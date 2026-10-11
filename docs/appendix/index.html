@@ -14404,6 +14404,60 @@ chain (<code>perseus-benchmarks/src/main.rs:200-261</code>). Screened
 before reading: no auto-run surface and no build-time execution point,
 every manifest inside the seven-day cooldown; nothing was installed or
 run.</li>
+<li><strong><code>SakanaAI/mass</code> was examined and has no report:
+what one MASS cycle learns reaches the next only as merged weights, and
+the workflow it searched for is removed from the training data on
+purpose.</strong> <em>Recursive Self-Improvement through Multi-Agent
+Self-Supervision</em> (Lee, Xu, Seely, Lee, Sojoudi, Zaharia and Tang,
+<a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a>, v1 8
+October 2026), read at <a
+href="https://github.com/SakanaAI/mass/commit/fb403581bed2c974b3f99e7236224169da643079"><code class="commit-id" title="fb403581bed2c974b3f99e7236224169da643079">fb403581…</code></a>:
+no licence file, and <code>NOTICE.md</code> says no open-source licence
+has been assigned to the MASS-specific code; 14 commits between 29
+September and 10 October 2026; 7,530 lines of Python in 43 non-test
+files, 2,535 of them in
+<code>harness_improvement/iterate_multi_agent_prompt.py</code>, and 12
+test functions in three files, not run. A cycle searches, task by task,
+for a multi-agent workflow with the model frozen, has the same model
+judge each version pairwise against the previous one, the champion and a
+bare-task reference run, collects trajectories from the retained
+workflow, and trains a LoRA on them that is merged into the next
+generation's weights (<code>mass/pipeline.py:96-131</code>,
+<code>:134-159</code>, <code>:277-289</code>). Three things outlive a
+step, and none is memory in this atlas's sense. The per-task
+<code>comparison_history.jsonl</code> and
+<code>champion_history.jsonl</code> are append-only judge verdicts that
+the optimizer's prompt summarises
+(<code>harness_improvement/iterate_multi_agent_prompt.py:209-228</code>,
+<code>:855</code>, <code>:1580-1581</code>, <code>:2092</code>); they
+record which run won, not a claim that could turn out false, and they
+sit under the cycle's own <code>run_dir</code>. The retained workflow is
+not carried forward either. <code>workflow_prompt</code> returns the
+hand-written file under <code>tasks/initial/</code> for version 0 in
+every cycle (<code>mass/pipeline.py:90-93</code>), and
+<code>configs/cycle2.json</code> differs from
+<code>configs/paper.json</code> only in generation, run directory, model
+paths and seeds, so cycle two searches again from the same starting
+workflows under a fresh <code>runs/L1</code>. When the trajectories are
+rendered for training, the orchestrator's first message has the teacher
+prompt, workflow plus execution directive, replaced by the bare task
+(<code>training/prepare_sft_data.py:161-169</code>,
+<code>:377-381</code>; <code>mass/pipeline.py:147</code>,
+<code>:233-234</code>), so the student learns to produce the
+orchestration from the task alone. That is the inverse of <a
+href="../systems/rrsi/">RRSI</a>, whose admitted harness is a commit the
+next run checks out. Here the one artifact a person could read, diff and
+correct is dissolved into the weights, and each adapter is merged before
+the next cycle trains, so cycle two's adapter is learned on top of cycle
+one's and the two cannot be separated. <a
+href="#weights-as-memory-at-adapter-granularity">Weights as memory, at
+adapter granularity</a> names that case: a merged adapter carries its
+contributions irreversibly. What remains is discarding a whole
+generation, and <code>export</code> refuses to overwrite one
+(<code>mass/pipeline.py:281-284</code>). Screened before reading: no
+auto-run surface, no build-time execution point, four requirements files
+inside the seven-day cooldown and one floating range; nothing was
+installed or run.</li>
 <li><strong><code>FreshHillyer/xiaoO</code> was examined and has no
 report: its long-term memory is an unpublished server behind an MCP
 client, and the memory crate in the tree has no caller.</strong> At <a
