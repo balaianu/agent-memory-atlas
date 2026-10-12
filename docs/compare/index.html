@@ -2953,29 +2953,45 @@ that was true last quarter and false now has no way to say so</td>
 </tr>
 <tr>
 <td><a href="../systems/athena/"><code>athena</code></a></td>
-<td>A Markdown file on disk — session logs, insights, case studies,
-protocols — indexed into SQLite</td>
-<td>Plain Markdown as the source of truth, with a files/tags/links index
-and an optional Supabase tier</td>
-<td>Chunk-level hybrid RAG with a cross-encoder reranker on by default
-and archive paths excluded, over per-intent RRF weight tables that boost
-or demote each document kind by classified query intent</td>
-<td>Session-end capture through an /end loop, with generators producing
-insights and case studies</td>
-<td>Curation by the user; a staleness auditor flags references older
-than the file they point at</td>
-<td>None on the read path; the store is one person's</td>
-<td>An MCP server, a CLI, workflows and skills, plus a Claude Code hook
-for the one enforced gate</td>
-<td>Auditors for staleness, session coverage and graph coverage, plus a
-flight recorder and pulse checks</td>
-<td>A three-value convention labelling every mechanism code-enforced,
-agent-discretion or aspirational</td>
-<td>The README grades its own claims by evidence level and names the
-incident its monitoring missed</td>
-<td>The convention that prevents self-mythologizing is applied inline in
-thirteen of 580 documents, and the new intent-specific retrieval weights
-are hand-set constants with no evaluation behind them</td>
+<td>A Markdown file under .context/ — session log, canonical fact line,
+case study, protocol, user profile — written by the agent through a
+session routine</td>
+<td>Plain Markdown as the source of truth; a local SQLite FTS5 index
+rebuilt from it; optional Supabase pgvector tables for sessions, case
+studies, protocols and chunks; a file-watching daemon keeps a
+files/tags/links SQLite catalogue that no search channel reads</td>
+<td>Five channels fused by intent-weighted RRF with a cross-encoder
+rerank on when sentence-transformers is installed: canonical-line
+keyword match, pgvector, FTS5 BM25, filename find and framework-doc
+grep. Archive paths are skipped by the bulk vector sync and the filename
+and framework channels, and indexed by FTS5</td>
+<td>Session logs appended by the quicksave MCP tool and written at /end;
+a shutdown script copies tagged learnings into SYSTEM_LEARNINGS.md and
+USER_PROFILE.yaml by rewriting them</td>
+<td>Curation by the user editing Markdown; an archive script moves
+session logs older than 30 days under .context/archive/; FTS5 forgets a
+removed file at its next rebuild, at most 24 hours later</td>
+<td>None; one person's store. Supabase row-level security separates
+service_role from anon, not one owner from another</td>
+<td>An MCP server of nineteen tools, a CLI, Markdown workflows and
+skills, and committed Claude Code hooks on prompt submit, tool use and
+stop</td>
+<td>None scheduled by the package. The SDK shutdown spawns a vector sync
+whose module has no entry point; auditors and an archive script run when
+invoked</td>
+<td>A three-label convention (code-enforced, agent-discretion,
+aspirational) on documents and a three-tag convention on claims in case
+studies, both prose; a Stop hook refuses a reply asserting engine
+results, or the phrase code-enforced, without a decision receipt</td>
+<td>The README publishes what is enforced in code and what is prompt,
+row by row, beside a retrieval benchmark restated downward when a
+lenient matcher was found inflating it; the docs cite the sycophancy
+literature against the product's own mechanism</td>
+<td>No memory carries a status, so the epistemic vocabulary never
+reaches a retrieved document; the flight recorder named as the action
+log has no caller; one retrieval channel indexes the archive the others
+exclude; the background vector sync at shutdown runs a module with no
+entry point and discards its output</td>
 </tr>
 <tr>
 <td><a
@@ -32889,7 +32905,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>254 of 731:</em> <a
+<p><em>253 of 731:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -32914,7 +32930,6 @@ href="../systems/anolisa-agent-memory/"><code>anolisa-agent-memory</code></a>,
 href="../systems/areev/"><code>areev</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
 href="../systems/artesian/"><code>artesian</code></a>, <a
-href="../systems/athena/"><code>athena</code></a>, <a
 href="../systems/attune-ai/"><code>attune-ai</code></a>, <a
 href="../systems/aukora-kernel/"><code>aukora-kernel</code></a>, <a
 href="../systems/aura/"><code>aura</code></a>, <a
@@ -33253,7 +33268,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>441 of 731:</em> <a
+<p><em>442 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33297,6 +33312,7 @@ href="../systems/areev/"><code>areev</code></a>, <a
 href="../systems/argo/"><code>argo</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
 href="../systems/artesian/"><code>artesian</code></a>, <a
+href="../systems/athena/"><code>athena</code></a>, <a
 href="../systems/atomic-agent/"><code>atomic-agent</code></a>, <a
 href="../systems/attune-ai/"><code>attune-ai</code></a>, <a
 href="../systems/aukora-kernel/"><code>aukora-kernel</code></a>, <a
@@ -33727,7 +33743,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-441 repositories of
+442 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

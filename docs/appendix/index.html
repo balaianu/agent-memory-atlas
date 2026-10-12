@@ -1650,7 +1650,13 @@ level</li>
 <li><a
 href="https://github.com/winstonkoh87/Athena-Public">winstonkoh87/Athena-Public</a>
 at <a
-href="https://github.com/winstonkoh87/Athena-Public/commit/f82e8f698e65dccbac3975fb508f790078b5a0b9"><code class="commit-id" title="f82e8f698e65dccbac3975fb508f790078b5a0b9">f82e8f69…</code></a></li>
+href="https://github.com/winstonkoh87/Athena-Public/commit/26b98486eeb728860fc7391326df4790927ee63b"><code class="commit-id" title="26b98486eeb728860fc7391326df4790927ee63b">26b98486…</code></a>
+— read only, from a full clone. Ten files scanned, two auto-run surfaces
+(the committed Claude Code hooks and a devcontainer
+<code>postCreateCommand</code>), one build-time execution point, one
+unpinned surface and one file inside the seven-day cooldown, with
+<code>CLAUDE.md</code> and <code>AGENTS.md</code> read as data. Nothing
+was installed, built or run</li>
 <li><a href="https://github.com/mem9-ai/mem9">mem9-ai/mem9</a> at <a
 href="https://github.com/mem9-ai/mem9/commit/5af03a68c072651e9c64d1b8b1265e36b7354671"><code class="commit-id" title="5af03a68c072651e9c64d1b8b1265e36b7354671">5af03a68…</code></a>
 — read only at the second pin; nothing installed or run.
@@ -15728,6 +15734,27 @@ though
 off-domain lesson stays out of the assembled block while two others from
 the same store appear. The first and last came from reading one store as
 the whole memory.</li>
+<li><strong>Five published claims about <a
+href="../systems/athena/">Project Athena</a> were wrong at <a
+href="https://github.com/winstonkoh87/Athena-Public/commit/f82e8f698e65dccbac3975fb508f790078b5a0b9"><code class="commit-id" title="f82e8f698e65dccbac3975fb508f790078b5a0b9">f82e8f69…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>audit_log</code> to <code>core/flight_recorder.py</code>
+and the auditors; <code>record_action</code> had no caller outside the
+module's own <code>__main__</code> self-test, the auditors printed their
+reports, and <code>audit_runner.py</code> overwrote
+<code>audit_state.json</code> and <code>audit_score.json</code>, so no
+record of memory mutations existed. It said the
+<code>epistemic_status:</code> frontmatter key appeared nowhere but in
+its own definition;
+<code>examples/protocols/reasoning/RSN-504-problem-framing.md</code> and
+<code>examples/protocols/decision/DEC-500-gto-problem-solver.md</code>
+carried it at line 5. It said no benchmark result was committed;
+<code>docs/BENCHMARKS.md:52</code> reported MRR@5 0.769 and Hit@5 0.892
+on a 65-query gold set. It counted thirteen labelled documents where
+<code>git grep</code> finds fourteen, and gave roughly 60,000 lines of
+Python where the tree held 72,502. The first rested on a module's
+docstring rather than its callers, and the third on the README rather
+than the documents it linked.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
