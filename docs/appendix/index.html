@@ -4080,11 +4080,12 @@ dependency files inside the seven-day cooldown. Nothing was installed,
 built or run</li>
 <li><a href="https://github.com/phanijapps/memex">phanijapps/memex</a>
 at <a
-href="https://github.com/phanijapps/memex/commit/80411705baa1004f061c8a0c29af94acbeb9e813"><code class="commit-id" title="80411705baa1004f061c8a0c29af94acbeb9e813">80411705…</code></a>
-— read only, from a shallow clone; seven files scanned, no auto-run
-surfaces, one build-time execution point, no unpinned surfaces and three
-dependency files inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/phanijapps/memex/commit/069cd03bcfca62f41d5b670c91e694c3cd24d5da"><code class="commit-id" title="069cd03bcfca62f41d5b670c91e694c3cd24d5da">069cd03b…</code></a>
+— read only, from a full clone; seven files scanned, no auto-run
+surfaces, one build-time execution point
+(<code>tests/conftest.py</code>), no unpinned surfaces and no dependency
+file inside the seven-day cooldown; <code>AGENTS.md</code> read as data.
+Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/yachen4ever/yacmemo">yachen4ever/yacmemo</a> at
 <a
@@ -11861,7 +11862,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">189
+href="../capabilities/">190
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems
@@ -15482,6 +15483,27 @@ The first three were wrong at every pin since <a
 href="https://github.com/OmniNode-ai/omnimemory/commit/5dacb73c3319fad338870916bfb30025af5cf39c"><code class="commit-id" title="5dacb73c3319fad338870916bfb30025af5cf39c">5dacb73c…</code></a>;
 the first rested on a function's name and docstring rather than its
 callers.</li>
+<li><strong>Three published claims about <a
+href="../systems/memex/">memex</a> were wrong at <a
+href="https://github.com/phanijapps/memex/commit/80411705baa1004f061c8a0c29af94acbeb9e813"><code class="commit-id" title="80411705baa1004f061c8a0c29af94acbeb9e813">80411705…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+no write path could update a memory and that the tool a model calls
+could not; <code>memex_import</code> was one of the eight registered MCP
+tools (<code>src/memex/mcp_server.py:281</code>), took nodes carrying
+slugs and wrote them through the update branch of
+<code>WikiStore.write</code>
+(<code>src/memex/infrastructure/import_export.py:63-69</code>), so a
+model could update a page by slug through the import tool, though not
+through <code>memex_write</code>. It said per-turn injection hooks
+covered pi, Claude Code, Codex and Copilot; only pi and Claude Code had
+an injection point, Codex had transcript capture through its
+<code>notify</code> wrapper, and Copilot a CI workflow
+(<code>marketplace/README.md:21-24</code>). And it said the only test
+touching <code>valid_from</code> asserted a round trip;
+<code>test_write_input_validation</code> also asserted that a malformed
+<code>valid_from</code> is rejected
+(<code>tests/unit/test_guardrails.py:58</code>). The first rested on the
+write tool's contract rather than on the whole tool registry.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -6277,41 +6277,37 @@ record no source fact, so forgetting the fact that stated them leaves
 them on the entity.</p>
 <p><strong><a href="../systems/memex/">memex</a> promises an update in
 the one surface a model is guaranteed to read, and cannot perform
-one.</strong> An MIT Python tool at version 0.2.4 — 10,249 lines with
-297 test functions — built on three claims: "The filesystem is the
-memory · the index is disposable · every session is provable." The first
-two hold. A memory is a Markdown page with YAML front matter, SQLite
-FTS5 is a cache that <code>rebuild-index</code> reconstructs from the
-pages, and a page edited by hand in an editor is reconciled rather than
-clobbered — the stale <code>content_hash</code> is detected and
-rewritten, by an explicit rebuild or a watcher. The third claim is the
-rarest thing here: <code>memex verify</code> turns "should have used
-memory" into an exit code, failing a build when no page parses, an index
-row is stale, a <code>[[link]]</code> dangles, or — with
+one.</strong> An MIT Python tool at version 0.5.0 — 12,881 lines under
+<code>src/</code> with 920 test functions — built on three claims: "The
+filesystem is the memory · the index is disposable · every session is
+provable." The first two hold: a memory is a Markdown page with OKF
+front matter, SQLite FTS5 is a cache that <code>rebuild-index</code>
+reconstructs from the pages, and a page edited by hand is reconciled by
+rewriting its stale <code>content_hash</code>. The third is a gate:
+<code>memex verify</code> fails a build when a page does not parse, an
+index row is stale, a link dangles, or — with
 <code>--require-recall</code> and <code>--require-write</code> — nothing
-has been read or written since a cutoff. Almost nothing else in this
-corpus tries to prove memory was used at all. The write path undoes much
-of it. <code>WriteInput</code> has no slug field;
-<code>Memex.write</code> leaves the slug empty;
-<code>WikiStore.write</code> therefore always derives a new one through
-<code>unique_slug</code>, so the same title written twice becomes
+was read or written since a cutoff. Pages carry
+<code>status: active | pending | superseded | archived</code>, every
+recall path returns <code>active</code> only, and consolidation writes
+every knowledge type as <code>pending</code> until
+<code>memex approve</code>, a CLI verb with no MCP twin, moves it. The
+write tool the model holds sits outside that queue and cannot update
+anything. <code>WriteInput</code> has no slug field, so
+<code>WikiStore.write</code> derives a new one through
+<code>unique_slug</code> and the same title written twice becomes
 <code>deploy-on-fridays</code> and <code>deploy-on-fridays-2</code>,
-both live, both retrievable, with nothing to reconcile them. The store's
-update branch — which preserves <code>id</code>, <code>created</code>,
-<code>access_count</code> and <code>last_access</code> — is reachable
-only from transcript ingest and JSON import, and the consolidator's own
+both active; the consolidator's
 <code>updating = bool(node.slug) and self._store.exists(node.slug)</code>
-tests a slug that is empty by construction, so
-<code>nodes_updated</code> is structurally always empty while the CLI
-and MCP tool report its length. Meanwhile <code>memex_write</code>'s
-description, shared across adapters precisely because "the description
-is the one guaranteed-read surface", tells the model: "Writing an
-existing slug updates it, preserving creation history and access
-counts." One mark, for a forgetting test that pairs its
-must-not-retrieve assertion with the same query under
-<code>include_expired=True</code>. <code>valid_from</code> is validated,
-stored in front matter, given its own indexed column, and appears in no
-WHERE clause in the repository.</p>
+tests a slug that is empty by construction; and
+<code>memex_write</code>'s description, shared across adapters because
+"the description is the one guaranteed-read surface", tells the model:
+"Writing an existing slug updates it, preserving creation history and
+access counts." A <code>supersedes</code> list on a write becomes a link
+edge and leaves the replaced page active. Three marks: trust state,
+human review, negative eval. Scope is withheld: project recall filters
+on a hashed project id, and global recall — the MCP default and the only
+scope the per-turn hooks use — returns every project's pages.</p>
 <p><strong><a href="../systems/yacmemo/">yacmemo</a> writes the
 duplicate guard that anticipates its own evasion.</strong> A personal
 Markdown memory server, MIT by metadata at version 0.2.0 — 11,833 lines,

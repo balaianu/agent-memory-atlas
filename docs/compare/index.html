@@ -16444,65 +16444,67 @@ an earlier archived copy; no scope, status or audit</td>
 </tr>
 <tr>
 <td><a href="../systems/memex/"><code>memex</code></a></td>
-<td>One Markdown page under <code>~/.memex/docs/{type}/{slug}.md</code>,
-typed <code>entity</code>, <code>preference</code>,
-<code>procedure</code>, <code>summary</code> or <code>episode</code>,
-with YAML front matter</td>
+<td>One Markdown page with OKF v0.2 front matter under
+docs/global/{type}/{slug}.md or docs/projects/{folder}/{type}/{slug}.md;
+five built-in types, five catalogue knowledge types and project-declared
+custom types, each page carrying a status</td>
 <td>The filesystem is the source of truth; SQLite FTS5 in
-<code>mem.db</code> is a disposable index rebuilt from the pages by
-<code>memex rebuild-index</code></td>
-<td>BM25 over FTS5, with the query reduced to alphanumeric tokens joined
-by OR so untrusted text never reaches the MATCH parser</td>
-<td><code>memex_write(type, title, body, tags, importance, links, expires_at, valid_from, valid_to)</code>
-— no slug field, so every call derives a new one</td>
-<td><code>forget</code> is <code>hard</code> (delete the file and purge
-the index), <code>soft</code> (set <code>valid_to</code>) or
-<code>decay</code> (set <code>expires_at</code>). There is no update: a
-repeat title becomes <code>title-2</code></td>
-<td>None. One store per installation, with a git-derived repo-and-branch
-string used as a recall hint</td>
-<td>Eight MCP tools, plus per-turn injection hooks for pi, Claude Code,
-Codex and GitHub Copilot, each with transcript capture</td>
-<td>An optional filesystem watcher re-indexing hand-edited pages;
-consolidation and decay are explicit commands, never triggered by a
-read</td>
-<td>Provenance from a page back to the transcript that produced it, with
-a three-value confidence, and <code>memex verify</code> as a CI
-gate</td>
-<td>Three decisions are worth the visit. The index is disposable and the
-code means it: <code>rebuild_index</code> deletes rows for missing
-pages, re-syncs links, and rewrites the front-matter hash of a page
-edited outside the tool, so hand-editing a memory in an editor is a
-supported operation rather than corruption. Recall's query handling
-reduces free text to <code>[a-z0-9]+</code> tokens joined by OR before
-it reaches FTS5, so a malformed or hostile query is a weak query and
-never a parser error. And <code>memex verify</code> turns "the agent
-should have used memory" into an exit code —
-<code>--require-recall</code> and <code>--require-write</code> fail a
-build when no page was read or written since a cutoff, alongside checks
-that every page parses, every index row is fresh and every
-<code>[[link]]</code> resolves. Very little in this corpus tries to
-prove that memory was used at all</td>
-<td>No write path can update an existing memory. <code>WriteInput</code>
-has no slug field, <code>Memex.write</code> builds a
-<code>WikiNode</code> whose slug is empty, and
-<code>WikiStore.write</code> therefore always derives a fresh
-collision-suffixed one — so writing the same title twice yields
-<code>deploy-on-fridays</code> and <code>deploy-on-fridays-2</code>,
-both live, both retrievable, disagreeing with nothing to reconcile them.
-The consolidator's own update branch is
+<code>mem.db</code> is a disposable index rebuilt from the pages, and
+generated <code>index.md</code> files per directory serve as a second,
+index-free search surface</td>
+<td>Weighted BM25 over FTS5 with alphanumeric tokens, scaffolding
+phrases and stop words removed, matched with AND and retried with OR on
+zero rows; filtered to active pages inside their validity window, and to
+one project when project scope is requested</td>
+<td><code>memex_write(type, title, body, scope, description, tags, importance, links, parent, supersedes, depends_on, project_id, project_label)</code>
+— no slug field, so every call derives a new one; consolidation writes
+knowledge types as pending</td>
+<td><code>forget</code> is <code>hard</code>, <code>soft</code> or
+<code>decay</code> from the model and also <code>archive</code> from the
+CLI; <code>approve</code>, <code>merge</code> and <code>import</code>
+are CLI-only. No tool on the model's surface changes an existing page's
+content: a repeated title becomes <code>title-2</code></td>
+<td>A <code>global</code> or <code>project</code> scope on every page,
+the project id a hash of the Git remote. Project recall filters on it;
+global recall, the default and the one the per-turn hooks use, returns
+every project's pages</td>
+<td>Five MCP tools; per-turn injection hooks for pi and Claude Code,
+transcript capture for pi, Claude Code and Codex, and a CI workflow for
+Copilot</td>
+<td>An optional polling watcher re-indexing hand-edited pages; at
+capture, an episode summary from a spawned harness CLI and an opt-in
+consolidation; decay and consolidation otherwise explicit commands</td>
+<td>A four-value page status filtered on every recall path, a pending
+queue for consolidated knowledge, provenance from a page back to its
+transcript, reserved provenance fields a caller may not set, and
+<code>memex verify</code> as a CI gate</td>
+<td>The index is disposable and the code means it:
+<code>rebuild_index</code> deletes rows for missing pages, re-syncs
+links, and rewrites the front-matter hash of a page edited outside the
+tool, so hand-editing a memory is a supported operation. Model-distilled
+knowledge waits: consolidation writes entity, preference, procedure,
+catalogue and custom pages as <code>pending</code>, every recall path
+hides them, and the approve verb is a CLI command absent from the MCP
+surface. And <code>memex verify</code> turns "the agent should have used
+memory" into an exit code — <code>--require-recall</code> and
+<code>--require-write</code> fail a build when nothing was read or
+written since a cutoff, beside parse, index-freshness, link and OKF
+checks</td>
+<td>No tool on the model's surface can update a memory.
+<code>WriteInput</code> has no slug field, <code>Memex.write</code>
+builds a <code>WikiNode</code> with an empty slug, and
+<code>WikiStore.write</code> derives a fresh collision-suffixed one, so
+the same title written twice is two active pages; the consolidator's
 <code>updating = bool(node.slug) and self._store.exists(node.slug)</code>
-over a slug that is empty by construction, so <code>nodes_updated</code>
-is structurally always empty while the CLI and the MCP tool report its
-length. The <code>memex_write</code> description tells a model the
-opposite: "Writing an existing slug updates it, preserving creation
-history and access counts." Separately, <code>valid_from</code> is
-accepted, validated, written to front matter and given its own indexed
-column, and appears in no WHERE clause anywhere — a page valid from next
-year is returned today. And the module whose docstring reads "Operation
-audit logging" is a <code>RotatingFileHandler</code> with
-<code>backupCount=3</code> carrying operation metadata only, so it is
-neither append-only nor a record of what changed</td>
+tests that empty slug, so <code>nodes_updated</code> is always empty.
+The <code>memex_write</code> description says the opposite — "Writing an
+existing slug updates it, preserving creation history and access counts"
+— and the tool is annotated <code>idempotent_hint=True</code>.
+<code>supersedes</code> on a write is a link edge only; the replaced
+page stays active. The per-turn hooks recall in global scope, so pages
+from every project are injected. And <code>memex import</code> drops
+<code>status</code>, so an imported or round-tripped page lands active
+whatever it was</td>
 </tr>
 <tr>
 <td><a href="../systems/memharness/"><code>memharness</code></a></td>
@@ -32197,7 +32199,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>189 of 731:</em> <a
+<p><em>190 of 731:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32293,6 +32295,7 @@ href="../systems/mama/"><code>mama</code></a>, <a
 href="../systems/mcp-memory-service/"><code>mcp-memory-service</code></a>,
 <a href="../systems/memcontinuum/"><code>memcontinuum</code></a>, <a
 href="../systems/memesh/"><code>memesh</code></a>, <a
+href="../systems/memex/"><code>memex</code></a>, <a
 href="../systems/memhtml/"><code>memhtml</code></a>, <a
 href="../systems/memledger/"><code>memledger</code></a>, <a
 href="../systems/memmy-agent/"><code>memmy-agent</code></a>, <a
@@ -33123,7 +33126,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 731:</em> <a
+<p><em>97 of 731:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33167,6 +33170,7 @@ href="../systems/lobu/"><code>lobu</code></a>, <a
 href="../systems/loreai/"><code>loreai</code></a>, <a
 href="../systems/marm-memory/"><code>marm-memory</code></a>, <a
 href="../systems/memesh/"><code>memesh</code></a>, <a
+href="../systems/memex/"><code>memex</code></a>, <a
 href="../systems/memhtml/"><code>memhtml</code></a>, <a
 href="../systems/memorix/"><code>memorix</code></a>, <a
 href="../systems/memory-compiler/"><code>memory-compiler</code></a>, <a
