@@ -20081,67 +20081,71 @@ prose</td>
 </tr>
 <tr>
 <td><a href="../systems/mushroomdb/"><code>mushroomdb</code></a></td>
-<td>An entity node with properties, and edges that are mostly derived —
-each carrying the rule, the score and the property values that produced
-it</td>
+<td>An entity node with properties and normalised aliases, a Note node
+linked to what it is about, hand-written fact edges, and rule-derived
+edges that carry the rule, the score and the property values that
+produced them</td>
 <td>A directory on disk: an append-only WAL over mmapped snapshot
 sections, with an overlay-over-base column, topology and edge-property
-view</td>
-<td>Cypher-shaped queries, similarity and hybrid search, plus traversal
-and shortest-path, all through a view that can carry a node mask</td>
-<td><code>upsert_entity</code> and <code>ingest_json</code>; a rule
-declared once derives matching edges on every subsequent write and
+view; roles and commit times in sidecar files</td>
+<td>Cypher-shaped queries, vector, full-text and hybrid search,
+traversal and shortest path through a view that can carry a node mask,
+and a recall digest over the full-text index</td>
+<td><code>remember</code> with entities and facts in one commit,
+<code>upsert_entity</code>, <code>ingest_json</code> and Cypher writes;
+a rule declared once derives matching edges on every later write and
 retracts them when it stops matching</td>
-<td>Derived edges are retracted by the rule engine inside the same
-commit that invalidates them; deleting a rule "answers by retracting
-every edge it owns"</td>
+<td>Derived edges are retracted by the rule engine in the commit that
+invalidates them; deleting a rule removes exactly the edges it owns;
+<code>forget</code> tombstones a node, removes a property or retracts a
+hand-written fact, and refuses a rule-derived edge</td>
 <td>A role bound to the bearer token on the HTTP surface, resolving to a
-node mask that a caller-supplied mask can only intersect; on the stdio
-MCP surface <code>role</code> is an argument</td>
-<td>Fifteen MCP tools over stdio, an HTTP server with role-bound tokens,
-and Rust, Python and npm distributions</td>
-<td>None in the write path — no model call unless embeddings are
-enabled</td>
+node mask a caller-supplied mask can only intersect; a read-only scoped
+handle in the Python binding; on the stdio MCP surface <code>role</code>
+is an argument</td>
+<td>Twenty-three MCP tools over stdio by default, twenty-five with
+--all-tools; an HTTP server with role-bound tokens; Rust, Python and npm
+distributions; an installer writing a skill, an MCP entry and
+session-start and per-prompt hooks</td>
+<td>None; no model call anywhere in the tree, and vectors are supplied
+by the caller</td>
 <td>Per-edge provenance answering why two nodes are related, a
-<code>what_if</code> that computes without writing, and history reads
-bounded by a reported horizon</td>
-<td>The RBAC is the most carefully reasoned in this corpus at this size,
-and the care shows where it usually does not. A hidden key returns the
-same 404 as an absent key, under a comment naming the reason — "[h]idden
-keys must respond identically to absent keys (no oracle)" — and the
-history handler filters edge-added and edge-removed entries whose other
-endpoint is hidden, because "[a] role token must not learn about hidden
-nodes via edge history events". Three failure modes all resolve to deny:
-an empty role sees nothing, an unknown role is an error rather than a
-grant, and a corrupt <code>roles.json</code> poisons every role until it
-is fixed. Even the sidecar's version numbering is a security decision —
-a file using <code>visible_where</code> or <code>namespaces</code> is
-deliberately not loadable by an older binary, because such a binary
-"would resolve a narrowed role to its full label set", so an
-unrecognised version "denies rather than over-grants". Separately,
-making a relationship a schema rule that retracts its own edges is the
-right shape for derived memory: the edge carries the rule and the values
-that produced it, so <code>explain_association</code> answers with
-evidence rather than an assertion, and a stale derivation disappears in
-the same commit that invalidates it rather than waiting for a sweep</td>
+<code>what_if</code> that computes without writing, history reads
+bounded by a reported horizon, and a provisional mark on stub entities
+that a describing write clears</td>
+<td>A hidden key returns the same 404 as an absent key, under a comment
+naming the reason — "[h]idden keys must respond identically to absent
+keys (no oracle)" — and the history handler filters edge-added and
+edge-removed entries whose other endpoint is hidden, because "[a] role
+token must not learn about hidden nodes via edge history events". Three
+failure modes resolve to deny: an empty role sees nothing, an unknown
+role is an error rather than a grant, and a corrupt
+<code>roles.json</code> poisons every role until it is fixed. The
+sidecar's version numbering is a security decision: a file using
+<code>visible_where</code> or <code>namespaces</code> is deliberately
+not loadable by an older binary, because such a binary "would resolve a
+narrowed role to its full label set". The scoped handle carries the same
+contract into the engine, refuses the whole-store reads it cannot
+narrow, and is pinned by a test file that fails when a method has no
+leak row. Making a relationship a schema rule that retracts its own
+edges is the right shape for derived memory: the edge carries the rule
+and the values that produced it, so <code>explain_association</code>
+answers with evidence rather than an assertion</td>
 <td>The enforcement and the advertised surface are not the same surface.
 The MCP server is JSON-RPC over stdio with no identity —
-<code>dispatch_call</code> takes no role at all — so
-<code>query</code>'s <code>role</code> is an argument the caller
-chooses, documented as one of "[t]wo ways to ask the same restricted
-question". That is coherent for a local subprocess that already holds
-the database file, and it does mean the README's "knows who's allowed to
-see it" describes the HTTP deployment, while the fifteen-tool MCP
-surface it leads with is a preview mechanism rather than a boundary.
-Underneath, the core is explicit that its history reads bypass masking —
-"this reads the WAL regardless of any role mask. Apply masking at the
-caller level" — which the HTTP layer does thoroughly and which any other
-embedder must remember to do. History is also bounded: snapshot
-truncation limits the live WAL, archives extend the floor, and a read
-below it errors. Nothing here is epistemic — an edge has a score and a
-rule, not a status, provenance class or validity window — and the
-project is pre-1.0 alpha at 0.6.8 with its previous positioning, seven
-tools and three hooks, deprecated in 0.6.4 and removed in 0.7</td>
+<code>dispatch_call</code> takes no role — so <code>query</code>'s
+<code>role</code> is an argument, one of "[t]wo ways to ask the same
+restricted question", and <code>forget</code> has no role check by the
+project's own statement. The session brief and the per-prompt recall
+digest read the whole store, and so do <code>analyze</code> and
+<code>suggest_rules</code>. The identity preset's <code>SAME_AS</code>
+rules carry no namespace, so same-named entities in different namespaces
+link. The core's history reads bypass masking — "[a]pply masking at the
+caller level" — which the HTTP layer and the scoped handle do. History
+is bounded: a truncating snapshot ends it, and Python's
+<code>snapshot()</code> truncates. Nothing here is epistemic — an edge
+has a score and a rule, not a status or a validity window — and the
+project is pre-1.0 alpha</td>
 </tr>
 <tr>
 <td><a href="../systems/nano-brain/"><code>nano-brain</code></a></td>

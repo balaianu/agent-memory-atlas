@@ -5,27 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="An embedded Rust graph where a
-relationship is a schema rule that derives and retracts its own edges
-with the evidence attached, and where a role-bound token's mask can only
-ever be narrowed — including on the history reads most systems forget to
-cover.">
+rule derives and retracts its own edges with the evidence attached, and
+a role's view can only be narrowed.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="mushroomdb — Agent Memory Atlas">
     <meta property="og:description" content="An embedded Rust graph
-where a relationship is a schema rule that derives and retracts its own
-edges with the evidence attached, and where a role-bound token's mask
-can only ever be narrowed — including on the history reads most systems
-forget to cover.">
+where a rule derives and retracts its own edges with the evidence
+attached, and a role's view can only be narrowed.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="mushroomdb — Agent Memory Atlas">
     <meta name="twitter:description" content="An embedded Rust graph
-where a relationship is a schema rule that derives and retracts its own
-edges with the evidence attached, and where a role-bound token's mask
-can only ever be narrowed — including on the history reads most systems
-forget to cover.">
+where a rule derives and retracts its own edges with the evidence
+attached, and a role's view can only be narrowed.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>mushroomdb — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ forget to cover.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "mushroomdb",
-      "description": "An embedded Rust graph where a relationship is a schema rule that derives and retracts its own edges with the evidence attached, and where a role-bound token's mask can only ever be narrowed \u2014 including on the history reads most systems forget to cover.",
+      "description": "An embedded Rust graph where a rule derives and retracts its own edges with the evidence attached, and a role's view can only be narrowed.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,25 +99,23 @@ forget to cover.">
           <p class="eyebrow">A hidden node answers exactly like a node
 that was never there</p>
           <h1>mushroomdb</h1>
-          <p class="document-deck">An embedded Rust graph where a
-relationship is a schema rule that derives and retracts its own edges
-with the evidence attached, and where a role-bound token's mask can only
-ever be narrowed — including on the history reads most systems forget to
-cover.</p>
+          <p class="document-deck">An embedded Rust graph where a rule
+derives and retracts its own edges with the evidence attached, and a
+role's view can only be narrowed.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/MatthewSherlin/mushroomdb">
               <span>Source</span>
               <strong>MatthewSherlin/mushroomdb</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/MatthewSherlin/mushroomdb/commit/4896a895fc2a7b6d11c80196a5c227e535611754" title="4896a895fc2a7b6d11c80196a5c227e535611754">
+            <a class="meta-pill revision-pill" href="https://github.com/MatthewSherlin/mushroomdb/commit/3c4719867d0d14ad02c33766994cf81084142b37" title="3c4719867d0d14ad02c33766994cf81084142b37">
               <span>Analyzed revision</span>
-              <code>4896a895…</code>
+              <code>3c471986…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-12</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/MatthewSherlin--mushroomdb" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,21 @@ cover.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+OR Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>193,587
+lines of Rust in 222 files across ten crates, 88,919 of them under tests
+directories; plus a PyO3 binding, Python and TypeScript clients, and
+LangChain and LlamaIndex integrations</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,223
+commits on main under two spellings of one author's name, 15 August – 12
+October 2026; version 0.7.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,674
+Rust test functions under crates/ and 543 Python test functions; none
+run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,25 +153,31 @@ cover.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>mushroomdb is "[t]he graph that stays true — and knows who's allowed
-to see it": an embedded Rust graph database, MIT or Apache-2.0, version
-0.6.8 and explicitly pre-1.0 alpha, 177,137 lines across ten crates with
-2,328 test functions, distributed on crates.io, npm and PyPI, reachable
-as a Rust library, a Python module, a sidecar, or fifteen MCP tools.</p>
-<p>Its central idea is that a relationship is a schema declaration
-rather than a write. Declare a rule once, and every subsequent write
-derives the matching edges, maintains them, and
-<strong>retracts</strong> them when the rule stops matching — each edge
-carrying the rule, the score and the property values that produced it.
-So <code>explain_association</code> answers why two nodes are related
-with the evidence rather than an assertion, and deleting a rule "answers
-by retracting every edge it owns". A stale derivation disappears in the
-commit that invalidates it, not in a sweep afterwards, which is the
-failure mode of nearly every system here that derives edges from an LLM
-pass.</p>
-<p>The part that earns most of the marks is the access control, and it
-is the most carefully reasoned RBAC this atlas has read at this scale.
-The never-widen rule is three sentences at the top of
+<p>mushroomdb is an embedded Rust graph database in which a relationship
+is a schema rule: declared once, it derives its matching edges on every
+later write, retracts them in the commit that makes them untrue, and
+leaves each edge carrying the rule, the score and the values that
+produced it. Its access control is a node mask resolved from a role that
+a caller's own mask can only narrow, with a hidden node answering
+exactly like an absent one, history reads included. The weak side is
+where that control stops: the stdio MCP server takes no identity, so a
+role there is an argument, and its memory tools — <code>remember</code>,
+<code>recall</code>, <code>forget</code> — run unscoped.</p>
+<p>It describes itself as "[t]he graph that stays true — and knows who's
+allowed to see it", dual-licensed MIT or Apache-2.0, explicitly pre-1.0
+alpha, and reachable as a Rust library, a Python module, an HTTP server
+or an MCP server over stdio. Version 0.7.0 recast it as agent memory:
+<code>remember</code> writes a note, the entities it names and the facts
+among them in one commit, and <code>recall</code> answers
+ordinary-language topics from a full-text index.</p>
+<p>A deleted rule takes exactly its own edges with it — "[r]emove the
+rule and exactly its owned edges"
+(<code>crates/core-rules/src/engine.rs:3547</code>) — and a rule that
+stops matching retracts inside the same commit, so a stale derivation
+does not wait for a sweep. That is the failure mode of most systems that
+derive edges from a model pass, and here there is no model in the write
+path at all.</p>
+<p>The never-widen rule is three sentences at the top of
 <code>roles.rs</code>:</p>
 <blockquote>
 <p>"Empty role (no keys, no labels) = empty mask = sees nothing. Unknown
@@ -174,88 +186,97 @@ Corrupt <code>roles.json</code> at open = roles poisoned … returns
 <code>Err</code> for any role name until the file is fixed and the DB
 re-opened."</p>
 </blockquote>
-<p>Every one of the three resolves to deny.
-<code>NodeMask::intersect</code> exists for exactly one purpose — "to
+<p>Each resolves to deny. <code>NodeMask::intersect</code> exists "to
 enforce the never-widen rule when a role token also supplies a client
-mask: <code>effective = role_mask.intersect(&amp;client_mask)</code>" —
-so a caller's own mask can only narrow. The MCP namespace argument
-carries the same contract in its description: it "[i]ntersects with
-'role' and 'mask' — it can only narrow what they already allow".</p>
-<p>Two details show the thinking went further than the happy path. A
-hidden key returns the same 404 as a key that does not exist, under a
-comment saying why: "Hidden keys must respond identically to absent keys
-(no oracle)." And the history handler filters edge events whose other
+mask: <code>effective = role_mask.intersect(&amp;client_mask)</code>",
+and the MCP namespace argument carries the same contract in its
+description: it "[i]ntersects with 'role' and 'mask' — it can only
+narrow what they already allow".</p>
+<p>Two details show the thinking went past the happy path. A hidden key
+returns the same 404 as a key that does not exist, under a comment
+saying why: "Hidden keys must respond identically to absent keys (no
+oracle)." And the history handler filters edge events whose other
 endpoint is hidden, because "[a] role token must not learn about hidden
-nodes via edge history events" — history being precisely where this kind
-of masking is usually forgotten, and where the core module warns it must
-be added: "this reads the WAL regardless of any role mask. Apply masking
-at the caller level."</p>
-<p>Even the file format version numbering is an access-control decision.
-A <code>roles.json</code> using <code>visible_where</code> or
+nodes via edge history events" — history being where masking is usually
+forgotten, and where the core warns it must be added: "Apply masking at
+the caller level."</p>
+<p>The engine carries that contract itself. <code>Scope</code> composes
+a role, a namespace and a key list by intersection, and the
+<code>*_scoped</code> read methods check the subject first, so "a key
+outside the scope is indistinguishable from a key that does not exist".
+The Python binding's <code>scoped()</code> handle is built on it,
+refuses every write, and refuses the reads it cannot narrow —
+<code>recall</code>, <code>schema_report</code>,
+<code>suggest_rules</code>, the graph algorithms — rather than answer
+them over hidden nodes.</p>
+<p>Even the file-format version is an access decision. A
+<code>roles.json</code> using <code>visible_where</code> or
 <code>namespaces</code> is deliberately not loadable by an older binary,
 because such a binary "would resolve a narrowed role to its full label
 set, so an unrecognised version poisons instead, which denies rather
-than over-grants". Very few projects think about what their own previous
-release would do with a file it half-understands.</p>
+than over-grants".</p>
 <p><strong>The enforcement and the advertised surface are not the same
 surface.</strong> The MCP server is JSON-RPC over newline-delimited
-stdio, and <code>dispatch_call</code> takes no identity at all —
+stdio, and <code>dispatch_call</code> takes no identity —
 <code>role</code> is an argument the caller passes, described in
 <code>tool_query</code> as one of "[t]wo ways to ask the same restricted
 question". For a local subprocess holding the database directory that is
 coherent: there is nothing to authenticate against, and the process
-could read the files anyway. But it means the tagline's second clause
-describes the HTTP deployment with role-bound bearer tokens, while the
-fifteen-tool MCP surface the README leads with is a way to preview a
-restricted view rather than a boundary around one. A reader wiring an
-agent to the MCP server should not read
-<code>query(role: "support")</code> as a control.</p>
-<p>The third mark is for the mask tests, which are the shape this atlas
-asks for and rarely finds:
-<code>masked_query_hides_nodes_and_their_edges</code> asserts the hidden
-node returns zero rows by key lookup and then, four lines later, that
-the unmasked query returns all three — and
-<code>masked_var_expand_blocks_hidden_intermediate</code> and
-<code>masked_shortest_path_blocks_hidden_intermediate</code> do the same
-for a hidden node in the middle of a traversal, each running the
-unmasked case first so the emptiness is attributable to the mask rather
-than to a query that stopped matching.</p>
-<p>What is not here is anything epistemic. An edge has a score and a
-rule; it has no status, no provenance class, no validity window and no
-notion of a claim somebody made. Time travel is
-<code>edges_at(key, commit)</code> over transaction time, bounded by a
-horizon the API reports honestly, with <code>CommitOutOfRange</code> for
-a read below it — version history rather than a second axis.</p>
+could read the files anyway. It means the tagline's second clause
+describes the HTTP deployment with role-bound tokens and the scoped
+Python handle. The changelog says it for <code>forget</code>: "Like
+every other MCP write tool, it is not an authorisation boundary."</p>
+<p>The third mark is for the negative tests, which pair every masked
+read with the unmasked run of the same read so the emptiness is
+attributable to the mask. What is not here is anything epistemic: an
+edge has a score and a rule, not a status, a provenance class or a
+validity window, and time travel is over commit order, with a wall-clock
+time recorded per commit.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>rule</strong> is the relationship. Edges are its
 output.</p>
 <p><strong>Retraction</strong> is not deletion; it is the rule no longer
-holding.</p>
+holding. Deleting the rule removes exactly the edges it owns.</p>
+<p>A <strong>note</strong> is what a caller said; an
+<strong>entity</strong> is what it was about. An entity named before it
+is described is a provisional stub until a describing write clears the
+mark. The mark is not a verdict: <code>recall</code> does not filter on
+it.</p>
+<p><strong>Forgetting</strong> is a tombstone, not a redaction. "History
+still holds what was forgotten until the log is pruned, and a note that
+stated a forgotten fact still says it"
+(<code>crates/core-api/src/memory/forget.rs:9-11</code>).</p>
 <p>A <strong>mask</strong> is a set of nodes. It only ever gets
 smaller.</p>
 <p>A <strong>hidden node</strong> and a <strong>missing node</strong>
 answer identically, on purpose.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the role mask comes from the bearer token and a caller-supplied mask can only intersect with it; hidden nodes answer like absent ones, and history events naming a hidden endpoint are dropped</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the role mask comes from the bearer token and a caller-supplied mask can only intersect with it; hidden nodes answer like absent ones, and history events naming a hidden endpoint are dropped
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a rule derives and retracts its own edges; on HTTP and on the scoped handle a role resolves to a mask that a caller can only narrow, and hidden answers like absent; the stdio surfaces carry no identity</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a rule derives and retracts its own edges; on HTTP and on the scoped handle a role resolves to a mask that a caller can only narrow, and hidden answers like absent; the stdio surfaces carry no identity
 flowchart TB
-    W[&quot;upsert_entity / ingest_json&quot;] --&gt; RULES[&quot;rule engine: derive matching edges,&lt;br/&gt;retract the ones that no longer match —&lt;br/&gt;in the same commit&quot;]
+    W[&quot;remember · upsert_entity ·&lt;br/&gt;ingest_json · Cypher write&quot;] --&gt; RULES[&quot;rule engine: derive matching edges,&lt;br/&gt;retract the ones that stop matching —&lt;br/&gt;in the same commit&quot;]
     RULES --&gt; EDGE[(&quot;edge carries the rule,&lt;br/&gt;the score and the values&lt;br/&gt;that produced it&quot;)]
-    RULES --&gt; WAL[(&quot;append-only WAL over&lt;br/&gt;mmapped snapshot sections&quot;)]
-    WAL --&gt; HIST[&quot;node_history · edge_history ·&lt;br/&gt;edges_at(key, commit)&quot;]
-    HIST --&gt;|&quot;below the floor&quot;| OOR[&quot;CommitOutOfRange —&lt;br/&gt;an error, not a partial answer&quot;]
-    HIST -.-&gt;|&quot;&#39;reads the WAL regardless of any&lt;br/&gt;role mask. Apply masking at&lt;br/&gt;the caller level.&#39;&quot;| CALLER
+    RULES --&gt; WAL[(&quot;append-only WAL;&lt;br/&gt;archived, not dropped,&lt;br/&gt;by the CLI&#39;s snapshots&quot;)]
+    F[&quot;forget&quot;] --&gt;|&quot;tombstone a node, a property&lt;br/&gt;or a hand-written fact;&lt;br/&gt;refuses a derived edge&quot;| WAL
+    WAL --&gt; HIST[&quot;node_history · edge_history ·&lt;br/&gt;was_linked · edges_at&quot;]
+    HIST --&gt;|&quot;below the horizon&quot;| OOR[&quot;CommitOutOfRange —&lt;br/&gt;an error, not a partial answer&quot;]
+    HIST -.-&gt;|&quot;&#39;Apply masking at&lt;br/&gt;the caller level.&#39;&quot;| MASKED
     HTTP[&quot;HTTP request with a bearer token&quot;] --&gt; ID{&quot;AuthIdentity&quot;}
+    ID --&gt;|&quot;no token on /health&quot;| ANON[&quot;Anonymous: liveness only&quot;]
     ID --&gt;|&quot;Role(name)&quot;| RM[&quot;mask_for_role(name)&quot;]
+    PY[&quot;Python db.scoped(role, namespace, keys)&quot;] --&gt; SC[&quot;Scope: legs intersect;&lt;br/&gt;writes and whole-store&lt;br/&gt;reads refused&quot;]
+    SC --&gt; RM
     RM --&gt;|&quot;unknown role&quot;| ERR[&quot;Err — never a silent full grant&quot;]
     RM --&gt;|&quot;empty role&quot;| NONE[&quot;empty mask — sees nothing&quot;]
     RM --&gt;|&quot;corrupt roles.json&quot;| POISON[&quot;every role errs until fixed&quot;]
     RM --&gt; EFF{&quot;caller also sent a mask?&quot;}
-    EFF --&gt;|&quot;yes&quot;| INT[&quot;effective = role_mask.intersect(client_mask)&lt;br/&gt;— narrows only&quot;]
+    EFF --&gt;|&quot;yes&quot;| INT[&quot;role_mask.intersect(client_mask)&lt;br/&gt;— narrows only&quot;]
     EFF --&gt;|&quot;no&quot;| ROLE[&quot;the role mask&quot;]
-    INT &amp; ROLE --&gt; CALLER[&quot;masked read: a hidden key 404s exactly&lt;br/&gt;like an absent one (no oracle);&lt;br/&gt;edge events naming a hidden endpoint&lt;br/&gt;are filtered out&quot;]
-    CALLER --&gt; EDGE
-    MCP[&quot;MCP: JSON-RPC over stdio&quot;] --&gt; DISP[&quot;dispatch_call — takes no identity&quot;]
-    DISP --&gt;|&quot;&#39;role&#39; and &#39;mask&#39; are arguments:&lt;br/&gt;two ways to ask the same&lt;br/&gt;restricted question&#39;&quot;| PREVIEW[&quot;a restricted view the caller chose,&lt;br/&gt;not a boundary around the caller&quot;]
-    PREVIEW --&gt; EDGE</code></pre></details></figure>
+    INT &amp; ROLE --&gt; MASKED[&quot;masked read: a hidden key answers&lt;br/&gt;as an absent one (no oracle);&lt;br/&gt;history events naming a hidden&lt;br/&gt;endpoint are dropped&quot;]
+    MASKED --&gt; EDGE
+    MCP[&quot;MCP over stdio · CLI hooks&quot;] --&gt; DISP[&quot;dispatch_call — takes no identity&quot;]
+    DISP --&gt;|&quot;&#39;role&#39; is an argument&quot;| PREVIEW[&quot;a restricted view the caller chose&quot;]
+    DISP --&gt;|&quot;session brief · recall digest ·&lt;br/&gt;forget · analyze&quot;| WHOLE[&quot;the whole store, unmasked&quot;]
+    PREVIEW --&gt; EDGE
+    WHOLE --&gt; EDGE</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -267,28 +288,33 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>core-api</code></td>
-<td>The public database, roles, masks, history, <code>what_if</code>
-(67,460 lines)</td>
-</tr>
-<tr>
-<td><code>cli</code></td>
-<td>Install, doctor, ingest-git, the skill and hooks (27,804)</td>
+<td>The public database, roles, masks and scopes, history, the memory
+calls (78,301 lines)</td>
 </tr>
 <tr>
 <td><code>server</code></td>
-<td>HTTP with role tokens, and the stdio MCP surface (23,362)</td>
+<td>HTTP with role tokens, and the stdio MCP surface (26,527)</td>
+</tr>
+<tr>
+<td><code>cli</code></td>
+<td>Install, doctor, brief, recall, ingest-git, the skill and hooks
+(27,073)</td>
 </tr>
 <tr>
 <td><code>core-rules</code></td>
-<td>Rule evaluation, firing and retraction with provenance (17,803)</td>
+<td>Rule evaluation, firing and retraction with provenance (18,976)</td>
 </tr>
 <tr>
 <td><code>core-query</code></td>
-<td>Query planning, traversal, the masked view (16,363)</td>
+<td>Query planning, traversal, the masked view (17,108)</td>
 </tr>
 <tr>
 <td><code>core-storage</code></td>
-<td>WAL, snapshots, the overlay-over-base views (10,873)</td>
+<td>WAL, snapshots, the overlay-over-base views, full-text (12,043)</td>
+</tr>
+<tr>
+<td><code>code-extract</code>, <code>arrow-bridge</code></td>
+<td>Source extraction for <code>ingest-git</code>, Arrow export</td>
 </tr>
 <tr>
 <td><code>sim-harness</code>, <code>core-bench</code></td>
@@ -296,84 +322,156 @@ flowchart TB
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to run: the store is a directory, opened in process.
+<code>mushroomdb serve</code> adds the HTTP server, which is where
+role-bound tokens exist. <code>npx mushroomdb install</code> writes a
+skill, an MCP server entry and two Claude Code hooks —
+<code>SessionStart</code> runs <code>mushroomdb brief</code>,
+<code>UserPromptSubmit</code> runs <code>mushroomdb recall</code> — and
+the npm launcher downloads the native binary in a
+<code>postinstall</code>. No API key is needed for anything; there is no
+embedder in the tree.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <p><code>crates/core-api/src/roles.rs:1-36</code> — the never-widen rule
 and the version bargain, in one header.</p>
-<p><code>crates/server/src/http.rs:2020-2070</code> — masking a history
-read, including the part everybody forgets.</p>
-<p><code>crates/core-rules/src/engine.rs:83-104</code> — a fire or a
-retract, captured during a commit.</p>
-<p><code>crates/core-api/tests/mask.rs:15-175</code> — what a negative
-test looks like when it has a control.</p>
+<p><code>crates/core-api/src/mask.rs:98-111</code>,
+<code>:264-363</code> — the intersection that cannot widen, and
+<code>Scope</code>, which resolves every leg and intersects them per
+read.</p>
+<p><code>crates/server/src/http.rs:1205-1272</code> — the
+<code>/query</code> role branch: role mask, client mask,
+intersection.</p>
+<p><code>crates/server/src/http.rs:2460-2499</code> — masking a history
+read, including the part most systems forget.</p>
+<p><code>crates/core-api/src/memory/brief.rs:204</code>,
+<code>crates/core-api/src/memory/recall.rs:314</code> — the
+session-start brief and the recall digest, neither taking a mask.</p>
+<p><code>crates/core-rules/src/engine.rs:83-106</code>,
+<code>:1043-1046</code>, <code>:3547-3548</code> — a fire or a retract
+captured during a commit, the diff scoped to one source, and rule
+deletion.</p>
+<p><code>crates/core-api/tests/mask.rs:15-175</code> and
+<code>bindings/python/tests/test_scope_leaks.py</code> — negative tests
+with their controls.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Entities with properties; edges mostly derived. The storage view is
-an overlay-over-base arrangement where a V8 snapshot's archived columns
-and CSR topology are read zero-copy from the mmap and post-snapshot
-changes accumulate in an overlay, with "[t]ombstones in the overlay mask
+<p>Entities with properties, notes, and edges that are mostly derived.
+Every entity carries an <code>aliases</code> list the store recomputes
+from its key and current name on each describing write; aliases a caller
+declares go in <code>alias_keys</code>. Optional identity rules
+(<code>schema apply --memory-identity</code>) link entities whose
+aliases overlap as <code>SAME_AS</code>. A node's namespace, stored as a
+property, is immutable and is one of the legs a role or scope can
+bind.</p>
+<p>The storage view is overlay over base: a snapshot's archived columns
+and CSR topology are read zero-copy from the mmap, post-snapshot changes
+accumulate in an overlay, and "[t]ombstones in the overlay mask
 deleted-from-base entries" — a storage-level tombstone, not a
-memory-level one.</p>
+memory-level one. Commit times live in a <code>commit_times.bin</code>
+sidecar, and <code>record_commits_at</code> lets an importer stamp
+backfilled commits with the source's own instant. That replaces the
+record time rather than adding a second axis.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Cypher-shaped queries, similarity, hybrid search, variable-length
-expansion and shortest path, all running against a
-<code>GraphView</code> whose <code>mask</code> field is an
-<code>Option</code> — <code>None</code> meaning every node is visible.
-That default is the engine's internal one; on the HTTP path the mask
-arrives from the token, and the mask tests pin what happens when it does
-not: an empty mask hides everything, and unknown keys inside a mask are
-ignored rather than widening it.</p>
+<p>Cypher-shaped queries, vector, full-text and hybrid search,
+variable-length expansion and shortest path, all running against a
+<code>GraphView</code> whose <code>mask</code> is an <code>Option</code>
+— <code>None</code> meaning every node is visible
+(<code>crates/core-query/src/view.rs:25-30</code>). On the HTTP path the
+mask arrives from the token. The mask tests pin what happens at the
+edges: an empty mask hides everything, and unknown keys inside a mask
+are ignored rather than widening it. Hybrid search filters both legs
+before reciprocal-rank fusion, so ranks are ranks within the visible
+corpus.</p>
+<p><code>recall</code> cuts a topic to at most 24 content words, ORs
+them against the full-text index, ranks hits by how many terms each
+matched, and names at most six; the hook prefixes the digest with a line
+framing it as untrusted data. It reads the whole store; it has no mask
+parameter. The session brief is the same: counts, labels, rules and
+worked calls for the store as a whole.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>A write fires the rules, and the rule engine diff-applies the desired
-edge set against provenance, with a comment guarding the subtle case —
-edges still supported "for some other source — are not mistakenly
-retracted". That is the hard part of incremental derivation and it is
-handled explicitly.</p>
+edge set against provenance for one source at a time. A comment guards
+the case that makes this subtle: it compares only triples where the node
+is the source, "so that (*, src) triples — where src is a dst for some
+other source — are not mistakenly retracted"
+(<code>crates/core-rules/src/engine.rs:1043-1045</code>).</p>
+<p><code>remember</code> writes the entities a caller recognised, the
+note, its <code>ABOUT</code> edges and the facts among the entities in
+one <code>GraphDb::batch</code> commit. A subject it has not seen is
+stubbed as a provisional <code>Entity</code>, at most twenty per call.
+<code>forget</code> names the rule that derived an edge it refuses, and
+lists the notes that still state what was forgotten. There is no model
+call on any write path.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p><code>npx mushroomdb install</code> writes a skill, an MCP server and
-session hooks in one command, and the four-call flow — upsert, rule,
-find, explain — is a genuinely small surface for a graph database. The
-deprecation note is unusually direct: the previous coding-assistant
-positioning, seven tools and three hooks, is deprecated in 0.6.4 and
-removed in 0.7, "[i]t still works and is still tested".</p>
+<p>The install writes the skill, the MCP entry and the two hooks; the
+README's quick start is <code>remember</code>, <code>recall</code>,
+<code>suggest_rules</code>, <code>create_rule</code> with the proposal's
+own arguments, then <code>explain_association</code>. The default tool
+listing is twenty-three tools. The code-graph tools and the edit hooks
+of the 0.6 line were removed in 0.7.0, and <code>ingest-git</code>
+remains as a data source whose store gets the same tools.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Covered above. The one thing to carry away for a deployment: the RBAC
-guarantees described here are properties of the HTTP server with
-role-bound tokens. Embedded as a library or driven over stdio, the
-caller holds the whole graph, and every mask is advisory.</p>
+<p>The RBAC guarantees described here are properties of two surfaces:
+the HTTP server with role-bound tokens, and the scoped Python handle.
+Embedded as a library without a scope, or driven over stdio, the caller
+holds the whole graph, and every mask is advisory. The two context
+assemblers an agent sees first — the session brief and the per-prompt
+recall digest — are on the second kind of surface and read
+everything.</p>
+<p>Before 0.6.12, <code>/health</code> returned node and edge counts to
+any caller, credentialed or not, while <code>/stats</code> and
+<code>/metrics</code> refused the same counters to a role token. It
+answers <code>{"ok": true}</code> alone unless the caller holds the full
+token (<code>crates/server/src/http.rs:758-780</code>). Identity linking
+is global: the preset's rules carry no namespace, so
+<code>remember</code>'s reply can name keys from other namespaces. On
+HTTP a role's mask hides those endpoints.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>2,328 test functions, including <code>rbac.rs</code>,
-<code>mask.rs</code>, <code>write_scopes.rs</code> and an adversarial
-RBAC-writes suite, plus a simulation harness and a benchmark crate.
-Nothing was built or run for this reading.</p>
+<p>2,674 Rust test functions under <code>crates/</code> and 543 Python
+test functions, including <code>mask.rs</code>, <code>rbac.rs</code>,
+<code>scoped_reads.rs</code>, <code>write_scopes.rs</code>, an
+adversarial RBAC-writes suite mapping ten checklist items to ten tests,
+and <code>test_scope_leaks.py</code>, whose header states its rule:
+"Each read test also pins the <em>unscoped</em> answer, so a test can
+never pass because the fixture had nothing to leak." Benchmarks and a
+simulation harness sit beside them. Nothing was built or run for this
+reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Make every failure of the permission lookup deny. Unknown role, empty
 role, corrupt file — three different bugs, one outcome, written at the
 top of the module so nobody has to infer it.</p>
-<p>Make hidden and absent indistinguishable. A different error for "you
-may not see this" is an oracle for what exists, and it takes one comment
-to remember.</p>
-<p>Remember the history endpoint. Masking the read path and forgetting
-the audit path is how the second one becomes the leak, and this project
-handles it by saying in the core that it does not, and handling it at
-the edge that can.</p>
-<p>Let the derivation retract itself. If a rule made an edge, the rule
-not matching should unmake it in the same commit; anything else leaves a
-graph asserting things its own rules no longer support.</p>
-<p>And ask what your previous release does with your next file format.
-Refusing to load is the right answer when the unknown field is one that
-narrows.</p>
+<p>Make hidden and absent indistinguishable, per surface. A history read
+that answers empty for an unknown key must answer empty for a hidden
+one; raising there is "the existence oracle the contract exists to
+prevent".</p>
+<p>Refuse what you cannot narrow. A centrality score computed over
+hidden topology leaks it even when the hidden rows are filtered, so the
+scoped handle refuses those reads outright.</p>
+<p>Let the derivation retract itself, in the commit that invalidates
+it.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A scope argument on a surface with no identity. It reads like a
+control in a tool listing and is a preview.</p>
+<p>A context assembler outside the scope contract. The read path can be
+exemplary while the session brief and the recall hook read the whole
+store.</p>
+<h3 id="fit">Fit</h3>
+<p>A strong base for a single agent's memory on one machine, where the
+stdio surface's lack of identity costs nothing, or for a multi-reader
+service behind the HTTP server with role tokens. It is a poor fit for
+several agents sharing one store through MCP and expecting isolation:
+nothing on that surface provides it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether an embedder other than the HTTP server masks history. The
-core points the obligation at the caller; the HTTP layer discharges it,
-and nothing enforces that a third embedder does.</p>
-<p>How far back history reaches in practice. Snapshot truncation bounds
-the live WAL, archives extend the floor, and the pruning policy was not
-traced.</p>
-<p>What replaces the deprecated door in 0.7. The seven code-graph tools
-and three hooks are removed next release, and the association surface is
-what remains.</p>
+<p>Whether the history masks hold for a role with a
+<code>visible_where</code> predicate, where a node's visibility depends
+on a property whose past values history returns. The mask is resolved
+against the current graph; that case was not traced.</p>
+<p>How the TypeScript client and the LangChain and LlamaIndex
+integrations reach a store, and whether any of them carries a role.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -388,29 +486,98 @@ what remains.</p>
 <td>Three failures, one outcome, and a version that refuses</td>
 </tr>
 <tr>
-<td><code>crates/core-api/src/mask.rs:94-107</code></td>
-<td>The intersection that cannot widen</td>
+<td><code>crates/core-api/src/mask.rs:98-111</code>,
+<code>:264-363</code></td>
+<td>The intersection that cannot widen, and the scope that resolves per
+read</td>
 </tr>
 <tr>
-<td><code>crates/server/src/http.rs:2025-2058</code></td>
+<td><code>crates/server/src/http.rs:798-870</code></td>
+<td>Token to identity, <code>/health</code> as anonymous, WebSocket
+routes refused to roles</td>
+</tr>
+<tr>
+<td><code>crates/server/src/http.rs:2460-2620</code></td>
 <td>No oracle, and a masked history</td>
 </tr>
 <tr>
-<td><code>crates/server/src/mcp.rs:204-237</code></td>
+<td><code>crates/server/src/mcp.rs:189-260</code></td>
 <td>A dispatch with no identity in it</td>
 </tr>
 <tr>
-<td><code>crates/core-rules/src/engine.rs:83-104</code>,
-<code>:1045</code></td>
-<td>Fire, retract, and what must not be retracted</td>
+<td><code>bindings/python/src/lib.rs:104-136</code>,
+<code>:1298-1317</code>, <code>:2153-2157</code></td>
+<td>The scoped handle, its history filter, and the refused recall</td>
 </tr>
 <tr>
-<td><code>crates/core-api/tests/mask.rs:15-175</code></td>
+<td><code>crates/core-api/src/memory/remember.rs:1-21</code>,
+<code>forget.rs:1-11</code></td>
+<td>The memory write path and what forgetting leaves</td>
+</tr>
+<tr>
+<td><code>crates/core-rules/src/engine.rs:83-106</code>,
+<code>:1043-1046</code>, <code>:3547</code></td>
+<td>Fire, retract, the per-source diff, and rule deletion</td>
+</tr>
+<tr>
+<td><code>crates/core-api/tests/mask.rs:15-175</code>,
+<code>scoped_reads.rs</code>,
+<code>bindings/python/tests/test_scope_leaks.py</code></td>
 <td>Negative assertions with their controls</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'AuthIdentity::Role' -- crates/server/src/http.rs</code>
+— 27 hits; every read handler's role branch either masks or returns
+<code>forbidden</code>.</li>
+<li><code>git grep -n -E '\.route\(' -- crates/server/src/http.rs</code>
+— no route for <code>recall</code>, <code>brief</code>,
+<code>remember</code> or <code>forget</code>.</li>
+<li><code>git grep -n -i -E 'mask|role|scope' -- crates/core-api/src/memory/recall.rs</code>
+— no match; the digest takes no mask.</li>
+<li><code>git grep -n -E 'refuse_read_if_scoped\("recall"\)' -- bindings/python/src/lib.rs</code>
+— one hit, <code>:2154</code>.</li>
+<li><code>git grep -n -E 'fn dispatch_call' -- crates/server/src/mcp.rs</code>
+— <code>:189</code>, signature <code>(db, db_dir, params)</code>, no
+identity.</li>
+<li><code>git grep -n -i -E 'openai|ollama|anthropic|reqwest|ureq' -- 'crates/*.rs' 'crates/**/Cargo.toml'</code>
+— one hit, <code>reqwest</code> under <code>[dev-dependencies]</code> in
+<code>crates/server/Cargo.toml</code>; no model call.</li>
+<li><code>git grep -n -i -E 'suppress(ed|ion)|blocklist|denylist|re-?assert' -- crates bindings/python/src ':!*/tests/*'</code>
+— query, replay and warning suppression only; no value-keyed
+tombstone.</li>
+<li><code>git grep -n -i -E 'valid_(from|to|at|until)|event_time|occurred_at' -- crates bindings/python/src ':!*/tests/*'</code>
+— commit-index alias intervals only; no validity axis.</li>
+<li><code>git grep -n -E '"(verified|disputed|candidate|unverified|trusted|contested)"' -- crates/core-api/src crates/server/src</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'provisional' -- crates/core-api/src/memory/recall.rs</code>
+— no match; recall does not filter stubs.</li>
+<li><code>git grep -n -E 'archive_wal' -- 'crates/*.rs' ':!*/tests/*'</code>
+— <code>true</code> only in the CLI's <code>AUTOMATIC_SNAPSHOT</code>
+and a worker binary.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE-MIT LICENSE-APACHE</code>
+— no match; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-12</strong> — <a
+href="https://github.com/MatthewSherlin/mushroomdb/commit/3c4719867d0d14ad02c33766994cf81084142b37"><code class="commit-id" title="3c4719867d0d14ad02c33766994cf81084142b37">3c471986…</code></a>
+— 286 commits on, 0.6.8 to 0.7.1 plus documentation. No mark moved. The
+scope contract moved into the engine as <code>Scope</code> and a
+read-only Python <code>scoped()</code> handle, and 0.7.0 added
+<code>remember</code>, <code>recall</code> and <code>forget</code> on
+the unscoped stdio surface (<a href="#1-executive-summary">section
+1</a>); the code-graph tools were removed, and <code>/health</code>
+stopped disclosing counts in 0.6.12. Wrong at the first pin: a quotation
+attributed to rule deletion described a via-hop hazard, the diff-apply
+comment was misread, and the matrix implied a model call no code makes
+(<a href="#7-write-mechanics">section 7</a>). Screened from a full
+clone: two auto-run surfaces, two build-time execution points, four
+unpinned surfaces, nothing inside the cooldown, no agent instruction
+files. Nothing was installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/MatthewSherlin/mushroomdb/commit/4896a895fc2a7b6d11c80196a5c227e535611754"><code class="commit-id" title="4896a895fc2a7b6d11c80196a5c227e535611754">4896a895…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

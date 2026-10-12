@@ -4118,11 +4118,11 @@ installed, built or run, and no benchmark was executed</li>
 <li><a
 href="https://github.com/MatthewSherlin/mushroomdb">MatthewSherlin/mushroomdb</a>
 at <a
-href="https://github.com/MatthewSherlin/mushroomdb/commit/4896a895fc2a7b6d11c80196a5c227e535611754"><code class="commit-id" title="4896a895fc2a7b6d11c80196a5c227e535611754">4896a895…</code></a>
-— read only, from a shallow clone; thirty-four files scanned, two
-auto-run surfaces, two build-time execution points, four unpinned
-surfaces and twenty-four dependency files inside the seven-day cooldown.
-Nothing was installed, built or run</li>
+href="https://github.com/MatthewSherlin/mushroomdb/commit/3c4719867d0d14ad02c33766994cf81084142b37"><code class="commit-id" title="3c4719867d0d14ad02c33766994cf81084142b37">3c471986…</code></a>
+— read only, from a full clone; thirty-four files scanned, two auto-run
+surfaces, two build-time execution points, four unpinned surfaces and no
+dependency file inside the seven-day cooldown. Nothing was installed,
+built or run</li>
 <li><a href="https://github.com/tpsdev-ai/flair">tpsdev-ai/flair</a> at
 <a
 href="https://github.com/tpsdev-ai/flair/commit/6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39"><code class="commit-id" title="6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39">6fadb74f…</code></a>
@@ -15618,6 +15618,25 @@ on the connector-sync panel
 (<code>frontend/src/app/settings/_sections/connectors.tsx:142</code>).
 The first searched the transport file rather than the registry it
 imports.</li>
+<li><strong>Three published claims about <a
+href="../systems/mushroomdb/">mushroomdb</a> were wrong at <a
+href="https://github.com/MatthewSherlin/mushroomdb/commit/4896a895fc2a7b6d11c80196a5c227e535611754"><code class="commit-id" title="4896a895fc2a7b6d11c80196a5c227e535611754">4896a895…</code></a>,
+the pin they were made at, and are corrected.</strong> The report quoted
+deleting a rule as one that "answers by retracting every edge it owns";
+that sentence (<code>crates/core-rules/src/engine.rs:150-154</code>)
+describes a via-hop rule misreading an empty overlay after a snapshot
+and wrongly retracting its edges, while rule deletion is documented as
+"[r]emove the rule and exactly its owned edges" (<code>:3539</code>).
+The behaviour was right and the quotation was not. It read the
+diff-apply comment as protecting edges "still supported" by some other
+source; the comment scopes the diff to one source's outgoing triples so
+that triples where the node is "a dst for some other source" are left
+alone (<code>:1043-1045</code>). And its matrix said no model call
+happens "unless embeddings are enabled", taken from the README; nothing
+in the tree calls a model, <code>reqwest</code> was a dev-dependency
+only, and every integration takes caller-supplied vectors. The first
+rested on a phrase's words rather than its paragraph, and the third on
+the README rather than the dependency graph.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -20277,23 +20277,29 @@ its dispatch takes no identity at all, so <code>role</code> is an
 argument the caller picks — "[t]wo ways to ask the same restricted
 question". That is coherent for a local subprocess holding the database
 directory, and it means the tagline's "knows who's allowed to see it"
-describes the HTTP deployment with role-bound tokens, not the
-fifteen-tool surface the README leads with. The core is likewise
-explicit that history reads bypass masking and push the obligation to
-the caller; the HTTP layer discharges it, and any other embedder must
-remember to.</li>
+describes the HTTP deployment with role-bound tokens and the Python
+scoped handle. On the twenty-three-tool surface the README leads with,
+<code>remember</code>, <code>recall</code> and <code>forget</code> run
+unscoped, and the session brief and the per-prompt recall hook read the
+whole store. The core is explicit that history reads bypass masking and
+push the obligation to the caller; the HTTP layer and the scoped handle
+discharge it.</li>
 <li>Most reusable component: <code>mask.rs</code> and
-<code>roles.rs</code> together — the never-widen intersection, the three
-deny-by-default failures, and the version bargain — alongside the rule
-engine's diff-apply, which guards the case that makes incremental
-derivation hard: edges still supported "for some other source — are not
+<code>roles.rs</code> together — the never-widen intersection, the
+<code>Scope</code> that resolves every leg per read, the three
+deny-by-default failures, and the version bargain — alongside
+<code>test_scope_leaks.py</code>, which pins every scoped method's
+unscoped answer as a control and fails when a method has no row, and the
+rule engine's diff-apply, scoped to one source's outgoing triples so
+that an edge where that node is "a dst for some other source" is "not
 mistakenly retracted".</li>
-<li>Maturity impression: MIT or Apache-2.0, version 0.6.8, explicitly
-pre-1.0 alpha, 177,137 lines across ten crates with 2,328 test
-functions, on crates.io, npm and PyPI, with a simulation harness, a
-benchmark crate and an adversarial RBAC-writes suite. The previous
-coding-assistant positioning is deprecated in 0.6.4 and removed in 0.7,
-still tested meanwhile.</li>
+<li>Maturity impression: MIT or Apache-2.0, version 0.7.1, explicitly
+pre-1.0 alpha, 193,587 lines of Rust across ten crates with 2,674 Rust
+and 543 Python test functions, on crates.io, npm and PyPI, with a
+simulation harness, a benchmark crate, an adversarial RBAC-writes suite
+and a scope-leak suite. 0.7.0 removed the coding-assistant tools and
+hooks of the 0.6 line and added the <code>remember</code>,
+<code>recall</code> and <code>forget</code> write path.</li>
 <li>Study when: you are writing role-scoped reads and want a worked
 example that covers the history endpoint, or you want derived
 relationships that retract themselves in the commit that invalidates
