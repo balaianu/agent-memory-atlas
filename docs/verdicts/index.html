@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 731 reports.</strong></p>
+<p><strong>This page covers all 732 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30393,6 +30393,40 @@ into several Claude Code configs and Codex.</li>
 <li>Do not copy when: sessions run in parallel for different scopes,
 sessions read credentials or client data, or the agent must recall
 something it was not told to look for.</li>
+</ul>
+<h3 id="tigerless-agent-memory"><a
+href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a></h3>
+<ul>
+<li>Best idea: <strong>the model returns operations; the core performs
+them.</strong> The distiller and the sleep reasoner run as the host CLI
+with tools disabled and reply one JSON object per line, and an update or
+supersede may only name a handle the reconcile sheet or an executor
+lookup showed.</li>
+<li>Biggest risk: <strong>unattended forgetting on cache-resident
+evidence.</strong> <code>mem sleep</code> hands delete proposals for
+never-recalled memories at the weight floor to the host model, which may
+accept three per pass, and "never recalled" is read from an access log
+that <code>mem rebuild</code> empties.</li>
+<li>Most reusable component:
+<code>packages/core/src/agent_memory/core/reconcile.py</code> — the
+handle sheet, the guard against email addresses absent from the
+conversation, and evidence dating of <code>valid_from</code>, none of it
+host-specific.</li>
+<li>Second risk: <strong>history that is not kept.</strong>
+<code>mem correct</code>, a same-name write, an accepted split and an
+abstract review rewrite text in place, and only a Git repository the
+user created preserves the prior version.</li>
+<li>Maturity impression: MIT, 12,086 lines of Python and 181 commits
+under 10 author names between 1 September and 12 October 2026. Two
+marks, <code>bitemporal</code> and <code>negative_eval</code>. CI runs
+570 pytest functions with an 85% coverage floor; the README's
+LongMemEval results live in a gitignored experiments tree.</li>
+<li>Study when: you want one store that several coding agents share,
+filled at conversation boundaries without the agent deciding to write,
+with as-of recall over validity intervals.</li>
+<li>Do not copy when: projects must not share or move each other's
+memories, corrections must be auditable without Git, or nobody will run
+the sleep pass and read its reports.</li>
 </ul>
         </article>
       </div>

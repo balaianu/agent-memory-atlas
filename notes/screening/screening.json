@@ -44279,6 +44279,49 @@
       "status": "screened",
       "url": "https://github.com/SawyerHan-AI/TideMind"
     },
+    "tigerless-agent-memory": {
+      "counts": {
+        "AGENT": 1,
+        "EXEC": 2,
+        "FLOAT": 6,
+        "FRESH": 3,
+        "NOTE": 1
+      },
+      "files_scanned": 18,
+      "findings": [
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "packages/adapters/pyproject.toml"
+        },
+        {
+          "detail": "changed 5 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "packages/cli/pyproject.toml"
+        },
+        {
+          "detail": "changed 5 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "uv.lock"
+        },
+        {
+          "detail": "executes arbitrary Python at install time",
+          "kind": "EXEC",
+          "path": "packages/adapters/src/agent_memory/adapters/setup.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        }
+      ],
+      "revision": "3698e601e07665121b9388aca100364837518e20",
+      "screened_at": "2026-10-12T23:47:04+00:00",
+      "slug": "tigerless-agent-memory",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/tigerless-labs/agent-memory"
+    },
     "tigrimosr": {
       "counts": {
         "FLOAT": 1

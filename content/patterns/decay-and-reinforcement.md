@@ -387,6 +387,8 @@ permanent."*
 
 **[Engram MCP (edg-l)](../../systems/engram-mcp/) decays on a clock of project activity rather than the calendar.** `elapsed` is the number of distinct days on which the memory's project received a store after the memory was last accessed, derived from `created_at` in the `UPDATE` itself rather than kept as a counter (`src/db/memories.rs:826-860`; `src/db/activity.rs`). Rows tagged `hook` do not advance it, so a session of automatic capture ages nothing, and a project nobody stores into does not decay however long it sits. The ranking scorers read the same store-day axis, and the usage boost is capped at 0.1 under a 1.0 ceiling, the value a pinned memory holds (`src/decay.rs:18-69`).
 
+**[Tigerless agent-memory](../../systems/tigerless-agent-memory/) keeps the evidence for forgetting in the cache it tells users to delete.** Each sleep adds 0.5 to a memory's weight per read since the last sleep, at most three, and subtracts 0.1 after 30 days without access. Weight multiplies the recall score and admits a memory to the injected `MEMORY.md` index at 0.75 (`manage.py:371-391`, `memory_md.py:10-31`). A memory at the 0.05 floor with no lifetime hits becomes a delete proposal the host model may accept, three per pass (`manage.py:609-623`). Reads and hits live in `access_log` inside `index.db`, whose docstring calls every table a cache, and `mem rebuild` drops the file. **Usage that decides removal is state; keep it beside the truth, not in the projection.**
+
 ## Implementation checklist
 
 - Store retrieval strength separately from confidence and trust.

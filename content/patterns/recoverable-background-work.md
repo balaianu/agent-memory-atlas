@@ -201,6 +201,8 @@ columns does this pass have no input for, and what happens to them.
 
 [second-brain (LindaHaviv)](../../systems/lindahaviv-second-brain/) guards the deletion that follows consolidation rather than the consolidation itself. `scripts/memory_expire.py` rotates raw runs and dialogue turns after 90 days only when the newest consolidated fact is at most seven days old, and fails the sync step loudly otherwise, so a silently broken distiller cannot let undistilled rows expire. The consolidation it protects is the counterexample: each run deletes every fact and inserts the model's answer in one transaction, so a failed call is recoverable and a successful short answer is not.
 
+**[Tigerless agent-memory](../../systems/tigerless-agent-memory/) runs the cursor version with two watermarks per session.** A boundary hook appends the raw increment to `archive/sessions/` and advances `consumed` (`adapters/capture.py:31-44`). The detached distiller advances `distilled` only after a batch's operations are applied, and an executor failure raises before that, so the batch is read again at the next boundary (`core/distill.py:54-97`). Operations refused twice wait in `.state/pending` for the session's next boundary. Two gaps remain. The pending file is unlinked before its operations are re-applied, so a failure in the repair round loses them behind an advanced watermark. No lock spans a distillation, so two boundary hooks close together process the same backlog.
+
 ## Tests to require
 
 - Crash before, during, and after each state mutation.

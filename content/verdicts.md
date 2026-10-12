@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 731 reports.**
+**This page covers all 732 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6628,3 +6628,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 1,070 lines of Python and 8 commits by one author between 25 September and 8 October 2026. No tests, no CI. No mark: recall is an instruction to read files, and nothing filters, scopes a read or records a correction.
 - Study when: you want model-independent capture of every agent turn across devices and accounts, or a minimal installer that wires hooks into several Claude Code configs and Codex.
 - Do not copy when: sessions run in parallel for different scopes, sessions read credentials or client data, or the agent must recall something it was not told to look for.
+
+### [`tigerless-agent-memory`](../systems/tigerless-agent-memory/)
+
+- Best idea: **the model returns operations; the core performs them.** The distiller and the sleep reasoner run as the host CLI with tools disabled and reply one JSON object per line, and an update or supersede may only name a handle the reconcile sheet or an executor lookup showed.
+- Biggest risk: **unattended forgetting on cache-resident evidence.** `mem sleep` hands delete proposals for never-recalled memories at the weight floor to the host model, which may accept three per pass, and "never recalled" is read from an access log that `mem rebuild` empties.
+- Most reusable component: `packages/core/src/agent_memory/core/reconcile.py` — the handle sheet, the guard against email addresses absent from the conversation, and evidence dating of `valid_from`, none of it host-specific.
+- Second risk: **history that is not kept.** `mem correct`, a same-name write, an accepted split and an abstract review rewrite text in place, and only a Git repository the user created preserves the prior version.
+- Maturity impression: MIT, 12,086 lines of Python and 181 commits under 10 author names between 1 September and 12 October 2026. Two marks, `bitemporal` and `negative_eval`. CI runs 570 pytest functions with an 85% coverage floor; the README's LongMemEval results live in a gitignored experiments tree.
+- Study when: you want one store that several coding agents share, filled at conversation boundaries without the agent deciding to write, with as-of recall over validity intervals.
+- Do not copy when: projects must not share or move each other's memories, corrections must be auditable without Git, or nobody will run the sleep pass and read its reports.

@@ -661,6 +661,8 @@ href="../systems/archiver-rag/"><code>archiver-rag</code></a></li>
 <li><a href="../systems/browsentic/"><code>browsentic</code></a></li>
 <li><a
 href="../systems/cloud-alter-ego/"><code>cloud-alter-ego</code></a></li>
+<li><a
+href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a></li>
 </ul>
 <h2 id="repos-inspected">Repos Inspected</h2>
 <ul>
@@ -6492,6 +6494,19 @@ user's own settings by <code>tools/install.py</code> rather than
 declared in the tree; <code>tools/</code> and
 <code>.gitattributes</code> (a built-in <code>merge=union</code> driver)
 were read by hand. Nothing was installed, built or run</li>
+<li><a
+href="https://github.com/tigerless-labs/agent-memory">tigerless-labs/agent-memory</a>
+at <a
+href="https://github.com/tigerless-labs/agent-memory/commit/3698e601e07665121b9388aca100364837518e20"><code class="commit-id" title="3698e601e07665121b9388aca100364837518e20">3698e601…</code></a>
+— read only, at the head of <code>main</code>, a merge commit dated 12
+October 2026. MIT with no rider. Screened before reading from a full
+clone: 18 files scanned, no auto-run surface, two build-time execution
+points (<code>tests/conftest.py</code>, and a host-configuration module
+named <code>setup.py</code> that the hatchling build never executes),
+three dependency files inside the seven-day cooldown, and six
+<code>pyproject.toml</code> files without a lockfile beside them against
+the root <code>uv.lock</code>; <code>CLAUDE.md</code> was treated as
+data. Nothing was installed, built or run</li>
 </ul>
 <h2 id="what-the-licences-actually-say">What the licences actually
 say</h2>

@@ -387,6 +387,19 @@ rows expire. The consolidation it protects is the counterexample: each
 run deletes every fact and inserts the model's answer in one
 transaction, so a failed call is recoverable and a successful short
 answer is not.</p>
+<p><strong><a href="../../systems/tigerless-agent-memory/">Tigerless
+agent-memory</a> runs the cursor version with two watermarks per
+session.</strong> A boundary hook appends the raw increment to
+<code>archive/sessions/</code> and advances <code>consumed</code>
+(<code>adapters/capture.py:31-44</code>). The detached distiller
+advances <code>distilled</code> only after a batch's operations are
+applied, and an executor failure raises before that, so the batch is
+read again at the next boundary (<code>core/distill.py:54-97</code>).
+Operations refused twice wait in <code>.state/pending</code> for the
+session's next boundary. Two gaps remain. The pending file is unlinked
+before its operations are re-applied, so a failure in the repair round
+loses them behind an advanced watermark. No lock spans a distillation,
+so two boundary hooks close together process the same backlog.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Crash before, during, and after each state mutation.</li>
