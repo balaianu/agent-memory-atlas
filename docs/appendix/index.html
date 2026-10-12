@@ -14458,6 +14458,51 @@ generation, and <code>export</code> refuses to overwrite one
 auto-run surface, no build-time execution point, four requirements files
 inside the seven-day cooldown and one floating range; nothing was
 installed or run.</li>
+<li><strong><code>mikekelly/nano</code> was examined and has no report:
+its memory is a specification the agent is told to build for itself, and
+the code it ships saves a conversation rather than anything
+learned.</strong> Read at <a
+href="https://github.com/mikekelly/nano/commit/bdaa98dcd7e477cbbbbed044be28ef4271a95e58"><code class="commit-id" title="bdaa98dcd7e477cbbbbed044be28ef4271a95e58">bdaa98dc…</code></a>:
+no licence file and none declared in <code>mix.exs</code> or the README;
+160 commits between 6 and 11 October 2026; 8,186 lines of Elixir in 27
+files under <code>lib/</code> and 8,307 lines of tests holding 283
+<code>test</code> blocks, not run. Nano starts an agent as a GenServer
+with two tools, <code>eval</code> and <code>idle</code>, running as root
+in a container, and leaves the agent to write the rest of its harness
+into the running node. What the shipped code persists is each agent's
+state map, transcript included, and its eval bindings, written to
+<code>&lt;name&gt;.term</code> and <code>&lt;name&gt;.bindings</code> on
+every change and read back at boot so the agent resumes where it stopped
+(<code>lib/nano/state_store.ex:1-20</code>, <code>:123-150</code>;
+<code>lib/nano_agent.ex:1-14</code>). That is one conversation outliving
+its process: <code>git grep -n -i -E 'compact' -- lib</code> returns
+nothing, the harness halts an agent before a call that might not fit its
+context (<code>lib/nano_agent.ex:858-869</code>), and nothing is
+extracted from the transcript, so the session is continued rather than
+remembered. Memory appears only in the growth docs. Item 7 of
+<code>seeding-docs/guidance.md</code> asks for goals and "what you have
+learned, on disk" (line 139), <code>seedling-docs/bots.md:178-181</code>
+asks for a memory per bot retrieved "in small, relevant amounts", and
+each doc closes by leaving the build to the agent. The boundary is the
+one drawn for <code>facebookresearch/HyperAgents</code> below: what an
+agent might write is not in the commit. Two things in the tree are worth
+taking. The binding saver leaves out the largest variables once their
+total passes <code>max_bindings_bytes</code>, 16 MB by default, keeps
+them bound in the live process, and on restore names each one to the
+agent as not restored (<code>lib/nano/state_store.ex:56-91</code>,
+<code>lib/nano_agent.ex:436-439</code>, <code>:496-497</code>), so the
+gap between live and saved state is reported to the one reader who would
+act on it. And the experimental front-of-mind spec, a note of at most
+1,000 characters re-shown whenever it sinks past a configurable depth of
+the context, requires the re-shown note to be marked as the agent's own
+with the time it was written, never readable as an instruction from the
+operators, and requires a switch to turn it off so its effect can be
+measured (<code>seeding-docs/experimental/front-of-mind.md</code>). That
+is the provenance rule this atlas asks of every injected memory, written
+down before the memory exists. Screened before reading: no auto-run
+surface or build-time execution point, one <code>AGENTS.md</code> read
+as data, and <code>mix.lock</code> is not a file the screen parses;
+nothing was installed or run.</li>
 <li><strong><code>FreshHillyer/xiaoO</code> was examined and has no
 report: its long-term memory is an unpublished server behind an MCP
 client, and the memory crate in the tree has no caller.</strong> At <a
