@@ -237,17 +237,17 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 
 | Stored in | Systems | Read off code | | Retrieval arm | Systems | Read off code |
 | --- | ---: | ---: | --- | --- | ---: | ---: |
-| Files on disk | 356 | 306 | | Lexical | 529 | 466 |
+| Files on disk | 356 | 307 | | Lexical | 529 | 466 |
 | SQLite | 354 | 299 | | Vector | 469 | 398 |
-| Postgres | 138 | 115 | | Graph | 229 | 200 |
-| Delegated to the adopter | 51 | 37 | | No arm named in the review | 87 | 58 |
-| Graph database | 43 | 38 | |  |  |  |
+| Postgres | 138 | 116 | | Graph | 229 | 200 |
+| Delegated to the adopter | 50 | 37 | | No arm named in the review | 87 | 59 |
+| Graph database | 43 | 39 | |  |  |  |
 | Chroma | 35 | 30 | |  |  |  |
 | In-process only | 35 | 28 | |  |  |  |
-| Qdrant | 25 | 17 | |  |  |  |
+| Qdrant | 25 | 18 | |  |  |  |
 | LanceDB | 24 | 19 | |  |  |  |
 | Embedded key-value | 21 | 17 | |  |  |  |
-| Redis | 17 | 11 | |  |  |  |
+| Redis | 17 | 12 | |  |  |  |
 | Milvus | 10 | 8 | |  |  |  |
 | MongoDB | 8 | 6 | |  |  |  |
 | FAISS | 8 | 6 | |  |  |  |
@@ -258,6 +258,6 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 | Weaviate | 1 | 1 | |  |  |  |
 | TepinDB | 1 | 1 | |  |  |  |
 
-Counted across 731 reports, each of which may name more than one store. The **Read off code** column is the part of each row confirmed against the tree at the pinned commit: 609 of 731 reports have been read that way, and the other 122 were derived from the review's own summary lines and are labelled `seeded` rather than `reviewed`. Read the first number as what the corpus says about itself and the second as what has been checked.
+Counted across 731 reports, each of which may name more than one store. The **Read off code** column is the part of each row confirmed against the tree at the pinned commit: 610 of 731 reports have been read that way, and the other 121 were derived from the review's own summary lines and are labelled `seeded` rather than `reviewed`. Read the first number as what the corpus says about itself and the second as what has been checked.
 
 <!-- END GENERATED STACK -->
