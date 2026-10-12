@@ -14073,62 +14073,66 @@ for verification and no write path consults it</td>
 <td><a href="../systems/levh/"><code>levh</code></a></td>
 <td>A row in one SQLite <code>memories</code> table: content, type,
 embedding, importance, frequency, tags, session, project, source, pinned
-flag, H-score, decay factor, stability in hours and a recall count</td>
+flag, H-score, decay factor, stability in hours, recall count, a
+validity window with a successor pointer, and a workspace id</td>
 <td>One local SQLite file that every MCP client on the machine opens as
 a separate process, with tables for entities, conflict candidates,
-attachments, trust scores, held candidates, findings and violations</td>
-<td>Vector similarity combined with an H(x,ψ) ranking over similarity,
-decay, importance and frequency, filters applied before ranking</td>
+attachments, trust scores, held candidates, findings, violations, a
+recall log, a continuity log, and team handoffs and decisions</td>
+<td>Vector similarity under a semantic embedder, or word overlap under
+the hash fallback, combined with an H(x,ψ) ranking over similarity,
+decay, importance and frequency; workspace and validity-window filters
+run before ranking, and an <code>as_of</code> read opens the window at
+an instant</td>
 <td><code>admit_memory</code> runs a four-verdict gate first — admit,
-redact, review, reject — and records the verdict in the stored memory's
-<code>metadata.admission</code></td>
-<td>Edit, pin, delete, and an SM-2 feedback call where unhelpful weakens
-stability without resetting the decay clock, so a wrong memory fades
-unless somebody rescues it</td>
-<td>A <code>project</code> string, passed as an optional argument to
-recall and omitted by default</td>
-<td>An MCP server plus an HTTP API and a React console, with connectors
-for Notion, GitHub, email, calendar and local files</td>
+redact, review, reject — and records the verdict in
+<code>metadata.admission</code>; under the hash fallback the duplicate
+probe is exact match only, so the gate returns reject or admit and never
+review</td>
+<td>Edit, pin, delete, an SM-2 feedback call where unhelpful weakens
+stability without resetting the decay clock, and an opt-in supersession
+pass that closes an older near-identical memory's validity window
+instead of deleting it</td>
+<td>A workspace id stamped by the store on every row and matched on
+every read, with one value in every shipped transport; and a
+<code>project</code> string passed as an optional argument to
+recall</td>
+<td>MCP over stdio and SSE with four tool profiles, an HTTP API, a
+Next.js console, a generated TypeScript SDK, signed peer federation, and
+connectors for Notion, GitHub, Jira, Linear, Slack, email, calendar,
+transcripts, Obsidian, local git history and local files</td>
 <td>A librarian that watches activity and writes findings, decay and
 reinforcement passes, and a spaced-repetition review queue</td>
 <td>An admission gate with a hold queue, deterministic conflict
 candidates, a computed trust score with a breakdown, attachment hash
-verification, and a violations log for learned rules</td>
-<td>The gate's central distinction is one this atlas rarely sees drawn
-at all: "<code>review</code> and <code>reject</code> are not the same
-refusal and must not share a path. <code>reject</code> is the gate
-deciding — too short, or a near-exact duplicate … so nothing is lost by
-dropping it. <code>review</code> is the gate declining to decide: the
-candidate is close to an existing memory but not identical, which is
-exactly the case where the difference may be the part worth keeping."
-The <code>held_memories</code> table is the store behind that second
-verdict, and its schema comment names the defect it fixes — "Without it
-the verdict had no store behind it and the content was dropped, which is
-the one thing a memory layer must not do quietly." The implementation
-keeps the promise: the row closes only after the new memory exists,
-because "losing it here would reintroduce exactly the bug this table was
-added to fix"; the decision is a compare-and-set; and the admitted
-memory carries <code>admission.forced</code> so the override is legible
-afterwards. The feedback asymmetry is equally deliberate — unhelpful
-weakens stability without resetting the clock, and a test asserts that
-"negative feedback is not a successful recall"</td>
-<td>Nothing shipped can drain the queue. <code>admit_held_memory</code>
-and <code>discard_held_memory</code> are each reachable from exactly one
-HTTP route; there is no CLI command and no MCP tool for them, and the
-bundled console surfaces the queue only as a count in the admission-gate
-settings panel — so a person deciding a held candidate must call the API
-by hand with an id no shipped client lists. Every other surface reports
-the number and none can act on it: capture, connector sync and export
-all print "held", and the librarian raises a finding when the backlog
-crosses a threshold whose own text says these candidates "never enter
-memory at all" if nobody decides. A watcher warning about a queue that
-the product gives no way to empty is the gap. Separately,
-<code>project</code> is an optional argument to <code>recall</code>
-rather than a bound predicate, so isolation is the caller's discipline;
-<code>memory_trust_scores</code> is explicitly a "deterministic
-reliability signal, NOT truth" and its label is derived rather than
-stored state; and there is no record of what a memory's content was
-before an edit</td>
+verification, a violations log for learned rules, and an advisory
+pre-action check against recorded mistakes</td>
+<td>The gate draws a distinction most admission filters collapse:
+"<code>review</code> and <code>reject</code> are not the same refusal
+and must not share a path. <code>reject</code> is the gate deciding —
+too short, or a near-exact duplicate … so nothing is lost by dropping
+it. <code>review</code> is the gate declining to decide: the candidate
+is close to an existing memory but not identical, which is exactly the
+case where the difference may be the part worth keeping." The
+<code>held_memories</code> table is the store behind the second verdict,
+and the decision path is careful: the row closes only after the admitted
+memory exists, the transition is a compare-and-set scoped to the
+workspace, and the admitted memory carries
+<code>admission.forced</code>. Supersession retires a fact by closing
+its validity window, keeps it readable through <code>as_of</code>, and
+is tested in both directions</td>
+<td>The agent's own <code>admit_memory</code> MCP tool takes
+<code>force</code>, and <code>force=True</code> stores a review-verdict
+candidate without holding it; the tool is in the admin and full
+profiles, and full is what the stdio and SSE servers advertise when
+<code>LEVH_MCP_PROFILE</code> is unset. The documented install omits the
+<code>local</code> extra, so the embedder falls back to hashing and the
+gate never returns review: the queue cannot fill. When it does fill,
+admit and discard are each reachable from one HTTP route, with no CLI
+command, MCP tool or console view. The workspace boundary has one value,
+because every transport binds the local principal.
+<code>valid_from</code> is the write time, retirement is off by default,
+and there is no record of what a memory said before an edit</td>
 </tr>
 <tr>
 <td><a href="../systems/light-mem/"><code>light-mem</code></a></td>
@@ -33133,7 +33137,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>97 of 731:</em> <a
+<p><em>96 of 731:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33171,7 +33175,6 @@ href="../systems/kirocrew/"><code>kirocrew</code></a>, <a
 href="../systems/klypix-mcp/"><code>klypix-mcp</code></a>, <a
 href="../systems/knowledge-worker/"><code>knowledge-worker</code></a>,
 <a href="../systems/lerim/"><code>lerim</code></a>, <a
-href="../systems/levh/"><code>levh</code></a>, <a
 href="../systems/llm-wiki-memory/"><code>llm-wiki-memory</code></a>, <a
 href="../systems/lobu/"><code>lobu</code></a>, <a
 href="../systems/loreai/"><code>loreai</code></a>, <a
@@ -33234,7 +33237,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>437 of 731:</em> <a
+<p><em>438 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33429,6 +33432,7 @@ href="../systems/lerim/"><code>lerim</code></a>, <a
 href="../systems/leteo/"><code>leteo</code></a>, <a
 href="../systems/lethe/"><code>lethe</code></a>, <a
 href="../systems/letta/"><code>letta</code></a>, <a
+href="../systems/levh/"><code>levh</code></a>, <a
 href="../systems/lindahaviv-second-brain/"><code>lindahaviv-second-brain</code></a>,
 <a href="../systems/linggen-memory/"><code>linggen-memory</code></a>, <a
 href="../systems/lint-ai/"><code>lint-ai</code></a>, <a
@@ -33704,7 +33708,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-437 repositories of
+438 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

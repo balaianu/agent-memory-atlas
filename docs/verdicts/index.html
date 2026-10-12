@@ -20136,31 +20136,35 @@ the case where the difference may be the part worth keeping".
 the schema comment names the defect: "Without it the verdict had no
 store behind it and the content was dropped, which is the one thing a
 memory layer must not do quietly."</li>
-<li>Biggest risk: <strong>nothing shipped can drain the queue.</strong>
-Admit and discard are reachable from one HTTP route each — no CLI
-command, no MCP tool, and the React console shows the backlog only as a
-count — so deciding a candidate means calling the API by hand with an id
-no client lists. Capture, connector sync and export all print the held
-total, and the librarian raises a finding when it piles up whose own
-text says these candidates never enter memory at all if nobody decides.
-A watcher warning about a queue the product gives no way to empty.</li>
+<li>Biggest risk: <strong>the producing agent can skip the review it
+would wait in.</strong> The agent's <code>admit_memory</code> MCP tool
+takes <code>force=True</code>, which stores a review-verdict candidate
+at once and writes no held row; the tool is in the admin and full
+profiles, and full is what the servers advertise when
+<code>LEVH_MCP_PROFILE</code> is unset. In the documented install the
+hash-fallback embedder leaves the gate unable to return review at all,
+and when the queue does fill, admit and discard are reachable from one
+HTTP route each with no client that lists it.</li>
 <li>Most reusable component: the admit path's ordering, with its comment
 — the held row is closed only after the new memory exists, "[i]f the
 store above raises, the candidate stays 'held' and can be retried --
 losing it here would reintroduce exactly the bug this table was added to
 fix" — plus the compare-and-set that makes a second decision return
 <code>already_decided</code>.</li>
-<li>Maturity impression: AGPL-3.0-or-later, Python, version 2.31.0 on
-PyPI, 54,347 lines with 896 test functions across ninety-six files, an
-MCP server, an HTTP API, a React console, connectors for five sources,
-and a schema file whose table comments state what each table refuses to
-do. Comments in English and Turkish.</li>
+<li>Maturity impression: AGPL-3.0-or-later, Python, version 2.34.0 on
+PyPI, an MCP server with four tool profiles, an HTTP API, a Next.js
+console, a generated TypeScript SDK, signed federation and connectors
+for eleven sources, with 1,543 test functions; the held-queue suite
+reaches its review path through a stub of the gate. Comments in English
+and Turkish.</li>
 <li>Study when: you are designing an admission filter and have only two
-outcomes, or you want an example of a decay model where negative
-feedback weakens stability without resetting the clock.</li>
-<li>Do not copy when: you need scope enforced by the store —
-<code>project</code> is an optional argument to recall — or a record of
-what a memory said before an edit. One mark, human review.</li>
+outcomes, you want a decay model where negative feedback weakens
+stability without resetting the clock, or you want a supersession pass
+that closes a validity window and is tested in both directions.</li>
+<li>Do not copy when: a person must approve what an agent remembers, two
+tenants must not see each other's memories — the workspace boundary has
+one value — or you need a record of what a memory said before an edit.
+One mark, negative eval.</li>
 </ul>
 <h3 id="anda-db"><a
 href="../systems/anda-db/"><code>anda-db</code></a></h3>

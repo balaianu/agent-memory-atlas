@@ -19877,20 +19877,47 @@
     },
     "levh": {
       "counts": {
+        "AGENT": 1,
         "EXEC": 1,
-        "FLOAT": 2,
-        "FRESH": 3
+        "FLOAT": 1,
+        "FRESH": 5,
+        "NOTE": 1
       },
-      "files_scanned": 6,
+      "files_scanned": 10,
       "findings": [
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "frontend/package-lock.json"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "frontend/package.json"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "pyproject.toml"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "sdk/typescript/package.json"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "uv.lock"
+        },
         {
           "detail": "executes on pytest collection, before any test runs",
           "kind": "EXEC",
           "path": "tests/conftest.py"
         }
       ],
-      "revision": "9bdcb25f52387814f389c7cf816959b297d74d59",
-      "screened_at": "2026-09-19T00:00:00+00:00",
+      "revision": "95dec5b41957347c07cfc6ab0abe14065ec438b5",
+      "screened_at": "2026-10-12T22:08:20+00:00",
       "slug": "levh",
       "source": "reused-clone",
       "status": "screened",

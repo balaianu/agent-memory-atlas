@@ -4095,11 +4095,11 @@ surfaces, two build-time execution points, two unpinned surfaces and six
 files inside the seven-day cooldown. Nothing was installed, built or
 run</li>
 <li><a href="https://github.com/ali-ulu/levh">ali-ulu/levh</a> at <a
-href="https://github.com/ali-ulu/levh/commit/9bdcb25f52387814f389c7cf816959b297d74d59"><code class="commit-id" title="9bdcb25f52387814f389c7cf816959b297d74d59">9bdcb25f…</code></a>
-— read only, from a shallow clone; six files scanned, no auto-run
-surfaces, one build-time execution point, two unpinned surfaces and
-three dependency files inside the seven-day cooldown. Nothing was
-installed, built or run</li>
+href="https://github.com/ali-ulu/levh/commit/95dec5b41957347c07cfc6ab0abe14065ec438b5"><code class="commit-id" title="95dec5b41957347c07cfc6ab0abe14065ec438b5">95dec5b4…</code></a>
+— read only, from a full clone; ten files scanned, no auto-run surfaces,
+one build-time execution point, one unpinned surface and five dependency
+files inside the seven-day cooldown. Nothing was installed, built or
+run</li>
 <li><a href="https://github.com/ldclabs/anda-db">ldclabs/anda-db</a> at
 <a
 href="https://github.com/ldclabs/anda-db/commit/e2a2c0517cabfd275caed450011271643decd752"><code class="commit-id" title="e2a2c0517cabfd275caed450011271643decd752">e2a2c051…</code></a>
@@ -15591,6 +15591,33 @@ baseline transition candidate; <code>correct</code> took no
 authorization, and the bound candidate belongs to the separate
 baseline-promotion path in
 <code>verified_claim_correction_transition.py</code>.</li>
+<li><strong>Three published claims about <a
+href="../systems/levh/">LEVH</a> were wrong at <a
+href="https://github.com/ali-ulu/levh/commit/9bdcb25f52387814f389c7cf816959b297d74d59"><code class="commit-id" title="9bdcb25f52387814f389c7cf816959b297d74d59">9bdcb25f…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>human_review</code> on the ground that the producing agent
+could reach neither held-queue decision, and grounded that on
+<code>server/mcp_stdio.py</code> containing neither <code>admit</code>
+nor <code>held</code>. The tools are registered from
+<code>server/tools/</code>, and <code>admit_memory</code> there
+(<code>server/tools/admission.py:38-73</code>) took
+<code>force: bool</code>, which stored a review-verdict candidate
+without writing a held row
+(<code>server/core/engine/ingest.py:95</code>). The tool was tiered
+<code>admin</code> (<code>server/tools/profiles.py:100</code>) and the
+stdio server advertised every tier when <code>LEVH_MCP_PROFILE</code>
+was unset (<code>server/mcp_stdio.py:140</code>), so the producer could
+skip its own review and the mark is withdrawn. Its census of 26,342
+lines of Python and 896 test functions described the first-reading pin,
+<code class="commit-id" title="6802ac81397abdf596cf8392b54dee461ec54226">6802ac81…</code>, where both
+figures reproduce; at
+<code class="commit-id" title="9bdcb25f52387814f389c7cf816959b297d74d59">9bdcb25f…</code> they were 27,113
+and 999. And it placed the console's held count in the admission-gate
+settings panel; that panel carried descriptive text, and the count was
+on the connector-sync panel
+(<code>frontend/src/app/settings/_sections/connectors.tsx:142</code>).
+The first searched the transport file rather than the registry it
+imports.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
