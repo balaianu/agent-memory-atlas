@@ -4530,63 +4530,72 @@ agent actually asks of it is not visible here</td>
 </tr>
 <tr>
 <td><a href="../systems/chump/"><code>chump</code></a></td>
-<td>A row in <code>chump_memory</code>: content, timestamp, source, a
-confidence float, a verified flag, a sensitivity label, an optional
-expiry and a memory type defaulting to <code>semantic_fact</code></td>
-<td>SQLite with an FTS5 virtual table kept in sync by insert, delete and
-update triggers, plus a separate memory graph</td>
-<td>FTS5 lexical search and a memory graph, with confidence used as a
-weight rather than a gate</td>
-<td>Agent capture plus an opt-in LLM summariser that clusters episodics
-into a <code>semantic_fact</code> marked <code>verified = 1</code> and
-sets <code>expires_at</code> on the sources it consumed</td>
-<td>Confidence decay per day for unverified rows, floored at 0.05 "so a
-decayed memory still surfaces in retrieval (just heavily down-weighted)
-rather than vanishing"; expiry removes rows the summariser has
-consumed</td>
-<td>None on the memory row; the fleet coordinates over projects and
-repos above it</td>
-<td>Bring-your-own coding agent — Claude Code, opencode, Codex CLI,
-Aider, goose or manual commits — with an MCP memory server, a desktop
-app and a web surface</td>
-<td>Fleet orchestration, a gap registry, summarisation behind an opt-in
-flag, and decay passes</td>
-<td>A verified flag that exempts a memory from decay, a sensitivity
-label, per-feature bypass flags for ablation, and a binding
-research-integrity directive</td>
-<td>It measured its own memory and reported that it did nothing.
-<code>CHUMP_BYPASS_SPAWN_LESSONS</code> was shipped specifically so
-spawn-time lesson injection could be switched off in a binary A/B, and
-EVAL-056 records the outcome without softening it: "n=30/cell
-binary-mode sweep; NO SIGNAL (CIs fully overlapping)". It then checked a
-second, independent way — whether the agent textually references the
-injected state — and reports that all five null-validated modules fell
-below a <em>preregistered</em> 5% threshold, with neuromodulation,
-belief state and surprisal at 0% and blackboard and spawn lessons at 1%.
-The bypass flag is one of a family
-(<code>chump_bypass_perception</code>,
-<code>chump_bypass_neuromod</code>,
-<code>chump_bypass_blackboard</code>), so each cognitive faculty can be
-switched off and measured. The public methodology directive requires
-Wilson confidence intervals, an A/A run per series to measure judge
-variance with a ±0.03 tolerance before results may be cited, and a
-preregistration file per gap. The decay comment states the design
-decision rather than leaving it to be inferred: the confidence floor
-exists so a decayed memory is down-weighted rather than removed</td>
-<td>Thirty-nine of the eighty-three eval documents are now stubs reading
-"[t]his document has been moved to a private repository", and the
-Research Integrity Directive is binding on contributors: "Do not state
-magnitudes, model names, or per-eval IDs in public docs, PRs, or
-external communications." The methodology remains public and the results
-largely do not, so a reader can check how the project measures and not,
-for most of the corpus, what it measured — the four surviving public
-write-ups are the exception rather than the sample. The memory itself
-carries no mechanism the atlas recognises: <code>confidence</code> is a
-continuous weight, <code>verified</code> exempts a row from decay rather
-than filtering a read, decay is floored so nothing is ever withheld, and
-there is no scope key, validity interval, supersession pointer or
-mutation record. On its own evidence, the memory faculty is the part of
-this system least demonstrated to work</td>
+<td>Two units. A fact row in chump_memory: content, timestamp, source, a
+confidence float, a verified integer, a sensitivity label, an optional
+expiry and a memory type. A lesson: a directive in
+chump_improvement_targets with a priority and an optional tool-domain
+scope, attached to a reflection that carries an outcome class</td>
+<td>One SQLite file shared by the fact table with an FTS5 mirror kept by
+insert, delete and update triggers, an entity-triple graph, the
+reflection and lesson tables, episodes and causal lessons; embeddings in
+a positional JSON array beside it; a markdown wiki under a separate
+brain path</td>
+<td>Facts: FTS5 with an expiry filter, cosine over embeddings and an
+entity-graph rank fused by three-way reciprocal rank fusion, multiplied
+by confidence and freshness, then MMR to a 4,000-character budget.
+Lessons: frequency over recency, filtered by priority, seed tag,
+outcome-class quality and tool domain, injected first in the system
+prompt</td>
+<td>The agent's memory tool stores a fact with a model-chosen
+confidence, type and expiry; an opt-in LLM summariser writes a
+semantic_fact with verified = 1 and expires the episodic rows it
+consumed. Lessons come from heuristic reflections after autonomy tasks,
+CI-failure capture and the orchestrator's per-dispatch writer</td>
+<td>Expiry, exact-content dedupe and confidence decay floored at 0.05
+for unverified facts, all in an operator-run curate mode that nothing in
+the tree schedules. No forget verb on any surface; lessons are deleted
+only by an A/B-seed cleanup command, and graph triples and embeddings
+survive the deletion of their fact</td>
+<td>No scope key on facts; isolation is one database file per repository
+root. Lessons carry a tool-domain scope with a universal NULL, and an
+empty domain returns every lesson. Episode search takes an optional repo
+argument the caller may omit</td>
+<td>The built-in agent's memory, memory_brain and graph tools; an MCP
+server with memory_search, memory_recall, episode_save and
+episode_search for bring-your-own agents; a briefing command that hands
+lessons to dispatched agents; a duty-officer peer that reads and writes
+episodes from shell</td>
+<td>Curation runs only when an operator invokes chump --curate;
+reflections are written at task and dispatch completion; the
+duty-officer loop appends an episode per judgment tick</td>
+<td>A verified integer whose only writers are the two LLM summariser
+paths, a sensitivity label that is always 'internal' and never read, an
+outcome-class quality gate on lessons, a hash-chained tool-call ledger
+capped at 200 rows, per-faculty bypass flags, and a research-integrity
+directive binding on contributors</td>
+<td>Every cognitive faculty has an environment flag read in one place
+and wired at its single injection point, so each can be measured by its
+absence; CHUMP_BYPASS_SPAWN_LESSONS short-circuits load_spawn_lessons
+before any database work. The project ran that A/B, then asked a second
+question of the same faculties, whether the agent textually references
+the injected state, and found reference rates of 0 and 1 percent. Its
+directive prohibits the exit-code scorer, requires an A/A run per series
+and states the tolerance before a result may be cited, and EVAL-102
+records in public why EVAL-101's null may not be cited. The lesson read
+path is pinned by tests that assert off-domain and failure-derived
+lessons stay out of the assembled block beside lessons that must
+appear</td>
+<td>The memory A/B is weaker than its label. The first EVAL-056 run
+scored exit code and output length while most trials failed on API
+connectivity, which the write-up says itself; the LLM-judge re-score at
+n=50 per cell had overlapping intervals and an A/A run of +0.200 against
+the plus-or-minus 0.03 the directive requires before citing.
+RESEARCH-022 applied a 5 percent threshold its preregistration states as
+10. Embeddings are a positional array aligned with the live rows, and
+expiry, dedupe and summarisation remove rows without touching it, so
+semantic scores attach to the wrong facts after the first removal. The
+MCP search tools omit the expiry predicate. Thirty-nine of the 78 eval
+write-ups are private stubs</td>
 </tr>
 <tr>
 <td><a href="../systems/citra/"><code>citra</code></a></td>
@@ -33244,7 +33253,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>440 of 731:</em> <a
+<p><em>441 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33308,6 +33317,7 @@ href="../systems/byterover/"><code>byterover</code></a>, <a
 href="../systems/cashew/"><code>cashew</code></a>, <a
 href="../systems/cass-memory-system/"><code>cass-memory-system</code></a>,
 <a href="../systems/caura/"><code>caura</code></a>, <a
+href="../systems/chump/"><code>chump</code></a>, <a
 href="../systems/citra/"><code>citra</code></a>, <a
 href="../systems/claude-engram/"><code>claude-engram</code></a>, <a
 href="../systems/claude-engram-mlapeter/"><code>claude-engram-mlapeter</code></a>,
@@ -33717,7 +33727,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-440 repositories of
+441 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -4044,15 +4044,15 @@ and three dependency files inside the seven-day cooldown. Nothing was
 installed, built or run</li>
 <li><a href="https://github.com/repairman29/chump">repairman29/chump</a>
 at <a
-href="https://github.com/repairman29/chump/commit/631fcaa7f56ef6fa567cbc0ea9859d1b4bec4263"><code class="commit-id" title="631fcaa7f56ef6fa567cbc0ea9859d1b4bec4263">631fcaa7…</code></a>
-— read only, from a shallow clone. Thirty-nine of the eighty-three
-documents under <code>docs/eval/</code> are stubs recording that the
-content moved to a private repository; the figures cited come from the
-write-ups that remain public. Eighty-eight files scanned, three auto-run
-surfaces, two build-time execution points, six unpinned surfaces and
-sixty-nine dependency files inside the seven-day cooldown, with
-<code>CLAUDE.md</code> and <code>AGENTS.md</code> read as data. Nothing
-was installed, built or run</li>
+href="https://github.com/repairman29/chump/commit/c532a7fa50f9a7ff4a0e5ee163f9aee408e0a1d1"><code class="commit-id" title="c532a7fa50f9a7ff4a0e5ee163f9aee408e0a1d1">c532a7fa…</code></a>
+— read only, from a full clone. Thirty-nine of the seventy-eight
+markdown write-ups at the top of <code>docs/eval/</code> are stubs
+recording that the content moved to a private repository; the figures
+cited come from the thirty-nine that remain public. Ninety-nine files
+scanned, three auto-run surfaces, three build-time execution points,
+seven unpinned surfaces and five files inside the seven-day cooldown,
+with <code>CLAUDE.md</code> and <code>AGENTS.md</code> read as data.
+Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP">MarcelRoozekrans/LongtermMemory-MCP</a>
 at <a
@@ -15699,6 +15699,35 @@ route (<code>src/orchestrator/semantics.py</code>). It called the
 thread read was at <code>src/mcp_server.py:3091</code>. The first rested
 on the shared graph rather than on the read lenses, and the second and
 third on module docstrings rather than their code.</li>
+<li><strong>Six published claims about <a
+href="../systems/chump/">Chump</a> were wrong at <a
+href="https://github.com/repairman29/chump/commit/631fcaa7f56ef6fa567cbc0ea9859d1b4bec4263"><code class="commit-id" title="631fcaa7f56ef6fa567cbc0ea9859d1b4bec4263">631fcaa7…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+described the ablated memory as the FTS fact table;
+<code>CHUMP_BYPASS_SPAWN_LESSONS</code> empties
+<code>load_spawn_lessons</code>, which reads
+<code>chump_improvement_targets</code>
+(<code>src/reflection_db.rs:503-627</code>), and the fact table is not
+touched by it. It described retrieval as FTS5 and a graph;
+<code>recall_for_context</code>
+(<code>src/memory_tool.rs:525-755</code>) also scores by embedding
+cosine and fuses the three arms. It presented EVAL-056's null as
+credible under the project's controls; the write-up attributes its first
+run's failures to API connectivity under an exit-code scorer that rule 6
+of <code>docs/process/RESEARCH_INTEGRITY.md</code> prohibits, and the
+re-score's A/A delta was +0.200 against the ±0.03 rule 5 requires before
+citing. It called the 5% mechanism threshold preregistered;
+<code>docs/eval/preregistered/RESEARCH-022.md:20-27</code> states 10%.
+It said four public write-ups survived among 83 documents; the directory
+held 78 markdown files and 39 were public, and the public
+<code>REMOVAL-003-design.md</code> answered its open question about
+<code>belief_state</code>. And it withheld <code>negative_eval</code>,
+though
+<code>scope_hint_filters_unrelated_lessons_in_assembled_block</code>
+(<code>src/reflection_db.rs:3283-3340</code>) asserted that an
+off-domain lesson stays out of the assembled block while two others from
+the same store appear. The first and last came from reading one store as
+the whole memory.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

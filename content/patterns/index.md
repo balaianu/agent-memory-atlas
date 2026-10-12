@@ -172,7 +172,7 @@ Where the atlas has an exact count — the seven mechanisms on
 <!-- BEGIN GENERATED SPREAD -->
 | Mechanism | Systems carrying it |
 | --- | --- |
-| Negative retrieval assertion | 440 of 731 |
+| Negative retrieval assertion | 441 of 731 |
 | Scope enforced in retrieval | 322 of 731 |
 | Append-only mutation audit | 254 of 731 |
 | Explicit trust state | 190 of 731 |

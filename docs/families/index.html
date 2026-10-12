@@ -2603,37 +2603,32 @@ the baseline is each user's own machine; a <code>GoldenQuery</code> also
 labels only what should surface, never what must not. No marks — a
 record here is an observation with an exit code, not a claim that can
 later be wrong.</p>
-<p><strong><a href="../systems/chump/">Chump</a> ablated its own memory
-and published the null.</strong> A dual-licensed AGPL/Apache multi-agent
-fleet coordinator — 326,308 lines of Rust with 4,071 test functions —
-whose memory is an unremarkable SQLite table with an FTS5 mirror, a
-confidence float, a verified flag that exempts a row from decay, and no
-scope key, validity interval, supersession pointer or mutation record.
-It carries no marks, and that is not why it is here. Chump shipped
-<code>CHUMP_BYPASS_SPAWN_LESSONS</code> — an environment flag whose only
-purpose is to turn its own spawn-time memory injection off — and ran a
-binary A/B: <code>EVAL-056-memory-ablation.md</code> records "n=30/cell
-binary-mode sweep; NO SIGNAL (CIs fully overlapping)". The flag is one
-of a family beside <code>bypass_perception</code>,
-<code>bypass_neuromod</code> and <code>bypass_blackboard</code>, and two
-sibling ablations report nulls too. It then checked a second,
-independent way — whether the agent ever textually references the
-injected state — and reports that "[a]ll 5 NULL-validated modules show
-≤1% reference rate in agent text output… All below the preregistered 5%
-mechanistic-support threshold", with the addendum careful that it
-"updates rationales, not actions". The public methodology requires
-Wilson confidence intervals, a preregistration per gap, and an A/A run
-per series within ±0.03 before any result may be cited — controls that
-were in place before the nulls, which is what makes them credible. The
-counterweight is that thirty-nine of the eighty-three eval documents are
-now stubs reading "moved to a private repository", under a directive
-binding on every contributor: "Do not state magnitudes, model names, or
-per-eval IDs in public docs, PRs, or external communications." The
-method stayed public and the results mostly did not, so the four
-surviving nulls are what the migration left behind rather than a
-representative sample. Almost every system in this corpus asserts its
-memory helps; this is the one that tested the claim against a bypass and
-wrote down that it did not.</p>
+<p><strong><a href="../systems/chump/">Chump</a> ablated its own lesson
+memory, and the A/A control its rules require did not pass.</strong> A
+Rust fleet coordinator — AGPL-3.0 for applications and memory crates,
+Apache-2.0 for eight library crates, 345,977 lines of Rust with 4,967
+test attributes — whose optional built-in agent keeps two memories: a
+SQLite fact table searched by FTS5, embeddings and an entity graph, and
+a store of reflection-derived lessons placed first in every system
+prompt. One mark, <code>negative_eval</code>: tests that make the prompt
+assembler's own calls assert that an off-domain lesson and a
+failure-derived lesson stay out of the block beside lessons that must
+appear. Each cognitive faculty has a bypass flag, and
+<code>CHUMP_BYPASS_SPAWN_LESSONS</code> empties
+<code>load_spawn_lessons</code> before its query, so the ablated memory
+is the lesson store, not the fact table. The A/B behind it is weaker
+than its label: EVAL-056's first run scored exit codes while most trials
+failed on API connectivity, and the LLM-judge re-score's A/A run came in
+at +0.200 against the ±0.03 the project's own directive requires before
+a result is cited. A second check found the agent echoed injected state
+in at most 1% of outputs, below a threshold the addendum calls a
+preregistered 5% and the preregistration states as 10%, so the
+conclusion holds either way. The fact store pairs embeddings to rows by
+array position, and expiry, dedupe and summarisation remove rows without
+touching the array, so semantic scores attach to the wrong facts after
+the first removal. Thirty-nine of the 78 eval write-ups are private
+stubs; the public thirty-nine include a null on the whole cognition
+stack and the list of protocol violations that make it uncitable.</p>
 <p><strong><a href="../systems/bifrost/">Bifrost</a> tells the model it
 is searching its absolute long-term memory, and keys the file to one
 session.</strong> An AGPL-3.0 Rust agent runtime orchestrator — 11,091
