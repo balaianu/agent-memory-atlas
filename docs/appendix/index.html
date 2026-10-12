@@ -4207,11 +4207,14 @@ surfaces and thirty-two dependency files inside the seven-day cooldown.
 Nothing was installed, built or run</li>
 <li><a href="https://github.com/asuramaya/osiris">asuramaya/osiris</a>
 at <a
-href="https://github.com/asuramaya/osiris/commit/561d5697a4c52057fee9d49bf3c62a0472537590"><code class="commit-id" title="561d5697a4c52057fee9d49bf3c62a0472537590">561d5697…</code></a>
-— read only, from a shallow clone; eleven files scanned, three auto-run
-surfaces, one build-time execution point, no unpinned surfaces and three
-dependency files inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/asuramaya/osiris/commit/4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7"><code class="commit-id" title="4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7">4c781169…</code></a>
+— read only, from a full clone, at the head of <code>main</code>, a
+commit of 5 October 2026. AGPL-3.0 with no rider. Eleven files scanned,
+three auto-run surfaces (<code>.claude/settings.json</code>,
+<code>.githooks/</code>, <code>.mcp.json</code>), one build-time
+execution point (<code>tests/conftest.py</code>), no unpinned surfaces
+and nothing inside the seven-day cooldown; <code>CLAUDE.md</code> was
+read as data. Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/Deathburgerz013/HOLO-Invariant">Deathburgerz013/HOLO-Invariant</a>
 at <a
@@ -15664,6 +15667,38 @@ by a wider bound that returned the shard. And it described
 (<code>src/nougen_shards/core.py:1285-1298</code>). The first rested on
 a docstring rather than the importer's call, the second on a search that
 never opened <code>history.py</code>.</li>
+<li><strong>Seven published claims about <a
+href="../systems/osiris/">Osiris</a> were wrong at <a
+href="https://github.com/asuramaya/osiris/commit/561d5697a4c52057fee9d49bf3c62a0472537590"><code class="commit-id" title="561d5697a4c52057fee9d49bf3c62a0472537590">561d5697…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+there was no isolation boundary and no partition predicate, and withheld
+<code>negative_eval</code>; reflections were house-scoped on search, the
+provenance lens and select
+(<code>src/orchestrator/compositions.py:313-345</code>,
+<code>:439</code>, <code>:536</code> at that pin), and
+<code>test_reflections_are_house_scoped_in_search</code>
+(<code>tests/test_reflection_acl.py:37-52</code>) asserted that another
+house and an anonymous caller got no Reflection hit where a housemate
+did, so <code>negative_eval</code> was earned. It said the evidence
+classes rank and never withhold; the open-thread wall that
+<code>orient</code> renders moved threads with no self-declared
+assertion into a counted echo pile (<code>compositions.py:3434</code>).
+It said assertion rows were never mutated; <code>assert_property</code>
+moved a repeated observation's <code>observed_at</code> in place and
+flipped the prior row's <code>is_current</code>
+(<code>src/actions/core.py:267</code>, <code>:295</code>). It described
+an audit row per mutation and left out the daily heartbeat, on by
+default, that deleted audit rows older than 90 days
+(<code>src/workers/arq_worker.py:1203-1262</code>). It gave retrieval as
+lexical and graph; <code>_fn_search</code> also fused a local-embedding
+route (<code>src/orchestrator/semantics.py</code>). It called the
+112-line evidence module eighty lines long. And its
+<code>trust_state</code> record cited
+<code>src/mcp_server.py:3062</code>, <code>:4204</code> and
+<code>src/cli.py:4852</code>, none of which held a status predicate; the
+thread read was at <code>src/mcp_server.py:3091</code>. The first rested
+on the shared graph rather than on the read lenses, and the second and
+third on module docstrings rather than their code.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

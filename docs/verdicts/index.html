@@ -20780,36 +20780,36 @@ href="../systems/osiris/"><code>osiris</code></a></h3>
 is derived from that.</strong> "[B]efore this module, every parser
 invented its own confidence number (0.4 → 0.99) with no shared meaning,
 so 'noise' was baked into the graph as fake-precise facts and nothing
-downstream could reason about <em>why</em> a node was believed." Now
+downstream could reason about <em>why</em> a node was believed."
 <code>confidence</code> is "a <em>projection</em> of the class, not a
-guess" — and CORROBORATED is the class no parser may claim: "computed at
-read time when ≥2 independent sources agree … Storing it would go stale
-the moment a third source lands."</li>
-<li>Biggest risk: <strong>the classes rank but never withhold, and
-nothing partitions the graph.</strong> A co-occurrence fact at 0.35
-comes back beside a self-declared one at 0.9, so a consumer that ignores
-the class sees peers and the protection lives in the reader. Agents,
-projects and threads are object types inside one graph rather than
-partitions of it, so isolation is the graph's shape and not a predicate
-a reader cannot omit. The base confidences are constants with an
-ordering and no stated derivation.</li>
-<li>Most reusable component: <code>parsers/evidence.py</code> — eighty
-lines carrying the class taxonomy, the projection, the strength
-ordering, and the rule that corroboration is recomputed rather than
-stored. Beside it, the within-source supersession rule that keeps one
-parser's self-correction from silencing an independent source, which is
-what makes read-time corroboration mean anything.</li>
-<li>Maturity impression: AGPL-3.0, Python 3.12+, 269,603 lines with
-6,388 test functions, PostgreSQL 16 with pg_trgm, a Redis 7 event bus, a
-streamable-HTTP MCP server, Claude Code hooks, and an ontology kept as a
-reviewed catalog because types "stop being invented inline by each
-parser".</li>
+guess", and CORROBORATED is the class no parser may store; the crawl
+frontier computes it from two or more distinct sources at read
+time.</li>
+<li>Biggest risk: <strong>the append-only promise is relaxed by the
+system's own housekeeping.</strong> The actions layer says "old rows are
+never mutated"; a default-on daily job deletes audit rows past 90 days,
+audit rows that repeat an assertion, and superseded assertions identical
+to their predecessor, through raw SQL outside that layer, and a repeated
+observation moves <code>observed_at</code> in place. Work knowledge is
+fleet-readable by design, and the reflection boundary is not applied by
+<code>dossier</code> or <code>list_assertions</code> and reads its
+reader from an argument a saved composition can set.</li>
+<li>Most reusable component: <code>parsers/evidence.py</code> — the
+class taxonomy, the projection and the strength order — and beside it
+the lifecycle predicate applied to every search route and to the
+embedding index's maintenance, so a merged object cannot come back
+through the semantic route.</li>
+<li>Maturity impression: AGPL-3.0, Python 3.12, 309,355 lines with 7,735
+test functions run against Postgres and Redis containers, PostgreSQL 16
+with pg_trgm, a Redis 7 event bus, a streamable-HTTP MCP server, Claude
+Code hooks, and an ontology kept as a reviewed catalog.</li>
 <li>Study when: your extractors each pick their own confidence number,
-or you store a corroboration flag that a later source would
-falsify.</li>
-<li>Do not copy when: you need isolation between agents, or a read that
-refuses weak evidence rather than ranking it. Two marks: trust state,
-audit log.</li>
+or a lifecycle filter lives in your SQL routes and not in your vector
+index.</li>
+<li>Do not copy when: you need an audit trail that outlives a retention
+window, isolation between agents, or a read that refuses weak evidence
+rather than ranking it. Three marks: trust state, audit log, negative
+eval.</li>
 </ul>
 <h3 id="holo-invariant"><a
 href="../systems/holo-invariant/"><code>holo-invariant</code></a></h3>

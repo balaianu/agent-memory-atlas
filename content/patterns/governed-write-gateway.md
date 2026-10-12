@@ -91,7 +91,10 @@ that has the gateway to solve it.
 [Osiris](../../systems/osiris/) states exclusivity as the contract of its actions
 layer — *"the only mutation path into the ontology"*, with the domain write, its
 `audit_log` row and any outbox rows committed in one transaction, and *"No
-bypassing."* [runar-forge](../../systems/runar-forge/) routes MCP saves, prompt
+bypassing."* Its own daily housekeeping deletes audit rows and redundant
+assertion rows through raw SQL outside that layer, and a source's own assertion
+writes no audit row, so the stated contract holds for the writes agents make and
+not for the maintenance the system runs on itself. [runar-forge](../../systems/runar-forge/) routes MCP saves, prompt
 capture, extraction and its crawler through one `propose`, which strips private
 blocks and redacts secret patterns before it bounds content, then stamps the
 author and dedupes on a topic key. [Neuron](../../systems/neuron/) refuses a

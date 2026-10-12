@@ -5,27 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="An event-sourced entity graph for
-agents where a fact's confidence is a projection of how it was obtained,
-corroboration is recomputed at read time because storing it would go
-stale, and every mutation commits its audit row in the same
-transaction.">
+agents where parsers declare how they knew a fact, search drops inactive
+objects, and daily housekeeping prunes its append-only tables.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Osiris — Agent Memory Atlas">
     <meta property="og:description" content="An event-sourced entity
-graph for agents where a fact's confidence is a projection of how it was
-obtained, corroboration is recomputed at read time because storing it
-would go stale, and every mutation commits its audit row in the same
-transaction.">
+graph for agents where parsers declare how they knew a fact, search
+drops inactive objects, and daily housekeeping prunes its append-only
+tables.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Osiris — Agent Memory Atlas">
     <meta name="twitter:description" content="An event-sourced entity
-graph for agents where a fact's confidence is a projection of how it was
-obtained, corroboration is recomputed at read time because storing it
-would go stale, and every mutation commits its audit row in the same
-transaction.">
+graph for agents where parsers declare how they knew a fact, search
+drops inactive objects, and daily housekeeping prunes its append-only
+tables.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Osiris — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +43,7 @@ transaction.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Osiris",
-      "description": "An event-sourced entity graph for agents where a fact's confidence is a projection of how it was obtained, corroboration is recomputed at read time because storing it would go stale, and every mutation commits its audit row in the same transaction.",
+      "description": "An event-sourced entity graph for agents where parsers declare how they knew a fact, search drops inactive objects, and daily housekeeping prunes its append-only tables.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -106,24 +102,22 @@ transaction.">
 and started declaring how they knew</p>
           <h1>Osiris</h1>
           <p class="document-deck">An event-sourced entity graph for
-agents where a fact's confidence is a projection of how it was obtained,
-corroboration is recomputed at read time because storing it would go
-stale, and every mutation commits its audit row in the same
-transaction.</p>
+agents where parsers declare how they knew a fact, search drops inactive
+objects, and daily housekeeping prunes its append-only tables.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/asuramaya/osiris">
               <span>Source</span>
               <strong>asuramaya/osiris</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/asuramaya/osiris/commit/561d5697a4c52057fee9d49bf3c62a0472537590" title="561d5697a4c52057fee9d49bf3c62a0472537590">
+            <a class="meta-pill revision-pill" href="https://github.com/asuramaya/osiris/commit/4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7" title="4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7">
               <span>Analyzed revision</span>
-              <code>561d5697…</code>
+              <code>4c781169…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-12</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/asuramaya--osiris" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +125,20 @@ transaction.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>309,355
+lines of Python in 786 files; src/ is 132,449 lines in 266 files and
+tests/ 160,535 in 397; the MCP server is 12,749 lines and the CLI
+9,980</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>2,998
+commits on main by 2 author names, 28 May – 5 October 2026; package
+version 0.0.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>7,735
+test functions in 397 files under tests/, against Postgres and Redis
+test containers; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,118 +154,126 @@ transaction.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Osiris is "[t]he persistent memory and coordination graph for AI
-agents" — AGPL-3.0, Python 3.12+, 269,603 lines with 6,388 test
-functions, over PostgreSQL 16 with <code>pg_trgm</code> and a Redis 7
-event bus, exposed as a streamable-HTTP MCP server with native Claude
-Code hooks. It describes itself as "[a] self-hosted, harness-agnostic,
-provenance-first entity-graph engine", turning agent reasoning,
-architectural rulings, loose ends and inter-agent messages into
-"durable, queryable, event-sourced graph memory across context windows,
-compactions, and harness boundaries".</p>
-<p>The module to read is eighty lines long and fixes something this
-atlas finds almost everywhere.</p>
-<p><strong>Parsers stopped writing confidence numbers.</strong> The
-evidence module opens with the defect:</p>
+<p>Osiris is an event-sourced entity graph that agents use as shared
+memory, in which a fact's confidence is derived from how it was obtained
+and a lifecycle status keeps merged and retired objects out of every
+search route. Its write path is one actions layer that records identity
+and lifecycle changes as events. Its weak side is the distance between
+the stated rule and the housekeeping: the module header promises
+append-only tables, and a daily job deletes audit rows and redundant
+assertion rows.</p>
+<p>The project describes itself as "a self-hosted memory and
+coordination graph for AI agents", one Postgres-backed service
+"reachable from any harness over the Model Context Protocol". Its tool
+surface coordinates a fleet of agents — mail, seats, threads, decisions,
+handoffs — over the same graph that holds what they learned.</p>
+<p><strong>Parsers declare how they knew.</strong> The evidence module
+opens with the defect:</p>
 <blockquote>
 <p>"Before this module, every parser invented its own confidence number
 (0.4 → 0.99) with no shared meaning, so 'noise' was baked into the graph
 as fake-precise facts and nothing downstream could reason about
-<em>why</em> a node was believed. Here we grade each fact by HOW it was
-obtained, and derive its confidence from that class. Parsers stop
-writing numbers; they declare an <code>EvidenceClass</code>."</p>
+<em>why</em> a node was believed."</p>
 </blockquote>
-<p>Five classes a parser may declare — self-declared, authoritative API,
-direct observation, derived, co-occurrence — each projecting a base
-confidence. The <code>confidence</code> column survives because the
-constraint, the entity-resolution scorers and the report views read it,
-"but it is now a <em>projection</em> of the class, not a guess".</p>
-<p><strong>The sixth class cannot be claimed.</strong> CORROBORATED:</p>
-<blockquote>
-<p>"is never assigned by a parser — it is computed at read time when ≥2
-independent sources agree … Storing it would go stale the moment a third
-source lands."</p>
-</blockquote>
-<p>Two things there. Corroboration requires <em>independent</em>
-sources, so an agent restating its own claim does not manufacture it —
-the failure <a href="../agent-memory-guard/">OWASP's memory guard</a>
-describes as a threat and most systems here leave open. And it is
-recomputed rather than cached, because a stored corroboration is a claim
-about a world that keeps changing. It ranks above a single authoritative
-source in the strength order, which is the correct ordering and the one
-a cached flag would eventually get wrong.</p>
-<p><strong>One write path, and the audit row rides with the
-write.</strong> The actions layer's header is the contract:</p>
-<blockquote>
-<p>"The Actions layer — the <em>only</em> mutation path into the
-ontology. Every method is atomic: the domain write, its
-<code>audit_log</code> row, and any <code>outbox</code> /
-<code>object_events</code> rows all commit in one transaction. UI
-clicks, helper outputs, and analyst edits must all go through here. No
-bypassing."</p>
-</blockquote>
-<p>Underneath: assertions are append-only with a <em>backward</em>
-<code>supersedes</code> pointer and "old rows are never mutated";
-supersession is scoped within a source rather than across the
-multi-source set, so one source correcting itself does not silence
-another; merges are events with <code>objects.status</code> and
-<code>merged_into</code> maintained as a projection; and cascades go
-through a durable outbox "(not fire-and-forget pub/sub)", so an effect
-cannot be lost independently of the write that caused it.</p>
-<p>That status is the second mark. Reads carry it —
-<code>o.status='active' AND o.merged_into IS NULL</code> on threads,
-<code>o.status='active'</code> on decisions and on agent lookups — so a
-merged object stays in the graph and stops being returned. Unmerge is a
-first-class action that restores it to active and clears the projection,
-under a rule of never deleting.</p>
-<p>The ontology is a declared catalog rather than a framework: "[a] new
-type is a new entry here (reviewed), never an inline string", after
-types were "invented inline by each parser and scattered across the UI,
-the parsers, and the docs". Every surface — the UI's colours and shapes,
-the generic object view, the validators — reads the one catalog.</p>
-<p>What is not here is an isolation boundary. Agents, projects and
-threads are object types inside one graph, not partitions of it, so what
-separates one agent's memory from another's is the graph's shape rather
-than a predicate a reader cannot omit. For a self-hosted single-operator
-deployment that is coherent; it is the thing to establish before a
-shared one.</p>
-<p>And the evidence classes grade and rank but never withhold. A
-co-occurrence fact at 0.35 comes back beside a self-declared one at 0.9,
-so a consumer that ignores the class treats them as peers — the
-protection lives in the reader. The base confidences are constants with
-no stated derivation, which is what the module intends (a shared
-ordering, not calibrated probabilities) and worth naming because a
-downstream reader may take 0.85 for a likelihood.</p>
+<p>Five classes a parser may declare each project a base confidence, and
+<code>confidence</code> is "a <em>projection</em> of the class, not a
+guess" (<code>src/parsers/evidence.py:21-31</code>). The sixth,
+CORROBORATED, "is never assigned by a parser — it is computed at read
+time when ≥2 independent sources agree". The crawl frontier computes it
+from distinct source ids
+(<code>src/orchestrator/frontier.py:105-144</code>). The agent's
+<code>search</code> does not: its grade weights carry a
+<code>corroborated</code> branch that no stored row reaches.</p>
+<p><strong>The status filters.</strong> <code>objects.status</code> is a
+projection of the <code>object_events</code> log, moved by merge,
+unmerge and <code>set_status</code>. Every route of
+<code>_fn_search</code> requires <code>o.status = 'active'</code>, and
+the embedding backfill deletes the vectors of an object that left active
+(<code>src/orchestrator/compositions.py:421-722</code>,
+<code>src/orchestrator/semantics.py:215-217</code>). A merged object
+stays in the graph and does not come back through
+<code>search</code>.</p>
+<p><strong>One write path, with events.</strong> The actions layer calls
+itself "the <em>only</em> mutation path into the ontology", and every
+identity and lifecycle change appends an <code>object_events</code> row
+in the same transaction as the projection it moves. No production
+statement updates or deletes that table.</p>
+<p><strong>The rule and the housekeeping disagree.</strong> The header
+says "old rows are never mutated" and the README says every change
+"appends an event, never overwrites or deletes". A repeated observation
+moves the existing row's <code>observed_at</code> in place. A daily
+heartbeat deletes audit rows older than 90 days. A second deletes audit
+rows that repeat an assertion, superseded assertions identical to the
+row they replaced, and old layout assertions. The fold module argues its
+case — "nothing the graph knows is lost" — and the deletions do not pass
+through the actions layer.</p>
+<p><strong>Reflections are house-scoped; the rest is shared by
+design.</strong> Decisions, threads and canon are "fleet-readable;
+cross-repo recall is the product". A reflection is readable within its
+own house and by the operator on search, the provenance lens, select and
+the screen-focus tool, and committed tests assert that another house
+gets no hit. <code>dossier</code> and <code>list_assertions</code> do
+not apply that check, and the search function takes its reader from an
+argument a saved composition can set.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>An <strong>assertion</strong> is one source saying one thing. It is
-never edited.</p>
-<p>A <strong>confidence</strong> is not something a parser chooses. The
-<em>class</em> is.</p>
-<p><strong>Corroboration</strong> is a question asked at read time,
-never an answer stored.</p>
-<p>A <strong>merge</strong> is an event; the status is only its
-shadow.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a parser declares how it knew rather than how sure it is, and corroboration is recomputed from independent sources instead of being stored</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a parser declares how it knew rather than how sure it is, and corroboration is recomputed from independent sources instead of being stored
+<p>An <strong>object</strong> is a typed node with a canonical name; its
+type comes from a reviewed catalog. An <strong>assertion</strong> is one
+source's claim about one property, graded by an evidence class. A new
+claim from the same source supersedes that source's current row; claims
+from other sources stand beside it as a multi-source set.</p>
+<p>A belief has two separate standings. The <strong>evidence
+class</strong> says how a claim was obtained; it ranks search hits and
+decides which crawl nodes may expand, and search withholds nothing by
+it. The <strong>lifecycle status</strong> says whether the object takes
+part at all: <code>active</code>, or <code>merged</code>,
+<code>archived</code>, <code>retired</code>, <code>historical</code>.
+Search returns only active objects.</p>
+<p>The status moves only by event. <code>merge_objects</code> writes a
+merge event and sets <code>merged</code>; <code>unmerge_objects</code>
+writes an unmerge event and restores <code>active</code>, leaving the
+merge event and its <code>same_as</code> link "as witnesses of the era"
+(<code>src/actions/core.py:709-753</code>). <code>set_status</code>
+writes a <code>status_change</code> or <code>archive</code> event with a
+required justification before it updates the projection
+(<code>:818-846</code>). A mined object a re-mine no longer produces is
+archived, and reactivated when the source produces it again
+(<code>src/ingest/mined.py:104-118</code>).</p>
+<p>Two signals label and do not withhold. A decision another decision
+supersedes is returned with a <code>superseded</code> flag naming its
+successor, and a refuted practice is returned with a
+<code>refuted</code> flag (<code>compositions.py:536-560</code>). The
+open-thread wall that <code>orient</code> renders does withhold: a
+thread with no self-declared assertion, either a question or older than
+a freshness window, goes into a counted echo pile instead of the list
+(<code>compositions.py:3514</code>).</p>
+<p>Nothing an agent writes waits for anyone. The miner's guesses about
+forgotten loose ends are active objects from their first write;
+<code>candidates</code> and <code>dispose</code> let a project's own
+seat adopt or drop them, and an unjudged guess is searchable
+meanwhile.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a claim becomes a searchable belief, how an object leaves search, and which tables the daily jobs prune</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a claim becomes a searchable belief, how an object leaves search, and which tables the daily jobs prune
 flowchart TB
-    P[&quot;a parser produces a fact&quot;] --&gt; DECL{&quot;declare an EvidenceClass —&lt;br/&gt;parsers no longer write numbers&quot;}
-    DECL --&gt; C1[&quot;SELF_DECLARED · 0.9&quot;]
-    DECL --&gt; C2[&quot;AUTHORITATIVE_API · 0.85&quot;]
-    DECL --&gt; C3[&quot;DIRECT_OBSERVATION · 0.6&quot;]
-    DECL --&gt; C4[&quot;DERIVED · 0.4&quot;]
-    DECL --&gt; C5[&quot;CO_OCCURRENCE · 0.35&quot;]
-    C1 &amp; C2 &amp; C3 &amp; C4 &amp; C5 --&gt; ACT{&quot;the Actions layer —&lt;br/&gt;the ONLY mutation path.&lt;br/&gt;&#39;No bypassing.&#39;&quot;}
-    ACT --&gt; TX[(&quot;one transaction:&lt;br/&gt;the domain write +&lt;br/&gt;its audit_log row +&lt;br/&gt;its object_events / outbox rows&quot;)]
-    TX --&gt; ASSERT[(&quot;assertions — append-only,&lt;br/&gt;a BACKWARD supersedes pointer,&lt;br/&gt;old rows never mutated;&lt;br/&gt;supersession is within-source&quot;)]
-    TX --&gt; EV[(&quot;object_events — the source of truth&lt;br/&gt;for merges&quot;)]
-    EV --&gt; PROJ[&quot;objects.status / merged_into —&lt;br/&gt;a projection updated alongside&quot;]
-    PROJ --&gt; READ{&quot;reads&quot;}
-    READ --&gt;|&quot;status=&#39;active&#39; AND merged_into IS NULL&quot;| OUT[&quot;returned&quot;]
-    READ --&gt;|&quot;merged&quot;| HELD[&quot;stays in the graph,&lt;br/&gt;stops being returned;&lt;br/&gt;unmerge restores it — never delete&quot;]
-    FRONT[&quot;read time: the crawl frontier&lt;br/&gt;and the subject report&quot;] --&gt; CORR{&quot;≥2 INDEPENDENT sources agree?&quot;}
-    CORR --&gt;|&quot;yes&quot;| CO[&quot;CORROBORATED · 0.8 —&lt;br/&gt;ranks above a single authoritative source&quot;]
-    CORR -.-&gt;|&quot;&#39;never assigned by a parser …&lt;br/&gt;storing it would go stale the moment&lt;br/&gt;a third source lands&#39;&quot;| NOSTORE[&quot;not a column&quot;]
-    OUT --&gt; FRONT
-    CAT[&quot;the ontology catalog:&lt;br/&gt;&#39;a new type is a new entry here (reviewed),&lt;br/&gt;never an inline string&#39;&quot;] --&gt; ACT</code></pre></details></figure>
+    P[&quot;a parser or an agent tool&quot;] --&gt; DECL[&quot;declare an EvidenceClass;&lt;br/&gt;confidence is its projection&quot;]
+    DECL --&gt; ACT{&quot;actions layer&lt;br/&gt;&#39;the only mutation path&#39;&quot;}
+    ACT --&gt; SAME{&quot;same value, confidence&lt;br/&gt;and class as the source&#39;s&lt;br/&gt;current row?&quot;}
+    SAME --&gt;|&quot;yes&quot;| BUMP[&quot;UPDATE observed_at&lt;br/&gt;on the existing row&quot;]
+    SAME --&gt;|&quot;no&quot;| NEW[(&quot;new assertion row&lt;br/&gt;supersedes the source&#39;s prior;&lt;br/&gt;prior.is_current = false&quot;)]
+    NEW --&gt; AUD{&quot;actor is not&lt;br/&gt;the source?&quot;}
+    AUD --&gt;|&quot;yes&quot;| AL[(&quot;audit_log row&quot;)]
+    AUD --&gt;|&quot;no&quot;| NOAL[&quot;no audit row:&lt;br/&gt;the assertion is the record&quot;]
+    ACT --&gt; LIFE[&quot;merge · unmerge · set_status ·&lt;br/&gt;change_canonical · create&quot;]
+    LIFE --&gt; OE[(&quot;object_events:&lt;br/&gt;no UPDATE or DELETE anywhere&quot;)]
+    LIFE --&gt; AL
+    OE --&gt; ST[&quot;objects.status projection:&lt;br/&gt;active · merged · archived ·&lt;br/&gt;retired · historical&quot;]
+    ST --&gt; SRCH{&quot;search: every route requires&lt;br/&gt;o.status = &#39;active&#39;&quot;}
+    ST --&gt; VEC[&quot;embedding backfill deletes&lt;br/&gt;vectors of inactive objects&quot;]
+    VEC --&gt; SRCH
+    SRCH --&gt; HOUSE{&quot;Reflection from&lt;br/&gt;another house?&quot;}
+    HOUSE --&gt;|&quot;yes&quot;| DROP[&quot;dropped from hits&quot;]
+    HOUSE --&gt;|&quot;no&quot;| HIT[&quot;ranked by relevance × grade × recency;&lt;br/&gt;superseded decisions flagged, not hidden&quot;]
+    CRON[&quot;daily heartbeats, on by default&quot;] -.-&gt;|&quot;delete rows older than 90 days&quot;| AL
+    CRON -.-&gt;|&quot;delete audit rows that repeat an assertion&quot;| AL
+    CRON -.-&gt;|&quot;delete superseded rows identical to their predecessor;&lt;br/&gt;delete old layout rows; move history to cold&quot;| NEW</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -270,102 +285,249 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>src/actions/core.py</code></td>
-<td>The only mutation path, and its invariants</td>
+<td>The actions layer: assertions, links, objects, merges, status,
+renames</td>
 </tr>
 <tr>
 <td><code>src/parsers/evidence.py</code></td>
-<td>The evidence-class taxonomy and its projections</td>
+<td>The evidence-class taxonomy, base confidences and strength
+order</td>
 </tr>
 <tr>
 <td><code>src/ontology/</code></td>
-<td>The declared catalog, labels, entity resolution</td>
+<td>The declared type catalog and entity resolution</td>
 </tr>
 <tr>
-<td><code>src/orchestrator/</code></td>
-<td>The frontier, sources, compositions</td>
+<td><code>src/orchestrator/compositions.py</code></td>
+<td>Search, the reflection ACL, the provenance lens, the op-tree
+evaluator</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/semantics.py</code></td>
+<td>Local static embeddings and the vector index</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/retention.py</code>,
+<code>assertion_fold.py</code>, <code>migration_0064.py</code></td>
+<td>Pruning, folding and hot/cold tiering</td>
+</tr>
+<tr>
+<td><code>src/workers/arq_worker.py</code></td>
+<td>Cron heartbeats</td>
 </tr>
 <tr>
 <td><code>src/mcp_server.py</code></td>
-<td>The agent surface (12,403 lines)</td>
+<td>The agent surface</td>
 </tr>
 <tr>
-<td><code>src/cli.py</code></td>
-<td>The operator surface (8,328)</td>
-</tr>
-<tr>
-<td><code>src/workers/</code>, <code>src/dissemination/</code></td>
-<td>Background work and delivery</td>
+<td><code>src/cli.py</code>, <code>src/api/app.py</code></td>
+<td>The operator surfaces</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The service is PostgreSQL 16 with <code>pg_trgm</code>, Redis 7, an
+MCP server on port 8790 over streamable HTTP, and an arq worker;
+<code>docker-compose.yml</code> stands up the first two. Embeddings come
+from model2vec's <code>potion-base-8M</code>, a static lookup model run
+on CPU and stored as <code>real[]</code> with no vector extension. The
+first load reaches Hugging Face, and a failed load closes the semantic
+route while the lexical routes keep answering
+(<code>src/orchestrator/semantics.py:1-25</code>).</p>
+<p>The repository's own <code>.claude/settings.json</code> wires prompt,
+tool and compaction hooks to absolute paths under the author's home
+directory, and <code>.mcp.json</code> points at a local server, so the
+committed hook set is the author's installation rather than a
+template.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/parsers/evidence.py:1-41</code> — the defect, the classes,
-and the one that cannot be claimed.</p>
-<p><code>src/actions/core.py:1-13</code> — one path, one transaction,
-three invariants.</p>
-<p><code>src/ontology/schema.py:1-21</code> — why the catalog exists and
-what it is not.</p>
+<p><strong>Assert.</strong> <code>Actions.assert_property</code> takes a
+transaction-scoped advisory lock on the object, property and source,
+reads the source's current row, and returns it with
+<code>observed_at</code> moved forward when value, confidence and class
+match (<code>src/actions/core.py:229-289</code>). Otherwise it inserts a
+row that supersedes the prior, flips the prior's
+<code>is_current</code>, writes an audit row only when the actor is not
+the source, and queues an outbox event (<code>:290-333</code>).</p>
+<p><strong>Merge, unmerge, status, rename.</strong>
+<code>merge_objects</code> (<code>:641</code>),
+<code>unmerge_objects</code> (<code>:709</code>),
+<code>set_status</code> (<code>:818</code>) and
+<code>change_canonical</code> (<code>:848</code>) each insert an
+<code>object_events</code> row, update the projection, write an audit
+row and queue an outbox event in one transaction. A rename appends the
+retired canonical to <code>object_aliases</code>; for a
+<code>SoftwareProject</code>, object creation resolves that alias to the
+migrated object instead of minting a twin (<code>:134-147</code>).</p>
+<p><strong>Search.</strong> The <code>search</code> tool runs
+<code>_fn_search</code> with the caller's agent id
+(<code>src/mcp_server.py:1528-1550</code>). An id-prefix route, strict
+full text, an OR-relaxed bag, trigram and the semantic route each
+require an active object, fuse by reciprocal rank, weight by grade and
+recency, drop other houses' reflections, and flag superseded decisions
+(<code>src/orchestrator/compositions.py:384-560</code>).</p>
+<p><strong>Housekeeping.</strong> <code>retention_heartbeat</code>
+deletes published outbox rows past 30 days and audit rows past 90
+(<code>src/workers/arq_worker.py:1234-1301</code>).
+<code>storage_housekeeping_heartbeat</code> retires duplicate audit
+rows, deletes layout assertions, folds no-op re-assertions and moves
+week-old superseded history to the cold table, each step on a time
+budget (<code>:1314-1411</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Objects of declared types with graded properties and links, every
-property and link carrying provenance as a kernel-wide invariant. An
-assertion is one source's claim; the multi-source set is preserved
-because supersession is within-source, which is the detail that keeps a
-self-correcting parser from silencing an independent one — and is also
-what makes read-time corroboration meaningful.</p>
+<p>Objects of declared types, with properties as assertions and
+relations as links; every assertion and link carries a source, an
+evidence class, a confidence, an evidence URI and hash, and a case. A
+property's current view is one row per source, and the winner is chosen
+at read time by confidence and then <code>observed_at</code>, so
+disagreement between sources is visible rather than resolved on
+write.</p>
+<p>Assertions live in two physical tables. Week-old superseded history
+moves from <code>assertions_hot</code> to <code>assertions_cold</code>
+by copy, verify and delete
+(<code>src/orchestrator/migration_0064.py</code>).
+<code>observed_at</code> is the time the claim was last confirmed: a
+repeated observation moves it on the existing row, and a fold carries
+the later time onto the surviving row
+(<code>src/orchestrator/assertion_fold.py:7-19</code>). Links carry
+<code>first_seen</code>, <code>last_seen</code> and
+<code>valid_until</code>. Nothing records the time a value began to hold
+apart from the time it was observed.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Graph traversal and trigram search over active objects, with the
-frontier reading the evidence class to decide "what is the strongest
-reason this node is here". Ranking by strength rather than by a raw
-number is what the class taxonomy buys.</p>
+<p>One search engine with five routes. A hex token is looked up as an
+object id or canonical hash. Text runs as strict web-search syntax,
+relaxes to any-term when the strict form finds nothing, then falls back
+to trigram similarity. Beside these the semantic route cosines the query
+against an in-process vector cache. Routes fuse by reciprocal rank, and
+each hit carries the field, source, grade, time and snippet that matched
+(<code>src/orchestrator/compositions.py:384-560</code>). Every query
+lands in <code>search_log</code> with the routes that answered.</p>
+<p>Grade weighs and does not gate. The SQL weight table maps
+self-declared to 1.0, authoritative API to 0.95, corroborated to 0.9,
+direct observation to 0.8, derived to 0.5 and anything else to 0.35
+(<code>compositions.py:230-233</code>). That ordering differs from the
+evidence module's, where corroborated ranks first; no writer stores the
+corroborated class, so the branch is never taken.</p>
+<p><code>trace_evidence</code>, the provenance lens, returns one
+object's assertions, links and events in observed order, merged and
+retired objects included when named by id
+(<code>compositions.py:1327</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Covered above. The unmerge path is worth a second look: it restores
-the merged object to active and clears the projection while leaving
-assertions in place — "resolve-on-read" — so undoing a merge does not
-require rewriting anything that was asserted.</p>
+<p>The actions layer serialises a source's writes to one property with
+the advisory lock, so concurrent writers cannot fork a supersession
+chain. A bound <code>Actions</code> pins its pool to the transaction's
+own connection, so a helper inside the transaction cannot draw a second
+pooled connection while holding the first
+(<code>src/actions/core.py:37-50</code>).</p>
+<p>The housekeeping deletions are deliberate and reasoned in their
+docstrings. Retention exists because the outbox and audit tables grew by
+tens of thousands of rows a day
+(<code>src/orchestrator/retention.py:1-19</code>). The fold deletes a
+superseded row only when it matches its predecessor on value,
+confidence, class, evidence URI, hash, case and helper run, and only
+when older than seven days (<code>assertion_fold.py:7-19</code>). Each
+runs as raw SQL against the pool rather than through the actions layer
+the header calls the only mutation path.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A streamable-HTTP MCP server, native Claude Code hooks, and a plugin
-for another harness. Screening flags three auto-run surfaces, which is
-what a hook-installing MCP server looks like.</p>
+<p>The MCP server registers tools for search, provenance, dossiers,
+mail, seats, threads, decisions, merges, retirements and compositions.
+Claude Code hooks inject context on prompt submit, refuse most tool
+calls once the context passes a threshold until a settle lands, and
+write a handoff marker before compaction. A bridge under
+<code>dsh-plugin/</code> mounts a DeepSeek Harness session. Screening
+flags three auto-run surfaces and a test <code>conftest.py</code> that
+executes on collection.</p>
+<p>The agent's surface carries the verbs that move status:
+<code>merge</code>, <code>unmerge</code>, <code>retire_object</code>,
+<code>retire_assertion</code> and <code>retire_link</code>. Nothing an
+agent writes waits for a person.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The evidence taxonomy and the single write path are the trust story,
-and they are complementary: one makes it impossible to write a fact
-without saying how it was obtained, the other makes it impossible to
-write anything without recording that it happened.</p>
-<p>The gap is enforcement at read time. Nothing withholds a
-weakly-graded fact, and nothing partitions one agent's view from
-another's.</p>
+<p>The status filter is the reliable part. It is applied by every search
+route and by the vector index's maintenance, and a test asserts that an
+object leaving active is dropped from the index
+(<code>tests/test_semantics.py:158-183</code>).</p>
+<p>The audit is two records with different lifetimes.
+<code>object_events</code> is untouched by any update or delete and
+records who moved an object's identity or status and why.
+<code>audit_log</code> covers the other actions for 90 days, and a
+source's own assertions are recorded in the assertions table
+instead.</p>
+<p>The reflection boundary covers four reads.
+<code>_hide_foreign_reflections</code> runs on search and
+<code>_visible_reflections</code> on the provenance lens, select and the
+screen-focus tool
+(<code>src/orchestrator/compositions.py:271-345</code>,
+<code>src/mcp_server.py:2254-2261</code>). <code>dossier</code> returns
+every current property of any object it can resolve
+(<code>src/orchestrator/dossier.py:127-132</code>), and
+<code>list_assertions</code> returns any property's rows, with no house
+check. <code>_fn_search</code> and <code>_fn_lap</code> read their
+reader from <code>args["caller"]</code> before the context variable
+(<code>compositions.py:403</code>, <code>:1350</code>).
+<code>composition(action='save')</code> stores a spec as given, so a
+saved function call can name <code>operator</code> as its reader and see
+every house.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>6,388 test functions, with the largest suites covering capture,
-triggers, the CLI and agents. Nothing was installed or run for this
-reading.</p>
+<p>7,735 test functions run against Postgres and Redis test containers.
+The ones that bear on the marks:</p>
+<ul>
+<li><code>tests/test_reflection_acl.py</code> — seven cases. A foreign
+house and an anonymous caller get no Reflection hit where a housemate
+and the operator do, and the id route, select and provenance lens are
+held the same way.</li>
+<li><code>tests/test_semantics.py:158-183</code> — an object moved to
+<code>merged</code> loses its vector on the next backfill.</li>
+<li><code>tests/test_search.py:241</code> — a superseded decision is
+returned with a flag naming its successor.</li>
+<li><code>tests/test_actions.py:457-477</code> — unmerge restores active
+and keeps the merge event and its <code>same_as</code> link.</li>
+<li><code>tests/test_assert_property_one_write.py</code> — which
+assertions leave an audit row, and a static check that no code reads the
+retired audit rows.</li>
+</ul>
+<p>No test asserts that a merged or retired object is absent from search
+results; the index test counts dropped vectors. Nothing was installed or
+run for this reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Grade the fact by how you got it, then derive the number. A parser
-that picks 0.72 is guessing; a parser that says "co-occurrence" is
-reporting, and the number becomes a shared ordering everyone downstream
-can reason about.</p>
-<p>Never let corroboration be self-asserted or stored. Require
-independent sources, compute it at read time, and the third source that
-arrives tomorrow changes the answer instead of contradicting a cached
-flag.</p>
-<p>Commit the audit row in the write's transaction. An audit that can
-fail separately from the mutation is an audit with silent gaps.</p>
-<p>Scope supersession to the source. One source correcting itself should
-not delete another source's disagreement, and the multi-source set is
-what corroboration is computed over.</p>
-<p>And put the type catalog in one reviewed place. Types invented inline
-by each parser is the state this project migrated away from, and the
-migration is the evidence that it costs something.</p>
+<h3 id="steal">Steal</h3>
+<p>Grade the fact by how you got it and derive the number. A parser that
+writes 0.72 is guessing; one that writes "co-occurrence" is reporting,
+and the number becomes an ordering everyone downstream shares.</p>
+<p>Put the lifecycle predicate in every route and in index maintenance.
+A filter in the SQL routes and not in the vector cache returns a merged
+object through the semantic route; deleting its vector closes that.</p>
+<p>Make status transitions events with a required reason, and undo them
+with a compensating event that leaves the original in place.</p>
+<p>Scope supersession to the source, so one source's correction cannot
+erase another source's disagreement.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Stating "never mutated" over a table a housekeeping job prunes. The
+deletions here are argued in their docstrings; the module header and the
+README make the stronger claim, and the deletions bypass the one layer
+said to own every mutation.</p>
+<p>A boundary that reads its subject from an argument. A reader identity
+a caller can supply, through any door, is a filter the caller sets.</p>
+<p>A grade weight for a class nothing stores. The
+<code>corroborated</code> branch in search's weights reads as read-time
+corroboration and is never taken.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one operator running a fleet of agents who should share
+work knowledge, where provenance and reversible identity changes matter
+and an audit horizon of 90 days is acceptable. Walk away if one agent's
+memory must be unreadable to another, if the audit trail must outlive a
+retention window, or if a weak claim must be kept out of the answer
+rather than ranked down.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether anything filters by evidence class. The classes rank and
-project a confidence; no read was found that withholds below a
-threshold.</p>
-<p>What isolates one agent from another. Agents are object types in a
-shared graph, and no partition predicate was found.</p>
-<p>How the base confidences were chosen. They are constants with a
-stated ordering and no stated derivation.</p>
+<p>Whether the 90-day audit window is meant to apply to merge and status
+audit rows, whose facts survive in <code>object_events</code>
+regardless.</p>
+<p>Whether the reflection boundary is meant to cover
+<code>dossier</code> and <code>list_assertions</code>, and whether a
+saved composition is meant to set its own reader.</p>
+<p>How the base confidences and search's separate grade weights were
+chosen; both are constants with an ordering and no stated derivation,
+and they disagree on where corroboration sits.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -376,25 +538,122 @@ stated ordering and no stated derivation.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>src/parsers/evidence.py:1-41</code></td>
-<td>Numbers replaced by classes, and one class that cannot be
-claimed</td>
+<td><code>src/parsers/evidence.py:1-53</code></td>
+<td>Numbers replaced by classes, the strength order, and the class no
+parser may store</td>
 </tr>
 <tr>
 <td><code>src/actions/core.py:1-13</code></td>
-<td>One mutation path and what rides with every write</td>
+<td>The stated contract of the only mutation path</td>
 </tr>
 <tr>
-<td><code>src/actions/core.py:688-692</code></td>
-<td>Unmerge, restore, never delete</td>
+<td><code>src/actions/core.py:205-333</code></td>
+<td>Assertion: the lock, the no-op guard, supersession, the conditional
+audit row</td>
+</tr>
+<tr>
+<td><code>src/actions/core.py:709-753</code></td>
+<td>Unmerge: a compensating event with its witnesses</td>
+</tr>
+<tr>
+<td><code>src/actions/core.py:818-846</code></td>
+<td><code>set_status</code>: event first, then the projection</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/compositions.py:271-345</code></td>
+<td>The reflection ACL and its operator exemption</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/compositions.py:384-560</code></td>
+<td>Search: five routes, the status predicate, flags</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/semantics.py:164-220</code></td>
+<td>Embedding backfill and the inactive-object purge</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/retention.py</code></td>
+<td>Audit and outbox retention, duplicate retirement, layout
+deletion</td>
+</tr>
+<tr>
+<td><code>src/orchestrator/assertion_fold.py:1-34</code></td>
+<td>The fold, and its argument against "never delete"</td>
+</tr>
+<tr>
+<td><code>src/workers/arq_worker.py:1234-1411</code></td>
+<td>The two daily heartbeats that run them</td>
 </tr>
 <tr>
 <td><code>src/ontology/schema.py:1-21</code></td>
 <td>A catalog, not a framework</td>
 </tr>
+<tr>
+<td><code>tests/test_reflection_acl.py</code></td>
+<td>The house boundary's negative cases</td>
+</tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -i -E '(UPDATE|DELETE FROM|TRUNCATE)[[:space:]]+(TABLE[[:space:]]+)?(ONLY[[:space:]]+)?object_events' -- ':!tests'</code>
+— no match.</li>
+<li><code>git grep -n -E 'DELETE FROM (audit_log|\{table\})' -- src</code>
+— <code>retention.py:76</code> (outbox or audit_log by allowlist),
+<code>:190</code> (duplicate audit rows), <code>:253</code> (layout
+assertions) and <code>assertion_fold.py:110</code> (folded
+assertions).</li>
+<li><code>git grep -n -E 'UPDATE assertions[a-z_]* SET' -- src</code> —
+<code>actions/core.py:288</code> (<code>observed_at</code>),
+<code>:316</code>, <code>:404</code>, <code>:488</code>,
+<code>:515</code> (<code>is_current</code>).</li>
+<li><code>git grep -n -E "o\.status ?= ?'active'" -- src/orchestrator/compositions.py</code>
+— the search routes at <code>:421</code>, <code>:471</code>,
+<code>:665</code>, <code>:696</code>, <code>:722</code>, among
+others.</li>
+<li><code>git grep -n -E '_visible_reflections|_hide_foreign_reflections' -- src</code>
+— <code>compositions.py</code> and <code>mcp_server.py:2258</code> only;
+no hit in <code>dossier.py</code> or <code>retirement.py</code>.</li>
+<li><code>git grep -n -E 'args\.get\("caller"\)' -- src</code> —
+<code>compositions.py:403</code> and <code>:1350</code>.</li>
+<li><code>git grep -n -E 'EvidenceClass\.CORROBORATED' -- src helpers scripts</code>
+— <code>parsers/evidence.py:27</code> and <code>:41</code> only; no
+writer stores the class.</li>
+<li><code>git grep -n -E 'evidence_class: str' -- src/mcp_server.py</code>
+— no match; no agent tool takes an evidence class.</li>
+<li><code>git grep -n -E "evidence_class ?(&lt;&gt;|!=|NOT IN|= ?'|IN ?\()" -- src</code>
+— partitions and counts on <code>self_declared</code> (the wall and echo
+pile, closure, janitor, sessions); none inside
+<code>_fn_search</code>.</li>
+<li><code>git grep -n -i 'tombstone' -- src</code> —
+<code>settings.py</code>, <code>pit_watch.py</code> and
+<code>trigger.py</code>, all about message delivery; no rejected-value
+record.</li>
+<li><code>git grep -n -E 'valid_from' -- src alembic</code> — no
+match.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION' -- README.md ARCHITECTURE.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the AGPL-3.0 text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-12</strong> — <a
+href="https://github.com/asuramaya/osiris/commit/4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7"><code class="commit-id" title="4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7">4c781169…</code></a>
+— 373 commits on. Overtaken: a source's own assertion writes no audit
+row, and a daily job deletes duplicate audit rows, no-op re-assertions
+and layout rows (<a href="#7-write-mechanics">section 7</a>); renames
+became events with aliases. <code>negative_eval</code> gained, earned at
+the old pin by the reflection tests (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Also wrong then:
+"no isolation boundary" missed the reflection ACL; "never withhold"
+missed the open-thread wall; assertions were updated in place; the
+90-day audit prune and the semantic route went unmentioned; three trust
+anchors pointed at unrelated lines. Screened from a full clone: eleven
+files, three auto-run surfaces, one build-time execution point, no
+unpinned surfaces, none inside the cooldown; <code>CLAUDE.md</code> read
+as data. Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/asuramaya/osiris/commit/561d5697a4c52057fee9d49bf3c62a0472537590"><code class="commit-id" title="561d5697a4c52057fee9d49bf3c62a0472537590">561d5697…</code></a>
 — <code>trust_state</code> re-tested. The mark holds and the model
@@ -405,9 +664,9 @@ projection. The scale of the predicate is worth stating rather than
 illustrating — <code>status = 'active'</code> appears at over three
 hundred sites and <code>merged_into IS NULL</code> at thirty-six, so
 this is a store where the filter is the habit rather than a rule kept in
-one helper. <code>merge_objects</code> is now at <code>:610</code>. Two
-things are added. <code>set_status</code> (<code>:789-812</code>) takes
-a <code>justification</code> and an <code>actor</code> as required
+one helper. <code>merge_objects</code> is now at <code>:610</code>.</p>
+<p>Two things are added. <code>set_status</code> (<code>:789-812</code>)
+takes a <code>justification</code> and an <code>actor</code> as required
 arguments and writes them into an append-only <code>object_events</code>
 row before touching the projection, so a lifecycle transition cannot be
 made without recording why — though the actor is a supplied string

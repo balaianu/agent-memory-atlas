@@ -23433,62 +23433,62 @@ re-create; an operator token reads every local agent's drafts</td>
 <tr>
 <td><a href="../systems/osiris/"><code>osiris</code></a></td>
 <td>An object of a declared type with graded properties, links and
-provenance; an assertion is one source's claim about a property,
-appended and never mutated</td>
-<td>PostgreSQL 16 with <code>pg_trgm</code>, a Redis 7 event bus, an
-append-only assertions table, an <code>object_events</code> log and a
-durable outbox</td>
-<td>Graph traversal and trigram search over active objects, with an
-evidence-graded view of why each node is present</td>
-<td>One actions layer; every parser declares an evidence class rather
-than a confidence number</td>
-<td>Assertions append with a backward <code>supersedes</code> pointer;
-merges are events with a status projection, and unmerge restores an
-object to active under a never-delete rule</td>
-<td>A self-hosted single graph; agents, projects and threads are object
-types rather than isolation boundaries</td>
-<td>A streamable-HTTP MCP server, native Claude Code hooks, and a plugin
-for another harness</td>
-<td>A crawl frontier, a dissemination layer, workers and an orchestrator
-composing capabilities</td>
-<td>An evidence-class taxonomy that replaces per-parser confidence
-numbers, corroboration computed at read time, provenance on every
-property and link, and an audit row per mutation</td>
-<td>The evidence module fixes a failure this atlas keeps finding and
-names it precisely: "[b]efore this module, every parser invented its own
-confidence number (0.4 → 0.99) with no shared meaning, so 'noise' was
-baked into the graph as fake-precise facts and nothing downstream could
-reason about <em>why</em> a node was believed." Now a parser declares an
-<code>EvidenceClass</code> — self-declared, authoritative API, direct
-observation, derived, co-occurrence — and the confidence column becomes
-"a <em>projection</em> of the class, not a guess". The sixth class is
-the one to copy: CORROBORATED "is never assigned by a parser — it is
-computed at read time when ≥2 independent sources agree … Storing it
-would go stale the moment a third source lands", and it ranks above a
-single authoritative source. A corroboration that cannot be
-self-asserted and is recomputed rather than cached is the shape OWASP's
-agent-memory guard describes as a threat when it is missing. The write
-path matches: one actions layer, "[n]o bypassing", every method
-committing the domain write, its audit row and its event rows together,
-append-only assertions with a backward supersedes pointer, and cascades
-through a durable outbox rather than fire-and-forget pub/sub. The
-ontology is a declared catalog so "[a] new type is a new entry here
-(reviewed), never an inline string"</td>
-<td>There is no isolation boundary. Agents, projects and threads are
-object types in one graph rather than partitions of it, so what
-separates one agent's memory from another's is the graph's shape and not
-a predicate a reader cannot omit — which suits a self-hosted
-single-operator deployment and is the thing to establish before a shared
-one. The evidence classes grade and rank but never withhold: a
-co-occurrence fact at 0.35 is returned beside a self-declared one at
-0.9, so a consumer that ignores the class sees them as peers, and the
-protection is in the reader's discipline. Base confidences are constants
-with no stated derivation, so the numbers are a shared ordering rather
-than calibrated probabilities — which is what the module intends, and
-worth saying since a consumer may read 0.85 as a likelihood. And at
-269,603 lines of Python with a 12,403-line MCP server and an 8,328-line
-CLI, a reader after the evidence taxonomy and the actions layer is
-reading about two percent of the tree</td>
+provenance; an assertion is one source's claim about a property, chained
+to the one it replaced</td>
+<td>PostgreSQL 16 with <code>pg_trgm</code>: objects, assertions split
+across a hot and a cold table, links, an <code>object_events</code> log,
+<code>audit_log</code>, a durable outbox, and embeddings as
+<code>real[]</code>; a Redis 7 event bus</td>
+<td>One search over active objects fusing strict full text, OR-relaxed
+full text, trigram and local static embeddings by reciprocal rank,
+weighted by evidence grade and recency; graph traversal and a per-object
+provenance timeline beside it</td>
+<td>One actions layer; parsers declare an evidence class and the
+confidence is derived from it; a write that repeats a source's current
+value moves its observation time instead of adding a row</td>
+<td>Within-source supersession by a new row; merges, status changes and
+renames as events with a projection, undone by compensating events. A
+daily job deletes audit rows past 90 days, duplicate audit rows, no-op
+re-assertions and old layout rows</td>
+<td>One graph for every agent and project; reflections alone are
+house-scoped on the search, provenance and select reads</td>
+<td>A streamable-HTTP MCP server, Claude Code hooks for prompt, tool and
+compaction events, a CLI, and a bridge plugin for the DeepSeek
+Harness</td>
+<td>An arq worker running cron heartbeats: retention, storage
+housekeeping, embedding backfill, mining, crawl frontier and
+dissemination</td>
+<td>An evidence-class taxonomy behind every confidence, a lifecycle
+status every search route filters on, provenance on every property and
+link, and event rows for every identity and lifecycle change</td>
+<td>The evidence module names the defect it replaced: "every parser
+invented its own confidence number (0.4 → 0.99) with no shared meaning".
+A parser declares how it knew — self-declared, authoritative API, direct
+observation, derived, co-occurrence — and the confidence is "a
+<em>projection</em> of the class, not a guess". Corroboration is not a
+class a parser may store; the crawl frontier computes it from two or
+more distinct sources at read time. The lifecycle status is enforced
+where it matters: every route of the agent's search requires an active
+object, and the embedding index drops an object that leaves active, so a
+merged or retired object cannot return through the semantic route
+either. Supersession is within a source, so one source correcting itself
+never silences another. Merges, unmerges, status changes and renames are
+events carrying a justification, undone by compensating events.
+Reflections are house-scoped on the search path, with tests asserting
+that another house's caller gets no hit</td>
+<td>The append-only rule is stated in the module header and the README
+and relaxed by the system's own housekeeping: a default-on daily job
+deletes audit rows older than 90 days, retires audit rows that repeat an
+assertion, deletes superseded assertions that restate their predecessor,
+and deletes old layout assertions, all through raw SQL outside the
+actions layer. A repeated observation moves the existing row's
+<code>observed_at</code> in place. Work knowledge is fleet-readable by
+design. The reflection boundary is not applied by <code>dossier</code>
+or <code>list_assertions</code>, which return any object's current
+properties by reference, and the search and provenance functions take
+their reader from a <code>caller</code> argument that a saved
+composition can set to the operator. Search ranks by grade and withholds
+nothing by grade, and it never computes corroboration</td>
 </tr>
 <tr>
 <td><a href="../systems/osk-system/"><code>osk-system</code></a></td>
@@ -33244,7 +33244,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>439 of 731:</em> <a
+<p><em>440 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33574,6 +33574,7 @@ href="../systems/orbital/"><code>orbital</code></a>, <a
 href="../systems/orgtree/"><code>orgtree</code></a>, <a
 href="../systems/ori-mnemos/"><code>ori-mnemos</code></a>, <a
 href="../systems/origintrail-dkg/"><code>origintrail-dkg</code></a>, <a
+href="../systems/osiris/"><code>osiris</code></a>, <a
 href="../systems/osk-system/"><code>osk-system</code></a>, <a
 href="../systems/otis/"><code>otis</code></a>, <a
 href="../systems/ouroboros-agent-os/"><code>ouroboros-agent-os</code></a>,
@@ -33716,7 +33717,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-439 repositories of
+440 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

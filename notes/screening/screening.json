@@ -33367,42 +33367,11 @@
       "counts": {
         "AGENT": 1,
         "EXEC": 1,
-        "FRESH": 3,
-        "NOTE": 1,
+        "NOTE": 2,
         "RUNS": 3
       },
       "files_scanned": 11,
       "findings": [
-        {
-          "detail": "instructions addressed to a reading agent — treat as data, never as commands",
-          "kind": "AGENT",
-          "path": "CLAUDE.md"
-        },
-        {
-          "detail": "executes on pytest collection, before any test runs",
-          "kind": "EXEC",
-          "path": "tests/conftest.py"
-        },
-        {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "dsh-plugin/osiris-bridge/package.json"
-        },
-        {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "pyproject.toml"
-        },
-        {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "uv.lock"
-        },
-        {
-          "detail": "lockfile(s) present: uv.lock",
-          "kind": "NOTE",
-          "path": "-"
-        },
         {
           "detail": "agent harness hooks (SessionStart / PreToolUse / Stop) — mentions PreToolUse, UserPromptSubmit, command, hooks",
           "kind": "RUNS",
@@ -33417,12 +33386,17 @@
           "detail": "MCP servers auto-started by a harness",
           "kind": "RUNS",
           "path": ".mcp.json"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
         }
       ],
-      "revision": "561d5697a4c52057fee9d49bf3c62a0472537590",
-      "screened_at": "2026-09-19",
+      "revision": "4c781169fe7e6dfb3ec4b302e2ba7dfa1cda10d7",
+      "screened_at": "2026-10-12T22:22:01+00:00",
       "slug": "osiris",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/asuramaya/osiris"
     },

@@ -205,8 +205,12 @@ to solve it.</p>
 contract of its actions layer — <em>"the only mutation path into the
 ontology"</em>, with the domain write, its <code>audit_log</code> row
 and any outbox rows committed in one transaction, and <em>"No
-bypassing."</em> <a href="../../systems/runar-forge/">runar-forge</a>
-routes MCP saves, prompt capture, extraction and its crawler through one
+bypassing."</em> Its own daily housekeeping deletes audit rows and
+redundant assertion rows through raw SQL outside that layer, and a
+source's own assertion writes no audit row, so the stated contract holds
+for the writes agents make and not for the maintenance the system runs
+on itself. <a href="../../systems/runar-forge/">runar-forge</a> routes
+MCP saves, prompt capture, extraction and its crawler through one
 <code>propose</code>, which strips private blocks and redacts secret
 patterns before it bounds content, then stamps the author and dedupes on
 a topic key. <a href="../../systems/neuron/">Neuron</a> refuses a
