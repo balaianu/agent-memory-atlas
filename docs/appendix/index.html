@@ -4194,11 +4194,11 @@ built or run</li>
 <li><a
 href="https://github.com/Who-Visions/NouGenShards">Who-Visions/NouGenShards</a>
 at <a
-href="https://github.com/Who-Visions/NouGenShards/commit/73078c05b5a36ad04a2d63b9dd6d42fa7f912bd3"><code class="commit-id" title="73078c05b5a36ad04a2d63b9dd6d42fa7f912bd3">73078c05…</code></a>
-— read only, from a shallow clone; twenty-two files scanned, two
-auto-run surfaces, two build-time execution points, four unpinned
-surfaces and nine dependency files inside the seven-day cooldown.
-Nothing was installed, built or run</li>
+href="https://github.com/Who-Visions/NouGenShards/commit/b570cf2fe4d0c8788ec66bb28ab6d05c6ec2635a"><code class="commit-id" title="b570cf2fe4d0c8788ec66bb28ab6d05c6ec2635a">b570cf2f…</code></a>
+— read only, from a full clone; twenty-nine files scanned, two auto-run
+surfaces, two build-time execution points, four unpinned surfaces and
+four dependency files inside the seven-day cooldown. Nothing was
+installed, built or run</li>
 <li><a href="https://github.com/fagemx/edda">fagemx/edda</a> at <a
 href="https://github.com/fagemx/edda/commit/ce8b98e0b41b832da71b46a6d87289184a158f6a"><code class="commit-id" title="ce8b98e0b41b832da71b46a6d87289184a158f6a">ce8b98e0…</code></a>
 — read only, from a shallow clone; forty-three files scanned, no
@@ -6521,7 +6521,8 @@ href="../systems/skales/">Skales</a></td>
 source-available non-commercial licence), <a
 href="../systems/nougenshards/">NouGenShards</a> (its own
 source-available licence; inspection and personal use granted,
-commercial use and competing hosted services prohibited)</td>
+commercial use, competing hosted services and use to build competing AI
+memory or retrieval products prohibited)</td>
 </tr>
 <tr>
 <td>Conditional MIT — three added conditions, revocable at the author's
@@ -15637,6 +15638,32 @@ in the tree calls a model, <code>reqwest</code> was a dev-dependency
 only, and every integration takes caller-supplied vectors. The first
 rested on a phrase's words rather than its paragraph, and the third on
 the README rather than the dependency graph.</li>
+<li><strong>Four published claims about <a
+href="../systems/nougenshards/">NouGenShards</a> were wrong at <a
+href="https://github.com/Who-Visions/NouGenShards/commit/73078c05b5a36ad04a2d63b9dd6d42fa7f912bd3"><code class="commit-id" title="73078c05b5a36ad04a2d63b9dd6d42fa7f912bd3">73078c05…</code></a>,
+the pin they were made at, and are corrected.</strong> The report tied
+the event-time axis to the brain-scan import and said imported traces
+were stamped at their true era. <code>run_import</code> called
+<code>capture</code> without <code>original_timestamp</code>
+(<code>src/nougen_shards/brain_scan/importer.py:84-90</code>), so every
+scanned trace carried its import time; the producers of a real event
+time were the tube importer, <code>/sync/push</code>, and the MCP and
+HTTP capture callers. It said there was no mutation record.
+<code>history.db</code>'s <code>shard_events</code>
+(<code>src/nougen_shards/history.py:43-66</code>) took a CREATED row on
+every capture and a UTILITY_CHANGE row with both scores on every
+<code>mark_shard</code> (<code>src/nougen_shards/core.py:1225</code>,
+<code>:2946</code>), and no statement updated or deleted one, so
+<code>audit_log</code> was earned. It did not credit
+<code>negative_eval</code>, though
+<code>tests/test_distill.py:103-118</code> asserted that an
+<code>as_of</code> before the learning date returned nothing, bracketed
+by a wider bound that returned the shard. And it described
+<code>valid_until</code> and <code>last_verified</code> as set by
+<code>mark_verified</code>, which no product path called
+(<code>src/nougen_shards/core.py:1285-1298</code>). The first rested on
+a docstring rather than the importer's call, the second on a search that
+never opened <code>history.py</code>.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

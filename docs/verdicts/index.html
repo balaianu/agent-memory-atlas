@@ -20701,35 +20701,40 @@ ordering: redaction runs before hashing, embedding, indexing and
 encryption, "so neither SQLite nor an embedding blob preserves a
 recoverable copy of a leaked credential".</li>
 <li>Biggest risk: <strong>one local database that has ingested every AI
-tool's history off a machine, with no isolation inside it.</strong>
-<code>domain_key</code> is derived from the working path on write but is
-an ordinary argument on read where <code>None</code> or <code>*</code>
-searches every domain, so it organises rather than isolates — and the
-product's premise, scanning for Claude, Gemini, Cursor and Codex traces,
-concentrates material that was previously scattered. Nothing is
-epistemic either: <code>sensitivity</code> changes how a body is stored,
-not whether it is returned, and no status withholds a shard. The licence
-is source-available and not open source — inspection and personal use
-granted, commercial use and competing hosted services prohibited.</li>
+tool's history off a machine, with no isolation inside it, and an MCP
+tool that runs agent code outside the sandbox's opt-in.</strong>
+<code>batch_execute_sandboxed</code> passes <code>trusted=True</code>
+for every command, so only the denylist stands. <code>domain_key</code>
+is derived from the working path on write and is an ordinary argument on
+read, and an explicit domain that matches nothing falls back to every
+domain, so it organises rather than isolates. Nothing is epistemic:
+<code>sensitivity</code> changes how a body is stored, not whether it is
+returned, and a retraction only zeroes the utility prior. The licence is
+source-available and not open source — inspection and personal use
+granted; commercial use, competing hosted services and building
+competing memory products prohibited.</li>
 <li>Most reusable component: the capture ordering and the sensitivity
 contract together — including the stated edge, "[t]itles and tags stay
 plaintext: they are the only handle recall has on an encrypted shard, so
-keep identifying detail out of them" — and the <code>UNIQUE</code>
-constraint on the content hash, which puts de-duplication where a caller
-cannot skip it.</li>
-<li>Maturity impression: version 1.3.1, 97,044 lines of Python with
-1,491 test functions across 182 files, a CLI, an MCP server with a shim
-for both <code>mcp</code> package spellings, hooks, a Docker image and a
-hardening document. Built by Who Visions; the name is Haitian Creole for
-"we have".</li>
+keep identifying detail out of them" — and the bracketed temporal test,
+where the same query must return nothing <code>as_of</code> 2021 and the
+shard <code>as_of</code> 2999.</li>
+<li>Maturity impression: version 1.3.1, 173,734 lines of Python with
+2,996 test functions across 349 files, 795 commits, a CLI, a local MCP
+server with a shim for both <code>mcp</code> package spellings, a
+network node with tenant vaults, hooks, a desktop app and a Docker
+image. Built by Who Visions; the name is Haitian Creole for "we
+have".</li>
 <li>Study when: you embed user content and have not decided where
-redaction sits in the pipeline, or you are importing another tool's
-history and must decide which timestamp to keep.</li>
-<li>Do not copy when: you need isolation between domains rather than
-organisation. One mark, bitemporal: <code>timestamp</code> is event time
-and <code>learned_utc</code> is when this node learned it, filtered
-independently, with imported traces stamped at their true era rather
-than at migration time.</li>
+redaction sits in the pipeline, or you are adding a second clock and
+need a test that proves it filters.</li>
+<li>Do not copy when: you need isolation between domains, deletion that
+survives re-import, or imported history kept at its own dates — the
+brain scan reads each record's timestamp and discards it. Three marks:
+bitemporal on <code>timestamp</code> against <code>learned_utc</code>;
+audit log on <code>shard_events</code>, which records creation and
+utility changes only; negative eval on the bracketed <code>as_of</code>
+case and an exact-list tag-scope case.</li>
 </ul>
 <h3 id="edda"><a href="../systems/edda/"><code>edda</code></a></h3>
 <ul>

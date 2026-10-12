@@ -20979,67 +20979,69 @@ memory client is most likely to use</td>
 <tr>
 <td><a
 href="../systems/nougenshards/"><code>nougenshards</code></a></td>
-<td>A shard: timestamp, event type, title, content, tags, a utility
-prior, an access count, a unique file hash, a domain key, a sensitivity,
-an embedding, <code>learned_utc</code>, <code>valid_until</code> and
+<td>A shard: event time, event type, title, content, tags, a utility
+prior, an access count, a unique content hash, a domain key, a
+sensitivity, an embedding, a source URI, the writing host,
+<code>learned_utc</code>, <code>valid_until</code> and
 <code>last_verified</code></td>
-<td>Local SQLite, with private and secret bodies AES-256-GCM encrypted
-before they reach the file</td>
-<td>Hybrid lexical and embedding search with a utility-weighted blend,
-filterable by scope, by what the node had learned by a date, and by an
-event window</td>
+<td>Local SQLite across up to nine grid databases, with private and
+secret bodies AES-256-GCM encrypted before they reach the file; a
+separate dedup index maps content hashes to grid databases, and
+history.db holds the event log</td>
+<td>Keyword, embedding, title and optional distilled lanes fused by
+reciprocal rank and blended with the utility prior; filterable by tag
+scope, by what the node had learned by a date, and by an event
+window</td>
 <td><code>nougen brain scan</code> harvests traces from Claude, Gemini,
-Cursor, Codex and others; capture redacts, hashes, embeds and encrypts
-in that order</td>
-<td>A unique constraint on the content hash refuses a duplicate import;
-<code>mark_verified</code> refreshes <code>last_verified</code> and
-<code>valid_until</code></td>
-<td>A <code>domain_key</code> derived from the working path on write,
-and an argument on read that accepts <code>None</code> or <code>*</code>
-to search every domain</td>
-<td>A CLI, an MCP server, hooks, and a Docker image</td>
-<td>Scanning, federation between nodes, and a hardening pass</td>
+Cursor, Codex and others and stamps them at import time; capture
+redacts, hashes, embeds and encrypts in that order; the MCP, HTTP, tube
+and sync paths may supply the original event time</td>
+<td>The dedup index refuses identical content; <code>mark_shard</code>
+moves the utility prior; the network node's MCP amends by appending
+dated text, retracts by title prefix, tag and zero utility, or deletes
+the row and leaves its hash in the dedup index</td>
+<td>A <code>domain_key</code> derived from the working path on write. On
+read an implicit domain only boosts, an explicit one falls back to every
+domain when it matches nothing, and agent, user, machine and project tag
+filters are optional arguments. The network node gives each
+authenticated tenant its own vault directory</td>
+<td>A CLI, a local MCP server, a network node serving HTTP and MCP
+behind tenant tokens, hooks, a Tauri desktop app and a Docker image</td>
+<td>Scanning, federation between nodes, a dream pass that consolidates
+and decays utility, and opt-in write-time consolidation tags</td>
 <td>Credential redaction before hashing and embedding, encryption by
-sensitivity, a command denylist, and an execution sandbox that is off by
-default</td>
+sensitivity, a command denylist, and an execution sandbox that refuses
+the single-command MCP tool by default and runs the batch tool's code as
+trusted</td>
 <td>Two safety mechanisms carry disclaimers written by the person who
-built them, which is rarer than either mechanism. The command gate:
-"This is a defense-in-depth speed-bump, NOT a security boundary. It is a
-best-effort denylist meant to catch obvious destructive commands and
-slow down accidents; it can be trivially bypassed by obfuscation
-(encoding, indirection, aliases, etc.) and must never be relied upon as
-the sole protection against malicious input." The sandbox: "this is
-process-level isolation (no parent env, no shell), NOT a full security
-sandbox", refused for untrusted callers unless an operator sets
-<code>NOUGEN_ENABLE_SANDBOX=1</code>. This atlas has reported several
-regex denylists presented as guarantees; this is the first that argues
-against its own sufficiency. The capture ordering is the other decision
-to copy: credential-shaped text is redacted <strong>before</strong>
-hashing, embedding, indexing or encryption, "so neither SQLite nor an
-embedding blob preserves a recoverable copy of a leaked credential" — an
-embedding computed over a secret is a recoverable copy of it, and
-redacting afterwards leaves that copy behind. Encryption is honest about
-its edge too: private and secret bodies are AES-256-GCM encrypted before
-they reach SQLite, and "[t]itles and tags stay plaintext: they are the
+built them. The command gate: "This is a defense-in-depth speed-bump,
+NOT a security boundary. It is a best-effort denylist meant to catch
+obvious destructive commands and slow down accidents; it can be
+trivially bypassed by obfuscation (encoding, indirection, aliases, etc.)
+and must never be relied upon as the sole protection against malicious
+input." The sandbox: "this is process-level isolation (no parent env, no
+shell), NOT a full security sandbox". The capture ordering is the other
+decision to copy: credential-shaped text is redacted before hashing,
+embedding, indexing or encryption, "so neither SQLite nor an embedding
+blob preserves a recoverable copy of a leaked credential". Encryption
+states its edge too: "[t]itles and tags stay plaintext: they are the
 only handle recall has on an encrypted shard, so keep identifying detail
-out of them"</td>
-<td>The licence is source-available and not open source, and says so in
-the README: commercial use needs a subscription or written permission,
-with redistribution for a fee and competing hosted services prohibited.
-Viewing for inspection and learning, and running locally for personal
-and educational use, are expressly granted. Beyond that:
-<code>domain_key</code> is derived from the working path when a shard is
-written but is a plain argument on read, where <code>None</code> or
-<code>*</code> searches every domain, so it organises rather than
-isolates — and the tool's premise, scanning a machine for every AI
-tool's traces, means one database can hold material from unrelated
-projects and people. Nothing is epistemic: <code>sensitivity</code>
-changes how a body is stored and not whether it is returned,
-<code>utility_score</code> is a weight, and no status withholds a shard
-from recall. There is no mutation record. And the product's central act
-— harvesting Claude, Gemini, Cursor and Codex histories off disk into
-one store — is worth a deliberate decision rather than a default,
-whatever the licence permits</td>
+out of them". Federation keeps that edge: <code>/sync/pull</code> ships
+encrypted bodies as ciphertext</td>
+<td>The licence is source-available and not open source: commercial use
+needs a subscription or written permission, and redistribution for a
+fee, competing hosted services and use to train, develop or improve
+competing AI memory or retrieval products are prohibited. The MCP tool
+<code>batch_execute_sandboxed</code> runs agent-supplied code with
+<code>trusted=True</code>, so the opt-in that refuses the single-command
+tool does not apply to it and only the denylist stands. The brain scan,
+the product's central import, discards the timestamps its parsers read,
+so the event axis says nothing about scanned history.
+<code>domain_key</code> organises rather than isolates.
+<code>shard_forget</code> leaves the hash in the dedup index, so
+identical content is refused afterwards with <code>durable: true</code>
+for a row that is gone. The node's <code>temporal_query</code> answers
+<code>as_of</code> on event time</td>
 </tr>
 <tr>
 <td><a href="../systems/nova-ai/"><code>nova-ai</code></a></td>
@@ -32878,7 +32880,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>253 of 731:</em> <a
+<p><em>254 of 731:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33053,6 +33055,7 @@ href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/noosphere/"><code>noosphere</code></a>, <a
 href="../systems/nornicdb/"><code>nornicdb</code></a>, <a
+href="../systems/nougenshards/"><code>nougenshards</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
 href="../systems/obsidian-mind/"><code>obsidian-mind</code></a>, <a
 href="../systems/octop-memory/"><code>octop-memory</code></a>, <a
@@ -33241,7 +33244,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>438 of 731:</em> <a
+<p><em>439 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33538,6 +33541,7 @@ href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/nodedb/"><code>nodedb</code></a>, <a
 href="../systems/nooa-memory/"><code>nooa-memory</code></a>, <a
+href="../systems/nougenshards/"><code>nougenshards</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
 href="../systems/obelyth-cortex/"><code>obelyth-cortex</code></a>, <a
 href="../systems/obsidian-mind/"><code>obsidian-mind</code></a>, <a
@@ -33712,7 +33716,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-438 repositories of
+439 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

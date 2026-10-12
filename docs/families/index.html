@@ -6445,33 +6445,27 @@ and supersession steepens a decay curve rather than withholding: a
 superseded note keeps returning, ranked lower, until it fades.</p>
 <p><strong><a href="../systems/nougenshards/">NouGenShards</a> writes
 the argument against its own guards into their docstrings.</strong> A
-source-available Python memory at version 1.3.1 — 97,044 lines with
-1,491 test functions — whose first act is
+source-available Python memory at version 1.3.1 whose first act is
 <code>nougen brain scan</code>: walk the machine for the traces Claude,
 Gemini, Cursor and Codex already left and import them into local SQLite.
-Its command gate says "[t]his is a defense-in-depth speed-bump, NOT a
-security boundary … it can be trivially bypassed by obfuscation
-(encoding, indirection, aliases, etc.) and must never be relied upon as
-the sole protection against malicious input", and its sandbox says
-"process-level isolation (no parent env, no shell), NOT a full security
-sandbox", refusing untrusted callers unless an operator opts in. This
-atlas has reported regex denylists presented as guarantees; this is the
-first whose author argues against relying on it. Capture redacts
+Its command gate is "a defense-in-depth speed-bump, NOT a security
+boundary", and its sandbox "process-level isolation (no parent env, no
+shell), NOT a full security sandbox" that refuses untrusted callers
+unless an operator opts in, except that the MCP tool
+<code>batch_execute_sandboxed</code> passes <code>trusted=True</code>
+and runs agent code behind the denylist alone. Capture redacts
 credential-shaped text <strong>before</strong> hashing, embedding,
-indexing or encryption — "so neither SQLite nor an embedding blob
-preserves a recoverable copy of a leaked credential" — which is the
-ordering that matters, because an embedding computed over a secret is a
+indexing or encryption, because an embedding computed over a secret is a
 recoverable copy of it. Private and secret bodies are AES-256-GCM
-encrypted before reaching SQLite, with the edge stated: "[t]itles and
-tags stay plaintext: they are the only handle recall has on an encrypted
-shard, so keep identifying detail out of them." One mark, for two clocks
-declared where the second was added — <code>timestamp</code> is event
-time and <code>learned_utc</code> is when this node stored it, filtered
-independently by <code>as_of</code>, <code>event_after</code> and
-<code>event_before</code>, with imported traces stamped at their true
-era rather than migration time. <code>domain_key</code> is derived from
-the working path on write and omittable on read, so it organises rather
-than isolates.</p>
+encrypted, with the edge stated: "[t]itles and tags stay plaintext".
+Three marks: two clocks, <code>timestamp</code> for event time and
+<code>learned_utc</code> for when this node stored it, filtered
+independently, though the brain scan stamps every import at import time;
+a <code>shard_events</code> log that records creation and utility
+changes and nothing else; and a bracketed test that an
+<code>as_of</code> before the learning date returns nothing.
+<code>domain_key</code> is derived from the working path on write and
+omittable on read, so it organises rather than isolates.</p>
 <p><strong><a href="../systems/edda/">Edda</a> refuses to write a chain
 break, and refuses an approval banked before the gate opened.</strong>
 An MIT-or-Apache Rust ledger for coding agents at version 0.6.2 —
