@@ -17,7 +17,7 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 345 |
+| Repositories with an auto-run surface (`RUNS`) | 346 |
 | Repositories with a dependency surface inside the cooldown (`FRESH`) | 400 |
 | Repositories with build-time execution (`EXEC`) | 528 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
@@ -369,6 +369,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`wenlan`](../../content/systems/wenlan.md) | `.claude-plugin/`, `.claude/hooks/`, `.claude/settings.json`, `.githooks/` |
 | [`windie-sandbox`](../../content/systems/windie-sandbox.md) | `.gitmodules` |
 | [`windieos`](../../content/systems/windieos.md) | `.vscode/settings.json` |
+| [`yantrik-mind`](../../content/systems/yantrik-mind.md) | `.codex/config.toml` |
 | [`yantrikdb-mcp`](../../content/systems/yantrikdb-mcp.md) | `.mcp.json`, `mcp.json`, `server.json` |
 | [`yourmemory`](../../content/systems/yourmemory.md) | `server.json` |
 | [`zcode`](../../content/systems/zcode.md) | `.vscode/settings.json`, `.vscode/tasks.json` |

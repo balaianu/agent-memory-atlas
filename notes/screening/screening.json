@@ -47597,10 +47597,16 @@
     "yantrik-mind": {
       "counts": {
         "EXEC": 2,
-        "NOTE": 3
+        "NOTE": 3,
+        "RUNS": 1
       },
-      "files_scanned": 27,
+      "files_scanned": 30,
       "findings": [
+        {
+          "detail": "Codex CLI config; `[mcp_servers.*]` entries start local servers — mentions command; launches a package fetched at run time (npx)",
+          "kind": "RUNS",
+          "path": ".codex/config.toml"
+        },
         {
           "detail": "cargo executes this at build time",
           "kind": "EXEC",
@@ -47612,8 +47618,8 @@
           "path": "crates/mind-conversation/src/build.rs"
         }
       ],
-      "revision": "97935b1e247167ac7d4fe192ec8a9a1966b26c49",
-      "screened_at": "2026-09-16T09:29:32+00:00",
+      "revision": "7fa2c04b791a795d7832ae9f23923b417d213a8d",
+      "screened_at": "2026-10-12T21:28:47+00:00",
       "slug": "yantrik-mind",
       "source": "reused-clone",
       "status": "screened",

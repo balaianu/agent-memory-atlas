@@ -9837,29 +9837,27 @@ all fail closed." Its own limits are stated as plainly: escalation
 "requires a second approver, so it is simply absent in a single-user
 install", the self-approval and override rules are policy flags, and the
 graph behind the gate is far thinner than the gate in front of it.</p>
-<p><strong><a href="../systems/yantrik-mind/">yantrik-mind</a> deleted
-its audit's exemption for the trusted caller, and wrote down
-why.</strong> A Rust companion of 203,205 lines across nineteen crates,
-with no licence file, delegating its belief store to a published <a
-href="../systems/yantrikdb-engine/">YantrikDB</a> pin and contributing a
-purpose gate of its own. Operator reads once sat outside the read ledger
-on "the trusted owner path"; the exemption is gone because "the
-operator's background lanes (dream/proactive/research/…) are exactly the
-cross-subject reads a purpose audit exists to catch, so a ledger blind
-to them would be theater." Every receipt now names who read, through
-which facade method, for what declared purpose, how many results crossed
-the boundary and how many the gate suppressed, hash-chained so an edit
-or reorder breaks every later value — a record of reads rather than of
-mutations, which is why it earns no audit mark here and is the half of
-that pattern most systems do worse. Its scope default is the other thing
-to take: <code>Shared</code> or <code>Private(owner)</code> on the
-belief, with legacy untagged memory made private to the primary member
-"so pre-multi-user facts never leak to a later-added member", which is
-the migration decision taken in the safe direction. The gap is that the
-thirty-line argument for pinning the engine to a published crate —
-because a path dep "built the mind against whatever that tree happened
-to contain" — was not applied to the three sibling crates still carried
-as path dependencies directly below it.</p>
+<p><strong><a href="../systems/yantrik-mind/">yantrik-mind</a> orders
+its read walls so the second can never widen the first, and leaves one
+background read outside both.</strong> A Rust companion with no licence
+file that keeps its beliefs in a published <a
+href="../systems/yantrikdb-engine/">YantrikDB</a> pin and adds a purpose
+gate of its own. Every facade read runs a scope wall —
+<code>Shared</code> or <code>Private(owner)</code> per belief, with
+untagged legacy rows private to the primary member "so pre-multi-user
+facts never leak to a later-added member" — and then a purpose lens that
+is "[m]onotonic toward denial": four sensitivity classes answer their
+owner in conversation and never season background work without a
+standing grant, and a grant can open the lens but never the wall. The
+operator lost its audit exemption because its background lanes "are
+exactly the cross-subject reads a purpose audit exists to catch", so
+every facade read is receipted in a hash-chained ledger that counts what
+the gate suppressed. Other minds reach the store through an MCP server
+on a credential the person's desktop validates, reading as the person
+with Credentials never opened. Two paths go around it: the same server's
+machine token reads under the unrestricted audit lane, and the
+compaction that writes the primary's rolling summary reads every
+member's transcript with no scope and no receipt.</p>
 <p><strong><a href="../systems/fava-trails/">FAVA Trails</a> puts the
 authority in the process and lets the tool argument choose only a
 view.</strong> An Apache-2.0 MCP server of 14,496 lines of Python

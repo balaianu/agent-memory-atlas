@@ -21712,56 +21712,49 @@ trusted. No marks.</li>
 <h3 id="yantrik-mind"><a
 href="../systems/yantrik-mind/"><code>yantrik-mind</code></a></h3>
 <ul>
-<li>Best idea: <strong>the audit exemption for the trusted caller,
-removed, with the argument written down.</strong> Operator reads once
-sat outside the read ledger on "the trusted owner path"; the exemption
-is gone because "the operator's background lanes
-(dream/proactive/research/…) are exactly the cross-subject reads a
-purpose audit exists to catch, so a ledger blind to them would be
-theater. Every context is receipted now." Each receipt names who read,
-through which facade method, for what declared purpose, what they asked,
-how many results crossed and how many the purpose gate suppressed,
-hash-chained so any edit or reorder breaks every later value. Beside it,
-a dependency line carrying thirty lines of comment:
-<code>yantrikdb-core</code> is an exact pin on a published crate because
-a path dep into a sibling checkout "built the mind against whatever that
-tree happened to contain - it sat at 0.16.0 with uncommitted changes -
-so no one else could reproduce this build", and the later upgrade was
-justified by replaying <code>assert_belief_evidence</code> across the
-migration for "identical priors, posteriors and effective weights to six
-decimals".</li>
-<li>Biggest risk: <strong>the reproducibility argument was applied to
-one dependency and not the other three.</strong>
-<code>yantrik-ml</code>, <code>yantrik-os</code> and
-<code>yantrik-chat</code> remain
-<code>path = "../yantrik-companion/crates/…"</code> — exactly the
-arrangement the comment directly above them rejects — so the build still
-needs a sibling checkout nobody else has. The same block's opening
-sentence still says "pinned to standalone yantrikdb 0.18.0" while the
-requirement below it reads <code>=0.21.2</code>; the move is documented
-further down, so it is a stale first line rather than a false claim, and
-it is the drift the block exists to prevent. There is no licence file.
-And what the store actually does — typed beliefs, Bayesian revision,
-contradiction detection — belongs to the engine rather than to this
-repository.</li>
-<li>Most reusable component: the scope default. <code>Scope</code> is
-<code>Shared</code> or <code>Private(owner)</code>, and legacy untagged
-memory becomes private to the primary member "so pre-multi-user facts
-never leak to a later-added member" — the migration decision taken in
-the safe direction rather than the convenient one. Over it, four
-sensitivity classes with "default deny outside their allowed activities,
-whoever the fact belongs to", and a <code>Credentials</code> class that
-"a wildcard-class grant deliberately does NOT cover".</li>
-<li>Maturity impression: no licence file, Rust, 203,205 lines over 226
-files in nineteen crates, delegating storage to a published YantrikDB
-pin, with a red-team test demanding zero unauthorized hydrations on
-every read path and in every background lane. No auto-run surfaces at
-this pin; run detritus is committed, including two smoke databases'
-write-ahead files.</li>
-<li>Study when: your audit exempts the owner, or your multi-user
-migration makes untagged rows shared.</li>
+<li>Best idea: <strong>two read walls in a fixed order, the second
+unable to widen the first.</strong> Scope decides what a reader may see
+— <code>Shared</code> or <code>Private(owner)</code> per belief,
+untagged legacy rows private to the primary member — and a purpose lens
+then decides what the declared work may use: four sensitivity classes,
+default deny outside their allowed activities, <code>Credentials</code>
+outside every wildcard grant, and a policy function that is "[m]onotonic
+toward denial". A standing grant can open the lens and never the wall.
+Every facade read is receipted, the operator's included, because its
+background lanes "are exactly the cross-subject reads a purpose audit
+exists to catch", and each receipt counts what the gate suppressed.</li>
+<li>Biggest risk: <strong>two reads go around the gate.</strong>
+<code>compact_conversation</code> reads the whole transcript through
+<code>messages_since</code>, which has no scope and writes no receipt,
+and folds it into the rolling summary the primary's prompt carries, so a
+household member's private lines can reach the primary; the
+consolidation lane reading the same table refuses a mixed window, and
+compaction has no such check. And the MCP server's machine token reads
+under <code>operator_audit()</code>, an unrestricted lane that sees
+every member's private beliefs and the Credentials class, on loopback
+TCP whenever the mind runs. Smaller: <code>believe</code> echoes the
+stored belief's confidence unwalled; three path dependencies sit below
+the comment arguing against them; there is no licence file.</li>
+<li>Most reusable component: the credential door. Another mind presents
+a <code>mem-</code> credential, the server sends only its SHA-256 to the
+person's desktop, accepts exactly a version-1 answer for this person,
+trusts it for at most five seconds and drops every cached answer when
+the desktop is unreachable; the caller then reads as the person with
+ordinary facts by default, Health and Finance by its own grants, and
+Credentials never.</li>
+<li>Maturity impression: no licence file, Rust, 214,762 lines over 237
+files in twenty-one crates at version 0.2.1, storing beliefs in a
+YantrikDB file pinned exactly at <code>=0.23.0</code> with the upgrade
+audits written beside the pin, and committed adversarial tests for the
+purpose gate, agent credentials and scope re-assertion. One auto-run
+surface, a Codex MCP config; run detritus is committed, including two
+smoke databases' write-ahead files.</li>
+<li>Study when: your audit exempts the owner, your purpose checks can be
+widened by the query, or another agent needs a narrower view of the same
+store.</li>
 <li>Do not copy when: you need the belief model itself — that lives in
-the engine. Two marks: scope enforced, negative evals.</li>
+the engine — or a background summariser reads the same table as your
+walled reads. Two marks: scope enforced, negative evals.</li>
 </ul>
 <h3 id="mnesio"><a
 href="../systems/mnesio/"><code>mnesio</code></a></h3>

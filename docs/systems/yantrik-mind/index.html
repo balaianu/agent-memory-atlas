@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="A Rust companion over the
-YantrikDB belief engine whose own contribution is a purpose gate: scope
-and sensitivity stored on every belief, default-deny policies over them,
-and a receipt for every read including the operator's.">
+YantrikDB belief engine, adding a purpose gate: per-belief scope,
+default-deny sensitivity classes, receipted reads, and a credentialed
+MCP door.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="yantrik-mind — Agent Memory Atlas">
     <meta property="og:description" content="A Rust companion over the
-YantrikDB belief engine whose own contribution is a purpose gate: scope
-and sensitivity stored on every belief, default-deny policies over them,
-and a receipt for every read including the operator's.">
+YantrikDB belief engine, adding a purpose gate: per-belief scope,
+default-deny sensitivity classes, receipted reads, and a credentialed
+MCP door.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="yantrik-mind — Agent Memory Atlas">
     <meta name="twitter:description" content="A Rust companion over the
-YantrikDB belief engine whose own contribution is a purpose gate: scope
-and sensitivity stored on every belief, default-deny policies over them,
-and a receipt for every read including the operator's.">
+YantrikDB belief engine, adding a purpose gate: per-belief scope,
+default-deny sensitivity classes, receipted reads, and a credentialed
+MCP door.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>yantrik-mind — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +44,7 @@ and a receipt for every read including the operator's.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "yantrik-mind",
-      "description": "A Rust companion over the YantrikDB belief engine whose own contribution is a purpose gate: scope and sensitivity stored on every belief, default-deny policies over them, and a receipt for every read including the operator's.",
+      "description": "A Rust companion over the YantrikDB belief engine, adding a purpose gate: per-belief scope, default-deny sensitivity classes, receipted reads, and a credentialed MCP door.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -99,28 +99,26 @@ and a receipt for every read including the operator's.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">Thirty lines of comment on one dependency
-line, because a path dep had been building it against whatever was lying
-around</p>
+          <p class="eyebrow">A purpose gate on every facade read, and a
+rolling summary that reads around it</p>
           <h1>yantrik-mind</h1>
           <p class="document-deck">A Rust companion over the YantrikDB
-belief engine whose own contribution is a purpose gate: scope and
-sensitivity stored on every belief, default-deny policies over them, and
-a receipt for every read including the operator's.</p>
+belief engine, adding a purpose gate: per-belief scope, default-deny
+sensitivity classes, receipted reads, and a credentialed MCP door.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/yantrikos/yantrik-mind">
               <span>Source</span>
               <strong>yantrikos/yantrik-mind</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/yantrikos/yantrik-mind/commit/97935b1e247167ac7d4fe192ec8a9a1966b26c49" title="97935b1e247167ac7d4fe192ec8a9a1966b26c49">
+            <a class="meta-pill revision-pill" href="https://github.com/yantrikos/yantrik-mind/commit/7fa2c04b791a795d7832ae9f23923b417d213a8d" title="7fa2c04b791a795d7832ae9f23923b417d213a8d">
               <span>Analyzed revision</span>
-              <code>97935b1e…</code>
+              <code>7fa2c04b…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-12</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/yantrikos--yantrik-mind" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -128,7 +126,22 @@ a receipt for every read including the operator's.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>None:
+no LICENSE file in the tree, and no licence named in Cargo.toml or the
+README</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>214,762
+lines of Rust in 237 files across twenty-one crates; the memory layer,
+mind-memory and mind-memory-mcp, is 14,430 lines in 8
+files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,790
+commits on main by 3 author names, 26 June – 30 September 2026; version
+0.2.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,188
+Rust test functions in 178 files, 126 of them in the two memory crates;
+none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -144,95 +157,102 @@ a receipt for every read including the operator's.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>yantrik-mind is "[a] ground-up Rust AI companion built on the
-YantrikDB typed-memory moat" — no licence file, 203,205 lines of Rust
-across 226 files in nineteen crates. Its claim is about the memory model
-rather than the assistant: "[i]t stores <em>beliefs</em> — typed,
+<p>yantrik-mind is a Rust companion that stores what it learns as typed
+beliefs in the YantrikDB engine and adds a purpose gate of its own:
+every belief carries an owner scope and a sensitivity class, and every
+facade read passes a scope wall and then a default-deny purpose lens
+before a receipt is written. The gate is well built and adversarially
+tested. Two paths go around it: the MCP server's machine token reads
+under the unrestricted audit lane, and the background compaction that
+writes the primary's rolling summary reads every member's transcript
+with no wall and no receipt.</p>
+<p>It describes itself as "[a] ground-up Rust AI companion built on the
+YantrikDB typed-memory moat" that stores "<em>beliefs</em> — typed,
 revisable nodes with Bayesian confidence scores, evidence trails, and
-contradiction edges — in YantrikDB's cognitive graph", and when two
-beliefs conflict "the companion asks rather than asserting either
-side."</p>
-<p>That model belongs to the engine. This report is about what the
-companion adds on top of it, and the addition is a <strong>purpose
-gate</strong>.</p>
-<p><strong>Scope is stored on the belief and the migration default fails
-safe.</strong> <code>Scope</code> is <code>Shared</code> or
-<code>Private(person_id)</code>, and the type's comment states the rule
-plainly — a fact "from one person must NEVER surface to another" — while
-the default for pre-existing data goes the careful way:
-"[l]egacy/untagged memory is private to them, so pre-multi-user facts
-never leak to a later-added member." Most systems make unlabelled rows
-visible to everyone, which is the same decision taken in the direction
-that is easier to ship.</p>
-<p><strong>Sensitivity is default-deny.</strong> Four classes carry
-purpose policies — "default deny outside their allowed activities,
-whoever the fact belongs to" — and <code>Credentials</code> is
-deliberately excluded from wildcard grants: "opening credentials takes
-an explicit credentials grant."</p>
-<p><strong>The audit has no exempt caller, and the reasoning for that is
-the best sentence in the tree.</strong> Operator reads were once outside
-the ledger, on the "trusted owner path". The exemption was removed:</p>
-<blockquote>
-<p>"the operator's background lanes (dream/proactive/research/…) are
-exactly the cross-subject reads a purpose audit exists to catch, so a
-ledger blind to them would be theater. Every context is receipted
-now."</p>
-</blockquote>
-<p>Each receipt records who read, through which facade method, for what
-declared purpose, what they asked, how many results crossed the
-boundary, and how many the gate suppressed — hash-chained so "[a]ny
-edit, reorder, or deletion of a middle line breaks every later chain
-value." It is a record of reads rather than of mutations, which is why
-it does not carry this atlas's audit mark, and it is the half of that
-pattern most systems do worse.</p>
-<p><strong>And a red-team test holds the whole arrangement.</strong>
-<code>purpose_gate_redteam_zero_unauthorized_hydrations</code> asserts
-"ZERO unauthorized hydrations across the cross-owner and sensitive-class
-corpora — on every read path, in every background lane."</p>
-<p><strong>The other thing to read here is a dependency line.</strong>
-<code>yantrikdb-core</code> carries about thirty lines of comment
-explaining why it is an exact version pin on a published crate rather
-than a path dependency — because a path dep into
-<code>../yantrikdb</code> "built the mind against whatever that tree
-happened to contain - it sat at 0.16.0 with uncommitted changes - so no
-one else could reproduce this build and it moved under us whenever
-someone worked there." The upgrade to a later engine is documented in
-the same block by re-checking the properties the pin was chosen for
-against the published crates, including replaying
-<code>assert_belief_evidence</code> across the migration for "identical
-priors, posteriors and effective weights to six decimals."</p>
-<p>The gap is that the argument stops at one line.
-<code>yantrik-ml</code>, <code>yantrik-os</code> and
-<code>yantrik-chat</code> are still path dependencies into a sibling
-workspace — the exact arrangement the comment above them rejects.</p>
+contradiction edges". That model belongs to the engine, described in <a
+href="../yantrikdb-engine/">YantrikDB Engine</a>. This report is about
+what the companion puts around it.</p>
+<p><strong>Scope is a wall, and legacy rows fall on the safe
+side.</strong> <code>Scope</code> is <code>Shared</code> or
+<code>Private(person_id)</code>, and the type states its rule: a fact
+"from one person must NEVER surface to another". An untagged row is
+private to the primary member, "so pre-multi-user facts never leak to a
+later-added member". A scoped assertion of a belief that exists keeps
+the scope it had; until 28 September 2026 it overwrote it.</p>
+<p><strong>Sensitivity is default-deny, and the policy only
+narrows.</strong> Four classes — Ordinary, Health, Finance, Credentials
+— answer their owner in direct conversation and never season background
+work without a standing grant, and <code>Credentials</code> is outside
+every wildcard grant. <code>purpose_allows</code> is "[m]onotonic toward
+denial: outside Audit/Maintenance, nothing about the activity or the
+query text can widen access — only a standing grant can."</p>
+<p><strong>Every facade read is receipted, the operator's
+included.</strong> Operator reads were once exempt as "the trusted owner
+path"; the receipts module removed the exemption because "the operator's
+background lanes (dream/proactive/research/…) are exactly the
+cross-subject reads a purpose audit exists to catch, so a ledger blind
+to them would be theater." Each receipt is hash-chained and counts what
+the gate suppressed.</p>
+<p><strong>Other minds reach memory through a door the desktop
+keeps.</strong> A <code>mind-memory-mcp</code> server serves beliefs and
+flat memories to other agents. A <code>mem-</code> credential is
+validated by the person's desktop over a socket, and the caller reads as
+the person with ordinary facts by default, Health and Finance by grant,
+and Credentials never.</p>
+<p><strong>The machine token is the exception.</strong> The same server
+accepts a per-machine bearer token, and that caller reads as
+<code>operator_audit()</code> — every scope, every class.</p>
+<p><strong>The rolling summary is the leak.</strong>
+<code>compact_conversation</code> reads the transcript through
+<code>messages_since</code>, which has no scope, and writes the result
+into the summary the primary's prompt carries. The consolidation lane
+beside it reads the same table and refuses any batch that mixes members;
+compaction has no such check.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>belief</strong> lives in the engine; a
-<strong>scope</strong> and a <strong>sensitivity</strong> are what this
-layer puts on it.</p>
-<p>A <strong>purpose</strong> is declared by the reader and checked
-against the class.</p>
-<p>A <strong>suppression</strong> is counted, not silent.</p>
-<p>A <strong>receipt</strong> covers every read, including the
-owner's.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the belief store is delegated to a pinned engine while this layer adds a stored scope and sensitivity class, a default-deny purpose gate whose suppressions are counted, and a hash-chained receipt for every read with no exempt caller</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the belief store is delegated to a pinned engine while this layer adds a stored scope and sensitivity class, a default-deny purpose gate whose suppressions are counted, and a hash-chained receipt for every read with no exempt caller
+<p>A <strong>belief</strong> lives in the engine and is revised by
+evidence. This layer adds two handling attributes keyed by the belief's
+proposition: a <strong>scope</strong> saying whose it is, and a
+<strong>sensitivity</strong> saying what work may use it, taken from an
+explicit override row or, failing that, from a deterministic classifier
+over the text.</p>
+<p>A <strong>read</strong> carries an <code>AccessContext</code>: a
+principal with a scope, the operator with a purpose, or another mind
+with a validated footing. There is no way to construct one without a
+declared purpose.</p>
+<p>The <strong>wall</strong> runs in a fixed order: scope decides what
+may be seen, then the purpose lens decides what this work may use. A
+suppression is counted.</p>
+<p>A <strong>receipt</strong> is written for each facade read, chained
+to the one before it.</p>
+<p>A belief stops being recalled when it is <strong>forgotten</strong>:
+the engine marks the node tombstoned and this layer records a redacted,
+fingerprinted reason. A later assertion of the same words creates a new
+belief; nothing consults the tombstone. Status labels such as
+<code>contradicted</code> or <code>stale</code> are computed at read
+time, not stored.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — scope and sensitivity are written beside each belief, every facade read passes the scope wall then the purpose lens and is receipted, the MCP door maps a validated credential to the person's view and the machine token to the audit lane, and compaction reads the transcript around the wall</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: scope and sensitivity are written beside each belief, every facade read passes the scope wall then the purpose lens and is receipted, the MCP door maps a validated credential to the person&#39;s view and the machine token to the audit lane, and compaction reads the transcript around the wall
 flowchart TB
-    TURN[&quot;a conversation turn&quot;] --&gt; CONS[&quot;consolidation into durable typed beliefs&quot;]
-    CONS --&gt; ENG[(&quot;YantrikDB — pinned as a PUBLISHED crate at an exact version:&lt;br/&gt;typed beliefs, Bayesian revision, evidence trails,&lt;br/&gt;contradiction edges&quot;)]
-    PIN[&quot;=0.21.2, not ^0.21, not a path dep&quot;] -.-&gt;|&quot;a path dep into ../yantrikdb &#39;built the mind against&lt;br/&gt;whatever that tree happened to contain - it sat at 0.16.0&lt;br/&gt;with uncommitted changes - so no one else could&lt;br/&gt;reproduce this build&#39;&quot;| ENG
-    PIN -.-&gt;|&quot;the upgrade was justified by replaying assert_belief_evidence&lt;br/&gt;across the migration: identical priors, posteriors and effective&lt;br/&gt;weights to six decimals, against both same-version controls&quot;| ENG
-    CONS --&gt; TAG[&quot;this layer tags each belief:&lt;br/&gt;Scope = Shared or Private(owner)&lt;br/&gt;Sensitivity = Ordinary, Health, Finance, Credentials&quot;]
-    TAG -.-&gt;|&quot;legacy untagged memory is private to the primary,&lt;br/&gt;&#39;so pre-multi-user facts never leak to a later-added member&#39;&quot;| SAFE[&quot;the migration default fails safe&quot;]
-    READ[&quot;a read, from a lane or from the owner&quot;] --&gt; FACADE[&quot;the memory facade&quot;]
-    FACADE --&gt; GATE{&quot;purpose gate: does this declared purpose&lt;br/&gt;clear this sensitivity class?&quot;}
-    GATE --&gt;|&quot;default deny outside the class&#39;s allowed activities,&lt;br/&gt;whoever the fact belongs to&quot;| DENY[&quot;suppressed&quot;]
-    GATE --&gt;|&quot;Credentials, under a wildcard grant&quot;| DENY2[&quot;still denied — it takes an&lt;br/&gt;explicit credentials grant&quot;]
-    GATE --&gt;|&quot;cleared&quot;| OUT[&quot;results cross the boundary&quot;]
-    DENY &amp; DENY2 &amp; OUT --&gt; REC[(&quot;receipts.jsonl — who read, which facade method,&lt;br/&gt;declared purpose, the query, how many crossed,&lt;br/&gt;how many were suppressed&quot;)]
-    REC -.-&gt;|&quot;chain = sha256(prev_chain ++ record), first off &#39;genesis&#39; —&lt;br/&gt;any edit, reorder or deletion breaks every later value&quot;| TAMPER[&quot;tamper-evident&quot;]
-    OPER[&quot;the operator&#39;s own lanes:&lt;br/&gt;dream, proactive, research&quot;] --&gt; FACADE
-    OPER -.-&gt;|&quot;these used to be exempt as &#39;the trusted owner path&#39;;&lt;br/&gt;the exemption was removed because they &#39;are exactly the&lt;br/&gt;cross-subject reads a purpose audit exists to catch,&lt;br/&gt;so a ledger blind to them would be theater&#39;&quot;| REC
-    TEST[&quot;purpose_gate_redteam_zero_unauthorized_hydrations&quot;] -.-&gt;|&quot;ZERO unauthorized hydrations across the cross-owner AND&lt;br/&gt;sensitive-class corpora, on every read path,&lt;br/&gt;in every background lane&quot;| GATE
-    PATHS[&quot;yantrik-ml, yantrik-os, yantrik-chat —&lt;br/&gt;still path deps into ../yantrik-companion&quot;] -.-&gt;|&quot;the argument that produced the engine pin&lt;br/&gt;was not applied to these three&quot;| ENG</code></pre></details></figure>
+    TURN[&quot;a conversation turn,&lt;br/&gt;written to the transcript&lt;br/&gt;with the speaker&#39;s scope&quot;] --&gt; CONS[&quot;consolidation&quot;]
+    CONS --&gt;|&quot;refuses a batch&lt;br/&gt;that mixes members&quot;| ASSERT[&quot;assert_belief_scoped&quot;]
+    ASSERT --&gt;|&quot;new belief: tag first,&lt;br/&gt;a failed write takes the tag back&quot;| ENG[(&quot;YantrikDB =0.23.0 —&lt;br/&gt;beliefs, evidence,&lt;br/&gt;Bayesian confidence&quot;)]
+    ASSERT --&gt;|&quot;existing belief:&lt;br/&gt;keeps its scope&quot;| ENG
+    ASSERT --&gt; TAGS[(&quot;mind_belief_scope,&lt;br/&gt;sensitivity overrides,&lt;br/&gt;keyed by proposition&quot;)]
+    TURN --&gt; COMPACT[&quot;compact_conversation&quot;]
+    COMPACT --&gt;|&quot;messages_since:&lt;br/&gt;every row, no scope,&lt;br/&gt;no receipt&quot;| SUM[&quot;rolling summary&quot;]
+    SUM --&gt;|&quot;shown to the&lt;br/&gt;primary member&quot;| PROMPT[&quot;primary&#39;s prompt&quot;]
+    READ[&quot;a facade read&lt;br/&gt;with a declared purpose&quot;] --&gt; WALL1{&quot;scope wall:&lt;br/&gt;visible to this viewer?&lt;br/&gt;untagged = primary only&quot;}
+    TAGS --&gt; WALL1
+    ENG --&gt; WALL1
+    WALL1 --&gt;|&quot;visible&quot;| WALL2{&quot;purpose lens:&lt;br/&gt;same owner and a class&lt;br/&gt;allowed for this activity,&lt;br/&gt;or a standing grant&quot;}
+    WALL1 --&gt;|&quot;not visible&quot;| DROP[&quot;dropped&quot;]
+    WALL2 --&gt;|&quot;allowed&quot;| OUT[&quot;results&quot;]
+    WALL2 --&gt;|&quot;denied&quot;| SUPP[&quot;suppressed, counted&quot;]
+    OUT --&gt; REC[(&quot;receipts.jsonl —&lt;br/&gt;who, method, purpose,&lt;br/&gt;query, results, suppressed;&lt;br/&gt;sha256 chain from genesis&quot;)]
+    SUPP --&gt; REC
+    MEM[&quot;mem- credential&quot;] --&gt;|&quot;desktop validates&lt;br/&gt;its SHA-256&quot;| AGENT[&quot;Agent footing:&lt;br/&gt;viewer Private(primary),&lt;br/&gt;Health and Finance by grant,&lt;br/&gt;Credentials never&quot;]
+    AGENT --&gt; READ
+    TOKEN[&quot;machine token&lt;br/&gt;on loopback TCP&quot;] --&gt; AUDIT[&quot;operator_audit:&lt;br/&gt;no viewer,&lt;br/&gt;unrestricted lane&quot;]
+    AUDIT --&gt; READ</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -243,103 +263,275 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>Cargo.toml:28-56</code></td>
-<td>The engine pin, and thirty lines on why it is what it is</td>
+<td><code>Cargo.toml:28-71</code></td>
+<td>The engine pin at <code>=0.23.0</code>, and the reasons for each
+move</td>
 </tr>
 <tr>
 <td><code>crates/mind-types/src/memory.rs</code></td>
-<td><code>Scope</code>, and the leak it exists to prevent</td>
+<td><code>Scope</code>, <code>AccessContext</code>, and the agent
+footing</td>
 </tr>
 <tr>
 <td><code>crates/mind-types/src/purpose.rs</code></td>
-<td>Sensitivity classes and their default-deny policies</td>
+<td>Sensitivity classes, grants and <code>purpose_allows</code></td>
 </tr>
 <tr>
 <td><code>crates/mind-memory/src/lib.rs</code></td>
-<td>The facade, the gate, and the red-team test</td>
+<td>The memory actor, the scope and sensitivity tables, the wall, the
+facade and its tests</td>
 </tr>
 <tr>
 <td><code>crates/mind-memory/src/receipts.rs</code></td>
-<td>A hash-chained ledger with no exempt caller</td>
+<td>The hash-chained read ledger</td>
 </tr>
 <tr>
-<td><code>crates/mind-governance/</code>, <code>mind-evals/</code></td>
-<td>Egress and device policy, and the immune ledger the chain
-mirrors</td>
+<td><code>crates/mind-memory-mcp/</code></td>
+<td>The MCP server, its token and credential auth, and the desktop
+door</td>
+</tr>
+<tr>
+<td><code>crates/mind-conversation/</code></td>
+<td>Consolidation, compaction and the companion's turns</td>
+</tr>
+<tr>
+<td><code>deploy/yantrik-os/</code></td>
+<td>The two systemd units that take turns owning the memory file</td>
 </tr>
 </tbody>
 </table></div>
+<p>One process owns the memory file at a time. While Yantrik Mind runs,
+it serves the MCP endpoint from its own handle; when another mind is
+active, the standalone <code>yantrik-memory</code> binary serves the
+same file at the same address, and the units declare
+<code>Conflicts=</code> with each other so they never overlap. The
+reason is stated in the crate header: "a second one does not see the
+first one's writes (proven 2026-09-16 — its recall misses them while its
+stats count them)."</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>Cargo.toml:28-56</code> — why the engine is a published pin,
-and what the upgrade had to prove.</p>
-<p><code>crates/mind-types/src/memory.rs:218-236</code> — a two-value
-scope and a safe legacy default.</p>
-<p><code>crates/mind-types/src/purpose.rs:140-153</code> — four classes,
-default deny, and one that wildcards cannot reach.</p>
-<p><code>crates/mind-memory/src/receipts.rs:1-14</code> — the exemption
-that was removed, and why.</p>
-<p><code>crates/mind-memory/src/lib.rs:7947-7966</code> — zero
-unauthorized hydrations, on every path, in every lane.</p>
+<p><code>crates/mind-memory/src/lib.rs:5564-5604</code> — the wall:
+scope visibility, then the purpose lens, returning the suppressed
+count.</p>
+<p><code>crates/mind-types/src/purpose.rs:391-418</code> —
+<code>purpose_allows</code>, the one policy function.</p>
+<p><code>crates/mind-memory/src/lib.rs:744-771</code> —
+<code>assert_belief_scoped</code>: tag before write, keep an existing
+belief's scope.</p>
+<p><code>crates/mind-memory-mcp/src/server.rs:20-28</code>,
+<code>:229-235</code> — the two callers and the context each reads
+under.</p>
+<p><code>crates/mind-memory-mcp/src/door.rs:94-141</code> — validating a
+credential through the desktop, failing closed.</p>
+<p><code>crates/mind-conversation/src/briefing.rs:297-379</code> —
+compaction, and the read that goes around the wall.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>The belief itself — statement, polarity, weight, source event,
-provenance, and the engine's confidence, evidence and contradiction
-structure — belongs to YantrikDB and is described in <a
-href="../yantrikdb-engine/">YantrikDB Engine</a>. What this repository
-contributes to the unit is the pair of handling attributes: a scope
-naming whose fact it is, and a sensitivity class naming what may be done
-with it.</p>
+<p>The belief node — proposition, log-odds, evidence trail, confidence,
+provenance — is the engine's. This layer keeps three things beside it,
+all in the same SQLite file and all keyed by the belief's proposition
+text: <code>mind_belief_scope</code> (<code>shared</code> or
+<code>private:&lt;owner&gt;</code>), a sensitivity override table, and
+<code>mind_belief_evidence_version</code>, a per-belief monotonic
+counter that drops an out-of-order or replayed evidence update instead
+of letting it overwrite a fresher confidence.</p>
+<p>Keying scope by text has a consequence the project found and fixed.
+<code>find_belief</code> merges case and punctuation variants into one
+node, and until <a
+href="https://github.com/yantrikos/yantrik-mind/commit/f90464b3d8b0c8e91a3de62260980c90eea25ce2"><code class="commit-id" title="f90464b3d8b0c8e91a3de62260980c90eea25ce2">f90464b3…</code></a>
+on 28 September 2026 a scoped assertion wrote the belief and then
+upserted its tag. The commit message states the effect: "anyone saying
+the same statement moved the whole belief -- confidence, evidence,
+history -- into their own scope, including Private -&gt; Shared. A
+failed tag was discarded, and write and tag were two engine commands."
+<code>assert_belief_scoped</code> makes it one command: a new belief is
+tagged before it is written and a failed write takes the tag back; an
+existing belief keeps its scope (<code>lib.rs:744-771</code>).</p>
+<p>Flat memories are engine records with a namespace, written by the MCP
+<code>remember</code> tool with a server-stamped <code>written_by</code>
+that the caller's metadata cannot impersonate. They have no scope tag,
+so the wall treats them as legacy rows: visible to the primary and to an
+agent reading as the primary, never to another member.</p>
+<p>Forgetting a belief calls the engine's
+<code>tombstone_cognitive_node</code>, which sets a flag on the node and
+its edges, and then records a row in
+<code>mind_belief_tombstone_v2</code> keyed by a SHA-256 of the
+proposition with a <code>ledger_safe</code> preview. The redaction
+exists because the v1 table kept the full proposition: "forgetting 46
+beliefs that contained a household safe code wrote 46 fresh copies of
+that code into the deletion ledger." The node row keeps its text under
+the flag, and the engine's oplog entry for each upsert carries the
+label.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Semantic recall blended with a confidence prior, through a facade
-that applies the scope filter and then the purpose gate, counting what
-it suppressed before anything crosses the boundary.</p>
+<p>Belief recall loads every belief and scores it: with the bundled
+embedder, cosine similarity plus <code>0.1 * confidence</code>; without
+one, keyword overlap plus confidence (<code>lib.rs:2835-2914</code>).
+<code>beliefs_matching_n</code> is a word match with acronym handling.
+Flat-memory recall calls the engine's <code>recall</code> with graph
+expansion off and the caller's optional namespace; <code>None</code>
+spans every namespace, which is the engine's documented behaviour.</p>
+<p>Each of these returns to the facade, which runs <code>wall</code> and
+writes a receipt. <code>recent_messages</code> applies the same rule on
+the transcript by downgrading an operator lane outside audit and
+maintenance to the scope its beneficiary could see.
+<code>messages_since</code> does not: it is a raw
+<code>SELECT id, role, text FROM mind_transcript WHERE id &gt; ?1</code>
+with no scope and no receipt (<code>lib.rs:4522-4544</code>), and its
+two callers are consolidation and compaction.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Conversation turns are consolidated into durable typed beliefs
-asserted through the engine's <code>assert_belief_evidence</code>.
-Contradiction detection belongs to the engine; this layer's stated
-behaviour on a conflict is to ask rather than to pick a side.</p>
+<p>Consolidation reads a bounded transcript window, refuses it unless
+<code>next_batch_is_primary_isolated</code> holds — "a mixed window must
+remain pending rather than fuse two people's private contexts into
+primary memory"
+(<code>crates/mind-conversation/src/lib.rs:6598-6612</code>) — and asks
+a model to extract beliefs, goals, preferences, commitments and people,
+each belief asserted through the engine's
+<code>assert_belief_evidence</code>. Every belief write passes
+<code>gate_write</code>, which keeps marker-shaped secrets out
+entirely.</p>
+<p>Over MCP, <code>remember</code> writes a flat memory and
+<code>believe</code> adds signed evidence to a belief, unscoped and so
+primary-only on read. A mind repeating its own assertion is not counted
+again (E.EVID1), and a mind may <code>forget</code> only what it alone
+wrote, checked against the server-stamped authors.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Nineteen crates covering agents, conversation, cortex, governance,
-identity, inference, instincts, perception, proactive lanes, recipes,
-tools and a world model, with client and deploy directories beside
-them.</p>
+<p>The companion runs over Telegram and a web console. Telegram mints a
+principal for every sender, the owner included, so remote reads are
+filtered; the web console and CLI dispatch use
+<code>operator_audit()</code>.</p>
+<p>The MCP server exposes <code>remember</code>, <code>recall</code>,
+<code>believe</code>, <code>beliefs</code>, <code>explain</code>,
+<code>forget</code>, <code>conflicts</code>, <code>relate</code> and
+<code>reflect</code>. It authenticates two kinds of caller
+(<code>crates/mind-memory-mcp/src/lib.rs:155-178</code>):</p>
+<ul>
+<li><strong>Another mind</strong>, presenting a <code>mem-</code>
+credential. The server sends only its SHA-256 to the desktop's
+<code>memory_validate</code>, accepts exactly a version-1 answer for
+this person naming a mind, trusts it for at most five seconds, and
+clears every cached answer when the door fails. The footing reads as
+<code>Private(PRIMARY)</code> under the <code>Agent</code> activity,
+every tool but <code>forget</code> requires its named grant, and
+<code>purpose_allows</code> refuses Credentials to the
+<code>Agent</code> activity "whatever it was granted". On the person's
+unix socket this is the only caller accepted, and only from the person's
+uid.</li>
+<li><strong>The machine token</strong>, a 32-byte value in a mode-0600
+file beside the database, accepted on loopback TCP. It reads under
+<code>operator_audit()</code> (<code>server.rs:229-235</code>), which
+<code>purpose_allows</code> treats as unrestricted. The Yantrik OS unit
+for the mind sets <code>YM_MEMORY_SERVER=127.0.0.1:7440</code>, so the
+endpoint is up whenever the mind runs. The <code>Caller</code> comment
+gives it "the machine owner's full view, until the desktop's per-mind
+credentials are validated."</li>
+</ul>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The strong parts are the default-deny sensitivity policies, the safe
-legacy scope default, the unexempted read ledger and the red-team test.
-The weak parts are three path dependencies that undo the reproducibility
-the engine pin buys, an absent licence, and committed run artefacts
-including two smoke databases' write-ahead files.</p>
+<p>The gate is the part to trust. It is one wall in a fixed order, the
+policy only narrows, a grant cannot widen a principal's view,
+suppressions are counted into a chained ledger, and the red-team test
+reads as a specification.</p>
+<p>Three things reach around it.</p>
+<p><strong>Compaction.</strong> <code>compact_conversation</code>
+(<code>crates/mind-conversation/src/briefing.rs:297-379</code>) runs on
+every Telegram tick
+(<code>crates/mind-core/src/telegram.rs:3101</code>), reads
+<code>messages_since</code> over the whole transcript, and writes a
+<code>conversation_summary</code> profile value. The turn builder shows
+that summary only when the viewer is the primary
+(<code>crates/mind-conversation/src/lib.rs:12455-12469</code>), on the
+stated ground that "[t]he rolling summary is distilled from the primary
+transcript". The read does not select it: rows written with a member's
+<code>private:&lt;owner&gt;</code> scope by
+<code>append_message_scoped</code> are in the window, so a registered
+member's private lines can reach the primary's prompt, and no receipt
+records the read. Consolidation, reading the same table, refuses a mixed
+window; compaction has no equivalent check.</p>
+<p><strong>The machine token.</strong> Whoever can read the token file
+reads every member's private beliefs and the Credentials class,
+receipted as <code>audit</code>. The Credentials rule that the class
+"never seasons background work" and the agent rule that another mind
+"never reads a credential" do not apply to it.</p>
+<p><strong>The believe tool.</strong> <code>believe</code> returns
+<code>belief_json</code> of the stored belief without passing the wall
+(<code>server.rs:379-407</code>), and <code>assert_belief</code> finds
+the node by proposition regardless of scope. An agent holding
+<code>believe</code> that states someone else's private belief verbatim
+adds evidence to it and gets its confidence and evidence count back.</p>
+<p>Beyond the gate: <code>yantrik-ml</code>, <code>yantrik-os</code> and
+<code>yantrik-chat</code> are path dependencies into
+<code>../yantrik-companion</code>, directly below the comment arguing
+against path dependencies, and that comment's first line reads "pinned
+to standalone yantrikdb 0.18.0" above <code>=0.23.0</code>. There is no
+licence file. Committed run artefacts include
+<code>comm_smoke.db-wal</code>, <code>mind_smoke.db-wal</code>, their
+<code>-shm</code> files, <code>grep.exe.stackdump</code> and two
+<code>__pycache__</code> files.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>A <code>mind-evals</code> crate with an immune ledger whose chain
-discipline the receipts module mirrors, plus in-tree adversarial tests —
-the purpose-gate red team over cross-owner and sensitive-class corpora,
-and a surprise-gift case the <code>Scope</code> type names directly.</p>
+<p><code>purpose_gate_redteam_zero_unauthorized_hydrations</code>
+(<code>lib.rs:8451-8701</code>) asserts that "purpose-incompatible facts
+that are PRESENT, VISIBLE (to the operator capability), and HIGHLY
+RELEVANT … must produce ZERO unauthorized hydrations across the
+cross-owner and sensitive-class corpora", across six background lanes
+and four read methods, with positive controls.
+<code>another_mind_reads_only_what_its_credential_opens</code>
+(<code>:9271-9332</code>) asserts the exact visible set for each agent
+grant combination and that explain and reflect hide what recall hides.
+<code>an_assertion_never_moves_a_beliefs_scope</code>
+(<code>:9352-9390</code>) and
+<code>read_isolation_keeps_a_private_belief_from_another_member</code>
+(<code>:9419-9512</code>) hold the scope wall against re-assertion and
+across members. The MCP crate tests that each tool demands its grant,
+that an HTTP call with no authenticated caller is refused, and that on
+the socket only the person's uid with a vouched credential is
+served.</p>
+<p>No test reads <code>messages_since</code>, compaction, or
+<code>recall_memories</code> under a member scope, and none exercises
+the machine-token caller against a private or Credentials row.
+<code>mind-evals</code> carries an immune ledger whose chain discipline
+the receipts module mirrors. No test was run for this reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Pin the engine you delegate to, exactly, on a published artifact —
-and write down why. The comment on that one line is worth more than most
-changelogs: it records the failure that produced the pin, the caret
-trap, the resolved checksum, and what the later upgrade had to
-prove.</p>
-<p>When you widen a data model to more than one owner, make the untagged
-rows private rather than shared. The convenient default is the one that
-leaks.</p>
-<p>Delete the audit exemption for the trusted caller. The lanes you
-trust are the ones that read across subjects, and a ledger without them
-measures the wrong half.</p>
-<p>Count your suppressions. A gate whose refusals are invisible cannot
-be told from a gate that never fired.</p>
+<h3 id="steal">Steal</h3>
+<p>Order the walls and never let the second widen the first. Scope
+decides what may be seen; purpose decides what this work may use; a
+grant can open the second and never the first.</p>
+<p>Make the context unconstructible without a purpose. Every call site
+then names what the read is for, and every receipt carries it.</p>
+<p>Count suppressions in the receipt. A gate whose refusals are
+invisible cannot be told from one that never fired.</p>
+<p>Validate another agent's credential by hash against an authority you
+do not control, trust the answer for seconds, and drop every cached
+answer when the authority is unreachable.</p>
+<p>When a scope is keyed by content, make the first writer's scope
+permanent. A merge on normalised text otherwise hands a belief to
+whoever says it next.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A raw read in the same module as the wall.
+<code>messages_since</code> sits beside <code>recent_messages</code>,
+which applies the rule, and the background lane that uses it produces
+text for one person's prompt from everyone's lines.</p>
+<p>A shared token that maps to the audit lane. Once a per-caller
+credential exists, the machine-wide one is the path that bypasses
+everything it was built to enforce.</p>
+<p>Returning a write's result unfiltered. A write tool that echoes the
+stored row is a read.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a household companion on one machine where several people
+talk to the same mind and the main risk is one person's private facts
+reaching another's conversation or a background job. It is a reference
+for purpose limitation over a belief store. It is not a library: there
+is no licence, the build needs a sibling checkout, and the memory API is
+internal to the workspace.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the three remaining path dependencies are intended. The
-argument against them is written directly above them, applied to a
-fourth, and a reader will wonder whether the other three were judged
-different or simply not revisited.</p>
-<p>Whether the read ledger will be joined by a mutation one. Everything
-about the receipts design — the chain, the removed exemption, the
-counted suppressions — would transfer to belief writes, and what changed
-a belief is currently the engine's business rather than this layer's
-record.</p>
+<p>Whether the machine token is meant to survive once per-mind
+credentials are validated, or whether it will be narrowed to a principal
+or removed.</p>
+<p>Whether compaction should read through <code>recent_messages</code>
+with the primary's scope, as the turn builder's comment assumes it
+does.</p>
+<p>Whether a tombstone should refuse a later assertion of the same
+proposition; the fingerprint is computed and is read only by the
+migration and the listing.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -350,28 +542,122 @@ record.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>Cargo.toml:28-56</code></td>
-<td>Thirty lines on one dependency, and worth every one</td>
+<td><code>Cargo.toml:28-71</code></td>
+<td>An exact engine pin and the evidence for each move</td>
 </tr>
 <tr>
-<td><code>crates/mind-types/src/memory.rs:218-236</code></td>
-<td>A migration default chosen in the safe direction</td>
+<td><code>crates/mind-types/src/memory.rs:217-261</code></td>
+<td><code>Scope</code> and the safe legacy default</td>
 </tr>
 <tr>
-<td><code>crates/mind-types/src/purpose.rs:140-153</code></td>
-<td>Default-deny classes, and one no wildcard covers</td>
+<td><code>crates/mind-types/src/memory.rs:280-391</code></td>
+<td><code>AccessContext</code>, the agent footing and
+<code>viewer()</code></td>
 </tr>
 <tr>
-<td><code>crates/mind-memory/src/receipts.rs:1-14</code></td>
-<td>Why the trusted caller lost its exemption</td>
+<td><code>crates/mind-types/src/purpose.rs:146-192</code></td>
+<td>Sensitivity classes and what each allows without a grant</td>
 </tr>
 <tr>
-<td><code>crates/mind-memory/src/lib.rs:7947-7966</code></td>
-<td>Zero unauthorized hydrations, stated as a test</td>
+<td><code>crates/mind-types/src/purpose.rs:391-418</code></td>
+<td><code>purpose_allows</code></td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/lib.rs:744-771</code></td>
+<td>A scoped assertion that cannot move a belief</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/lib.rs:3865-3901</code></td>
+<td><code>PurposeLens</code>: owner from the scope tag, class from
+override or classifier</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/lib.rs:4522-4544</code></td>
+<td><code>messages_since</code>, the unwalled transcript read</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/lib.rs:5564-5604</code></td>
+<td>The wall</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/receipts.rs:1-16</code></td>
+<td>Why the operator lost its exemption</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory/src/lib.rs:8451-8701</code></td>
+<td>The red-team test</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory-mcp/src/server.rs:20-28</code>,
+<code>:229-235</code></td>
+<td>Two callers, two contexts</td>
+</tr>
+<tr>
+<td><code>crates/mind-memory-mcp/src/door.rs:94-141</code></td>
+<td>Credential validation through the desktop</td>
+</tr>
+<tr>
+<td><code>crates/mind-conversation/src/briefing.rs:297-379</code></td>
+<td>Compaction into the rolling summary</td>
+</tr>
+<tr>
+<td><code>crates/mind-conversation/src/lib.rs:6598-6612</code></td>
+<td>Consolidation's mixed-window refusal</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>.</p>
+<ul>
+<li><code>git grep -nE 'mind_belief_tombstone_v2' -- crates</code> — the
+table, its migration, <code>record_tombstone</code> and
+<code>list_tombstones</code>; no read by fingerprint outside the
+migration, so no write path consults it.</li>
+<li><code>git grep -n 'self.receipt_read(' -- crates/mind-memory/src/lib.rs</code>
+— six call sites: <code>recall_memories</code>,
+<code>recall_typed</code>, <code>beliefs_matching</code>,
+<code>conflicts</code>, <code>explain_belief</code>,
+<code>recent_messages</code>; none in <code>messages_since</code>,
+<code>memory_curation_baseline</code> or <code>export</code>.</li>
+<li><code>git grep -nE '\.messages_since\(' -- crates</code> —
+<code>crates/mind-conversation/src/briefing.rs:313</code> (compaction)
+and <code>crates/mind-conversation/src/lib.rs:6591</code>
+(consolidation).</li>
+<li><code>git grep -nE 'expand_entities' -- crates/mind-memory/src</code>
+— one hit, <code>false</code>, in the pack recall;
+<code>recall_memories</code> passes <code>false</code> positionally; no
+graph traversal on a read path.</li>
+<li><code>git grep -nE 'BeliefStatus::[A-Z][a-z]+' -- crates ':!*tests.rs'</code>
+— assignments only inside <code>reflect</code> and
+<code>hydrate_working_set</code>, computed from conflicts and decay at
+read time; no stored status column.</li>
+<li><code>git grep -nE 'recall_as_of|event_time_min|valid_from|valid_to|valid_until' -- crates</code>
+— no match; no valid-time axis in this layer.</li>
+<li><code>git grep -niE '"(approve|approved|pending_review|reject)"|fn approve' -- crates/mind-memory crates/mind-memory-mcp crates/mind-types</code>
+— no match; no review state.</li>
+<li><code>git grep -niE 'licen[cs]e' -- '*.toml' README.md BUILD.md RELEASE_NOTES.md</code>
+— no match; <code>ls LICENSE*</code> finds nothing.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-12</strong> — <a
+href="https://github.com/yantrikos/yantrik-mind/commit/7fa2c04b791a795d7832ae9f23923b417d213a8d"><code class="commit-id" title="7fa2c04b791a795d7832ae9f23923b417d213a8d">7fa2c04b…</code></a>
+— 153 commits on, version 0.2.1. The engine pin moved to
+<code>=0.23.0</code> so Hermes can share the file, and an MCP server
+arrived with a credentialed agent footing and a machine token that reads
+under the audit lane (<a href="#8-agent-integration">section 8</a>).
+Overtaken: a scoped assertion moved an existing belief between scopes
+until <code>f90464b</code> (<a href="#5-memory-data-model">section
+5</a>). Wrong then: a receipt for every read, when compaction read every
+member's transcript unwalled and unreceipted (<a
+href="#9-reliability-safety-and-trust">section 9</a>); scope on the
+belief, when it was a side table the last assertion overwrote; and a
+delegated store with a graph arm. Both marks hold at both pins. Screened
+from a full clone: thirty files, one auto-run surface
+(<code>.codex/config.toml</code>, present at the earlier pin), two
+build-time execution points, nothing inside the cooldown. The engine was
+cloned at tag <code>v0.23.0</code>. Nothing was installed, built or
+run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/yantrikos/yantrik-mind/commit/97935b1e247167ac7d4fe192ec8a9a1966b26c49"><code class="commit-id" title="97935b1e247167ac7d4fe192ec8a9a1966b26c49">97935b1e…</code></a>
 — first reading, at a commit dated 8 September 2026. Screened before

@@ -4388,13 +4388,14 @@ built or run and no embedding model was loaded. Apache-2.0</li>
 <li><a
 href="https://github.com/yantrikos/yantrik-mind">yantrikos/yantrik-mind</a>
 at <a
-href="https://github.com/yantrikos/yantrik-mind/commit/97935b1e247167ac7d4fe192ec8a9a1966b26c49"><code class="commit-id" title="97935b1e247167ac7d4fe192ec8a9a1966b26c49">97935b1e…</code></a>
-— read only; twenty-seven files scanned, no auto-run surfaces, two
-build-time execution points, no unpinned dependency surfaces and nothing
-inside the seven-day cooldown, with <code>Cargo.lock</code> tracked.
-Reviewed <strong>without a licence file</strong>. The belief engine it
-delegates to is a published crate and was not cloned for this reading.
-Nothing was installed, built or run</li>
+href="https://github.com/yantrikos/yantrik-mind/commit/7fa2c04b791a795d7832ae9f23923b417d213a8d"><code class="commit-id" title="7fa2c04b791a795d7832ae9f23923b417d213a8d">7fa2c04b…</code></a>
+— read only, from a full clone; thirty files scanned, one auto-run
+surface (a Codex MCP config), two build-time execution points, no
+unpinned dependency surfaces and nothing inside the seven-day cooldown,
+with <code>Cargo.lock</code> tracked. Reviewed <strong>without a licence
+file</strong>. The YantrikDB engine it pins was cloned at tag
+<code>v0.23.0</code> to check the storage and scope claims. Nothing was
+installed, built or run</li>
 <li><a href="https://github.com/mnesio/mnesio">mnesio/mnesio</a> at <a
 href="https://github.com/mnesio/mnesio/commit/5831aa0ea0a359b44a3a28b64e7e9f7174d88970"><code class="commit-id" title="5831aa0ea0a359b44a3a28b64e7e9f7174d88970">5831aa0e…</code></a>
 — read only; one auto-run surface, three build-time execution points,
@@ -15504,6 +15505,27 @@ touching <code>valid_from</code> asserted a round trip;
 <code>valid_from</code> is rejected
 (<code>tests/unit/test_guardrails.py:58</code>). The first rested on the
 write tool's contract rather than on the whole tool registry.</li>
+<li><strong>Three published claims about <a
+href="../systems/yantrik-mind/">yantrik-mind</a> were wrong at <a
+href="https://github.com/yantrikos/yantrik-mind/commit/97935b1e247167ac7d4fe192ec8a9a1966b26c49"><code class="commit-id" title="97935b1e247167ac7d4fe192ec8a9a1966b26c49">97935b1e…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+described a receipt for every read, the operator's included;
+<code>messages_since</code>
+(<code>crates/mind-memory/src/lib.rs:4234-4256</code> at that pin) read
+the transcript with no scope and no receipt, and
+<code>compact_conversation</code>
+(<code>crates/mind-conversation/src/briefing.rs:297-379</code>) folded
+every member's lines into the rolling summary the primary's prompt
+carries. It said scope was stored on the belief; it was a side table
+keyed by proposition text whose writer upserted on every scoped
+assertion (<code>lib.rs:3252-3265</code>, <code>:5461-5477</code>), so
+saying the same words moved a belief between scopes, private to shared
+included. And its stack fields read <code>delegated</code> with a graph
+arm; the layer opened YantrikDB on one SQLite file beside its own
+tables, and belief recall scored every node by embedding or keyword with
+no traversal (<code>lib.rs:2694-2716</code>). The first took the
+receipts module's header for its callers; the second read the type and
+not its writer.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
