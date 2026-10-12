@@ -9,7 +9,7 @@ source_url: https://github.com/TencentCloud/octop-memory
 archive_name: "TencentCloud--octop-memory"
 revision: 8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf
 revision_url: https://github.com/TencentCloud/octop-memory/commit/8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf
-analyzed_at: 2026-10-08
+analyzed_at: 2026-10-13
 licence: "MIT"
 size: "32,665 lines of Python under src/octop_memory, a LangGraph checkpoint store among them; 1,030 lines of Python and 2,581 of TypeScript in the Hermes and OpenClaw plugins"
 activity: "4 commits on main by 2 contributor accounts, all on 24 September 2026; the history opens with one commit of the whole tree"
@@ -324,6 +324,24 @@ its own comment, skips `run_idle_maintenance` so that LangGraph checkpoint rows
 are never pruned from there (`:758-793`). No Python module under `src/octop` calls
 consolidation or `run_fallback_pass`.
 
+**Deletion on Octop.** At [`664c1fb38e354ea987041aa14b151e20d15ce71f`](https://github.com/TencentCloud/Octop/commit/664c1fb38e354ea987041aa14b151e20d15ce71f), Octop locks this package at 1.0.1
+and `octop-harness` at 1.0.2, and deletes through it in three places. Deleting a
+conversation calls `delete_thread` (`src/octop/infra/agents/manager.py:1384-1400`,
+`src/octop/infra/agents/memory/thread_cleanup.py:84-125`, `:172-206`). Here
+`delete_thread` removes LangGraph checkpoints only (`core.py:1303-1316`), so the
+raw events captured from that thread, which carry its `thread_id`, stay, and so
+does whatever was extracted from them. Deleting a user does the same for that
+user's threads on agents they do not own
+(`src/octop/infra/users/manager.py:766-796`, `:832-849`): on a shared agent their
+checkpoints go, and the facts they stated stay in the namespace every other user
+recalls from.
+
+Deleting an agent on Octop purges its namespace, on SQLite by dropping the
+tables that carry its prefix and on PostgreSQL by deleting its rows from each
+table in a copy of this package's `_TABLES` that the module keeps in sync by hand
+(`thread_cleanup.py:46-60`, `:417-511`). At 1.0.1 the two lists are identical, so
+a table added here later would survive an agent delete on PostgreSQL.
+
 ## 9. Reliability, Safety, and Trust
 
 **The status column is out of the model's reach.** The parser assigns
@@ -506,6 +524,8 @@ Checked against the checkout at the pinned revision.
 - `grep -rliE 'arxiv|bibtex|@article|@misc|doi\.org' . --exclude-dir=.git` — no match, and no `CITATION` file.
 
 ## History
+
+**2026-10-13** — [`8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf`](https://github.com/TencentCloud/octop-memory/commit/8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf) — pin and marks unchanged; the package itself was not re-read. [Section 8](#8-agent-integration) gains how [TencentCloud/Octop](https://github.com/TencentCloud/Octop/commit/664c1fb38e354ea987041aa14b151e20d15ce71f) deletes through it: a conversation or a departing user's threads lose their checkpoints and keep their raw events, and an agent's namespace is purged on PostgreSQL from a hand-kept copy of `_TABLES`, identical to it at 1.0.1. `delete_thread` and `_TABLES` were compared at this pin and at `v1.0.1` and are unchanged. Octop was screened and read at `664c1fb38e354ea987041aa14b151e20d15ce71f`; nothing installed, built or run.
 
 **2026-10-08** — [`8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf`](https://github.com/TencentCloud/octop-memory/commit/8b6abc3b6817f6b6d993d68190bc7ffc0a70dccf) — pin and marks unchanged; the package itself was not re-read. [Section 8](#8-agent-integration) gains how [TencentCloud/Octop](https://github.com/TencentCloud/Octop/commit/0c5a46ab5f82e5ad9d1a56fa09b00e542f042fda) uses it: 1.0.0 locked from PyPI, reached through `octop-harness` 1.0.1 and the JSON-RPC `Bridge`, one namespace per agent, shared agents included, so one user's facts can be recalled into another's chat. Two open questions narrowed. Octop was screened and read at `0c5a46ab5f82e5ad9d1a56fa09b00e542f042fda`, and one `octop-harness` file fetched raw at `v1.0.1`; nothing installed, built or run.
 

@@ -14200,15 +14200,15 @@ report: its memory is <a
 href="../systems/octop-memory/"><code>octop-memory</code></a>, which it
 installs and does not reimplement.</strong> Octop is a self-hosted
 multi-user assistant, read at <a
-href="https://github.com/TencentCloud/Octop/commit/0c5a46ab5f82e5ad9d1a56fa09b00e542f042fda"><code class="commit-id" title="0c5a46ab5f82e5ad9d1a56fa09b00e542f042fda">0c5a46ab…</code></a>.
-Its <code>uv.lock</code> pins <code>octop-memory</code> 1.0.0 from PyPI,
-and nothing of that package is vendored. Agent turns reach it through
-<code>octop-harness</code> 1.0.1, whose middleware captures, extracts
-and recalls; Octop names the namespace <code>agent_&lt;id&gt;</code> and
-chooses the SQLite file or the PostgreSQL DSN
-(<code>src/octop/infra/agents/memory/backend.py</code>), and its
-dashboard forwards review and correction to the package's JSON-RPC
-<code>Bridge</code>
+href="https://github.com/TencentCloud/Octop/commit/664c1fb38e354ea987041aa14b151e20d15ce71f"><code class="commit-id" title="664c1fb38e354ea987041aa14b151e20d15ce71f">664c1fb3…</code></a>,
+release 1.0.2b7. Its <code>uv.lock</code> pins <code>octop-memory</code>
+1.0.1 from PyPI, and nothing of that package is vendored. Agent turns
+reach it through <code>octop-harness</code> 1.0.2, whose middleware
+captures, extracts and recalls; Octop names the namespace
+<code>agent_&lt;id&gt;</code> and chooses the SQLite file or the
+PostgreSQL DSN (<code>src/octop/infra/agents/memory/backend.py</code>),
+and its dashboard forwards review and correction to the package's
+JSON-RPC <code>Bridge</code>
 (<code>src/octop/api/common/memory_client.py</code>). The proactive-care
 job reads the package's episodes and records which ones it pushed, and
 <code>/memory slim</code> compacts LangGraph checkpoints in the same
@@ -14219,7 +14219,8 @@ transcript storage, and no tool Octop registers searches across threads;
 the <code>MEMORY.md</code> and daily-note files belong to
 <code>octop-harness</code>, and Octop only serves and deletes them. How
 Octop wires the package, including one namespace shared by every user of
-a shared agent, is in the octop-memory report, section 8. No source is
+a shared agent, and how deleting a conversation, a user or an agent
+reaches it, is in the octop-memory report, section 8. No source is
 vendored, since
 <code>git ls-files | /usr/bin/grep -E '(^|/)octop_memory/'</code>
 returns nothing, and
@@ -14232,9 +14233,8 @@ build-time execution points (two <code>Makefile</code>s, four
 <code>conftest.py</code>, and four modules named <code>setup.py</code>
 that are an API router and three setup helpers, not packaging scripts),
 2 unpinned surfaces, and <code>pyproject.toml</code> and
-<code>uv.lock</code> inside the cooldown, changed three days before the
-pin; <code>AGENTS.md</code> was treated as data. Nothing was installed
-or run.</li>
+<code>uv.lock</code> inside the cooldown; <code>AGENTS.md</code> was
+treated as data. Nothing was installed or run.</li>
 <li><strong>AIM (<a
 href="https://arxiv.org/abs/2609.38445">arXiv:2609.38445</a>) was
 examined and has no report: no code is released, and its lesson memory
