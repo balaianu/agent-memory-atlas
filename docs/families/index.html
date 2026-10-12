@@ -8749,33 +8749,26 @@ merged object to active under a never-delete rule. What is absent is
 enforcement: the classes rank and never withhold, so a co-occurrence
 fact at 0.35 returns beside a self-declared one at 0.9, and agents are
 object types in one shared graph rather than partitions of it.</p>
-<p><strong><a href="../systems/holo-invariant/">HOLO-Invariant</a>
-scores the naive alternative on its own benchmark and publishes which
-metrics the naive alternative wins.</strong> An MIT Python continuity
-framework — 91,867 lines with 1,603 test functions and zero runtime
-dependencies — built on the premise that correction should become a
-verified relation rather than replace history, so "[o]riginal,
-correction, and target remain inspectable". Five bounded metrics over
-one committed fixture that "fixes the target before results are
-observed", under a closed condition schema "so undeclared fields cannot
-alter the scoring contract", with the reference result regenerated in CI
-and the comparison asserting both sides share a
-<code>fixture_hash</code> before reading a metric. Then the part this
-atlas has almost never seen: a plain latest-value store is scored on the
-identical fixture and passes two of the five — latest-justified recall
-1.0, superseded resurrections 0 — with the deltas asserted to be exactly
-zero and a comment stating the claim, "[t]he difference is specifically
-uncertainty + lineage + stale-continuation behavior, not latest-value
-recall." Naming the metrics your baseline already passes turns a
-five-for-five scoreboard into a narrow claim that could have come out
-otherwise. One mark: <code>passes_bounded_continuity_fixture</code>
-requires no superseded claim to return as current <strong>and</strong>
-full recall of everything that is, so the must-not-resurrect half cannot
-pass by returning nothing. Every result payload records
-<code>truth_claimed: false</code> and <code>accepted: false</code>. It
-is not a memory an agent writes to — there is no store, no read path and
-no scoping — and the five metrics are bounded to one fixture's shape,
-which the identifier concedes.</p>
+<p><strong><a href="../systems/holo-invariant/">HOLO-Invariant</a> binds
+a check to the version it checked, so a correction makes every earlier
+check stale.</strong> An MIT Python continuity framework — 139,792 lines
+with 2,954 test functions and zero runtime dependencies — whose memory
+is HoloChain, one hash-chained append-only JSONL file per chain. A
+correction is an appended record naming the target's index and hash with
+a required reason; the effective view folds it over the original, and
+raw history keeps every value the claim has held. A revalidation stores
+the digest of the version it examined, so the claim index reports
+<code>STALE</code> once that version is corrected, without anyone
+editing the receipt. Two marks: the chain is an append-only mutation
+record, and committed tests assert that a corrected value does not
+return as current and that correction and service records do not appear
+as claims. The status filters nothing — no read withholds a
+<code>FAILED</code> claim — and the published continuity benchmark
+scores two hand-written conditions rather than any store's output: the
+"CI-verified reference result" is a typed answer key, and the
+latest-value baseline is a dict literal copying it. The scorer itself is
+careful, with a hash-pinned fixture, a closed schema and a pass
+condition that cannot be met by an empty answer.</p>
 <p><strong><a href="../systems/tessellum/">Tessellum</a> shipped the
 demotion path before the promotion path it guards.</strong> An MIT
 Python knowledge-construction system — 138,183 lines with 2,905 test

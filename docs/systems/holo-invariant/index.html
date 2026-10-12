@@ -4,28 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A continuity framework whose
-committed fixture is hashed before results are observed, whose pass
-condition pairs full recall of the latest claims with zero resurrections
-of superseded ones, and whose own result payload records that no truth
-was claimed.">
+    <meta name="description" content="A Python continuity framework
+built on a hash-chained append-only claim log, where corrections and
+revalidations are appended records and the benchmark scores declared
+answers.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="HOLO-Invariant — Agent Memory Atlas">
-    <meta property="og:description" content="A continuity framework
-whose committed fixture is hashed before results are observed, whose
-pass condition pairs full recall of the latest claims with zero
-resurrections of superseded ones, and whose own result payload records
-that no truth was claimed.">
+    <meta property="og:description" content="A Python continuity
+framework built on a hash-chained append-only claim log, where
+corrections and revalidations are appended records and the benchmark
+scores declared answers.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="HOLO-Invariant — Agent Memory Atlas">
-    <meta name="twitter:description" content="A continuity framework
-whose committed fixture is hashed before results are observed, whose
-pass condition pairs full recall of the latest claims with zero
-resurrections of superseded ones, and whose own result payload records
-that no truth was claimed.">
+    <meta name="twitter:description" content="A Python continuity
+framework built on a hash-chained append-only claim log, where
+corrections and revalidations are appended records and the benchmark
+scores declared answers.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>HOLO-Invariant — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +44,7 @@ that no truth was claimed.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "HOLO-Invariant",
-      "description": "A continuity framework whose committed fixture is hashed before results are observed, whose pass condition pairs full recall of the latest claims with zero resurrections of superseded ones, and whose own result payload records that no truth was claimed.",
+      "description": "A Python continuity framework built on a hash-chained append-only claim log, where corrections and revalidations are appended records and the benchmark scores declared answers.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,28 +99,27 @@ that no truth was claimed.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">It scores a naive baseline on its own
-benchmark, and says which metrics the baseline wins</p>
+          <p class="eyebrow">A correction is appended beside the claim,
+and every earlier check on it goes stale</p>
           <h1>HOLO-Invariant</h1>
-          <p class="document-deck">A continuity framework whose
-committed fixture is hashed before results are observed, whose pass
-condition pairs full recall of the latest claims with zero resurrections
-of superseded ones, and whose own result payload records that no truth
-was claimed.</p>
+          <p class="document-deck">A Python continuity framework built
+on a hash-chained append-only claim log, where corrections and
+revalidations are appended records and the benchmark scores declared
+answers.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/Deathburgerz013/HOLO-Invariant">
               <span>Source</span>
               <strong>Deathburgerz013/HOLO-Invariant</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/2d36396a060f28ec68110f7697b893d2c8cff859" title="2d36396a060f28ec68110f7697b893d2c8cff859">
+            <a class="meta-pill revision-pill" href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab" title="1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab">
               <span>Analyzed revision</span>
-              <code>2d36396a…</code>
+              <code>1dd96b3a…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-12</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Deathburgerz013--HOLO-Invariant" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +127,19 @@ was claimed.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>139,792
+lines of Python in 642 files, 66,414 of them in 362 test files; the
+store, holosim/core.py, is 863 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,519
+commits on main by one maintainer under two author names, 4 December
+2025 – 12 October 2026; package version 0.4.9</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,954
+test functions in 361 files under tests/ and holosim/tests/; none run
+for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,138 +155,142 @@ was claimed.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>HOLO-Invariant is "AI continuity that preserves corrections instead
-of hiding them" — MIT, Python 3.10+, 91,867 lines across roughly two
-hundred modules with 1,603 test functions in 218 test files, and zero
-runtime dependencies. It is a framework for preserving, reconstructing
-and checking state across sessions, models, tools and execution
-environments.</p>
-<p>Its README states the contrast as a table, and every row is a failure
-this atlas reports somewhere: correction replaces history, the latest
-value hides its lineage, resume trusts supplied context, memory
-authority is implicit. Against each: correction becomes a verified
-relation, original and correction and target all stay inspectable,
-resume checks externally retained evidence, authority stays explicit and
-bounded.</p>
-<p><strong>The benchmark is the reason to read it.</strong> Five bounded
-metrics over one committed fixture:</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Reference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Latest justified recall</td>
-<td>1.0</td>
-</tr>
-<tr>
-<td>Superseded resurrection count</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Uncertainty recall</td>
-<td>1.0</td>
-</tr>
-<tr>
-<td>Lineage recall</td>
-<td>1.0</td>
-</tr>
-<tr>
-<td>Stale continuation blocked</td>
-<td>true</td>
-</tr>
-</tbody>
-</table></div>
-<p>Four things make that table mean something. The fixture is public and
-hashed, and "fixes the target before results are observed". The
-condition schema is closed "so undeclared fields cannot alter the
-scoring contract" — a candidate cannot add a field that changes how it
-is scored. The reference result is "regenerated from the same committed
-fixture and condition on every change" in CI. And the comparison test
-asserts
-<code>holo_reference["fixture_hash"] == fixture["fixture_hash"]</code>
-before reading a single metric.</p>
-<p><strong>Then it scores the trivial alternative, and reports which
-metrics the trivial alternative wins.</strong> A plain latest-value
-store is run against the identical fixture, and the test records that it
-passes two of the five: its <code>latest_justified_recall</code> is 1.0,
-and its <code>superseded_resurrection_count</code> is 0 — "[i]t does not
-resurrect the overwritten value as current." It fails exactly three:
-uncertainty recall, lineage recall, and stale-continuation blocking. And
-the deltas are asserted to be <em>zero</em> on the two the baseline
-already wins, under a comment that states the claim in one sentence:</p>
-<blockquote>
-<p>"The difference is specifically uncertainty + lineage +
-stale-continuation behavior, not latest-value recall."</p>
-</blockquote>
-<p>This atlas has read a great many benchmarks. Very few name the
-metrics their baseline already passes. Doing so converts a five-for-five
-scoreboard into a narrow claim — <em>this system represents uncertainty,
-lineage, and staleness, and ordinary storage does not</em> — which is
-both smaller and worth something, because it can be checked and could
-have come out the other way.</p>
-<p>The pass condition is why this earns the negative-evaluation mark
-rather than just admiration.
-<code>passes_bounded_continuity_fixture</code> is</p>
-<pre class="python"><code>latest_recall == 1.0 and not resurrected and uncertainty_recall == 1.0
-and lineage_recall == 1.0 and stale_blocked</code></pre>
-<p>— a must-not-retrieve assertion (no superseded claim comes back as
-current) that cannot pass vacuously, because the same condition demands
-full recall of everything that <em>is</em> current. A store that
-returned nothing would fail the first clause. The control is in the pass
-condition itself.</p>
-<p><strong>The artifacts refuse to claim more than they show.</strong>
-Every result payload carries <code>truth_claimed: false</code> and
-<code>accepted: false</code>. The demo's description ends: "[i]t does
-not modify an existing chain or grant truth, acceptance, write, or
-execution authority." A correction is bound to one exact baseline
-transition candidate and sits at
-<code>READY_FOR_EXACT_TARGET_AUTHORIZATION</code> until authorized
-against that target — the same bind-to-one-operation property this atlas
-found in <a href="../anda-db/">Anda DB</a>'s approvals and <a
-href="../edda/">Edda</a>'s verdicts.</p>
-<p>What this is not: a memory an agent writes to. There is no store with
-a read path, no scoping over stored content, and no mutation record —
-the transitions are the subject. A reader arriving for a memory backend
-will find a scoring contract and a correction model, which is the
-valuable thing here and not the thing the category name suggests.</p>
-<p>And the metrics are bounded in the literal sense the code names them:
-five properties over one fixture of a chosen shape. Passing says the
-system represents uncertainty, lineage and stale continuation <em>on
-that fixture</em>; generalisation is the reader's inference and not the
-benchmark's claim — which <code>passes_bounded_continuity_fixture</code>
-concedes in its own identifier.</p>
+<p>HOLO-Invariant is a Python continuity framework whose memory
+primitive is HoloChain: one JSONL file per chain, each line hash-linked
+to the one before, where a correction or a re-check is appended as its
+own record rather than written over the claim it concerns. The mechanism
+to take is the revalidation receipt, which stores the digest of the
+exact version it checked, so correcting a claim turns every earlier
+check on it <code>STALE</code> without anyone touching those checks. The
+weak points are that nothing reads that status to withhold a claim, and
+that the published benchmark scores two hand-written conditions rather
+than the output of any store.</p>
+<p><strong>The chain is the store.</strong>
+<code>HoloChain.append</code> takes a file lock, re-reads and
+re-verifies every line, writes one entry whose <code>hash</code> covers
+the previous hash, index, timestamp and content, and fsyncs;
+<code>load_and_verify</code> walks from a genesis hash of 64 zeros and
+raises on the first mismatch (<code>holosim/core.py:127-216</code>). The
+class docstring calls it a "[t]amper-evident append-only chain for
+AI/human continuity and long-term memory", and the package description
+says the same. Nothing in <code>core.py</code> rewrites the file.</p>
+<p><strong>A correction is a record, not an edit.</strong>
+<code>correct(target_idx, new_content, reason)</code> appends a
+<code>holo_correction</code> naming the target's index and hash, refuses
+an empty reason, and refuses a target that is itself a correction, a
+revalidation or an operational record
+(<code>holosim/core.py:374-437</code>). The effective view folds the
+latest correction over each original and keeps the whole correction
+history beside it (<code>:465-469</code>); raw history keeps the value
+that was corrected. That is the README's row "[o]riginal, correction,
+and target remain inspectable", and it holds in the code.</p>
+<p><strong>A check knows what it checked.</strong>
+<code>revalidate</code> appends an outcome from <code>HELD</code>,
+<code>FAILED</code>, <code>REVISED</code> or <code>UNAVAILABLE</code>, a
+method, an evidence string, and the digest of the effective version plus
+the index of the correction that produced it (<code>:588-660</code>).
+The claim index reports the outcome of the latest receipt that matches
+the claim's present version, <code>STALE</code> when receipts exist and
+none matches, and <code>UNCHECKED</code> when there are none
+(<code>:703-741</code>). A correction therefore invalidates prior checks
+by construction, and
+<code>test_correction_makes_prior_revalidation_stale_until_rechecked</code>
+walks the sequence HELD, corrected, STALE, re-checked, HELD
+(<code>holosim/tests/test_core.py:144-171</code>).</p>
+<p><strong>The status filters nothing.</strong> Its one consumer outside
+<code>core.py</code> is <code>build_continuity_checkpoint</code>, which
+copies it into the checkpoint beside every other claim
+(<code>holosim/continuity_checkpoint.py:56-73</code>). A
+<code>FAILED</code> claim is returned by the effective view, the
+checkpoint and the search exactly as a <code>HELD</code> one is, so the
+status is a label for a reader rather than a gate.</p>
+<p><strong>The benchmark scores declared answers.</strong> The scorer is
+careful. The fixture is hashed and "fixes the target before results are
+observed"; the condition schema is closed "so undeclared fields cannot
+alter the scoring contract";
+<code>passes_bounded_continuity_fixture</code> requires full recall of
+the latest claims <em>and</em> zero resurrections of superseded ones, so
+the negative half cannot pass on an empty answer
+(<code>holosim/continuity_baseline_benchmark.py:162-168</code>). But the
+"CI-verified reference result" is that scorer applied to
+<code>benchmarks/examples/passing-condition.json</code>, a
+twenty-three-line document listing the fixture's correct claim ids by
+hand. The latest-value baseline it is compared with is a dict literal
+that copies the fixture's <code>latest_justified_claim_ids</code> into
+its recovered and current fields
+(<code>tests/test_latest_value_continuity_baseline.py:51-65</code>). No
+code path turns a HoloChain into a condition. The README's invitation —
+"Export a system-neutral condition document, then score it" — leaves the
+export to the reader, and the comparison establishes what the scorer
+does with two declared answers.</p>
+<p><strong>Where a real chain does meet a scorer, it recorded
+failure.</strong> <code>cross_model_correction_handoff.py</code> builds
+a disposable chain holding an original rule, a correction and a
+<code>REVISED</code> revalidation, hands its topology to local Ollama
+models, and scores their JSON against the fixture. The committed run
+records <code>all_checks_passed: 0</code> in all four cells, over eight
+attempts with one request error, and the module's own docstring files it
+as a "PARTIAL model handoff pilot".</p>
+<p><strong>The write gate binds an approval to one write and does not
+establish who approved.</strong> <code>HoloService.append</code> —
+behind <code>holo append</code> and the <code>Collector</code> — refuses
+without a <code>holo_operational_authorization</code> whose
+<code>target_sha256</code> equals the canonical content's SHA-256, and
+refuses one whose id or hash already appears in the chain
+(<code>holosim/service.py:101-217</code>). That single-use, target-bound
+shape is the property <a href="../anda-db/">Anda DB</a>'s approvals and
+<a href="../edda/">Edda</a>'s verdicts have. The record is built from
+caller strings: the CLI takes <code>--reviewer</code> and
+<code>--approval-reference</code> and calls
+<code>build_operational_authorization</code> itself
+(<code>holosim/holo_cli.py:581-637</code>), and the module states it is
+"deliberately not proof of the issuer's identity". The library's
+<code>append</code>, <code>correct</code> and <code>revalidate</code>
+take no authorization at all.</p>
+<p>There is no scope over stored content, no ranking and no delete; the
+MCP server exposes one read-only IDX packet check. The store is 863
+lines in a repository whose bulk is verifiers, receipts and a research
+layer — functional-consciousness experiments, an i386 OS core, a game —
+that the README separates out as a research layer with no runtime
+authority.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>correction</strong> is a relation, not a replacement.</p>
-<p>A <strong>fixture</strong> is hashed before anyone runs against
-it.</p>
-<p>A <strong>baseline</strong> is scored on the same target, and told
-what it won.</p>
-<p>A <strong>result</strong> records that it claimed no truth.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the pass condition pairs a must-not-resurrect assertion with full recall of current claims, and the naive baseline is scored on the same hash-pinned fixture</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the pass condition pairs a must-not-resurrect assertion with full recall of current claims, and the naive baseline is scored on the same hash-pinned fixture
+<p>A <strong>memory</strong> is an entry in the chain. An original claim
+is any JSON value or string; corrections, revalidations and
+<code>service_append</code> records are entries too, distinguished by a
+<code>_holo_record_type</code> or <code>type</code> field and excluded
+from the claim index.</p>
+<p>A claim is never replaced. A <strong>correction</strong> supersedes
+it in the effective view and leaves it in raw history. A
+<strong>revalidation</strong> records a verdict on one version. The
+claim's <strong>status</strong> is not stored; it is folded from the
+receipts on every read.</p>
+<p>Nothing dies. There is no delete, no expiry, and no rejected value
+kept for refusal; <code>needs_review</code> and
+<code>prune_suggestions</code> list entries older than 90 or 180 days
+and act on none of them.</p>
+<p>Every mover is a caller of the library. No background process, model
+or agent tool changes a claim's state; the service facade's
+authorization gates its own appends and nothing else. The system treats
+every entry as a recorded claim, and its payloads say so: admission
+returns <code>accepted_as_truth: false</code> and
+<code>write_authority: "NONE"</code>
+(<code>holosim/core.py:788-798</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a claim's status is folded from appended receipts, each bound to the version it checked; a correction leaves the original in history and makes earlier checks stale</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a claim&#39;s status is folded from appended receipts, each bound to the version it checked; a correction leaves the original in history and makes earlier checks stale
 flowchart TB
-    FIX[(&quot;benchmarks/continuity-v1.fixture.json —&lt;br/&gt;public, hashed, &#39;fixes the target&lt;br/&gt;before results are observed&#39;&quot;)]
-    SCH[&quot;schemas/continuity-condition.schema.json —&lt;br/&gt;closed, &#39;so undeclared fields cannot&lt;br/&gt;alter the scoring contract&#39;&quot;]
-    FIX --&gt; SCORE{&quot;score a condition&quot;}
-    SCH --&gt; SCORE
-    SCORE --&gt; M1[&quot;latest_justified_recall&quot;]
-    SCORE --&gt; M2[&quot;superseded_resurrection_count&lt;br/&gt;= len(superseded_resurrected_as_current)&quot;]
-    SCORE --&gt; M3[&quot;uncertainty_recall&quot;]
-    SCORE --&gt; M4[&quot;lineage_recall&quot;]
-    SCORE --&gt; M5[&quot;stale_continuation_blocked&quot;]
-    M1 &amp; M2 &amp; M3 &amp; M4 &amp; M5 --&gt; PASS{&quot;passes_bounded_continuity_fixture =&lt;br/&gt;latest_recall == 1.0 AND not resurrected&lt;br/&gt;AND uncertainty_recall == 1.0&lt;br/&gt;AND lineage_recall == 1.0 AND stale_blocked&quot;}
-    PASS -.-&gt;|&quot;the must-not-resurrect clause cannot&lt;br/&gt;pass vacuously — the same condition&lt;br/&gt;demands full recall of what IS current&quot;| CTRL[&quot;the control is in the pass condition&quot;]
-    BASE[&quot;a naive latest-value store,&lt;br/&gt;scored on the IDENTICAL fixture&quot;] --&gt; SCORE
-    BASE --&gt; WINS[&quot;wins two metrics:&lt;br/&gt;latest_justified_recall = 1.0&lt;br/&gt;superseded_resurrection_count = 0&quot;]
-    BASE --&gt; LOSES[&quot;fails three:&lt;br/&gt;uncertainty_recall = 0.0&lt;br/&gt;lineage_recall = 0.0&lt;br/&gt;stale_continuation_blocked = false&quot;]
-    WINS -.-&gt;|&quot;deltas asserted to be exactly zero:&lt;br/&gt;&#39;the difference is specifically uncertainty +&lt;br/&gt;lineage + stale-continuation behavior,&lt;br/&gt;not latest-value recall&#39;&quot;| CLAIM[&quot;a narrow claim instead of&lt;br/&gt;a five-for-five scoreboard&quot;]
-    HASHCHK[&quot;the comparison asserts both results&lt;br/&gt;share a fixture_hash before reading a metric&quot;] --&gt; SCORE
-    OUT[&quot;every result payload:&lt;br/&gt;truth_claimed = false,&lt;br/&gt;accepted = false&quot;] --&gt; PASS
-    CORR[&quot;a correction&quot;] --&gt; CAND[&quot;bound to ONE exact baseline&lt;br/&gt;transition candidate —&lt;br/&gt;READY_FOR_EXACT_TARGET_AUTHORIZATION&quot;]
-    CAND --&gt;|&quot;authorized against that exact target&quot;| NEWBASE[&quot;becomes the baseline;&lt;br/&gt;original, correction and target&lt;br/&gt;all remain inspectable&quot;]</code></pre></details></figure>
+    A[&quot;append(claim)&lt;br/&gt;new line: hash = H(prev_hash, idx, timestamp, content)&quot;] --&gt; U[&quot;claim index status: UNCHECKED&lt;br/&gt;(no receipts)&quot;]
+    U --&gt;|&quot;revalidate(outcome, method, evidence)&lt;br/&gt;receipt stores digest of the version checked&quot;| R[&quot;status = outcome of the latest receipt&lt;br/&gt;that matches the present version:&lt;br/&gt;HELD · FAILED · REVISED · UNAVAILABLE&quot;]
+    R --&gt;|&quot;correct(target_idx, replacement, reason)&lt;br/&gt;appends holo_correction:&lt;br/&gt;corrects_idx, corrects_hash, reason&quot;| C[&quot;effective view shows the replacement;&lt;br/&gt;raw history keeps the original&quot;]
+    U --&gt;|&quot;correct(...)&quot;| C
+    C --&gt; S{&quot;any receipt matching&lt;br/&gt;the corrected version?&quot;}
+    S --&gt;|&quot;no, but receipts exist&quot;| ST[&quot;status: STALE&lt;br/&gt;earlier receipts kept, marked not current&quot;]
+    S --&gt;|&quot;no receipts at all&quot;| U2[&quot;status: UNCHECKED&quot;]
+    ST --&gt;|&quot;revalidate again&quot;| R
+    U2 --&gt;|&quot;revalidate&quot;| R
+    R -.-&gt;|&quot;read by&quot;| CP[&quot;build_continuity_checkpoint&lt;br/&gt;copies status beside every claim;&lt;br/&gt;no read withholds FAILED or STALE&quot;]
+    ST -.-&gt;|&quot;read by&quot;| CP
+    G[&quot;HoloService.append / holo append&quot;] --&gt;|&quot;authorization bound to content SHA-256,&lt;br/&gt;single use, built from caller strings&quot;| A
+    L[&quot;library append · correct · revalidate&quot;] --&gt;|&quot;no authorization&quot;| A
+    V[&quot;load_and_verify on every read and append:&lt;br/&gt;walks from genesis, raises on any mismatch;&lt;br/&gt;a truncated tail verifies&quot;] -.-&gt; A</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -289,95 +301,251 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>holosim/continuity_baseline_benchmark.py</code></td>
-<td>The scorer, the metrics, the comparison</td>
+<td><code>holosim/core.py</code></td>
+<td><code>HoloChain</code>: append, verify, correct, revalidate,
+effective view, claim index, snapshot admission</td>
 </tr>
 <tr>
-<td><code>holosim/spine_protocol.py</code></td>
-<td>The continuity protocol (1,641 lines)</td>
+<td><code>holosim/replay.py</code></td>
+<td><code>ReplayEngine</code>: latest, timeline, substring search with a
+decoded-size cap</td>
 </tr>
 <tr>
-<td><code>holosim/verified_claim_correction_transition.py</code></td>
-<td>A correction bound to one target</td>
+<td><code>holosim/service.py</code></td>
+<td><code>HoloService</code>: the authorization-gated append facade,
+optional SQLite slot mirror</td>
 </tr>
 <tr>
-<td><code>holosim/invariant_catalog.py</code></td>
-<td>The declared invariants</td>
+<td><code>holosim/typed_operational_authorization.py</code></td>
+<td>The closed, target-bound authorization record</td>
 </tr>
 <tr>
-<td><code>holosim/slot_merkle_sqlite.py</code></td>
-<td>Hashed slots over SQLite</td>
+<td><code>holosim/collector.py</code></td>
+<td>Intake: near-duplicate check, then a service append</td>
 </tr>
 <tr>
-<td><code>benchmarks/</code>, <code>schemas/</code></td>
-<td>The fixture, the closed condition schema, CI results</td>
+<td><code>holosim/continuity_checkpoint.py</code></td>
+<td>A hashed checkpoint of the claim index for handoff</td>
+</tr>
+<tr>
+<td><code>holosim/continuity_baseline_benchmark.py</code>,
+<code>holosim/public_continuity_benchmark.py</code></td>
+<td>The continuity scorer and its closed public condition</td>
+</tr>
+<tr>
+<td><code>holosim/holo_cli.py</code>,
+<code>holosim/mcp_adapter.py</code></td>
+<td>The <code>holo</code> CLI; a one-tool read-only MCP server</td>
+</tr>
+<tr>
+<td><code>holosim/persistent_baseline_transition.py</code></td>
+<td>A separate store, on HoloChain, that commits authorized baseline
+promotions exactly once</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to run. <code>pip install -e .</code> installs a package
+with no runtime dependencies; MCP, sentence-transformers,
+<code>arxiv</code> and <code>pygame</code> are optional extras. A chain
+is a text file a person can read line by line, and a damaged tail can be
+diagnosed and its verified prefix copied out to a separate artifact by
+<code>holochain_terminal_tail_diagnosis.py</code> and
+<code>verified_prefix_recovery.py</code>, which never modify the source.
+No API key is needed to store anything; the similarity model loads only
+when <code>HOLOSIM_ENABLE_EMBEDDINGS=1</code>.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>holosim/continuity_baseline_benchmark.py:153-190</code> — the
-five metrics and the pass condition that keeps one of them honest.</p>
-<p><code>tests/test_latest_value_continuity_baseline.py:75-150</code> —
-the baseline, what it wins, and the deltas asserted to zero.</p>
-<p><code>benchmarks/continuity-v1.fixture.json</code> — the target,
-fixed and hashed.</p>
+<p><strong>Write.</strong> <code>HoloChain.append</code>
+(<code>holosim/core.py:157-216</code>) runs
+<code>load_and_verify</code>, an optional caller precondition, the hash,
+the write and an fsync inside <code>_append_transaction</code>'s lock.
+<code>HoloService.append</code>
+(<code>holosim/service.py:101-245</code>) validates the authorization,
+then appends with a precondition that refuses a consumed authorization
+id or hash.</p>
+<p><strong>Correct and recheck.</strong> <code>correct</code>
+(<code>holosim/core.py:374-437</code>) and <code>revalidate</code>
+(<code>:588-660</code>) each validate the target from one snapshot, then
+append with a precondition that re-checks the target inside the lock and
+raises "Correction target changed before append" or "Revalidation
+subject changed before append".</p>
+<p><strong>Read.</strong> <code>get_effective_state</code>
+(<code>:465-469</code>) folds corrections;
+<code>_get_claim_index_from_verified_entries</code>
+(<code>:703-741</code>) computes the status per claim;
+<code>ReplayEngine.search</code> (<code>holosim/replay.py:81-100</code>)
+matches decoded text.</p>
+<p><strong>Hand off.</strong> <code>build_continuity_checkpoint</code>
+(<code>holosim/continuity_checkpoint.py:26-88</code>) takes a snapshot,
+admits it through <code>_admit_verified_entries</code>
+(<code>holosim/core.py:743-798</code>), and refuses if the chain changed
+between the read and the reconstruction.</p>
+<p><strong>Score.</strong> <code>score_continuity_condition</code>
+(<code>holosim/continuity_baseline_benchmark.py:118-198</code>) and
+<code>compare_continuity_conditions</code> (<code>:200-271</code>),
+which also refuses a result whose hash or resurrection count does not
+match its own fields.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A claim with retained evidence, correction edges forming a lineage,
-and an uncertainty record. The model's commitment is that all three
-survive a correction: "[o]riginal, correction, and target remain
-inspectable."</p>
+<p>An entry is
+<code>{idx, timestamp, content, prev_hash, hash, type, original_size}</code>,
+where <code>type</code> is <code>plain</code> or <code>compressed</code>
+(hex of a zlib stream, used only when shorter than the original). The
+hash covers <code>idx</code>, <code>timestamp</code> and
+<code>content</code> after the previous hash, so it covers the stored
+form, compressed or not.</p>
+<p>A correction's content is
+<code>{_holo_record_type: "holo_correction", version: 1, corrects_idx, corrects_hash, reason, replacement}</code>.
+A revalidation's is
+<code>{_holo_record_type: "holo_revalidation", version: 1, target_idx, target_hash, subject_hash, subject_correction_idx, outcome, method, evidence}</code>.
+A claim-index row carries <code>idx</code>, <code>original_hash</code>,
+<code>content</code>, <code>content_hash</code>,
+<code>correction_history</code>, <code>revalidation_history</code>,
+<code>status</code>, and <code>corrected_by</code> and
+<code>revalidated_by</code> where they apply.</p>
+<p>There is one time field, <code>timestamp</code>, the append time.
+There is no scope key, no author field on the chain entry, and no
+confidence number. Provenance is whatever the caller puts in the
+content; the service facade puts a provenance packet and the
+authorization record there.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>None of its own. Reconstruction and checking rather than search.</p>
+<p><code>ReplayEngine.search</code> lowercases the query and returns up
+to <code>limit</code> (default 20) entries whose decoded content
+contains it, in chain order, after verifying the whole chain
+(<code>holosim/replay.py:81-100</code>). A compressed entry is decoded
+with a 1 MiB cap, and a malformed or oversized one raises
+<code>SearchDecodeError</code> rather than returning a partial result
+(<code>:102-125</code>). Until 1 October 2026 (<a
+href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/945c98e121ec10c2f5e8666816839d35072e12a7"><code class="commit-id" title="945c98e121ec10c2f5e8666816839d35072e12a7">945c98e1…</code></a>)
+search matched the stored form, so an entry the service facade had
+compressed — it compresses by default — could not be found by its
+text.</p>
+<p>Search returns raw entries, not the effective view: a corrected
+original and its correction both match their own text, and nothing marks
+the first as superseded in the result. A reader wanting the corrected
+value goes to <code>get_effective_state</code> or the claim index, which
+have no query parameter.</p>
+<p>There is no ranking, token budget or context assembly; the CLI prints
+results.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>A correction becomes a transition candidate bound to one exact
-baseline, held at <code>READY_FOR_EXACT_TARGET_AUTHORIZATION</code>
-until a typed authorization for that exact target arrives. Binding the
-authorization to the target is what stops one approval from licensing a
-different transition.</p>
+<p>Writes are synchronous and call no model. The <code>Collector</code>
+skips text whose similarity to any of the last 100 entries reaches 0.85
+unless <code>force</code> is set, then calls the service facade
+(<code>holosim/collector.py:42-116</code>); without both a reviewer and
+an approval reference it returns <code>blocked</code> with
+<code>external_approval_required</code>.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Every append and every read re-reads and re-hashes the whole file,
+and the claim index computes revalidations claim by claim over all
+receipts, so cost grows with the chain on every operation. Nothing runs
+in the background and nothing is injected into a prompt.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A CLI and a system-neutral condition document, so another continuity
-system can be exported into the same shape and scored against the same
-fixture. That is an unusual offer — a benchmark designed to be run
-against its author's competitors on equal terms — and its value depends
-entirely on the fixture being fair, which is why the hash pinning and
-the baseline scoring matter as much as the metrics.</p>
+<p>No agent tool writes memory. The MCP server registers
+<code>idx_check</code>, which checks a moving Spine packet against a
+frozen IDX text and returns a receipt, plus two schema resources
+(<code>holosim/mcp_adapter.py:20-37</code>). The <code>holo</code> CLI
+covers <code>append</code>, <code>replay --search</code>,
+<code>index</code>, <code>resume</code> from an operator handoff,
+<code>verify</code>, <code>review</code>, <code>demo</code> and
+<code>benchmark continuity</code>. <code>correct</code> and
+<code>revalidate</code> have no CLI verb; their production callers are
+the demo and the cross-model pilot, each on a disposable chain.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The trust story is methodological rather than architectural: the
-fixture, the closed schema, the CI regeneration, the baseline
-comparison, and the payload fields that decline to claim truth or
-acceptance.</p>
+<p><strong>Interior tampering is detected; truncation is not.</strong>
+<code>load_and_verify</code> checks each link from genesis, so an edited
+line fails. A file whose last entries are removed is a valid shorter
+chain: <code>create_checkpoint</code> returns the head hash and "is not
+automatically persisted", and nothing in <code>core.py</code> records
+the head anywhere else.</p>
+<p><strong>Concurrent writers are serialized.</strong>
+<code>fcntl.flock</code> on POSIX; on Windows a non-blocking byte-range
+lock retried for 30 seconds, then <code>TimeoutError</code>
+(<code>holosim/core.py:71-93</code>). Every precondition is evaluated
+inside that lock.</p>
+<p><strong>Authorization is a contract on shape, not on
+identity.</strong> It binds one action to one content hash and is
+consumed once, which stops one approval licensing a different write. Who
+supplied it is a string. The library's own write methods are outside
+it.</p>
+<p><strong>Uncertainty is representable and unused.</strong>
+<code>UNAVAILABLE</code> and <code>STALE</code> exist as statuses; no
+read path acts on them.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>1,603 test functions across 218 files, including tests that assert
-the README's own table matches the regenerated reference result — so the
-published number cannot drift from the computed one. Nothing was
-installed or run for this reading; the numbers quoted are the committed
-ones.</p>
+<p>I installed and ran nothing for this reading; the results quoted are
+the committed ones.</p>
+<p>The store is tested directly: tamper detection, corrections that keep
+raw history and update the effective view, the HELD-to-STALE sequence,
+malformed references failing closed
+(<code>holosim/tests/test_core.py</code>). Other tests cover corrections
+and revalidations refused when their target changes inside the append
+window (<code>tests/test_correction_snapshot_consistency.py</code>,
+<code>tests/test_revalidation_snapshot_consistency.py</code>),
+operational records refused as correction targets and excluded from the
+claim index
+(<code>tests/test_operational_record_target_boundary.py</code>,
+<code>tests/test_claim_record_classification.py</code>), and compressed
+search with its byte cap
+(<code>tests/test_replay_compressed_search.py</code>).</p>
+<p>The continuity-benchmark tests test the scorer.
+<code>test_committed_reference_result_matches_current_scorer</code>
+re-scores the committed condition file and compares it with the
+committed result; <code>test_readme_exposes_ci_verified_benchmark</code>
+pins the README's metric rows as literals; the baseline test scores a
+dict literal (<code>tests/test_continuity_benchmark_ci.py:43-130</code>,
+<code>tests/test_latest_value_continuity_baseline.py:31-167</code>).
+These keep the README, the result file and the scorer consistent with
+each other. None of them runs a store.</p>
+<p>The <code>holo-reference</code> table reads correctly as a worked
+example of the scorer. A test that exports a HoloChain into a condition
+and scores it is the one this repository does not carry, and it is the
+test that would make the table a result.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Score the trivial alternative on your own benchmark, and publish what
-it wins. A metric the naive baseline already passes is a metric your
-system should not take credit for, and saying so is what turns a
-scoreboard into a claim.</p>
-<p>Hash the fixture and close the schema. "Fixes the target before
-results are observed" and "undeclared fields cannot alter the scoring
-contract" are two sentences that prevent most of the ways a benchmark
-stops being one.</p>
-<p>Put the control in the pass condition. Requiring full recall of
-current claims alongside zero resurrections means the negative half
-cannot be satisfied by a system that returns nothing.</p>
-<p>And let your artifacts say what they do not establish.
-<code>truth_claimed: false</code> in every result is a small field that
-keeps a downstream reader from importing a score as a verdict.</p>
+<h3 id="steal">Steal</h3>
+<p>Bind a check to the digest of the version it checked. A verdict that
+records what it looked at expires itself when the thing changes, which
+is cheaper and more honest than any re-validation schedule.</p>
+<p>Append corrections with the target's hash and a required reason, and
+fold them at read time. The original stays answerable, and the reason is
+in the record rather than in a commit message.</p>
+<p>Re-check a write's precondition inside the lock that serializes
+writes, not before taking it.</p>
+<p>Put the control inside the pass condition. Requiring full recall of
+current claims alongside zero resurrections means a system that returns
+nothing fails.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Publishing a reference result computed from a typed answer under a
+benchmark badge. A scorer test belongs in the scorer's suite; a system
+result needs a system to have produced the condition.</p>
+<p>Computing an epistemic status that no read consults. A
+<code>FAILED</code> claim served like a <code>HELD</code> one is a
+label, and a reader of the claim index will assume it filters.</p>
+<p>Calling an unanchored hash chain tamper-evident without saying which
+tampering it misses. Persisting the head somewhere the writer cannot
+rewrite is what makes truncation visible.</p>
+<h3 id="fit">Fit</h3>
+<p>This is for someone building a correction-preserving claim log by
+hand, in Python, for one process or a few, who wants the receipts and
+the fold rather than a memory service. It is a poor fit for anything an
+agent writes to directly — there is no tool surface, no scope, no
+ranking, and every operation is linear in the chain — and for a reader
+who wants a benchmark number to compare systems with, since the
+committed number is not a measurement of one.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the authorization is human. Transitions are bound to an exact
-target and typed; who supplies the authorization was not traced.</p>
-<p>How the fixture was chosen. It is fixed and hashed, which makes it
-fair; whether its shape favours the model it was built alongside is a
-question the fixture cannot answer about itself.</p>
-<p>What the spine protocol contributes. At 1,641 lines it is the largest
-module and sits outside the benchmark path read here.</p>
+<p>Whether a HoloChain-to-condition exporter is intended. The scorer,
+schema and README all assume one, and none is in the tree.</p>
+<p>Whether the claim status is meant to gate <code>resume</code> or the
+checkpoint. The handoff gates elsewhere in the repository
+(<code>continuity_current_gate.py</code>,
+<code>continuity_head_binding.py</code>) block on a head's own
+<code>STALE</code> status, computed from a supplied packet, and do not
+read the claim index.</p>
+<p>Who writes to a chain in practice. The CLI's <code>append</code> and
+the <code>Collector</code> are the only production writers of original
+claims, both through the authorization facade, and the cross-model pilot
+suggests the intended reader is a model handed a projection of the
+chain.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -388,21 +556,109 @@ module and sits outside the benchmark path read here.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>holosim/continuity_baseline_benchmark.py:153-190</code></td>
-<td>Five metrics, and a pass condition that cannot be gamed by
-silence</td>
+<td><code>holosim/core.py:127-216</code></td>
+<td>Verification from genesis, the locked append, fsync</td>
 </tr>
 <tr>
-<td><code>tests/test_latest_value_continuity_baseline.py:75-150</code></td>
-<td>A baseline scored honestly, including what it wins</td>
+<td><code>holosim/core.py:374-437</code></td>
+<td>A correction as an appended record, with an in-lock
+precondition</td>
 </tr>
 <tr>
-<td><code>holosim/verified_claim_correction_transition.py:1-25</code></td>
-<td>A correction bound to one exact target</td>
+<td><code>holosim/core.py:588-660</code></td>
+<td>A revalidation bound to the digest of the version checked</td>
+</tr>
+<tr>
+<td><code>holosim/core.py:703-741</code></td>
+<td>The claim index and its STALE / UNCHECKED fold</td>
+</tr>
+<tr>
+<td><code>holosim/replay.py:81-125</code></td>
+<td>Substring search and the compressed-decode cap</td>
+</tr>
+<tr>
+<td><code>holosim/service.py:101-245</code></td>
+<td>The target-bound, single-use authorization gate</td>
+</tr>
+<tr>
+<td><code>holosim/typed_operational_authorization.py</code></td>
+<td>What the authorization record does and does not prove</td>
+</tr>
+<tr>
+<td><code>holosim/continuity_baseline_benchmark.py:118-198</code></td>
+<td>The scorer and a pass condition that cannot pass on silence</td>
+</tr>
+<tr>
+<td><code>benchmarks/examples/passing-condition.json</code></td>
+<td>The hand-written condition behind the reference result</td>
+</tr>
+<tr>
+<td><code>tests/test_latest_value_continuity_baseline.py:51-65</code></td>
+<td>The baseline as a dict literal</td>
+</tr>
+<tr>
+<td><code>holosim/tests/test_core.py:53-171</code></td>
+<td>Corrections, the effective view and the STALE sequence</td>
+</tr>
+<tr>
+<td><code>holosim/cross_model_correction_handoff.py</code></td>
+<td>The pilot that scores model output from a real chain</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -l -E 'score_continuity_condition|holo_continuity_condition|PUBLIC_CONDITION_TYPE' -- '*.py' '*.json' '*.yml'</code>
+— the scorer, the public wrapper, the fixture-derived longitudinal
+experiment, the schema, the example condition and four test files;
+nothing that builds a condition from a <code>HoloChain</code>.</li>
+<li><code>git grep -n -E '\.(correct|revalidate)\(' -- holosim ':!holosim/tests'</code>
+— <code>continuity_demo.py:46,54</code> and
+<code>cross_model_correction_handoff.py:46-47</code> only; no CLI or MCP
+verb.</li>
+<li><code>git grep -n -E 'truncate\(|os\.replace|open\([^)]*"w' -- holosim/core.py holosim/replay.py holosim/service.py</code>
+— no match.</li>
+<li><code>git grep -n -E 'root_hash|expected_head|head_hash' -- holosim/core.py</code>
+— <code>:232</code> (<code>create_checkpoint</code>, not persisted) and
+<code>:791</code> (the admission result); no stored head.</li>
+<li><code>git grep -n -i -E 'thread_id|scope' -- holosim/core.py holosim/replay.py holosim/service.py</code>
+— no match.</li>
+<li><code>git grep -n -E 'get_claim_index|_admit_verified_entries' -- holosim ':!holosim/tests'</code>
+— <code>core.py</code> and <code>continuity_checkpoint.py:42</code>,
+which copies <code>status</code> and filters nothing.</li>
+<li><code>git grep -n -E '"(HELD|FAILED|STALE|UNCHECKED|REVISED|UNAVAILABLE)"' -- holosim/continuity_checkpoint.py holosim/replay.py holosim/service.py holosim/api.py holosim/runtime.py holosim/holo_cli.py</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'tombstone|rejected_value' -- holosim ':!holosim/tests'</code>
+— no match.</li>
+<li><code>git grep -n -E 'def (delete|forget|remove|purge|prune|erase)' -- holosim/core.py holosim/service.py holosim/replay.py holosim/api.py holosim/runtime.py</code>
+— <code>core.py:848</code>, <code>prune_suggestions</code>, which
+returns <code>needs_review</code> and deletes nothing.</li>
+<li><code>git grep -n -E '@mcp\.tool' -- holosim</code> —
+<code>mcp_adapter.py:20</code>, <code>idx_check</code> only.</li>
+<li><code>git grep -n -i -E 'arxiv\.org|bibtex|@article|@misc|doi\.org' -- README.md</code>
+— no match; the documents under <code>docs/</code> cite other authors'
+papers and no paper describes this project.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE holosim/LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-12</strong> — <a
+href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab"><code class="commit-id" title="1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab">1dd96b3a…</code></a>
+— 307 commits on, package version 0.4.9 at both pins. Screened from a
+full clone: five files scanned, no auto-run surface, one build-time
+execution point (<code>experiments/os_core/Makefile</code>, added since
+the first pin), one unpinned surface, nothing inside the cooldown,
+<code>AGENTS.md</code> read as data. Nothing was installed, built or
+run. <code>audit_log</code> gained, earned at the first pin, where the
+report said there was no store, read path or mutation record.
+<code>negative_eval</code> kept on the effective-view tests, which
+carried it at both pins; the benchmark tests it cited score hand-written
+conditions. The write row conflated the library correction with the
+authorized baseline path. Upstream since: appends fsync, preconditions
+run inside the lock, search decodes compressed entries. See <a
+href="#1-executive-summary">section 1</a>.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/2d36396a060f28ec68110f7697b893d2c8cff859"><code class="commit-id" title="2d36396a060f28ec68110f7697b893d2c8cff859">2d36396a…</code></a>
 — first reading, at a commit dated 15 September 2026. Screened before

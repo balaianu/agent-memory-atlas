@@ -4215,11 +4215,14 @@ built or run</li>
 <li><a
 href="https://github.com/Deathburgerz013/HOLO-Invariant">Deathburgerz013/HOLO-Invariant</a>
 at <a
-href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/2d36396a060f28ec68110f7697b893d2c8cff859"><code class="commit-id" title="2d36396a060f28ec68110f7697b893d2c8cff859">2d36396a…</code></a>
-— read only, from a shallow clone; four files scanned, no auto-run
-surfaces, no build-time execution points, one unpinned surface and one
-dependency file inside the seven-day cooldown. Nothing was installed,
-built or run, and no benchmark was executed</li>
+href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab"><code class="commit-id" title="1dd96b3a3ec8f8491a77c411b1848fe76f0e8bab">1dd96b3a…</code></a>
+— read only, from a full clone, at the head of <code>main</code>, a
+commit of 12 October 2026. MIT with no rider. Five files scanned, no
+auto-run surfaces, one build-time execution point
+(<code>experiments/os_core/Makefile</code>), one unpinned surface
+(<code>pyproject.toml</code>) and nothing inside the seven-day cooldown;
+<code>AGENTS.md</code> read as data. Nothing was installed, built or
+run, and no benchmark was executed</li>
 <li><a href="https://github.com/kunickiaj/codemem">kunickiaj/codemem</a>
 at <a
 href="https://github.com/kunickiaj/codemem/commit/6391c66b1d1ea9757ba9a984076bb2f15673a3b7"><code class="commit-id" title="6391c66b1d1ea9757ba9a984076bb2f15673a3b7">6391c66b…</code></a>
@@ -15563,6 +15566,31 @@ in <code>src/cloud/auth.rs</code> and
 suite's test names rather than its assertions, the second on the local
 store rather than the whole tree, and the third on the store API rather
 than its callers.</li>
+<li><strong>Three published claims about <a
+href="../systems/holo-invariant/">HOLO-Invariant</a> were wrong at <a
+href="https://github.com/Deathburgerz013/HOLO-Invariant/commit/2d36396a060f28ec68110f7697b893d2c8cff859"><code class="commit-id" title="2d36396a060f28ec68110f7697b893d2c8cff859">2d36396a…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+there was no store with a read path, no record of mutations and nothing
+that retrieves; <code>HoloChain</code> (<code>holosim/core.py:23</code>)
+was an append-only, hash-chained JSONL store whose <code>correct</code>
+and <code>revalidate</code> appended records naming their target
+(<code>:309-341</code>, <code>:473-516</code>), read back through
+<code>get_effective_state</code> (<code>:343-363</code>) and
+<code>ReplayEngine.search</code> (<code>holosim/replay.py:73</code>), so
+<code>audit_log</code> was earned and is awarded. It said a plain
+latest-value store was run against the benchmark fixture, and grounded
+<code>negative_eval</code> on that comparison; both scored conditions
+were written by hand —
+<code>benchmarks/examples/passing-condition.json</code> and a dict
+literal at
+<code>tests/test_latest_value_continuity_baseline.py:51-65</code> — and
+the mark rests instead on <code>holosim/tests/test_core.py:53-72</code>,
+which asserted at that pin that a corrected value does not come back as
+current. And it described every correction as bound to an authorized
+baseline transition candidate; <code>correct</code> took no
+authorization, and the bound candidate belongs to the separate
+baseline-promotion path in
+<code>verified_claim_correction_transition.py</code>.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

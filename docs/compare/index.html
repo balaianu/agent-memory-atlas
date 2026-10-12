@@ -11736,63 +11736,73 @@ never refreshed while its log file lives</td>
 <tr>
 <td><a
 href="../systems/holo-invariant/"><code>holo-invariant</code></a></td>
-<td>A claim with retained evidence, a lineage of correction edges, and
-an uncertainty record — an original observation, a correction, and the
-relation between them all stay inspectable</td>
-<td>Local files with canonical hashing; zero runtime dependencies</td>
-<td>Not a retrieval engine — reconstruction and checking of state across
-sessions, models and tools</td>
-<td>A correction is a verified relation bound to an exact baseline
-transition candidate, authorized before it becomes the baseline</td>
-<td>Correction never replaces history: "[o]riginal, correction, and
-target remain inspectable"</td>
-<td>Authority is explicit and bounded; the demo "does not modify an
-existing chain or grant truth, acceptance, write, or execution
-authority"</td>
-<td>A CLI (<code>holo demo</code>,
-<code>holo benchmark continuity</code>), a closed condition schema, and
-an interop directory</td>
-<td>None; the work is transitions and checks</td>
-<td>A hash-pinned public fixture, a CI-regenerated reference result, a
-baseline scored on the same target, and result payloads that record
-<code>truth_claimed: false</code></td>
-<td>The benchmark is built the way a benchmark has to be built to mean
-anything, and this atlas has read very few like it. The fixture is
-committed and hashed, and "fixes the target before results are
-observed"; the condition schema is closed "so undeclared fields cannot
-alter the scoring contract"; the reference result is regenerated from
-the same fixture on every change; and the comparison test asserts the
-two results share a <code>fixture_hash</code> before reading either.
-Then the part that makes the number honest: a naive latest-value store
-is scored on the identical fixture and <strong>wins two of the five
-metrics</strong> — <code>latest_justified_recall</code> is 1.0 and
-<code>superseded_resurrection_count</code> is 0 for the baseline too —
-with the test asserting those deltas are exactly zero under a comment
-saying so: "[t]he difference is specifically uncertainty + lineage +
-stale-continuation behavior, not latest-value recall." A benchmark whose
-author writes down which of its metrics the trivial alternative already
-passes is making a narrow, checkable claim instead of a flattering one.
-The same restraint runs through the artifacts: every result payload
-carries <code>truth_claimed: false</code> and
-<code>accepted: false</code>, and the demo's own description ends "[i]t
-does not modify an existing chain or grant truth, acceptance, write, or
-execution authority"</td>
-<td>This is a framework for checking continuity rather than a memory an
-agent writes to. There is no store with a read path, no scoping model
-over stored content, no audit record of mutations — the transitions are
-the subject — and nothing here retrieves. A reader looking for a memory
-backend will find a scoring contract and a correction-transition model,
-which is the useful thing here and not the advertised one. The metrics
-are also bounded in the literal sense: five properties over one fixture
-of a chosen shape, so passing says the system represents uncertainty,
-lineage and stale continuation <em>on that fixture</em>, and
-generalisation is the reader's inference rather than the benchmark's
-claim — which the naming
-(<code>passes_bounded_continuity_fixture</code>) concedes. At 91,867
-lines across two hundred-odd modules with a vocabulary of its own —
-spine protocol, invariant catalog, baseline transition candidates, typed
-operational authorization — the cost of entry is high relative to the
-five metrics at the centre</td>
+<td>An entry in a hash-chained JSONL log: an original claim holding any
+JSON value, a correction naming the index and hash it replaces with a
+reason, or a revalidation receipt with outcome, method, evidence and the
+digest of the version it checked</td>
+<td>One append-only JSONL file per chain, each line hash-linked to the
+previous one and optionally zlib-compressed; an opt-in SQLite slot
+mirror; zero runtime dependencies</td>
+<td>Case-insensitive substring search over decoded entries in chain
+order, plus an effective view and a claim index folded from the whole
+log on every read; no ranking and no scope filter</td>
+<td>Library calls append, correct and revalidate with no gate; the
+service facade and the holo append CLI refuse unless handed a single-use
+authorization bound to the content hash, built from caller-supplied
+reviewer and reference strings</td>
+<td>A correction appends a record and the original stays in raw history;
+correcting a claim makes every earlier revalidation of it stale. Nothing
+deletes; prune_suggestions only lists entries older than a
+threshold</td>
+<td>None over stored content; a thread id reaches the provenance packet
+and no read path</td>
+<td>A Python library and the holo CLI (append, replay with search,
+index, resume, demo, benchmark continuity); the MCP server exposes one
+read-only IDX packet check and no memory verb</td>
+<td>None; every read and every append re-verifies the chain from the
+genesis hash</td>
+<td>A tamper-evident interior, required correction reasons, revalidation
+receipts bound to the exact version they checked, and payloads that
+record truth_claimed false; the head is unanchored and the claim status
+filters nothing</td>
+<td>A check is bound to what it checked. A revalidation stores the
+digest of the effective version it examined and the index of the
+correction that version came from, and the claim index reports a claim's
+status from the latest receipt that still matches — so correcting a
+claim turns every earlier HELD into STALE without anyone editing those
+receipts, and the test asserts exactly that sequence. Corrections are
+appended rather than applied: each names the target's index and hash and
+must carry a reason, the effective view folds the latest one over the
+original, and raw history keeps every value the claim has held. Both
+appends re-validate their target inside the append lock, so a correction
+whose target changed between read and write is refused. The write facade
+binds an authorization to the SHA-256 of the exact content and refuses
+one whose id or hash already appears in the chain, which makes each
+approval single-use and target-specific. The benchmark scorer is built
+carefully: the fixture is hashed and "fixes the target before results
+are observed", the condition schema is closed "so undeclared fields
+cannot alter the scoring contract", and the pass condition demands full
+recall of current claims alongside zero resurrections, so the negative
+half cannot pass on an empty answer</td>
+<td>The published benchmark measures no store. The "CI-verified
+reference result" is the scorer applied to a twenty-three-line condition
+file whose recovered, current, uncertain and lineage fields are typed by
+hand, and the latest-value baseline it is compared against is a dict
+literal in the test that copies the fixture's own answer key; no code
+turns a HoloChain into a condition, so the five-for-five row and the
+two-metric tie describe declared answers. The claim status is computed
+on every read and consulted by nothing: the continuity checkpoint copies
+it, and no read withholds a FAILED or STALE claim. The authorization
+that gates the write facade is built from strings the caller supplies —
+the CLI takes --reviewer and --approval-reference and builds it itself —
+and the module says it is "deliberately not proof of the issuer's
+identity"; the library methods take no authorization at all.
+Verification walks forward from the genesis hash, so deleting the last
+entries leaves a chain that verifies. Every append re-reads and
+re-hashes the whole file under a lock. And the store is 863 lines inside
+a repository of verifiers, receipts and research experiments that runs
+to well over a hundred thousand, which is the cost of entry for a reader
+who came for the store</td>
 </tr>
 <tr>
 <td><a href="../systems/holographic/"><code>holographic</code></a></td>
@@ -32860,7 +32870,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>252 of 731:</em> <a
+<p><em>253 of 731:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -32955,6 +32965,7 @@ href="../systems/harness-evolution/"><code>harness-evolution</code></a>,
 <a href="../systems/hexis/"><code>hexis</code></a>, <a
 href="../systems/hindsight/"><code>hindsight</code></a>, <a
 href="../systems/hippo-memory/"><code>hippo-memory</code></a>, <a
+href="../systems/holo-invariant/"><code>holo-invariant</code></a>, <a
 href="../systems/humans/"><code>humans</code></a>, <a
 href="../systems/huqan/"><code>huqan</code></a>, <a
 href="../systems/iai-pme/"><code>iai-pme</code></a>, <a
