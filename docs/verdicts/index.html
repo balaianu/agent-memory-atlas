@@ -7184,36 +7184,40 @@ targets it and the benchmark excludes abstention questions.</li>
 <h3 id="omnimemory"><a
 href="../systems/omnimemory/"><code>omnimemory</code></a></h3>
 <ul>
-<li>Best idea: a default-deny AST gate that tests its own checker — six
+<li>Best idea: a default-deny AST gate that tests its own checker — five
 positive and negative controls added after "a verifier demonstrated the
 <code>apply_instance_discriminator</code> laundering hole live" — on the
 stated principle that a gate whose discrimination is never exercised is
 indistinguishable from a gate that always passes. Beside it, a test that
 asserts in executable form what the suite does <em>not</em> prove.</li>
-<li>Biggest risk: <code>create_lifecycle_dispatch_handler</code> returns
-the no-op handler, which logs and acknowledges
-<code>expire-memory</code> and <code>archive-memory</code> commands
-without acting; its docstring records that it "previously" raised
-<code>RuntimeError</code> and was changed so upstream commands are
-"gracefully acknowledged instead of crashing the service". The crash was
-information.</li>
-<li>Most reusable component: the expire SQL —
+<li>Biggest risk: the routed retrieval node can only serve in-memory
+test doubles that nothing seeds —
+<code>OMNIMEMORY_USE_STUB_HANDLERS</code> defaults to
+<code>"true"</code>, and every other value reaches
+<code>NotImplementedError("Production handlers not yet implemented")</code>
+— so the running system returns nothing from memory.
+<code>archive-memory</code> and <code>runtime-tick</code> are
+acknowledged without acting.</li>
+<li>Most reusable component: the expire path —
 <code>WHERE id = ? AND lifecycle_revision = ? AND lifecycle_state = 'active'</code>,
-<code>rows_affected == 0</code> reported as a conflict, and a comment
-explaining why EXPIRED is excluded from the retry's valid source states.
-Optimistic concurrency and an illegal-transition guard in one
-statement.</li>
-<li>Maturity impression: 119,000 lines, mypy strict, Pydantic
-throughout, a frozen five-state transition map with DELETED terminal —
-and a fully specified audit model with no constructor anywhere in
-<code>src</code>, a trust enum derived from a float by threshold, and
-<code>OMNIMEMORY_USE_STUB_HANDLERS</code> defaulting to
-<code>"true"</code>.</li>
+zero rows reported as a conflict, and a dispatcher that publishes
+exactly one of <code>memory-expired</code> or
+<code>lifecycle-transition-failed</code> per command and nacks when it
+has no publisher. Optimistic concurrency, an illegal-transition guard
+and an outcome contract in one route.</li>
+<li>Maturity impression: mypy strict, Pydantic throughout, a frozen
+five-state transition map nothing consults — and a fully specified audit
+model with no constructor in <code>src</code>, a promotion tier with a
+QUARANTINE state nothing writes or reads, a trust enum derived from a
+float by threshold, and an expire UPDATE that writes an
+<code>expired_at</code> column the shipped migration does not
+create.</li>
 <li>Study when: you assert an invariant in CI and have never proved the
-assertion fails when violated.</li>
+assertion fails when violated, or you need a command handler that cannot
+succeed silently.</li>
 <li>Do not copy when: you want a memory system to adopt — this is a
-platform domain package, and the lifecycle it specifies is not
-running.</li>
+platform domain package, and its read side is not implemented in this
+repository.</li>
 </ul>
 <h3 id="wax"><a href="../systems/wax/"><code>wax</code></a></h3>
 <ul>

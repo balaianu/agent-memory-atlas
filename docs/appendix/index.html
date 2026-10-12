@@ -1674,9 +1674,9 @@ redirects</li>
 <li><a
 href="https://github.com/OmniNode-ai/omnimemory">OmniNode-ai/omnimemory</a>
 at <a
-href="https://github.com/OmniNode-ai/omnimemory/commit/59874e5b3359972d7313b4eb6266ca241111ed15"><code class="commit-id" title="59874e5b3359972d7313b4eb6266ca241111ed15">59874e5b…</code></a>
-— the lifecycle dispatch handler is a documented no-op; retrieval
-defaults to in-memory stubs</li>
+href="https://github.com/OmniNode-ai/omnimemory/commit/7be7aa9ea56a498ec6c10fe366927e7ec2fc0650"><code class="commit-id" title="7be7aa9ea56a498ec6c10fe366927e7ec2fc0650">7be7aa9e…</code></a>
+— expire commands reach a compare-and-set with one outcome event each;
+retrieval serves only unseeded in-memory test doubles</li>
 <li><a
 href="https://github.com/christopherkarani/Wax">christopherkarani/Wax</a>
 at <a
@@ -15455,6 +15455,33 @@ was refused as <code>entry not found</code>. All three sit outside
 <code>src/core/refinement/</code>, the directory the reading treated as
 the whole mechanism; the first was in a sibling Python package, and the
 third needed the caller rather than the callee.</li>
+<li><strong>Four published claims about <a
+href="../systems/omnimemory/">OmniMemory</a> were wrong at <a
+href="https://github.com/OmniNode-ai/omnimemory/commit/59874e5b3359972d7313b4eb6266ca241111ed15"><code class="commit-id" title="59874e5b3359972d7313b4eb6266ca241111ed15">59874e5b…</code></a>,
+the pin they were made at, and are corrected.</strong> The report named
+the no-op returned by <code>create_lifecycle_dispatch_handler</code> as
+the Kafka handler for <code>expire-memory</code> and
+<code>archive-memory</code>; that factory had no caller outside tests,
+and <code>create_memory_dispatch_engine</code> registered
+<code>_create_lifecycle_bridge_handler</code>
+(<code>src/omnimemory/runtime/dispatch_handlers.py:1005</code>), which
+read a <code>command</code> key the expire command lacks and called
+<code>handle_shutdown()</code> for a literal
+<code>"expire-memory"</code>. It called the retrieval stubs a default
+set by <code>OMNIMEMORY_USE_STUB_HANDLERS</code>;
+<code>HandlerMemoryRetrieval.initialize()</code> raised
+<code>NotImplementedError</code> for every non-stub configuration
+(<code>handler_memory_retrieval.py:169</code>), so the stubs were the
+only path. It counted six <code>test_checker_*</code> controls in the
+gate file; there were five. And it quoted a README sentence about "15
+runnable" nodes moving to <code>omnimarket</code> and cited
+<code>docs/migrations/MARKET_MIGRATION_BOUNDARY.md</code>; both were
+removed on 1 September 2026 by <a
+href="https://github.com/OmniNode-ai/omnimemory/commit/545cc0cc6372a86aa8d2a301fbfb56067438e9d3"><code class="commit-id" title="545cc0cc6372a86aa8d2a301fbfb56067438e9d3">545cc0cc…</code></a>.
+The first three were wrong at every pin since <a
+href="https://github.com/OmniNode-ai/omnimemory/commit/5dacb73c3319fad338870916bfb30025af5cf39c"><code class="commit-id" title="5dacb73c3319fad338870916bfb30025af5cf39c">5dacb73c…</code></a>;
+the first rested on a function's name and docstring rather than its
+callers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

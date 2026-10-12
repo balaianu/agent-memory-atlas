@@ -2024,12 +2024,12 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 
 ### [`omnimemory`](../systems/omnimemory/)
 
-- Best idea: a default-deny AST gate that tests its own checker — six positive and negative controls added after "a verifier demonstrated the `apply_instance_discriminator` laundering hole live" — on the stated principle that a gate whose discrimination is never exercised is indistinguishable from a gate that always passes. Beside it, a test that asserts in executable form what the suite does *not* prove.
-- Biggest risk: `create_lifecycle_dispatch_handler` returns the no-op handler, which logs and acknowledges `expire-memory` and `archive-memory` commands without acting; its docstring records that it "previously" raised `RuntimeError` and was changed so upstream commands are "gracefully acknowledged instead of crashing the service". The crash was information.
-- Most reusable component: the expire SQL — `WHERE id = ? AND lifecycle_revision = ? AND lifecycle_state = 'active'`, `rows_affected == 0` reported as a conflict, and a comment explaining why EXPIRED is excluded from the retry's valid source states. Optimistic concurrency and an illegal-transition guard in one statement.
-- Maturity impression: 119,000 lines, mypy strict, Pydantic throughout, a frozen five-state transition map with DELETED terminal — and a fully specified audit model with no constructor anywhere in `src`, a trust enum derived from a float by threshold, and `OMNIMEMORY_USE_STUB_HANDLERS` defaulting to `"true"`.
-- Study when: you assert an invariant in CI and have never proved the assertion fails when violated.
-- Do not copy when: you want a memory system to adopt — this is a platform domain package, and the lifecycle it specifies is not running.
+- Best idea: a default-deny AST gate that tests its own checker — five positive and negative controls added after "a verifier demonstrated the `apply_instance_discriminator` laundering hole live" — on the stated principle that a gate whose discrimination is never exercised is indistinguishable from a gate that always passes. Beside it, a test that asserts in executable form what the suite does *not* prove.
+- Biggest risk: the routed retrieval node can only serve in-memory test doubles that nothing seeds — `OMNIMEMORY_USE_STUB_HANDLERS` defaults to `"true"`, and every other value reaches `NotImplementedError("Production handlers not yet implemented")` — so the running system returns nothing from memory. `archive-memory` and `runtime-tick` are acknowledged without acting.
+- Most reusable component: the expire path — `WHERE id = ? AND lifecycle_revision = ? AND lifecycle_state = 'active'`, zero rows reported as a conflict, and a dispatcher that publishes exactly one of `memory-expired` or `lifecycle-transition-failed` per command and nacks when it has no publisher. Optimistic concurrency, an illegal-transition guard and an outcome contract in one route.
+- Maturity impression: mypy strict, Pydantic throughout, a frozen five-state transition map nothing consults — and a fully specified audit model with no constructor in `src`, a promotion tier with a QUARANTINE state nothing writes or reads, a trust enum derived from a float by threshold, and an expire UPDATE that writes an `expired_at` column the shipped migration does not create.
+- Study when: you assert an invariant in CI and have never proved the assertion fails when violated, or you need a command handler that cannot succeed silently.
+- Do not copy when: you want a memory system to adopt — this is a platform domain package, and its read side is not implemented in this repository.
 
 ### [`wax`](../systems/wax/)
 
