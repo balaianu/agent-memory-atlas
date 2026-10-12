@@ -6745,43 +6745,38 @@ instrument, append-only with a single writer and edit rows carrying
 <code>entity_id</code> and keeps the payload, so a pruned entity's
 former text outlives the row it belonged to.</p>
 <p><strong><a href="../systems/leteo/">Leteo</a> writes down what each
-decision cost to find out, and its epistemic fields are each one step
-short of doing work.</strong> An MIT Rust memory at version 0.2.1 —
-73,418 lines across 121 files — keeping one local SQLite file with no
-embedding model and no network in the memory path. The commentary is the
-distinguishing feature: the migration that adds a second full-text index
-publishes what each tokenizer can do rather than announcing the index,
-measuring that a question with two of six words re-inflected is answered
-<em>"63% of the time here and 0% by the same store searched without a
-stemmer"</em>, that quoting six words verbatim finds the memory first
-78% of the time stemmed against 84% unstemmed, and that fusing the two
-by rank position reaches 84.3% and 37.0% — alongside the cost, 5.1 MB of
-index on a 46 MB store and 0.04 ms added to a save. The bug this project
-has learned to name is a rule written in more than one place, and the
-comments carry the damage each time: <code>REVIEW_WINDOWS</code> was
-folded into one place only after <em>"a third hand-written copy of these
-names let <code>policy</code> keep a window nothing could fire"</em>, a
-fourth vocabulary was consolidated for the same reason, and a benchmark
-that wrote its own copy of the search query <em>"was measured for an
-afternoon before anybody noticed the product never issues it"</em>. That
-discipline also explains the query shape: <code>Narrowing::equals</code>
-writes a clause when there is a value and <em>"nothing at all when there
-is not — never a clause that has to be true for every row"</em>, because
-a parameter inside a disjunction costs SQLite its index at plan time,
-5.7 ms against 0.015 ms. The consequence is that scope and project are
-narrowing arguments a caller may omit, and the tests pin it — <em>"an
-empty scope is not a scope filter"</em>, with <em>"a real scope
-narrows"</em> beside it as the control. No mark lands. The state a
-reader sees is computed in Rust after the rows are back, so
-<code>needs_review</code> labels a memory that was returned anyway; the
-only predicate that withholds is <code>deleted_at IS NULL</code>, and it
-sits in both dedup lookups, so a deleted memory is invisible to the
-checks that would notice it being written again. The relation row
-records <code>marked_by_actor</code>, <code>marked_by_kind</code> and
-<code>marked_by_model</code> — the provenance shape this atlas rewards —
-and every shipped writer supplies <code>agent</code> or
-<code>system</code>, so the field built to tell a person from a machine
-has no path that writes a person.</p>
+decision cost to find out, and hides a superseded memory from every read
+while its save path writes into it.</strong> An MIT Rust memory at
+version 0.3.0 keeping one local SQLite file with three full-text indexes
+and a static multilingual embedding model behind them, with no network
+on the memory path. The commentary is the distinguishing feature: the
+function that reads two indexes together publishes what each tokenizer
+can do rather than announcing the index — quoting six words from a
+memory finds it first <em>"78% of the time here against 84%
+unstemmed"</em>, and fusing the two by rank position reaches 84.3% on
+quoted words and 37.0% on re-inflected ones — and the semantic stage's
+0.30 cosine floor states that it <em>"answers 24% of the controls"</em>.
+The bug the project has learned to name is a rule written in more than
+one place, and its answer is one visibility predicate,
+<code>visible_observations</code>, that every retrieval stage reads,
+including the vector stage, which a comment records <em>"was the first
+to be tempted to restate it"</em>. Through it a judged
+<code>supersedes</code> verdict hides its target from search, the
+opening context and every listing, and changing the verdict restores it.
+The save path does not read it: both lookups check
+<code>deleted_at IS NULL</code> alone, so a topic-key save into a hidden
+memory revises it and reports success. <code>needs_review</code> is
+computed in Rust after the rows are back and labels without withholding.
+The agent's search fills the project from the working directory and
+reads every project under <code>all_projects</code> or in a directory
+holding several repositories, and every judgement writer stamps
+<code>agent</code> or <code>system</code>. Two marks:
+<code>negative_eval</code>, on tests asserting that a replaced title, a
+deleted memory, another project's identical copy and a superseded memory
+are each absent from a populated store's answers, and
+<code>audit_log</code>, on the optional cloud server's append-only
+mutation log, since the local outbox is pruned a week after
+acknowledgement.</p>
 <p><strong><a href="../systems/memorywhale/">MemoryWhale</a> decides a
 lesson's approval from who wrote it, and refuses to run against the one
 schema where that filter could be skipped.</strong> An MIT Rust

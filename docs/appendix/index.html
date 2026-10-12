@@ -4436,13 +4436,16 @@ files inside the seven-day cooldown and <code>Cargo.lock</code> present.
 as data. Nothing was installed, built or run. MIT</li>
 <li><a href="https://github.com/asanabrial/leteo">asanabrial/leteo</a>
 at <a
-href="https://github.com/asanabrial/leteo/commit/f49917e4b9ffdf842e8f656a82867098487f789a"><code class="commit-id" title="f49917e4b9ffdf842e8f656a82867098487f789a">f49917e4…</code></a>
-— read only; two auto-run surfaces, no build-time execution point and no
-unpinned dependency surface, with seven dependency files inside the
-seven-day cooldown and <code>Cargo.lock</code> present.
+href="https://github.com/asanabrial/leteo/commit/78bc1738b7b73a5ec7e0e03c561ff4986214e12a"><code class="commit-id" title="78bc1738b7b73a5ec7e0e03c561ff4986214e12a">78bc1738…</code></a>
+— read only; two auto-run surfaces (a Claude Code marketplace manifest
+and an MCP server manifest), one build-time execution point
+(<code>build.rs</code>, which runs <code>git</code> for the build
+identity), no unpinned dependency surface, and five dependency files
+inside the seven-day cooldown, with <code>Cargo.lock</code> present.
 <code>AGENTS.md</code> and <code>CLAUDE.md</code> are addressed to a
 reading agent and were recorded as data. Nothing was installed, built or
-run and no benchmark was reproduced. MIT</li>
+run and no benchmark was reproduced. MIT; the embedding model files are
+Apache-2.0</li>
 <li><a
 href="https://github.com/wuisabel-gif/MemWhale">wuisabel-gif/MemWhale</a>
 at <a
@@ -15526,6 +15529,40 @@ tables, and belief recall scored every node by embedding or keyword with
 no traversal (<code>lib.rs:2694-2716</code>). The first took the
 receipts module's header for its callers; the second read the type and
 not its writer.</li>
+<li><strong>Five published claims about <a
+href="../systems/leteo/">Leteo</a> were wrong at <a
+href="https://github.com/asanabrial/leteo/commit/f49917e4b9ffdf842e8f656a82867098487f789a"><code class="commit-id" title="f49917e4b9ffdf842e8f656a82867098487f789a">f49917e4…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>negative_eval</code> on the ground that the exclusion
+tests were count comparisons rather than assertions that a named memory
+does not come back;
+<code>the_full_text_triggers_follow_every_write</code>
+(<code>src/store/tests/search.rs:104-155</code>) asserted that a search
+for a replaced title returned nothing while the new title was found and
+that a hard-deleted memory was not found, and
+<code>a_project_whose_name_the_tokenizer_splits_still_finds_its_memories</code>
+(<code>:992-1039</code>) stored one memory in three projects and
+asserted a narrowed search returned exactly the one in its own project,
+so the mark was earned. It withheld <code>audit_log</code> on the local
+<code>sync_mutations</code> outbox alone; the cloud server kept every
+pushed upsert and delete in <code>cloud_mutations</code>, written by
+<code>insert_mutations_tx</code>
+(<code>src/cloud/cloudstore/mod.rs:665-685</code>) and updated or
+deleted by no production statement, so that mark was earned too. And it
+said a caller who passes nothing gets no project clause, and that the
+suite's PostgreSQL tests needed a database the repository did not
+provide; <code>mem_search</code> and <code>mem_context</code> filled the
+project from the working directory
+(<code>src/mcp/tools.rs:328-338</code>), dropping it only under
+<code>all_projects</code> or an ambiguous directory, and the CI workflow
+ran the ignored tests against a PostgreSQL service container. It also
+counted thirteen ignored tests where the tree carried eleven
+<code>#[ignore]</code> attributes; the other two hits were doc comments
+in <code>src/cloud/auth.rs</code> and
+<code>src/cloud/cloudstore/tests.rs</code>. The first rested on the
+suite's test names rather than its assertions, the second on the local
+store rather than the whole tree, and the third on the store API rather
+than its callers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

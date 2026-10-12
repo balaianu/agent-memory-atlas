@@ -5,27 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="A local-first Rust memory for
-coding agents whose comments are a ledger of one bug hit repeatedly — a
-rule written in more than one place — and whose epistemic fields are
-each derived at read time, fixed to a single value, or omitted from the
-query when the caller leaves them out.">
+coding agents: three full-text indexes, a static-embedding fallback, and
+verdicts that hide what they supersede from every listing.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Leteo — Agent Memory Atlas">
     <meta property="og:description" content="A local-first Rust memory
-for coding agents whose comments are a ledger of one bug hit repeatedly
-— a rule written in more than one place — and whose epistemic fields are
-each derived at read time, fixed to a single value, or omitted from the
-query when the caller leaves them out.">
+for coding agents: three full-text indexes, a static-embedding fallback,
+and verdicts that hide what they supersede from every listing.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Leteo — Agent Memory Atlas">
     <meta name="twitter:description" content="A local-first Rust memory
-for coding agents whose comments are a ledger of one bug hit repeatedly
-— a rule written in more than one place — and whose epistemic fields are
-each derived at read time, fixed to a single value, or omitted from the
-query when the caller leaves them out.">
+for coding agents: three full-text indexes, a static-embedding fallback,
+and verdicts that hide what they supersede from every listing.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Leteo — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ query when the caller leaves them out.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Leteo",
-      "description": "A local-first Rust memory for coding agents whose comments are a ledger of one bug hit repeatedly \u2014 a rule written in more than one place \u2014 and whose epistemic fields are each derived at read time, fixed to a single value, or omitted from the query when the caller leaves them out.",
+      "description": "A local-first Rust memory for coding agents: three full-text indexes, a static-embedding fallback, and verdicts that hide what they supersede from every listing.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -106,24 +100,22 @@ query when the caller leaves them out.">
 test says so</p>
           <h1>Leteo</h1>
           <p class="document-deck">A local-first Rust memory for coding
-agents whose comments are a ledger of one bug hit repeatedly — a rule
-written in more than one place — and whose epistemic fields are each
-derived at read time, fixed to a single value, or omitted from the query
-when the caller leaves them out.</p>
+agents: three full-text indexes, a static-embedding fallback, and
+verdicts that hide what they supersede from every listing.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/asanabrial/leteo">
               <span>Source</span>
               <strong>asanabrial/leteo</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/asanabrial/leteo/commit/f49917e4b9ffdf842e8f656a82867098487f789a" title="f49917e4b9ffdf842e8f656a82867098487f789a">
+            <a class="meta-pill revision-pill" href="https://github.com/asanabrial/leteo/commit/78bc1738b7b73a5ec7e0e03c561ff4986214e12a" title="78bc1738b7b73a5ec7e0e03c561ff4986214e12a">
               <span>Analyzed revision</span>
-              <code>f49917e4…</code>
+              <code>78bc1738…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-12</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/asanabrial--leteo" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,22 @@ when the caller leaves them out.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT;
+the embedding model files under assets/model are
+Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>92,326
+lines of Rust in 134 files under src/, 36,682 of them in 28 test files;
+5,877 more in tests/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>373
+commits on main by one author, 9 August – 12 October 2026; version
+0.3.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,077
+Rust test attributes — 993 under src/, 83 in tests/, 1 in tools/ — 22 of
+them ignored locally and run in CI against a PostgreSQL service; none
+run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,144 +154,119 @@ when the caller leaves them out.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Leteo is "[l]iving memory for AI agents. Light. Local. Yours." — MIT,
-Rust, version 0.2.1, 73,418 lines across 121 files, giving a coding
-agent "persistent memory, contextual retrieval, and continuous
-cognition" from one local SQLite file with no embedding model and no
-network in the memory path.</p>
-<p><strong>The thing worth reading here is the commentary, and it is
-unusual enough to lead with.</strong> Most codebases record what a
-decision was. This one records what it cost to find out, in numbers, and
-names the bug that motivated it. The migration that adds a second
-full-text index does not say "added an exact index"; it says what each
-tokenizer can and cannot do, and what the pair measured:</p>
+<p>Leteo is a local-first memory for coding agents — one Rust binary
+over one SQLite file, reached through MCP, lifecycle hooks and a CLI —
+whose search is a lexical cascade over three full-text indexes with a
+small static embedding model behind it for questions the words cannot
+answer. Its distinguishing feature is a codebase that writes down what
+each decision cost to find out, in numbers, and a single visibility
+predicate that every retrieval stage reads. Its weakest point is that
+the predicate governs reads only: the verdict that hides a superseded
+memory from every listing is invisible to the save path, and the review
+date that marks a memory stale labels it without withholding it.</p>
+<p><strong>The commentary is the thing worth reading, and it
+leads.</strong> Most codebases record what a decision was. This one
+records the measurement and the bug behind it. The function that reads
+two of the indexes together does not say "added an exact index"; it says
+what each tokenizer can do and what the pair measured:</p>
 <blockquote>
-<p>"a question with two of six words re-inflected is answered 63% of the
-time here and 0% by the same store searched without a stemmer."</p>
-<p>"quoting six words straight out of a memory finds it first 78% of the
-time, against 84% unstemmed. Both are real, they pull in opposite
-directions, and no single tokenizer has both — the tokenizer is a
-property of the table."</p>
+<p>"six words lifted straight out of a memory find it first 78% of the
+time here against 84% unstemmed."</p>
 </blockquote>
-<p>So there are two indexes and the search reads both, fused by the rank
-position each gave a memory rather than by score, which the same comment
-measures at 84.3% on quoted words and 37.0% on re-inflected ones against
-78.0% and 37.3% from the stemmed index alone. The cost is stated in the
-same breath: 5.1 MB of index on a 46 MB store, 228 ms to build once,
-0.03 ms on a search, and 0.04 ms — three per cent — on saving a memory.
-A reader can disagree with the trade because the trade is on the
-page.</p>
-<p><strong>The recurring bug this project has learned to name is a rule
-written in more than one place.</strong> It appears again and again in
-the comments, each time with the damage:</p>
-<blockquote>
-<p>"<code>REVIEW_WINDOWS</code> itself was consolidated after a third
-hand-written copy of these names let <code>policy</code> keep a window
-nothing could fire."</p>
-<p>"This is the fourth vocabulary to be consolidated for the same
-reason."</p>
-<p>"a hand-written copy with <code>ifnull(project, '')</code> where
-<code>Narrowing</code> writes <code>project =</code> was measured for an
-afternoon before anybody noticed the product never issues it."</p>
-</blockquote>
-<p>That last one is the sharpest, because the duplicate was in a
-<em>measurement tool</em>: a benchmark that wrote its own copy of the
-search query was measuring a search the product does not run. The fix
-was to pass the real query's weights in rather than let the tool restate
-them.</p>
-<p><strong>The same discipline explains why the scope predicate is
-shaped the way it is, and why this report awards no marks.</strong>
-<code>Narrowing::equals</code> writes
-<code>AND &lt;column&gt; = ?n</code> when there is a value "and nothing
-at all when there is not — never a clause that has to be true for every
-row", and the reason is a query plan, measured:</p>
-<blockquote>
-<p>"A column inside a disjunction with a parameter is therefore not a
-usable index term at plan time, and the plan it settles on is the one
-that works whichever way the parameter goes: <code>SCAN</code>. … On a
-store of 3,587 memories that is 5.7 ms against 0.015 ms, and the
-session-opening context pays it four times over."</p>
-</blockquote>
-<p>That is a good reason to build SQL per call. It also means the scope
-is a narrowing <em>argument</em>: a caller who passes nothing gets no
-scope clause, and the test suite pins exactly that —
-<code>"an empty scope is not a scope filter"</code>, with
-<code>"a real scope narrows"</code> beside it as the control that stops
-the first assertion passing by doing nothing. A predicate a caller may
-omit is not a boundary the store enforces, so
-<code>scope_enforced</code> is withheld on the shape of the query rather
-than on a missing feature.</p>
-<p><strong>The epistemic fields are all one step short of doing
-work.</strong> A memory's state is computed rather than stored:
-<code>Observation::state()</code> returns <code>deleted</code>,
-<code>needs_review</code> or <code>active</code> by looking at
-<code>deleted_at</code> and comparing <code>review_after</code> to the
-clock, in Rust, after the rows are already back from SQLite. It can
-label a result and cannot withhold one. The only predicate that
-withholds anything is <code>deleted_at IS NULL</code>. And the relation
-row that carries a judgement records <code>marked_by_actor</code>,
-<code>marked_by_kind</code> and <code>marked_by_model</code> — the
-provenance shape this atlas rewards, because it says <em>what kind of
-thing</em> decided — but every shipped writer supplies
-<code>"agent"</code> or <code>'system'</code>. The field built to tell a
-person from a machine has no path that writes a person.</p>
-<p><strong>Deletion is keyed on the row, not the claim.</strong> Both
-dedup lookups end with <code>AND deleted_at IS NULL</code>, so a memory
-somebody deleted is invisible to the two checks that would otherwise
-notice the same thing being written again. The prompt side comes closer
-than anything else here: <code>apply_prompt_upsert_tx</code> reads
-<code>prompt_deletions</code> <em>before</em> accepting an incoming
-prompt and drops the write when the arriving copy is not newer than the
-deletion. That is a deletion consulted on the write path, which most of
-this corpus does not manage — but it is keyed on the
-<code>sync_id</code>, so it settles a race between replicas about one
-row rather than remembering that a claim was rejected.</p>
+<p>Fused by the rank position each index gave a memory, the pair reaches
+84.3% on quoted words and 37.0% on re-inflected ones, against 78.0% and
+37.3% from the stemmed index alone. The semantic floor carries its cost
+in the same breath: at a cosine of 0.30 it "keeps 43% of what can be
+rescued at 43% precision and answers 24% of the controls", with the
+alternatives on either side measured.</p>
+<p><strong>The recurring bug this project names is a rule written in
+more than one place</strong>, and the visibility predicate is its
+answer. <code>not_superseded</code> is "[t]he hiding rule, written once
+and read by every door that lists memories", and the comment on
+<code>visible_observations</code> records that the semantic stage "was
+the first to be tempted to restate it". A memory a judged
+<code>supersedes</code> verdict points at drops out of search, the
+opening context, the pinned list and the raw listings together, and a
+test walks each of those doors.</p>
+<p><strong>What the predicate does not reach is the write path.</strong>
+<code>add_observation</code> looks a memory up by topic key and by
+content hash with <code>deleted_at IS NULL</code> alone, so a save keyed
+to a memory a verdict has hidden revises the hidden row, and an
+identical re-save increments a hidden row's duplicate count. Both report
+success. The hiding is reversible by design — changing the verdict
+restores the source — but nothing on the write side knows a memory is
+hidden.</p>
+<p><strong>Two marks land.</strong> <code>negative_eval</code>, on tests
+that assert a replaced title, a deleted memory, another project's
+identical copy and a superseded memory are each absent from a populated
+store's answers. <code>audit_log</code>, on the optional cloud server,
+which keeps every replicated upsert and delete in a sequenced table no
+production statement updates or deletes. The local store has no such
+record: its sync outbox is pruned a week after acknowledgement and its
+version table keeps twenty bodies per memory. The project scope is
+filled from the working directory for the agent's reads and is lifted by
+one argument or by an ambiguous directory, so
+<code>scope_enforced</code> is withheld.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>Leteo is a lexical memory with no model in the loop, and almost every
-question about it resolves by asking whether a thing is a column or a
-computation.</p>
-<p>Columns withhold: <code>deleted_at IS NULL</code> is in the SQL, so a
-deleted memory does not come back. Computations describe:
-<code>state()</code> runs after the query, so <code>needs_review</code>
-reaches the caller as a label on a row that was already returned. The
-scope sits in between — it is a column, and it is in the SQL only when
-the caller supplied a value.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a save is normalised and hashed, then routed to a revision, a duplicate count or an insert; retrieval runs BM25 over two full-text indexes of the same rows and fuses them by rank position, with the scope and project clauses present only when the caller passed a value; the state a reader sees is computed in Rust after the rows are back, so it can label a memory but cannot withhold one</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a save is normalised and hashed, then routed to a revision, a duplicate count or an insert; retrieval runs BM25 over two full-text indexes of the same rows and fuses them by rank position, with the scope and project clauses present only when the caller passed a value; the state a reader sees is computed in Rust after the rows are back, so it can label a memory but cannot withhold one
+<p>A memory is an observation an agent saved, and it is ground truth
+until something says otherwise. Three things can say otherwise, and they
+differ in whether they withhold.</p>
+<ul>
+<li><strong>Deletion withholds.</strong> <code>deleted_at IS NULL</code>
+is in every listing.</li>
+<li><strong>A judged supersedes verdict withholds.</strong> A relation
+row with <code>judgment_status = 'judged'</code> and
+<code>relation = 'supersedes'</code> hides its target from every listing
+through <code>not_superseded()</code>. A pending relation hides nothing,
+and re-judging the pair with another verb, or removing the row, restores
+the memory. Consolidation is this verdict applied to several sources at
+once.</li>
+<li><strong>A review date labels.</strong> <code>state()</code> returns
+<code>needs_review</code> when <code>review_after</code> has passed, in
+Rust, after the rows are back from SQLite, so a stale decision is
+returned with a label beside it.</li>
+</ul>
+<p>The state machine is short. A save inserts an <code>active</code>
+memory; a topic-key save or an update revises it in place and snapshots
+the replaced text; a review date passes and the row reads
+<code>needs_review</code> until an agent marks it reviewed; a verdict
+hides it; a delete stamps it or removes it. Nothing expires —
+<code>expires_at</code> sits in the schema with no writer and no
+reader.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a save is normalised and routed to a revision, a duplicate count or an insert by lookups that check deletion only; every read stage shares one predicate that also hides a memory a judged supersedes verdict points at; a passed review date labels a returned memory and withholds nothing</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a save is normalised and routed to a revision, a duplicate count or an insert by lookups that check deletion only; every read stage shares one predicate that also hides a memory a judged supersedes verdict points at; a passed review date labels a returned memory and withholds nothing
 flowchart TB
-    SAVE[&quot;mem_save / leteo save&quot;]
-    NORM[&quot;normalize: strip &amp;lt;private&amp;gt; spans,&lt;br/&gt;cap length, fold the project&#39;s case,&lt;br/&gt;hash the folded body&quot;]
-    TK{&quot;does a memory hold&lt;br/&gt;this topic_key,&lt;br/&gt;in this project and scope?&quot;}
-    REV[&quot;REVISE in place:&lt;br/&gt;revision_count + 1,&lt;br/&gt;reschedule the review clock&quot;]
-    DUP{&quot;same normalized_hash, project,&lt;br/&gt;scope, type and title,&lt;br/&gt;inside the dedupe window?&quot;}
+    SAVE[&quot;mem_save · mem_update · leteo save&quot;]
+    NORM[&quot;normalize: strip &amp;lt;private&amp;gt; spans,&lt;br/&gt;cap length, fold project case,&lt;br/&gt;hash the folded body&quot;]
+    TK{&quot;a memory with this topic_key,&lt;br/&gt;project and scope,&lt;br/&gt;deleted_at IS NULL?&quot;}
+    REV[&quot;REVISE in place:&lt;br/&gt;snapshot old title and body&lt;br/&gt;(newest 20 kept),&lt;br/&gt;revision_count + 1&quot;]
+    DUP{&quot;same hash, project, scope,&lt;br/&gt;type and title inside the window,&lt;br/&gt;deleted_at IS NULL?&quot;}
     INC[&quot;duplicate_count + 1&quot;]
-    INS[(&quot;INSERT into observations&quot;)]
-    NOTE[&quot;both lookups end with deleted_at IS NULL,&lt;br/&gt;so a DELETED memory is not consulted here&quot;]
+    INS[(&quot;INSERT observation&quot;)]
+    GAP[&quot;neither lookup reads the verdict:&lt;br/&gt;a HIDDEN memory is revised&lt;br/&gt;or counted, and the save succeeds&quot;]
 
     SAVE --&gt; NORM --&gt; TK
     TK --&gt;|&quot;yes&quot;| REV
     TK --&gt;|&quot;no&quot;| DUP
     DUP --&gt;|&quot;yes&quot;| INC
     DUP --&gt;|&quot;no&quot;| INS
-    NOTE -.-&gt; TK
-    NOTE -.-&gt; DUP
+    GAP -.-&gt; TK
+    GAP -.-&gt; DUP
 
-    Q[&quot;mem_search(query, project, scope)&quot;]
-    N{&quot;Narrowing::equals —&lt;br/&gt;a clause when there is a value,&lt;br/&gt;NOTHING when there is not&quot;}
-    SQL[&quot;WHERE fts MATCH ?&lt;br/&gt;AND deleted_at IS NULL&lt;br/&gt;( AND project = ? )&lt;br/&gt;( AND scope = ? )&quot;]
-    F1[(&quot;observations_fts&lt;br/&gt;porter unicode61 — stemmed&quot;)]
-    F2[(&quot;observations_exact&lt;br/&gt;unicode61 — as written&quot;)]
-    FUSE[&quot;fuse by the RANK POSITION&lt;br/&gt;each index gave a memory,&lt;br/&gt;not by score&quot;]
-    ROWS[&quot;rows&quot;]
-    ST[&quot;Observation::state() runs HERE, in Rust:&lt;br/&gt;deleted · needs_review · active&quot;]
+    J[&quot;mem_judge · mem_consolidate ·&lt;br/&gt;model judge&quot;]
+    VER[(&quot;memory_relations:&lt;br/&gt;relation = supersedes,&lt;br/&gt;judgment_status = judged,&lt;br/&gt;marked_by_kind = agent or system&quot;)]
+    J --&gt; VER
+
+    Q[&quot;mem_search · mem_context ·&lt;br/&gt;session-start hook · prompt hint&quot;]
+    VIS{&quot;visible_observations:&lt;br/&gt;deleted_at IS NULL&lt;br/&gt;AND project / scope / type when given&lt;br/&gt;AND NOT EXISTS a judged supersedes&lt;br/&gt;pointing at this memory&quot;}
+    LEX[&quot;topic key → BM25 over three indexes,&lt;br/&gt;fused by rank → prefix → substring →&lt;br/&gt;typo → any-word → median floor&quot;]
+    SEM[&quot;cosine over stored vectors,&lt;br/&gt;only when the words found nothing&lt;br/&gt;or only the weakest answer&quot;]
+    ST[&quot;state() in Rust:&lt;br/&gt;deleted · needs_review · active&quot;]
     OUT[&quot;the answer, each row labelled&quot;]
 
-    Q --&gt; N --&gt; SQL
-    SQL --&gt; F1 --&gt; FUSE
-    SQL --&gt; F2 --&gt; FUSE
-    FUSE --&gt; ROWS --&gt; ST --&gt; OUT
-    N -.-&gt;|&quot;a caller who passes nothing&lt;br/&gt;gets no scope clause —&lt;br/&gt;&#39;an empty scope is not a scope filter&#39;&quot;| SQL
-    ST -.-&gt;|&quot;computed after the rows are back,&lt;br/&gt;so it can LABEL a memory&lt;br/&gt;but cannot WITHHOLD one&quot;| OUT
-    INS --&gt; F1</code></pre></details></figure>
+    Q --&gt; VIS
+    VER -.-&gt;|&quot;hides the target&quot;| VIS
+    VIS --&gt; LEX --&gt; SEM --&gt; ST --&gt; OUT
+    ST -.-&gt;|&quot;computed after the rows are back:&lt;br/&gt;LABELS, does not WITHHOLD&quot;| OUT</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -297,222 +279,340 @@ flowchart TB
 <tr>
 <td><code>src/store/</code></td>
 <td>The SQLite layer: observations, prompts, sessions, relations,
-search, wire and diagnostics, with <code>Narrowing</code> and the column
-lists shared across them</td>
+search, the semantic stage, wire and diagnostics, with
+<code>Narrowing</code>, the column lists and the version retention bound
+shared across them</td>
+</tr>
+<tr>
+<td><code>src/semantic/</code></td>
+<td>The static embedding model: file hashes compiled in, the width, the
+token cap, the cosine floor, and <code>leteo model install</code></td>
 </tr>
 <tr>
 <td><code>src/memory/</code></td>
-<td>The model, the normalisation rules, the review windows and the
-relation vocabulary</td>
+<td>The model types, normalisation, the review windows, the refusal
+rules and the relation vocabulary</td>
 </tr>
 <tr>
 <td><code>src/mcp/</code></td>
-<td>Twenty-two tools — the agent's surface</td>
-</tr>
-<tr>
-<td><code>src/cli/</code></td>
-<td>Some thirty subcommands, including <code>doctor</code>,
-<code>conflicts</code> and <code>timeline</code></td>
+<td>Twenty-three tools, the agent and admin profiles, and the loopback
+HTTP API in <code>serve.rs</code></td>
 </tr>
 <tr>
 <td><code>src/hooks/</code></td>
-<td>Session-start and session-end hooks that assemble the opening
-context</td>
+<td>Session-start, prompt, compaction and subagent hooks, with a spool
+for learnings that arrive while the store is busy</td>
+</tr>
+<tr>
+<td><code>src/cli/</code></td>
+<td>Twenty-six commands, including <code>consolidate</code>,
+<code>conflicts</code>, <code>doctor</code>, <code>serve</code> and
+<code>model</code></td>
 </tr>
 <tr>
 <td><code>src/sync/</code>, <code>src/cloud/</code></td>
-<td>An outbox of mutations, a chunked transfer, and an optional cloud
-server</td>
+<td>The outbox, chunked transfer, autosync, and the feature-gated
+PostgreSQL cloud server with grants and a dashboard</td>
 </tr>
 <tr>
 <td><code>migrations/</code></td>
-<td>Four baseline files plus one, each carrying the argument for what it
-does</td>
+<td>Four baseline files and five numbered ones, each carrying the
+argument for what it does</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One binary and one SQLite file under <code>~/.leteo</code>, with no
+network on the memory path and no API key. The embedding model is three
+files beside the binary — 12.6 MB of int8 weights and a gzipped
+tokenizer — carried in release archives and the Docker image and fetched
+by <code>leteo model install</code> otherwise; each file must match a
+SHA-256 compiled into the binary or the semantic stage stays off and
+search is lexical. Plugins for Claude Code, Codex, OpenCode, Pi and
+ZCode register <code>leteo mcp --tools=agent</code> and the hooks. The
+cloud server is a separate build behind the <code>cloud-server</code>
+feature and needs PostgreSQL. The store is SQLite and readable with any
+client; <code>doctor --repair</code> rebuilds indexes and backfills
+vectors.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
-<li><code>src/store/mod.rs:194-231</code> — <code>Narrowing</code>, and
-the plan argument that shapes it.</li>
-<li><code>src/store/search.rs:47-57</code> — the fused-search SQL, with
-type, project and scope each behind an <code>IS NULL</code>
-disjunction.</li>
-<li><code>src/store/observations.rs:228-270</code> — the topic-key
-revision lookup and the hash dedup lookup, both ending
-<code>AND deleted_at IS NULL</code>.</li>
-<li><code>src/memory/model.rs:105-122</code> — <code>state()</code>,
-computed from <code>deleted_at</code> and the review clock.</li>
-<li><code>src/memory/rules.rs:78-110</code> —
-<code>REVIEW_WINDOWS</code> and the calendar-month rule, with the three
-disagreeing copies it replaced.</li>
-<li><code>src/store/relations.rs:375-400</code> — the judgement write,
-recording actor, kind and model.</li>
-<li><code>src/store/wire.rs:400-430</code> — the prompt tombstone
-consulted before a synced write is accepted.</li>
-<li><code>src/store/wire.rs:610-631</code> — the journal prune, and why
-the outbox is not a record.</li>
-<li><code>migrations/0001_baseline_after_the_tables.sql</code> — the
-second index, with its measurements.</li>
+<li><code>src/store/observations.rs:331-524</code> —
+<code>add_observation</code>: the refusal, the topic-key lookup at
+<code>:358-365</code>, the version snapshot, the hash lookup at
+<code>:459-464</code>, and the insert.</li>
+<li><code>src/store/observations.rs:202-236</code> —
+<code>snapshot_observation_version_tx</code>, which inserts the replaced
+text and deletes everything past the newest twenty.</li>
+<li><code>src/store/observations.rs:526-629</code> —
+<code>consolidate_observations</code>: one replacement, one judged
+<code>supersedes</code> per source, all in one transaction.</li>
+<li><code>src/store/relations.rs:62-83</code> —
+<code>not_superseded</code>, the hiding rule.</li>
+<li><code>src/store/search.rs:154-176</code> —
+<code>visible_observations</code>, the predicate every stage reads.</li>
+<li><code>src/store/search.rs:417-638</code> —
+<code>search_limited</code>, the cascade from topic key to semantic
+stage.</li>
+<li><code>src/store/search.rs:874-955</code> —
+<code>fused_observations</code>, the three-index rank fusion with its
+measurements.</li>
+<li><code>src/store/semantic_stage.rs:92-146</code> —
+<code>semantic_candidates</code>, a cosine scan under the same
+predicate.</li>
+<li><code>src/semantic/mod.rs:39-89</code> — model identity, file
+hashes, width, token cap and <code>FLOOR</code>.</li>
+<li><code>src/memory/model.rs:108-123</code> —
+<code>state()</code>.</li>
+<li><code>src/store/relations.rs:389-431</code>, <code>:758-804</code> —
+the judgement writes, with actor, kind and model.</li>
+<li><code>src/mcp/tools.rs:8-18</code>, <code>:423-506</code> —
+<code>read_project</code> and <code>mem_search</code>, the
+working-directory default and <code>all_projects</code>.</li>
+<li><code>src/mcp/serve.rs:34</code>, <code>:80-87</code>;
+<code>src/cli/mod.rs:959-963</code> — the loopback HTTP API and the tool
+list it exposes.</li>
+<li><code>src/cloud/cloudstore/mod.rs:915-935</code>,
+<code>:764-800</code> — the cloud mutation log's writer and its
+latest-state read.</li>
+<li><code>src/store/wire.rs:682-703</code> — the local journal
+prune.</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>An observation carries <code>type</code>, <code>title</code>,
 <code>content</code>, <code>tool_name</code>, <code>project</code>,
-<code>scope</code> (defaulting to <code>project</code>),
-<code>topic_key</code>, <code>normalized_hash</code>,
-<code>revision_count</code>, <code>duplicate_count</code>,
-<code>last_seen_at</code>, <code>pinned</code>,
-<code>review_after</code>, <code>expires_at</code>,
-<code>created_at</code>, <code>updated_at</code> and
-<code>deleted_at</code>. The vector column inherited from the upstream
-schema is annotated as never written: "Leteo does not embed
-anything."</p>
-<p><code>type</code> is a write-time genre rather than an epistemic
-status, and it is the input to the review clock:
-<code>REVIEW_WINDOWS</code> gives <code>decision</code> six months,
-<code>policy</code> twelve and <code>preference</code> three, and every
-other kind none, because most kinds do not go stale. The window is
-counted in calendar months rather than thirty-day months, on the stated
-ground that "a decision is good for six months, not for a hundred and
-eighty days" — a distinction that had produced a four-day disagreement
-between three copies of the same rule.</p>
-<p>A relation row is the other memory unit: a <code>relation</code>
-verb, a <code>reason</code>, <code>evidence</code>, a
-<code>confidence</code>, a <code>judgment_status</code>, the actor, kind
-and model that marked it, and a supersession pointer.</p>
-<p>Every timestamp is a record time. There is no validity interval and
-no as-of read, so <code>bitemporal</code> is withheld on an absence.</p>
+<code>scope</code> (defaulting to <code>project</code>, with
+<code>personal</code> beside it), <code>topic_key</code>,
+<code>normalized_hash</code>, <code>revision_count</code>,
+<code>duplicate_count</code>, <code>last_seen_at</code>,
+<code>pinned</code>, <code>review_after</code>, <code>expires_at</code>,
+<code>prompt_sync_id</code>, <code>created_at</code>,
+<code>updated_at</code> and <code>deleted_at</code>. The
+<code>embedding*</code> columns inherited from Engram, the project Leteo
+reimplements, are written by nothing; vectors live in
+<code>observation_vectors</code>, keyed by the local id, with the model
+name and a source key built from the content hash and title, so a
+changed memory is found stale in SQL without reading its text. They are
+derived, local and never replicated.</p>
+<p><code>observation_versions</code> holds the title and body a
+content-changing write replaced, keyed by the memory's
+<code>sync_id</code> and revision, replicated, and cut to the newest
+twenty per memory on every insert. <code>mem_get_observation</code> with
+<code>include_history</code> returns them.</p>
+<p><code>type</code> is a write-time genre and the input to the review
+clock: <code>REVIEW_WINDOWS</code> gives <code>decision</code> six
+months, <code>policy</code> twelve and <code>preference</code> three,
+counted in calendar months on the stated ground that a decision "is good
+for six months, not for a hundred and eighty days".</p>
+<p>A relation row carries a verb, a reason, evidence, a confidence, a
+<code>judgment_status</code> of <code>pending</code>,
+<code>judged</code> or <code>orphaned</code>, and
+<code>marked_by_actor</code>, <code>marked_by_kind</code> and
+<code>marked_by_model</code>. Every timestamp is a record time; there is
+no validity interval and no as-of read, so <code>bitemporal</code> is
+withheld.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Search is BM25 over two FTS5 external-content indexes of the same
-rows, fused by the position each index gave a memory rather than by
-combining scores — the choice the migration measures. The weights are a
-single constant passed into the query builder rather than restated by
-each caller, which is the fix for the benchmark that had been measuring
-a query nobody issued.</p>
-<p><code>deleted_at IS NULL</code> is in every listing. Type, project
-and scope are each behind <code>(?n IS NULL OR column = ?n)</code> in
-the raw SQL, and the <code>Narrowing</code> builder used by the other
-reads omits the clause entirely instead. A relation-aware candidate
-search additionally excludes memories already related to the one in
-hand, which is an existence test rather than a status test.</p>
+<p><code>search_limited</code> runs a cascade in which each stage fires
+only when everything before it came back empty. A query shaped like a
+topic key is looked up exactly. Then the strict pass: BM25 over the
+Porter, unstemmed and Snowball indexes, fused by
+<code>1 / (k + rank)</code> rather than by score, with body text
+weighted half a title word on a measurement over 253 real prompts. Then
+prefixes, then substrings, then a typo correction that must place every
+unknown word or none, then any of the words, then the median-relative
+floor the per-prompt hint uses. Every relaxed result is marked
+<code>partial</code>.</p>
+<p>The semantic stage is last. It embeds the question as a mean of int8
+token vectors, scans every stored vector under the shared predicate, and
+answers an empty result only above a cosine of 0.30, or merges its best
+candidate by rank beside a <code>nearest</code> answer, which is the
+weakest lexical claim the cascade makes. It is on unless a setting turns
+it off.</p>
+<p>Every stage reads <code>visible_observations</code>: not deleted,
+inside the type, project and scope the caller gave, and not the target
+of a judged <code>supersedes</code>. The clauses are
+<code>(?n IS NULL OR …)</code>, so an omitted value narrows nothing —
+the test <code>a_blank_narrowing_narrows_nothing</code> pins <em>"an
+empty scope is not a scope filter"</em>. <code>Narrowing</code>, which
+the context listings use, writes a clause when there is a value and
+nothing when there is not, for a plan reason measured at 5.7 ms against
+0.015 ms.</p>
+<p>At the agent's surface the project is rarely omitted.
+<code>mem_search</code> and <code>mem_context</code> fill it from
+<code>read_project</code> — a process override, then a
+<code>.leteo/config.json</code>, the git remote, the git root or the
+directory name — and the session-start hook and the prompt hint always
+pass one. Three things widen it: the caller names another project, the
+caller sets <code>all_projects</code>, or detection is ambiguous because
+the directory holds several repositories, in which case the fallback is
+empty and the read covers every project, labelled
+<code>all_projects</code>. Writes in the same ambiguous directory
+refuse. When a project-narrowed search finds nothing, a second, unscoped
+search counts the matches elsewhere and reports the count alone.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>A save normalises first: <code>&lt;private&gt;</code> spans are
-stripped by regex before storage, the body is capped, and the project
-name is case-folded — the last because a prompt arriving over the sync
-wire once kept its spelling, so <code>Leteo</code> never matched the
-<code>leteo</code> every query narrows by and "that prompt was invisible
-to the opening context for ever."</p>
-<p>Then three outcomes in order. A memory holding the same
-<code>topic_key</code> in the same project and scope is revised in place
-with <code>revision_count</code> incremented and its review clock
-rescheduled. Otherwise an identical <code>normalized_hash</code> with
-the same project, scope, type and title inside a configurable window
-increments <code>duplicate_count</code>. Otherwise a new row is
-inserted.</p>
-<p>Both lookups end <code>AND deleted_at IS NULL</code>.</p>
+stripped by regex, the body is capped, the project is case-folded and
+reduced from a path to its last segment, and a title-less or empty
+memory is refused. Then three outcomes: a revision in place for a
+matching topic key, project and scope, with the replaced text
+snapshotted when it changed; a duplicate count on a matching hash,
+project, scope, type and title inside a configurable window; or an
+insert. Both lookups read <code>deleted_at IS NULL</code> and not
+<code>not_superseded()</code>.</p>
+<p>After the commit, <code>embed_written</code> computes the vector,
+loading the model on the first write in a process; a failure leaves the
+memory saved and the backfill thread catches it up. Saving blocks on no
+model call. Consolidation is synchronous and transactional: every source
+is read and checked for project before the first write.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write path is a SQLite transaction and a mean over at most 128
+tokens. The read path is a handful of FTS5 queries and, when it fires, a
+linear scan of one kilobyte per memory. The opening context is bounded
+by a size setting, and the pinned list is held to the same ceiling after
+a 47 KB opening was measured.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Twenty-two MCP tools cover saving, searching, context assembly,
-pinning, reviewing, judging relations, comparing, timelines, stats and a
-doctor. The CLI covers the same ground for a person, plus
-<code>conflicts</code>, <code>export</code>, an Obsidian export, a
-terminal UI and the setup module that writes configuration for several
-agent clients at install time.</p>
-<p><code>mem_review</code> lists memories due for review and marks one
-reviewed. <code>mem_judge</code> records a verdict on a relation. Both
-are agent-facing, which is what decides the review mark below.</p>
+<p>Twenty-three MCP tools. The agent profile the plugins install holds
+twenty — save, update, review, consolidate, search, get, context, pin,
+judge, compare, timeline, session tools, passive capture and doctor
+among them — and <code>mem_delete</code>,
+<code>mem_merge_projects</code> and <code>mem_stats</code> sit behind
+<code>admin</code>. <code>leteo serve</code> exposes the same handlers
+over HTTP on <code>127.0.0.1:7437</code> with
+<code>McpOptions::default()</code>, so every tool including
+<code>mem_delete</code> is reachable by any local process without a
+token.</p>
+<p>Hooks open each session with an index of the project's recent and
+pinned memories, recover after compaction, name memories relevant to
+each prompt, and keep a subagent's learnings, spooling them when another
+process holds the write lock. <code>mem_review</code> lists due memories
+and marks one reviewed; <code>mem_judge</code> records a verdict on a
+pair. Both are on the agent's own surface.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>Trust state — withheld, on a derived state.</strong>
-<code>state()</code> is computed per row as it is serialised. Nothing in
-SQL consults it, and nothing can, because it does not exist until the
-rows are already back. <code>needs_review</code> therefore reaches an
-agent as a label beside a memory that was returned anyway.</p>
-<p><strong>Scope enforced — withheld, on an omittable
-predicate.</strong> The clause is present when a value is supplied and
-absent when it is not, for a measured query-plan reason. The test suite
-documents the consequence rather than guarding against it, asserting
-that an empty scope is not a scope filter and that a real one
-narrows.</p>
-<p><strong>Human review — withheld, on the producer.</strong> The
-provenance triple on a judgement is the right shape, and
-<code>marked_by_kind</code> exists precisely to say what kind of thing
-decided. Every production writer supplies <code>"agent"</code>, except
-the system path which writes <code>'system'</code> with
-<code>marked_by_actor = 'leteo'</code>. A search across the tree finds
-no path that records a person.</p>
-<p><strong>Tombstone — withheld, and the prompt path is the near
-miss.</strong> A deleted observation is excluded from both dedup
-lookups, so the same content can be written back with nothing to notice.
-<code>prompt_deletions</code> is consulted on the write path and does
-drop an incoming copy that is not newer than the deletion, which is more
-than most stores here do — but it is keyed on the row's identity, so it
-arbitrates replication rather than remembering a rejected claim.</p>
-<p><strong>Audit log — withheld.</strong> <code>sync_mutations</code> is
-an append-only journal of entity, operation and payload, and it is
-pruned: acknowledged rows older than a retention window are deleted,
-because "an unpruned journal roughly doubles the size of the database"
-and the window "leaves a few days of history for anyone debugging a sync
-problem." That is an outbox, honestly described as one.</p>
-<p><strong>Negative evaluation — withheld.</strong> The exclusion tests
-are count comparisons — a filtered count must be smaller than an
-unfiltered one — rather than assertions that a named memory does not
-come back. The one test that does assert non-leakage,
-<code>mutation_scoping_fails_closed_on_an_empty_allowlist</code>, has
-both halves the mark wants, including the control that the scoped
-project has rows to return; it is <code>#[ignore]</code>d behind a
-PostgreSQL the repository does not provide, and it asserts over a
-mutation listing rather than a memory retrieval.</p>
-<p><strong>What is genuinely defended</strong> is the content itself:
+<p><strong>Trust state — withheld.</strong> <code>needs_review</code> is
+computed per row after the query and filters nothing. The supersedes
+verdict does withhold, through a predicate every listing shares — and
+the state it expresses is <em>replaced</em>, not <em>disbelieved</em>:
+it is a relation between two memories, set when one overtakes another,
+and no verdict withholds a memory for being wrong on its own. The mark
+is withheld on that shape.</p>
+<p><strong>Scope enforced — withheld, on a read that fails
+open.</strong> The project reaches the agent's search by default, from
+the working directory rather than from the model. It is dropped by one
+argument the agent holds, <code>all_projects</code>, and by an ambiguous
+directory, where reads cover every project while writes refuse. The mark
+needs the predicate on the read path whatever the caller passes or fails
+to resolve. The cloud server's pull feed and dashboard filter by
+per-principal project grants held on the server; the agent never
+retrieves from it.</p>
+<p><strong>Audit log — earned, on the cloud server only.</strong>
+<code>cloud_mutations</code> records every pushed upsert and delete with
+its full payload under a sequence number, and the server's reads derive
+current state from it. Locally, <code>sync_mutations</code> is an outbox
+pruned seven days after acknowledgement — "an unpruned journal roughly
+doubles the size of the database" — and
+<code>observation_versions</code> keeps twenty replaced bodies per
+memory without recording who replaced them or why. A user without a
+cloud server has no mutation record.</p>
+<p><strong>Human review — withheld.</strong> <code>marked_by_kind</code>
+has three writers: <code>mem_judge</code> and the recall path write
+<code>agent</code>, and <code>judge_relation_tx</code>, which
+consolidation uses, writes <code>system</code> with actor
+<code>leteo</code>. A person running <code>leteo consolidate</code> is
+recorded as <code>system</code>. The CLI lists, shows and scans
+conflicts, and its scan can hand pairs to a model judge; no verb lets a
+person settle one.</p>
+<p><strong>Tombstone — withheld.</strong> A deleted memory is excluded
+from both save lookups, so the same content can be written back
+unnoticed. <code>prompt_deletions</code> is consulted before a
+replicated prompt is accepted and drops a copy not newer than the
+deletion — keyed on the prompt's <code>sync_id</code>, so it settles a
+race between replicas rather than remembering a rejected claim.</p>
+<p><strong>Negative evaluation — earned.</strong> See section 10.</p>
+<p><strong>What is defended well</strong> is the content:
 <code>&lt;private&gt;</code> spans are stripped before storage, and
-tests assert the secret is absent from the stored body, from a generated
-summary and from the replicated copy.</p>
+tests assert the secret is absent from the stored body, a summary and
+the replicated copy. The embedding model is verified by hash before it
+is loaded.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>748 test attributes across the tree, thirteen of them
-<code>#[ignore]</code>d — eleven in the cloud-store file, which needs an
-external database. The retrieval numbers quoted in the migrations come
-from a measurement harness under <code>tools/</code>, and the comment
-beside the search query records why that harness now takes the product's
-own weights as an argument: a tool that restates the query measures a
-search nobody runs.</p>
+<p>1,077 test attributes, 22 ignored and run in CI against a PostgreSQL
+service container. The negative cases sit across several suites.
+<code>the_full_text_triggers_follow_every_write</code> asserts that
+after an update a search for the replaced title returns nothing while
+the new title returns one, and that a hard-deleted memory is not found.
+<code>a_project_whose_name_the_tokenizer_splits_still_finds_its_memories</code>
+saves one memory into three projects and asserts a narrowed search
+returns exactly the one in its own project.
+<code>a_consolidation_hides_its_sources_and_a_reversal_restores_them</code>
+asserts a superseded memory is absent from search, the context's recent
+and pinned lists and the raw listing while the replacement and an
+unrelated pin are present, then reverses the verdict and removes a
+relation and asserts each source returns;
+<code>an_unjudged_supersedes_relation_hides_nothing</code> is its
+control, and
+<code>a_superseded_memory_is_left_out_of_search_results</code> repeats
+it through the MCP tool. On the cloud server,
+<code>browsing_reads_the_current_state_of_one_project_at_a_time</code>
+asserts a replaced title, a deleted memory, a soft-deleted one and
+another project's memory are each absent.</p>
+<p>A seeded invariant sweep mixes verdicts with topic-key saves and
+checks that each key has one live memory; no test asserts what a save
+into a superseded memory should do. The retrieval figures quoted in
+comments come from a Python harness under
+<code>tools/memory-bench</code> that drives the built binary; I did not
+run it, and no figure here is mine.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Put the measurement in the comment.</strong> Two indexes
-with their survival rates, a clause shape with its millisecond cost, a
-review window with the four-day disagreement that motivated folding
-three copies into one. Every one of those is a decision a reader can
+<li><strong>Put the measurement in the comment.</strong> A tokenizer
+with its survival rates, a clause shape with its milliseconds, a floor
+with its false-answer rate on controls. Each is a decision a reader can
 check rather than accept.</li>
-<li><strong>Never let a measurement tool restate the query.</strong>
-Pass the real one's parameters in. An afternoon of benchmarking a query
-the product does not issue is the cheapest version of this lesson.</li>
-<li><strong>Write the clause or write nothing.</strong>
-<code>(?1 IS NULL OR col = ?1)</code> costs the plan its index, because
-SQLite chooses before it knows the binding. Building the SQL per call
-trades one prepared shape for two the statement cache holds.</li>
-<li><strong>Decide whether a state is a column or a computation before
-you name it.</strong> A computed <code>needs_review</code> can label and
-cannot filter; if you want it to withhold, it has to be in the
-query.</li>
-<li><strong>If you record who decided, make sure something can record a
-person.</strong> A <code>marked_by_kind</code> whose every writer is a
-machine is a column that will look like provenance in a year's time and
-answer nothing.</li>
+<li><strong>One visibility predicate, interpolated everywhere.</strong>
+Write the hiding rule once and make every stage — including the one that
+reads vectors instead of an index — call it, then test each door it is
+meant to close.</li>
+<li><strong>Hide by relation, reverse by verdict.</strong> Consolidation
+that records a judged supersedes per source loses nothing and is undone
+by changing one row.</li>
+<li><strong>Calibrate a semantic floor on held-out answers and report
+the controls.</strong> "Answers 24% of the controls" is the number that
+tells you what the stage costs.</li>
 </ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A hiding rule the write path does not read.</strong> If a
+verdict withholds a memory from reads, the save that matches it by key
+or hash has to see the same verdict, or a revision lands somewhere
+nobody will find it.</li>
+<li><strong>A read that widens when it cannot resolve its
+scope.</strong> Refuse, as the write beside it does.</li>
+<li><strong>A provenance column whose writers are all machines.</strong>
+A <code>marked_by_kind</code> that stamps a person's CLI action
+<code>system</code> answers nothing about review.</li>
+<li><strong>An HTTP surface broader than the agent's.</strong> A
+loopback API with every tool and no token gives any local process the
+admin profile.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>A single developer who wants a fast, local, inspectable memory across
+several agent clients, and who reads code, is well served. A team that
+needs to know who changed a memory, or that a project boundary holds in
+a workspace of many repositories, needs the cloud server and more
+besides.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>Is a scope meant to be mandatory anywhere? The default is
-<code>project</code>, and the narrowing builder makes omission the
-caller's choice; which of the two is the intended contract is not
-written down.</li>
-<li>Will a person ever be a judge? The relation schema is ready for it —
-actor, kind and model — and the CLI lists and shows conflicts without a
-verb to settle one.</li>
-<li>Should a deleted memory block its own re-derivation? Dropping
-<code>deleted_at IS NULL</code> from the dedup lookups would do it, at
-the cost of surfacing a deleted row to the writer.</li>
-<li>What is <code>expires_at</code> for? It sits on every observation
-and no read path in this reading consults it.</li>
+<li>Should the save lookups read <code>not_superseded()</code>? A
+topic-key save into a hidden memory could revise it, open a new row, or
+refuse; which one the project intends is not written down.</li>
+<li>Is the unscoped read in an ambiguous directory deliberate? Writes
+refuse there with a recovery token; reads widen and label the
+answer.</li>
+<li>Will a person ever be a judge? The schema records the kind of actor,
+and no path records a person.</li>
+<li>What is <code>expires_at</code> for? It has no writer and no
+reader.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
@@ -525,67 +625,117 @@ and no read path in this reading consults it.</li>
 <tbody>
 <tr>
 <td><code>src/store/mod.rs</code></td>
-<td><code>Narrowing</code>, the shared column lists, and the BM25 weight
-constant</td>
+<td><code>Narrowing</code>, the column lists, <code>BM25_WEIGHTS</code>
+and the version retention bound</td>
 </tr>
 <tr>
 <td><code>src/store/search.rs</code></td>
-<td>The fused-search SQL and the two-index query</td>
+<td><code>visible_observations</code>, the cascade, the three-index
+fusion</td>
+</tr>
+<tr>
+<td><code>src/store/semantic_stage.rs</code></td>
+<td>Vector freshness, the cosine scan and the merge</td>
+</tr>
+<tr>
+<td><code>src/semantic/mod.rs</code></td>
+<td>The model's identity, hashes, width and floor</td>
 </tr>
 <tr>
 <td><code>src/store/observations.rs</code></td>
-<td>The save path: revision, duplicate count, insert, and the review
-reschedule</td>
+<td>The save path, version snapshots, consolidation, listings</td>
 </tr>
 <tr>
 <td><code>src/store/relations.rs</code></td>
-<td>Judgement writes with actor, kind and model; the conflicts
+<td><code>not_superseded</code>, judgement writes, the conflicts
 listing</td>
 </tr>
 <tr>
 <td><code>src/store/wire.rs</code></td>
-<td>The sync apply path, the prompt tombstone consult, and the journal
-prune</td>
+<td>The sync apply path, the prompt tombstone and the journal prune</td>
 </tr>
 <tr>
 <td><code>src/memory/model.rs</code></td>
-<td><code>Observation</code>, and <code>state()</code></td>
+<td><code>Observation</code> and <code>state()</code></td>
 </tr>
 <tr>
-<td><code>src/memory/rules.rs</code></td>
-<td><code>REVIEW_WINDOWS</code>, the calendar-month rule, and the
-relation vocabulary</td>
+<td><code>src/mcp/tools.rs</code>, <code>src/mcp/mod.rs</code>,
+<code>src/mcp/serve.rs</code></td>
+<td>The tools, the profiles, the HTTP API</td>
 </tr>
 <tr>
-<td><code>src/memory/normalize.rs</code></td>
-<td>The <code>&lt;private&gt;</code> regex, the hash, and the field
-normalisation</td>
+<td><code>src/cloud/cloudstore/mod.rs</code></td>
+<td>The append-only mutation log and its reads</td>
 </tr>
 <tr>
-<td><code>src/mcp/tools.rs</code></td>
-<td>The twenty-two tools</td>
+<td><code>migrations/0019_observation_versions.sql</code> –
+<code>0022_stems_keep_their_language.sql</code></td>
+<td>Versions, vectors and Snowball stems, each with its argument</td>
 </tr>
 <tr>
-<td><code>migrations/0001_baseline_after_the_tables.sql</code></td>
-<td>The second full-text index with its measurements</td>
-</tr>
-<tr>
-<td><code>src/store/tests/search.rs</code></td>
-<td>The blank-versus-real narrowing test and its control</td>
-</tr>
-<tr>
-<td><code>src/cloud/cloudstore/tests.rs</code></td>
-<td>The scoping test, behind an external database</td>
+<td><code>src/store/tests/search.rs</code>,
+<code>src/store/tests/consolidate.rs</code></td>
+<td>The negative cases</td>
 </tr>
 </tbody>
 </table></div>
-<p>Searches behind the absence claims above, run from the repository
-root:</p>
-<pre class="sh"><code>grep -rn &#39;marked_by_kind&#39; src --include=&#39;*.rs&#39;          # every writer supplies &quot;agent&quot;; one system path writes &#39;system&#39;
-grep -rn &#39;valid_from\|valid_to\|as_of&#39; src --include=&#39;*.rs&#39;   # no validity axis; the hits are an effective_query and a port helper
-grep -rn &#39;judgment_status&#39; src --include=&#39;*.rs&#39;         # serialised and listed; no retrieval path filters on it
-grep -rn &#39;DELETE FROM sync_mutations&#39; src --include=&#39;*.rs&#39;    # the retention prune</code></pre>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -nE "marked_by_kind: \"|marked_by_kind = '" -- 'src/*.rs' ':!*tests*'</code>
+— <code>src/mcp/tools.rs:1172</code> and <code>src/recall.rs:939</code>
+write <code>agent</code>; <code>src/store/relations.rs:783</code> writes
+<code>system</code>.</li>
+<li><code>git grep -nE 'valid_from|valid_to|as_of' -- 'src/*.rs'</code>
+— no match.</li>
+<li><code>git grep -nE 'expires_at' -- src migrations ':!*tests*'</code>
+— the column in <code>migrations/0001_baseline_tables.sql:37</code> and
+the schema list at <code>src/store/schema.rs:861</code>; the remaining
+hits are cloud session tokens and MCP recovery tokens.</li>
+<li><code>git grep -nE 'not_superseded\(\)' -- 'src/*.rs'</code> — the
+definition and eight call sites, all listings; none in
+<code>add_observation</code>.</li>
+<li><code>git grep -nE 'review_after|needs_review' -- 'src/*.rs' ':!*tests*'</code>
+— writers, the Engram import and the <code>REVIEW_DUE</code> listing; no
+retrieval predicate.</li>
+<li><code>git grep -nE 'DELETE FROM sync_mutations' -- 'src/*.rs'</code>
+— the retention prune at <code>src/store/wire.rs:698</code> and two
+removals of a project's unacknowledged rows in
+<code>src/store/projects.rs</code>.</li>
+<li><code>git grep -nE 'DELETE FROM cloud_|UPDATE cloud_mutations' -- src ':!*tests*'</code>
+— <code>src/cloud/cloudstore/mod.rs:524</code>, project grants
+only.</li>
+<li>Test functions under <code>src/store/tests/</code>,
+<code>src/mcp/tests.rs</code>, <code>src/hooks/tests.rs</code> and
+<code>tests/</code> whose body holds both a supersedes verdict or
+<code>consolidate_observations</code> and a topic-key save, found with
+an <code>awk</code> pass over each file split at <code>#[test]</code> —
+four: the seeded sweep
+<code>no_order_of_operations_leaves_the_store_disagreeing_with_itself</code>,
+a replication test,
+<code>a_topic_key_lookup_does_not_hand_back_a_superseded_memory</code>
+(a read) and a hook test; none asserts the outcome of the save.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE LICENSES NOTICE</code>
+— no match; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-12</strong> — <a
+href="https://github.com/asanabrial/leteo/commit/78bc1738b7b73a5ec7e0e03c561ff4986214e12a"><code class="commit-id" title="78bc1738b7b73a5ec7e0e03c561ff4986214e12a">78bc1738…</code></a>
+— 246 commits on, version 0.2.1 to 0.3.0. Overtaken: a static-embedding
+stage, a third index, version history, and judged supersedes verdicts
+that hide their targets (<a href="#2-mental-model">section 2</a>). Two
+marks gained, both earned at the first pin: <code>negative_eval</code>,
+on a trigger test and a cross-project test present then (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>), and
+<code>audit_log</code>, on the cloud server's append-only log (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Also wrong then:
+the agent's reads default the project rather than omit it, and CI
+provided the PostgreSQL the ignored tests need. Screened from a full
+clone: twenty files, two auto-run surfaces, one new build-time
+<code>build.rs</code>, five dependency files inside the cooldown,
+<code>AGENTS.md</code> and <code>CLAUDE.md</code> read as data. Nothing
+was installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/asanabrial/leteo/commit/f49917e4b9ffdf842e8f656a82867098487f789a"><code class="commit-id" title="f49917e4b9ffdf842e8f656a82867098487f789a">f49917e4…</code></a>
 — first reading, at a commit dated 13 September 2026. Screened before

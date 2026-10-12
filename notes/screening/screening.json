@@ -19794,11 +19794,12 @@
     "leteo": {
       "counts": {
         "AGENT": 2,
-        "FRESH": 7,
-        "NOTE": 1,
+        "EXEC": 1,
+        "FRESH": 5,
+        "NOTE": 2,
         "RUNS": 2
       },
-      "files_scanned": 13,
+      "files_scanned": 20,
       "findings": [
         {
           "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 1 entr(ies): marketplace.json",
@@ -19811,43 +19812,38 @@
           "path": "server.json"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "Cargo.lock"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "Cargo.toml"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "detail": "changed 5 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "npm/package.json"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
-          "path": "tools/mutate/Cargo.lock"
+          "path": "plugin/pi/package.json"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "tools/mutate/Cargo.toml"
-        },
-        {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 5 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "tools/retrieval/Cargo.lock"
         },
         {
-          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "tools/retrieval/Cargo.toml"
+          "detail": "cargo executes this at build time",
+          "kind": "EXEC",
+          "path": "build.rs"
         }
       ],
-      "revision": "f49917e4b9ffdf842e8f656a82867098487f789a",
-      "screened_at": "2026-09-16T17:22:18+00:00",
+      "revision": "78bc1738b7b73a5ec7e0e03c561ff4986214e12a",
+      "screened_at": "2026-10-12T21:33:13+00:00",
       "slug": "leteo",
       "source": "reused-clone",
       "status": "screened",

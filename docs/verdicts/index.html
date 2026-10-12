@@ -22004,38 +22004,40 @@ eval.</li>
 <h3 id="leteo"><a href="../systems/leteo/"><code>leteo</code></a></h3>
 <ul>
 <li>Best idea: <strong>put the measurement, and the bug, in the
-comment.</strong> The migration that adds a second full-text index does
-not announce an index; it states what each tokenizer can and cannot do
-and what the pair measured — a question with two of six words
-re-inflected answered "63% of the time here and 0% by the same store
-searched without a stemmer", quoted words found first 78% stemmed
-against 84% unstemmed, and the rank-position fusion of the two at 84.3%
-and 37.0% — with the price in the same breath: 5.1 MB of index on a 46
-MB store, 228 ms to build, 0.04 ms added to a save. A reader can
-disagree because the trade is on the page.</li>
-<li>Second idea: <strong>never let a measurement tool restate the query
-it measures.</strong> A benchmark that wrote its own copy of the search,
-with <code>ifnull(project, '')</code> where the product writes
-<code>project =</code>, "was measured for an afternoon before anybody
-noticed the product never issues it" — so the real query's weights are
-passed in rather than repeated. It is the sharpest instance of the bug
-class this codebase has learned to name: a rule written in more than one
-place, which also cost it a review window nothing could fire until a
-third hand-written copy was found.</li>
-<li>Biggest risk: <strong>every epistemic field is one step short of
-doing work.</strong> The state a reader sees — <code>active</code>,
-<code>needs_review</code>, <code>deleted</code> — is computed in Rust
-after the rows are already back from SQLite, so it labels a memory that
-was returned anyway and cannot withhold one; the only predicate that
-withholds is <code>deleted_at IS NULL</code>. Scope and project are
-narrowing arguments the caller may omit, and the suite pins the
-consequence rather than guarding it: "an empty scope is not a scope
-filter". The relation row records the actor, kind and model that judged
-it, and every shipped writer supplies <code>agent</code> or
-<code>system</code>, so the column built to tell a person from a machine
-has no path that writes a person. And both dedup lookups end
-<code>AND deleted_at IS NULL</code>, so a deleted memory is invisible to
-the checks that would notice the same thing being written again.</li>
+comment.</strong> The function that reads two full-text indexes together
+does not announce an index; it states what each tokenizer can and cannot
+do and what the pair measured — quoted words found first "78% of the
+time here against 84% unstemmed", and the rank-position fusion of the
+two at 84.3% and 37.0% — and the migration that adds the second index
+prices it in the same breath: 5.1 MB of index on a 46 MB store, 228 ms
+to build, 0.04 ms added to a save. The semantic stage's 0.30 cosine
+floor comes with its false-answer rate: it "answers 24% of the
+controls". A reader can disagree because the trade is on the page.</li>
+<li>Second idea: <strong>one hiding rule, read by every door.</strong>
+<code>not_superseded</code> is "[t]he hiding rule, written once and read
+by every door that lists memories", interpolated into
+<code>visible_observations</code>, which the topic-key lookup, the three
+ranked indexes, the relaxed stages, the vector scan, the prompt hint,
+the opening context and the raw listings all read. A judged
+<code>supersedes</code> verdict hides its target everywhere at once,
+consolidation is that verdict applied to several sources in one
+transaction, and re-judging the pair or removing the relation restores
+the memory. A test walks every one of those doors with an unrelated pin
+as the control.</li>
+<li>Biggest risk: <strong>the hiding rule stops at the read
+path.</strong> Both save lookups end <code>AND deleted_at IS NULL</code>
+and never consult the verdict, so a topic-key save into a memory a
+verdict has hidden revises the hidden row and reports success, and an
+identical re-save is counted as its duplicate. <code>needs_review</code>
+is computed in Rust after the rows are back, so it labels a stale memory
+that was returned anyway. The agent's search fills the project from the
+working directory and reads every project when it sets
+<code>all_projects</code> or when the directory holds several
+repositories, while writes there refuse. Every judgement writer stamps
+<code>agent</code> or <code>system</code>, a person's
+<code>leteo consolidate</code> included, and <code>leteo serve</code>
+exposes every tool, <code>mem_delete</code> among them, on a loopback
+port with no token.</li>
 <li>Most reusable component: <code>Narrowing</code> — a builder that
 writes <code>AND col = ?n</code> when there is a value "and nothing at
 all when there is not — never a clause that has to be true for every
@@ -22045,19 +22047,24 @@ is <code>SCAN</code>. Measured at 5.7 ms against 0.015 ms on a store of
 3,587 memories, paid four times over by the session-opening context. The
 cost is one prepared-statement shape becoming two, which the statement
 cache holds.</li>
-<li>Maturity impression: MIT, Rust, version 0.2.1, 73,418 lines across
-121 files, one local SQLite file with two FTS5 indexes and no embedding
-model anywhere, a CLI of some thirty subcommands, twenty-two MCP tools,
-a terminal UI, agent hooks, an Obsidian export and an optional cloud
-sync, against 748 test attributes of which thirteen are ignored. Two
-auto-run surfaces and seven dependency files inside the cooldown at this
-pin.</li>
+<li>Maturity impression: MIT, Rust, version 0.3.0, 92,326 lines in 134
+files under <code>src/</code>, one local SQLite file with three FTS5
+indexes and a 12.6 MB int8 static embedding model verified by hash
+before it loads, a CLI of twenty-six commands, twenty-three MCP tools
+with a twenty-tool agent profile, a loopback HTTP API, hooks for five
+agent clients, an Obsidian export and an optional PostgreSQL cloud
+server, against 1,077 test attributes of which 22 are ignored locally
+and run in CI. Two auto-run surfaces, one build-time
+<code>build.rs</code> and five dependency files inside the cooldown at
+this pin.</li>
 <li>Study when: you are deciding whether a piece of state should be a
-column or a computation, or you want a model for writing the measurement
+column or a computation, you want one visibility rule shared by lexical
+and vector stages, or you want a model for writing the measurement
 behind a decision into the code that implements it.</li>
-<li>Do not copy when: you need the store itself to withhold a memory, or
-a project boundary that holds when the caller says nothing. No
-marks.</li>
+<li>Do not copy when: you need the store to withhold a stale memory, a
+save to respect the verdict that hid its target, or a project boundary
+that holds in a directory of several repositories. Two marks: mutation
+audit, negative eval.</li>
 </ul>
 <h3 id="memorywhale"><a
 href="../systems/memorywhale/"><code>memorywhale</code></a></h3>

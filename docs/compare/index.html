@@ -13954,64 +13954,69 @@ compiled records</td>
 <tr>
 <td><a href="../systems/leteo/"><code>leteo</code></a></td>
 <td>An observation — a typed, titled body with a project, a scope, an
-optional topic key, a normalized content hash, counts of revisions and
-duplicates, and a soft-delete stamp. Prompts and sessions are stored
-beside them, and a relation row carries one memory's claim about
-another</td>
-<td>One local SQLite file, with two FTS5 external-content indexes over
-the same rows — one stemmed, one verbatim — kept in step by insert,
-delete and update triggers</td>
-<td>BM25 over both indexes, fused by the rank position each one gave a
-memory rather than by score; no embeddings anywhere, and the schema
-comment says the inherited vector column is never written</td>
-<td>A save normalises the body, strips <code>&lt;private&gt;</code>
-spans, folds case and whitespace into a hash, then either revises the
-memory holding the same topic key, increments a duplicate count on an
-identical hash inside a time window, or inserts</td>
-<td>A topic key makes the next save a revision in place with
-<code>revision_count</code> incremented. Deletion is soft by default —
-<code>deleted_at</code> is stamped and every listing carries
-<code>deleted_at IS NULL</code> — with a hard variant beside it. Deleted
-prompts leave a row in <code>prompt_deletions</code> that the sync path
-consults before accepting an incoming copy</td>
-<td>A <code>scope</code> column defaulting to <code>project</code>, and
-a <code>project</code> column beside it. Both are narrowing arguments:
-when the caller passes nothing, the clause is not in the SQL</td>
-<td>One Rust binary with a CLI of some thirty subcommands, an MCP server
-of twenty-two tools, a terminal UI, agent hooks, an Obsidian export and
-an optional cloud sync</td>
-<td>None over memory. Sync runs as an explicit command or an autosync
-task; everything else is a command</td>
-<td>A derived state of <code>active</code>, <code>needs_review</code> or
-<code>deleted</code>, computed per row when it is serialised. Relations
-carry a <code>judgment_status</code> and the actor, kind and model that
-judged them. Nothing stored is consulted to withhold a memory from
-retrieval</td>
-<td>A codebase whose comments carry the measurement and the bug behind
-each decision, rather than the decision alone. Two full-text indexes
-because no single tokenizer has both properties, with the survival rates
-of each published in the migration that adds the second. A narrowing
-builder that writes a clause or writes nothing, never a clause that is
-true for every row, because a parameter inside a disjunction costs the
-query plan its index. A <code>&lt;private&gt;</code> span that is
-stripped before storage. And a documented habit of folding a rule back
-to one place after finding the third hand-written copy of it</td>
-<td>Nothing stored withholds a memory. The state a reader sees —
-<code>active</code>, <code>needs_review</code>, <code>deleted</code> —
-is computed in Rust after the rows are already back from SQLite, so it
-can label a result but cannot filter one; the only predicate that
-actually withholds is <code>deleted_at IS NULL</code>. The scope and
-project keys are narrowing arguments the caller may omit entirely, and
-the test suite pins that behaviour rather than guarding against it:
-<em>"an empty scope is not a scope filter"</em>. The relation row
-records who judged it — actor, kind and model — but every shipped writer
-supplies <code>agent</code> or <code>system</code>, so the field that
-exists to tell a person from a machine has no path that writes a person.
-Deletion is keyed on the row: both dedup lookups carry
-<code>deleted_at IS NULL</code>, so a memory somebody removed is
-invisible to the check that would notice it being written again. And the
-sync journal is pruned on a retention window, so it is an outbox rather
-than a record</td>
+optional topic key, a normalised content hash, counts of revisions and
+duplicates, a review date and a soft-delete stamp. Prompts and sessions
+sit beside them, a relation row carries one memory's claim about
+another, and up to twenty replaced bodies are kept per memory</td>
+<td>One local SQLite file with three FTS5 indexes over the same rows —
+Porter-stemmed, unstemmed, and a per-language Snowball index fed by a
+registered SQL function — plus a table of 256-dimension vectors local to
+the machine. An optional cloud server keeps every replicated change in
+an append-only PostgreSQL log</td>
+<td>A cascade: an exact topic-key lookup, then BM25 over the three
+indexes fused by rank position, then prefix, substring, typo-corrected,
+any-word and median-floored stages, each only when the one before found
+nothing. A static multilingual embedding answers by cosine when the
+words found nothing, above a 0.30 floor, or is merged beside the weakest
+lexical answer. Every stage shares one visibility predicate</td>
+<td>A save normalises the body, strips private-tagged spans, folds case
+and whitespace into a hash, then revises the memory holding the same
+topic key, increments a duplicate count on an identical hash inside a
+time window, or inserts; the vector is computed after the commit</td>
+<td>A topic key or an update revises in place, snapshotting the replaced
+title and body into a version table capped at twenty per memory.
+Deletion is soft by default with a hard variant. Consolidation inserts
+one replacement and records a judged supersedes relation to each source;
+a judged supersedes verdict hides its target from every listing until
+the verdict changes or the relation is removed</td>
+<td>A project and a scope column. The agent's search and context fill
+the project from the working directory when the caller names none, and
+read every project when it sets all_projects or when the directory is
+ambiguous; writes refuse an ambiguous directory. The store API omits a
+clause it is given no value for</td>
+<td>One Rust binary: a CLI of twenty-six commands, an MCP server of
+twenty-three tools with a twenty-tool agent profile, an unauthenticated
+loopback HTTP API exposing all of them, plugins and lifecycle hooks for
+five agent clients, a terminal UI, an Obsidian export and an optional
+self-hosted cloud server</td>
+<td>An embedding backfill thread and an optional autosync loop run
+beside the MCP server and the HTTP API. Nothing rewrites or summarises
+the store</td>
+<td>A state of active, needs_review or deleted computed per row when it
+is serialised, so it labels and does not filter. A relation verdict of
+supersedes withholds its target, and records the actor, kind and model
+that judged it; every shipped writer supplies agent or system</td>
+<td>Comments that carry the measurement and the bug behind each decision
+rather than the decision alone. Two tokenizers read together because no
+single one both stems and quotes, with the survival rates of each
+published beside the code. A narrowing builder that writes a clause or
+writes nothing, never a clause true for every row. One visibility
+predicate shared by every stage, including the semantic one, with a
+comment saying the vector stage was the first tempted to restate it. A
+semantic floor calibrated on held-out answers with its false-answer rate
+on controls stated. Consolidation that hides rather than deletes, and is
+reversed by changing one verdict</td>
+<td>The supersedes verdict that hides a memory from every listing is not
+consulted by the save path: a topic-key save into a hidden memory
+revises it in place and reports success, and an identical re-save is
+counted as a duplicate of the hidden row. needs_review is computed after
+the rows are back and filters nothing. The agent's search reads every
+project when the working directory is ambiguous or when it sets one
+argument. A judgement records its actor kind, and no writer records a
+person; a person's consolidation from the CLI is stamped system. The
+loopback HTTP API exposes the delete tool with no token. The local
+outbox is pruned, so outside the optional cloud server nothing records
+what changed</td>
 </tr>
 <tr>
 <td><a href="../systems/lethe/"><code>lethe</code></a></td>
@@ -32855,7 +32860,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>251 of 731:</em> <a
+<p><em>252 of 731:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -32965,6 +32970,7 @@ href="../systems/klypix-mcp/"><code>klypix-mcp</code></a>, <a
 href="../systems/knowl/"><code>knowl</code></a>, <a
 href="../systems/knowledge-worker/"><code>knowledge-worker</code></a>,
 <a href="../systems/kube-coder/"><code>kube-coder</code></a>, <a
+href="../systems/leteo/"><code>leteo</code></a>, <a
 href="../systems/lethe/"><code>lethe</code></a>, <a
 href="../systems/llm-wiki-cli/"><code>llm-wiki-cli</code></a>, <a
 href="../systems/lobu/"><code>lobu</code></a>, <a
@@ -33217,7 +33223,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>436 of 731:</em> <a
+<p><em>437 of 731:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33409,6 +33415,7 @@ href="../systems/langgraph/"><code>langgraph</code></a>, <a
 href="../systems/leankg/"><code>leankg</code></a>, <a
 href="../systems/lemmalog/"><code>lemmalog</code></a>, <a
 href="../systems/lerim/"><code>lerim</code></a>, <a
+href="../systems/leteo/"><code>leteo</code></a>, <a
 href="../systems/lethe/"><code>lethe</code></a>, <a
 href="../systems/letta/"><code>letta</code></a>, <a
 href="../systems/lindahaviv-second-brain/"><code>lindahaviv-second-brain</code></a>,
@@ -33686,7 +33693,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-436 repositories of
+437 repositories of
 731 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
