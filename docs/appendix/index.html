@@ -14578,8 +14578,8 @@ surface or build-time execution point, one <code>AGENTS.md</code> read
 as data, and <code>mix.lock</code> is not a file the screen parses;
 nothing was installed or run.</li>
 <li><strong><code>hydra-db/hydradb</code> was examined and has no
-report: it is a graph database on object storage, built for a memory
-workload whose application is not in the tree.</strong> AGPL-3.0 with no
+report: it is the open graph database under a closed memory product, and
+the memory semantics live in the product.</strong> AGPL-3.0 with no
 additional terms, read at <a
 href="https://github.com/hydra-db/hydradb/commit/722f32c80a7f8ce1867a26f67c1c02736fef461d"><code class="commit-id" title="722f32c80a7f8ce1867a26f67c1c02736fef461d">722f32c8…</code></a>,
 the head of <code>main</code> on 14 October 2026: 54 commits by 13
@@ -14611,12 +14611,23 @@ a <code>__hydradb_create_only_</code> prefix keeps a property such as
 (<code>src/query/opencypher.rs:22-40</code>, <code>:6340-6370</code>;
 <code>architecture.md:415-417</code>), so a delayed replay cannot move a
 fact's validity start or its metadata backward. Supersession, validity
-and tenancy semantics belong to the caller. Screened before reading,
-from a full clone: no auto-run surface, three build-time execution
-points (<code>build.rs</code> at the root and in two crates), nothing
-inside the cooldown and no unpinned surface, with <code>AGENTS.md</code>
-and <code>CLAUDE.md</code> read as data; nothing was installed, built or
-run.</li>
+and tenancy semantics belong to the caller. That caller is a closed
+product. The <a href="https://benchmarks.hydradb.com/hydradb">benchmark
+pages</a> and the <a
+href="https://benchmarks.hydradb.com/reports/hydradb.pdf">white
+paper</a> describe HydraDB as a context engine from AGI Context, Inc.,
+storing versioned edges with commit time and valid time, and link no
+source code, harness or per-question results. The white paper names the
+design choice the guarded merge serves: it rejects an LLM deciding to
+update or delete a similar record, because a false-positive delete
+purges history, and adopts a "Git-Style Append-Only Log" in which a
+changed fact is a new edge. No deletion of any kind is described, so a
+request to forget a fact has no mechanism on either page. Screened
+before reading, from a full clone: no auto-run surface, three build-time
+execution points (<code>build.rs</code> at the root and in two crates),
+nothing inside the cooldown and no unpinned surface, with
+<code>AGENTS.md</code> and <code>CLAUDE.md</code> read as data; nothing
+was installed, built or run.</li>
 <li><strong><code>FreshHillyer/xiaoO</code> was examined and has no
 report: its long-term memory is an unpublished server behind an MCP
 client, and the memory crate in the tree has no caller.</strong> At <a

@@ -107,6 +107,12 @@ against 0.661 and 0.650 overall, from forked benchmark steps rather than its
 shipped search. So correction is measured, barely, in one place, and it is the
 lowest-scoring category at both sizes.
 
+HydraDB's [BEAM 1M page](https://benchmarks.hydradb.com/beam-1m) shows the same
+shape from a vendor: 82 overall, with `contradiction_resolution` at 66 and
+knowledge update at 63, two of its three lowest categories. Those figures name no
+answer model, judge, run count or version, and the system behind them is closed,
+so unlike ReMe's tables they can be accepted but not audited.
+
 It still measures only the easy half. `contradiction_resolution` asks the system
 to answer with the right value; it never asks whether the rejected one is still
 reachable, still in the store, or liable to return. That distinction runs through
