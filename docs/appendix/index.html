@@ -14491,6 +14491,48 @@ generation, and <code>export</code> refuses to overwrite one
 auto-run surface, no build-time execution point, four requirements files
 inside the seven-day cooldown and one floating range; nothing was
 installed or run.</li>
+<li><strong>Harness-Zero (<a
+href="https://arxiv.org/abs/2609.24974">arXiv:2609.24974</a>) was
+examined and has no report: its memory is a file an offline evolution
+agent writes, and the method's purpose is to remove that file at
+deployment once the model has absorbed it.</strong> <em>Harness-Zero:
+Harness Distillation via Agent-as-Harness</em> (Ye, Lu, Dong, Su and
+Song, v1 21 September 2026), code at
+<code>metaevo-ai/harness-zero</code>, read at <a
+href="https://github.com/metaevo-ai/harness-zero/commit/a4a6223241479c750fdab827c3a449bb1d41b99a"><code class="commit-id" title="a4a6223241479c750fdab827c3a449bb1d41b99a">a4a62232…</code></a>:
+Apache-2.0, 15 commits between 20 September and 9 October 2026, 3,359
+lines of Python in <code>src/harness_zero/</code> beside a vendored copy
+of deepagents, and 88 test functions in nine files, not run. Each
+domain's evolved harness in <code>harness_bank/</code> carries a
+<code>memory.md</code> that the <code>student-harness-evolve</code>
+skill grows over three rounds of failed training tasks, as "accumulated
+checklist clauses (English, no source attribution, grouped by topic)"
+(<code>.agents/skills/student-harness-evolve/SKILL.md:34</code>,
+<code>:85</code>). At rollout it is copied into the trial's sandbox and
+primed into the system prompt through deepagents'
+<code>MemoryMiddleware</code>
+(<code>src/harness_zero/student_harness.py:1-17</code>,
+<code>:28-30</code>; <code>src/harness_zero/student.py:244</code>), and
+the only store the code writes is a per-trial, append-only directory of
+trajectories for fine-tuning
+(<code>src/harness_zero/store.py:1-27</code>). No agent writes memory at
+run time and nothing it learns in one task reaches the next, so the
+scope call is the one made for <code>SakanaAI/mass</code> directly
+above, and the weight side is in <a
+href="#weights-as-memory-at-adapter-granularity">weights as memory, at
+adapter granularity</a>. Two things are worth keeping. Table 4 of the
+paper scores recovery of behaviours sourced from the memory file
+separately from skills, tools and middleware, after the harness is
+removed, which makes it the most direct measurement here of a memory
+document's content moving into weights. And the evolution rule strips
+the one field correction would need: a clause is merged into a topic
+section with no attribution to the failures that produced it, so a wrong
+clause cannot be traced to its evidence before distillation, and after
+distillation it is answered only by regenerating trajectories and
+retraining. Screened before reading: no auto-run surface, four
+build-time execution points (three in the vendored deepagents tree),
+nothing inside the cooldown and no unpinned surface; nothing was
+installed or run.</li>
 <li><strong><code>mikekelly/nano</code> was examined and has no report:
 its memory is a specification the agent is told to build for itself, and
 the code it ships saves a conversation rather than anything
