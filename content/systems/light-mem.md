@@ -30,6 +30,13 @@ matrix:
 
 ## 1. Executive Summary
 
+**The source of this report is no longer reachable upstream.** `DevEstacion/light-mem`
+returns 404 with no rename redirect, while the account keeps its other public repositories, so the repository was deleted or made private. The atlas holds a copy: the fork at
+[`agent-memory-atlas-archive/DevEstacion--light-mem`](https://github.com/agent-memory-atlas-archive/DevEstacion--light-mem)
+carries the pinned commit, so every file path below is readable there. Links in
+the body point at the upstream because that is where the reading happened; the
+archive is the working route.
+
 light-mem is "[l]ightweight persistent memory for Claude Code, Grok, Codex, and
 OpenCode" — Apache-2.0, TypeScript, Node 24+, 74,394 lines with 1,778 test cases
 across 153 test files, installed with `npx light-mem install` or from the Claude

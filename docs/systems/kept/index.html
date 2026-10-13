@@ -111,12 +111,12 @@ hook adds the two closest passages to every request, and one generated
 MEMORY.md per project — bounded to 17 KB, archived notes excluded and
 tested — is what a session loads.</p>
                     <div class="document-meta">
-            <a class="meta-pill" href="https://github.com/yestropcool/kept">
+            <a class="meta-pill" href="https://github.com/codexofc/kept">
               <span>Source</span>
-              <strong>yestropcool/kept</strong>
+              <strong>codexofc/kept</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/yestropcool/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189" title="8177f2339f6235c083a9cfec3f96b40aaaa54189">
+            <a class="meta-pill revision-pill" href="https://github.com/codexofc/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189" title="8177f2339f6235c083a9cfec3f96b40aaaa54189">
               <span>Analyzed revision</span>
               <code>8177f233…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
@@ -125,9 +125,9 @@ tested — is what a session loads.</p>
               <span>Analyzed on</span>
               <strong>2026-09-17</strong>
             </div>
-                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/yestropcool--kept" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/codexofc--kept" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
-              <strong>yestropcool--kept</strong>
+              <strong>codexofc--kept</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
@@ -148,8 +148,9 @@ tested — is what a session loads.</p>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
 <p>The repository moved from <code>codexofc/kept</code> to
-<code>yestropcool/kept</code>; the old address redirects there, and the
-pinned commit resolves at the new one.</p>
+<code>yestropcool/kept</code> and back; <code>yestropcool/kept</code>
+redirects to <code>codexofc/kept</code>, and the pinned commit resolves
+there.</p>
 <p>Kept is a memory for coding agents that is nothing but Markdown
 files. One Rust binary embeds them with a small model on the CPU — the
 README measures 198 MB resident and a tenth of a second per answer —
@@ -423,6 +424,16 @@ rg -n &quot;is_active&quot; src/main.rs                                         
 rg -n &quot;superseded_by&quot; src                                                        # written by supersede; read by the linter and for display, never on the write path
 rg -n &quot;remove_file|fs::remove&quot; src/main.rs                                      # the daemon socket and a failed model download only: no note is deleted</code></pre>
 <h2 id="history">History</h2>
+<p><strong>2026-10-13</strong> — the repository is back at
+<code>codexofc/kept</code>, and <code>yestropcool/kept</code> answers
+with a redirect to it; the head of <code>master</code> is still the pin
+<a
+href="https://github.com/codexofc/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189"><code class="commit-id" title="8177f2339f6235c083a9cfec3f96b40aaaa54189">8177f233…</code></a>,
+last pushed 11 September 2026. <code>source_name</code>,
+<code>source_url</code>, <code>revision_url</code> and
+<code>archive_name</code> follow the move, the archive fork is renamed
+to <code>codexofc--kept</code>, and older entries keep their original
+links, which redirect.</p>
 <p><strong>2026-10-01</strong> — the repository moved from
 <code>codexofc/kept</code> to <code>yestropcool/kept</code>; the old
 address answers with a 301 to the new one, and the last push is dated 11

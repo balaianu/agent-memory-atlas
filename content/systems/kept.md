@@ -4,11 +4,11 @@ eyebrow: "Markdown notes with a local embedder and a bounded index"
 description: "A Rust memory for coding agents made of Markdown files: a CPU embedding model searches them locally, a prompt hook adds the two closest passages to every request, and one generated MEMORY.md per project — bounded to 17 KB, archived notes excluded and tested — is what a session loads."
 root: ../..
 page_kind: system
-source_name: "yestropcool/kept"
-source_url: https://github.com/yestropcool/kept
-archive_name: "yestropcool--kept"
+source_name: "codexofc/kept"
+source_url: https://github.com/codexofc/kept
+archive_name: "codexofc--kept"
 revision: 8177f2339f6235c083a9cfec3f96b40aaaa54189
-revision_url: https://github.com/yestropcool/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189
+revision_url: https://github.com/codexofc/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189
 analyzed_at: 2026-09-17
 capabilities: "negative_eval"
 capability_evidence:
@@ -32,8 +32,8 @@ matrix:
 
 ## 1. Executive Summary
 
-The repository moved from `codexofc/kept` to `yestropcool/kept`; the old
-address redirects there, and the pinned commit resolves at the new one.
+The repository moved from `codexofc/kept` to `yestropcool/kept` and back;
+`yestropcool/kept` redirects to `codexofc/kept`, and the pinned commit resolves there.
 
 Kept is a memory for coding agents that is nothing but Markdown files. One Rust binary embeds them with a small model on the CPU — the README measures 198 MB resident and a tenth of a second per answer — searches them locally with no server and no network at query time, and wires itself into Claude Code as a prompt hook and an MCP server, and into Codex CLI, opencode, Gemini CLI, Cursor, Windsurf and Kandev as an MCP server. MIT or Apache-2.0, twenty-nine commits by one author since 6 September 2026, 6,157 lines of Rust with 1,545 lines of tests and a CI that runs them, clippy and coverage.
 
@@ -154,6 +154,8 @@ rg -n "remove_file|fs::remove" src/main.rs                                      
 ```
 
 ## History
+
+**2026-10-13** — the repository is back at `codexofc/kept`, and `yestropcool/kept` answers with a redirect to it; the head of `master` is still the pin [`8177f2339f6235c083a9cfec3f96b40aaaa54189`](https://github.com/codexofc/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189), last pushed 11 September 2026. `source_name`, `source_url`, `revision_url` and `archive_name` follow the move, the archive fork is renamed to `codexofc--kept`, and older entries keep their original links, which redirect.
 
 **2026-10-01** — the repository moved from `codexofc/kept` to `yestropcool/kept`; the old address answers with a 301 to the new one, and the last push is dated 11 September 2026, before the pin. `source_name`, `source_url` and `revision_url` follow the move, the pin [`8177f2339f6235c083a9cfec3f96b40aaaa54189`](https://github.com/yestropcool/kept/commit/8177f2339f6235c083a9cfec3f96b40aaaa54189) is unchanged, and older entries keep their original links, which redirect.
 
