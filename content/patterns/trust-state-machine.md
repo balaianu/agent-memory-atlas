@@ -133,9 +133,9 @@ every hit — until a human releases it, while an unreadable ledger withholds
 every item. An agent may propose one
 and cannot confirm it. The source states the rule in one line — *"a
 human-confirmed verdict may withhold; a machine signal only ever ranks down"* —
-and the report carries `trust_state` on that ledger. Four id-addressed reads,
-`why`, `blame`, `diff` and the candidate list `resolve` prints, do not consult
-it.
+and the report carries `trust_state` on that ledger. The id-addressed reads and
+every ledger printer go through the same view, and the project's read census
+asserts that no surface shows a quarantined value to an agent.
 
 Its refutation ledger answers a different question: *how do you know a
 human approved it*. A refutation —

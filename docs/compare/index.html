@@ -7206,12 +7206,14 @@ human-confirmed quarantine are judged out before a row is indexed and
 again on every hit</td>
 <td>Detached LLM extraction at session end, then deterministic quote and
 outcome gates</td>
-<td>A value-keyed tombstone appended before the rewrite and consulted at
-every checkpoint write, so a re-extracted forgotten value is dropped
-before it reaches disk; also consulted by the supersede-candidate
-emitter and the index build; forget rebuilds the index at once, purges
-the chunk cache and redacts every ledger, keeping a quarantine's
-verdict</td>
+<td>A value-keyed tombstone on the item id, every sibling id and a key
+ref of its own, appended before the rewrite and consulted at every
+checkpoint write, so a re-extracted forgotten value is dropped before it
+reaches disk and an unreadable ledger refuses the write; also consulted
+by the supersede-candidate emitter and the index build; forget runs
+every registry step, reports each surface it could not reach, rebuilds
+the index, purges the chunk cache and redacts every ledger, keeping a
+quarantine's verdict; only a human unforget lifts it</td>
 <td>Per-project bucket on every read, each latest-read naming a route
 and an admit rule; cross-project reads only by explicit slug, a
 host-declared allowlist, or a ruling layer — an ancestor directory
@@ -7237,10 +7239,10 @@ polarities, whose authority is read off the observed write channel and
 whose polarity is derived from the founding event name rather than any
 writable field; a candidate/confirmed/rejected relation ledger in shadow
 mode with no mechanical channel at all; a human quarantine ledger whose
-active state one read view withholds from the briefing, the recall
-index, the viewer and the suppressed listing, closing outright when the
-ledger cannot be read, proposed by an agent and confirmed or released
-only through a human channel; and a contradiction slot on the recall
+active state one read view withholds from every read surface, closing
+outright when the ledger cannot be read, proposed by an agent and
+confirmed or released only through a human channel, and published to
+teammates as a hash-only row; and a contradiction slot on the recall
 index that only receipt, file, branch and PR probes may write, each cure
 bound to its own claim and recorded rather than erased</td>
 <td>Authority derived from the observed write channel rather than a
@@ -7250,20 +7252,20 @@ a guard refuses an undeclared one; a residue auditor whose third exit
 code separates cannot-prove from clean; a placebo arm that has refuted
 the project's own features; one value-keyed human verdict that withholds
 where every machine signal only ranks, through one read view and a
-census of every surface</td>
+census asserting no surface leaks it</td>
 <td>One live checkpoint per project; the chunk cache is purged wholesale
 because it is keyed by chunk text and cannot be searched by value; the
 negative-knowledge guard is agent-invoked and advisory, and nothing
 reaps its ledger by age; world evidence reaches the contradiction slot
 only from a <code>daimon brief</code> run with worldcheck on, so the MCP
 and Hermes briefing paths record none and a dependency-version
-contradiction moves no rank; a confirmed quarantine is not consulted by
-<code>why</code>, <code>blame</code>, <code>diff</code> or the candidate
-list <code>resolve</code> prints, and ledger verbs whose prose quotes
-the value print it; one ratification at a ruling layer arms a
-shell-blocking check in every repository beneath it, and only
-<code>ruling propose</code> carries the guard against a directory
-resolving to a layer the caller did not name</td>
+contradiction moves no rank; the team sidecar's write access is the
+trust boundary for a published quarantine, so a member who can write it
+can forge a row that over-suppresses or one that lifts a teammate's
+claim; one ratification at a ruling layer arms a shell-blocking check in
+every repository beneath it, and only <code>ruling propose</code>
+carries the guard against a directory resolving to a layer the caller
+did not name</td>
 </tr>
 <tr>
 <td><a href="../systems/deepcode/"><code>deepcode</code></a></td>
@@ -32170,11 +32172,11 @@ and refuse the <em>write</em>; <a
 href="../systems/memsem/"><code>memsem</code></a> also refuses the
 write, from a table only a human rejection can populate, leaving its
 automatic supersession path ungated. <a
-href="../systems/daimon/"><code>daimon</code></a> keys on a canonical
-form of the text — NFKC-folded, casefolded, whitespace-collapsed,
-confusables translated — and <a
-href="../systems/provem/"><code>provem</code></a> on a normalized token
-subset, and both suppress on the <em>read</em> path instead. Casing,
+href="../systems/daimon/"><code>daimon</code></a> refuses the checkpoint
+write too, on a canonical form of the text — NFKC-folded, casefolded,
+whitespace-collapsed, confusables translated. <a
+href="../systems/provem/"><code>provem</code></a> keys on a normalized
+token subset and suppresses on the <em>read</em> path instead. Casing,
 spacing and homoglyph substitution defeat neither; a paraphrase defeats
 Daimon's key, while Provem's token subset still catches the erased term
 restated inside different surrounding text.</li>
@@ -33886,14 +33888,17 @@ engineering practice</strong>: three of the six arrived from
 access-control work rather than from memory research, and one, N.E.K.O.,
 from a companion app where re-raising something the user asked you to
 drop is a product failure rather than a data-quality one.</p>
-<p><a href="../systems/daimon/">Daimon</a> is the near-miss that shows
-how narrow the bar is: 4,388 tests, a committed LongMemEval harness,
-unit tests asserting that a resolved item is withheld and that an
-id-bearing item is never fuzzy-matched into suppression — and still no
-case that forgets a value, re-extracts it, and asserts it stayed gone.
-The tombstone is the mechanism most in need of a negative test and the
-one least likely to get one, because nothing fails visibly when it
-silently stops working.</p>
+<p><a href="../systems/daimon/">Daimon</a> writes the expensive
+assertion down.
+<code>test_forgotten_value_stays_gone_across_reassertion</code> forgets
+a value, re-extracts the same sentence, and asserts it stays out of the
+checkpoint on disk, the rendered brief and the recall rows, each
+negative paired with a never-forgotten twin that matches the same
+keyword (<code>plugin/tests/test_forget_reassertion_e2e.py</code>). Its
+docstring says it was written to fail against the code before the write
+consulted the forget ledger. The tombstone is the mechanism most in need
+of a negative test, because nothing fails visibly when it silently stops
+working.</p>
         </article>
       </div>
     </main>

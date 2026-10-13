@@ -1062,7 +1062,7 @@ href="https://github.com/yaminbkk/NexusMem/commit/e1842964dec6f268febbc99d5c429a
 manifests inside the seven-day cooldown, nothing installed or run</li>
 <li><a href="https://github.com/Daily-Nerd/daimon">Daily-Nerd/daimon</a>
 at <a
-href="https://github.com/Daily-Nerd/daimon/commit/fb1ccd03e42f735568fd1477cea22c71af8956a6"><code class="commit-id" title="fb1ccd03e42f735568fd1477cea22c71af8956a6">fb1ccd03…</code></a>
+href="https://github.com/Daily-Nerd/daimon/commit/f05d6340c36231f99a00b8c4410345456a416938"><code class="commit-id" title="f05d6340c36231f99a00b8c4410345456a416938">f05d6340…</code></a>
 — read only; three auto-run surfaces, three build-time execution paths,
 one unpinned surface and two files inside the seven-day cooldown.
 Nothing was built and nothing was run. Apache-2.0</li>
@@ -15811,6 +15811,21 @@ on a 65-query gold set. It counted thirteen labelled documents where
 Python where the tree held 72,502. The first rested on a module's
 docstring rather than its callers, and the third on the README rather
 than the documents it linked.</li>
+<li><strong>Three claims about <a href="../systems/daimon/">Daimon</a>
+on the capabilities and comparison pages were wrong at <a
+href="https://github.com/Daily-Nerd/daimon/commit/fb1ccd03e42f735568fd1477cea22c71af8956a6"><code class="commit-id" title="fb1ccd03e42f735568fd1477cea22c71af8956a6">fb1ccd03…</code></a>,
+the pin its report was read at, and are corrected.</strong> Both pages
+said Daimon suppresses a forgotten value on the read path rather than
+refusing the write; <code>write_checkpoint</code> passed the forgotten
+content keys to <code>admit_checkpoint</code> before a byte landed
+(<code>plugin/daimon_briefing/store.py:1374</code>). The capabilities
+page said the key is a hash of the exact text; it is a canonical form,
+NFKC-folded, casefolded, whitespace-collapsed and
+confusables-translated. And both said no test re-asserts a forgotten
+value; <code>plugin/tests/test_forget_reassertion_e2e.py</code> forgets
+a value, re-extracts the same sentence and asserts it stays gone beside
+a positive control. The report was right on all three; the cross-page
+prose predated the readings that established them.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

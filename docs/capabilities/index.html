@@ -339,12 +339,11 @@ git, which is a real mechanism and a different one.</li>
 <li><a href="../systems/memanto/">Memanto</a> resolves conflicts with a
 human and then deletes without a tombstone — the most carefully reasoned
 correction in the atlas, and the next extraction pass may undo it.</li>
-<li><a href="../systems/daimon/">Daimon</a> is the weakest of the
-tombstones, and the flag is granted on mechanism rather than on
-hardening: it suppresses on the read path rather than refusing the
-write, and its key is a hash of the item's exact text, so a paraphrase
-defeats it where Verel's normalized key would not. It is also the only
-holder with no test that re-asserts a forgotten value.</li>
+<li><a href="../systems/daimon/">Daimon</a> refuses the checkpoint write
+on a canonical key — NFKC-folded, casefolded, whitespace-collapsed,
+confusables translated — so casing and homoglyphs do not defeat it and a
+paraphrase does; a re-assertion test pins the refusal, and only a human
+<code>unforget</code> lifts a forget.</li>
 <li><a href="../systems/memsem/">memsem</a> is the near-miss in the
 other direction: its suppression table refuses the write and is keyed on
 the normalised value, and nothing but a human rejecting a candidate ever

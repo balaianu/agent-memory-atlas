@@ -253,7 +253,10 @@ committed test asserts the re-extracted sentence is absent from the checkpoint
 file itself, beside a never-forgotten twin that must be present. The read side
 repeats the check — withheld from the briefing, not carried, never written to
 the index on rebuild — and the supersede-candidate emitter skips values already in
-the ledger.
+the ledger. An events ledger the write cannot read refuses the admission instead of
+admitting through an empty set. And a reopen on the item cannot lift a forget,
+because the forget also stands on a random key ref of its own; only `daimon
+unforget`, at a terminal and with no agent channel, writes the lift.
 
 **Daimon's key is canonical, not literal.** `normalize.canonical_text` folds NFKC,
 strips invisible characters, collapses whitespace, casefolds and **translates

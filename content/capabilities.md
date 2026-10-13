@@ -206,11 +206,10 @@ cases. The ones worth knowing:
 - [Memanto](../systems/memanto/) resolves conflicts with a human and then deletes
   without a tombstone — the most carefully reasoned correction in the atlas, and
   the next extraction pass may undo it.
-- [Daimon](../systems/daimon/) is the weakest of the tombstones, and the
-  flag is granted on mechanism rather than on hardening: it suppresses on the
-  read path rather than refusing the write, and its key is a hash of the item's
-  exact text, so a paraphrase defeats it where Verel's normalized key would not.
-  It is also the only holder with no test that re-asserts a forgotten value.
+- [Daimon](../systems/daimon/) refuses the checkpoint write on a canonical key —
+  NFKC-folded, casefolded, whitespace-collapsed, confusables translated — so
+  casing and homoglyphs do not defeat it and a paraphrase does; a re-assertion
+  test pins the refusal, and only a human `unforget` lifts a forget.
 - [memsem](../systems/memsem/) is the near-miss in the other direction: its
   suppression table refuses the write and is keyed on the normalised value, and
   nothing but a human rejecting a candidate ever writes a row into it, so its own

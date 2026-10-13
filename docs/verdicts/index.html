@@ -2211,10 +2211,10 @@ verdict that withholds is a human quarantine, keyed on the value, which
 an agent may propose and never confirm.</li>
 <li>Biggest risk: the live working set is one checkpoint per project, so
 anything carry drops is reachable only through a lexical index with no
-semantic arm, and the committed retrieval numbers are modest. The
-quarantine reaches the briefing, the index and the viewer, and not
-<code>why</code>, <code>blame</code>, <code>diff</code> or the candidate
-list <code>resolve</code> prints.</li>
+semantic arm, and the committed retrieval numbers are modest. A
+quarantine published to teammates is only as trustworthy as write access
+to the team sidecar, where a forged row can over-suppress a value or
+lift a teammate's claim.</li>
 <li>Most reusable component: <code>verify_quotes</code> and
 <code>ground_outcomes</code> in <code>serializer.py</code> — about 200
 lines that make an extraction's own provenance mechanically checkable.
@@ -2223,7 +2223,7 @@ table that reads authority off the write channel the process observed
 instead of a <code>--by</code> flag the caller sets, with the strongest
 channels unreachable from the CLI so an agent cannot shell out to
 one.</li>
-<li>Maturity impression: ~54,500 lines of source under ~127,100 lines of
+<li>Maturity impression: ~59,900 lines of source under ~145,100 lines of
 tests, a research logbook, a scar file per landmine, a benchmark
 reporting policy stricter than most vendors', a replay A/B rig with a
 placebo arm that has been used to refute three of the project's own

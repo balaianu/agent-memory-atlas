@@ -111,14 +111,14 @@ stored.</p>
               <strong>Daily-Nerd/daimon</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/Daily-Nerd/daimon/commit/fb1ccd03e42f735568fd1477cea22c71af8956a6" title="fb1ccd03e42f735568fd1477cea22c71af8956a6">
+            <a class="meta-pill revision-pill" href="https://github.com/Daily-Nerd/daimon/commit/f05d6340c36231f99a00b8c4410345456a416938" title="f05d6340c36231f99a00b8c4410345456a416938">
               <span>Analyzed revision</span>
-              <code>fb1ccd03…</code>
+              <code>f05d6340…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-10-08</strong>
+              <strong>2026-10-13</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Daily-Nerd--daimon" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -128,16 +128,16 @@ stored.</p>
                       </div>
                               <div class="document-meta document-facts">
             <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
-            <div class="meta-pill fact-pill"><span>Size</span><strong>210,275
-lines of Python in 482 files: 58,859 in the plugin/daimon_briefing/
-package, 127,121 under plugin/tests/, the rest in hook scripts, a viewer
-and research/ experiments; 2,685 lines of TypeScript and
+            <div class="meta-pill fact-pill"><span>Size</span><strong>233,674
+lines of Python in 559 files: 64,283 in the plugin/daimon_briefing/
+package, 145,082 under plugin/tests/, the rest in hook scripts, a viewer
+and research/ experiments; 2,722 lines of TypeScript and
 JavaScript</strong></div>
-            <div class="meta-pill fact-pill"><span>Activity</span><strong>670
-commits on main, 636 by one author, 33 by the github-actions bot and 1
-by a commit-signing bot, 3 July – 8 October 2026 (UTC)</strong></div>
-            <div class="meta-pill fact-pill"><span>Tests</span><strong>7,702
-test functions in 261 files under plugin/tests/, counted by
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>702
+commits on main, 667 by one author, 33 by the github-actions bot and 2
+by a commit-signing bot, 3 July – 13 October 2026 (UTC)</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>8,784
+test functions in 335 files under plugin/tests/, counted by
 <code>def test_</code> lines; none run for this reading</strong></div>
           </div>
                                         <div class="capability-strip"><p class="cap-legend">Carries <b>6</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
@@ -198,10 +198,9 @@ itself.</p>
 <p>One verdict withholds. Every machine signal that an item has gone bad
 — staleness, a supersession guess, contradicting evidence — ranks it
 down and hides nothing. A value a person has quarantined is withheld by
-one read view that the briefing, recall and the viewer all read through,
-until a person releases it, and an agent can propose that verdict and
-never confirm it (<code>trust.py</code>, <code>view.py</code>, section
-2).</p>
+one read view that every read surface goes through, until a person
+releases it, and an agent can propose that verdict and never confirm it
+(<code>trust.py</code>, <code>view.py</code>, section 2).</p>
 <p>Weakest parts: the live working set is <strong>one checkpoint per
 project</strong>, so anything not carried forward is reachable only
 through a lexical FTS5 index with no semantic component; and the
@@ -315,7 +314,7 @@ doctrine in a prompt became a number before it became a rule.</p>
 <p>The item's identity is content-derived:
 <code>id = &lt;kind-initial&gt;-sha1("&lt;field&gt;:&lt;text&gt;")</code>
 truncated to a hex slice, minted by <code>policy.stamp_item_ids</code>
-(<code>policy.py:210</code>, re-exported as
+(<code>policy.py:212</code>, re-exported as
 <code>store._stamp_item_ids</code>). Two sessions that extract the same
 sentence into the same field produce the same id. That single decision
 is what makes the tombstone work, and also what bounds it.</p>
@@ -340,8 +339,8 @@ could not break it.</p>
 append-only in practice — <code>last_verified</code> is stamped in
 exactly one place and the docstring forbids any other writer — and
 liveness is a <strong>fold over an event log at read time</strong>
-(<code>store.resolutions</code>, <code>store.py:2666</code>;
-<code>store.is_resolved</code>, <code>store.py:2750</code>):</p>
+(<code>store.resolutions</code>, <code>store.py:3476</code>;
+<code>store.is_resolved</code>, <code>store.py:3568</code>):</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -378,11 +377,26 @@ index</strong></td>
 unknown status resolves rather than vanishes — the writer bothered to
 record a lifecycle fact. Same-second ties break on event
 <em>content</em>, never file order, so a reordered log folds identically
-(<code>_tie_wins</code>, <code>store.py:2654</code>).</p>
+(<code>_tie_wins</code>, <code>store.py:3464</code>).</p>
+<p>A forget is the one status a reopen on the item cannot undo.
+<code>forget.write_tombstones</code> appends, in one write, the
+tombstone on the item id, one on every sibling id that held the same
+value, and one on a <strong>key ref</strong> of its own — a random
+<code>forgotten-key:</code> token that carries nothing of the key and
+that no item id can equal (<code>forget.py:145-182</code>,
+<code>store.py:3178</code>). The item fold never returns a key ref, and
+<code>store.standing_tombstones</code> is the one parser that reads both
+kinds (<code>store.py:3213-3233</code>). A reopen replaces only its own
+id's latest event, so the value stays withheld through the key ref; the
+lift is <code>daimon unforget</code>, which appends
+<code>reopened:unforget</code> on every standing ref that carries the
+key (<code>forget.py:237-257</code>). A tombstone written before the key
+ref existed is a single id row, and <code>forget --resume</code> gives
+it one.</p>
 <p>One more withholding outcome comes from a different ledger. An item
 whose text or quote matches an active quarantine is withheld before any
 row of this table is consulted (<code>view.classify</code>,
-<code>view.py:604-630</code>); <em>The quarantine ledger</em> below
+<code>view.py:890-919</code>); <em>The quarantine ledger</em> below
 describes it.</p>
 <p>Three actors can move an item, and the code is explicit about which
 is which. <strong>Code</strong> downgrades trust classes and emits
@@ -394,15 +408,15 @@ human</strong> resolves, forgets, and re-opens. An agent's
 <code>resolve --by agent --evidence</code> writes a
 <code>resolving-candidate</code>, which withholds nothing until capture
 finds the quoted evidence in the session transcript and appends
-<code>resolved-agent-verified</code> (<code>capture.py:350</code>,
-<code>:377-417</code>).</p>
+<code>resolved-agent-verified</code> (<code>capture.py:359</code>,
+<code>:386-427</code>).</p>
 <p>Re-opening a resolved item requires evidence: either the item's code
 anchor still checks out live, or an explicit <code>--evidence</code>
 string. <code>_cmd_reverify</code> refuses otherwise, and its docstring
 gives the reason: <em>"re-stamping a resolved item without evidence
 would mark an unchecked claim verified — the one thing this tool must
 never do to its own audit trail"</em>
-(<code>cli/lifecycle.py:745-747</code>).</p>
+(<code>cli/lifecycle.py:1013-1015</code>).</p>
 <p>The system therefore treats memory as <strong>attested transcription
 plus explicitly labelled inference</strong>, never as ground truth. The
 briefing's own top section is called
@@ -437,7 +451,7 @@ itself.</strong> Every row records the channel it arrived through —
 <code>CHANNEL_AUTHORITY</code> maps that to agent, human or mechanical.
 The four shared channels live in <code>channels.py:41-46</code>, which
 three ledgers import after two hand-kept copies of the table <em>"had
-drifted"</em>, and <code>refutations.py:73</code> adds
+drifted"</em>, and <code>refutations.py:74</code> adds
 <code>mechanical</code>. The comment says what was deleted and why:</p>
 <blockquote>
 <p><code>--by human</code> was a flag whose only function was to let the
@@ -548,7 +562,7 @@ channel therefore stays inert and arms nothing.</p>
 body of at most 8,192 bytes and a command pattern of at most 200, stored
 in the row so the check travels with the ruling, with an intent of
 <code>enforce</code>, <code>warn</code> or <code>record-only</code>
-(<code>refutations.py:128-166</code>). Its hash is computed by the
+(<code>refutations.py:129-167</code>). Its hash is computed by the
 writer over the stored bytes and <em>"never accepted from a
 caller"</em>, the way <code>verdict_key</code> pins the rule text. A
 body naming a host-local path — <code>~/</code>, <code>$HOME/</code>,
@@ -557,15 +571,15 @@ line by line, because such a script <em>"travels to another machine as a
 script whose real content is a file that is not there"</em>.</p>
 <p>The check's lifecycle follows the ruling's: <code>active</code> folds
 to <code>armed</code>, <code>overturned</code> to <code>disarmed</code>
-(<code>:1280-1281</code>), so only a human ratification arms anything,
+(<code>:1289-1290</code>), so only a human ratification arms anything,
 and <code>ruling check try</code> runs a check against a command
-<em>"arming nothing"</em> (<code>cli/ruling.py:691</code>).
+<em>"arming nothing"</em> (<code>cli/ruling.py:748</code>).
 <code>checks.sync</code> is the only writer of
 <code>~/.daimon/checks/</code>. Every ledger writer that can change what
 is armed calls it, and so does <code>daimon check sync</code>. It writes
 a six-key manifest and one executable body per armed check at mode
 <code>0o500</code>, atomically, and skips the write when the bytes
-already match (<code>checks.py:1-60</code>).</p>
+already match (<code>checks.py:1-61</code>).</p>
 <p><strong>The bug this shipped with is the more instructive half, and
 the project wrote it down.</strong> Scar 0053 records that the CLI was
 scoped (<code>refute list</code> passes
@@ -586,7 +600,7 @@ making an unscoped call impossible to write.</p>
 <p>A ruling holds for one project bucket, which makes a rule a person
 means for every repository under <code>~/work</code> a thing they
 re-ratify per repository. <code>config.layer_scopes</code>
-(<code>config.py:931</code>) resolves that by naming <strong>ruling
+(<code>config.py:934</code>) resolves that by naming <strong>ruling
 layers</strong>: the ancestors of a project's resolved root, nearest
 first, that a child may inherit active rulings from. It is the only
 place that knows the shape, and the three conditions it applies are the
@@ -706,7 +720,7 @@ machine signal only ever ranks down"</em>.</p>
 <p>A record is keyed on the value, the way a forget tombstone is.
 <code>value_key</code> runs the redacted, whitespace-collapsed text
 through <code>normalize.content_key</code>, and the record id hashes
-kind, project slug and that key (<code>trust.py:164-190</code>). A
+kind, project slug and that key (<code>trust.py:165-191</code>). A
 carried or re-extracted copy under a new item id stays covered, and the
 <code>item_id</code> on the row <em>"is never the gate"</em>. Text under
 20 characters is refused, because <em>"a short, generic value risks
@@ -714,31 +728,31 @@ quarantining unrelated items that canonicalize the same"</em>. Four
 events — <code>quarantined</code>, <code>confirmed</code>,
 <code>dismissed</code>, <code>released</code> — fold to
 <code>candidate</code>, <code>active</code>, <code>dismissed</code> or
-<code>released</code> (<code>trust.py:47-48</code>,
-<code>:268-352</code>).</p>
+<code>released</code> (<code>trust.py:48-49</code>,
+<code>:288-361</code>).</p>
 <p>Authority is the refutation ledger's, on the four shared channels.
 <code>daimon trust propose --by agent</code> writes a candidate, which
 withholds nothing. The same verb from an interactive terminal lands
 <code>active</code> at once. <code>confirm</code>, <code>dismiss</code>
 and <code>release</code> raise unless the channel is human
-(<code>_human_transition</code>, <code>trust.py:420-428</code>), and the
+(<code>_human_transition</code>, <code>trust.py:492-500</code>), and the
 fold skips a lifecycle row from any other channel: <em>"no agent channel
-moves state, whatever the event says"</em> (<code>:338-340</code>).
+moves state, whatever the event says"</em> (<code>:347-349</code>).
 There is no mechanical tier — <em>"there is no automatic quarantine
 signal, by design"</em> — and a dismissed or released value can be
 proposed again.</p>
 <p><strong><code>active</code> withholds through one read view.</strong>
-<code>view.py</code> (1,135 lines) decides <em>"what a reader may see of
+<code>view.py</code> (2,131 lines) decides <em>"what a reader may see of
 a project"</em> for every reader that shows a checkpoint value.
 <code>snapshot</code> reads the bucket's ledgers once, and
 <code>_trust_index</code> folds <code>trust.jsonl</code> through
 <code>trust.records</code> and keeps the <code>active</code> pairs
-(<code>view.py:304-320</code>). <code>classify</code> returns
+(<code>view.py:414-433</code>). <code>classify</code> returns
 <code>Visible</code> or <code>Withheld</code> by canonical value over
 <code>text</code>, <code>quote</code> and <code>scene</code>, in a fixed
 order: a closed snapshot withholds everything, then a forgotten value or
 id, then a quarantine of the field's kind
-(<code>view.py:604-630</code>). <code>Withheld</code> has no text, quote
+(<code>view.py:890-919</code>). <code>Withheld</code> has no text, quote
 or scene attribute, so a refused value cannot be printed from it by
 accident. The topic singleton and a bare-string contradiction go through
 the same call.</p>
@@ -756,16 +770,44 @@ the same call.</p>
 MCP <code>daimon_brief</code>, the Hermes <code>pre_llm_call</code>
 hook</td>
 <td><code>briefing.prepare</code> opens the checkpoint with
-<code>view.open</code> (<code>briefing.py:711-755</code>)</td>
+<code>view.open</code> (<code>briefing.py:712-777</code>), and the
+rulings, request, owed and verdict panels take their rows through
+<code>view.masked</code></td>
 </tr>
 <tr>
 <td><code>search</code>, <code>suggest</code>, <code>lookup_item</code>,
 MCP <code>daimon_recall</code>, both recall hooks, the viewer's
 search</td>
 <td>the build judges each row before it is inserted
-(<code>recall.py:1199-1250</code>); <code>query</code>,
+(<code>recall.py:1220-1279</code>); <code>query</code>,
 <code>find</code> and <code>suggest</code> judge every hit again and
-rebuild when one is dropped (<code>:1482-1511</code>)</td>
+rebuild when one is dropped (<code>:1577-1613</code>)</td>
+</tr>
+<tr>
+<td><code>why</code>, <code>blame</code>, <code>diff</code> and the
+viewer's <code>/api/why</code></td>
+<td><code>view.lineage</code> and <code>view.lookup_many</code> answer
+an exact id from the pointer window, the recall index as a locator, then
+the hints (<code>view.py:1470</code>, <code>:1690</code>);
+<code>inspector.inspect_item</code> composes from the lineage and reads
+no session file itself (<code>inspector.py:450</code>)</td>
+</tr>
+<tr>
+<td><code>resolve</code>, <code>forget</code>, <code>reverify</code>
+binding by id or query</td>
+<td><code>view.match</code> and <code>view.label</code>; a candidate
+list prints a withheld row as a marker, and an exact id that is withheld
+is refused off a terminal</td>
+</tr>
+<tr>
+<td>every ledger prose printer — the <code>refute</code>,
+<code>ruling</code>, <code>request</code>, <code>trust</code> and
+<code>amend</code> verbs, <code>decide</code>, MCP
+<code>requests_inbox</code>, <code>/api/refutations</code>,
+<code>/api/relations</code></td>
+<td><code>view.masked</code> judges every declared prose string as a
+whole value, plus every string leaf of a folded record
+(<code>view.py:2027-2042</code>)</td>
 </tr>
 <tr>
 <td><code>status --suppressed</code>, <code>daimon projects</code>, MCP
@@ -775,8 +817,7 @@ quarantine prints its id, kind and
 <code>[withheld: quarantine tr-…]</code>, never its text</td>
 </tr>
 <tr>
-<td>Every viewer route except <code>/api/why</code>,
-<code>/api/refutations</code> and <code>/api/relations</code></td>
+<td>every viewer route</td>
 <td><code>daimon_ui/reader.py</code>, which imports nothing from the
 package but <code>api</code>, <code>schema</code> and
 <code>view</code></td>
@@ -793,70 +834,105 @@ row for that bucket, and a query touching it carries a
 anything, with a <code>⚠</code> line naming the degraded ledger, so a
 quarantine whose own row is the torn one withholds nothing.</p>
 <p><code>trust.jsonl</code> is an input to the index fingerprint
-(<code>surfaces.py:296-299</code>), so a confirmation after the index
+(<code>surfaces.py:487-491</code>), so a confirmation after the index
 exists forces a rebuild. Scar 0107 records why that was missed first:
 every test confirmed the quarantine before any index existed, so
 <em>"the test proves nothing about staleness"</em>.</p>
-<p><strong>Some verbs read checkpoint files directly</strong>, and check
-the forget ledger and not this one:</p>
-<ul>
-<li><code>daimon why &lt;item-id&gt;</code> and the viewer's
-<code>/api/why</code> go through <code>inspector.inspect_item</code>
-(<code>inspector.py:447-467</code>,
-<code>daimon_ui/server.py:256</code>). An id seen before the quarantine
-returns the text and the stored quote.</li>
-<li><code>daimon blame &lt;item-id&gt;</code> and
-<code>daimon diff</code> walk the retained pointer chain
-(<code>cli/history.py:189-196</code>, <code>:441-454</code>).</li>
-<li><code>daimon resolve &lt;query&gt;</code> reads the latest
-checkpoint unfiltered. When the query matches nothing it prints every
-item's id and text as candidates
-(<code>cli/lifecycle.py:114-142</code>).</li>
-</ul>
-<p>The project counts the gap itself. <code>test_read_sentinel.py</code>
-builds a store through the real writers holding one sentinel value per
-item field, three quarantined by a human and three forgotten through
-<code>daimon forget</code>. It drives every CLI leaf, every MCP tool,
-every viewer route and both Hermes hooks against it, and asserts that
-the set of surfaces where a sentinel appears — in output or in any byte
-written during the run — equals <code>KNOWN_LEAKS</code>. That set holds
-73 surface-and-kind pairs over 34 surfaces, every one a quarantined
-value: <code>why</code>, <code>/api/why</code>, <code>blame</code>,
-<code>resolve</code> and <code>reverify</code>, and the ledger verbs
-whose prose quotes a value (<code>trust list</code>, the
-<code>refute</code>, <code>ruling</code> and <code>request</code>
-families, <code>/api/refutations</code>, <code>/api/relations</code>,
-MCP <code>requests_inbox</code>). It may only shrink, because an entry
-that stops leaking fails the test until it is removed. No forgotten
-sentinel appears on any surface.</p>
-<p>The agent skill names <code>why</code>, <code>diff</code> and
-<code>blame</code> as answers to questions an agent will ask
-(<code>skill_content.py:340-342</code>), so an agent reaches them by
-shelling out.</p>
-<p>The ledger is local to one install. <code>teamsync.py</code>
-publishes nothing from it, and a teammate's mirrored checkpoint is
-judged through the reader's own quarantines — <em>"a teammate's own
-ledger is theirs and is not read here"</em>
-(<code>cli/brief.py:113</code>). A forget, by contrast, publishes a
-hash-only row.</p>
+<p><strong>A census asserts that no surface leaks.</strong>
+<code>test_read_sentinel.py</code> builds a store through the real
+writers holding one sentinel value per item field, three quarantined by
+a human and three forgotten through <code>daimon forget</code>. It
+drives every CLI leaf, every MCP tool, every viewer route and both
+Hermes hooks against it, in text and <code>--json</code>, and scans
+everything each run printed and every byte it wrote. The assertion is
+that the set of leaks is empty (<code>test_read_sentinel.py:738</code>).
+A second scan looks for the forgotten values' content keys and key refs,
+because a raw tombstone status printed by a reader names the value it
+hashes.</p>
+<p>What a surface may show on purpose is a declared exemption with a
+reason. <code>HUMAN_CHANNEL</code> lists the cases where a person at a
+terminal sees a quarantined value — <code>trust show</code> printing the
+evidence they are about to confirm, <code>forget --dry-run</code> naming
+its target — and a companion test runs each of them on the agent channel
+and requires that run to leak nothing. <code>KEY_EXEMPT</code> lets
+<code>audit privacy</code> and the forget receipt print content hashes.
+The MCP tools take no item id, by design, so the id verbs live on the
+CLI, the viewer and the in-process <code>api</code>.</p>
+<p>The binding verbs refuse rather than print. <code>resolve</code>,
+<code>forget</code> and <code>reverify</code> by exact id refuse an item
+withheld by a quarantine unless a person at a terminal runs them.
+<code>ruling ratify</code>, <code>ruling revise</code> and the
+<code>refute</code> ratify, revise and overturn verbs refuse before any
+append when the record holds withheld text, on every channel, because
+<em>"a person signs the whole text or nothing"</em>
+(<code>cli/_ledger.py:149</code>). <code>why --source</code> is refused
+while the machine holds any forgotten value or the project any
+quarantine (<code>inspector.py:275-287</code>), so a transcript window
+cannot hand one back.</p>
+<p><strong>A quarantine reaches the team as a hash only.</strong> When a
+quarantine turns active or is released, the trust verbs append a row to
+<code>authors/&lt;me&gt;/quarantines.jsonl</code> in every team sidecar
+clone, carrying the kind, the value key, the state, an order, an event
+id and the author — no value, no slug, no text
+(<code>store.publish_quarantine</code>, <code>store.py:1137</code>). On
+a teammate's machine one walk reads both published ledgers per author
+and folds them as a union. A pair stays withheld while any author holds
+it active, and one author's release never lifts another's
+(<code>view.machine_sets</code>, <code>view.py:356-365</code>).</p>
+<p>The foreign set joins every snapshot machine-wide, the way forgotten
+keys do. A teammate's quarantine shows as
+<code>[withheld: quarantine]</code> with no id on every channel, a
+terminal included, because the reader is not its owner, and
+<code>forget</code>, <code>resolve</code> and <code>reverify</code> by
+exact id refuse such an item everywhere, printing that <em>"a teammate
+quarantined this; they release it"</em>
+(<code>cli/_ledger.py:136-146</code>).
+<code>daimon trust republish</code> re-sends the standing rows and is
+human-only.</p>
+<p>The commit states the trust boundary: sidecar write access, as for
+tombstones. A member who can write the sidecar can forge an active row
+that over-suppresses or a released row that lifts a teammate's claim,
+and a damaged line skips that author for the whole team. A torn tail on
+either published ledger marks the author unproven, so their checkpoints
+and rows are skipped rather than read around. Mirrored checkpoint bytes
+are untouched: a quarantine withholds on read and never rewrites.</p>
 <p><strong>A forget redacts a quarantine and keeps it.</strong>
-<code>trust.redact_content_key</code> (<code>trust.py:504-573</code>)
-runs inside <code>ledger_repair.scrub_forgotten_key</code>, the one
-function forget and <code>ledger repair</code> share. A
-<code>reason</code> or one <code>evidence</code> entry whose value is
-the forgotten one becomes the marker the events scrub writes; a
-quarantine <em>of</em> the forgotten value loses all its prose; the
-verdict and <code>value_key</code> stay, because dropping the rows
-<em>"would lift the withhold and let the value show again"</em>. Scar
-0115 fences it.</p>
-<p>Two things in the tree lag the wiring. The module header and the
+<code>trust.redact_content_key</code> (<code>trust.py:643-712</code>) is
+the trust ledger's step in the surface registry
+(<code>surfaces.py:487-491</code>), which <code>forget.run</code> walks
+for both forget and <code>ledger repair</code>. A <code>reason</code> or
+one <code>evidence</code> entry whose value is the forgotten one becomes
+the marker the events scrub writes; a quarantine <em>of</em> the
+forgotten value loses all its prose; the verdict and
+<code>value_key</code> stay, because dropping the rows <em>"would lift
+the withhold and let the value show again"</em>. Scar 0115 fences
+it.</p>
+<p>One thing in the tree lags the wiring. The module header and the
 surface-registry comment name <code>trust.active_value_keys</code> as
 the readers' entry point (<code>trust.py:12-14</code>,
-<code>surfaces.py:292-293</code>), and nothing in the package calls it:
-the view folds <code>trust.records</code> itself. And the
-<code>daimon trust</code> help line describes the ledger as
-<em>"write-only in this release, nothing reads it yet"</em>
-(<code>cli/trust.py:157</code>).</p>
+<code>surfaces.py:483-484</code>), and nothing in the package calls it:
+the view folds <code>trust.records</code> itself.</p>
+<h3 id="how-a-value-stops-being-shown">How a value stops being
+shown</h3>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — two value-keyed ledgers decide what no reader sees; a forget stands on a key ref no reopen reaches and is lifted only by unforget at a terminal, a quarantine moves only on a human channel, and the write gate refuses rather than admit through a ledger it cannot read</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: two value-keyed ledgers decide what no reader sees; a forget stands on a key ref no reopen reaches and is lifted only by unforget at a terminal, a quarantine moves only on a human channel, and the write gate refuses rather than admit through a ledger it cannot read
+flowchart TB
+    F[&quot;daimon forget&quot;] --&gt; EV[&quot;events.jsonl&lt;br/&gt;id row + key ref + sibling rows&lt;br/&gt;forgotten:&amp;lt;content key&amp;gt;&quot;]
+    RO[&quot;reopen on the item id&quot;] -.-&gt;|&quot;lifts the id row only&quot;| EV
+    UF[&quot;daimon unforget&lt;br/&gt;terminal, no agent channel&quot;] --&gt;|&quot;lift on every ref&quot;| EV
+    EV --&gt; ST[&quot;standing_tombstones&lt;br/&gt;forgotten set&quot;]
+    TP[&quot;trust propose --by agent&quot;] --&gt; TL[&quot;trust.jsonl&lt;br/&gt;candidate&quot;]
+    TC[&quot;confirm / release&lt;br/&gt;human channel only&quot;] --&gt; TL
+    TL --&gt;|&quot;active&quot;| QS[&quot;quarantined pairs&quot;]
+    TM[&quot;teammates&#39; published rows&lt;br/&gt;hash only, union&quot;] --&gt; QS
+    TM --&gt; ST
+    ST --&gt; GATE{&quot;write_checkpoint&lt;br/&gt;ledger proven?&quot;}
+    GATE --&gt;|&quot;no&quot;| REF[[&quot;admission refused&lt;br/&gt;held for heal&quot;]]
+    GATE --&gt;|&quot;yes&quot;| DROP[&quot;drop_forgotten&lt;br/&gt;before stamp, sign, index&quot;]
+    ST --&gt; V[&quot;view.classify&quot;]
+    QS --&gt; V
+    V --&gt;|&quot;Withheld, no text&quot;| OUT[&quot;briefing, recall index, id verbs,&lt;br/&gt;ledger printers, viewer, MCP&quot;]
+
+    style REF fill:#f4e2bd,stroke:#b8860b</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <p>Nothing runs. There is no server, no daemon, no queue, no embedding
 model, and no database process — a <code>uv tool install</code> of a
@@ -864,7 +940,7 @@ package whose only declared runtime dependency is a <code>tomli</code>
 backport on Python below 3.11, plus hook scripts the host invokes. The
 <code>pretty</code> extra pulls in <code>rich</code> for terminal output
 and is optional.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the checkpoint files are authoritative and the FTS5 index is disposable; one read view judges every value the briefing, the index and the viewer show, withholding forgotten and quarantined values and closing when the trust ledger cannot be read; the team sidecar and the signed receipt are opt-in</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the checkpoint files are authoritative and the FTS5 index is disposable; one read view judges every value the briefing, the index and the viewer show, withholding forgotten and quarantined values and closing when the trust ledger cannot be read; the team sidecar and the signed receipt are opt-in
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the checkpoint files are authoritative and the FTS5 index is disposable; one read view judges every value any surface shows, withholding forgotten and quarantined values, a teammate's included, and closing when the trust ledger cannot be read; the team sidecar and the signed receipt are opt-in</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the checkpoint files are authoritative and the FTS5 index is disposable; one read view judges every value any surface shows, withholding forgotten and quarantined values, a teammate&#39;s included, and closing when the trust ledger cannot be read; the team sidecar and the signed receipt are opt-in
 flowchart TD
     subgraph Host[&quot;Agent host (Claude Code / Windsurf / Codex)&quot;]
         SS[&quot;SessionStart hook&quot;]
@@ -877,13 +953,16 @@ flowchart TD
     GATES --&gt; STORE[&quot;checkpoint_dir/&lt;br/&gt;&amp;lt;session&amp;gt;.json + &amp;lt;slug&amp;gt;/latest.json&quot;]
     STORE --&gt; EV[&quot;events.jsonl&lt;br/&gt;verification.jsonl&quot;]
     TR[&quot;trust.jsonl&lt;br/&gt;human quarantine&quot;]
+    TQ[&quot;teammates&#39; published&lt;br/&gt;tombstones and quarantines&quot;]
     EV --&gt; VIEW[&quot;view: snapshot + classify&lt;br/&gt;Withheld carries no value&quot;]
     TR --&gt; VIEW
+    TQ --&gt; VIEW
     STORE --&gt; VIEW
     VIEW --&gt;|&quot;judged before insert&quot;| IDX[&quot;recall index, one per store&lt;br/&gt;SQLite FTS5, disposable&quot;]
     IDX --&gt;|&quot;every hit judged again&quot;| SUG[&quot;recall query / suggest&quot;]
     VIEW --&gt;|&quot;briefing.prepare&quot;| BRIEF[&quot;daimon brief, MCP brief,&lt;br/&gt;Hermes hook, loops&quot;]
     VIEW --&gt; UI[&quot;viewer routes&quot;]
+    VIEW --&gt; IDV[&quot;why, blame, diff,&lt;br/&gt;ledger printers&quot;]
     SS --&gt; BRIEF
     BRIEF --&gt; INJ[&quot;injected briefing text&quot;]
     UPS --&gt; SUG
@@ -898,7 +977,7 @@ flowchart TD
 <code>os.replace</code>, and the check-rotate-write pointer sequence is
 serialized by an <code>flock</code> on a sidecar dotfile that
 <strong>fails open</strong> on contention (<code>jsonl.dir_lock</code>,
-<code>jsonl.py:116</code>, which <code>store._pointer_lock</code>
+<code>jsonl.py:121</code>, which <code>store._pointer_lock</code>
 delegates to and every ledger append and rewrite also takes). A
 monotonicity guard rejects a write whose session is older than the
 pointer's. Per-session files are garbage-collected to the newest 100 by
@@ -958,7 +1037,7 @@ rows carrying only <code>tool_result</code> blocks are surfaced as
 <code>role: "tool"</code> with a capped payload, which is what makes
 outcome grounding possible on that host and nowhere else.</p>
 <p><strong>Extraction.</strong> <code>serializer.serialize_strict</code>
-(<code>serializer.py:2474</code>) gates on <code>min_messages</code> (10
+(<code>serializer.py:2486</code>) gates on <code>min_messages</code> (10
 by default; tool rows do not count), renders the transcript, and chunks
 it at 1,200 lines with 100 lines of overlap. Chunks run concurrently
 through the D-019 prompt, each cached by content hash under
@@ -997,12 +1076,12 @@ provenance strips on purpose, since carry's freeze prefers
 <code>verbatim</code> and a model-claimed verbatim this path can never
 check must not beat extracted prior content.</p>
 <p><strong>Retrieval.</strong> <code>recall.query</code>
-(<code>recall.py:1545</code>), behind <code>search</code>, runs an FTS5
+(<code>recall.py:1649</code>), behind <code>search</code>, runs an FTS5
 <code>MATCH</code>, AND-joined first, retrying OR-joined when AND
 matches nothing, ordered by <code>invalidated_by IS NOT NULL</code>,
 then <code>superseded_by IS NOT NULL</code>, then bm25, then a silent
 <code>frontier</code> recency tiebreak, and judges every hit before
-returning it. <code>recall.suggest</code> (<code>recall.py:1807</code>)
+returning it. <code>recall.suggest</code> (<code>recall.py:1918</code>)
 is the proactive path behind <code>UserPromptSubmit</code>, gated hard
 toward silence: unknown project, fewer than two salient terms, or fewer
 than two distinct shared terms with a matched session all return
@@ -1019,13 +1098,21 @@ announced. Verbatim item text is never rewritten; it may be dropped
 whole.</p>
 <p><strong>Correction.</strong> <code>cli._cmd_resolve</code> /
 <code>_cmd_forget</code> / <code>_cmd_reverify</code> /
-<code>_cmd_log</code> append to <code>events.jsonl</code> via
-<code>store.append_event</code>, which refuses a <code>forgotten:</code>
+<code>_cmd_unforget</code> / <code>_cmd_log</code> append to
+<code>events.jsonl</code> via <code>store.append_event</code> or
+<code>append_events</code>, which refuse a <code>forgotten:</code>
 status from any caller but forget (before #1139,
 <code>resolve --status</code> could write a tombstone with no scrub).
-<code>scrub_event_fields</code> (<code>store.py:2557</code>) then
-redacts a field whose whole value is the forgotten one and removes no
-row.</p>
+<code>forget.run</code> then walks the forget steps the surface registry
+declares, in phase order — tombstone, team publish, value-keyed scrubs,
+id-keyed scrubs, wholesale purges, derived caches. Each step returns
+what it reached, judged by reading the surface again, and one that
+raises is reported by its exception type and never its message, which
+could carry the value. Any plaintext surface left unreached moves the
+exit code to 4 and names its cure, and <code>forget --resume</code>
+finishes every phase for every standing tombstone. Among those steps
+<code>scrub_event_fields</code> (<code>store.py:3367</code>) redacts a
+field whose whole value is the forgotten one and removes no row.</p>
 <p><strong>MCP.</strong> <code>mcp_server.py</code> is a hand-rolled
 stdio JSON-RPC server — no SDK, because zero runtime dependencies is a
 product claim — exposing five read-only tools
@@ -1033,11 +1120,11 @@ product claim — exposing five read-only tools
 <code>daimon_projects</code>, <code>daimon_status</code>,
 <code>requests_inbox</code>) through thin shims in
 <code>mcp_tools.py</code>.</p>
-<p><strong>Tests.</strong> 7,702 test functions in 261 Python files
-under <code>plugin/tests/</code>, which holds 277 Python files and
-127,121 lines in all. The count is <code>grep -E '^\s*def test_'</code>,
-so methods on test classes are included; 7,617 sit at column 0. The
-source is 58,859 lines in <code>plugin/daimon_briefing/</code>, 54,452
+<p><strong>Tests.</strong> 8,784 test functions in 335 Python files
+under <code>plugin/tests/</code>, which holds 352 Python files and
+145,082 lines in all. The count is <code>grep -E '^\s*def test_'</code>,
+so methods on test classes are included; 8,699 sit at column 0. The
+source is 64,283 lines in <code>plugin/daimon_briefing/</code>, 59,867
 outside its <code>_hooks/</code> directory. All are raw
 <code>wc -l</code> counts at the pin.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
@@ -1123,7 +1210,7 @@ timestamp rather than an interval (section 6).</p>
 <p><strong>Scope</strong> is the project slug: every character outside
 Python's Unicode <code>\w</code> and <code>-</code> becomes
 <code>-</code> (<code>/Users/x/proj</code> → <code>-Users-x-proj</code>,
-<code>store.py:50</code>). It is deliberately not the Claude CLI's own
+<code>store.py:53</code>). It is deliberately not the Claude CLI's own
 directory scheme — the two diverge on underscores, measured over 711
 directories — and re-slugging would orphan every bucket whose path
 carries one: <em>"Two slugs is the correct end state, not one"</em>.</p>
@@ -1132,11 +1219,11 @@ read-path filter in both. <strong>Every latest-read names two
 things</strong>: a <code>Route</code> — the project's own pointer only,
 or own-then-global — and an <code>Admit</code> rule — any payload, or
 only one whose stamp is this project's or nobody's
-(<code>store.py:1730</code>, <code>:1742</code>). Both are required
+(<code>store.py:2390</code>, <code>:2402</code>). Both are required
 keywords with no default, <em>"so an omitted argument is a TypeError
 instead of a silently unsafe answer"</em>, and the one reader the
 persist path uses, <code>read_own_stream_latest</code>
-(<code>store.py:1750</code>), takes no policy argument at all: nothing
+(<code>store.py:2410</code>), takes no policy argument at all: nothing
 an environment variable can reach may change what carry writes.</p>
 <p>The comment where the previous single <code>fallback</code> flag was
 deleted names the reason: <em>"fallback named a mechanism while callers
@@ -1148,7 +1235,7 @@ injection route falls back to the global pointer only when the project
 is unknown or the operator opted in with
 <code>DAIMON_BRIEF_GLOBAL_FALLBACK</code>
 (<code>briefing.injection_read_route</code>,
-<code>briefing.py:395</code>). A refused foreign payload leaves behind a
+<code>briefing.py:396</code>). A refused foreign payload leaves behind a
 <code>Marker</code> of exactly two header fields, slug and created,
 <em>"and NOTHING more"</em>. Stdout inside an agent session is
 checkpoint input, so a wider marker would copy foreign content into this
@@ -1162,7 +1249,7 @@ read or hand out ids (scar 0063). The display path keeps its old shape:
 a header saying activity is in another project, never a hundred foreign
 lines under a warning.</p>
 <p><strong>Tenant scope is a host decision, not a caller's.</strong>
-<code>DAIMON_TENANT_SCOPED</code> (<code>config.py:548</code>) makes
+<code>DAIMON_TENANT_SCOPED</code> (<code>config.py:551</code>) makes
 every caller-chosen cross-project address a refusal: <code>--slug</code>
 and <code>--all-projects</code> on the CLI, <code>slug</code> and
 <code>all_projects</code> on the MCP tools, and
@@ -1171,11 +1258,11 @@ viewer's project list show only the caller's own bucket, through one
 enumeration (<code>view.buckets</code>). One layer down,
 <code>view.read_scopes</code> narrows an in-process
 <code>all_projects</code> request to the caller's own slug plus the host
-allowlist (<code>view.py:257-280</code>). The reasoning is that for a
+allowlist (<code>view.py:330-353</code>). The reasoning is that for a
 host running one daimon home with a project directory per person, those
 surfaces are <em>"cross-tenant read and enumerate primitives, one prompt
 injection away from every tenant's memory"</em>.</p>
-<p><code>DAIMON_EXTRA_READ_SLUGS</code> (<code>config.py:570</code>) is
+<p><code>DAIMON_EXTRA_READ_SLUGS</code> (<code>config.py:573</code>) is
 the host declaring, out of band, which other buckets a session may read
 ambiently; an entry that is not slug-shaped is dropped rather than
 widened into a path, and no write path takes a slug. The refusal is loud
@@ -1191,7 +1278,7 @@ Only immutable per-author files sync — no mutable pointer ever lands in
 the sidecar — which makes the git merges conflict-free by construction.
 Teammates' items are attributed and never merged into yours.</p>
 <p><strong>Staleness</strong> has a dedicated read-time signal.
-<code>briefing.stamp_stale_carried</code> (<code>briefing.py:639</code>)
+<code>briefing.stamp_stale_carried</code> (<code>briefing.py:640</code>)
 stamps carried items whose effective last-verified age exceeds seven
 days, and they are the first items the budget drops. The threshold's
 docstring states the reasoning: a fresh checkpoint restating a carried
@@ -1228,7 +1315,7 @@ it.</strong> The index has two Graphiti-inspired slots,
 <code>superseded_by</code> and <code>invalidated_by</code>, and the
 module docstring is careful about what the second holds: evidence, not a
 verdict. <code>_apply_verification_invalidations</code>
-(<code>recall.py:875</code>) folds each bucket's own
+(<code>recall.py:896</code>) folds each bucket's own
 <code>verification.jsonl</code> at rebuild and stamps an item's standing
 contradiction as <code>"&lt;check&gt;:&lt;reason&gt;@&lt;ts&gt;"</code>.
 The fold is by timestamp and never by line order, and it is bound to
@@ -1237,8 +1324,8 @@ brand a teammate's mirrored copy.</p>
 <p>Four check classes may write the slot: <code>receipt</code>,
 <code>file-exists</code>, <code>branch-state</code> and
 <code>pr-state</code> (<code>_INVALIDATION_CHECKS</code>,
-<code>recall.py:867</code>; <code>store.WORLD_CHECKS</code>,
-<code>store.py:2190</code>). Capture-time rejection rows describe the
+<code>recall.py:888</code>; <code>store.WORLD_CHECKS</code>,
+<code>store.py:2861</code>). Capture-time rejection rows describe the
 capture rather than later disproof, and a model-flagged contradiction
 has no path to the slot at all — <em>"derived world evidence writes the
 slot, or nothing does"</em>. A dependency-version contradiction stays a
@@ -1251,14 +1338,14 @@ that claim.</strong> <code>worldcheck._claim_key</code>
 and the expected assertion, so the ledger row carries no raw target.
 <code>latest_world_verdicts</code> keeps the latest verdict per item,
 class and claim key. <code>latest_invalidation_verdicts</code>
-(<code>store.py:2293</code>) then summarises the item for the index
+(<code>store.py:2964</code>) then summarises the item for the index
 under one rule: <em>"ANY outstanding contradiction wins"</em>. Scar 0117
 records the bug this prevents — taking the latest verdict across a whole
 item <em>"lets a receipt confirmation erase unrelated contradiction
 evidence"</em>.</p>
 <p>The evidence has one collector. <code>daimon brief</code> runs the
 probes when <code>DAIMON_WORLDCHECK=1</code>, and
-<code>_write_worldcheck_ledger</code> (<code>cli/status.py:82</code>)
+<code>_write_worldcheck_ledger</code> (<code>cli/status.py:83</code>)
 appends their rows through <code>effects_commit</code>, after the
 briefing is printed. The project's configuration page lists the MCP
 <code>daimon_brief</code> tool and the Hermes hook as <em>"Unsupported:
@@ -1274,7 +1361,7 @@ literally, while <code>search</code> keeps a three-way split inside the
 superseded half that puts a person's recorded resolution below a
 model-authored link. The tier has to bind before the fetch and not only
 at the end: the candidate window is 256 rows
-(<code>_SUGGEST_CANDIDATE_LIMIT</code>, <code>recall.py:1778</code>),
+(<code>_SUGGEST_CANDIDATE_LIMIT</code>, <code>recall.py:1889</code>),
 and a wall of strongly-matching demoted rows can fill it on its own and
 truncate a weaker, better-tiered row away before the Python sort ever
 sees it.</p>
@@ -1283,7 +1370,7 @@ multiplies by 0.4 for contradiction, 0.7 for a supersession the model's
 typed link wrote and 0.5 for one a human resolution wrote, stacking
 because the axes are independent — a replaced decision was still right
 at the time, whereas contradiction says a check disagreed with the claim
-itself (<code>_suggest_weight</code>, <code>recall.py:1781</code>,
+itself (<code>_suggest_weight</code>, <code>recall.py:1892</code>,
 <code>_RESOLVED_WEIGHT</code>). The read side demotes in the order the
 write side already keeps, the resolution fold overwriting the link fold,
 and an unattributed row — legacy, or a writer the fold could not name —
@@ -1323,12 +1410,12 @@ fold clears <code>invalidated_by</code> and writes
 and survived"</em> indistinguishable from <em>"never
 questioned"</em>.</p>
 <p>A cure row is written only when it changes something
-(<code>append_receipt_cure</code>, <code>store.py:2321</code>;
-<code>append_world_cure</code>, <code>store.py:2308</code>). The
+(<code>append_receipt_cure</code>, <code>store.py:2992</code>;
+<code>append_world_cure</code>, <code>store.py:2979</code>). The
 rejection ledger therefore stays a ledger of problems found rather than
 work done, and <code>verification_counts</code> excludes cures — <em>"a
 cure is not a catch"</em>. One ordering,
-<code>_latest_verification_verdicts</code> (<code>store.py:2241</code>),
+<code>_latest_verification_verdicts</code> (<code>store.py:2912</code>),
 serves both cure gates and the index fold, because <em>"a recorder
 deriving from a different view than the verifier is the failure this
 codebase keeps paying for"</em>.</p>
@@ -1392,7 +1479,7 @@ the transcript is serialized once, at session end. On Codex and Kimi a
 <code>Stop</code> hook also serializes mid-session, throttled by default
 to one run per 300 seconds (<code>hook/daimon-codex-stop.py</code>,
 <code>hook/daimon-kimi-stop.py</code>). Proactive recall excludes the
-current session (<code>recall.py:1855-1856</code>), so a mid-session
+current session (<code>recall.py:1966-1967</code>), so a mid-session
 checkpoint reaches the session that wrote it only through an explicit
 <code>daimon recall</code>. That is a deliberate scope choice, and it
 means daimon cannot remember something said thirty seconds ago.</p>
@@ -1412,26 +1499,42 @@ allowed to reword.</p>
 <p><strong>Correction and deletion.</strong> <code>resolve</code> closes
 a loop. <code>forget</code> is the strong form: the item is deleted from
 the live checkpoint, the checkpoint is rewritten and its receipt
-re-minted, and a <code>forgotten:&lt;sha256[:12]&gt;</code> event is
-appended carrying a content hash and never the text. <code>forget</code>
-then rebuilds the live index at once and deletes every other cache of
-the same store (<code>recall.refresh_store_caches</code>,
-<code>recall.py:801</code>). The build judges each row before it is
-inserted, so a forgotten value, or any row carrying a forgotten item's
-id, across every historical checkpoint, is never written to the index,
-and it runs with <code>secure_delete</code> on.</p>
+re-minted, and <code>forgotten:&lt;sha256[:12]&gt;</code> events are
+appended on the item id, its siblings and a key ref, carrying a content
+hash and never the text (section 2). <code>forget</code> then rebuilds
+the live index at once and deletes every other cache of the same store
+(<code>recall.refresh_store_caches</code>, <code>recall.py:812</code>).
+The build judges each row before it is inserted, so a forgotten value,
+or any row carrying a forgotten item's id, across every historical
+checkpoint, is never written to the index, and it runs with
+<code>secure_delete</code> on.</p>
 <p><strong>A re-extraction is refused at the write.</strong>
 <code>write_checkpoint</code> runs every checkpoint through
-<code>policy.admit_checkpoint</code> (<code>store.py:1374-1375</code>).
-Its <code>drop_forgotten</code> removes any item whose canonical text
-hashes into the forgotten set before the item is stamped, signed,
-indexed or mirrored (<code>policy.py:93-106</code>). The docstring names
-what that buys over a filter on the read: it is <em>"not merely a
-render-time withhold, which leaves the value sitting on disk"</em>.
+<code>policy.admit_checkpoint</code> (<code>store.py:1992</code>). Its
+<code>drop_forgotten</code> removes any item whose canonical text hashes
+into the forgotten set before the item is stamped, signed, indexed or
+mirrored (<code>policy.py:95-108</code>). The docstring names what that
+buys over a filter on the read: it is <em>"not merely a render-time
+withhold, which leaves the value sitting on disk"</em>.
 <code>test_forget_reassertion_e2e.py</code> asserts the forgotten
 sentence is absent from the live checkpoint file after a second session
 re-extracts it, beside a never-forgotten twin that must be present
-(<code>test_forget_reassertion_e2e.py:124-127</code>).</p>
+(<code>test_forget_reassertion_e2e.py:125-128</code>).</p>
+<p>The gate cannot be satisfied by an empty set.
+<code>write_checkpoint</code> reads the project's
+<code>events.jsonl</code> once, through <code>admission_gate</code>, for
+the forgotten keys and the ledger's health together
+(<code>store.py:1864-1884</code>). A ledger that is transient or
+unreadable refuses an admission or a human write with
+<code>jsonl.Refused</code> before a byte lands; a degraded one is
+proven, its good lines the set. A refused capture lands in
+<code>serialize.log</code> as <code>admission refused</code>, is held
+back without burning a retry, and <code>daimon heal</code> serializes it
+once the ledger reads again.
+<code>test_an_admission_is_refused_when_events_is_unreadable</code> pins
+the refusal (<code>test_write_checkpoint_posture.py:68</code>). Every
+other ledger write judges its health the same way, under the ledger
+lock, from a write column on the surface registry.</p>
 <p>That is a genuine rejected-value tombstone, and the key is canonical
 rather than literal. <code>normalize.canonical_text</code> folds NFKC,
 strips invisible characters, collapses whitespace, casefolds, and
@@ -1515,7 +1618,7 @@ in the Voyager sense. The packaged skill text also teaches
 <code>daimon trust propose --by agent</code>, and says
 <code>confirm</code>, <code>dismiss</code> and <code>release</code> are
 human-only: <em>"print the command, never run it"</em>
-(<code>skill_content.py:258-270</code>).</li>
+(<code>skill_content.py:263-275</code>).</li>
 </ul>
 <p><strong>The human's half has a surface.</strong>
 <code>daimon decide</code> lists what is waiting on a person: undecided
@@ -1527,7 +1630,7 @@ when some verb's write path REFUSES a non-human channel… No guard, no
 entry"</em>. That test is checkable, and it is why an agent's own
 proposal cannot promote itself onto the queue. A candidate quarantine
 enters through <code>_trust_rows</code>
-(<code>pending.py:249-273</code>) with its <code>confirm</code> and
+(<code>pending.py:283-310</code>) with its <code>confirm</code> and
 <code>dismiss</code> commands, and its headline is the reason, cut to
 one line through the shared display helper, never the quarantined
 value.</p>
@@ -1562,15 +1665,19 @@ check is unchanged.</p>
 items and typed supersession links inside one constrained JSON emission;
 it cannot write code-owned fields. An agent with a shell reaches two
 lifecycle verbs. Its <code>resolve --by agent</code> is a candidate
-until capture finds the quoted evidence in the transcript (section 2).
-And <code>forget</code> <em>"takes no --by and asks no
-confirmation"</em>: the one branch that demands a terminal is the one
-that would remove an active ruling
-(<code>cli/lifecycle.py:463-485</code>). The skill text calls
-<code>forget</code> human-only, and no code refuses an agent that runs
-it. Reverify, ratify, confirm and release do check for a terminal. The
-counterweight is that a wrong extraction persists until someone notices
-it in a briefing.</p>
+until capture finds the quoted evidence in the transcript (section
+2).</p>
+<p>The second, <code>forget</code>, <em>"takes no --by and asks no
+confirmation"</em> (<code>cli/lifecycle.py:401-417</code>). It demands a
+terminal in two branches only, to remove an active ruling and to forget
+a value a person quarantined, and refuses a teammate's quarantined value
+on every channel (<code>:564-583</code>). The skill text calls
+<code>forget</code> human-only, and no code refuses an agent that
+forgets an ordinary item. Reverify, ratify, confirm, release,
+<code>forget --resume</code> and <code>unforget</code> check for a
+terminal, and <code>unforget</code> has no agent channel at all, so an
+agent can delete but cannot undo a deletion. The counterweight is that a
+wrong extraction persists until someone notices it in a briefing.</p>
 <p>Porting to another host is cheap: the adapters are thin, stdlib-only
 scripts sharing <code>_daimon_hook_lib.py</code>, and the contract is
 "read the payload, spawn the CLI". The one non-portable piece is
@@ -1658,8 +1765,8 @@ the one place free-form event text reaches rendered output.</p>
 <p><strong>Concurrency.</strong> Every ledger append goes through
 <code>jsonl.append_lines</code>, one unbuffered write per batch, and
 every append and rewrite takes the bucket <code>flock</code> the pointer
-writes take, bounded and fail-open (<code>jsonl.py:116</code>,
-<code>:178-210</code>, <code>:430-469</code>). The event fold is
+writes take, bounded and fail-open (<code>jsonl.py:121</code>,
+<code>:208-252</code>, <code>:718-757</code>). The event fold is
 order-independent by construction. Team sync leans on git's own
 <code>index.lock</code> rather than custom locking, never force-pushes,
 and refuses to auto-repair a non-fast-forward — it warns and touches
@@ -1683,7 +1790,7 @@ unparseable line back verbatim. <code>daimon ledger repair</code>, on no
 MCP or skill surface, moves torn and unparseable lines into a declared
 <code>&lt;name&gt;.quarantined-lines</code> sidecar that forget also
 reaches, leaves parsed rows byte for byte, and re-runs forget
-(<code>ledger_repair.py:215-247</code>). <code>daimon status</code>
+(<code>ledger_repair.py:237-269</code>). <code>daimon status</code>
 counts the rows that still hold a forgotten value.</p>
 <p><strong>Uncertainty representation</strong> is the point of the
 system, and it does it in four registers: the trust class, the
@@ -1898,12 +2005,12 @@ epoch.</p>
 <code>delivered</code> because accepting never bumps the revision, so
 reusing that key <em>"would drop the accepted card with no error and no
 log line"</em> (<code>_RECIPIENT_OWED</code>,
-<code>owed_renderable</code>, <code>requests.py:2280</code>); and
+<code>owed_renderable</code>, <code>requests.py:2389</code>); and
 staleness deliberately does not reach it, since <em>"work does not
 expire by being ignored"</em>. The predicate deciding whether an ask
 still deserves ambient attention is one function shared by the panel and
 the live path (<code>_deserves_attention</code>,
-<code>requests.py:2252</code>), named once because <em>"the day the two
+<code>requests.py:2361</code>), named once because <em>"the day the two
 filters disagree, one of them is nudging about an ask the other already
 decided was not worth attention"</em>.</p>
 <p><strong>An accepted ask can be answered before it is
@@ -1911,10 +2018,10 @@ finished.</strong> <code>request reply</code> appends a
 <code>replied</code> event to the recipient's own
 <code>requests.jsonl</code>, and the fold enforces the rules itself: a
 non-empty note, a record in state <code>accepted</code>, and a row not
-written from the sender's bucket (<code>requests.py:1034</code>,
-<code>:1912</code>). An agent may reply, and the sender's panel labels
+written from the sender's bucket (<code>requests.py:1041</code>,
+<code>:1939</code>). An agent may reply, and the sender's panel labels
 it <code>Reply (agent, unverified)</code>
-(<code>requests.py:2506</code>). A reply moves no verdict, so the
+(<code>requests.py:2631</code>). A reply moves no verdict, so the
 human-only split above is untouched, and an older reader drops the event
 and nothing else. Before 0.52.0 the only verb carrying text after
 acceptance was <code>done</code>, so a long answer became a second
@@ -1923,7 +2030,7 @@ request in the opposite direction.</p>
 <code>daimon projects</code> prints. One match resolves and says so on
 stderr. Two or more refuse and list the slugs, because two checkouts
 with one directory basename share a name
-(<code>cli/request.py:464-469</code>).</p>
+(<code>cli/request.py:496-501</code>).</p>
 <p><strong>A ruling can stop an action, and the hook that does it is the
 first in the tree that can.</strong>
 <code>hook/daimon-pre-action.py</code> is registered on
@@ -1950,7 +2057,7 @@ path"</em>.</p>
 <p>Nothing here widens the model's reach. The check is a human's script
 on a human's ruling, and <code>ruling checks</code> shows what is armed,
 in what mode on each host, and whether it ever fired
-(<code>cli/ruling.py:568</code>).</p>
+(<code>cli/ruling.py:625</code>).</p>
 <p><strong>A foreign tombstone apply says what it could not
 reach.</strong> <code>store.apply_foreign_tombstones</code> walks the
 checkpoint shapes through <code>scrub_content_key</code> and nothing
@@ -1960,24 +2067,19 @@ the value; the interim fix names those surfaces from the registry in the
 output and leaves the issue open for the structural fix (#945,
 <code>test_foreign_apply_coverage.py</code>).</p>
 <p><strong>A teammate's tombstone binds the explanation surface
-too.</strong> <code>daimon why &lt;id&gt;</code> reads the union of the
-local ledger and <code>foreign_forgotten_content_keys()</code>, the same
-set recall's search and the team read already check
-(<code>inspector.py:447-451</code>). When the item's own content key is
-in it, the item text and the stored quote are withheld with one line
-saying so. The id and every axis carrying no text of its own still
-print, and <code>--json</code> sends <code>{"state": "withheld"}</code>
-in their place.</p>
-<p><code>why --source</code> counts the union as well, so a project
-whose only tombstone came from a teammate withholds the transcript
-window exactly as a local one does. The local web viewer honours the
-same withheld shape rather than rendering the object literally. The
-docstring states the reason: <code>why</code> <em>"binds an id straight
-to its stored text, so it is the one surface that could still hand a
-forgotten value back to anyone still holding that id"</em>. The union is
-computed once per call and reused by both the text withhold and the
-<code>--source</code> count, <em>"so the two never drift to different
-answers within one call"</em>.</p>
+too.</strong> <code>daimon why &lt;id&gt;</code> is composed from
+<code>view.lineage</code>, whose snapshot carries the machine-wide
+forgotten set — every local project's tombstones plus what teammates
+published — and the teammates' quarantined pairs
+(<code>inspector.py:450-470</code>). A withheld item answers through
+<code>_withheld_result</code>, which <em>"never receives an item, so no
+value, quote, tool context or transcript window can reach it"</em>. The
+id, the kind and the lifecycle still print, because <em>"a person has to
+see that a quarantine or a forget exists to act on it"</em>, and the
+evidence axes report from a textless projection the view took when it
+withheld the copy (<code>inspector.py:382-424</code>). <code>why</code>
+reads the project's own bucket only, so the host allowlist does not
+widen it.</p>
 <p><strong>Twelve item fields are code-owned and stripped from anything
 a model authors.</strong> <code>_CODE_OWNED_ITEM_KEYS</code> is
 <code>origin_session</code>, <code>origin_author</code>,
@@ -2005,8 +2107,8 @@ disk, because that would erase the code's real stamps and let a later
 of input and destructive on another, and the docstring says which.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>7,702 tests across 261 files, about twice the source in lines.
-Coverage tracks the design claims closely:
+<p>8,784 tests across 335 files, a little over twice the source in
+lines. Coverage tracks the design claims closely:
 <code>test_quote_verification.py</code>, <code>test_carry.py</code>,
 <code>test_briefing.py</code> (liveness semantics, including
 <code>test_id_bearing_item_never_fuzzy_closed</code>),
@@ -2029,22 +2131,22 @@ write boundary: <code>test_by_human_is_not_an_accepted_choice</code>,
 <p>The properties the channel table exists for are asserted one layer
 down, against <code>fold</code> itself, in
 <code>test_refutations.py</code>:
-<code>test_agent_cannot_self_ratify</code> (<code>:70</code>),
+<code>test_agent_cannot_self_ratify</code> (<code>:71</code>),
 <code>test_agent_overturn_proposal_does_not_disable_active_guard</code>
-(<code>:115</code>), and
+(<code>:116</code>), and
 <code>test_tampered_agent_ratification_flag_cannot_activate</code>
-(<code>:174</code>) — a hand-edited <code>ratified: True</code> on a
+(<code>:175</code>) — a hand-edited <code>ratified: True</code> on a
 <code>cli-agent</code> row folds to <code>candidate</code> anyway,
 because the fold re-derives authority from the channel rather than
 trusting the flag. That is the sharper placement: it holds for a row
 written by anything, not only for one the CLI would have refused to
 write. The same file covers the fold's determinism under reorder
 (<code>test_malformed_order_does_not_sink_the_ledger</code>,
-<code>:163</code>), identity
+<code>:164</code>), identity
 (<code>test_a_revision_cannot_take_over_another_records_identity</code>,
-<code>:489</code>), and guard precision
+<code>:490</code>), and guard precision
 (<code>test_guard_fires_on_exact_issue_anchor_not_broad_topic</code>,
-<code>:132</code> — a negative retrieval case in the strict sense,
+<code>:133</code> — a negative retrieval case in the strict sense,
 asserting that a broad topical query must <em>not</em> surface an active
 guard). <code>test_forget_refutations.py</code> and
 <code>test_refutation_privacy.py</code> bind the second store to the
@@ -2057,39 +2159,46 @@ must-not cases have controls.</strong>
 row set equals exactly the visible value and the other withheld one, and
 <code>test_no_withheld_byte_reaches_the_index_file</code> reads the
 database file's bytes for both withheld sentinels and the visible one
-(<code>test_recall_judged.py:93</code>, <code>:100</code>,
-<code>:117</code>).
+(<code>test_recall_judged.py:94</code>, <code>:101</code>,
+<code>:118</code>).
 <code>test_rebuild_quarantine_spares_a_sibling_of_the_same_kind</code>
 asserts a second decision in the same checkpoint is still returned
-(<code>test_recall.py:2136</code>), and
+(<code>test_recall.py:2139</code>), and
 <code>test_search_notices_a_quarantine_confirmed_after_the_index_was_built</code>
 asserts the hit before the confirmation and its absence after, with no
-manual rebuild (<code>:2180</code>).</p>
+manual rebuild (<code>:2183</code>).</p>
 <p>The MCP brief case and the Hermes hook case each assert the
 quarantined text is missing and an unrelated live item still renders
-(<code>test_mcp_server.py:520</code>, <code>test_hooks.py:685</code>). A
+(<code>test_mcp_server.py:530</code>, <code>test_hooks.py:688</code>). A
 candidate, a dismissed and a released quarantine are each asserted to
-withhold nothing (<code>test_recall.py:2080</code>, <code>:2095</code>).
+withhold nothing (<code>test_recall.py:2083</code>, <code>:2098</code>).
 Authority is tested at the library, the fold and the CLI:
 <code>test_agent_channel_cannot_confirm</code>
-(<code>test_trust.py:120</code>),
+(<code>test_trust.py:121</code>),
 <code>test_fold_ignores_a_lifecycle_event_from_a_non_human_channel</code>
-(<code>:439</code>), and
+(<code>:440</code>), and
 <code>test_cli_confirm_by_agent_is_refused</code> beside
 <code>test_cli_confirm_requires_tty</code>
 (<code>test_trust_cli.py:58</code>, <code>:66</code>).
 <code>test_quarantine_readpaths.py</code> builds the id divergence
 through the shipping writers and pins the accepted gap: a paraphrase
 that changes the canonical text is not withheld
-(<code>test_quarantine_readpaths.py:107</code>).
+(<code>test_quarantine_readpaths.py:108</code>).
 <code>test_forget_trust_ledger.py</code> drives <code>forget</code> and
 asserts the quarantine's prose is redacted, its record and latch kept,
 and an unrelated quarantine byte for byte unchanged.</p>
 <p>The read census in section 2 drives the id-addressed verbs,
-<code>forget</code>, the <code>daimon brief</code> command and a
-<code>topic</code> quarantine. A pinned leak is a recorded gap rather
-than a guard: the census proves the briefing hosts closed and
-<code>why</code> open.</p>
+<code>forget</code>, the <code>daimon brief</code> command, a
+<code>topic</code> quarantine and a teammate's published quarantine, and
+asserts that nothing leaks. Its exemptions are a person at a terminal
+reading a quarantine's evidence, each paired with an agent-channel run
+that must show nothing. The forget key row has its own must-not cases:
+<code>test_a_reopen_on_the_id_leaves_the_value_withheld</code> reopens
+the id and every sibling and asserts the key still stands
+(<code>test_forget_tombstones.py:144</code>), and
+<code>test_another_project_that_forgot_the_value_keeps_it_withheld</code>
+asserts an unforget in one project leaves the value withheld by another
+(<code>test_unforget.py:229</code>).</p>
 <p><strong>Two of these tests were found passing for the wrong reason,
 and the project recorded both as scars rather than fixing them
 quietly.</strong> Scar 0054 is the sharper one.
@@ -2111,7 +2220,7 @@ fails with the real code removed and the comment left in place. Scar
 unfiltered call.</p>
 <p>Both were exposed by mutation testing rather than by review reading,
 which is the same lesson one level up from the suite: a test that cannot
-be shown to fail is a claim nobody has checked, and 7,702 of them do not
+be shown to fail is a claim nobody has checked, and 8,784 of them do not
 change that for any individual one.</p>
 <p><strong>The lesson became a rule with discovery.</strong>
 <code>test_gate_controls.py</code> scans the package source for every
@@ -2459,10 +2568,14 @@ against it.</strong> A <code>Withheld</code> result with no text
 attribute cannot be printed by accident. A store seeded through the real
 writers with sentinel values, driven through every CLI leaf, MCP tool
 and route, finds the readers a feature's call-site list misses. Daimon's
-finds <code>why</code>, <code>blame</code> and <code>resolve</code>'s
-candidate list showing a quarantined value, and pins them in a leak list
-that may only shrink, so the gap is recorded rather than
-discovered.</li>
+census asserts zero leaks, and every surface that shows a value on
+purpose is declared, given a reason and paired with an agent-channel run
+that must show nothing.</li>
+<li><strong>Make a forget something a reopen cannot undo.</strong> A
+tombstone written only on the item id is lifted by any later event on
+that id. Daimon writes a second tombstone on a random ref nothing else
+addresses, so the lift is one named verb, and that verb needs a person
+at a terminal.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
@@ -2559,13 +2672,12 @@ CLI brief?</strong> File, branch and PR verdicts reach
 worldcheck enabled. An install that briefs through the MCP tool or the
 Hermes hook records none, and a dependency-version contradiction moves
 no rank on any host.</li>
-<li><strong>Will a quarantine reach the inspection verbs and
-teammates?</strong> The census pins <code>why</code>,
-<code>blame</code>, <code>resolve</code> and the ledger verbs as
-surfaces that show a quarantined value, and calls the set of surfaces
-outside the view shrink-only, <em>"an empty set is the goal"</em>, so
-the stopping point reads as a stage. Nothing publishes a quarantine to
-the team sidecar.</li>
+<li><strong>What stops a forged team quarantine?</strong> Sidecar write
+access is the trust boundary, as it is for tombstones.
+<code>team sync</code> warns when a published ledger changed under a git
+author other than its owner, and its own docstring calls that
+<em>"Hygiene, never proof"</em> (<code>teamsync.py:327</code>). The
+published row shape at this pin carries no signature.</li>
 <li><strong>Can a forget reach a value that lives only in a
 quarantine?</strong> <code>forget</code> picks its target from
 checkpoint items, so a value that appears only in a quarantine's reason
@@ -2608,8 +2720,13 @@ scrubbing</li>
 <ul>
 <li><code>plugin/daimon_briefing/view.py</code> — the read view:
 snapshot, <code>classify</code>, the typed <code>Withheld</code>, the
-projections, <code>read_scopes</code> and the index's
-<code>judge</code></li>
+projections, <code>lookup_many</code> and <code>lineage</code> for the
+id verbs, <code>masked</code> for every ledger prose printer,
+<code>read_scopes</code>, the machine-wide forgotten and
+teammate-quarantine sets, and the index's <code>judge</code></li>
+<li><code>plugin/daimon_briefing/index_locate.py</code> — a read-only,
+stdlib-only locator over the recall index for an exact id, which never
+rebuilds</li>
 <li><code>plugin/daimon_briefing/recall.py</code> — FTS5 index judged
 before insert and per hit, search, proactive suggest, the contradiction
 fold, the two-tier ordering both read paths share, and
@@ -2642,8 +2759,8 @@ deleter that keeps the verdict</li>
 authority table the refutation, relation and quarantine ledgers
 share</li>
 <li><code>plugin/daimon_briefing/inspector.py</code> —
-<code>daimon why</code>, the id-addressed receipt, which checks forget
-tombstones and not quarantines</li>
+<code>daimon why</code>, the id-addressed receipt, composed from
+<code>view.lineage</code> and reading no session file itself</li>
 <li><code>plugin/daimon_briefing/refutations.py</code> — the
 project-scoped negative-knowledge ledger, its channel-derived authority
 table and its lifecycle fold</li>
@@ -2672,10 +2789,15 @@ provenance receipts</li>
 <li><code>plugin/daimon_briefing/ledger.py</code> — serialize log,
 health classification, heal plan</li>
 <li><code>plugin/daimon_briefing/jsonl.py</code>,
-<code>ledger_repair.py</code> — the one append, split, health read and
-locked rewrite every ledger uses; <code>ledger repair</code>, its
-sidecar, and <code>scrub_forgotten_key</code>, the deleters forget and
-repair share</li>
+<code>ledger_repair.py</code> — the one append, split, health read,
+write posture and locked rewrite every ledger uses;
+<code>ledger repair</code> and its sidecar</li>
+<li><code>plugin/daimon_briefing/forget.py</code> — the forget run: the
+tombstone rows with their key ref, every registry step in phase order
+with its reach, and the lift <code>unforget</code> writes</li>
+<li><code>plugin/daimon_briefing/surfaces.py</code> — the registry of
+every file shape under <code>~/.daimon</code>, with its delete strategy,
+its forget steps and its read and write postures</li>
 </ul>
 <p><strong>Integration</strong></p>
 <ul>
@@ -2691,9 +2813,8 @@ family, among them <code>lifecycle.py</code> (<code>resolve</code>,
 <code>ledger_cmd.py</code> and <code>history.py</code>
 (<code>diff</code>, <code>blame</code>)</li>
 <li><code>plugin/daimon_ui/reader.py</code>, <code>server.py</code> —
-the local viewer, reading through the view except for
-<code>/api/why</code>, which calls
-<code>inspector.inspect_item</code></li>
+the local viewer, reading through the view; <code>/api/why</code> calls
+<code>inspector.inspect_item</code>, which composes from it</li>
 <li><code>hook/daimon-pre-action.py</code> — the <code>PreToolUse</code>
 hook on <code>Bash</code>, the one hook that can deny an action</li>
 <li><code>plugin/daimon_briefing/render.py</code> — the single output
@@ -2702,13 +2823,14 @@ seam every lifecycle, report and ledger verb routes through</li>
 <p><strong>Team and extras</strong></p>
 <ul>
 <li><code>plugin/daimon_briefing/teamsync.py</code>,
-<code>teamproject.py</code> — git sidecar mirror</li>
+<code>teamproject.py</code> — git sidecar mirror, and the published
+tombstone and quarantine ledgers per author</li>
 <li><code>plugin/daimon_briefing/harvest.py</code> — zero-LLM
 scar-candidate drafting</li>
 </ul>
 <p><strong>Tests and evals</strong></p>
 <ul>
-<li><code>plugin/tests/</code> — 7,702 tests across 261 files, including
+<li><code>plugin/tests/</code> — 8,784 tests across 335 files, including
 <code>test_read_sentinel.py</code>, the read census</li>
 <li><code>benchmark/</code> — LongMemEval-S harness, reporting policy,
 committed results</li>
@@ -2724,65 +2846,79 @@ shipped feature</li>
 </ul>
 <h2 id="appendix-recorded-searches">Appendix: Recorded Searches</h2>
 <p>Run at the repository root at the pinned revision with
-<code>/usr/bin/grep</code>. Each absence is paired with a control that
-returns hits.</p>
+<code>/usr/bin/grep</code>, or with <code>git grep</code> where a search
+spans the whole tree. Each absence is paired with a control that returns
+hits.</p>
 <ul>
 <li><strong>No validity interval on an item.</strong>
 <code>grep -rn -E 'valid_from|valid_to|valid_until|event_time|occurred_at|as_of' plugin/daimon_briefing</code>
 returns nothing. Control:
 <code>grep -rn invalidated_by plugin/daimon_briefing</code> returns 22
-lines.</li>
+lines. Over the whole tree,
+<code>git grep -n -i -E 'valid_from|valid_to|valid_until|validity interval|bi-temporal|event_time|occurred_at' -- . ':!website'</code>
+finds the deferred design named in docs, research notes and two
+comments, a test name containing <code>valid_toml</code>, and one
+validity-interval engine,
+<code>research/experiments/track-c/pipeline/run.py</code>, an offline
+harness over a synthetic fixture.
+<code>git grep -l -E 'track.c|pipeline\.run' -- plugin/daimon_briefing</code>
+returns nothing.</li>
 <li><strong>No embedding in the package.</strong>
 <code>grep -rn -i -E 'embedding|faiss|hnsw' plugin/daimon_briefing</code>
 returns nothing, against the same control.</li>
-<li><strong><code>daimon why</code> does not consult the quarantine
-ledger or the view.</strong>
-<code>grep -n -E 'quarantin|active_value_keys|import.*\btrust\b|view\.' plugin/daimon_briefing/inspector.py</code>
-returns nothing. Control: <code>grep -c forgotten_content_keys</code> on
-the same file returns 6.</li>
-<li><strong><code>diff</code> and <code>blame</code> do not consult
-it.</strong>
-<code>grep -n -E 'quarantin|active_value_keys|trust_lib|view\.' plugin/daimon_briefing/cli/history.py</code>
-returns nothing. Control: <code>grep -c forgotten</code> on the same
-file returns 11.</li>
+<li><strong>No id verb reads a session file itself.</strong>
+<code>grep -n -E 'read_checkpoint|read_latest' plugin/daimon_briefing/inspector.py plugin/daimon_briefing/cli/history.py</code>
+returns nothing. Control: <code>grep -c 'view\.'</code> on the same two
+files returns 6 and 18.</li>
+<li><strong>The read census carries no leak allowlist.</strong>
+<code>grep -c KNOWN_LEAKS plugin/tests/test_read_sentinel.py</code>
+returns 0. Control: <code>grep -c -E 'KEY_EXEMPT|HUMAN_CHANNEL'</code>
+on the same file returns 13.</li>
+<li><strong>A published quarantine row carries no text.</strong>
+<code>grep -n -A1 '^_QUARANTINE_FIELDS' plugin/daimon_briefing/store.py</code>
+lists <code>version</code>, <code>ts</code>, <code>order</code>,
+<code>event_id</code>, <code>quarantine_id</code>, <code>kind</code>,
+<code>value_key</code>, <code>state</code> and <code>author</code>, and
+<code>_publishable</code> keeps those keys alone
+(<code>store.py:1113-1127</code>).</li>
 <li><strong><code>trust.active_value_keys</code> has no caller.</strong>
 <code>grep -rn 'active_value_keys(' --include='*.py' plugin/daimon_briefing plugin/daimon_ui hook</code>
-returns its definition alone, <code>trust.py:363</code>. Control:
-<code>grep -n redact_content_key plugin/daimon_briefing/ledger_repair.py</code>
-returns the forget deleter's call at <code>:135</code>.</li>
-<li><strong>No forgotten sentinel is on the census's leak list.</strong>
-<code>sed -n '/^KNOWN_LEAKS: set = {/,/^}/p' plugin/tests/test_read_sentinel.py | grep -c -E '"(decision|belief|uncertainty)"'</code>
-returns 0; the same count for the quarantined kinds,
-<code>topic|question|contradiction</code>, returns 34.</li>
-<li><strong>The team sidecar publishes nothing from the quarantine
-ledger.</strong>
-<code>grep -n -E 'trust\.jsonl|\btrust\.' plugin/daimon_briefing/teamsync.py plugin/daimon_briefing/teamproject.py</code>
-returns nothing. Control:
-<code>grep -c -i forgot plugin/daimon_briefing/teamsync.py</code>
-returns 1.</li>
+returns its definition alone, <code>trust.py:372</code>. Control:
+<code>grep -n redact_content_key plugin/daimon_briefing/surfaces.py</code>
+returns two lines, the trust row's comment and its forget step at
+<code>:491</code>.</li>
 <li><strong><code>ledger repair</code> is on no MCP or skill
 surface.</strong>
 <code>grep -rn -E 'ledger repair|ledger_repair|trust repair' plugin/daimon_briefing/mcp_tools.py plugin/daimon_briefing/mcp_server.py plugin/daimon_briefing/skill_content.py skills</code>
 returns nothing. Control:
 <code>grep -c -E 'daimon (resolve|forget)' plugin/daimon_briefing/skill_content.py</code>
 returns 6.</li>
-<li><strong><code>forget</code> checks for a terminal only in the
-active-ruling branch.</strong>
-<code>grep -n isatty plugin/daimon_briefing/cli/lifecycle.py</code>
-returns two lines, <code>:40</code> in <code>_human_cli_channel</code>
-and <code>:471</code> in <code>_cmd_forget</code>.
-<code>grep -n '_human_cli_channel(' plugin/daimon_briefing/cli/*.py</code>
-shows calls for <code>resolve</code> and <code>reverify</code>
-only.</li>
+<li><strong>Where the lifecycle verbs check for a terminal.</strong>
+<code>grep -n -E 'isatty|_human_cli_channel\(' plugin/daimon_briefing/cli/lifecycle.py</code>
+returns the definition at <code>:40</code> and its check at
+<code>:42</code>, then <code>resolve</code> (<code>:123</code>),
+<code>forget --resume</code> (<code>:294</code>), the active-ruling
+branch of <code>forget</code> (<code>:407</code>), the
+quarantined-target branch of <code>forget</code> (<code>:564</code>),
+<code>unforget</code> (<code>:823</code>) and <code>reverify</code>
+(<code>:1025</code>). <code>grep -n '"--by"'</code> on the same file
+returns one line, <code>:1467</code>, the <code>resolve</code>
+parser's.</li>
 <li><strong>The refutation guard has one caller.</strong>
 <code>grep -rn -E 'refutations\.(guard|search)\(' --include='*.py' plugin/daimon_briefing plugin/daimon_ui hook</code>
 returns two lines, both in <code>cli/refute.py</code>.</li>
-<li><strong>Recall, carry, the briefing and the view read nothing from
-the relation ledger.</strong>
+<li><strong>Recall, carry, the briefing and the read view's withholding
+read nothing from the relation ledger.</strong>
 <code>grep -rln -E '\brelations\.' --include='*.py' plugin/daimon_briefing plugin/daimon_ui</code>
 lists nine files, and <code>recall.py</code>, <code>carry.py</code>,
-<code>briefing.py</code> and <code>view.py</code> are not among
-them.</li>
+<code>briefing.py</code> and <code>view.py</code> are not among them.
+<code>view.py</code> imports the module as <code>relation_ledger</code>,
+and
+<code>grep -n 'relation_ledger\.' plugin/daimon_briefing/view.py</code>
+returns six lines, all inside <code>view.relations</code>
+(<code>view.py:2068-2104</code>), the projection behind
+<code>relations list</code>, <code>relations show</code> and
+<code>/api/relations</code>.</li>
 <li><strong>Nothing in the product's suite or its workflows references
 the replay harness.</strong>
 <code>grep -rln -E 'replay_ab|recall-replay-ab' plugin/tests .github</code>
@@ -2790,6 +2926,22 @@ returns nothing. Control: the same pattern over <code>research/</code>
 lists <code>recall-replay-ab/verify.py</code> among its hits.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-13</strong> — <a
+href="https://github.com/Daily-Nerd/daimon/commit/f05d6340c36231f99a00b8c4410345456a416938"><code class="commit-id" title="f05d6340c36231f99a00b8c4410345456a416938">f05d6340…</code></a>
+— 32 commits on, release 0.55.0. Screened again: three auto-run
+surfaces, three build-time paths, one unpinned manifest, two files in
+cooldown, the plugin manifests changed only in version; nothing
+installed, built or run. All six marks held, and <code>bitemporal</code>
+is absent across the whole tree. <code>why</code>, <code>blame</code>,
+<code>diff</code>, the binding verbs and every ledger printer read
+through the view, and the census asserts that no surface leaks (<a
+href="#2-mental-model">section 2</a>). An active quarantine reaches
+teammates as a hash-only row. A forget stands on a key ref no reopen
+reaches, and only <code>unforget</code> at a terminal lifts it. Until
+this release an unreadable events ledger read as no tombstones at the
+checkpoint write; it refuses the write (<a
+href="#7-write-mechanics">section 7</a>). No published claim was wrong
+at the previous pin.</p>
 <p><strong>2026-10-08</strong> — <a
 href="https://github.com/Daily-Nerd/daimon/commit/fb1ccd03e42f735568fd1477cea22c71af8956a6"><code class="commit-id" title="fb1ccd03e42f735568fd1477cea22c71af8956a6">fb1ccd03…</code></a>
 — 32 commits on, through releases 0.53.0 and 0.54.0. Screened again:
@@ -2872,8 +3024,8 @@ active rulings a project below it inherits at brief time. It is a read,
 never a write — two guards refuse a child that would retire, ratify,
 revise or found into a layer's id and send the human there with
 <code>--project</code> instead — and <code>tenant_scoped()</code>
-returns no layers at all. Sections 2, 5 and the matrix carry it. The
-consequence to weigh is on the check contract:
+returns no layers at all. Sections 2, 5 and the matrix carry it.</p>
+<p>The consequence to weigh is on the check contract:
 <code>checks.sync_layers</code> re-arms a layer's checks on a machine
 that never synced the layer's own project, so one human ratification at
 <code>~/work</code> places a shell-blocking <code>PreToolUse</code>
@@ -2883,7 +3035,7 @@ which is why the risks field says so.</p>
 <p>Two mechanisms that bear on marks got stronger. <code>ratify</code>
 on an already-active ruling with a pending agent revision had appended a
 row the fold read as a re-stamp — the proposal stayed pending, its check
-was never armed, and the flow reported success and did nothing; the fix
+was never armed, and the flow reported success and did nothing. The fix
 requires a human channel <strong>in the fold</strong> rather than only
 at the writer, <em>"because the fold is the authority for a row that
 reaches the ledger another way"</em> (#1097). And
@@ -2921,16 +3073,16 @@ commit, the ranges checked at both ends.</p>
 <code>verb=open</code>, so an agent may open a <code>kind=info</code>
 ask only under a ruling a person ratified in the sending project's own
 ledger, re-derived in the fold rather than trusted from the stamp
-(#1085); a <code>status</code> field on every MCP
+(#1085). A <code>status</code> field on every MCP
 <code>daimon_recall</code> row, sharing one parse with the CLI and the
 hook line because <em>"a pull and an injection should never describe one
-item two ways"</em> (#1080); <code>rank_score</code> and an honest-empty
+item two ways"</em> (#1080). <code>rank_score</code> and an honest-empty
 row with <code>best_refused</code> on all three recall surfaces, closing
-a delivery log that could see admissions and never refusals (#1075);
+a delivery log that could see admissions and never refusals (#1075).
 <code>decide</code> amendment rows carrying the target's text, its
 claimed state transition and the evidence role, with batch
 ratify-or-reject atomic across ids and no <code>confirm all</code> line
-on purpose (#1088); and a Gemini host page that replaces a closed
+on purpose (#1088). And a Gemini host page that replaces a closed
 upstream blocker with the honest gap, an unverified transcript parse
 (#1081).</p>
 <p>Counts: 6,500 <code>def test</code> across 186 files, ~106,700 test
@@ -2944,24 +3096,26 @@ asks for a state that withholds a memory from being treated as true.
 Daimon has the states and has decided, explicitly and with issue
 numbers, that they will not withhold: <em>"Neither is a filter. #112's
 rule holds for both: an overturned item is still evidence… so it ranks
-down and renders flagged rather than disappearing."</em> Supersession
-and contradiction are two independent multiplicative demotions — 0.7 for
-a link, 0.5 for a recorded resolution, 0.4 for contradiction evidence —
-stacked because the axes are independent, and the recall docstring
-repeats the rule for the auto-inject path: <em>"Superseded items are
-INCLUDED, ranked down and flagged… it still never hides a result."</em>
-Even the candidate fetch window is annotated as <em>"not an admission
-gate"</em>. That is the ranking half of the distinction this mark exists
-to draw, held deliberately and argued for. The record's other clause was
-the <code>verbatim</code> versus <code>inferred</code> field, which
-<code>verify_quotes</code> checks against the transcript — a write-time
-provenance genre recording how a line was obtained, not a judgement that
-can be revised, and the atlas does not award the mark for those. The
-state machines that do gate — <code>relations.py</code>'s candidate /
-confirmed / rejected / retracted set and the amendment guards that
-refuse a transition unless the current state is candidate or verified —
-are write-path transition rules, not admission predicates on a read.
-Everything else stands: <code>tombstone</code>,
+down and renders flagged rather than disappearing."</em></p>
+<p>Supersession and contradiction are two independent multiplicative
+demotions — 0.7 for a link, 0.5 for a recorded resolution, 0.4 for
+contradiction evidence — stacked because the axes are independent. The
+recall docstring repeats the rule for the auto-inject path:
+<em>"Superseded items are INCLUDED, ranked down and flagged… it still
+never hides a result."</em> Even the candidate fetch window is annotated
+as <em>"not an admission gate"</em>. That is the ranking half of the
+distinction this mark exists to draw, held deliberately and argued
+for.</p>
+<p>The record's other clause was the <code>verbatim</code> versus
+<code>inferred</code> field, which <code>verify_quotes</code> checks
+against the transcript — a write-time provenance genre recording how a
+line was obtained, not a judgement that can be revised, and the atlas
+does not award the mark for those. The state machines that do gate —
+<code>relations.py</code>'s candidate / confirmed / rejected / retracted
+set and the amendment guards that refuse a transition unless the current
+state is candidate or verified — are write-path transition rules, not
+admission predicates on a read.</p>
+<p>Everything else stands: <code>tombstone</code>,
 <code>scope_enforced</code>, <code>audit_log</code>,
 <code>human_review</code> and <code>negative_eval</code> are untouched,
 and the flagged-not-hidden design remains one of the clearer positions
@@ -2974,12 +3128,13 @@ re-screened at the new pin. All six marks hold, and the
 <code>human_review</code> record is rewritten because it undersold the
 mechanism. It said authority is derived <em>"from the observed write
 channel rather than a caller flag"</em>, which is true and is not the
-whole of it: <code>_refute_channel</code> also establishes that the only
+whole of it. <code>_refute_channel</code> also establishes that the only
 flag available, <code>--by agent</code>, declares the
 <strong>narrower</strong> authority, so a caller can lower what it may
 do and never raise it — the inverse of the <code>confirm=true</code> and
 <code>override_operator</code> shapes this atlas has had to withdraw the
-same mark for elsewhere. The human path is the absence of that flag plus
+same mark for elsewhere.</p>
+<p>The human path is the absence of that flag plus
 <code>sys.stdin.isatty()</code>, and <code>ui</code> and
 <code>signed</code> are in-process-only for a reason the docstring gives
 outright: <em>"a channel an agent can reach by shelling out is the
@@ -3012,12 +3167,12 @@ still absent, and the grep for <code>valid_from</code>,
 <code>valid_to</code>, <code>valid_until</code>,
 <code>event_time</code>, <code>occurred_at</code> and <code>as_of</code>
 over the package still returns nothing.</p>
-<p>The new mechanism is the check on a ruling (#943 and its slices): a
+<p>The new mechanism is the check on a ruling (#943 and its slices). A
 human-ratified ruling may carry a script that a <code>PreToolUse</code>
 hook on <code>Bash</code> runs before a matching shell action, with an
-intent of enforce, warn or record-only, a hash pinned at ratify,
-host-local paths refused in the body, a manifest and bodies under
-<code>~/.daimon/checks/</code> that every ledger writer re-syncs
+intent of enforce, warn or record-only. Around it sit a hash pinned at
+ratify, host-local paths refused in the body, a manifest and bodies
+under <code>~/.daimon/checks/</code> that every ledger writer re-syncs
 idempotently, a stdlib-only runtime and host profile table mirrored into
 the hook directories, a five-second fail-open budget, and a firing log
 capped in place. It is the first daimon hook that can fail a host
@@ -3031,10 +3186,10 @@ same way; section 6 now says so. Also in range: a receipt evidence kind
 on refutations (#930), the foreign tombstone apply naming the surfaces
 it cannot reach (#945), a gate-control test that discovers every
 <code>_*GATE*</code> constant and demands a control on each side (#947),
-gate margins in the render (#960), a one-shot bucket migration across
-the 0.42.0 path-resolution change (#963), and a README section that
-cites this atlas's reading of the project, strong half and weak half
-together (#910).</p>
+gate margins in the render (#960). Also: a one-shot bucket migration
+across the 0.42.0 path-resolution change (#963), and a README section
+that cites this atlas's reading of the project, strong half and weak
+half together (#910).</p>
 <p>Counts: 5,247 <code>def test</code> across 158 files, ~84,300 test
 lines against ~38,600 source lines excluding the mirrored check modules;
 74 numbered scars. Five explicit line citations had drifted and were
@@ -3063,25 +3218,28 @@ contradiction evidence with a timestamp rather than an interval.</p>
 <code>read_latest(fallback=)</code> was deleted for a <code>Route</code>
 and an <code>Admit</code> enum, both required, after four defects
 shipped from the flag's default, one of them a foreign briefing injected
-into a project's first session; a forty-cell contract table and a
+into a project's first session. A forty-cell contract table and a
 manifest test pin the replacement. The recall index's
 <code>invalidated_by</code> slot, a placeholder at the previous pin, is
 populated from worldcheck receipt contradictions and demotes in both
 <code>search</code> and <code>suggest</code>, with a conditional cure
-row and a <code>cured_by</code> column so a cleared mark is not erased.
-The ungated arm the previous open question called unbuilt was built and
-run: 726 flips across 54 questions, every ranking identical, a result
-the pre-registered prediction derived from the <code>ORDER BY</code>
-clause before the run. <code>stated_by</code> became the tenth
-code-owned field, derived by code from the host's per-message speaker
-under a unanimity rule. And a <code>quote_provenance.stitching</code>
-verdict records, without enforcing, whether a verified quote needed more
-than one message or one role. Around them: a declarative field table
-that generates the validator and a published schema document, an opt-in
-live delivery of cross-project asks at the turn boundary with an owed
-lane and a third-bucket verdict join, a <code>daimon decide</code> queue
-whose admission rule is structural, and a host-set tenant-scoped mode
-that refuses caller-chosen slugs without adding isolation.</p>
+row and a <code>cured_by</code> column so a cleared mark is not
+erased.</p>
+<p>The ungated arm the previous open question called unbuilt was built
+and run: 726 flips across 54 questions, every ranking identical, a
+result the pre-registered prediction derived from the
+<code>ORDER BY</code> clause before the run. <code>stated_by</code>
+became the tenth code-owned field, derived by code from the host's
+per-message speaker under a unanimity rule. And a
+<code>quote_provenance.stitching</code> verdict records, without
+enforcing, whether a verified quote needed more than one message or one
+role.</p>
+<p>Around them: a declarative field table that generates the validator
+and a published schema document, an opt-in live delivery of
+cross-project asks at the turn boundary with an owed lane and a
+third-bucket verdict join, a <code>daimon decide</code> queue whose
+admission rule is structural, and a host-set tenant-scoped mode that
+refuses caller-chosen slugs without adding isolation.</p>
 <p>Six claims were wrong at the previous pin rather than overtaken by
 it, and the three that hurt were absences. Section 9 said no test
 asserted the lockfile-before-manifest precedence;
@@ -3184,9 +3342,9 @@ model rather than retrying blind. 3,929 tests across 135 files; 58
 scars, two more than at the previous pin.</p>
 <p>The research record is worth one line because it is a published null.
 The frozen merge-fidelity instrument was re-run on 2026-08-26 and
-<strong>joined none of the 241 sessions</strong>, with every exclusion
-counted against the pre-registration, the stamp formula verified
-unchanged so the zero is population structure rather than instrument
+<strong>joined none of the 241 sessions</strong>. Every exclusion was
+counted against the pre-registration, and the stamp formula was verified
+unchanged, so the zero is population structure rather than instrument
 drift, and — the part most projects skip — <em>"no rate claim, decision
 rule not evaluated."</em> The re-run exists because an earlier status
 had predicted the joinable population would accrue forward, and it did
@@ -3216,11 +3374,11 @@ single <code>_guard_ruling_cap</code> chokepoint bound the shape.</p>
 ledger in shadow mode whose every writable string is a hash-derived id
 or a closed-set value so no field can carry item text, and which has no
 mechanical channel because Phase 1 established that no evidence rail
-qualified for automatic confirmation; and <code>amendments.py</code>,
-whose header argues against reusing <code>events.jsonl</code> by naming
-three of that store's own weaknesses — a caller-declared
-<code>source</code> no write path attests, a latest-wins fold, and a
-forget that never removes a row.</p>
+qualified for automatic confirmation. The other is
+<code>amendments.py</code>, whose header argues against reusing
+<code>events.jsonl</code> by naming three of that store's own weaknesses
+— a caller-declared <code>source</code> no write path attests, a
+latest-wins fold, and a forget that never removes a row.</p>
 <p><code>cli.py</code> is now a package of subcommand family modules,
 and every lifecycle, report and ledger verb routes through one
 <code>render.py</code> seam.</p>
@@ -3250,14 +3408,15 @@ execution paths, 1 unpinned surface, and
 inside the seven-day cooldown; nothing was built or run. No mark moved —
 six of seven, <code>bitemporal</code> still absent — and
 <code>stack_source</code> was promoted from <code>seeded</code> to
-<code>reviewed</code> after checking both lists against the tree. The
-material change is a second store: <code>refutations.py</code> and a
-<code>refutations.jsonl</code> per project, holding approaches that lost
-under cited evidence, with a candidate/active/overturned fold whose
-authority is read off the observed write channel rather than a
-caller-set flag. Two published claims were wrong, and both were wrong at
-the previous pin rather than overtaken by it. <code>worldcheck</code>
-covers <strong>five</strong> claim classes, not four:
+<code>reviewed</code> after checking both lists against the tree.</p>
+<p>The material change is a second store: <code>refutations.py</code>
+and a <code>refutations.jsonl</code> per project, holding approaches
+that lost under cited evidence, with a candidate/active/overturned fold
+whose authority is read off the observed write channel rather than a
+caller-set flag.</p>
+<p>Two published claims were wrong, and both were wrong at the previous
+pin rather than overtaken by it. <code>worldcheck</code> covers
+<strong>five</strong> claim classes, not four:
 <code>receipt-validity</code> is collected in its own pass from the
 item's <code>origin_session</code> stamp rather than from its text, and
 <code>worldcheck.py</code> is byte-identical to the previous pin, so the
@@ -3266,12 +3425,12 @@ citations pointed at unrelated lines — <code>store.py:1083</code> was
 <code>try:</code>, <code>store.py:1124</code> was blank,
 <code>cli.py:987</code> was a call to <code>carry._generic_terms</code>
 — apparently carried forward from a pin several readings old; every one
-has been re-resolved against this commit. Elsewhere the deletion
-contract absorbed the new store and two of its own writers:
-<code>forget</code> reaches every subject a refutation has ever carried
-rather than only the folded one, and the quote-downgrade log lines
-record a content key instead of the item's text, closing a plaintext
-residue in a shape the surface registry had already declared
+has been re-resolved against this commit.</p>
+<p>Elsewhere the deletion contract absorbed the new store and two of its
+own writers: <code>forget</code> reaches every subject a refutation has
+ever carried rather than only the folded one, and the quote-downgrade
+log lines record a content key instead of the item's text, closing a
+plaintext residue in a shape the surface registry had already declared
 <code>exempt-no-plaintext</code>.</p>
 <p><strong>2026-08-07</strong> — <a
 href="https://github.com/Daily-Nerd/daimon/commit/4222243e40352691b957d6e3242b5aed25e8c851"><code class="commit-id" title="4222243e40352691b957d6e3242b5aed25e8c851">4222243e…</code></a>
@@ -3280,16 +3439,17 @@ landed. Screened first: 0 auto-run surfaces, 2 build-time execution
 paths, 1 unpinned surface, and <code>plugin/pyproject.toml</code> and
 <code>plugin/uv.lock</code> both inside the seven-day cooldown; nothing
 was built or run. No mark moved — six of seven, <code>bitemporal</code>
-still absent — and the mechanisms behind two of them grew materially.
-<code>surfaces.py</code> now declares every file shape written under
+still absent — and the mechanisms behind two of them grew
+materially.</p>
+<p><code>surfaces.py</code> now declares every file shape written under
 <code>~/.daimon</code> with its delete strategy, and a guard asserts
 every observed write shape is declared with a sensitivity twin against
 an empty registry, so a new store cannot ship without stating how
 deletion reaches it. <code>daimon audit privacy</code> adds a read-only
 residue audit with a three-valued exit code whose third value exists so
-that <em>"could not check" must never look like "all clean"</em>.
-<code>forget</code> now reaches quote, scene, links and topic fields and
-redacts the event ledger; the serializer crash log and the Windsurf
+that <em>"could not check" must never look like "all clean"</em>.</p>
+<p><code>forget</code> now reaches quote, scene, links and topic fields
+and redacts the event ledger; the serializer crash log and the Windsurf
 adapter's own transcript store were brought inside the deletion
 contract; and a forget in team mode publishes a hash-only
 <code>{ts, key, author}</code> row so teammates suppress the value by
