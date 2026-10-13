@@ -14577,6 +14577,46 @@ down before the memory exists. Screened before reading: no auto-run
 surface or build-time execution point, one <code>AGENTS.md</code> read
 as data, and <code>mix.lock</code> is not a file the screen parses;
 nothing was installed or run.</li>
+<li><strong><code>hydra-db/hydradb</code> was examined and has no
+report: it is a graph database on object storage, built for a memory
+workload whose application is not in the tree.</strong> AGPL-3.0 with no
+additional terms, read at <a
+href="https://github.com/hydra-db/hydradb/commit/722f32c80a7f8ce1867a26f67c1c02736fef461d"><code class="commit-id" title="722f32c80a7f8ce1867a26f67c1c02736fef461d">722f32c8…</code></a>,
+the head of <code>main</code> on 14 October 2026: 54 commits by 13
+authors since 11 August 2026, renamed from Turbolay in pull request 56,
+about 152,000 lines of Rust in 153 files with 1,007 test attributes, not
+run. It runs openCypher over SlateDB on S3-compatible storage, with
+GraphBLAS traversal, a Neo4j-compatible Bolt endpoint and an HTTPS query
+API; query nodes and indexers hold only disposable cache, and
+object-store leases pick one writer per cell. Nothing in it defines a
+memory unit, extracts, ranks for recall or embeds:
+<code>git grep -n -i -E 'embedding|cosine|knn|hnsw' -- src crates ':!crates/cypher-parser-antlr/grammar'</code>
+returns nothing, and the vector and full-text <code>SEARCH</code>
+clauses exist only in the vendored Cypher 25 grammar. The workload shows
+through anyway. The tests, and an importer from FalkorDB
+(<code>examples/falkor_import.rs</code>), write <code>Entity</code>
+nodes joined by <code>RELATES</code> edges carrying
+<code>relationship_id</code>, <code>chunk_id</code>,
+<code>valid_from</code>, <code>superseded_by</code> and
+<code>valid_to</code>, scoped by <code>tenant_id</code> and
+<code>sub_tenant_id</code>
+(<code>src/client/bolt/tests.rs:990-1001</code>), and telemetry promotes
+both tenancy keys to every log line, with a mailbox folder as the
+example sub-tenant (<code>crates/telemetry/src/layers.rs:310-311</code>,
+<code>:809-821</code>). The engine property that reaches such a memory
+is a guarded bulk merge: a <code>__hydradb_update_if_newer_by</code>
+marker applies an update only when its timestamp is strictly newer, and
+a <code>__hydradb_create_only_</code> prefix keeps a property such as
+<code>valid_from</code> from being overwritten after creation
+(<code>src/query/opencypher.rs:22-40</code>, <code>:6340-6370</code>;
+<code>architecture.md:415-417</code>), so a delayed replay cannot move a
+fact's validity start or its metadata backward. Supersession, validity
+and tenancy semantics belong to the caller. Screened before reading,
+from a full clone: no auto-run surface, three build-time execution
+points (<code>build.rs</code> at the root and in two crates), nothing
+inside the cooldown and no unpinned surface, with <code>AGENTS.md</code>
+and <code>CLAUDE.md</code> read as data; nothing was installed, built or
+run.</li>
 <li><strong><code>FreshHillyer/xiaoO</code> was examined and has no
 report: its long-term memory is an unpublished server behind an MCP
 client, and the memory crate in the tree has no caller.</strong> At <a
