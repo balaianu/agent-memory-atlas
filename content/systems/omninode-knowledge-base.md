@@ -4,11 +4,11 @@ eyebrow: "Every claim needs evidence, and none has any"
 description: "A decision ledger with a typed schema, a per-type status enum and eight CI-enforced checks — whose own rule that an accepted claim carries an evidence artifact has zero instances, and whose ledger contains two records with the same id."
 root: ../..
 page_kind: system
-source_name: "OmniNode-ai/knowledge-base"
-source_url: https://github.com/OmniNode-ai/knowledge-base
-archive_name: "OmniNode-ai--knowledge-base"
+source_name: "OmniNode-ai/knowledge_base"
+source_url: https://github.com/OmniNode-ai/knowledge_base
+archive_name: "OmniNode-ai--knowledge_base"
 revision: cb724907605ed9a1c6ba1b574168153080a0d2a7
-revision_url: https://github.com/OmniNode-ai/knowledge-base/commit/cb724907605ed9a1c6ba1b574168153080a0d2a7
+revision_url: https://github.com/OmniNode-ai/knowledge_base/commit/cb724907605ed9a1c6ba1b574168153080a0d2a7
 analyzed_at: 2026-09-20
 capabilities: ""
 capability_evidence:
@@ -30,6 +30,8 @@ matrix:
 ---
 
 ## 1. Executive Summary
+
+The repository was renamed from `OmniNode-ai/knowledge-base` to `OmniNode-ai/knowledge_base`; the old address redirects there, and the pinned commit resolves at the new one.
 
 This is OmniNode's public architectural provenance record: 89 files, MIT,
 holding decision records, doctrine, pivots, deep dives and an architecture
@@ -406,6 +408,8 @@ Checked against the repository tree at the pinned revision, without a clone.
 
 
 ## History
+
+**2026-10-14** — the repository was renamed to `OmniNode-ai/knowledge_base`, and the old address redirects to it. `source_name`, `source_url`, `revision_url` and `archive_name` follow the rename, the pin [`cb724907605ed9a1c6ba1b574168153080a0d2a7`](https://github.com/OmniNode-ai/knowledge_base/commit/cb724907605ed9a1c6ba1b574168153080a0d2a7) is unchanged, the archive fork is renamed to `OmniNode-ai--knowledge_base`, and older entries keep their original links, which redirect.
 
 **2026-09-20** — same pin, one correction, from a corpus-wide verification of stated licences. Section 1 called the repository Apache-2.0. At this revision `LICENSE` opens `MIT License` and `pyproject.toml` declares `license = {text = "MIT"}`; at the earlier pin, `37f76b1382`, the same file was the Apache License. The project relicensed between the two readings and the label was carried forward. No mark changes, and a Recorded Searches appendix was added carrying both fetches.
 

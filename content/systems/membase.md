@@ -4,11 +4,11 @@ eyebrow: "Signature-owned conversation memory"
 description: "Conversation-keyed message buffers summarised into long-term memory and a user profile, persisted to a hub where every write is signed with the caller's wallet key — behind a retrieval filter that reads a distance as a similarity."
 root: ../..
 page_kind: system
-source_name: "unibaseio/membase"
-source_url: https://github.com/unibaseio/membase
-archive_name: "unibaseio--membase"
+source_name: "unibaseio/membase1.0-sdk"
+source_url: https://github.com/unibaseio/membase1.0-sdk
+archive_name: "unibaseio--membase1.0-sdk"
 revision: 9e03b75a453118f4faf4ed3539279435e03bd603
-revision_url: https://github.com/unibaseio/membase/commit/9e03b75a453118f4faf4ed3539279435e03bd603
+revision_url: https://github.com/unibaseio/membase1.0-sdk/commit/9e03b75a453118f4faf4ed3539279435e03bd603
 analyzed_at: 2026-09-18
 capabilities: "scope_enforced"
 capability_evidence:
@@ -31,6 +31,8 @@ matrix:
 ---
 
 ## 1. Executive Summary
+
+The repository was renamed from `unibaseio/membase` to `unibaseio/membase1.0-sdk`, and the old name now belongs to a different repository, described as SDKs, a CLI and an MCP server for Membase, so the old address does not redirect here. The pinned commit is the head of `membase1.0-sdk`.
 
 Membase is a decentralised memory layer for agents: conversation history and a
 vector knowledge base held locally and mirrored to a remote hub, with every hub
@@ -555,8 +557,10 @@ The command is the check that was actually run, not a local equivalent.
 
 ## History
 
-**2026-09-18** — [`9e03b75a453118f4faf4ed3539279435e03bd603`](https://github.com/unibaseio/membase/commit/9e03b75a453118f4faf4ed3539279435e03bd603) — re-read at the same commit, and this one confirms rather than corrects. Both headline defects are still exactly as described: `ChromaKnowledgeBase.retrieve` compares `results["distances"][0][i]` against `similarity_threshold` and skips anything *below* it, so a threshold keeps the least similar documents; and the same branch sets `where_document = {"$contains": query}` whenever a threshold is given, so asking for more semantic precision silently switches the search to whole-query substring matching. `find_optimal_threshold` still sweeps 0.3 to 0.9 through that same call. The LICENSE file the README grants MIT under is still absent from the tree.
+**2026-10-14** — the repository was renamed to `unibaseio/membase1.0-sdk`, and `unibaseio/membase` is now a different repository in which the pin [`9e03b75a453118f4faf4ed3539279435e03bd603`](https://github.com/unibaseio/membase1.0-sdk/commit/9e03b75a453118f4faf4ed3539279435e03bd603) does not resolve; the head of `membase1.0-sdk` is still the pin. `source_name`, `source_url`, `revision_url`, `archive_name` and every commit link on this page, older entries included, follow the rename, because the old links no longer reach this code; the archive fork is renamed to `unibaseio--membase1.0-sdk`. The new `unibaseio/membase` was not read.
+
+**2026-09-18** — [`9e03b75a453118f4faf4ed3539279435e03bd603`](https://github.com/unibaseio/membase1.0-sdk/commit/9e03b75a453118f4faf4ed3539279435e03bd603) — re-read at the same commit, and this one confirms rather than corrects. Both headline defects are still exactly as described: `ChromaKnowledgeBase.retrieve` compares `results["distances"][0][i]` against `similarity_threshold` and skips anything *below* it, so a threshold keeps the least similar documents; and the same branch sets `where_document = {"$contains": query}` whenever a threshold is given, so asking for more semantic precision silently switches the search to whole-query substring matching. `find_optimal_threshold` still sweeps 0.3 to 0.9 through that same call. The LICENSE file the README grants MIT under is still absent from the tree.
 
 Two things were added. `scope_enforced` now carries an evidence record that names which read path holds the predicate: `conversation_id` is a required positional argument of `SqliteMemory.get` and reaches the SQL, while `LTMemory.retrieve` forwards an optional `metadata_filter` defaulting to None over a per-account Chroma collection — so the vector arm is scoped by account and not by conversation, and the matrix row now says so. And the negative-retrieval claim was made exact: `tests/test_chroma.py:310` does assert that non-matching documents stay out of a filtered query, but what it exercises is Chroma's own `where` parameters through a thin wrapper, and the same file's threshold case passes over the inverted predicate. `stack_source` goes from seeded to reviewed.
 
-**2026-07-31** — [`9e03b75a453118f4faf4ed3539279435e03bd603`](https://github.com/unibaseio/membase/commit/9e03b75a453118f4faf4ed3539279435e03bd603) — first reading.
+**2026-07-31** — [`9e03b75a453118f4faf4ed3539279435e03bd603`](https://github.com/unibaseio/membase1.0-sdk/commit/9e03b75a453118f4faf4ed3539279435e03bd603) — first reading.
