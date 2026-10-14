@@ -14155,6 +14155,47 @@ mode it reads a different project from the one the judge wrote to. The
 screen found no manifest it parses (the tree has no requirements,
 pyproject or build file), so the scripts were read by hand; nothing was
 installed or run.</li>
+<li><strong>JAZ (<a
+href="https://arxiv.org/abs/2609.26891">arXiv:2609.26891</a>) was
+examined and has no report: its long-term memory is the previous agent's
+raw REPL history handed to the next one as a variable, inside one run,
+and nothing outlives the process.</strong> <em>Harness as a Language: A
+Minimalist Agent Framework With Maximal Expressivity</em> (Li, Liu,
+Vukelic, Shen, Lall, Thakur, Zhang, Khattab, Light and Solar-Lezama, v1
+22 September 2026, NeurIPS 2026 TTCL workshop), unrelated to the <a
+href="../systems/jaz/">jaz</a> report. The framework,
+<code>jaz-lang/jaz</code>, read at <a
+href="https://github.com/jaz-lang/jaz/commit/0803d4971be785e95b80054b02259664d70fa3da"><code class="commit-id" title="0803d4971be785e95b80054b02259664d70fa3da">0803d497…</code></a>,
+is Apache-2.0, six commits from April to September 2026; the evaluation
+code, <code>jaz-lang/jaz-evals</code>, read at <a
+href="https://github.com/jaz-lang/jaz-evals/commit/2ffe7b5e6792a76fccb26f9ce188c88fb95ffa72"><code class="commit-id" title="2ffe7b5e6792a76fccb26f9ce188c88fb95ffa72">2ffe7b5e…</code></a>,
+is MIT, four commits, and pulls its StuLife and AppWorld environments
+from two submodule forks on a <code>jaz</code> branch. Everything the
+model sees is a variable in a code environment, and one primitive,
+<code>invoke</code>, lets that code call the model again. On StuLife the
+configured handoff passes a fresh subagent
+<code>prev_history=globals().get("prev_history", []) + __history__</code>
+(<code>configs/stulife_jaz.yaml:34-39</code>), and the prompt tells it
+to search that list with code before acting
+(<code>prompts/long_horizon/jaz.md</code>). On AppWorld, "continual
+self-improvement" is one root agent with a four-hour execution budget
+working through 417 tasks, editing the prompt and tools it hands each
+subagent between batches (<code>configs/appworld_jaz.yaml:1-2</code>,
+<code>:21-22</code>; <code>prompts/ttsi/jaz.md:1-9</code>). Neither
+writes anything that a later run reads:
+<code>git grep -n -i -E 'pickle|dill|checkpoint|save_state|load_state|sqlite|shelve' -- src</code>
+matches only comments about <code>deepcopy</code> and process spawning
+in both repositories. The result worth carrying is the comparison the
+paper draws. Kept whole and searched by code, the raw history beats <a
+href="../systems/letta/">Letta</a> by 8% at half its cost on StuLife's
+recall-heavy tasks, inside one session. That makes a lossless transcript
+the baseline an extracting memory has to beat on recall. It says nothing
+about correcting or forgetting a fact across sessions, which a variable
+that dies with the process cannot be asked to do. Screened before
+reading: <code>jaz</code> has one unpinned surface and nothing else;
+<code>jaz-evals</code> has one auto-run surface,
+<code>.gitmodules</code> naming the two benchmark forks; nothing was
+installed or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
