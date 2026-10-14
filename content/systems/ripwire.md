@@ -68,12 +68,13 @@ own degenerate case: a finding whose magnitude is zero would make the test
 explicitly promises never to be"* (`src/quality.h:4592-4594`), so the kind token
 is qualified by origin to keep that from happening.
 
-**Two marks.** `human_review` on a ledger the project keeps committed precisely
-so that a change in what is suppressed shows up in a diff, beside a `--notes`
-listing that flags a note whose target no longer resolves so a person can prune
-it. `negative_eval` on a case that writes a note against a target that does not
-exist and asserts its text appears in neither the task-scoped retrieval nor the
-default map, with the positive control in the same script.
+**One mark.** `negative_eval` on a case that writes a note against a target that
+does not exist and asserts its text appears in neither the task-scoped retrieval
+nor the default map, with the positive control in the same script. `human_review`
+is withheld: the ledger is committed so that a change in what is suppressed shows
+up in a diff, and a `--notes` listing flags a note whose target no longer resolves
+so a person can prune it, but the project's own quality-bar skill spells the ack
+command out for the model, so the producer can clear its own findings.
 
 **Why `tombstone` is withheld, and it is the most interesting call in this
 report.** Everything about the ack ledger looks like the mark: durable,

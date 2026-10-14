@@ -190,14 +190,15 @@ suppress forever, <em>"a permanent blank check, which the ack contract
 explicitly promises never to be"</em>
 (<code>src/quality.h:4592-4594</code>), so the kind token is qualified
 by origin to keep that from happening.</p>
-<p><strong>Two marks.</strong> <code>human_review</code> on a ledger the
-project keeps committed precisely so that a change in what is suppressed
-shows up in a diff, beside a <code>--notes</code> listing that flags a
-note whose target no longer resolves so a person can prune it.
-<code>negative_eval</code> on a case that writes a note against a target
-that does not exist and asserts its text appears in neither the
-task-scoped retrieval nor the default map, with the positive control in
-the same script.</p>
+<p><strong>One mark.</strong> <code>negative_eval</code> on a case that
+writes a note against a target that does not exist and asserts its text
+appears in neither the task-scoped retrieval nor the default map, with
+the positive control in the same script. <code>human_review</code> is
+withheld: the ledger is committed so that a change in what is suppressed
+shows up in a diff, and a <code>--notes</code> listing flags a note
+whose target no longer resolves so a person can prune it, but the
+project's own quality-bar skill spells the ack command out for the
+model, so the producer can clear its own findings.</p>
 <p><strong>Why <code>tombstone</code> is withheld, and it is the most
 interesting call in this report.</strong> Everything about the ack
 ledger looks like the mark: durable, committed, consulted before the
