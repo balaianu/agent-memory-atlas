@@ -36675,6 +36675,43 @@
       "status": "screened",
       "url": "https://github.com/redhat-et/ripwire"
     },
+    "ripwire-rs": {
+      "counts": {
+        "AGENT": 1,
+        "EXEC": 2,
+        "FRESH": 2,
+        "NOTE": 1
+      },
+      "files_scanned": 5,
+      "findings": [
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "Cargo.lock"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "Cargo.toml"
+        },
+        {
+          "detail": "check the default target before running bare `make`",
+          "kind": "EXEC",
+          "path": "Makefile"
+        },
+        {
+          "detail": "cargo executes this at build time",
+          "kind": "EXEC",
+          "path": "build.rs"
+        }
+      ],
+      "revision": "5eba075534d8009b86b201f8574ac1c0a9ad82e4",
+      "screened_at": "2026-10-14T11:18:18+00:00",
+      "slug": "ripwire-rs",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/casonadams/ripwire-rs"
+    },
     "risuai": {
       "counts": {
         "AGENT": 1,

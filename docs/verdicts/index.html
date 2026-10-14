@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 732 reports.</strong></p>
+<p><strong>This page covers all 733 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -14895,6 +14895,44 @@ that can go stale and are deciding where to repair it.</li>
 <li>Do not copy when: you need retrieval by content, a status on what is
 stored, validity time, or a notes half that can tell you one of its rows
 has stopped being true. One mark: negative eval.</li>
+</ul>
+<h3 id="ripwire-rs"><a
+href="../systems/ripwire-rs/"><code>ripwire-rs</code></a></h3>
+<ul>
+<li>Best idea: <strong>read the predecessor's ledger unchanged.</strong>
+The port parses ripwire's committed <code>.ripwire_quality_acks</code>
+as written, so a team switching binaries keeps its accepted debt and the
+reasons written for it, and it prints an acked finding with its gating
+cleared rather than dropping it from the report.</li>
+<li>Biggest risk: <strong>the ratchet is wider than the ledger's authors
+agreed to.</strong> <code>is_acknowledged</code> accepts a finding when
+the ack is zero, when the kind is churn, or when it is within twelve
+points of the acked magnitude; it strips the origin suffix the original
+added against zero-magnitude blank checks; and it matches on the file a
+row's <code>p=</code> locator names, so one accepted finding covers
+every symbol of its kind in that file.</li>
+<li>Second risk: <strong>instructions for a binary it is not.</strong>
+The shipped skills tell an agent to record trade-offs with
+<code>--quality-ack</code>, scope them with <code>--scope</code>, and
+expect notes beside <code>--for</code> output and inside
+<code>--handoff</code>; the flag writes nothing, notes surface nowhere,
+and <code>--handoff</code> prints a fixed packet naming branch
+<code>main</code>.</li>
+<li>Most reusable component: <code>is_acknowledged</code>
+(<code>src/gate/quality_delta.rs:37-52</code>) read beside ripwire's
+<code>findSuppressingAck</code>, as a worked list of the clauses that
+turn a ratchet into a blank check.</li>
+<li>Maturity impression: Apache-2.0, 134 commits between 10 and 14
+October 2026, version 0.4.1, 23,595 lines of Rust with 158 test
+functions, and a CI parity job that compares the shape of 67 commands'
+output against the upstream binary and no value on the memory surfaces.
+No mark: the one ack test asserts a suppression, and nothing asserts one
+must not happen.</li>
+<li>Study when: you are porting or reimplementing a suppression ledger
+and want the list of clauses not to add.</li>
+<li>Do not copy when: you want the original's ack semantics, a notes
+store attached to symbols, or parity checked on values rather than on
+attribute names.</li>
 </ul>
 <h3 id="openmasq"><a
 href="../systems/openmasq/"><code>openmasq</code></a></h3>

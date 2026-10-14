@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 732
+    <meta name="description" content="The 733
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 732
+    <meta property="og:description" content="The 733
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-732 systems grouped by eight architectural
+733 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 732 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 733 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 732 systems
+          <p class="document-deck">The 733 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>732 systems do not fall into 182 categories. They
+<p>733 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -3833,6 +3833,7 @@ href="../systems/openzync-core/"><code>openzync-core</code></a>, <a
 href="../systems/sibyl-memory/"><code>sibyl-memory</code></a>, <a
 href="../systems/auto-company/"><code>auto-company</code></a>, <a
 href="../systems/ripwire/"><code>ripwire</code></a>, <a
+href="../systems/ripwire-rs/"><code>ripwire-rs</code></a>, <a
 href="../systems/artesian/"><code>artesian</code></a>, <a
 href="../systems/context-keeper/"><code>context-keeper</code></a>, <a
 href="../systems/deja-vu/"><code>deja-vu</code></a>, <a
@@ -5695,6 +5696,24 @@ none of that care — two rows, no rescue route, no write lock, and
 nothing in the format able to say that one of them has stopped being
 true — and the verb advertised as returning <em>"most relevant memory
 notes / docs for a task"</em> does not read the notes store at all.</p>
+<p><strong><a href="../systems/ripwire-rs/">ripwire-rs</a> reads
+ripwire's ack ledger and loosens the ratchet it was written
+for.</strong> An Apache-2.0 Rust port of ripwire by a different author,
+134 commits between 10 and 14 October 2026, whose memory layer is the
+original's two sidecars with the machinery around them removed. The
+committed ledger's header is byte-identical to the original's v0.6.5
+writer, and the port has no writer of its own:
+<code>--quality-ack</code> is declared and read by nothing. Its
+suppression test keeps the original's <code>ack &gt;= now</code> and
+adds three clauses — a zero magnitude suppresses at any size, churn at
+any count, and anything within twelve points — and it strips the origin
+suffix the original added against exactly that zero-magnitude case. A
+row matches on the file its <code>p=</code> locator names rather than on
+the symbol hash, so one ack covers every symbol of its kind in a file.
+Notes are a raw line appended in the working directory and listed whole,
+surfaced beside no symbol. No mark: the one ack test asserts a
+suppression the original would also grant, and nothing asserts one must
+not happen.</p>
 <p><strong><a href="../systems/llm-wiki-cli/">LWC</a> is the family's
 two-store CLI, and the half that earns its marks is the one under the
 wiki.</strong> Apache-2.0, 294 commits between 29 July and 5 September

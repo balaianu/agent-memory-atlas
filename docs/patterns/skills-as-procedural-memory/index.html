@@ -485,6 +485,16 @@ becomes usable with no review at all
 (<code>src/lib/bridge/recording-store.ts:105-141</code>) — the same
 shape <a href="../../systems/cua/">Cua</a> has, where the person who
 demonstrates never sees the generated text.</p>
+<p><a href="../../systems/ripwire-rs/">ripwire-rs</a> shows the
+staleness cost from the supply side. Its seventeen skills are adapted
+from <a href="../../systems/ripwire/">ripwire</a>'s and embedded into
+the binary at build time, and they tell an agent to record a trade-off
+with <code>--quality-ack</code>, scope it with <code>--scope</code>, and
+expect notes beside <code>--for</code> output. The port's binary
+implements none of the three. A procedure carried across a rewrite
+describes the old implementation until something checks it against the
+new one; here nothing does, and an agent that follows the skill believes
+it recorded an acceptance the ledger never received.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Store a skill, then execute the retrieved copy in a fresh context

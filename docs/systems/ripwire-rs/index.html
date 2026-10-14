@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Rust port of ripwire that reads
+the original's ack ledger through a widened, file-keyed ratchet, writes
+no acks, and only lists its notes.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="ripwire-rs — Agent Memory Atlas">
+    <meta property="og:description" content="A Rust port of ripwire that
+reads the original's ack ledger through a widened, file-keyed ratchet,
+writes no acks, and only lists its notes.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ripwire-rs — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Rust port of ripwire
+that reads the original's ack ledger through a widened, file-keyed
+ratchet, writes no acks, and only lists its notes.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>ripwire-rs — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "ripwire-rs",
+      "description": "A Rust port of ripwire that reads the original's ack ledger through a widened, file-keyed ratchet, writes no acks, and only lists its notes.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">The ledger was ported; the ratchet was
+not</p>
+          <h1>ripwire-rs</h1>
+          <p class="document-deck">A Rust port of ripwire that reads the
+original's ack ledger through a widened, file-keyed ratchet, writes no
+acks, and only lists its notes.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/casonadams/ripwire-rs">
+              <span>Source</span>
+              <strong>casonadams/ripwire-rs</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/casonadams/ripwire-rs/commit/5eba075534d8009b86b201f8574ac1c0a9ad82e4" title="5eba075534d8009b86b201f8574ac1c0a9ad82e4">
+              <span>Analyzed revision</span>
+              <code>5eba0755…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-14</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/casonadams--ripwire-rs" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>casonadams--ripwire-rs</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0;
+the NOTICE names it an independent Rust port and rewrite of
+redhat-et/ripwire, carrying derived documentation and agent
+skills</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>23,595
+lines of Rust in 75 files under src/; the ack reader and filter are
+about 130 lines of src/gate/quality_delta.rs, the two notes verbs 19
+lines of src/cli/queries.rs</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>134
+commits on main between 10 and 14 October 2026, 128 by one author and 6
+by a release bot; version 0.4.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>158
+Rust test functions, 115 in-file across 51 source files and 43 in 12
+integration files; a CI parity job compares output shape against the
+upstream v0.6.5 binary; no case asserts an ack must not
+suppress</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>ripwire-rs is an independent Rust port of <a
+href="../ripwire/">ripwire</a>, a code-context engine and pre-commit
+quality gate for coding agents, and the memory it carries is the
+original's: a committed ledger of accepted quality findings and a
+field-notes file. It reads the original's ledger format, which makes its
+suppression rule comparable line by line with the contract it ports. The
+comparison is the finding. The port's test accepts more than the
+original's, matches on files rather than symbols, and the binary writes
+no ack and surfaces no note.</p>
+<p>The licence is Apache-2.0, and the <code>NOTICE</code> names the
+project an independent port and rewrite of redhat-et/ripwire by a
+different author, carrying derived documentation and agent skills. As
+with the original, the call graph, ranking and lenses are a code index
+and out of scope. This report reads only the port's handling of
+<code>.ripwire_quality_acks</code> and <code>.ripwire_notes</code>,
+against the <a href="../ripwire/">ripwire report</a> pinned at
+<code>e54b688</code>.</p>
+<p><strong>The original's ratchet is one comparison; the port's is
+four.</strong> The original suppresses a finding only while
+<code>r.now &lt;= ackNow</code>, on a kind token qualified by origin so
+that a zero magnitude cannot become <em>"a permanent blank check"</em>
+(<code>src/quality.h:4815-4817</code>, <code>:5127-5170</code>,
+<code>:6021-6024</code> at <code>e54b688</code>). The port's test is
+this (<code>src/gate/quality_delta.rs:38-43</code>):</p>
+<pre class="rust"><code>let check_val = |ack_val: u32| -&gt; bool {
+    ack_val &gt;= now_val
+        || ack_val == 0
+        || kind == &quot;short-horizon-churn&quot;
+        || ack_val.saturating_add(12) &gt;= now_val
+};</code></pre>
+<p>The first clause is the original's. The second is the case the
+original's guard exists to prevent. The third accepts short-horizon
+churn at any count, and the fourth accepts any finding up to twelve
+points worse than the acked magnitude, which subsumes the first. The
+parser also strips the <code>:new-symbol</code> and
+<code>:preexisting</code> suffix the original added to keep
+zero-magnitude acks apart (<code>:71</code>), so an ack on a
+never-gating new-symbol row matches a gating preexisting finding of the
+same kind.</p>
+<p><strong>The match is on the file a row names, not on the
+symbol.</strong> Nothing in the port computes the original's 16-hex key,
+an FNV-1a hash over path, scope and name. The parser aliases each row
+under its <code>p=</code> path, with and without the line
+(<code>:76-83</code>), and <code>apply_quality_acks</code> looks a
+regression up by symbol name, file path and bare file
+(<code>:309-313</code>). One accepted complexity finding therefore
+covers every function in that file, up to the highest magnitude acked
+there plus twelve. In the original, <code>p=</code> is a locator and
+<em>"the hash key is still the only identity"</em>
+(<code>src/quality.h:6438-6439</code> at upstream
+<code>d4325a8</code>).</p>
+<p><strong>The ledger is the original's output.</strong> The port
+declares <code>--quality-ack</code> and <code>--ack-only</code>
+(<code>src/cli/args.rs:219-224</code>), and nothing reads either field.
+The committed file's three header lines are byte-identical to the writer
+in redhat-et/ripwire v0.6.5 (<code>src/quality.h:6739-6741</code> at
+<code>3fcd515</code>), the release the port's CI installs. The file was
+first committed on 10 October 2026, before the port had a quality delta
+to read it. Its rows cite the port's own Rust paths, so they come from a
+run of the C++ binary over this tree, a command no script here
+records.</p>
+<p><strong>Notes are a raw append and a raw listing.</strong>
+<code>--note-add</code> appends its argument as one line to
+<code>.ripwire_notes</code> in the process's working directory rather
+than the analysed root, with no target, date, sanitising or lock.
+<code>--notes</code> prints each line as a <code>text=</code> attribute,
+escaping only the double quote
+(<code>src/cli/queries.rs:166-184</code>). The original's note is a
+target, a date and a text, resolved through the read verbs' resolver,
+surfaced beside its symbol and listed with a dangling flag. None of that
+is implemented, and no <code>.ripwire_notes</code> is committed.</p>
+<p><strong>No mark.</strong> The original's <code>negative_eval</code>
+rests on a dangling note asserted absent from two populated retrievals,
+and on an ack that must not survive a rewrite. The port's one ack test
+asserts a suppression at a magnitude below the ack
+(<code>src/gate/quality_delta.rs:714-741</code>) and passes under every
+clause above. No case asserts that a worsened finding re-reports.</p>
+<p><strong>Two memory-adjacent verbs print fixed text.</strong>
+<code>--doctor</code> writes <code>checks="9" passed="9"</code>, and
+<code>--handoff</code> writes a packet naming branch <code>main</code>,
+zero changed files and <code>src/main.rs</code>, as literals on their
+only code path (<code>src/cli/queries.rs:186-198</code>). The shipped
+handoff skill describes that packet as verified disk truth carrying
+committed notes on the touched files. The parity harness behind the
+<em>"1:1 DOM parity"</em> commit subjects compares root tags, schema
+attributes and attribute-name sets, and checks values for only two
+commands, neither of them these
+(<code>scripts/validate-parity.py:246-291</code>), so a literal passes
+it.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory here is the same two things as in the original, with less
+attached to each.</p>
+<p>An <strong>ack</strong>, as the port reads it, is a floor on a kind
+and a file. Its row was written by another program, and the port keeps
+three of its fields: the kind with its origin suffix removed, the
+magnitude, and the <code>p=</code> path. Several rows for one kind and
+file collapse to the largest magnitude (<code>:55-59</code>). A finding
+of that kind anywhere in that file is accepted while it stays within
+twelve points of that magnitude, and at any size when the magnitude is
+zero or the kind is churn.</p>
+<p>A <strong>note</strong> is a line of text. With no target it cannot
+ride along with a symbol, with no date it cannot be ordered or aged, and
+with no status it cannot be marked wrong.</p>
+<p>Neither has a state to move between. A row stops applying when
+somebody deletes it by hand, which is what commit <code>f233e5a</code>
+did to three rows, and the port's only act on either store is to append
+a note.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the ack ledger is written by the upstream C++ binary and only read by the port, which strips the origin suffix, aliases every row under the file its p= field names, and clears a regression's gating when the ack's magnitude is within twelve of it, is zero, or belongs to churn; the port's own --quality-ack flag writes nothing</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the ack ledger is written by the upstream C++ binary and only read by the port, which strips the origin suffix, aliases every row under the file its p= field names, and clears a regression&#39;s gating when the ack&#39;s magnitude is within twelve of it, is zero, or belongs to churn; the port&#39;s own --quality-ack flag writes nothing
+flowchart TB
+    UP[&quot;upstream ripwire binary,&lt;br/&gt;--quality-ack run over this tree&quot;]
+    LEDGER[(&quot;committed .ripwire_quality_acks:&lt;br/&gt;kind, 16-hex key, magnitude,&lt;br/&gt;cid, now, was, p=path:line, reason&quot;)]
+    PARSE[&quot;parse_acks_content:&lt;br/&gt;strip :new-symbol / :preexisting,&lt;br/&gt;alias each row under its p= file,&lt;br/&gt;keep the largest magnitude&quot;]
+    RUN[&quot;ripwire-rs DIR --quality-delta&quot;]
+    FIND[&quot;regressions: complexity,&lt;br/&gt;verbosity, nesting, params,&lt;br/&gt;dead-code, short-horizon churn&quot;]
+    LOOK{&quot;an ack of this kind for the&lt;br/&gt;symbol name, the file path&lt;br/&gt;or the bare file?&quot;}
+    CHECK{&quot;ack &amp;gt;= now, or ack is 0,&lt;br/&gt;or kind is churn,&lt;br/&gt;or ack + 12 &amp;gt;= now?&quot;}
+    SUP[&quot;gating cleared, row printed;&lt;br/&gt;counted in acked= unless churn&quot;]
+    GATE[&quot;reported; gates if over its bar&quot;]
+    STALE[&quot;stale list: one reason,&lt;br/&gt;finding-gone, computed&lt;br/&gt;before churn rows exist&quot;]
+    PORTACK[&quot;ripwire-rs --quality-ack=REASON:&lt;br/&gt;parsed, read by nothing&quot;]
+
+    UP --&gt; LEDGER
+    LEDGER --&gt; PARSE
+    RUN --&gt; FIND
+    FIND --&gt; LOOK
+    PARSE --&gt; LOOK
+    LOOK -- no --&gt; GATE
+    LOOK -- yes --&gt; CHECK
+    CHECK -- yes --&gt; SUP
+    CHECK -- no --&gt; GATE
+    PARSE --&gt; STALE
+    PORTACK -.-&gt;|&quot;writes nothing&quot;| LEDGER</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>A single Rust binary. <code>build.rs</code> compiles tree-sitter
+grammars from a vendored directory, <code>gix</code> reads git history
+in-process, and <code>ripwire-rs mcp</code> serves the tools over stdio.
+Everything this report covers is in
+<code>src/gate/quality_delta.rs</code> and
+<code>src/cli/queries.rs</code>, with the flags in
+<code>src/cli/args.rs</code>, the MCP wiring in
+<code>src/mcp/dispatch.rs</code> and <code>src/mcp/retrieval.rs</code>,
+and the skills under <code>skills/</code>, which <code>build.rs</code>
+embeds into the binary (<code>build.rs:121-149</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li><strong>What has to run:</strong> the binary.</li>
+<li><strong>Fully local and offline:</strong> yes; no model is called
+anywhere on the memory path.</li>
+<li><strong>Hand-repairable:</strong> both stores are plain text, and
+the ledger is committed, so a bad row is a revert away.</li>
+<li><strong>Install:</strong> a Homebrew tap,
+<code>cargo install</code>, or <code>make install</code>.
+<code>cargo build</code> also copies the man page into
+<code>~/.local/share/man/man1</code> and
+<code>/opt/homebrew/share/man/man1</code> as a side effect
+(<code>build.rs:63-75</code>).</li>
+</ul>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<ul>
+<li><strong>Read the ledger.</strong>
+<code>evaluate_quality_delta</code> joins the analysed root with
+<code>.ripwire_quality_acks</code> and parses it when present
+(<code>src/gate/quality_delta.rs:613-620</code>).
+<code>parse_acks_content</code> (<code>:61-93</code>) keeps lines
+starting <code>ack</code> with at least four tokens, cuts the kind at
+its first <code>:</code>, parses the magnitude with a fallback of 0 on a
+malformed value, which the zero clause then honours at any size, and
+registers the row under its key, its <code>p=</code> path and its
+<code>p=</code> path with the line.</li>
+<li><strong>Apply it.</strong> <code>apply_quality_acks</code>
+(<code>:306-321</code>) asks <code>is_acknowledged</code> three times
+per regression and clears <code>is_gating</code> on a hit; it counts
+only rows that were gating. <code>is_acknowledged</code>
+(<code>:37-52</code>) falls back to the key's last <code>::</code>
+segment when the full key misses.</li>
+<li><strong>Apply it again for churn.</strong> Churn regressions are
+computed after the first pass, so <code>evaluate_quality_delta</code>
+re-applies the ledger to them and discards the count
+(<code>:628-633</code>).</li>
+<li><strong>List stale rows.</strong> <code>collect_stale_acks</code>
+(<code>:323-348</code>) marks a row stale when no regression of its kind
+matches its key or a prefix of its path, with the single reason
+<code>finding-gone</code> and a fallback path of
+<code>src/lib.rs:1</code> for a row with none. It runs inside
+<code>compute_quality_delta_with_acks</code> (<code>:384-389</code>),
+before the churn regressions exist.</li>
+<li><strong>Render the header.</strong> The report header prints
+<code>renames</code>, <code>rename_window_commits</code>,
+<code>acked_by_rename</code> and <code>acked_by_content</code> as the
+literal <code>0</code> (<code>:130</code>); the original computes them
+from its identity heal.</li>
+<li><strong>Add and list notes.</strong>
+<code>execute_note_append</code> and <code>execute_notes_display</code>
+(<code>src/cli/queries.rs:166-184</code>), reached only from
+<code>execute_session_tools_query</code> (<code>:186-208</code>), which
+receives no root.</li>
+<li><strong>Recall.</strong> <code>call_memory_recall</code>
+(<code>src/mcp/retrieval.rs:336-381</code>) scores ingested files whose
+path ends <code>.md</code> or contains <code>doc</code> or
+<code>notes</code>.</li>
+</ul>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>An <strong>ack row</strong> as committed:
+<code>ack &lt;kind&gt; &lt;16-hex key&gt; &lt;magnitude&gt;</code>
+followed by named tokens and a reason to end of line. The ledger holds
+542 rows. Every row carries <code>p=</code> and 470 carry
+<code>cid=</code>; none carries <code>by=</code> or <code>prov=</code>.
+Short-horizon churn accounts for 272 rows across 51 files, dead-code for
+96, duplication for 66, verbosity for 52, params for 30 and complexity
+for 23. Magnitude 0 appears on 96 rows. The rows name 67 distinct paths,
+and 49 rows name three that do not exist at the pin:
+<code>src/cli.rs</code>, <code>src/ingest.rs</code> and
+<code>src/resolve.rs</code>.</p>
+<p>The port's delta produces no duplication or clone kind, so the 67
+rows of those kinds can only reach the stale list. The port reads
+nothing from <code>cid</code>, <code>now</code> or <code>was</code>.</p>
+<p>A <strong>note</strong>: one line, stored as typed.</p>
+<p><strong>Temporal:</strong> none. A note has no date, and an ack's
+magnitude is the only number the port reads from it.
+<code>bitemporal</code> withheld.</p>
+<p><strong>Trust:</strong> none. <code>StaleAck</code> carries one
+reason against the original's three — target gone, finding gone, foreign
+scope (<code>src/quality.h:6082-6089</code> at <code>e54b688</code>) —
+and the port's reason is disclosure only. <code>trust_state</code>
+withheld.</p>
+<p><strong>Scoping:</strong> none. <code>by=</code> is not parsed, and
+<code>--scope</code> (<code>src/cli/args.rs:228-230</code>) has no
+reader. <code>scope_enforced</code> withheld.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Acks are consulted, not retrieved. Each regression is looked up under
+its kind by three strings — the symbol's last name segment, the file
+path and the bare file — and any hit at any of the four clauses clears
+its gating. The acked row stays in the report with
+<code>gating="0"</code>, which a reader can see; the original removes
+suppressed rows and discloses a count.</p>
+<p>The <code>acked=</code> header counts rows whose gating was cleared
+in the first pass. Churn suppression happens in the second pass, whose
+count is discarded, so a churn finding the ledger hides is in no header
+total.</p>
+<p>Notes are not retrieved by any verb but <code>--notes</code>. The
+original attaches a note to the symbol or file it names whenever a map
+or expansion emits that target.</p>
+<p><code>memory_recall</code>, advertised as <em>"Most relevant memory
+notes / docs for a task, full text"</em>
+(<code>src/mcp/schema.rs:226-227</code>), scores ingested Markdown and
+doc paths by term presence and returns the first 20 lines of each.
+<code>.ripwire_notes</code> has no extension, so the crawler classifies
+it <code>Lang::Unknown</code> and never ingests it
+(<code>src/crawler.rs:84-95</code>). The original's verb of the same
+name misses its notes store in the same way.</p>
+<p><strong>Failure modes.</strong> A file with one churn ack hides churn
+on every function in it, at any count. A file with one zero-magnitude
+dead-code ack hides dead-code findings there at any size. A row naming a
+moved file stops matching anything and lands on the stale list, where it
+stays.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p><strong>Acks are not written by the port.</strong>
+<code>--quality-ack[=REASON]</code>, <code>--ack-only</code> and
+<code>--allow-dirty</code> are clap fields with no reader
+(<code>src/cli/args.rs:219-227</code>). A command that passes them runs
+whatever else it names and leaves the ledger untouched. The original's
+writer refuses a reason-less ack without the delta, refuses an
+<code>--ack-only</code> selection outside the scope under review, and
+publishes atomically under a lock; none of that has a counterpart
+here.</p>
+<p><strong>Notes are appended raw.</strong>
+<code>execute_note_append</code> opens <code>.ripwire_notes</code> with
+<code>create(true).append(true)</code> relative to the working directory
+and writes the argument and a newline
+(<code>src/cli/queries.rs:177-184</code>). An argument containing a
+newline becomes several notes. Pointing the tool at another repository
+reads and writes the notes file in the caller's directory, the failure
+the original fixed for its ledger by root-qualifying the path.</p>
+<p><strong>The baseline is written carefully.</strong>
+<code>write_baseline_file</code> writes a temporary file, syncs it and
+renames it over <code>.ripwire_quality_baseline</code>
+(<code>src/gate/baseline.rs:206-213</code>), which is the discipline
+neither memory file gets.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<ul>
+<li>One file read and a linear parse per quality delta; nothing blocks
+on a model.</li>
+<li>No lag: a row takes effect on the next run after it is in the
+file.</li>
+<li>Nothing runs in the background and nothing rewrites either
+store.</li>
+</ul>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP <code>quality_delta</code> tool calls the same
+<code>evaluate_quality_delta</code>
+(<code>src/mcp/dispatch.rs:253-254</code>), so an agent on MCP gets the
+ledger applied and has no tool to change it. <code>memory_recall</code>
+is the only tool named for memory, and it reads documentation.</p>
+<p>The skills carry the original's instructions over a binary that does
+not implement them. <code>ripwire-rs-quality-bar</code> tells the agent
+to record a trade-off with <code>--quality-ack</code>, narrow it with
+<code>--ack-only</code>, scope it with <code>--scope</code> and prune
+with <code>--show-stale</code>
+(<code>skills/ripwire-rs-quality-bar/SKILL.md:191-221</code>).
+<code>ripwire-rs-orient</code> says notes <em>"surface on their
+own"</em> beside <code>--for</code> and <code>--expand</code> output and
+are listed with <code>dangling="1"</code>
+(<code>skills/ripwire-rs-orient/SKILL.md:196-203</code>).
+<code>ripwire-rs-handoff</code> describes <code>--handoff</code> as
+carrying committed notes on the touched files
+(<code>skills/ripwire-rs-handoff/SKILL.md:114-126</code>). An agent
+following the quality-bar skill sees the finding it meant to accept keep
+gating, with nothing on stdout or stderr saying why.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Negative evaluation — withheld.</strong> The one ack case
+seeds a nesting regression from 2 to 7 and an ack at 10, and asserts
+gating drops to zero (<code>src/gate/quality_delta.rs:714-741</code>).
+That is a positive case: 7 is below 10, so the original's test passes it
+too, and so would a filter that suppressed everything. The ack it uses
+matches through the <code>p=src/math.rs:1</code> alias, since its 16-hex
+key names nothing the port produces. The notes test calls
+<code>--notes</code> and discards the result
+(<code>tests/test_cli_and_mcp.rs:670-672</code>), and the
+<code>memory_recall</code> test checks the tool is listed
+(<code>tests/test_mcp_33_tools.rs:34</code>).</p>
+<p><strong>Human review — withheld.</strong> Nothing waits for anyone.
+The port has no writer for the ledger, a row takes effect when it is in
+the file, and the rows here were produced by the upstream binary outside
+the port. The committed file makes a change in what is suppressed
+visible in <code>git diff</code>, which is git's review and not a
+surface in the tool.</p>
+<p><strong>Tombstone — withheld,</strong> for the original's reasons and
+one more: the port does not compute the content-keyed half at all, and
+its effective key is a file.</p>
+<p><strong>Audit log — withheld.</strong> The notes file is opened in
+append mode, but it is the store, not a record of mutations to one, and
+no verb edits or deletes a note.</p>
+<p><strong>Format compatibility is the port's real asset.</strong>
+Because the ledger's syntax is shared, a team moving from the C++ binary
+keeps its record of accepted debt and the reasons written for it. What
+the port does not keep is what those rows meant: each was accepted at a
+magnitude for one symbol, and the port reads it as a floor plus twelve
+for a file.</p>
+<p><strong>The widening landed in three commits.</strong> The
+zero-magnitude clause is in the first ack reader (<code>2c9db2f</code>,
+11 October 2026), the file-level lookup was added in
+<code>d7b7dad</code> on 12 October, and the churn and twelve-point
+clauses arrived in <code>a4e4ed8</code> on 13 October, whose subject
+reads <em>"achieve 1:1 DOM parity and wall/CPU/RSS superiority across
+all 67 commands"</em>. That commit's body does not mention the ack
+test.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>158 Rust test functions: 115 in-file unit tests across 51 source
+files and 43 in 12 integration files. CI runs format and clippy checks,
+the tests under coverage with a CRAP ceiling of 30, and a parity job
+(<code>.github/workflows/ci.yml:103-124</code>). <code>make all</code>,
+which <code>AGENTS.md</code> requires before finishing, includes a
+<code>quality</code> step that runs the port's own
+<code>--quality-delta</code> over its tree and falls back to the
+upstream binary only when no port binary is found
+(<code>Makefile:78-87</code>), so the widened test gates the port's own
+development.</p>
+<p>The parity job downloads the upstream v0.6.5 release and runs 67
+commands through both binaries over the port's tree. It compares the
+root tag, the <code>schema</code> attribute, the set of root attribute
+names minus a 104-entry optional list, and the attribute names of the
+first child of each shared tag
+(<code>scripts/validate-parity.py:246-291</code>). Values are compared
+for two commands only: the dead-code count, which fails only when the
+port's is more than five times the upstream's and more than 50 higher,
+and the token-budget size. An exit-code difference on
+<code>--quality-delta</code> passes when either stdout is empty
+(<code>:339-348</code>), and an upstream run over four seconds passes
+the port when its output parses and carries a <code>schema</code>
+attribute (<code>:330-338</code>). The optional list includes the four
+rescue attributes the port prints as zero (<code>:30-33</code>).</p>
+<p>For the memory layer this means the parity claim is a claim about
+shape. No <code>acked=</code> or <code>stale=</code> value is compared,
+and with no <code>.ripwire_notes</code> in the tree the notes listing is
+compared empty. Nothing was run for this report.</p>
+<p>No paper describes the project. The one arXiv citation in the tree is
+for the slicing algorithm, outside the memory layer.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Read your predecessor's store format.</strong> A rewrite
+that parses the old ledger keeps the reasons people wrote for accepting
+debt, which are the part that cannot be regenerated.</li>
+<li><strong>Leave a suppressed finding visible.</strong> Printing an
+acked row with its gating cleared lets a reader see what the ledger is
+hiding without asking for a second listing.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Widening a ratchet with tolerances.</strong> Each added
+clause is a blank check for some shape of finding: a tolerance for small
+regressions, a zero for findings without a magnitude, a kind exemption
+for churn. The original's single comparison is the contract; anything
+more is a different contract.</li>
+<li><strong>Matching on a field the writer meant as a locator.</strong>
+<code>p=</code> was written to answer "which file"; keying suppression
+on it turns a symbol-level acceptance into a file-level one.</li>
+<li><strong>Computing a stale list before every finding exists.</strong>
+A disclosure computed from half the regressions contradicts the
+suppression computed from all of them.</li>
+<li><strong>Shipping instructions for verbs the binary lacks.</strong> A
+skill that tells an agent to record a trade-off, when the flag writes
+nothing, produces an agent that believes it has.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>The port fits a team that wants the code-index verbs in Rust and
+keeps the C++ binary, or hand edits, as the only writer of its ledger.
+It does not fit anyone who wants the original's ack semantics: a ledger
+read through this test suppresses more than the people who wrote it
+agreed to. As agent memory the notes half is a text file the agent can
+append to and list, and nothing more.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is the twelve-point tolerance meant to absorb differences between
+the C++ and Rust complexity measures? The commit that added it does not
+say, and no test or comment names the number.</li>
+<li>Will <code>--quality-ack</code> get a writer, and in which key — the
+original's hash, or the file the port matches on?</li>
+<li>Did the parity job pass on <code>--notes</code>? The port's root
+element carries a <code>schema</code> attribute the upstream
+<code>&lt;ctx&gt;</code> lacks, which the harness compares; running the
+job would answer.</li>
+<li>Will notes resolve against the analysed root rather than the working
+directory?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Lines</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/gate/quality_delta.rs</code></td>
+<td>783</td>
+<td>The ack record (14-34), <code>is_acknowledged</code> (37-52), the
+max-merge alias (55-59), <code>parse_acks_content</code> (61-93), the
+header literals (130), <code>apply_quality_acks</code> (306-321),
+<code>collect_stale_acks</code> (323-348), the ledger read (613-620),
+the churn re-application (628-633), the one ack test (714-741)</td>
+</tr>
+<tr>
+<td><code>src/cli/queries.rs</code></td>
+<td>977</td>
+<td><code>execute_notes_display</code> and
+<code>execute_note_append</code> (166-184), the <code>--doctor</code>
+and <code>--handoff</code> literals (186-198)</td>
+</tr>
+<tr>
+<td><code>src/cli/args.rs</code></td>
+<td>827</td>
+<td><code>--quality-ack</code>, <code>--ack-only</code>,
+<code>--allow-dirty</code>, <code>--scope</code> (219-230),
+<code>--notes</code> and <code>--note-add</code> (644-649)</td>
+</tr>
+<tr>
+<td><code>src/gate/baseline.rs</code></td>
+<td>255</td>
+<td>The atomic baseline writer (206-213)</td>
+</tr>
+<tr>
+<td><code>src/mcp/retrieval.rs</code>,
+<code>src/mcp/schema.rs</code></td>
+<td>—</td>
+<td><code>call_memory_recall</code> (retrieval.rs:336-381) and its
+description (schema.rs:226-227)</td>
+</tr>
+<tr>
+<td><code>src/crawler.rs</code></td>
+<td>—</td>
+<td>The extension check that keeps the notes dotfile out of the index
+(84-95)</td>
+</tr>
+<tr>
+<td><code>.ripwire_quality_acks</code></td>
+<td>545</td>
+<td>The committed ledger: three header lines and 542 rows</td>
+</tr>
+<tr>
+<td><code>scripts/validate-parity.py</code></td>
+<td>394</td>
+<td>The 67-command structural comparison</td>
+</tr>
+<tr>
+<td><code>.github/workflows/ci.yml</code></td>
+<td>—</td>
+<td>The parity job against upstream v0.6.5 (103-124)</td>
+</tr>
+<tr>
+<td><code>skills/ripwire-rs-quality-bar/SKILL.md</code>,
+<code>skills/ripwire-rs-orient/SKILL.md</code>,
+<code>skills/ripwire-rs-handoff/SKILL.md</code></td>
+<td>—</td>
+<td>Instructions for ack writing, note surfacing and handoff
+contents</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -w -E 'quality_ack|ack_only|allow_dirty' -- src tests</code>
+— the three declarations at <code>src/cli/args.rs:221-227</code> and
+nothing else.</li>
+<li><code>git grep -n -E 'safety\.scope|args\.scope|ws\.scope|cli\.scope' -- src</code>
+— no match; the <code>--scope</code> field has no reader.</li>
+<li><code>git grep -n -E 'DEFAULT_ACKS_FILE|ripwire_quality_acks' -- src</code>
+— the constant, a doc comment and one read at
+<code>src/gate/quality_delta.rs:613</code>; no write.</li>
+<li><code>git grep -n -E 'ripwire quality acks v1|PROVENANCE: now=' HEAD -- src</code>
+— no match; the header text is not in the port's source.</li>
+<li><code>cmp</code> of the ledger's first three lines against
+<code>src/quality.h:6739-6741</code> at upstream <code>3fcd515</code>
+(v0.6.5), with the C++ string syntax removed — identical.</li>
+<li><code>git log --reverse -S'ripwire_quality_acks' -- src</code> —
+first <code>2c9db2f</code>, 11 October 2026; the ledger itself is in
+<code>a18ae78</code>, 10 October 2026.</li>
+<li><code>git grep -n -E 'fnv1a|0xcbf29ce484222325' -- src</code> —
+<code>src/clones/token_stream.rs</code> only; no ack key is
+computed.</li>
+<li><code>git grep -n -i -E 'heal|remap|rescue|acked_by' -- src/gate</code>
+— the literal header at <code>src/gate/quality_delta.rs:130</code>
+only.</li>
+<li><code>git grep -n -E '\bby=' -- src</code> — one comment in
+<code>src/serialize/html_vis.js</code>; <code>by=</code> is not
+parsed.</li>
+<li><code>git grep -n -E 'show-stale|show_stale|stale_by_kind|scoped-out' -- src</code>
+— no match.</li>
+<li><code>git grep -n -E 'dangling' -- src</code> — PageRank only.</li>
+<li><code>git grep -n -E 'ripwire_notes' -- src</code> — help text in
+<code>src/cli/args.rs</code> and the two notes functions in
+<code>src/cli/queries.rs</code>.</li>
+<li><code>git grep -n -E 'quality_ack|is_acknowledged|parse_acks|ripwire_notes|note_add|\.notes' -- tests</code>
+— <code>tests/test_cli_and_mcp.rs:670</code> and <code>:673</code>,
+setting and clearing <code>ws.notes</code> around a discarded call.</li>
+<li><code>git grep -n -i -E 'doctor|handoff' -- src</code> — the flag
+declarations and <code>src/cli/queries.rs:187-197</code>.</li>
+<li><code>git ls-files | grep ripwire_notes</code> — no match.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|CITATION' -- .</code> — the
+slicing citation in <code>docs/ALGORITHMS.md</code>,
+<code>www/docs.html</code> and two skill files; no
+<code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-14</strong> — <a
+href="https://github.com/casonadams/ripwire-rs/commit/5eba075534d8009b86b201f8574ac1c0a9ad82e4"><code class="commit-id" title="5eba075534d8009b86b201f8574ac1c0a9ad82e4">5eba0755…</code></a>
+— first reading, at the head of <code>main</code>, a commit of 14
+October 2026. No mark. Screened before reading from a full clone: no
+auto-run surface, two build-time execution points
+(<code>Makefile</code>, <code>build.rs</code>), <code>Cargo.toml</code>
+and <code>Cargo.lock</code> inside the seven-day cooldown, no unpinned
+surface; <code>AGENTS.md</code> read as data. The original's pin
+<code>e54b688</code>, its v0.6.5 release and its <code>main</code> at
+<code>d4325a8</code> were fetched as objects into the same clone to
+compare the ack contract and the ledger header. Read with
+<code>git grep</code> and <code>sed</code>; nothing installed, built or
+run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

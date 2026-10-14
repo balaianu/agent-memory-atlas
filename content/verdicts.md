@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 732 reports.**
+**This page covers all 733 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -3526,6 +3526,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0 from Red Hat's emerging-technologies organisation, version 0.6.1, 2,896 commits over 47 days from twenty identities of which one accounts for 1,903, 172,653 lines of C++23 across 167 files, an MCP server of thirty-one verbs, and a test tree of 1,599 files holding 618 named gates and 206 C++ harnesses — with the published gate count itself a build product gated by two independent derivations. Two auto-run surfaces and four unpinned dependency surfaces at this pin. One of seven capability marks: `human_review` was withdrawn on the 2026-09-19 re-read, because the shipped skills spell the `--quality-ack` command out for the model to run, so the producer clears its own queue; the ledger keeps its description without the mark.
 - Study when: you want accepted technical debt to be a reviewable committed artifact rather than a suppression comment, or you have a key that can go stale and are deciding where to repair it.
 - Do not copy when: you need retrieval by content, a status on what is stored, validity time, or a notes half that can tell you one of its rows has stopped being true. One mark: negative eval.
+
+### [`ripwire-rs`](../systems/ripwire-rs/)
+- Best idea: **read the predecessor's ledger unchanged.** The port parses ripwire's committed `.ripwire_quality_acks` as written, so a team switching binaries keeps its accepted debt and the reasons written for it, and it prints an acked finding with its gating cleared rather than dropping it from the report.
+- Biggest risk: **the ratchet is wider than the ledger's authors agreed to.** `is_acknowledged` accepts a finding when the ack is zero, when the kind is churn, or when it is within twelve points of the acked magnitude; it strips the origin suffix the original added against zero-magnitude blank checks; and it matches on the file a row's `p=` locator names, so one accepted finding covers every symbol of its kind in that file.
+- Second risk: **instructions for a binary it is not.** The shipped skills tell an agent to record trade-offs with `--quality-ack`, scope them with `--scope`, and expect notes beside `--for` output and inside `--handoff`; the flag writes nothing, notes surface nowhere, and `--handoff` prints a fixed packet naming branch `main`.
+- Most reusable component: `is_acknowledged` (`src/gate/quality_delta.rs:37-52`) read beside ripwire's `findSuppressingAck`, as a worked list of the clauses that turn a ratchet into a blank check.
+- Maturity impression: Apache-2.0, 134 commits between 10 and 14 October 2026, version 0.4.1, 23,595 lines of Rust with 158 test functions, and a CI parity job that compares the shape of 67 commands' output against the upstream binary and no value on the memory surfaces. No mark: the one ack test asserts a suppression, and nothing asserts one must not happen.
+- Study when: you are porting or reimplementing a suppression ledger and want the list of clauses not to add.
+- Do not copy when: you want the original's ack semantics, a notes store attached to symbols, or parity checked on values rather than on attribute names.
 
 ### [`openmasq`](../systems/openmasq/)
 - Best idea: **extract from the wire the model already saw, and let the vault be the hallucination filter.** The extractor reads the redacted replay, answers in fakes, and every entity is un-redacted locally and must appear verbatim in the real text or is dropped; a value present only on the wire is refused as an unresolved pseudonym. No new byte leaves the machine, and the model's own knowledge is inadmissible by construction.
