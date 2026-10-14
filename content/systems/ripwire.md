@@ -51,7 +51,7 @@ both survive every session, and both can be corrected.
 
 **The ack ledger is a ratchet, and that is the idea worth carrying.** A row is
 `ack <kind> <16-hex key> <magnitude> [cid=…] [by=…] <reason>`, and the whole
-mechanism is one comparison (`src/quality.h:5798-5802`):
+mechanism is one comparison (`src/quality.h:6021-6025`):
 
 ```cpp
 const auto it = acks.find( ackMapKey( ackKindToken( r ), r.key ) );
@@ -61,11 +61,11 @@ return ( it != acks.end() && r.now <= it->second.ackNow ) ? &it->second : nullpt
 An ack accepts a finding **at the size it was accepted at**. The moment the
 finding worsens past that magnitude it reappears, which the source states as the
 contract — *"an ack accepts a finding AT its acked size, never a blank check"*
-(`src/quality.h:4838`). Suppression is disclosed rather than silent: the report
+(`src/quality.h:5061`). Suppression is disclosed rather than silent: the report
 header carries an `acked` count. And the contract has been defended against its
 own degenerate case: a finding whose magnitude is zero would make the test
 `0 <= 0` and suppress forever, *"a permanent blank check, which the ack contract
-explicitly promises never to be"* (`src/quality.h:4592-4594`), so the kind token
+explicitly promises never to be"* (`src/quality.h:4815-4817`), so the kind token
 is qualified by origin to keep that from happening.
 
 **One mark.** `negative_eval` on a case that writes a note against a target that
@@ -80,7 +80,7 @@ command out for the model, so the producer can clear its own findings.
 report.** Everything about the ack ledger looks like the mark: durable,
 committed, consulted before the tool speaks again, with a magnitude floor that
 stops it being a blanket. Three things decide against it. The key is a location
-— `fnv1a64(relative path \0 scope \0 symbol name)` (`src/quality.h:733-740`) —
+— `fnv1a64(relative path \0 scope \0 symbol name)` (`src/quality.h:734-741`) —
 so it identifies *where* a finding was, not *what* was rejected. What the row
 records is an **accepted** finding rather than a rejected value; it suppresses a
 warning about code that stays. And it is consulted when a report is rendered
@@ -96,7 +96,7 @@ byte of code changed, not one of the fifty-nine canonical ids survived, nor any
 of the fifty-nine path-qualified keys, nor any of the four clone groups — and in
 the source's own words, *"[e]very ack recorded against those symbols died, along
 with the reason someone wrote for accepting each one"*
-(`src/quality.h:5300-5303`). The obvious fix — teach every baseline lookup and
+(`src/quality.h:5523-5526`). The obvious fix — teach every baseline lookup and
 the ratchet to try an alias — is rejected in the same comment, and the reason is
 an argument about *where* a repair belongs:
 
@@ -112,7 +112,7 @@ equality second. Because the baseline snapshot and the ack ledger are the only
 two things carrying a stale identity, healing them makes `computeDelta`, the
 ratchet, the stale-ack classifier and the `--quality-ack` writer rename-aware
 with no edit at all. It is wired on four paths — two in `src/verbs_quality.h`,
-the history walk at `:907`, and the MCP delta at `src/mcpverbs.h:3401` — and it
+the history walk at `:908`, and the MCP delta at `src/mcpverbs.h:3481` — and it
 is self-healing, because `--quality-ack` writes the rekeyed rows back, so a
 rescued ack stops depending on the replay.
 
@@ -220,37 +220,37 @@ skills that tell a model when to ack.
 
 ## 4. Essential Implementation Paths
 
-- **Key a finding.** `pathQualifiedKey` (`src/quality.h:565-573`) hashes the
+- **Key a finding.** `pathQualifiedKey` (`src/quality.h:566-574`) hashes the
   root-relative path, the scope and the name with a null byte between each;
-  `qualityKey` (`:654-658`) is the symbol-level caller. The two clone kinds key
+  `qualityKey` (`:655-659`) is the symbol-level caller. The two clone kinds key
   on a member-set hash instead.
-- **Compute the content id.** `scrubbedBody` and `scrubbedBodyHash` (`src/quality.h:828-898`)
+- **Compute the content id.** `scrubbedBody` and `scrubbedBodyHash` (`src/quality.h:829-899`)
   hashes the body after collapsing whitespace, replacing the symbol's own name
   with a sentinel and dropping ack comment lines. Built corpus-wide with a
   count per id, so a body shared by two symbols refuses to resolve.
-- **Heal an identity.** `remapAckIdentity` (`src/quality.h:4677-4755`) runs
+- **Heal an identity.** `remapAckIdentity` (`src/quality.h:4900-4978`) runs
   before the ratchet and re-files a row only when its own key resolves to
   nothing, it carries a content id, and that id is unique — preferring a
   git-recorded rename over a content match. The comment states the boundary:
   *"Identity that follows a rename must not become identity that follows a
-  rewrite; that is the blank check the ack contract forbids"* (`:4673-4675`).
-- **Apply the ratchet.** `findSuppressingAck` (`:5798-5802`) and
-  `applyAckRatchet` (`:4907-4918`).
-- **Write an ack.** `--quality-ack[=REASON]` (`src/cli.h:2667`, `:4506`) implies
+  rewrite; that is the blank check the ack contract forbids"* (`:4896-4898`).
+- **Apply the ratchet.** `findSuppressingAck` (`:6021-6025`) and
+  `applyAckRatchet` (`:5130-5141`).
+- **Write an ack.** `--quality-ack[=REASON]` (`src/cli.h:2679`, `:4561`) implies
   the delta, refuses reason-less spellings unless the delta is also requested,
-  and is gated by `refuseForeignAckSelection` (`src/verbs_quality.h:401-441`)
+  and is gated by `refuseForeignAckSelection` (`src/verbs_quality.h:423-463`)
   against an `--ack-only` that names rows outside the scope under review. The
-  row is built at `:1141-1144` and published at `:1157` through an atomic write
+  row is built at `:1174-1177` and published at `:1190` through an atomic write
   under a cross-process lock.
-- **Add a note.** `resolveNoteAddTarget` (`src/main.cpp:606-670`) resolves the
+- **Add a note.** `resolveNoteAddTarget` (`src/main.cpp:656-720`) resolves the
   selector through the same resolver the read verbs use: unique stores the
   canonical id, ambiguous refuses and names every candidate, and a path that
   resolves to nothing stores with a loud dangling warning.
 - **Surface a note.** `fileNoteTarget` and `symbolNoteTarget`
-  (`src/serialize.h:503-511`) spell the two lookup keys once;
-  `renderNoteChildren` (`:471-489`) attaches them, reached from the task map,
+  (`src/serialize.h:504-512`) spell the two lookup keys once;
+  `renderNoteChildren` (`:472-490`) attaches them, reached from the task map,
   the default map, the expansion, the edit check and three MCP verbs.
-- **List notes for pruning.** `--notes` (`src/main.cpp:798-860`) recomputes the
+- **List notes for pruning.** `--notes` (`src/main.cpp:848-910`) recomputes the
   live target set and emits per-target rows with a dangling flag.
 
 ## 5. Memory Data Model
@@ -267,9 +267,9 @@ optionally the HEAD sha and branch. One row is committed.
 
 **Temporal:** one time on a note, none on an ack, and the absence is deliberate:
 *"Deliberately NOT pinned to a HEAD sha: an acked finding … stays accepted
-across commits"* (`src/quality.h:3941-3943`). `bitemporal` withheld.
+across commits"* (`src/quality.h:4103-4105`). `bitemporal` withheld.
 
-**Trust:** none applied. `StaleAckWhy` (`src/quality.h:4936-4941`) is a real
+**Trust:** none applied. `StaleAckWhy` (`src/quality.h:5159-5164`) is a real
 three-value classification — the target is gone, the finding is gone, or the row
 was filed from a foreign scope — and it is emitted as disclosure rows and never
 read by the suppression test. `trust_state` withheld.
@@ -296,7 +296,7 @@ moves is rescued if a rename is recorded in git or its body is unchanged and
 unique, and is otherwise classified stale and left in place. And because the
 rescue routes were added after most of the ledger was written, the source is
 explicit that they *"can never rescue the 443 rows already committed here, and
-the report says so"* (`src/quality.h:5567`).
+the report says so"* (`src/quality.h:5790`).
 
 ## 7. Write Mechanics
 
@@ -315,7 +315,7 @@ alongside the delta is accepted and renders the literal string
 `(no reason given)`, though no committed row carries it. And the reason chain is
 capped at one hop, so a row acked three times keeps the newest reason and the one
 before it, *"without turning the ledger into an append-only reason log"*
-(`src/quality.h:3988`).
+(`src/quality.h:4171`).
 
 The note writer has none of this: a plain truncating stream with no lock, in a
 file whose header cites the ack precedent for its sorted format.

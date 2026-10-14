@@ -175,20 +175,20 @@ corrected.</p>
 carrying.</strong> A row is
 <code>ack &lt;kind&gt; &lt;16-hex key&gt; &lt;magnitude&gt; [cid=…] [by=…] &lt;reason&gt;</code>,
 and the whole mechanism is one comparison
-(<code>src/quality.h:5798-5802</code>):</p>
+(<code>src/quality.h:6021-6025</code>):</p>
 <pre class="cpp"><code>const auto it = acks.find( ackMapKey( ackKindToken( r ), r.key ) );
 return ( it != acks.end() &amp;&amp; r.now &lt;= it-&gt;second.ackNow ) ? &amp;it-&gt;second : nullptr;</code></pre>
 <p>An ack accepts a finding <strong>at the size it was accepted
 at</strong>. The moment the finding worsens past that magnitude it
 reappears, which the source states as the contract — <em>"an ack accepts
 a finding AT its acked size, never a blank check"</em>
-(<code>src/quality.h:4838</code>). Suppression is disclosed rather than
+(<code>src/quality.h:5061</code>). Suppression is disclosed rather than
 silent: the report header carries an <code>acked</code> count. And the
 contract has been defended against its own degenerate case: a finding
 whose magnitude is zero would make the test <code>0 &lt;= 0</code> and
 suppress forever, <em>"a permanent blank check, which the ack contract
 explicitly promises never to be"</em>
-(<code>src/quality.h:4592-4594</code>), so the kind token is qualified
+(<code>src/quality.h:4815-4817</code>), so the kind token is qualified
 by origin to keep that from happening.</p>
 <p><strong>One mark.</strong> <code>negative_eval</code> on a case that
 writes a note against a target that does not exist and asserts its text
@@ -205,7 +205,7 @@ ledger looks like the mark: durable, committed, consulted before the
 tool speaks again, with a magnitude floor that stops it being a blanket.
 Three things decide against it. The key is a location —
 <code>fnv1a64(relative path \0 scope \0 symbol name)</code>
-(<code>src/quality.h:733-740</code>) — so it identifies <em>where</em> a
+(<code>src/quality.h:734-741</code>) — so it identifies <em>where</em> a
 finding was, not <em>what</em> was rejected. What the row records is an
 <strong>accepted</strong> finding rather than a rejected value; it
 suppresses a warning about code that stays. And it is consulted when a
@@ -222,7 +222,7 @@ not one of the fifty-nine canonical ids survived, nor any of the
 fifty-nine path-qualified keys, nor any of the four clone groups — and
 in the source's own words, <em>"[e]very ack recorded against those
 symbols died, along with the reason someone wrote for accepting each
-one"</em> (<code>src/quality.h:5300-5303</code>). The obvious fix —
+one"</em> (<code>src/quality.h:5523-5526</code>). The obvious fix —
 teach every baseline lookup and the ratchet to try an alias — is
 rejected in the same comment, and the reason is an argument about
 <em>where</em> a repair belongs:</p>
@@ -241,7 +241,7 @@ carrying a stale identity, healing them makes <code>computeDelta</code>,
 the ratchet, the stale-ack classifier and the <code>--quality-ack</code>
 writer rename-aware with no edit at all. It is wired on four paths — two
 in <code>src/verbs_quality.h</code>, the history walk at
-<code>:907</code>, and the MCP delta at <code>src/mcpverbs.h:3401</code>
+<code>:908</code>, and the MCP delta at <code>src/mcpverbs.h:3481</code>
 — and it is self-healing, because <code>--quality-ack</code> writes the
 rekeyed rows back, so a rescued ack stops depending on the replay.</p>
 <p><strong>The rescue discloses which route saved each row, and that is
@@ -352,48 +352,48 @@ build.</li>
 Paths</h2>
 <ul>
 <li><strong>Key a finding.</strong> <code>pathQualifiedKey</code>
-(<code>src/quality.h:565-573</code>) hashes the root-relative path, the
+(<code>src/quality.h:566-574</code>) hashes the root-relative path, the
 scope and the name with a null byte between each;
-<code>qualityKey</code> (<code>:654-658</code>) is the symbol-level
+<code>qualityKey</code> (<code>:655-659</code>) is the symbol-level
 caller. The two clone kinds key on a member-set hash instead.</li>
 <li><strong>Compute the content id.</strong> <code>scrubbedBody</code>
-and <code>scrubbedBodyHash</code> (<code>src/quality.h:828-898</code>)
+and <code>scrubbedBodyHash</code> (<code>src/quality.h:829-899</code>)
 hashes the body after collapsing whitespace, replacing the symbol's own
 name with a sentinel and dropping ack comment lines. Built corpus-wide
 with a count per id, so a body shared by two symbols refuses to
 resolve.</li>
 <li><strong>Heal an identity.</strong> <code>remapAckIdentity</code>
-(<code>src/quality.h:4677-4755</code>) runs before the ratchet and
+(<code>src/quality.h:4900-4978</code>) runs before the ratchet and
 re-files a row only when its own key resolves to nothing, it carries a
 content id, and that id is unique — preferring a git-recorded rename
 over a content match. The comment states the boundary: <em>"Identity
 that follows a rename must not become identity that follows a rewrite;
 that is the blank check the ack contract forbids"</em>
-(<code>:4673-4675</code>).</li>
+(<code>:4896-4898</code>).</li>
 <li><strong>Apply the ratchet.</strong> <code>findSuppressingAck</code>
-(<code>:5798-5802</code>) and <code>applyAckRatchet</code>
-(<code>:4907-4918</code>).</li>
+(<code>:6021-6025</code>) and <code>applyAckRatchet</code>
+(<code>:5130-5141</code>).</li>
 <li><strong>Write an ack.</strong> <code>--quality-ack[=REASON]</code>
-(<code>src/cli.h:2667</code>, <code>:4506</code>) implies the delta,
+(<code>src/cli.h:2679</code>, <code>:4561</code>) implies the delta,
 refuses reason-less spellings unless the delta is also requested, and is
 gated by <code>refuseForeignAckSelection</code>
-(<code>src/verbs_quality.h:401-441</code>) against an
+(<code>src/verbs_quality.h:423-463</code>) against an
 <code>--ack-only</code> that names rows outside the scope under review.
-The row is built at <code>:1141-1144</code> and published at
-<code>:1157</code> through an atomic write under a cross-process
+The row is built at <code>:1174-1177</code> and published at
+<code>:1190</code> through an atomic write under a cross-process
 lock.</li>
 <li><strong>Add a note.</strong> <code>resolveNoteAddTarget</code>
-(<code>src/main.cpp:606-670</code>) resolves the selector through the
+(<code>src/main.cpp:656-720</code>) resolves the selector through the
 same resolver the read verbs use: unique stores the canonical id,
 ambiguous refuses and names every candidate, and a path that resolves to
 nothing stores with a loud dangling warning.</li>
 <li><strong>Surface a note.</strong> <code>fileNoteTarget</code> and
-<code>symbolNoteTarget</code> (<code>src/serialize.h:503-511</code>)
+<code>symbolNoteTarget</code> (<code>src/serialize.h:504-512</code>)
 spell the two lookup keys once; <code>renderNoteChildren</code>
-(<code>:471-489</code>) attaches them, reached from the task map, the
+(<code>:472-490</code>) attaches them, reached from the task map, the
 default map, the expansion, the edit check and three MCP verbs.</li>
 <li><strong>List notes for pruning.</strong> <code>--notes</code>
-(<code>src/main.cpp:798-860</code>) recomputes the live target set and
+(<code>src/main.cpp:848-910</code>) recomputes the live target set and
 emits per-target rows with a dangling flag.</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
@@ -410,10 +410,10 @@ committed.</p>
 <p><strong>Temporal:</strong> one time on a note, none on an ack, and
 the absence is deliberate: <em>"Deliberately NOT pinned to a HEAD sha:
 an acked finding … stays accepted across commits"</em>
-(<code>src/quality.h:3941-3943</code>). <code>bitemporal</code>
+(<code>src/quality.h:4103-4105</code>). <code>bitemporal</code>
 withheld.</p>
 <p><strong>Trust:</strong> none applied. <code>StaleAckWhy</code>
-(<code>src/quality.h:4936-4941</code>) is a real three-value
+(<code>src/quality.h:5159-5164</code>) is a real three-value
 classification — the target is gone, the finding is gone, or the row was
 filed from a foreign scope — and it is emitted as disclosure rows and
 never read by the suppression test. <code>trust_state</code>
@@ -440,7 +440,7 @@ unique, and is otherwise classified stale and left in place. And because
 the rescue routes were added after most of the ledger was written, the
 source is explicit that they <em>"can never rescue the 443 rows already
 committed here, and the report says so"</em>
-(<code>src/quality.h:5567</code>).</p>
+(<code>src/quality.h:5790</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>Both stores are written by command-line verbs only — no MCP verb
 writes either — and both are sorted on every write so that two branches
@@ -458,7 +458,7 @@ the literal string <code>(no reason given)</code>, though no committed
 row carries it. And the reason chain is capped at one hop, so a row
 acked three times keeps the newest reason and the one before it,
 <em>"without turning the ledger into an append-only reason log"</em>
-(<code>src/quality.h:3988</code>).</p>
+(<code>src/quality.h:4171</code>).</p>
 <p>The note writer has none of this: a plain truncating stream with no
 lock, in a file whose header cites the ack precedent for its sorted
 format.</p>
