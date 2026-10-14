@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 733
+    <meta name="description" content="The 734
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 733
+    <meta property="og:description" content="The 734
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-733 systems grouped by eight architectural
+734 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 733 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 734 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 733 systems
+          <p class="document-deck">The 734 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>733 systems do not fall into 182 categories. They
+<p>734 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -3960,7 +3960,8 @@ href="../systems/osk-system/"><code>osk-system</code></a>, <a
 href="../systems/ihmt-memory/"><code>ihmt-memory</code></a>, <a
 href="../systems/archiver-rag/"><code>archiver-rag</code></a>, <a
 href="../systems/cloud-alter-ego/"><code>cloud-alter-ego</code></a>, <a
-href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a></p>
+href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
+<a href="../systems/musclememory/"><code>musclememory</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
 background consolidation accountable rather than trusted.</strong> A
 DeepSeek Harness plugin on SQLite with Markdown mirrors, it writes a
@@ -7504,6 +7505,22 @@ session, and a loads-per-request rate archives the unused into
 hand-written skill, the tool drops the fold marker, and lifecycle
 eviction writes no ledger entry. One mark,
 <code>negative_eval</code>.</p>
+<p><strong><a href="../systems/musclememory/">MuscleMemory</a> moves <a
+href="../systems/voyager/">Voyager</a>'s success gate onto the test
+suite, and the gate is a word.</strong> A local FastAPI service fed by
+hooks in Claude Code, Codex and Cursor compiles a session into a skill
+when a test command passes after the last edit. It injects the skill
+only after two further sessions, never the source, pass doing the same
+thing, and one failed check flags a revision for good. Where <a
+href="../systems/altk-evolve/">ALTK-Evolve</a> distils every trajectory
+and <a href="../systems/autoharness/">autoharness</a> gates on lint,
+this gates on observed, repeated outcomes. The weak side is what counts
+as an outcome: any command containing <code>test</code>,
+<code>check</code> or <code>go</code> that exits 0. The hooks never
+report a failure, so flagging and failure contrasts need explicit calls,
+and a <code>learn</code> through MCP lands approved. Four marks:
+<code>trust_state</code>, <code>scope_enforced</code>,
+<code>audit_log</code>, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/megamemory/">MegaMemory</a> makes the
 coding agent the indexer of its own project graph, and keeps removal
 honest but correction thin.</strong> A stdio MCP server over one SQLite

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 733 reports.**
+**This page covers all 734 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6647,3 +6647,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 12,086 lines of Python and 181 commits under 10 author names between 1 September and 12 October 2026. Two marks, `bitemporal` and `negative_eval`. CI runs 570 pytest functions with an 85% coverage floor; the README's LongMemEval results live in a gitignored experiments tree.
 - Study when: you want one store that several coding agents share, filled at conversation boundaries without the agent deciding to write, with as-of recall over validity intervals.
 - Do not copy when: projects must not share or move each other's memories, corrections must be auditable without Git, or nobody will run the sleep pass and read its reports.
+
+### [`musclememory`](../systems/musclememory/)
+
+- Best idea: **two independent checks, never the source session.** `evaluate` refuses the training run, requires the checking run to have executed the revision's required capabilities and matching action shapes, and promotes at two successes and reliability 0.65; one failure flags the revision for good, and every read path requires `validated`.
+- Biggest risk: **the approval queue has a side door.** Hook-learned skills wait for a person's Keep, but `learn` through MCP, REST or an SDK sets `reviewed_at` at once, and the committed MCP test takes a skill from three self-reported traces to a recall hit with no person involved.
+- Most reusable component: `compatibility_freshness` in `packages/musclememory/retrieval.py` with `conditions_satisfied` in `shapes.py` — a fail-closed admission filter over capabilities, permissions, environment, freshness, reliability, status and approval, applied alike to search, plans and related links.
+- Second risk: **failure is reported, not captured.** The hooks only ever call `evaluate` with success, a failed session closes as `incomplete`, and "tests passed" is any command containing `test`, `check`, `go` or `cargo` that exits 0; delete clears the cached compile so the same trace can be learned again.
+- Maturity impression: Apache-2.0 with a trademark NOTICE, 8,043 lines of Python in the package and 27 commits by one author, all dated 13 October 2026. Four marks, `trust_state`, `scope_enforced`, `audit_log` and `negative_eval`. CI runs 112 pytest functions on SQLite and pgvector; three benchmark runs are committed with per-session rows whose totals recompute.
+- Study when: you want procedural memory for coding agents promoted on observed, repeated success rather than on a model's judgement, with a bounded pointer and a capability mapping that carries skills between agents.
+- Do not copy when: the memory must be defended against the agent writing it, a removed skill must stay removed, or several projects on one machine must not see each other's skills.

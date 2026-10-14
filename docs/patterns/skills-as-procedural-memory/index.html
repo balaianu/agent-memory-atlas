@@ -495,6 +495,21 @@ implements none of the three. A procedure carried across a rewrite
 describes the old implementation until something checks it against the
 new one; here nothing does, and an agent that follows the skill believes
 it recorded an acceptance the ledger never received.</p>
+<p><a href="../../systems/musclememory/">MuscleMemory</a> carries the
+outcome gate to coding agents and adds the generality check this page
+asks for. A session becomes a skill only when a test command passes
+after the last edit, and the skill reaches a prompt only after two later
+sessions, never the source, execute its required capabilities and action
+shapes and pass (<code>packages/musclememory/service.py:692-776</code>,
+<code>retrieval.py:211-233</code>). One failed check flags the revision
+for good. It also keeps the failures Voyager discards: failed runs with
+the same action sequence are diffed against the success by argument
+shape and become avoid notes (<code>service.py:414-461</code>). Two
+things weaken the gate. "Passed" is any command containing
+<code>test</code>, <code>check</code>, <code>go</code> or
+<code>cargo</code> that exits 0 (<code>artifacts.py:17-18</code>). And
+the hooks only ever report successes, so in a default install neither
+the flag nor the contrasts fire (<code>service.py:1225-1240</code>).</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Store a skill, then execute the retrieved copy in a fresh context

@@ -420,6 +420,8 @@ visible only in the data.
 
 **[Graft](../../systems/graft/) writes a doubt state and spends it nowhere.** `STALE` is set by `maintain resolve --action stale` in an audited transaction, and the skill offers it for a note the agent could not confirm. Every search arm selects `state IN (0,1)`, so it filters nothing; the query and hook outputs carry no state, so it labels nothing; and every maintenance scan selects `state = 0`, so it drops the note out of the one process that would revisit it. A test pins *"stale nodes stay searchable"*. `SUPERSEDED` and `RETIRED` do filter, and both mean replaced or removed rather than disbelieved, so the report withholds `trust_state`.
 
+**[MuscleMemory](../../systems/musclememory/) keeps the states honest and lets the client supply the evidence that moves them.** A revision is `provisional`, `validated` or `flagged` and a procedure `provisional`, `active`, `flagged` or `retired`; search, plan composition and related-skill links all require `active` and `validated` (`packages/musclememory/retrieval.py:228-230`, `:409-410`, `planning.py:40-41`). `flagged` is terminal for a revision: no later success clears it (`service.py:827-836`). The transitions are driven by outcomes the caller reports, and the compiler stamps every revision *"Completion evidence is caller-attested"* (`compiler.py:212`). Two writers sit outside the ladder: a revise sets a `retired` procedure back to `provisional` without reading its old value (`service.py:464-474`), and the hook path never reports a failure, so `flagged` has no automatic producer.
+
 ## Tests to require
 
 - Prove candidates cannot enter verified-only context.

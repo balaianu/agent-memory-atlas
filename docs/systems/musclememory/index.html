@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local service that compiles
+coding-agent sessions whose tests passed into versioned skills, and
+injects one only after two independent passing checks.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="MuscleMemory — Agent Memory Atlas">
+    <meta property="og:description" content="A local service that
+compiles coding-agent sessions whose tests passed into versioned skills,
+and injects one only after two independent passing checks.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MuscleMemory — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local service that
+compiles coding-agent sessions whose tests passed into versioned skills,
+and injects one only after two independent passing checks.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>MuscleMemory — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "MuscleMemory",
+      "description": "A local service that compiles coding-agent sessions whose tests passed into versioned skills, and injects one only after two independent passing checks.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Procedural memory compiled from coding
+sessions whose tests passed</p>
+          <h1>MuscleMemory</h1>
+          <p class="document-deck">A local service that compiles
+coding-agent sessions whose tests passed into versioned skills, and
+injects one only after two independent passing checks.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/TheWariend/MuscleMemory">
+              <span>Source</span>
+              <strong>TheWariend/MuscleMemory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">
+              <span>Analyzed revision</span>
+              <code>4c7b01b4…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-14</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/TheWariend--MuscleMemory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>TheWariend--MuscleMemory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0,
+with a NOTICE withholding the MuscleMemory and TheWariend
+marks</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>8,043
+lines of Python in packages/musclememory (651 of them Alembic
+migrations), 3,705 in benchmarks/, and 3,447 lines in the TypeScript SDK
+and dashboard sources</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>27
+commits on main by one author, all dated 13 October 2026; version
+0.1.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>112
+pytest functions in 22 files, run in CI against SQLite and a pgvector
+service; 5 TypeScript test files; three committed benchmark runs with
+SHA-256 manifests</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>MuscleMemory is procedural memory for coding agents. Hooks in Claude
+Code, Codex and Cursor record every tool call. When a session ends with
+a test command passing after the last code change, the service compiles
+the session into a skill — files to change, the test that proved it,
+what to avoid — and later hands an agent a short pointer to it. What is
+notable is the promotion rule: a skill reaches a prompt only after two
+further sessions, not the one it came from, pass while doing the same
+thing, and one failed check takes it out for good. What is weak is
+everything that decides "passed". The evidence is whatever the capture
+reports, the test gate is a word list, the default hook path never
+records a failure, and the agent's own MCP tools can learn and validate
+a skill with no person involved.</p>
+<p>The system is one FastAPI service with a REST API, a five-tool MCP
+endpoint and a React dashboard, over SQLite by default or PostgreSQL
+with pgvector. Retrieval fuses exact file-path matches, BM25 and local
+MiniLM embeddings, then refuses any candidate that is not active,
+validated, approved, fresh and runnable with the agent's own tools. The
+README frames the result as learning from what worked and what
+failed.</p>
+<p>Five findings shape the rest of this report.</p>
+<ul>
+<li><strong>The approval queue covers one producer.</strong>
+Hook-learned skills wait with <code>reviewed_at</code> null until
+someone presses Keep. Any <code>learn</code> through MCP, REST, an SDK
+or <code>hooks learn</code> passes <code>auto=False</code> and lands
+approved (<code>packages/musclememory/service.py:476-483</code>). A
+committed MCP test takes a skill from three self-reported traces to a
+recall hit with no approve call
+(<code>tests/test_mcp.py:33-109</code>).</li>
+<li><strong>The default path never learns from failure.</strong> The
+only in-product caller of <code>evaluate</code> is
+<code>auto_learn</code>, which passes <code>succeeded: True</code>
+(<code>service.py:1225-1240</code>). A hook session whose tests fail
+closes as <code>incomplete</code>, not <code>failure</code>
+(<code>service.py:327-332</code>), so it neither flags the skill it used
+nor feeds a failure contrast.</li>
+<li><strong>"Tests passed" means a word.</strong> A command whose words
+include <code>test</code>, <code>check</code>, <code>go</code>,
+<code>cargo</code> or <code>pytest</code> and exits 0 after the last
+edit closes the session as verified
+(<code>packages/musclememory/artifacts.py:17-18</code>,
+<code>:120-130</code>).</li>
+<li><strong>Removal does not hold.</strong> Delete clears the cached
+compile so the retained trace can be learned again, and a committed test
+asserts that it can
+(<code>tests/test_failure_learning.py:275-298</code>). A revision
+through <code>revise_procedure_token</code> sets a retired procedure
+back to <code>provisional</code>.</li>
+<li><strong>One namespace per machine.</strong>
+<code>musclememory connect</code> gives every agent in every project the
+same tenant and namespace
+(<code>packages/musclememory/local.py:151-162</code>). Paths are stored
+relative to each project root, so <code>app/rounding.py</code> in one
+repository matches <code>app/rounding.py</code> in another.</li>
+</ul>
+<p>Four marks: <code>trust_state</code>, <code>scope_enforced</code>,
+<code>audit_log</code> and <code>negative_eval</code>.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a <strong>procedure</strong>: a stable token with
+numbered revisions. A revision is a step graph compiled
+deterministically from one closed trace whose completion event says
+<code>success</code>
+(<code>packages/musclememory/compiler.py:71-235</code>). Failed steps,
+steps depending on them, read-only detours and unverified checks are
+pruned. The revision also carries the files read and written, the
+commands run, the test command, applicability conditions, and
+plain-English avoid and recovery notes derived from the trace's own
+failures and from failure contrasts.</p>
+<p><strong>The trace, not the agent, is the witness.</strong> The
+compiler never asks a model what happened; it reads the recorded tool
+calls. But each event's <code>status</code>,
+<code>outcome_verified</code> and <code>capture_complete</code> arrive
+from the client, and the contract defaults the last two to
+<code>True</code> (<code>packages/musclememory/core.py:36-38</code>).
+The compiler says so on every revision: <em>"Completion evidence is
+caller-attested; structural validation is not task verification"</em>
+(<code>compiler.py:212</code>).</p>
+<p><strong>Two statuses and a timestamp decide whether a skill is
+believed.</strong> A revision is <code>provisional</code>,
+<code>validated</code> or <code>flagged</code>; a procedure is
+<code>provisional</code>, <code>active</code>, <code>flagged</code> or
+<code>retired</code>; <code>reviewed_at</code> is null until a person
+approves an automatically learned procedure. <code>evaluate</code>
+counts a check only from a run other than the training run
+(<code>service.py:692-695</code>). The run must have executed the
+revision's required capabilities and matching action shapes
+(<code>:704-776</code>), and its reported metrics must match the trace
+(<code>:786-800</code>).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Event</th>
+<th>revision status</th>
+<th>procedure lifecycle</th>
+<th>read path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>learn</code> (new)</td>
+<td>provisional</td>
+<td>provisional</td>
+<td>excluded</td>
+</tr>
+<tr>
+<td><code>learn</code> with <code>revise_procedure_token</code></td>
+<td>new revision, provisional</td>
+<td>provisional, even from retired</td>
+<td>excluded</td>
+</tr>
+<tr>
+<td>second passing check, reliability ≥ 0.65</td>
+<td>validated</td>
+<td>active</td>
+<td>included if <code>reviewed_at</code> is set</td>
+</tr>
+<tr>
+<td>any failed check</td>
+<td>flagged, never cleared</td>
+<td>flagged</td>
+<td>excluded</td>
+</tr>
+<tr>
+<td><code>retire</code></td>
+<td>unchanged</td>
+<td>retired</td>
+<td>excluded</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>rows removed</td>
+<td>rows removed</td>
+<td>gone; trace re-learnable</td>
+</tr>
+</tbody>
+</table></div>
+<p>The read predicates are <code>retrieval.py:228-230</code> and
+<code>:409-410</code>; the writers are <code>service.py:473</code>,
+<code>:827-848</code> and <code>:1297</code>.</p>
+<p><strong>What "learns from failure" does.</strong> Three mechanisms,
+and the first two write text into the skill. Failed steps and retries
+inside the successful trace become avoid and recovery notes
+(<code>packages/musclememory/boundaries.py:88-118</code>). At learn
+time, failed runs in the same namespace with an identical capability
+sequence are diffed against the success by argument shape — key names
+and types, never values. The diff is stored as a <code>contrasts</code>
+row keyed on the pair of runs (<code>service.py:414-461</code>,
+<code>packages/musclememory/shapes.py:168</code>). Third, a failed check
+flags the revision. Only the third withholds anything, and none is keyed
+on a value that later writes consult.</p>
+<p><strong>Against the other procedural memories here.</strong> <a
+href="../voyager/">Voyager</a> writes a skill only when a critic
+confirms success and keeps no failures. MuscleMemory adds what Voyager
+lacks, a reuse count before admission and a record of failed runs, and
+drops execution, since a skill is advice the agent re-derives. <a
+href="../acontext/">Acontext</a> queues distillation on any terminal
+task status, failed included; MuscleMemory learns only from a pass. <a
+href="../sesa/">SESA</a> and <a href="../autoharness/">autoharness</a>
+prune by measured use and can regenerate what they evicted, and a
+deleted MuscleMemory skill comes back from its retained trace the same
+way. <a href="../altk-evolve/">ALTK-Evolve</a> distils guidelines from
+every trajectory with a model; here no generative model runs unless a
+note refiner is configured.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a MuscleMemory skill is written, checked and admitted, where the review queue applies, and the two paths by which a removed skill comes back</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a MuscleMemory skill is written, checked and admitted, where the review queue applies, and the two paths by which a removed skill comes back
+flowchart TD
+    H[&quot;hook capture:&lt;br/&gt;every tool call,&lt;br/&gt;client-reported status&quot;] --&gt; S{&quot;Stop: a command with&lt;br/&gt;a test word exited 0&lt;br/&gt;after the last edit?&quot;}
+    S -- &quot;no&quot; --&gt; I[&quot;run closed as incomplete:&lt;br/&gt;no check, no flag,&lt;br/&gt;no failure contrast&quot;]
+    S -- &quot;yes&quot; --&gt; AL[&quot;auto_learn&quot;]
+    AL --&gt; M{&quot;same files as a provisional&lt;br/&gt;or active skill, and&lt;br/&gt;shapes match?&quot;}
+    M -- &quot;yes&quot; --&gt; CK[&quot;evaluate succeeded=True:&lt;br/&gt;one more check&quot;]
+    M -- &quot;no&quot; --&gt; PEND[&quot;new skill, provisional,&lt;br/&gt;reviewed_at = null&quot;]
+    MCP[&quot;MCP, REST, SDK or&lt;br/&gt;hooks learn&quot;] --&gt; APPR[&quot;new skill, provisional,&lt;br/&gt;reviewed_at = utcnow()&quot;]
+    MCPE[&quot;MCP or SDK evaluate&lt;br/&gt;with succeeded=false&quot;] --&gt; FL[&quot;revision flagged:&lt;br/&gt;never validated again&quot;]
+    PEND --&gt; CK
+    APPR --&gt; CK
+    CK --&gt; V{&quot;two checks and&lt;br/&gt;reliability at least 0.65?&quot;}
+    V -- &quot;yes&quot; --&gt; ACT[&quot;active and validated&quot;]
+    ACT --&gt; G{&quot;reviewed_at set, fresh,&lt;br/&gt;tools and conditions met?&quot;}
+    G -- &quot;yes&quot; --&gt; P[&quot;one pointer per prompt,&lt;br/&gt;at most two per session&quot;]
+    G -- &quot;no: waits for Keep&quot; --&gt; K[&quot;dashboard Keep:&lt;br/&gt;POST approve, write grant&quot;]
+    K --&gt; G
+    ACT --&gt; RT[&quot;retire: excluded&quot;]
+    RT -- &quot;learn with revise_procedure_token&quot; --&gt; APPR
+    ACT --&gt; DEL[&quot;delete: rows gone,&lt;br/&gt;cached compile cleared&quot;]
+    DEL -- &quot;learn on the retained trace,&lt;br/&gt;or the next passing session&quot; --&gt; APPR</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>One Python process serves everything. <code>musclememory serve</code>
+runs uvicorn over a FastAPI app that mounts the REST API under
+<code>/v1</code>, the MCP Streamable HTTP endpoint at <code>/mcp</code>,
+and the built dashboard at <code>/dashboard</code>
+(<code>packages/musclememory/api.py:133-378</code>). A pure-ASGI
+middleware authenticates every <code>/v1</code> and <code>/mcp</code>
+request against a SHA-256 digest of the bearer key and rate-limits per
+key (<code>api.py:45-130</code>). The same middleware rejects unknown
+hosts and origins and caps bodies at 2 MiB. <code>MemoryService</code>
+holds all logic, one SQLAlchemy transaction per call
+(<code>service.py:76-1448</code>).</p>
+<p><strong>Persistence.</strong> Twelve tables across eight Alembic
+migrations: credentials, runs and their events, procedures and
+revisions, evaluations, artifact postings, contrasts, session usage,
+sign-in codes, rate windows and <code>audit_log</code>
+(<code>packages/musclememory/storage.py</code>). Events cascade from
+runs, and revisions, evaluations and postings cascade from procedures.
+Migrations are explicit; startup only checks that the credentials table
+answers.</p>
+<p><strong>Search stack.</strong> On PostgreSQL, keyword candidates come
+from <code>to_tsvector</code> full-text search and vector candidates
+from a partial HNSW index per embedding dimension
+(<code>packages/musclememory/retrieval.py:236-251</code>,
+<code>:440-450</code>). SQLite has neither, so each process keeps one
+normalised NumPy matrix and BM25 postings per tenant, namespace and
+embedding space (<code>retrieval.py:266-335</code>). The cache is
+rebuilt when the revisions table's row count or max rowid changes. Final
+BM25 is computed in Python on both backends over the candidate union, so
+the two backends rank identically
+(<code>retrieval.py:170-192</code>).</p>
+<p><strong>Hooks are their own process.</strong> Each hook call runs
+<code>python -m musclememory hooks receive</code>, appends to a private
+SQLite queue under
+<code>~/.musclememory/hooks/&lt;agent&gt;-state</code>, and delivers
+unacknowledged events over HTTP
+(<code>packages/musclememory/client_hooks.py:513-546</code>). A stopped
+server leaves the queue for <code>musclememory hooks flush</code>. Shell
+commands are bracketed by <code>git status --porcelain</code> snapshots,
+so a file changed by a script counts as an edit
+(<code>packages/musclememory/workspace.py:71-80</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p><code>pipx install thewariend-musclememory</code>, then
+<code>musclememory init</code> creates <code>~/.musclememory</code> at
+mode 0700, migrates the SQLite file and downloads
+<code>all-MiniLM-L6-v2</code> (about 90 MB) through fastembed
+(<code>local.py:56-90</code>). <code>musclememory start</code> runs the
+server in the background on <code>127.0.0.1:8080</code>.
+<code>musclememory connect claude</code> issues a per-agent key into a
+0600 env file and merges hooks into the project's
+<code>.claude/settings.json</code>, backing up the old file
+(<code>local.py:151-217</code>,
+<code>client_hooks.py:896-953</code>).</p>
+<p>No API key for any model is needed; the only outbound calls are an
+optional remote embedder and an optional HTTPS note refiner. The team
+path is <code>compose.yaml</code> with
+<code>pgvector/pgvector:pg17</code> and a read-only, capability-dropped
+backend container. The store is ordinary SQL, inspectable with
+<code>sqlite3</code>; skill definitions are JSON columns.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>run_hook</code> loads the agent's
+config, hands the redacted payload to <code>HookQueue.handle</code>, and
+delivers (<code>client_hooks.py:815-893</code>). <code>handle</code>
+opens a run on <code>UserPromptSubmit</code> and records a tool event on
+each <code>PostToolUse</code> with the mapped capability and effect
+(<code>client_hooks.py:223-464</code>). It marks a gap for unmapped
+tools, parallel calls or missing exit codes, and on <code>Stop</code>
+runs <code>_tests_passed</code> (<code>:466-502</code>). Codex's Bash
+output is parsed for <code>Process exited with code</code>, and a test
+runner's summary line settles a piped run.</p>
+<p><strong>Write.</strong> On <code>verified</code>, the hook calls
+<code>POST /v1/runs/{token}/auto-learn</code> with the skill injected at
+the prompt as a hint (<code>client_hooks.py:838-845</code>).
+<code>auto_learn</code> collects passing test events, gathers
+provisional or active procedures whose current revision wrote any of the
+same files, and calls <code>evaluate</code> for each
+(<code>service.py:1160-1243</code>). The first that does not raise
+counts as checked. Otherwise it calls <code>learn(..., auto=True)</code>
+and rewrites the new revision's provenance with <code>auto: True</code>
+(<code>:1244-1265</code>). <code>learn</code> validates the proof,
+compiles, builds failure contrasts, derives notes, embeds the semantic
+document and writes the revision and its postings
+(<code>service.py:386-529</code>).</p>
+<p><strong>Retrieval.</strong> <code>recall</code> embeds the intent,
+calls <code>hybrid_candidates</code> and <code>rank_candidates</code>,
+adds one-hop related skills, and renders a pointer
+(<code>service.py:531-645</code>). An intent sequenced with "then" or
+"followed by" is split into at most four segments and composed into a
+plan. The hook's <code>recall_once</code> caps each session at two
+injections and one per skill version
+(<code>client_hooks.py:617-669</code>).</p>
+<p><strong>Correction.</strong> <code>evaluate</code>
+(<code>service.py:680-860</code>), <code>retire</code>
+(<code>:1294-1300</code>), <code>delete_memory</code>
+(<code>:1125-1147</code>) and <code>approve</code>
+(<code>:1149-1158</code>). Retire, delete and approve are REST routes
+the dashboard calls (<code>api.py:288-316</code>,
+<code>apps/dashboard/src/api.ts:98-101</code>); <code>evaluate</code> is
+on REST and MCP.</p>
+<p><strong>Agent surface.</strong> <code>build_mcp</code> registers
+<code>musclememory_recall</code>, <code>_observe</code>,
+<code>_learn</code>, <code>_evaluate</code> and <code>_inspect</code>,
+authenticated by the same key the REST API takes
+(<code>packages/musclememory/mcp_server.py:96-193</code>). MCP recall
+strips the definition and notes from the candidate and returns only the
+pointer.</p>
+<p><strong>Tests.</strong> <code>tests/test_failure_learning.py</code>,
+<code>tests/test_engine.py</code>,
+<code>tests/test_client_hooks.py</code> and
+<code>tests/test_mcp.py</code> carry the memory behaviour; <a
+href="#10-tests-evals-and-benchmarks">section 10</a> covers them.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>procedures</code> holds the token, tenant, namespace,
+<code>current_version</code>, <code>lifecycle</code>,
+<code>reviewed_at</code> and timestamps. <code>revisions</code> is keyed
+on <code>(procedure_token, version)</code> and holds the definition
+JSON, a search document, the embedding with its space and dimension,
+success and failure counts, <code>validation_status</code> and
+<code>validated_at</code> (<code>storage.py:83-140</code>).
+<code>evaluations</code> is one immutable row per
+<code>(procedure, version, run)</code>; a re-sent evaluation with
+different content raises <code>evaluation_conflict</code>
+(<code>service.py:801-826</code>).</p>
+<p><strong>Scope.</strong> Every row carries <code>tenant</code>;
+procedures, runs, postings and contrasts carry <code>namespace</code>.
+The tenant comes from the credential, never from the request. The
+namespace is the request's <code>visibility_scope</code>, checked
+against the key's grants by <code>Principal.require</code>
+(<code>packages/musclememory/security.py:65-67</code>). Grants are
+<code>read</code>, <code>write</code>, <code>delete</code> and
+<code>admin</code> per namespace. No column names a project, repository
+or agent.</p>
+<p><strong>Provenance.</strong> A definition's <code>provenance</code>
+holds <code>source_run</code>, the completion proof, the compiler
+version, the removed-event count, the contrast ids and, for hook-learned
+skills, <code>auto</code>. Runs keep the agent name in
+<code>runtime</code>, so <code>inspect</code> can say which agent
+learned a skill and which checked it
+(<code>service.py:948-984</code>).</p>
+<p><strong>Time.</strong> <code>created_at</code>,
+<code>updated_at</code> and <code>validated_at</code> are record times.
+Freshness falls linearly from the last validation to zero at 90 days
+(<code>retrieval.py:213-233</code>). Nothing records when a procedure
+was true of the code it describes.</p>
+<p><strong>Retention.</strong> Runs expire after 30 days, enforced on
+access with a 410 and removed by <code>musclememory purge</code>
+(<code>service.py:159-160</code>, <code>:1302-1306</code>). Skills and
+evaluations stay until deleted. Contrasts cascade from runs, so they go
+with the failed or successful trace, not with the procedure.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Four candidate pools, each limited to 80: exact matches of a path or
+command from the task against artifact postings; BM25 (FTS on
+PostgreSQL); vector neighbours; and the most recently updated eligible
+procedures (<code>retrieval.py:395-461</code>). Every pool is drawn from
+one statement that requires tenant, namespace,
+<code>lifecycle == "active"</code> and
+<code>validation_status == "validated"</code>.</p>
+<p><code>rank_candidates</code> scores the union. Lexical, semantic and
+exact-target rankings are fused by RRF with k = 60, normalised by the
+three-list maximum. A candidate is then dropped unless
+<code>compatibility_freshness</code> passes
+(<code>retrieval.py:211-233</code>). That needs every required
+capability bindable by the agent, every required permission and
+environment value present, and fewer than 90 days since validation. It
+also needs at least two successes, reliability at least 0.65, and a
+validated, active, reviewed record. Every applicability condition must
+be a known kind and satisfied (<code>shapes.py:144-163</code>), so
+free-form conditions fail closed. The survivor needs relevance 0.25, and
+the score is
+<code>0.75 × max(exact, fused) + 0.20 × reliability + 0.05 × freshness</code>
+(<code>retrieval.py:515-535</code>).</p>
+<p>Retrieval is automatic in the hook path and tool-mediated in MCP. No
+model runs at recall; the embedding is local.</p>
+<p><strong>The pointer.</strong> <code>render_pointer</code> emits
+compact JSON (<code>packages/musclememory/delivery.py:26-112</code>). It
+carries a notice that the result is untrusted, the procedure and
+version, title, up to six changed files and the test command. It adds up
+to four before-and-after edit snippets, inputs, preconditions, one avoid
+note, permissions and the inspect tool name. Over budget, it drops whole
+optional fields, then edit snippets, and abstains rather than cut the
+notice or permission list. The default budget is 350 tokens by
+<code>tiktoken</code> <code>o200k_base</code>.</p>
+<p><strong>Failure modes.</strong> Over-recall across projects is the
+one the data model invites: with one namespace per machine, a path-exact
+match from another repository scores 1.0 on the exact arm. Stale hits
+are bounded by the 90-day window. A skill whose steps match a new task
+by file but not by intent can be counted as a check without being the
+right skill. <code>auto_learn</code> matches on written files and action
+shapes, not on the task text.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p><strong>Hot path or deferred.</strong> Every hook call is synchronous
+with a 10-second timeout, and delivery happens inside it. The
+<code>Stop</code> hook delivers the remaining events and calls
+<code>auto-learn</code>, which compiles, embeds and commits before the
+hook returns. Hook failures print a one-line notice and fail open.</p>
+<p><strong>Lag.</strong> A new skill is not retrievable until two
+further passing sessions have checked it and, for a hook-learned skill,
+a person has pressed Keep. The lag is measured in sessions, not
+seconds.</p>
+<p><strong>Deduplication.</strong> A passing session that touches the
+files of an existing provisional or active skill and matches its action
+shapes becomes a check, not a new skill. One that does not match becomes
+a new skill, so two ways of doing the same task are two procedures.
+Nothing merges them.</p>
+<p><strong>Update.</strong> Append-only by revision: a revise adds
+version N+1 and resets the procedure to <code>provisional</code>. Two
+writes rewrite in place. <code>auto_learn</code> replaces the new
+revision's <code>definition</code> to add <code>auto: True</code>
+(<code>service.py:1258-1264</code>), and <code>reindex</code> replaces
+search text and embeddings (<code>:647-678</code>).</p>
+<p><strong>Agent-generated content.</strong>
+<code>learning_policy.title</code>, <code>preconditions</code> and
+<code>expected_outcomes</code> are free text from the caller and reach
+the pointer (<code>core.py:88-94</code>,
+<code>delivery.py:45-50</code>). Redaction strips values under
+secret-like keys and token patterns before storage and before any
+boundary refinement (<code>security.py:11-50</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Each tool call costs one hook process start and, normally, one HTTP
+round trip. Recall costs one local embedding per intent and one per
+segment, plus SQL; <code>docs/benchmarks.md</code> reports about 60 ms
+at 10,000 skills on SQLite, measured with
+<code>benchmarks/scale.py</code>; no result file for it is committed.
+Injection is at most two pointers of at most 350 tokens per session.
+They arrive as hook <code>additionalContext</code> on the user prompt,
+which leaves the system prompt and earlier turns' cache untouched. No
+background pass reads the whole store.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p><code>musclememory connect &lt;agent&gt;</code> is the main path:
+hooks only, no MCP server, and the agent never calls a memory tool. It
+sees one JSON pointer at its next prompt when something matches. Cursor
+has no prompt-context output, so the pointer rides on the first tool
+result's <code>additional_context</code>
+(<code>client_hooks.py:867-890</code>). CleanSlate is wired through a
+TypeScript host adapter whose <code>finishIfVerified</code> mirrors the
+Stop logic
+(<code>packages/sdk-typescript/src/cleanslate.ts:168-176</code>).</p>
+<p>MCP gives an agent the whole loop: observe its own events, learn,
+evaluate, recall and inspect. The Python and TypeScript SDKs give
+application code the same verbs plus <code>auto_learn</code>.
+<code>musclememory export &lt;token&gt; --to claude</code> writes a
+Ready skill into the agent's user skills folder as <code>SKILL.md</code>
+(<code>packages/musclememory/skill_export.py:26-34</code>,
+<code>service.py:986-1018</code>), after which it lives outside the
+store.</p>
+<p>Agency is low on the hook path and total on MCP. A skill learned by
+Codex is handed to Claude Code and Cursor, because file edits map to one
+capability family across agents (<code>shapes.py:128-141</code>).</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>The verifier is a vocabulary.</strong> <code>TESTERS</code>
+and <code>TEST_WORDS</code> hold <code>pytest</code>,
+<code>unittest</code>, <code>jest</code>, <code>vitest</code>,
+<code>cargo</code>, <code>go</code>, <code>tox</code>, <code>nox</code>,
+<code>test</code>, <code>tests</code> and <code>check</code>, and any
+command containing one is a <code>verify</code> operation
+(<code>artifacts.py:17-18</code>, <code>:120-130</code>).
+<code>cargo build</code>, <code>go vet</code>, <code>ruff check</code>
+and <code>echo test</code> all qualify. The roadmap names the piped-test
+and shell-change limits; it does not name this one. A session therefore
+teaches whenever the last edit is followed by any such command exiting
+0.</p>
+<p><strong>Failures are not captured where capture is
+automatic.</strong> A hook session that ends without a passing test
+closes as <code>incomplete</code> on Codex and stays
+<code>recording</code> on Claude Code
+(<code>client_hooks.py:291-314</code>, <code>:558-571</code>). Only a
+completion with <code>capture_complete</code> true and status
+<code>failure</code> sets <code>runs.status = 'failure'</code>
+(<code>service.py:327-332</code>). That comes from
+<code>hooks attest</code> without <code>--succeeded</code>, from receipt
+reconciliation, or from an SDK or CleanSlate caller passing
+<code>succeeded=False</code>. In a default install the failure-contrast
+query at <code>service.py:417-428</code> therefore finds nothing, and an
+injected skill that preceded a failed session is never flagged.</p>
+<p><strong>The review gate.</strong> For hook-learned skills,
+<code>reviewed_at</code> is the gate and <code>retrieval.py:230</code>
+enforces it. The approve route needs <code>write</code>
+(<code>service.py:1152</code>), the grant every agent key carries
+(<code>local.py:156-159</code>); the dashboard key adds
+<code>delete</code> and <code>admin</code>. Neither the hook config nor
+the MCP tool list exposes approve, so on the declared tool surface a
+hook-learned skill waits for a person.</p>
+<p>But <code>learn</code> through MCP lands with
+<code>reviewed_at</code> set, and the integration guide says so:
+<em>"Skills you learn on purpose through the SDK, MCP or
+<code>hooks learn</code> count as approved"</em>
+(<code>docs/integrations.md:83-86</code>). A revision inherits the
+procedure's approval, so new content under an approved token is never
+reviewed. <code>human_review</code> is withheld on these grounds.</p>
+<p><strong>Correction that does not stick.</strong> Retire is undone by
+any revise, which sets <code>lifecycle = "provisional"</code> without
+consulting the old value (<code>service.py:464-474</code>). Delete
+removes the procedure but clears <code>learned_result</code> on its
+source run, so <code>learn</code> on the same retained trace compiles it
+again (<code>service.py:1133-1143</code>). The next passing session on
+the same files also re-learns it into the review queue. There is no
+record of a rejected skill, and <code>tombstone</code> is withheld.</p>
+<p><strong>Scope.</strong> Every read carries tenant and namespace, the
+tenant cannot be supplied by a caller, and the read grant is checked
+before the query (<code>service.py:532</code>, <code>:150-183</code>).
+The weak part is the default: one install, one tenant
+<code>local</code>, one namespace <code>default</code>, shared by every
+agent and every project on the machine. Cross-project recall is a
+property of the local install, not a leak in the code.</p>
+<p><strong>Prompt injection.</strong> Free text a caller supplies
+through <code>learning_policy</code> reaches the pointer. The pointer
+opens with a notice that the result is untrusted and that normal
+permissions apply, and MuscleMemory executes nothing. Captured tool
+arguments, including edit snippets, become the pointer's
+<code>edits</code>, so a planted edit in a passing session is replayed
+as guidance.</p>
+<p><strong>Concurrency.</strong> Writes take row locks with
+<code>with_for_update</code>, and events are idempotent by id and refuse
+changed contents (<code>service.py:150-161</code>,
+<code>:260-270</code>). Evaluations are immutable, and a re-sent learn
+with a different request digest raises <code>learning_conflict</code>
+(<code>:393-398</code>). The hook queue serialises separate hook
+processes through SQLite transactions.</p>
+<p><strong>Audit.</strong> <code>audit_log</code> gets one row per
+mutation in the same transaction and is never updated or deleted in the
+tree. It records operation, reference and key, not content. Its one
+reader is the usage endpoint's count by operation
+(<code>service.py:1308-1315</code>).</p>
+<p><strong>Delete semantics.</strong> A deleted skill's rows go with it
+by cascade. Its source trace stays until it expires, its contrasts stay
+with their runs, its audit rows stay, and any exported
+<code>SKILL.md</code> stays in the agent's skills folder.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p><strong>What the suite asserts.</strong> 112 pytest functions in 22
+files run in CI against SQLite and a <code>pgvector/pgvector:pg17</code>
+service (<code>.github/workflows/verify.yml</code>). The PostgreSQL
+cases skip without <code>MM_TEST_POSTGRES_URL</code>, which CI sets. A
+<code>conftest.py</code> fixture forces the lexical-hash embedder, so
+the suite never exercises MiniLM ranking. I ran nothing; these are read
+from the files.</p>
+<p><strong>Negative retrieval, with controls.</strong> Three cases
+assert that a skill is not recalled, each beside a positive recall on
+the same query:</p>
+<ul>
+<li><code>test_validation_and_regression_gate</code> asserts
+<code>no_match</code> after one check, a hit after two, and
+<code>no_match</code> after a failed third
+(<code>tests/test_failure_learning.py:242-272</code>).</li>
+<li><code>test_versioning_independent_validation_and_regression</code>
+asserts a hit on validated revision 2 and <code>no_match</code> after it
+fails (<code>tests/test_engine.py:235-249</code>).</li>
+<li><code>test_passing_sessions_learn_then_wait_for_approval</code>
+drives Codex-shaped hook payloads to an active skill, then asserts
+<code>no_match</code> before approval and a hit after
+(<code>tests/test_client_hooks.py:537-563</code>).</li>
+</ul>
+<p>Scope has a foreign-tenant miss on SQLite
+(<code>tests/test_engine.py:79-83</code>) and on PostgreSQL with a
+positive recall first (<code>tests/test_migrations.py:83-96</code>).
+Fail-closed conditions are parametrised over five shapes
+(<code>tests/test_failure_learning.py:132-145</code>).</p>
+<p><strong>What no test asserts.</strong> That a retired skill is
+excluded: the only retire case checks the status code
+(<code>tests/test_api.py:79</code>). That a deleted skill stays gone:
+the suite asserts the opposite
+(<code>tests/test_failure_learning.py:275-298</code>). That an
+MCP-learned skill waits for anyone: <code>protocol_workflow</code>
+passes with no approve (<code>tests/test_mcp.py:33-109</code>). That a
+failing hook session flags the skill it was handed:
+<code>test_failing_tests_teach_nothing</code> checks only that no skill
+was learned (<code>tests/test_client_hooks.py:566-569</code>).</p>
+<p><strong>The benchmarks measure efficiency on repeat tasks.</strong>
+Three runs are committed with harness, per-session rows and a
+<code>SHA256.json</code> manifest. <code>codex/luna-03</code> is nine
+paired Codex sessions on three planted-bug tasks;
+<code>claude/sonnet-01</code> is four Claude Code pairs on skills Codex
+learned; <code>codex/django-forms-01</code> is one SWE-bench Verified
+issue, three repeats per arm. I recomputed luna-03's totals from
+<code>results.json</code> with my own script: 981,734 against 731,549
+input tokens, 56 against 39 tool calls, nine passes per arm, matching
+the README. Every file in all three manifests matched its digest. The
+manifests are the author's, so they show the files are unchanged since
+fingerprinting, not who produced them.</p>
+<p>The luna-03 report records one rule change mid-run, with the harness
+digests before and after. Every memory-off session also passed, so the
+run measures cost, not success. No benchmark measures what a wrong or
+flagged skill does to a session, and none measures cross-project recall.
+There is no paper; <code>docs/whitepaper.md</code> is a design document
+citing Voyager, AWM, ExpeL and Memp as related work.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Exclude the training run from its own validation.</strong> A
+procedure learned from a session cannot be checked by that session;
+require two independent runs that executed the same required
+capabilities.</li>
+<li><strong>Fail closed on applicability.</strong> Store conditions in a
+closed vocabulary (<code>capability:</code>, <code>permission:</code>,
+<code>environment:</code>) and drop any candidate with an unknown or
+unmet one, including free text.</li>
+<li><strong>Compare failures by shape.</strong> Diffing a failed and a
+successful run on key names and types finds the step that mattered
+without storing or transmitting values.</li>
+<li><strong>Bound the pointer by whole fields.</strong> Drop optional
+fields and whole edit hunks to meet a token budget, and abstain rather
+than cut the safety notice.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A review gate with a side door.</strong> If the human queue
+applies to one write path, any other path that writes the same table is
+the producer's way around it. Put the gate on the record, not on the
+caller.</li>
+<li><strong>A verifier that is a word list.</strong> "A command named
+like a test exited 0" is a claim the agent can satisfy without testing
+anything.</li>
+<li><strong>Learning from failure only when someone reports it.</strong>
+If the automatic capture records only successes, every failure mechanism
+downstream is dead in the default install.</li>
+<li><strong>Delete that re-arms.</strong> Clearing a cache so the same
+evidence compiles again turns a person's Delete into a
+postponement.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>MuscleMemory suits one developer who repeats similar repair tasks in
+a few repositories with real test suites, wants measurable token
+savings, and will look at the dashboard's queue. It runs locally on one
+SQLite file and a 90 MB model. A team sharing a PostgreSQL namespace
+should first split namespaces per repository and decide whether
+MCP-learned skills may skip review. Walk away if the agent's work is not
+gated by tests that mean something, if a removed skill must stay
+removed, or if the memory must be defended against the agent that writes
+it.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>How often the word-list verifier admits a session whose command was
+not a test, on real histories; answering it needs the hooks run over
+recorded sessions.</li>
+<li>Whether the maintainers intend <code>hooks attest</code> or a future
+hook to report failed sessions, which would make flagging and contrasts
+reachable by default.</li>
+<li>How the SQLite index behaves when several server processes share one
+file, since its fingerprint is a whole-table count and max rowid.</li>
+<li>Whether the hosted mode on the roadmap will give namespaces per
+repository.</li>
+<li>What the CleanSlate host does with <code>finish(false)</code>,
+outside this tree.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>packages/musclememory/storage.py</code>,
+<code>packages/musclememory/migrations/versions/*.py</code>,
+<code>scripts/database_backup.py</code>.</li>
+<li><strong>Write:</strong>
+<code>packages/musclememory/service.py</code> (<code>learn</code>,
+<code>auto_learn</code>, <code>evaluate</code>, <code>observe</code>),
+<code>packages/musclememory/compiler.py</code>,
+<code>packages/musclememory/boundaries.py</code>,
+<code>packages/musclememory/shapes.py</code>,
+<code>packages/musclememory/artifacts.py</code>.</li>
+<li><strong>Retrieval and context:</strong>
+<code>packages/musclememory/retrieval.py</code>,
+<code>packages/musclememory/planning.py</code>,
+<code>packages/musclememory/delivery.py</code>.</li>
+<li><strong>Capture and hooks:</strong>
+<code>packages/musclememory/client_hooks.py</code>,
+<code>packages/musclememory/workspace.py</code>,
+<code>packages/musclememory/spool.py</code>,
+<code>packages/musclememory/observer.py</code>,
+<code>packages/sdk-typescript/src/*.ts</code>.</li>
+<li><strong>Surfaces:</strong>
+<code>packages/musclememory/api.py</code>,
+<code>packages/musclememory/mcp_server.py</code>,
+<code>packages/musclememory/gateway.py</code>,
+<code>packages/musclememory/cli.py</code>,
+<code>packages/musclememory/local.py</code>,
+<code>packages/musclememory/skill_export.py</code>,
+<code>apps/dashboard/src/api.ts</code>.</li>
+<li><strong>Security:</strong>
+<code>packages/musclememory/security.py</code>,
+<code>packages/musclememory/config.py</code>.</li>
+<li><strong>Tests and benchmarks:</strong>
+<code>tests/test_failure_learning.py</code>,
+<code>tests/test_engine.py</code>,
+<code>tests/test_client_hooks.py</code>, <code>tests/test_mcp.py</code>,
+<code>tests/test_migrations.py</code>, <code>tests/conftest.py</code>,
+<code>benchmarks/reproduce.py</code>,
+<code>benchmarks/results/*/*/results.json</code>,
+<code>benchmarks/results/*/*/SHA256.json</code>,
+<code>.github/workflows/verify.yml</code>.</li>
+<li><strong>Docs read as claims:</strong> <code>README.md</code>,
+<code>docs/how-it-works.md</code>, <code>docs/integrations.md</code>,
+<code>docs/whitepaper.md</code>, <code>docs/roadmap.md</code>,
+<code>docs/benchmarks.md</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E 'reviewed_at' -- packages</code> — set at
+<code>service.py:481</code> (null only when <code>auto</code>) and
+<code>:1154</code>, read at <code>retrieval.py:230</code>,
+<code>service.py:912</code> and <code>:1080</code>; the migration
+backfills <code>created_at</code>.</li>
+<li><code>git grep -n -E 'lifecycle *=|lifecycle ==|lifecycle\.in_|lifecycle !=' -- packages</code>
+— writers at <code>service.py:473</code>, <code>:843</code> and
+<code>:1297</code>; filters at <code>planning.py:40</code>,
+<code>retrieval.py:229</code> and <code>:409</code>.</li>
+<li><code>git grep -n -E 'validation_status *=|validation_status ==|validation_status !=' -- packages</code>
+— <code>flagged</code> set at <code>service.py:830</code> and checked at
+<code>:834</code>; no writer clears it.</li>
+<li><code>git grep -n -E '\bAudit\b|audit_log' -- packages apps scripts</code>
+— construction at <code>service.py:135</code>, an aggregate select at
+<code>:1312-1314</code>, the model, the migration and the backup's table
+list; no update or delete.</li>
+<li><code>git grep -n -E 'evaluate\(|musclememory_evaluate|/v1/evaluate' -- ':!tests' ':!docs'</code>
+— product callers are <code>service.py:1226</code> (always
+<code>succeeded: True</code>) and the REST, MCP, gateway and SDK
+forwards; the rest are benchmarks and examples.</li>
+<li><code>git grep -n -E '"succeeded": False|succeeded=False' -- packages</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'tombstone|rejected_|blocklist|denylist|suppress' -- packages</code>
+— only <code>rejected_event_count</code> on the observe response.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_until|invalid_at|as_of' -- packages</code>
+— one false positive, <code>invalid_tool_metadata</code> in
+<code>observer.ts</code>.</li>
+<li><code>git grep -n -i -E 'project|repository|repo_' -- packages/musclememory/retrieval.py packages/musclememory/service.py packages/musclememory/core.py</code>
+— comments only; no project column or predicate.</li>
+<li><code>git grep -n -E 'retire' -- tests packages/sdk-typescript/tests</code>
+— one hit, the status-code assertion at
+<code>tests/test_api.py:79</code>.</li>
+<li><code>git grep -n -E 'rmtree|unlink|remove\(' -- packages/musclememory/skill_export.py packages/musclememory/service.py</code>
+— staging cleanup only; nothing removes an exported skill.</li>
+<li><code>git ls-files benchmarks/results | cut -d/ -f3-4 | sort -u</code>
+— <code>claude/sonnet-01</code>, <code>codex/django-forms-01</code> and
+<code>codex/luna-03</code>; no scale result is committed.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|citation|doi\.org'</code>
+— related-work citations in <code>docs/whitepaper.md:378-397</code>; no
+<code>CITATION.cff</code> and no paper for this system.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-14</strong> — <a
+href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d"><code class="commit-id" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">4c7b01b4…</code></a>
+— first reading, at the head of <code>main</code>, a commit of 13
+October 2026. Four marks: <code>trust_state</code>,
+<code>scope_enforced</code>, <code>audit_log</code>,
+<code>negative_eval</code>. Screened before reading from a full clone:
+no auto-run surface, one build-time execution point
+(<code>tests/conftest.py</code>), five dependency files inside the
+seven-day cooldown, and two floating-range manifests without a lockfile
+beside them (<code>apps/dashboard/package.json</code>,
+<code>packages/sdk-typescript/package.json</code>). Apache-2.0 with a
+<code>NOTICE</code> and no rider. Nothing was installed, built or run;
+benchmark totals were recomputed from committed JSON with a separate
+script.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

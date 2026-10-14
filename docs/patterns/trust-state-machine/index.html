@@ -701,6 +701,24 @@ note out of the one process that would revisit it. A test pins
 <em>"stale nodes stay searchable"</em>. <code>SUPERSEDED</code> and
 <code>RETIRED</code> do filter, and both mean replaced or removed rather
 than disbelieved, so the report withholds <code>trust_state</code>.</p>
+<p><strong><a href="../../systems/musclememory/">MuscleMemory</a> keeps
+the states honest and lets the client supply the evidence that moves
+them.</strong> A revision is <code>provisional</code>,
+<code>validated</code> or <code>flagged</code> and a procedure
+<code>provisional</code>, <code>active</code>, <code>flagged</code> or
+<code>retired</code>; search, plan composition and related-skill links
+all require <code>active</code> and <code>validated</code>
+(<code>packages/musclememory/retrieval.py:228-230</code>,
+<code>:409-410</code>, <code>planning.py:40-41</code>).
+<code>flagged</code> is terminal for a revision: no later success clears
+it (<code>service.py:827-836</code>). The transitions are driven by
+outcomes the caller reports, and the compiler stamps every revision
+<em>"Completion evidence is caller-attested"</em>
+(<code>compiler.py:212</code>). Two writers sit outside the ladder: a
+revise sets a <code>retired</code> procedure back to
+<code>provisional</code> without reading its old value
+(<code>service.py:464-474</code>), and the hook path never reports a
+failure, so <code>flagged</code> has no automatic producer.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Prove candidates cannot enter verified-only context.</li>

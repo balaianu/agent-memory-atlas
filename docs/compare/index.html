@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-733, generated from each report's frontmatter —
+734, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-733, generated from each report's frontmatter —
+734, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-733, generated from each report's frontmatter —
+734, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 733, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 734, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-733, generated from each report's frontmatter —
+734, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 733 systems by the seven mechanisms
+filters all 734 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -20070,6 +20070,54 @@ licence is BSL 1.1, so the mechanisms are readable and their use is
 constrained twice over</td>
 </tr>
 <tr>
+<td><a
+href="../systems/musclememory/"><code>musclememory</code></a></td>
+<td>A procedure with numbered revisions; each revision is a step graph
+compiled from one successful tool trace, with files read and changed,
+the test command, applicability conditions, avoid and recovery notes,
+success and failure counts, and a validation status</td>
+<td>SQLite at ~/.musclememory/memory.db by default, PostgreSQL with
+pgvector and partial HNSW indexes for teams; runs, events, procedures,
+revisions, evaluations, artifact postings, failure contrasts and an
+audit_log table</td>
+<td>Candidates from exact file and command postings, BM25 (PostgreSQL
+FTS on that backend) and MiniLM cosine with a 0.40 floor, fused by RRF;
+only active, validated, reviewed, fresh and capability-compatible
+revisions score; one-hop producer and consumer links add related
+skills</td>
+<td>Hooks for Claude Code, Codex and Cursor record every tool call; a
+Stop with a test command passing after the last change counts the
+session as a check on a matching skill or compiles a new one pending a
+person's OK. MCP, REST and SDK learn writes an approved skill</td>
+<td>A revision is added by learn with revise_procedure_token; one failed
+check flags a revision for good; retire hides a procedure; delete
+removes it and clears the cached compile so the same trace can be
+learned again. Traces expire after 30 days through a manual purge</td>
+<td>Tenant from the API key and namespace from a granted
+visibility_scope on every read; the local install puts every agent and
+project in one namespace; no project key</td>
+<td>musclememory connect installs hooks that inject one compact JSON
+pointer per prompt, at most two per session; five MCP tools; Python and
+TypeScript SDKs; a CleanSlate host adapter; a dashboard; export of a
+Ready skill as SKILL.md</td>
+<td>None in the server. Hooks queue events in a local SQLite and deliver
+them on each hook call; trace purge is a CLI command to schedule
+externally</td>
+<td>Two stored statuses gate every read, and an approval timestamp gates
+automatically learned skills; success evidence is whatever the capture
+or the caller reports, and the agent's MCP tools can learn, validate and
+so publish a skill with no person</td>
+<td>A two-check promotion rule that excludes the training run; a
+fail-closed applicability filter; failure contrasts compared on
+value-free action shapes; a bounded pointer that never cuts code
+mid-string; benchmark totals that recompute from committed per-session
+rows</td>
+<td>Skills learned through MCP or the SDK skip the review queue; the
+default hook path never records a failed check or a failed run; the test
+gate is a word list; a deleted or retired skill can return; one
+namespace spans every project on the machine</td>
+</tr>
+<tr>
 <td><a href="../systems/muse-brain/"><code>muse-brain</code></a></td>
 <td>An observation — content, territory, texture, mood, type, tags, an
 embedding, an access count, a novelty score, a processing count and
@@ -32273,7 +32321,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>66 of 733:</em> <a
+<p><em>66 of 734:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32343,7 +32391,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>190 of 733:</em> <a
+<p><em>191 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32465,6 +32513,7 @@ href="../systems/mnemora/"><code>mnemora</code></a>, <a
 href="../systems/monet/"><code>monet</code></a>, <a
 href="../systems/muninn/"><code>muninn</code></a>, <a
 href="../systems/muninndb/"><code>muninndb</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/neoth/"><code>neoth</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
@@ -32541,7 +32590,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>123 of 733:</em> <a
+<p><em>123 of 734:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32672,7 +32721,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>322 of 733:</em> <a
+<p><em>323 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -32882,6 +32931,7 @@ href="../systems/moltbrain/"><code>moltbrain</code></a>, <a
 href="../systems/monet/"><code>monet</code></a>, <a
 href="../systems/muninn/"><code>muninn</code></a>, <a
 href="../systems/muninndb/"><code>muninndb</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/muse-brain/"><code>muse-brain</code></a>, <a
 href="../systems/mushroomdb/"><code>mushroomdb</code></a>, <a
 href="../systems/nanoclaw/"><code>nanoclaw</code></a>, <a
@@ -33010,7 +33060,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>253 of 733:</em> <a
+<p><em>254 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33176,6 +33226,7 @@ href="../systems/mnestic/"><code>mnestic</code></a>, <a
 href="../systems/monet/"><code>monet</code></a>, <a
 href="../systems/munder-difflin/"><code>munder-difflin</code></a>, <a
 href="../systems/muninndb/"><code>muninndb</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/mushroomdb/"><code>mushroomdb</code></a>, <a
 href="../systems/neko/"><code>neko</code></a>, <a
 href="../systems/neurakeep/"><code>neurakeep</code></a>, <a
@@ -33273,7 +33324,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 733:</em> <a
+<p><em>96 of 734:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33373,7 +33424,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>443 of 733:</em> <a
+<p><em>444 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33659,6 +33710,7 @@ href="../systems/monet/"><code>monet</code></a>, <a
 href="../systems/moth-memory-template/"><code>moth-memory-template</code></a>,
 <a href="../systems/muninn/"><code>muninn</code></a>, <a
 href="../systems/muninndb/"><code>muninndb</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/muse-brain/"><code>muse-brain</code></a>, <a
 href="../systems/mushroomdb/"><code>mushroomdb</code></a>, <a
 href="../systems/nano-brain/"><code>nano-brain</code></a>, <a
@@ -33849,8 +33901,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-443 repositories of
-733 assert that particular material must
+444 repositories of
+734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -33923,7 +33975,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 733 is the real figure for the second kind, and
+of 734 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not
