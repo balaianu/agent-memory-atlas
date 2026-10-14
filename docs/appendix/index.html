@@ -14106,6 +14106,38 @@ unpinned surfaces, all but three inside the vendored agent frameworks
 under <code>agent-frameworks/</code>; only the evaluator, the paper and
 the leaderboard's committed submission were read, and nothing was
 installed or run.</li>
+<li><strong>AgentHorizon (<a
+href="https://arxiv.org/abs/2610.11050">arXiv:2610.11050</a>) was
+examined and has no report: it is a benchmark for judges of computer-use
+trajectories, and its unit of work is one trajectory.</strong>
+<em>AgentHorizon: Evaluating Agentic Judges for Long-Horizon
+Computer-Use Tasks</em> (Lù, Vattikonda, Hajimiri, Pesaran Zadeh,
+BehnamGhader, Darwiche, Kazemnejad, Pal, Drouin and Reddy, v1 8 October
+2026), code at <code>ServiceNow/agenthorizon</code>, read at <a
+href="https://github.com/ServiceNow/agenthorizon/commit/8584a347370ab1d92b908732cfabe72b3a23486d"><code class="commit-id" title="8584a347370ab1d92b908732cfabe72b3a23486d">8584a347…</code></a>:
+four commits from 9 June to 6 October 2026, 36 files, about 8,200 lines
+of Python, and no licence file. It scores whether a judge accepts a
+successful trajectory and rejects one that completed a similar but
+incompatible request, built by swapping instructions between paired
+recordings, so every negative has its positive control from the same
+recording. Nothing in it stores or retrieves memory across tasks, which
+is this atlas's bar. One thing about how it runs agentic judges belongs
+here. In sandbox mode each judge CLI runs with the experiment's
+<code>sandbox/</code> directory as its working directory
+(<code>scripts/evaluate_trajectories.py:1390-1397</code>,
+<code>:1833</code>), and Claude Code keys its per-project state, the
+session transcripts and the auto-memory directory among them, by working
+directory, which the script's own transcript lookup also assumes
+(<code>:1642-1643</code>). So every task in one experiment shares one
+Claude Code project, although a comment says each eval "creates a
+brand-new project dir (via <code>--session-id &lt;uuid&gt;</code>)"
+(<code>:807-811</code>); whether any judge wrote memory there was not
+checked, since nothing was run. The same lookup builds the path from the
+script's own working directory rather than the sandbox, so in sandbox
+mode it reads a different project from the one the judge wrote to. The
+screen found no manifest it parses (the tree has no requirements,
+pyproject or build file), so the scripts were read by hand; nothing was
+installed or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
