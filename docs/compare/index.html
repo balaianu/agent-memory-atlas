@@ -15026,72 +15026,59 @@ re-asserted</td>
 </tr>
 <tr>
 <td><a href="../systems/loreweave/"><code>loreweave</code></a></td>
-<td>A fact — subject, predicate, object, a display form, valid window,
-recorded and superseded times, a source type, the note path and block
-anchor it came from, and a confidence — written as a markdown line and
-mirrored into a row</td>
+<td>A fact — subject, predicate, object, a display form, a valid window,
+a recorded time, supersession columns, a source type, the note path and
+block anchor it came from, and a confidence — written as a markdown line
+and replayed into a row</td>
 <td>A markdown vault as the durable store, with a SQLite index of notes,
-blocks, links, entities, mentions, edges, facts, embeddings and an
-access log, rebuilt from the vault on demand</td>
+blocks, links, entities, mentions, edges, facts, fact links, embeddings
+and an access log, rebuilt from the vault whenever an index sees a
+changed note</td>
 <td>Lexical search over blocks, embeddings, and a graph of entity
-mentions and edges, with a rerank stage and a retrievability decay
-fitted from the vault's own access history</td>
-<td><code>lore assert</code> and <code>lore invalidate</code> from the
-CLI, fifteen <code>lore_*</code> MCP tools, a capture path, and
-extraction from field syntax in any note</td>
-<td>A new value supersedes the old and sets its
-<code>valid_until</code>; <code>[invalidate]</code> closes a fact at a
-date; nothing is deleted, and removing a fact means removing its
-markdown line</td>
-<td>None — the vault is the boundary, and no fact carries a scope
-key</td>
-<td>A <code>lore</code> CLI, an MCP server with fifteen tools, a file
-watcher, and a session-resume path that reconstructs what was being
-worked on</td>
-<td>A <code>dream</code> pass that consolidates, proposes links, and
-fits the vault's forgetting-curve shape from its own retrieved-then-used
-history</td>
+mentions, co-occurrence and current-fact edges, with a rerank stage and
+a retrievability decay fitted from the vault's own access history; facts
+are queried by slot, as of a valid date, or as known at a record
+date</td>
+<td>lore assert and lore invalidate from the CLI, lore_assert_fact and
+lore_invalidate_fact over MCP, a capture path that appends timestamped
+bullets to any vault note, and extraction from frontmatter and field
+syntax in any note</td>
+<td>A new value closes the slot's previous one; an invalidate line
+closes the current value at a date; nothing deletes a fact, and removing
+one means removing its markdown line or the note field it was extracted
+from</td>
+<td>None — the vault is the boundary; search takes optional folder and
+tag facets chosen by the caller, and no fact carries a scope key</td>
+<td>A lore CLI, an MCP server with fifteen tools, a file watcher, and a
+session-resume delta computed from record time</td>
+<td>A dream pass that consolidates, proposes links, writes a digest and
+a review-queue note, and fits the vault's forgetting-curve shape from
+its own retrieved-then-used history</td>
 <td>Provenance on every fact through the note path and block anchor it
-was extracted from, a
-<code>stated</code>/<code>extracted</code>/<code>inferred</code> source
-type, and a confidence; supersession closes rather than overwrites</td>
-<td>Two pieces of work stand out, and both are bugs that were measured
-before they were fixed. The first is subject-key normalisation:
-<code>keyOf</code> refuses a subject that normalises to an empty key,
-and the comment reproduces what happened when it did not —
-"<code>assert 🚀 status launched</code>, then
-<code>assert — status cancelled</code> reported 'superseded: launched',
-and <code>invalidate 🎯 status</code> closed the <code>—</code> fact.
-Three unrelated subjects contradicting one another through a key none of
-them had." The fix is stated as a rule worth copying: "Refuse the key,
-name the value, and say why, so the caller can add a word to it." The
-second is the aggregate total, which is returned rather than requested,
-"because the bug this replaces was exactly a caller not asking: the
-query has always capped at 100 groups and said nothing, so 'the
-computable layer' answered a question about 150 distinct values with 100
-rows and no indication. An opt-in total would have been the same design
-that produced that." Behind both sits the architectural choice: the
-markdown is the record and the index is a replay, so a fact an agent got
-wrong is corrected by editing a line in a file the user already
-owns</td>
-<td>There is no scope of any kind: no tenant, project or agent key on a
-fact, and no predicate on any read, so a vault is the only boundary and
-two agents sharing one vault share everything in it. The status
-vocabulary is a write-time genre rather than an epistemic state —
-<code>source_type</code> is <code>stated</code>, <code>extracted</code>
-or <code>inferred</code>, decided when the fact is written, displayed in
-the CLI and used in a single timeline heuristic, so nothing in it
-withholds a fact from retrieval; what withholds is supersession, which
-is the temporal axis rather than a judgement about truth. The MCP
-adjudication step is addressed to the model:
-<code>lore_propose_facts</code> says it "keeps judgement with you and
-out of the index", and the "you" reading that description is an agent,
-so a candidate fact promoted through it has been reviewed by the same
-kind of thing that proposed it. And there are no committed cases
-asserting that particular material must not be retrieved, which for a
-store whose default query already filters superseded and expired facts
-would be cheap to add and would pin the behaviour the whole design rests
-on</td>
+came from, a stated, extracted or inferred source type honoured from a
+line only under lore/journal, and a confidence; supersession closes
+rather than overwrites</td>
+<td>The authoritative artifact is the user's markdown, and the index is
+a replay that can be wiped. Assertions and closures are appended to a
+dated journal before any row changes, and a rebuild reproduces the same
+fact state, which a test pins. The code refuses inputs it cannot make
+meaningful and says why: a subject that normalises to an empty key, a
+close before its start. Totals are returned rather than requested: a
+capped fact query or aggregate reports how many matched, because the bug
+each replaces was a caller not asking. Commit messages carry the
+reproduction for each fix, with the measured output before and
+after</td>
+<td>There is no scope of any kind, so two agents sharing a vault share
+every fact in it. The record-time axis has gaps. valid_until is one
+column rewritten by each close, so asOf combined with an earlier
+asKnownAt answers from a close learned afterwards. An invalidate records
+no transaction time. An extracted fact's recorded_at is its note's
+modification time, and a recorded_at attribute in any note is believed.
+By reading, an invalidate on a slot held only by an extracted fact is
+lost at the next replay, because extraction inserts after the journal's
+closes are applied. source_type withholds nothing from retrieval. The
+only adjudication surface is an MCP tool description addressed to the
+model</td>
 </tr>
 <tr>
 <td><a
@@ -33447,7 +33434,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>449 of 734:</em> <a
+<p><em>450 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33655,6 +33642,7 @@ href="../systems/llm-wiki-cli/"><code>llm-wiki-cli</code></a>, <a
 href="../systems/lobu/"><code>lobu</code></a>, <a
 href="../systems/local-memory-mcp/"><code>local-memory-mcp</code></a>,
 <a href="../systems/loreai/"><code>loreai</code></a>, <a
+href="../systems/loreweave/"><code>loreweave</code></a>, <a
 href="../systems/lossless-context-mcp/"><code>lossless-context-mcp</code></a>,
 <a href="../systems/m-flow/"><code>m-flow</code></a>, <a
 href="../systems/m3-memory/"><code>m3-memory</code></a>, <a
@@ -33929,7 +33917,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-449 repositories of
+450 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

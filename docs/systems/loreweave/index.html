@@ -5,24 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="A temporal knowledge engine over a
-markdown vault whose fact lines are the durable store, with both a
-valid-time as-of and a transaction-time as-known-at query, and a subject
-key that refuses to normalise to nothing.">
+markdown vault whose journal of fact lines is the durable record,
+queried by valid time and by record time.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Loreweave — Agent Memory Atlas">
     <meta property="og:description" content="A temporal knowledge engine
-over a markdown vault whose fact lines are the durable store, with both
-a valid-time as-of and a transaction-time as-known-at query, and a
-subject key that refuses to normalise to nothing.">
+over a markdown vault whose journal of fact lines is the durable record,
+queried by valid time and by record time.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Loreweave — Agent Memory Atlas">
     <meta name="twitter:description" content="A temporal knowledge
-engine over a markdown vault whose fact lines are the durable store,
-with both a valid-time as-of and a transaction-time as-known-at query,
-and a subject key that refuses to normalise to nothing.">
+engine over a markdown vault whose journal of fact lines is the durable
+record, queried by valid time and by record time.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Loreweave — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ and a subject key that refuses to normalise to nothing.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Loreweave",
-      "description": "A temporal knowledge engine over a markdown vault whose fact lines are the durable store, with both a valid-time as-of and a transaction-time as-known-at query, and a subject key that refuses to normalise to nothing.",
+      "description": "A temporal knowledge engine over a markdown vault whose journal of fact lines is the durable record, queried by valid time and by record time.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,23 +100,22 @@ and a subject key that refuses to normalise to nothing.">
 is a replay, so a wrong fact is fixed by editing a line</p>
           <h1>Loreweave</h1>
           <p class="document-deck">A temporal knowledge engine over a
-markdown vault whose fact lines are the durable store, with both a
-valid-time as-of and a transaction-time as-known-at query, and a subject
-key that refuses to normalise to nothing.</p>
+markdown vault whose journal of fact lines is the durable record,
+queried by valid time and by record time.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/lets-order-some-fries/loreweave">
               <span>Source</span>
               <strong>lets-order-some-fries/loreweave</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/lets-order-some-fries/loreweave/commit/8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7" title="8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7">
+            <a class="meta-pill revision-pill" href="https://github.com/lets-order-some-fries/loreweave/commit/303a4183cf1ee420fcc50c6318d0969b9a3bbd6d" title="303a4183cf1ee420fcc50c6318d0969b9a3bbd6d">
               <span>Analyzed revision</span>
-              <code>8fe4c5a2…</code>
+              <code>303a4183…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/lets-order-some-fries--loreweave" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,19 @@ key that refuses to normalise to nothing.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>22,089
+lines of TypeScript in 107 files under src/ and tests/, 11,005 of them
+in 36 source files, plus a 2,453-line eval directory</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>224
+commits on main by one author name, 5 August – 9 October 2026; version
+0.39.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>About
+520 vitest cases in 70 files (the README says 546); none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,16 +151,18 @@ key that refuses to normalise to nothing.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Loreweave is "[a] temporal knowledge engine for markdown vaults" that
-"indexes, links, remembers, forgets, and dreams — locally, over files
-you own." MIT, TypeScript, version 0.37.1, 19,552 lines across 100
-files, a SQLite index over a directory of markdown.</p>
-<p>Its diagnosis is that most knowledge tools are
-<strong>write-only</strong>: "You capture diligently, the vault grows,
-and six months later you can't find the thing you know you wrote —
-because retrieval is keyword search over prose, nothing ever resurfaces
-on its own, and nothing notices when what you wrote last year stopped
-being true."</p>
+<p>Loreweave is a temporal knowledge engine over a markdown vault in
+which the journal of fact lines is the durable record and the SQLite
+index is a replay that can be wiped and rebuilt. Facts can be queried as
+of a valid date or as known at a record date, and the record-time half
+is the weaker one: a close learned later rewrites the one
+<code>valid_until</code> column, an invalidate records no time of its
+own, and an extracted fact's record time is its note's last edit.</p>
+<p>It describes itself as "[a] temporal knowledge engine for markdown
+vaults" that "indexes, links, remembers, forgets, and dreams — locally,
+over files you own." Its diagnosis is that most knowledge tools are
+write-only: "nothing ever resurfaces on its own, and nothing notices
+when what you wrote last year stopped being true."</p>
 <p><strong>The architectural decision worth taking is which artifact is
 authoritative.</strong></p>
 <blockquote>
@@ -164,56 +174,76 @@ replay."</p>
 dated file under <code>lore/journal/</code>, every closure appends
 <code>- [invalidate] Subject :: predicate {valid_until=…}</code>, and
 "[r]ebuild wipes and replays ALL fact rows deterministically, so the
-index stays a pure cache of the vault." A fact an agent got wrong is
-corrected by editing a line in a file the user already owns, and the
-index follows.</p>
-<p><strong>The temporal model is the most complete of the several this
-atlas has read with these four columns.</strong> <code>queryFacts</code>
-takes <code>asOf</code> and <code>asKnownAt</code> as separate
-parameters and builds separate predicates — the first over
-<code>valid_from</code> and <code>valid_until</code>, the second over
-<code>recorded_at</code> and <code>superseded_at</code> — and the
-comment on the second says exactly why it is a different question:</p>
+index stays a pure cache of the vault." The journal line is written
+before the row, and nothing in the tree rewrites a journal file (audit
+log). A fact an agent got wrong is corrected by editing a line in a file
+the user already owns.</p>
+<p><code>queryFactsPage</code> takes <code>asOf</code> and
+<code>asKnownAt</code> as separate parameters over separate column
+pairs, and valid time comes from the caller's <code>--valid-from</code>,
+a line's own <code>{valid_from=…}</code> or a note's frontmatter rather
+than the clock (bitemporal). The comment on the record-time clause
+states the case it handles:</p>
 <blockquote>
 <p>"Known at T: recorded by then, and not yet superseded by then. A fact
 asserted afterwards was not available to anyone reasoning at T, however
 early its validity was backdated to start."</p>
 </blockquote>
-<p>Backdating is the case that separates a real transaction axis from a
-decorated one, and it is handled in the clause rather than left to the
-caller. Valid time comes from somewhere other than the clock: a note's
-frontmatter <code>date</code>, <code>event_date</code>,
-<code>created</code> or <code>valid_from</code>, a trailing
-<code>{valid_from=…}</code> annotation, or an explicit argument.</p>
+<p>That holds for a backdated assertion and not for a backdated close,
+as <a href="#6-retrieval-mechanics">section 6</a> sets out. Committed
+tests assert that an invalidated fact and a late-recorded one stay out
+of fact queries beside a control that returns them, and that
+out-of-vault content stays out of search (negative evaluation).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>fact line</strong> in markdown is the record; the row is a
-copy.</p>
-<p>A <strong>valid window</strong> is when it was true;
-<strong>recorded_at</strong> is when the vault learned it.</p>
-<p>An <strong>invalidate line</strong> closes a fact at a date rather
-than deleting it.</p>
-<p>A <strong>rebuild</strong> is allowed to wipe the database, because
-nothing lives only there.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — markdown fact lines are the durable record and the SQLite rows are a deterministic replay of them, with valid time read from the note and transaction time stamped on the write, queried through two independent parameters</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: markdown fact lines are the durable record and the SQLite rows are a deterministic replay of them, with valid time read from the note and transaction time stamped on the write, queried through two independent parameters
+copy. Fact lines come from three places, in the order a replay reads
+them: the engine's own journal under <code>lore/journal/</code>,
+<code>- [fact]</code> lines written into any other note, and fields
+extracted from note structure — frontmatter, <code>key:: value</code>,
+<code>- [key] value</code>.</p>
+<p>A <strong>valid window</strong> is when the fact was true.
+<strong><code>recorded_at</code></strong> is when the vault learned it:
+the write clock for an assertion, carried into the journal line, and the
+note's modification time for an extracted fact.</p>
+<p>A fact stops being current in two ways, and neither deletes it:</p>
+<ul>
+<li><strong>Superseded.</strong> Within a slot, every row is closed by
+the next one ordered by valid time; <code>superseded_at</code> takes the
+successor's <code>recorded_at</code>. A different value links
+<code>updates</code>, the same value <code>extends</code>.</li>
+<li><strong>Closed.</strong> An <code>[invalidate]</code> line sets
+<code>valid_until</code> and <code>user_valid_until</code> on the slot's
+current row. It sets no record time.</li>
+</ul>
+<p>A fact's <strong>source type</strong> is <code>stated</code>,
+<code>extracted</code> or <code>inferred</code>. A <code>source=</code>
+attribute counts only under <code>lore/journal/</code>; elsewhere the
+row is <code>extracted</code>. A slot holding a <code>stated</code> row
+is closed to extraction. Nothing filters on source type at read
+time.</p>
+<p>A <strong>rebuild</strong> wipes the fact table and replays
+everything, and runs whenever an index sees an added, changed or removed
+note.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the journal and the notes are the record; a replay rebuilds every fact row from them in a fixed order, and two query parameters read the valid and record axes, with the record axis missing for closes</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the journal and the notes are the record; a replay rebuilds every fact row from them in a fixed order, and two query parameters read the valid and record axes, with the record axis missing for closes
 flowchart TB
-    NOTE[(&quot;any note: frontmatter date,&lt;br/&gt;key:: value, - [key] value&quot;)] --&gt; EX[&quot;extract: source_type &#39;extracted&#39;&quot;]
-    CLI[&quot;lore assert / lore invalidate&lt;br/&gt;lore_assert_fact / lore_invalidate_fact&quot;] --&gt; APPEND[&quot;appendJournalLine&quot;]
-    APPEND --&gt; J[(&quot;lore/journal/YYYY-MM-DD.md&lt;br/&gt;- [fact] S :: p :: O {valid_from=…}&lt;br/&gt;- [invalidate] S :: p {valid_until=…}&quot;)]
-    J -.-&gt;|&quot;control characters escaped losslessly,&lt;br/&gt;&#39;or a fact containing a newline would be&lt;br/&gt;silently truncated on replay (data loss)&#39;&quot;| SAFE[&quot;the line survives the round trip&quot;]
-    EX --&gt; J
-    J --&gt; REPLAY[&quot;rebuild wipes and replays ALL fact rows&quot;]
-    REPLAY --&gt; DB[(&quot;facts: valid_from · valid_until&lt;br/&gt;recorded_at · superseded_at · superseded_by&lt;br/&gt;source_type · note_path · block_anchor&quot;)]
-    REPLAY -.-&gt;|&quot;&#39;the index stays a pure cache of the vault&#39; —&lt;br/&gt;so a mutation that never reached the journal&lt;br/&gt;does not survive&quot;| AUTH[&quot;the markdown is authoritative&quot;]
-    KEY{&quot;keyOf: does the subject normalise&lt;br/&gt;to a non-empty key?&quot;} --&gt; APPEND
-    KEY -.-&gt;|&quot;&#39;Three unrelated subjects contradicting one another&lt;br/&gt;through a key none of them had&#39; — refuse the key,&lt;br/&gt;name the value, and say why&quot;| REFUSE[&quot;the write is refused with the value quoted&quot;]
-    DB --&gt; Q[&quot;queryFacts(store, q)&quot;]
-    Q --&gt;|&quot;q.asOf — VALID time&quot;| VT[&quot;COALESCE(valid_from, recorded_at) at or before T,&lt;br/&gt;and valid_until either NULL or after T&quot;]
-    Q --&gt;|&quot;q.asKnownAt — TRANSACTION time&quot;| TT[&quot;recorded_at at or before T,&lt;br/&gt;and superseded_at either NULL or after T&quot;]
-    TT -.-&gt;|&quot;&#39;a fact asserted afterwards was not available&lt;br/&gt;to anyone reasoning at T, however early its&lt;br/&gt;validity was backdated to start&#39;&quot;| RIGHT[&quot;the backdating case, handled in the clause&quot;]
-    Q --&gt;|&quot;neither, and not includeHistory&quot;| NOW[&quot;valid_until IS NULL AND superseded_by IS NULL&quot;]
-    VT &amp; TT &amp; NOW --&gt; OUT[&quot;facts returned&quot;]
-    SRC[&quot;source_type: stated, extracted or inferred&quot;] -.-&gt;|&quot;decided at write time, printed in the CLI,&lt;br/&gt;used in one timeline heuristic —&lt;br/&gt;it withholds nothing&quot;| NOTS[&quot;no trust-state mark&quot;]
-    NOSCOPE[&quot;no tenant, project or agent key&lt;br/&gt;on a fact, and no scope predicate&lt;br/&gt;on any read&quot;] -.-&gt; DB</code></pre></details></figure>
+    CLI[&quot;lore assert / lore_assert_fact&lt;br/&gt;valid_from from the caller, else today&lt;br/&gt;recorded_at = write clock&quot;] --&gt; KEY{&quot;keyOf: subject and predicate&lt;br/&gt;normalise to a non-empty key?&quot;}
+    KEY --&gt;|&quot;no&quot;| REFUSE[&quot;refused, value quoted:&lt;br/&gt;&#39;normalises to nothing&#39;&quot;]
+    KEY --&gt;|&quot;yes&quot;| APPEND[&quot;appendJournalLine (appendFileSync)&quot;]
+    INV[&quot;lore invalidate / lore_invalidate_fact&lt;br/&gt;valid_until from the caller, else today&quot;] --&gt; APPEND
+    APPEND --&gt; J[(&quot;lore/journal/YYYY-MM-DD.md&lt;br/&gt;- [fact] S :: p :: O {valid_from, recorded_at, source}&lt;br/&gt;- [invalidate] S :: p {valid_until} — no record time&quot;)]
+    NOTE[(&quot;any other note:&lt;br/&gt;- [fact] lines, frontmatter,&lt;br/&gt;key:: value, - [key] value&quot;)]
+    J --&gt; R1[&quot;replay 1: journal lines in path order;&lt;br/&gt;an invalidate closes the slot&#39;s open row so far&quot;]
+    NOTE --&gt; R2[&quot;replay 2: fact lines in other notes —&lt;br/&gt;source forced to extracted,&lt;br/&gt;a recorded_at attribute believed&quot;]
+    NOTE --&gt; R3[&quot;replay 3: extraction — recorded_at = note mtime;&lt;br/&gt;skipped where a stated row holds the slot&quot;]
+    R1 --&gt; R2 --&gt; R3
+    R3 -.-&gt;|&quot;a journal invalidate that closed&lt;br/&gt;an extracted-only slot ran before&lt;br/&gt;the row existed&quot;| REOPEN[&quot;the extracted value reopens&quot;]
+    R3 --&gt; SUP[&quot;recomputeSupersessions:&lt;br/&gt;each row closed by the next;&lt;br/&gt;valid_until = MIN(user close, successor start);&lt;br/&gt;superseded_at = successor recorded_at&quot;]
+    SUP --&gt; DB[(&quot;facts: valid_from · valid_until · user_valid_until&lt;br/&gt;recorded_at · superseded_at · superseded_by&lt;br/&gt;source_type · note_path · block_anchor&quot;)]
+    DB --&gt; Q[&quot;queryFactsPage&quot;]
+    Q --&gt;|&quot;default&quot;| NOW[&quot;valid_until IS NULL&lt;br/&gt;AND superseded_by IS NULL&quot;]
+    Q --&gt;|&quot;asOf T&quot;| VT[&quot;valid_from at or before T,&lt;br/&gt;valid_until NULL or after T —&lt;br/&gt;today&#39;s valid_until, whenever it was learned&quot;]
+    Q --&gt;|&quot;asKnownAt T&quot;| TT[&quot;recorded_at at or before T,&lt;br/&gt;superseded_at NULL or after T&quot;]
+    VT &amp; TT -.-&gt;|&quot;combined: a close learned after T&lt;br/&gt;and backdated before the asOf date&lt;br/&gt;removes a value that was believed at T&quot;| GAP[&quot;record-time gap&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -225,24 +255,34 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>src/facts/journal.ts</code></td>
-<td>The markdown record, its grammar, and the escaping that keeps it
-lossless</td>
+<td>The fact-line grammar, lossless escaping, the replay and the
+supersession recompute</td>
 </tr>
 <tr>
 <td><code>src/facts/model.ts</code></td>
-<td>Assert, invalidate, supersession, and the bitemporal query</td>
+<td>Assert, invalidate, the bitemporal query and the aggregate</td>
+</tr>
+<tr>
+<td><code>src/facts/extract.ts</code></td>
+<td>Deterministic extraction from frontmatter and field syntax</td>
 </tr>
 <tr>
 <td><code>src/temporal/</code></td>
-<td>Date extraction from notes, and the timeline</td>
+<td>Date parsing for notes and queries, and the entity timeline</td>
 </tr>
 <tr>
-<td><code>src/store/schema.ts</code></td>
-<td>Eleven tables, all of them derivable from the vault</td>
+<td><code>src/store/</code></td>
+<td>Eleven tables plus an FTS5 index, migrations, and version stamps
+that refuse a newer index</td>
+</tr>
+<tr>
+<td><code>src/retrieve/</code></td>
+<td>Lexical, vector and graph retrieval, expansion and rerank</td>
 </tr>
 <tr>
 <td><code>src/dream/</code></td>
-<td>Consolidation, link proposals, and the fitted forgetting curve</td>
+<td>Consolidation, link proposals, digests and the fitted forgetting
+curve</td>
 </tr>
 <tr>
 <td><code>src/mcp/server.ts</code></td>
@@ -250,97 +290,266 @@ lossless</td>
 </tr>
 <tr>
 <td><code>eval/</code></td>
-<td>LoCoMo, LongMemEval, BEIR and scale harnesses against a committed
-baseline</td>
+<td>LoCoMo, LongMemEval, BEIR, generated-question and scale harnesses
+against a committed baseline</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One Node package with <code>better-sqlite3</code>; version 0.39.0
+requires Node 22 or later. Nothing has to be running and no API key is
+needed to store anything; embeddings are optional and default to none in
+the generated config. The store is a directory of markdown the user
+owns, so it is readable and repairable by hand, and <code>.lore/</code>
+can be deleted and rebuilt at the cost of the usage history described in
+<a href="#5-memory-data-model">section 5</a>. The MCP manifest launches
+the published package through <code>npx</code>.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/facts/journal.ts:1-11</code> — the sentence the
-architecture rests on, and the fact-line grammar under it.</p>
-<p><code>src/facts/model.ts:296-328</code> — two time axes as two query
-parameters, and the backdating comment.</p>
-<p><code>src/facts/model.ts:41-50</code> — <code>keyOf</code>, refusing
-a subject that normalises to nothing.</p>
-<p><code>src/facts/model.ts:340-360</code> — an aggregate that returns
-its total because the bug it replaces was a caller not asking.</p>
-<p><code>src/temporal/dates.ts:205-206</code> — where valid time comes
-from when it is not supplied.</p>
+<p><strong>Assert.</strong> <code>assertFact</code> validates fields and
+dates, stamps <code>recordedAt = new Date().toISOString()</code> and
+takes <code>validFrom</code> from the input or today
+(<code>src/facts/model.ts:140-142</code>). It refuses a read-only index
+before either write, appends the rendered journal line, then inserts the
+row, recomputes supersession, indexes the journal note and stamps the
+block anchor the replay would derive (<code>:145-247</code>). An
+identical assertion appends the line and inserts no row
+(<code>:195-215</code>).</p>
+<p><strong>Invalidate.</strong> <code>invalidateFact</code> refuses a
+close before the current row's <code>valid_from</code>, appends
+<code>- [invalidate] S :: p {valid_until=…}</code> and updates the
+slot's open row (<code>src/facts/model.ts:262-306</code>).</p>
+<p><strong>Replay.</strong> <code>rebuildFactsFromNotes</code> deletes
+every fact row, reads blocks containing <code>[fact]</code> or
+<code>[invalidate]</code> journal-first, inserts facts and applies
+invalidates as it goes, then calls <code>extractStructuredFacts</code>
+and a final supersession pass
+(<code>src/facts/journal.ts:229-359</code>). The indexer calls it after
+any index that adds, updates or removes a note
+(<code>src/index/indexer.ts:324-327</code>).</p>
+<p><strong>Query.</strong> <code>queryFactsPage</code> builds the slot,
+<code>asOf</code>, <code>asKnownAt</code> and term clauses, caps at 200
+and returns the matched total when the cap is hit
+(<code>src/facts/model.ts:372-435</code>). <code>lore ask</code> maps a
+past-tense date in the question to <code>asOf</code>
+(<code>src/cli/main.ts:366-367</code>).</p>
+<p><strong>Search.</strong> Blocks are dated from their own prose or the
+note's frontmatter (<code>src/store/db.ts:530-532</code>), and a query
+window also boosts blocks whose facts' validity meets it
+(<code>src/retrieve/search.ts:748-752</code>). The graph adds an edge
+per current fact (<code>src/graph/build.ts:311-321</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A fact is subject, predicate and object with a display form preserved
-beside the normalised key, a validity window, a recorded time,
-supersession columns, a source type, the note path and block anchor it
-came from, and a confidence. Around it sit notes, blocks, links,
-entities, mentions, edges, embeddings and an access log — every one of
-them derivable from the vault, which is what licenses the rebuild.</p>
+<p>The <code>facts</code> row carries <code>subject</code>,
+<code>predicate</code>, <code>object</code>,
+<code>subject_display</code>, <code>valid_from</code>,
+<code>valid_until</code>, <code>recorded_at</code>,
+<code>superseded_at</code>, <code>superseded_by</code>,
+<code>source_type</code>, <code>note_path</code>,
+<code>block_anchor</code> and <code>confidence</code>, and a migration
+adds <code>user_valid_until</code> so a user's close survives the
+supersession recompute (<code>src/store/schema.ts:142-157</code>,
+<code>:251-252</code>). <code>fact_links</code> records
+<code>updates</code> and <code>extends</code> between rows. Around it
+sit notes, blocks, links, entities, mentions, edges, embeddings and an
+access log. All but the access log, the per-block stability and access
+counts, and the decay fitted from them are derived from the vault; an
+incremental reindex carries those across, and deleting
+<code>.lore/</code> loses them.</p>
+<p>Valid time has four producers that are not the clock: the CLI's
+<code>--valid-from</code> (<code>src/cli/main.ts:595</code>), the MCP
+tool's <code>validFrom</code> (<code>src/mcp/server.ts:250</code>), a
+line's own <code>{valid_from=…}</code>
+(<code>src/facts/extract.ts:170</code>), and the note's frontmatter
+<code>valid_from</code>, <code>date</code> or <code>created</code>, in
+that order, as a fallback for lines that state none
+(<code>src/facts/extract.ts:184-192</code>, <code>:278</code>). A
+separate function reads <code>date</code>, <code>event_date</code>,
+<code>created</code> and <code>valid_from</code> to date blocks for
+search windows (<code>src/temporal/dates.ts:204-216</code>); it does not
+write facts.</p>
+<p>Record time has three producers: the write clock on assert, carried
+as <code>recorded_at=</code> in the journal line; a
+<code>{recorded_at=…}</code> attribute on a fact line in any note
+(<code>src/facts/journal.ts:300-302</code>); and the note's modification
+time for extracted facts (<code>src/facts/journal.ts:419</code>). The
+third moves every time the note is edited.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Lexical search over blocks, embeddings, and a graph walk over entity
-mentions and edges, with a rerank stage. A retrievability decay is
-fitted from the vault's own retrieved-then-used history rather than
-assumed, and <code>lore review</code> surfaces what has faded below the
-threshold. The default fact query returns only facts that are neither
-expired nor superseded; <code>includeHistory</code> returns the
-chain.</p>
-<p><code>lore review</code> is a listing, not a gate, and neither is
-anything else here, which is why this report does not carry
-<code>human_review</code>. <code>lore facts</code>,
-<code>lore timeline</code> and <code>lore invalidate</code> act on facts
-already in the index; the vault is markdown, so a person can equally
-open the journal file and edit the line an agent wrote, and the next
-rebuild replays the corrected file. The one surface that calls itself
-adjudication is addressed to the wrong reader:
-<code>lore_propose_facts</code> returns candidates <em>"for you to
-adjudicate"</em> and says it <em>"keeps judgement with you and out of
-the index"</em>, but it is an MCP tool description, so the "you" is the
-model. A candidate promoted through it has been reviewed by the same
-kind of thing that proposed it.</p>
+<p>The default fact query returns rows with no <code>valid_until</code>
+and no successor. <code>asOf T</code> returns rows whose start is at or
+before T and whose <code>valid_until</code> is empty or after T.
+<code>asKnownAt T</code> returns rows recorded by T and not superseded
+by T. The MCP description offers the two together for "what was true
+then, as far as we knew then"
+(<code>src/mcp/server.ts:329-342</code>).</p>
+<p>The combination is correct for a backdated assertion and wrong for a
+backdated close. <code>valid_until</code> is a single column that
+<code>recomputeSupersessions</code> and <code>invalidateFact</code>
+rewrite in place, with no record of when the close was learned
+(<code>src/facts/journal.ts:181-218</code>,
+<code>src/facts/model.ts:295-302</code>). Take a value recorded in
+January 2024, superseded or invalidated in March 2025 with an end date
+of June 2024. Asked <code>asOf</code> September 2024 and
+<code>asKnownAt</code> December 2024, the query applies the June end
+learned in March and returns nothing, though in December the value was
+believed to hold. The committed combined test uses a successor that
+starts after the <code>asOf</code> date, so it does not reach this case
+(<code>tests/facts.test.ts:345-358</code>). I read the predicate; I did
+not run it.</p>
+<p>Extracted facts weaken the record axis further. Their
+<code>recorded_at</code> is the note's modification time, so editing a
+note re-dates every fact extracted from it, and <code>asKnownAt</code>
+before the edit excludes values the vault held for a year. The same
+column drives <code>lore_resume</code>'s "facts asserted" list
+(<code>src/resume.ts:75-80</code>).</p>
+<p>Search is lexical over blocks with an FTS5 index, optional
+embeddings, and a personalised walk over entity mentions, co-occurrence
+and current-fact edges, followed by a rerank stage that is skipped on
+temporally scoped queries. A retrievability decay is fitted from the
+vault's own retrieved-then-used history, and <code>lore review</code>
+lists what has faded below a threshold.</p>
+<p><code>lore review</code> is a listing, not a gate, and nothing else
+gates either. <code>lore_propose_facts</code> returns candidates
+<em>"for you to adjudicate"</em> and says it <em>"keeps judgement with
+you and out of the index"</em>, but it is an MCP tool description, so
+the "you" is the model (<code>src/mcp/server.ts:471-475</code>). A
+person can edit the journal line an agent wrote, and the next rebuild
+replays the corrected file; that is correction after the write, not
+review before it.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>A write is refused rather than accepted quietly when it cannot be
-made meaningful: a subject that normalises to an empty key, or a
-<code>validUntil</code> before its <code>validFrom</code>, which
-"[a]ccepted silently … produced intervals like (2025-01-01 →
-2024-06-01), which no query can answer and nothing flags." A successful
-write appends its journal line first and indexes the journal file, so
-the durable record and the cache are written in that order.</p>
+made meaningful. A subject or predicate that normalises to an empty key
+is refused with the value quoted, because "[t]hree unrelated subjects
+contradicting one another through a key none of them had" is what
+happened when it was not (<code>src/facts/model.ts:31-49</code>). A
+<code>validUntil</code> before its <code>validFrom</code> is refused,
+because "[a]ccepted silently this produced intervals like (2025-01-01 →
+2024-06-01), which no query can answer and nothing flags"
+(<code>:150-157</code>).</p>
+<p>The journal line goes first, then the row. A read-only index is
+refused before both, "or the next rebuild replays a fact the user was
+told was refused" (<code>src/facts/model.ts:145-148</code>).
+<code>capture</code> appends a timestamped bullet, and because the stamp
+precedes the text it cannot form a fact line
+(<code>src/capture.ts:72-97</code>). Its target is
+<code>lore/inbox.md</code> by default and any indexable vault note on
+request, through <code>lore_capture</code>'s <code>to</code> argument as
+well, where the README says the engine appends "only under
+<code>lore/</code>".</p>
+<p>By reading the replay order, a close on a slot held only by an
+extracted fact does not survive the next index. The live
+<code>invalidateFact</code> closes the extracted row. A replay applies
+the journal's <code>[invalidate]</code> before extraction has inserted
+that row, finds nothing open, and extraction then inserts it open
+(<code>src/facts/journal.ts:259-288</code>, <code>:356</code>). The slot
+is closed until any note in the vault changes. No committed test
+invalidates an extracted fact.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Fifteen MCP tools spanning search, fact assertion and invalidation,
-timeline, aggregation, context packing, session resume and the review
-list, plus a <code>lore</code> CLI with the same operations and a file
-watcher.</p>
+<p>Fifteen MCP tools: <code>lore_search</code>,
+<code>lore_context_pack</code>, <code>lore_read_note</code>,
+<code>lore_assert_fact</code>, <code>lore_invalidate_fact</code>,
+<code>lore_resume</code>, <code>lore_review</code>,
+<code>lore_timeline</code>, <code>lore_query_facts</code>,
+<code>lore_aggregate_facts</code>, <code>lore_capture</code>,
+<code>lore_mark_used</code>, <code>lore_dream_report</code>,
+<code>lore_propose_facts</code> and <code>lore_index</code>. The CLI
+exposes the same operations, and a file watcher re-indexes on change.
+<code>lore_context_pack</code> and <code>lore_query_facts</code> return
+a <code>truncated</code> field naming what a capped list left out and
+which tool returns the rest. The server exits when its client closes
+stdin, flushing the watcher and the index first.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Provenance is concrete — every extracted fact keeps the note path and
-block anchor it came from — and the rebuild-from-vault property means
-the failure mode of a corrupted index is a re-index rather than data
-loss. The gaps are scope, which does not exist, and the absence of any
-epistemic status separate from supersession.</p>
+<p>Provenance is concrete: every fact keeps the note path and block
+anchor it came from, and an asserted fact's anchor is stamped to match
+what a replay derives. A corrupted index is a re-index rather than data
+loss, and an index stamped by a newer version is refused rather than
+read.</p>
+<p>The vault boundary holds on reads and writes. A symlink named
+<code>.md</code> whose target is not a note, and a symlinked note or
+folder whose real location is outside the vault, are neither indexed,
+searched nor readable unless the owner sets
+<code>followExternalSymlinks</code> in <code>.lore/config.json</code>.
+Writes are held to the real vault root with symlinks resolved
+(<code>src/capture.ts:43-66</code>).</p>
+<p>Source type is guarded on one attribute and not the other. A
+<code>source=</code> attribute counts only under
+<code>lore/journal/</code>, so note content cannot label itself
+<code>stated</code> (<code>src/facts/journal.ts:320-335</code>). A
+<code>recorded_at=</code> attribute counts in any note, so a clipped
+article can backdate its own record time and enter an
+<code>asKnownAt</code> answer for a date before it existed.</p>
+<p>There is no scope and no epistemic status separate from
+supersession.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>A vitest suite whose test names read as regressions with the fault
-named — one edit erasing a note's whole retrieval history, one use
-relabelling a week of ignored retrievals as successes — alongside an
-<code>eval/</code> directory running LoCoMo, LongMemEval, BEIR,
-generated questions and a scale harness against a committed baseline.
-There are no committed must-not-retrieve cases.</p>
+<p>About 520 vitest cases in 70 files; the README states 546. I read
+them and ran none. Test names state the regression they hold, such as
+"one use does not relabel a week of ignored retrievals as successes"
+(<code>tests/decay-fit.test.ts:102</code>).</p>
+<p>Two fact-query cases assert absence with a control on the same store.
+<code>invalidate closes open facts</code> expects the default query to
+return nothing for the slot and <code>asOf</code> inside the window to
+return the fact (<code>tests/facts.test.ts:166-174</code>).
+<code>excludes facts recorded after the date</code> expects
+<code>asKnownAt</code> 2021 to return nothing for a fact valid from 2020
+and <code>asOf</code> 2021 to return it (<code>:332-343</code>). The CLI
+journey repeats the first through <code>lore facts</code> and
+<code>--history</code> (<code>tests/cli.test.ts:84-102</code>).</p>
+<p>Search carries the same shape for out-of-vault content. A key file
+linked in as <code>leak.md</code> is asserted absent from
+<code>searchLexical</code> beside a genuine note that is indexed
+(<code>tests/note-gate.test.ts:132-176</code>). A row an older version
+indexed through such a link is asserted searchable first and absent
+after the next open (<code>:254-289</code>), and an out-of-vault diary
+is asserted absent from search
+(<code>tests/symlink-containment.test.ts:97-103</code>). All but the
+last were in the tree on 15 September 2026.</p>
+<p><code>tests/facts.test.ts:176-210</code> asserts that a full reindex
+from the journal reproduces the same fact rows, and
+<code>:438-480</code> round-trips 300 generated fact lines. The
+<code>eval/</code> directory runs LoCoMo, LongMemEval, BEIR, generated
+questions and a scale harness against
+<code>eval/baseline.json</code>.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Decide which artifact is authoritative and make the other one
 disposable. Being able to wipe and replay the index is what makes every
-other correction cheap.</p>
-<p>Take the empty-key refusal. Any normalisation that can produce an
-empty string will eventually collapse unrelated records into one slot,
-and the failure is silent — the reproduction in that comment is worth
-reading before you write your own <code>normalizeKey</code>.</p>
-<p>If you offer an aggregate with a cap, return the total. An opt-in
-total is the same design as no total.</p>
+other correction cheap, and a test that rebuilds and compares rows keeps
+it true.</p>
+<p>Refuse a normalised key that is empty, and quote the value. Any
+normalisation that can produce an empty string will collapse unrelated
+records into one slot, and the failure is silent.</p>
+<p>If an aggregate or list is capped, return the total. An opt-in total
+is the same design as no total.</p>
+<p>Honour a provenance attribute only on the path that writes it. The
+<code>source=</code> rule is the template: content may state a fact, and
+may not say who stated it.</p>
+<h3 id="avoid">Avoid</h3>
+<p>One <code>valid_until</code> column for a store that offers a
+record-time query. If a close can be learned after the fact, the close
+needs its own record time, or "true then, as known then" answers with
+later knowledge.</p>
+<p>A note's modification time as a fact's record time. It moves on every
+unrelated edit to the same file.</p>
+<p>Applying journal closes before the rows they close exist. A replay
+should apply closes after every source of rows has inserted, or key them
+on something extraction will produce again.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one person's vault, where the user owns the files, edits
+them by hand, and wants facts with a history. It is a poor fit for
+several agents or people who must not see each other's facts, or for an
+audit question about what was believed at a past date when closes were
+backdated.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether a vault is really the intended boundary once several agents
-share one. Nothing carries a scope key, so a fact asserted for one
-project is visible to every query.</p>
-<p>Whether <code>source_type</code> was meant to influence retrieval. It
-has three values, one of which is <code>inferred</code>, and a reader
-would reasonably expect an inferred fact to be treated differently from
-a stated one; nothing does.</p>
+<p>Whether a vault is the intended boundary once several agents share
+one. Nothing carries a scope key, so a fact asserted for one project is
+visible to every query.</p>
+<p>Whether <code>source_type</code> was meant to influence retrieval.
+<code>inferred</code> is offered to the model as "your deduction", and
+an inferred fact is returned exactly like a stated one.</p>
+<p>Whether <code>{recorded_at=…}</code> outside the journal is intended.
+It is the same shape as the <code>source=</code> forgery fixed in
+<code>8ac4b34</code>, on the other axis.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -355,24 +564,97 @@ a stated one; nothing does.</p>
 <td>Markdown as the record and the database as a replay</td>
 </tr>
 <tr>
-<td><code>src/facts/model.ts:296-328</code></td>
-<td>Two time axes as two parameters, backdating included</td>
+<td><code>src/facts/journal.ts:147-223</code></td>
+<td>Supersession: every row closed by the next, user closes as an upper
+bound</td>
 </tr>
 <tr>
-<td><code>src/facts/model.ts:41-50</code></td>
+<td><code>src/facts/journal.ts:229-359</code></td>
+<td>The replay order, the invalidate pass, and which attributes are
+believed where</td>
+</tr>
+<tr>
+<td><code>src/facts/model.ts:31-49</code></td>
 <td>A normalisation that refuses to produce an empty key</td>
 </tr>
 <tr>
-<td><code>src/facts/model.ts:340-360</code></td>
-<td>Why the total is returned rather than requested</td>
+<td><code>src/facts/model.ts:121-306</code></td>
+<td>Assert and invalidate: journal first, then row</td>
 </tr>
 <tr>
-<td><code>src/temporal/dates.ts:205-206</code></td>
-<td>Where valid time comes from when nobody supplies it</td>
+<td><code>src/facts/model.ts:372-435</code></td>
+<td>The two time axes as two parameters, and the returned total</td>
+</tr>
+<tr>
+<td><code>src/facts/extract.ts:170-192</code></td>
+<td>Where an extracted fact's valid time comes from</td>
+</tr>
+<tr>
+<td><code>src/mcp/server.ts:471-475</code></td>
+<td>The adjudication step addressed to the model</td>
+</tr>
+<tr>
+<td><code>tests/facts.test.ts:166-174</code>, <code>:292-364</code></td>
+<td>Absence after invalidate, and the record-time cases</td>
+</tr>
+<tr>
+<td><code>tests/note-gate.test.ts:132-289</code></td>
+<td>Out-of-vault content kept out of the index and search</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep -n -E</code>.</p>
+<ul>
+<li><code>'appendFileSync|writeFileSync|unlinkSync|rmSync|renameSync|truncateSync' -- src</code>
+— the journal append at <code>src/facts/model.ts:78</code>, capture's
+append, <code>lore init</code>'s config,
+<code>graph export --out</code>, the dream digest and review queue, and
+<code>rmSync</code> on the index database files; nothing rewrites or
+deletes a journal file.</li>
+<li><code>'superseded_at\s*=' -- src</code> —
+<code>src/facts/journal.ts:162</code> and <code>:183</code> only;
+<code>invalidateFact</code> does not set it.</li>
+<li><code>'recorded_at' -- src/facts/journal.ts</code> —
+<code>:301</code> reads the attribute with no journal check, beside
+<code>:334</code>, which checks the path for <code>source</code>.</li>
+<li><code>'source_type|sourceType' -- src</code> — the CLI label, the
+timeline heuristic, the MCP schema, and the stated-slot lock at
+<code>src/facts/journal.ts:383</code>; no read filter.</li>
+<li><code>-i 'tenant|agent_id|user_id|project_id|workspace_id' -- src</code>
+— no match.</li>
+<li><code>-i 'tombstone|reject|blocklist|denylist' -- src/facts src/store</code>
+— two comments; no value-keyed rejection.</li>
+<li><code>"'(pending|verified|disputed|candidate|approved|rejected|unverified|quarantine)'" -- src</code>
+— no match; no review state.</li>
+<li><code>'asKnownAt' -- tests</code> — <code>tests/facts.test.ts</code>
+only; no case closes a fact after the <code>asKnownAt</code> date.</li>
+<li><code>'invalidateFact\(' -- tests</code> —
+<code>facts.test.ts</code>, <code>fact-invariants.test.ts</code>,
+<code>fact-key.test.ts</code>; none on an extracted fact.</li>
+<li><code>-i 'anthropic|machine learning' -- LICENSE</code> — no match;
+the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/lets-order-some-fries/loreweave/commit/303a4183cf1ee420fcc50c6318d0969b9a3bbd6d"><code class="commit-id" title="303a4183cf1ee420fcc50c6318d0969b9a3bbd6d">303a4183…</code></a>
+— 38 commits on, version 0.37.1 to 0.39.0. <code>negative_eval</code>
+gained, earned at the old pin: an invalidated and a late-recorded fact
+were asserted absent from fact queries, and out-of-vault content from
+search (<a href="#10-tests-evals-and-benchmarks">section 10</a>).
+<code>bitemporal</code> and <code>audit_log</code> hold at both pins.
+Wrong then: the frontmatter keys and anchor for valid time,
+<code>source_type</code> having one reader, every table being derivable,
+and backdated closes being handled (<a
+href="#6-retrieval-mechanics">section 6</a>). Overtaken:
+<code>source=</code> counts only under the journal, a line's own
+<code>valid_from</code> and <code>valid_until</code> survive extraction,
+and symlinked notes outside the vault are not indexed. Screened from a
+full clone: four files, one auto-run surface (<code>server.json</code>),
+one build-time execution point, one unpinned surface behind
+<code>package-lock.json</code>, nothing inside the cooldown. Nothing was
+installed, built or run.</p>
 <p><strong>2026-09-19</strong> — audited at the unchanged pin <a
 href="https://github.com/lets-order-some-fries/loreweave/commit/8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7"><code class="commit-id" title="8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7">8fe4c5a2…</code></a>;
 nothing upstream moved, so the correction is ours.

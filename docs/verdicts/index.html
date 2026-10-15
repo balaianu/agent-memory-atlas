@@ -21311,20 +21311,24 @@ assertion appends
 <code>- [fact] Subject :: predicate :: Object {valid_from=…}</code> and
 every closure appends
 <code>- [invalidate] Subject :: predicate {valid_until=…}</code> to a
-dated file the user already owns, so a fact an agent got wrong is
-corrected by editing a line, and a mutation that never reached the
-journal does not survive a rebuild.</li>
-<li>Biggest risk: <strong>no scope of any kind, and no epistemic status
-separate from supersession.</strong> Nothing on a fact carries a tenant,
-project or agent key and no read applies a scope predicate, so a vault
-is the only boundary. <code>source_type</code> is decided at write time
-— <code>stated</code>, <code>extracted</code>, <code>inferred</code> —
-printed in the CLI and used in one timeline heuristic, and withholds
-nothing; a reader would reasonably expect an inferred fact to be treated
-unlike a stated one, and nothing does. The MCP adjudication step is
-addressed to the model: <code>lore_propose_facts</code> says it "keeps
-judgement with you and out of the index", and the "you" reading that is
-an agent.</li>
+dated file the user already owns, before any row changes, so a fact an
+agent got wrong is corrected by editing a line, and a committed test
+rebuilds the fact table from the journal and compares the rows.</li>
+<li>Biggest risk: <strong>no scope of any kind, and a record-time axis
+with gaps.</strong> Nothing on a fact carries a tenant, project or agent
+key and no read applies a scope predicate, so a vault is the only
+boundary. <code>valid_until</code> is one column every close rewrites in
+place, an <code>[invalidate]</code> records no time of its own, an
+extracted fact's <code>recorded_at</code> is its note's modification
+time, and a <code>{recorded_at=…}</code> attribute is believed in any
+note, so <code>asOf</code> combined with an earlier
+<code>asKnownAt</code> can answer with knowledge learned afterwards. By
+reading the replay order, an invalidate on a slot held only by an
+extracted fact reopens at the next index. <code>source_type</code>
+labels a fact and closes a <code>stated</code> slot to extraction, and
+withholds nothing at read time; the MCP adjudication step,
+<code>lore_propose_facts</code>, "keeps judgement with you", and the
+"you" reading that is an agent.</li>
 <li>Most reusable component: <code>keyOf</code>, which refuses a subject
 that normalises to an empty key, with the reproduction in the comment
 above it — "<code>assert 🚀 status launched</code>, then
@@ -21334,17 +21338,18 @@ Three unrelated subjects contradicting one another through a key none of
 them had." The rule it lands on is the transferable part: "Refuse the
 key, name the value, and say why, so the caller can add a word to
 it."</li>
-<li>Maturity impression: MIT, TypeScript, version 0.37.1, 19,552 lines
-over 100 files, SQLite over a markdown vault, a CLI and fifteen MCP
-tools, a vitest suite whose test names name the regression, and an eval
-directory running LoCoMo, LongMemEval, BEIR and a scale harness against
-a committed baseline. One auto-run surface at this pin.</li>
+<li>Maturity impression: MIT, TypeScript, version 0.39.0, 22,089 lines
+over 107 files, SQLite over a markdown vault, a CLI and fifteen MCP
+tools, about 520 vitest cases whose names state the regression they
+hold, and an eval directory running LoCoMo, LongMemEval, BEIR and a
+scale harness against a committed baseline. One auto-run surface at this
+pin.</li>
 <li>Study when: your index holds anything the source of truth cannot
-regenerate, or your normalisation can produce an empty key.</li>
-<li>Do not copy when: two agents must not see each other's facts. Two
-marks: <code>bitemporal</code> and <code>audit_log</code> — the one
-surface that calls itself adjudication is an MCP tool description, so
-the "you" it keeps judgement with is the model.</li>
+regenerate, your normalisation can produce an empty key, or you are
+about to offer an as-known-at query.</li>
+<li>Do not copy when: two agents must not see each other's facts, or a
+past belief has to be reconstructed after closes were backdated. Three
+marks: bitemporal, mutation audit, negative evals.</li>
 </ul>
 <h3 id="temvera"><a
 href="../systems/temvera/"><code>temvera</code></a></h3>

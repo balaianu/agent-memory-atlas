@@ -8875,7 +8875,7 @@ and is still an <code>Option</code> the query defaults to
 whether the caller remembered to ask. <strong><a
 href="../systems/loreweave/">Loreweave</a> makes the markdown
 authoritative and the database disposable.</strong> An MIT TypeScript
-temporal knowledge engine at version 0.37.1 — 19,552 lines over 100
+temporal knowledge engine at version 0.39.0 — 22,089 lines over 107
 files, a SQLite index over a directory of markdown — whose fact module
 opens with the inversion the rest of it rests on: "Fact lines in
 markdown are the durable record; DB fact rows are a replay." Every
@@ -8883,16 +8883,18 @@ assertion appends a <code>- [fact]</code> line and every closure a
 <code>- [invalidate]</code> line to a dated journal in the user's own
 vault, and a rebuild "wipes and replays ALL fact rows deterministically,
 so the index stays a pure cache", which makes correcting an agent's
-mistake a text edit rather than a migration. Its temporal query is the
-most complete this page has read on these four columns:
-<code>queryFacts</code> takes <code>asOf</code> and
-<code>asKnownAt</code> as separate parameters over separate column
-pairs, and the comment on the second handles the case that separates a
-real transaction axis from a decorated one — "A fact asserted afterwards
-was not available to anyone reasoning at T, however early its validity
-was backdated to start." What it has no answer for is scope: no fact
-carries a tenant, project or agent key and no read applies a predicate,
-so the vault is the whole boundary.</p>
+mistake a text edit rather than a migration. <code>queryFactsPage</code>
+takes <code>asOf</code> and <code>asKnownAt</code> as separate
+parameters over separate column pairs, and the comment on the second
+handles a backdated assertion: "A fact asserted afterwards was not
+available to anyone reasoning at T, however early its validity was
+backdated to start." A backdated close is not handled.
+<code>valid_until</code> is one column every close rewrites, an
+invalidate records no time of its own, and an extracted fact's record
+time is its note's last edit, so "true then, as far as we knew then" can
+answer with later knowledge. Scope has no answer at all: no fact carries
+a tenant, project or agent key and no read applies a predicate, so the
+vault is the whole boundary.</p>
 <p><strong><a href="../systems/mindreader/">Mindreader</a> makes an
 omitted scope narrow the view instead of widening it.</strong> An MIT
 Rust MCP server over Neo4j at version 0.7.2 — 20,225 lines over 24 files

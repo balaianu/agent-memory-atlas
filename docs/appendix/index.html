@@ -4343,11 +4343,13 @@ recorded as data. Nothing was installed, built or run. MIT</li>
 <li><a
 href="https://github.com/lets-order-some-fries/loreweave">lets-order-some-fries/loreweave</a>
 at <a
-href="https://github.com/lets-order-some-fries/loreweave/commit/8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7"><code class="commit-id" title="8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7">8fe4c5a2…</code></a>
-— read only; four files scanned, one auto-run surface, one build-time
-execution point, one unpinned dependency surface and two dependency
-files inside the seven-day cooldown, with <code>package-lock.json</code>
-present. Nothing was installed, built or run. MIT</li>
+href="https://github.com/lets-order-some-fries/loreweave/commit/303a4183cf1ee420fcc50c6318d0969b9a3bbd6d"><code class="commit-id" title="303a4183cf1ee420fcc50c6318d0969b9a3bbd6d">303a4183…</code></a>
+— read only; four files scanned, one auto-run surface
+(<code>server.json</code>, an MCP manifest that launches the package
+through <code>npx</code>), one build-time execution point
+(<code>prepublishOnly</code>), one unpinned dependency surface behind
+<code>package-lock.json</code>, and nothing inside the seven-day
+cooldown. Nothing was installed, built or run. MIT</li>
 <li><a href="https://github.com/suanlab/temvera">suanlab/temvera</a> at
 <a
 href="https://github.com/suanlab/temvera/commit/75243a3dbc3dfeda3613fb69e940c774f5ff4e5b"><code class="commit-id" title="75243a3dbc3dfeda3613fb69e940c774f5ff4e5b">75243a3d…</code></a>
@@ -16202,6 +16204,35 @@ section 4 and the file index cited an earlier pin's lines, such as
 <code>store.py:151-198</code> for a guard at <code>:182-222</code>. The
 first rested on the reader of the status rather than on what the
 re-index did to the row.</li>
+<li><strong>Five published claims about <a
+href="../systems/loreweave/">Loreweave</a> were wrong at <a
+href="https://github.com/lets-order-some-fries/loreweave/commit/8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7"><code class="commit-id" title="8fe4c5a2961f46732aa60ce9d8753f0c7818ddc7">8fe4c5a2…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+there were no committed must-not-retrieve cases.
+<code>tests/facts.test.ts:166-174</code> asserted an invalidated fact
+absent from the default query and <code>:332-343</code> a late-recorded
+fact absent from <code>asKnownAt</code>, each beside an
+<code>asOf</code> control on the same store, and
+<code>tests/note-gate.test.ts:164</code> and <code>:269-274</code>
+asserted out-of-vault content absent from search, so
+<code>negative_eval</code> was earned. It said a fact's valid time came
+from frontmatter <code>date</code>, <code>event_date</code>,
+<code>created</code> or <code>valid_from</code>, citing
+<code>src/temporal/dates.ts:205-206</code>; that function dates blocks
+for search windows (<code>src/store/db.ts:445-447</code>), and facts
+read <code>valid_from</code>, <code>date</code> and <code>created</code>
+only (<code>src/facts/extract.ts:177</code>). It said
+<code>source_type</code> was used in a single timeline heuristic;
+<code>src/facts/journal.ts:369</code> and <code>:404</code> also closed
+every slot holding a <code>stated</code> row to extraction. It said
+every table was derivable from the vault; the access log and the
+per-block usage history were not. And it said backdating was handled in
+the as-known-at clause. That held for a backdated assertion, while every
+close rewrote the one <code>valid_until</code> column in place
+(<code>src/facts/journal.ts:181-217</code>,
+<code>src/facts/model.ts:263-268</code>), so <code>asOf</code> combined
+with an earlier <code>asKnownAt</code> answered from a close learned
+afterwards.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
