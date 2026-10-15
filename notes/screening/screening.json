@@ -34158,21 +34158,22 @@
     },
     "pi-memory": {
       "counts": {
-        "FLOAT": 2,
-        "FRESH": 2,
+        "EXEC": 1,
+        "FLOAT": 1,
+        "FRESH": 4,
         "NOTE": 1
       },
-      "files_scanned": 3,
+      "files_scanned": 6,
       "findings": [
         {
-          "detail": "1 dependenc(ies) from a non-registry source: @prjct.app/pi-tui-kit=file:../pi-tui-kit",
-          "kind": "FLOAT",
-          "path": "package.json"
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": ".github/release/package-lock.json"
         },
         {
-          "detail": "4 floating range(s) — lockfile present, so resolution is reproducible today: tsx=^4.20.0, @types/node=^22.19.0, esbuild=^0.28.1, typescript=^5.9.3",
-          "kind": "FLOAT",
-          "path": "package.json"
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": ".github/release/package.json"
         },
         {
           "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
@@ -34185,15 +34186,15 @@
           "path": "package.json"
         },
         {
-          "detail": "lockfile(s) present: package-lock.json",
-          "kind": "NOTE",
-          "path": "-"
+          "detail": "npm lifecycle `prepublishOnly`: node -e \"if (process.env.GITHUB_ACTIONS !== 'true') { console.error('Publish only from the Release workflow: merge to main.'); process.exit(1); }\"",
+          "kind": "EXEC",
+          "path": "package.json"
         }
       ],
-      "revision": "0f09c6b4b79c81f1c68a5a53238830d49d792d5c",
-      "screened_at": "2026-09-19",
+      "revision": "b0e913df6e77b8e10483b2bfe7e44a607cb48a66",
+      "screened_at": "2026-10-15T03:15:16+00:00",
       "slug": "pi-memory",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/prjct-app/pi-memory"
     },

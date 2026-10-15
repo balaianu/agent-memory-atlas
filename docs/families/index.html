@@ -3948,7 +3948,8 @@ href="../systems/ihmt-memory/"><code>ihmt-memory</code></a>, <a
 href="../systems/archiver-rag/"><code>archiver-rag</code></a>, <a
 href="../systems/cloud-alter-ego/"><code>cloud-alter-ego</code></a>, <a
 href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
-<a href="../systems/musclememory/"><code>musclememory</code></a></p>
+<a href="../systems/musclememory/"><code>musclememory</code></a>, <a
+href="../systems/pi-memory/"><code>pi-memory</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
 background consolidation accountable rather than trusted.</strong> A
 DeepSeek Harness plugin on SQLite with Markdown mirrors, it writes a
@@ -7965,6 +7966,22 @@ every later unscoped search with no review, the delete reason the tool
 demands is discarded, and entries are indexed with an empty
 <code>cwd</code>, so scoped search never returns them. One mark,
 <code>negative_eval</code>.</p>
+<p><strong><a href="../systems/pi-memory/">pi-memory</a> keeps no memory
+of its own: it indexes Pi's session journals and rereads every answer
+from them.</strong> An MIT TypeScript extension for <a
+href="../systems/pi/">Pi</a>, version 1.0.0, whose index holds redacted
+search terms in a contentless SQLite FTS5 table and a byte pointer per
+journal line, so deleting the index loses nothing. One on-demand tool
+searches by BM25 with a recency discount, lists compaction summaries and
+reads an entry by id; nothing is injected, and a test asserts that no
+context or prompt hook is registered. Secrets are redacted before they
+become search terms and again on output. Until 14 October 2026 it was a
+curated temporal-fact store whose <code>resolveFact</code> refused to
+reopen a superseded fact, removed in 1.0.0 after the project measured
+that 85% of its lookups came back empty. Against that:
+<code>global</code> is a value of the agent's own scope argument, a read
+by id ignores scope, and the read does not check the id of the line it
+lands on. One mark, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/mnemo/">Mnemo</a> supersedes carefully
 and forgets loosely.</strong> An Apache-2.0 HTTP MCP server on one
 SQLite file per namespace: FTS5 tiers and sqlite-vec cosine fused by
@@ -9089,7 +9106,6 @@ href="../systems/membrane/"><code>membrane</code></a>, <a
 href="../systems/distill-kura/"><code>distill-kura</code></a>, <a
 href="../systems/eliot-memory-os/"><code>eliot-memory-os</code></a>, <a
 href="../systems/inspeximus/"><code>inspeximus</code></a>, <a
-href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
 href="../systems/mandalore/"><code>mandalore</code></a>, <a
 href="../systems/kannaka-memory/"><code>kannaka-memory</code></a>, <a
 href="../systems/agent-memory-guard/"><code>agent-memory-guard</code></a>,
@@ -9597,37 +9613,6 @@ figures against named competitors are the project's own measurements at
 n=30 per system and were not reproduced here; the fourth column is its
 own guard disabled at 100%, which is the control that makes the other
 three legible.</p>
-<p><strong><a href="../systems/pi-memory/">pi-memory</a> will not let a
-closed interval be reopened.</strong> An MIT TypeScript extension for <a
-href="../systems/pi/">Pi</a> at version 0.1.0 — 15,920 lines, 41 test
-files — plus a daemon that analyses changed sources while Pi is closed,
-whose <code>/memory sync</code> "fingerprints publishers and enqueues
-work — it does not copy raw source bodies". A fact carries
-<code>valid_at</code> and <code>invalid_at</code> separately from
-<code>recorded_at</code>, and both retrieval entry points take an
-<code>asOf</code> parsed strictly as ISO-8601 — an unparseable value
-throws rather than silently becoming now — with the federated path
-resolving the instant once and pushing it to every engine leg, so a
-multi-scope query reads one moment instead of a different now per leg.
-Standing is
-<code>candidate | supported | needs_review | contradicted | superseded</code>,
-and the storage read is an allowlist —
-<code>standing IN ('supported','needs_review','candidate')</code> — so a
-value added later is withheld by default rather than leaking until
-someone remembers to exclude it. The sentence that holds it together is
-in <code>resolveFact</code>, which requires a rationale, redacts it
-before commit, checks a replacement is a different existing fact, and
-refuses to move a superseded or contradicted fact back to a live
-standing: "A closed interval cannot be reopened without losing history;
-record a new fact instead." Its capture gate refuses routine chatter and
-tool dumps while deliberately exempting corrections and constraints —
-the class most likely to look like noise and most costly to drop — under
-a header naming what it is not: "Not a copy of prjct fail-open excess."
-Two marks. The hybrid and federated APIs filter on the validity interval
-and return the standing alongside each result rather than withholding a
-contradicted fact, so the label has to be read; and
-<code>scope_id</code> is a parameter of the scoped query rather than a
-property of the handle, which is why no scope mark is claimed.</p>
 <p><strong><a href="../systems/mandalore/">Mandalore</a> deletes
 nothing, withdraws by appending, and its recall packet tells the model
 what absence does not prove.</strong> An MIT Go engine at version 1.6.0

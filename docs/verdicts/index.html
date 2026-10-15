@@ -19673,57 +19673,43 @@ and the guard says so.</li>
 <h3 id="pi-memory"><a
 href="../systems/pi-memory/"><code>pi-memory</code></a></h3>
 <ul>
-<li>Best idea: <strong>a terminal standing is terminal, and the error
-says what to do instead.</strong> <code>resolveFact</code> refuses to
-move a <code>superseded</code> or <code>contradicted</code> fact back to
-a live standing — "A closed interval cannot be reopened without losing
-history; record a new fact instead." That is the rule that stops a
-mutable status from quietly undoing a temporal record: the standing may
-move forward, the interval it closed stays closed, and saying "it is
-true again" means recording a new fact with its own validity, which is
-what the bitemporal columns are for. The same method requires a
-rationale, passes it through <code>redactSecrets</code> before commit —
-the free-text field explaining why a fact was wrong is exactly where
-someone pastes the token that proved it — and validates that a
-replacement is a different existing fact. Beside it, the storage read is
-an allowlist,
-<code>standing IN ('supported','needs_review','candidate')</code>, so a
-value added next year is withheld by default rather than leaking until
-someone remembers to exclude it.</li>
-<li>Biggest risk: <strong>the standing gates the storage query and the
-publication path, and the retrieval API labels rather than
-withholds.</strong> <code>activeFacts</code> and three points in
-<code>publish.ts</code> exclude contradicted and superseded facts; the
-hybrid and federated APIs filter on the validity interval and thread
-<code>standing</code> back to the caller beside <code>validAt</code>,
-<code>invalidAt</code> and <code>expiredAt</code>. That is defensible
-for an API whose consumer is another program, and it means a caller that
-ignores the label gets a contradicted fact. Nothing in the tree asserts
-otherwise — no test seeds a contradicted fact and asserts it stays out
-of a retrieval, which is the cheap test that would pin the allowlist
-against a refactor moving the filter. <code>scope_id</code> is also a
-parameter of the scoped query rather than a property of the handle, so
-no scope mark is claimed.</li>
-<li>Most reusable component: the <code>asOf</code> handling. It is
-parsed strictly — an unparseable value throws with "asOf must be
-ISO-8601." rather than silently becoming now — and the federated path
-resolves the instant once before fanning out, so a query spanning
-several scopes reads one moment instead of a different now per leg. Both
-halves are small and both are usually got wrong.</li>
-<li>Maturity impression: MIT, version 0.1.0, 15,920 lines of TypeScript
-with 41 test files, a Pi extension plus a daemon that analyses changed
-sources while Pi is closed. The README declines things in its first
-screen: <code>/memory sync</code> "fingerprints publishers and enqueues
-work — it does not copy raw source bodies", and "[d]o not install a
-persistent service unless explicitly authorized." The capture gate
-refuses routine chatter and tool dumps while exempting corrections and
-constraints deliberately, under a header naming what it is not: "Not a
-copy of prjct fail-open excess."</li>
-<li>Study when: you have a mutable status over a temporal record and
-need to decide what happens when the two disagree.</li>
-<li>Do not copy when: you need the store to withhold rather than label —
-here retrieval returns a contradicted fact with its standing attached
-and leaves the decision to the reader.</li>
+<li>Status: on 14 October 2026 version 1.0.0 replaced the curated
+temporal-fact store with an index over Pi's session journals; the
+entries below describe the index, and the fact store is summarised in
+the report's section 9.</li>
+<li>Best idea: <strong>the transcript is the memory and the index is
+disposable.</strong> The index stores redacted search terms in a
+contentless FTS5 table and a byte pointer into each journal line; every
+text the tool returns is reread from the journal and redacted again, so
+<code>/memory rebuild</code> deletes the index and loses nothing.
+Secrets are redacted before they become search terms, and a committed
+test asserts a key is neither searchable nor readable.</li>
+<li>Biggest risk: <strong>the project scope is a default the agent can
+widen, and the pointer read trusts the offset.</strong>
+<code>global</code> is one of three values of
+<code>memory_context</code>'s own <code>scope</code> argument and drops
+the cwd predicate, and <code>read</code> by entry id applies no project
+filter at any scope. <code>entryText</code> seeks to the stored offset
+and returns whatever entry parses there without comparing its id, while
+a journal is reindexed only when it shrinks.</li>
+<li>Most reusable component: the junk collector's confirm.
+<code>/memory gc</code> previews journals by mechanical criteria, and
+<code>/memory gc confirm</code> deletes exactly the files that preview
+listed, skips any whose size or mtime changed, and removes their index
+rows and terms with them; journals quiet for under 24 hours, compacted
+ones and the current one are never candidates.</li>
+<li>Maturity impression: MIT, version 1.0.0, 930 lines of TypeScript and
+9 test cases in two files, one tool and one command, no runtime
+dependencies. The 1.0.0 changelog removed curated facts,
+<code>memory_record</code>, the daemon, retention and embeddings, on the
+measurement that "85% of lookups came back empty, 46% of writes
+failed".</li>
+<li>Study when: your agent compacts its context and loses things the
+transcript keeps, and you want them findable without a second
+store.</li>
+<li>Do not copy when: projects must not see each other's history, or the
+memory must say that something was corrected rather than show where it
+was said.</li>
 </ul>
 <h3 id="mandalore"><a
 href="../systems/mandalore/"><code>mandalore</code></a></h3>

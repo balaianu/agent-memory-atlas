@@ -4039,9 +4039,10 @@ were not reproduced. Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/prjct-app/pi-memory">prjct-app/pi-memory</a> at
 <a
-href="https://github.com/prjct-app/pi-memory/commit/0f09c6b4b79c81f1c68a5a53238830d49d792d5c"><code class="commit-id" title="0f09c6b4b79c81f1c68a5a53238830d49d792d5c">0f09c6b4…</code></a>
-— read only, from a shallow clone; three files scanned, no auto-run
-surfaces, no build-time execution points, one unpinned surface and two
+href="https://github.com/prjct-app/pi-memory/commit/b0e913df6e77b8e10483b2bfe7e44a607cb48a66"><code class="commit-id" title="b0e913df6e77b8e10483b2bfe7e44a607cb48a66">b0e913df…</code></a>
+— read only, from a full clone; six files scanned, no auto-run surfaces,
+one build-time execution point (a <code>prepublishOnly</code> guard that
+exits unless run in GitHub Actions), one unpinned surface and four
 dependency files inside the seven-day cooldown. Nothing was installed,
 built or run</li>
 <li><a
@@ -11928,7 +11929,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">191
+href="../capabilities/">190
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems
@@ -16142,6 +16143,37 @@ plus six commits, with 526 commits and 22 CTest registrations over
 10,630 lines. The first rested on the formula rather than the sign of
 its input, and the second on the tool schema a session is offered rather
 than on the dispatcher.</li>
+<li><strong>Five published claims about <a
+href="../systems/pi-memory/">pi-memory</a> were wrong at <a
+href="https://github.com/prjct-app/pi-memory/commit/0f09c6b4b79c81f1c68a5a53238830d49d792d5c"><code class="commit-id" title="0f09c6b4b79c81f1c68a5a53238830d49d792d5c">0f09c6b4…</code></a>,
+the pin they were made at, and are corrected.</strong> The report did
+not credit <code>negative_eval</code>, saying nothing in the tree
+asserted a record stays out of a retrieval; <a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/tests/engine.test.ts#L35-L46"><code>tests/engine.test.ts:35-46</code></a>
+asserted a superseded fact returned nothing at the default
+<code>asOf</code>, and <a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/tests/isolation.test.ts#L16-L38"><code>tests/isolation.test.ts:16-38</code></a>
+and <code>:51-69</code> asserted one project's facts stayed out of
+another's search. It said retrieval returned contradicted facts labelled
+rather than withholding them; a terminal resolution closed
+<code>invalid_at</code> at the event time (<a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/src/storage/projection.ts#L385-L398"><code>src/storage/projection.ts:385-398</code></a>),
+<code>factIsValidAt</code> then dropped the fact (<a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/src/retrieval/hybrid.ts#L167-L169"><code>src/retrieval/hybrid.ts:167-169</code></a>),
+and the prompt hook selected only supported and needs_review facts. It
+withheld <code>scope_enforced</code> because <code>scope_id</code> was a
+parameter rather than a property of the handle; the agent-reachable
+search injected the engine's own scope (<a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/src/engine.ts#L400-L402"><code>src/engine.ts:400-402</code></a>),
+dropped documents of any other scope, and gave the model no scope
+argument. It quoted the capture gate's header as "Not a copy of prjct
+fail-open excess.", a line commit
+<code class="commit-id" title="77e5bd3eaeb2de6ec0465bfe20b819edf756503c">77e5bd3e…</code> removed before the
+pin. And its census of 15,920 lines and 41 test files reproduces under
+no method tried; <code>src</code> held 12,755 lines and
+<code>tests</code> 48 <code>*.test.ts</code> files. The first three
+rested on the storage query and the field's signature rather than on the
+read path and the test suite.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

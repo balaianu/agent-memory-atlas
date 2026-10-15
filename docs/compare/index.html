@@ -24153,64 +24153,56 @@ fail-open when no authority manifest exists</td>
 </tr>
 <tr>
 <td><a href="../systems/pi-memory/"><code>pi-memory</code></a></td>
-<td>A fact with a statement, an optional subject/predicate/object
-triple, a standing, a confidence, a validity interval and a recorded-at;
-beneath it episodes and evidence rows carrying provenance, a content
-hash and the originating tool call</td>
-<td>SQLite with documents, chunks, episodes, evidence, an
-episode-evidence join, entities and facts, plus an applied-events table
-and a compact-authority singleton</td>
-<td>Hybrid lexical, vector and graph retrieval over a scope, federated
-across engines at one resolved <code>asOf</code>, with a relevance gate
-that reports insufficient evidence rather than returning weak
-matches</td>
-<td>A Pi extension records; a standalone daemon analyses changed sources
-while Pi is closed. <code>/memory sync</code> "fingerprints publishers
-and enqueues work — it does not copy raw source bodies"</td>
-<td><code>resolveFact</code> moves a fact to a new standing with a
-mandatory rationale and an optional replacement; a superseded or
-contradicted fact cannot be reopened. Retention carries a capture gate,
-consolidation, a value model and bounded garbage collection</td>
-<td>A <code>scope_id</code> on episodes, entities and facts, passed as
-an argument to the scoped queries; federation runs one query across
-several engines, each with its own scope</td>
-<td>A Pi extension plus a daemon
-(<code>npm run daemon -- once|start|stop|status</code>), with the README
-cautioning "[d]o not install a persistent service unless explicitly
-authorized"</td>
-<td>A daemon that fingerprints and enqueues changed sources,
-consolidation, and bounded garbage collection</td>
-<td>The standing allowlist and its reopening guard, secret redaction on
-capture and on rationales, a capture gate that refuses routine chatter,
-and eval oracles including an unanswerable kind</td>
-<td>The reopening guard is the sharpest sentence in the repository and
-the right rule: a fact that is superseded or contradicted cannot be
-moved back to a live standing, because "[a] closed interval cannot be
-reopened without losing history; record a new fact instead" — so the
-temporal record stays append-shaped even though the standing is mutable.
-The storage read is an allowlist rather than a denylist, so a standing
-added later is excluded by default instead of leaking.
-<code>resolveFact</code> requires a rationale and redacts it before
-commit, and validates that a replacement is a different existing fact.
-The capture gate refuses routine chatter and tool dumps while
-<code>isNegationOrCorrection</code> deliberately admits corrections and
-constraints — the class most likely to be filtered as noise and the most
-costly to lose — under a header that names what it is not: "Not a copy
-of prjct fail-open excess." The sync path fingerprints publishers rather
-than copying source bodies</td>
-<td>Version 0.1.0, 15,920 lines and 41 test files: early, and the
-surface area is wider than the depth. <code>scope_id</code> is a
-parameter of <code>activeFacts</code> rather than a property of the
-handle, so the boundary is the caller's to pass correctly and no mark is
-claimed for it. The standing allowlist lives in the storage query and
-the publication path; the hybrid and federated retrieval APIs filter on
-the validity interval and return the standing alongside each result
-rather than withholding a contradicted fact, so what a caller does with
-that label is the caller's decision. Redaction is pattern-based over key
-names and token shapes, with no stated limit paragraph of the kind the
-rest of the code writes. The eval oracles score answer quality — recall,
-grounding, an unanswerable case — and nothing in the tree asserts that a
-specific record stays out of a retrieval</td>
+<td>An entry of a Pi session journal (a user, assistant, tool-result,
+bash, custom, compaction or branch-summary line), indexed by entry id,
+parent id, timestamp, kind, role, tool name, character count and the
+byte offset and length of its line</td>
+<td>Pi's own JSONL session journals hold the text; a derived SQLite
+index holds file cursors, entry rows and a contentless FTS5 table of
+redacted terms, and can be deleted and rebuilt from the journals</td>
+<td>One on-demand tool: BM25 full-text search with
+all-terms-then-any-term fallback and a one-month recency discount, a
+newest-first listing, a list of compaction summaries, and a paged read
+of one entry reread from its journal line; filters by local-day or ISO
+date range, kind and a project, session or global scope</td>
+<td>No memory writes by the agent. The index follows the current journal
+on session start, message end, compaction and tree moves, and one
+process at a time backfills other journals under a lease</td>
+<td>Index rows follow the journal: a journal that shrank is dropped and
+reindexed from the start. <code>/memory rebuild</code> deletes the
+index; <code>/memory gc</code> lists junk journals and
+<code>/memory gc confirm</code> hard-deletes exactly those, if unchanged
+since the preview, with their index rows</td>
+<td>A project root derived from the session cwd is the default filter;
+the agent may pass session or global instead, and a read by entry id is
+not scoped</td>
+<td>A Pi extension registering one tool, <code>memory_context</code>,
+and one command, <code>/memory</code>; it hooks no context, prompt or
+provider event</td>
+<td>Incremental indexing in 12 ms time slices with a yield between them,
+a delayed backfill of older journals under a two-minute lease, and a
+user-run junk-journal collector</td>
+<td>Secret redaction before terms are indexed and again on every
+returned text, FTS syntax quoted to literal terms, and a deletion that
+touches only the files a preview listed</td>
+<td>The store keeps no second copy of anything: the index holds search
+terms in a contentless FTS5 table and a byte pointer into the journal
+line, and every returned text is reread from the journal and redacted on
+the way out, so deleting the index loses nothing. Secrets are redacted
+before they become search terms, and a committed test asserts a key is
+neither searchable nor readable. Nothing reaches the model unless it
+calls the tool, and a test asserts the context, prompt and provider
+hooks are not registered. The junk collector deletes only the files its
+preview listed and keeps any that changed since</td>
+<td>The project scope is a default, not a boundary: <code>global</code>
+is a value of the agent's own <code>scope</code> argument, and a read by
+entry id is not filtered by project at all. A read seeks to the stored
+offset and returns whatever entry parses there without checking its id,
+and a journal is reindexed only when it shrinks. Redaction is
+pattern-based and the journal keeps the unredacted text.
+<code>/memory gc confirm</code> hard-deletes Pi's own journals, which
+are the only copy. The curated-fact databases of earlier versions are
+left on disk, and nothing in this tree reads or deletes them</td>
 </tr>
 <tr>
 <td><a href="../systems/pi/"><code>pi</code></a></td>
@@ -32426,7 +32418,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>191 of 734:</em> <a
+<p><em>190 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32572,7 +32564,6 @@ href="../systems/ouroboros-agent-os/"><code>ouroboros-agent-os</code></a>,
 href="../systems/particles/"><code>particles</code></a>, <a
 href="../systems/pensyve/"><code>pensyve</code></a>, <a
 href="../systems/perseus-vault/"><code>perseus-vault</code></a>, <a
-href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
 href="../systems/plur/"><code>plur</code></a>, <a
 href="../systems/plur1bus/"><code>plur1bus</code></a>, <a
 href="../systems/pluribus/"><code>pluribus</code></a>, <a
@@ -32625,7 +32616,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>122 of 734:</em> <a
+<p><em>121 of 734:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32717,7 +32708,6 @@ href="../systems/openmemory/"><code>openmemory</code></a>, <a
 href="../systems/openzync-core/"><code>openzync-core</code></a>, <a
 href="../systems/ostk-recall/"><code>ostk-recall</code></a>, <a
 href="../systems/perseus-vault/"><code>perseus-vault</code></a>, <a
-href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
 href="../systems/plur/"><code>plur</code></a>, <a
 href="../systems/plur1bus/"><code>plur1bus</code></a>, <a
 href="../systems/pluribus/"><code>pluribus</code></a>, <a
@@ -33458,7 +33448,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>448 of 734:</em> <a
+<p><em>449 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33804,6 +33794,7 @@ href="../systems/particles/"><code>particles</code></a>, <a
 href="../systems/pensyve/"><code>pensyve</code></a>, <a
 href="../systems/people-context/"><code>people-context</code></a>, <a
 href="../systems/perseus-vault/"><code>perseus-vault</code></a>, <a
+href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
 href="../systems/plur/"><code>plur</code></a>, <a
 href="../systems/plur1bus/"><code>plur1bus</code></a>, <a
 href="../systems/pluribus/"><code>pluribus</code></a>, <a
@@ -33939,7 +33930,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-448 repositories of
+449 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

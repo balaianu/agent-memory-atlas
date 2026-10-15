@@ -4,30 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A Pi extension whose facts carry a
-validity interval separate from when they were recorded and a five-value
-standing the storage layer reads through an allowlist — and whose
-resolve path refuses to move a superseded or contradicted fact back to a
-live standing, telling the caller to record a new fact instead.">
+    <meta name="description" content="A Pi extension that indexes Pi's
+own session journals with contentless SQLite FTS5 and byte pointers, so
+the agent searches and rereads what compaction removed.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="pi-memory — Agent Memory Atlas">
-    <meta property="og:description" content="A Pi extension whose facts
-carry a validity interval separate from when they were recorded and a
-five-value standing the storage layer reads through an allowlist — and
-whose resolve path refuses to move a superseded or contradicted fact
-back to a live standing, telling the caller to record a new fact
-instead.">
+    <meta property="og:description" content="A Pi extension that indexes
+Pi's own session journals with contentless SQLite FTS5 and byte
+pointers, so the agent searches and rereads what compaction removed.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="pi-memory — Agent Memory Atlas">
-    <meta name="twitter:description" content="A Pi extension whose facts
-carry a validity interval separate from when they were recorded and a
-five-value standing the storage layer reads through an allowlist — and
-whose resolve path refuses to move a superseded or contradicted fact
-back to a live standing, telling the caller to record a new fact
-instead.">
+    <meta name="twitter:description" content="A Pi extension that
+indexes Pi's own session journals with contentless SQLite FTS5 and byte
+pointers, so the agent searches and rereads what compaction removed.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>pi-memory — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -49,7 +41,7 @@ instead.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "pi-memory",
-      "description": "A Pi extension whose facts carry a validity interval separate from when they were recorded and a five-value standing the storage layer reads through an allowlist \u2014 and whose resolve path refuses to move a superseded or contradicted fact back to a live standing, telling the caller to record a new fact instead.",
+      "description": "A Pi extension that indexes Pi's own session journals with contentless SQLite FTS5 and byte pointers, so the agent searches and rereads what compaction removed.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -104,27 +96,26 @@ instead.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">A closed interval cannot be reopened</p>
+          <p class="eyebrow">The journal is the memory and the index is
+disposable</p>
           <h1>pi-memory</h1>
-          <p class="document-deck">A Pi extension whose facts carry a
-validity interval separate from when they were recorded and a five-value
-standing the storage layer reads through an allowlist — and whose
-resolve path refuses to move a superseded or contradicted fact back to a
-live standing, telling the caller to record a new fact instead.</p>
+          <p class="document-deck">A Pi extension that indexes Pi's own
+session journals with contentless SQLite FTS5 and byte pointers, so the
+agent searches and rereads what compaction removed.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/prjct-app/pi-memory">
               <span>Source</span>
               <strong>prjct-app/pi-memory</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/prjct-app/pi-memory/commit/0f09c6b4b79c81f1c68a5a53238830d49d792d5c" title="0f09c6b4b79c81f1c68a5a53238830d49d792d5c">
+            <a class="meta-pill revision-pill" href="https://github.com/prjct-app/pi-memory/commit/b0e913df6e77b8e10483b2bfe7e44a607cb48a66" title="b0e913df6e77b8e10483b2bfe7e44a607cb48a66">
               <span>Analyzed revision</span>
-              <code>0f09c6b4…</code>
+              <code>b0e913df…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/prjct-app--pi-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -132,7 +123,19 @@ live standing, telling the caller to record a new fact instead.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>930
+lines of TypeScript in 9 files under src and the root index.ts, plus 245
+lines in 2 test files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>111
+commits on main by 3 author names, one of them a release bot, 10
+September – 14 October 2026; version 1.0.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>9
+test cases in 2 files under tests, plus 3 in a release-policy test; none
+run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -148,83 +151,86 @@ live standing, telling the caller to record a new fact instead.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>pi-memory is "Pi-native temporal memory and hybrid retrieval for
-agents" — MIT, TypeScript, version 0.1.0, 15,920 lines with 41 test
-files. It is an extension for <a href="../pi/">Pi</a> plus a standalone
-daemon that "analyzes changed sources while Pi is closed."</p>
-<p>The architecture note in the README is worth quoting for what it
-declines to do: <code>/memory sync</code> "fingerprints publishers and
-enqueues work — it does not copy raw source bodies", and "[d]o not
-install a persistent service unless explicitly authorized." Both are
-restraint written into the first screen.</p>
-<p>The memory model is bitemporal in the way the atlas asks for. A fact
-carries <code>valid_at</code> and <code>invalid_at</code> — when the
-thing it states was true — separately from <code>recorded_at</code>,
-when the store learned it. Both retrieval entry points accept an
-<code>asOf</code>, parse it strictly
-(<code>"asOf must be ISO-8601."</code>), default it to now, and filter
-candidates with <code>factIsValidAt(fact, asOf)</code>. The federated
-path resolves the instant once and passes it down to every engine leg,
-so a query spanning several scopes reads one consistent moment rather
-than a different now per leg.</p>
-<p>Beside that runs a five-value standing — <code>candidate</code>,
-<code>supported</code>, <code>needs_review</code>,
-<code>contradicted</code>, <code>superseded</code> — and the storage
-layer reads it through an allowlist:</p>
-<pre><code>SELECT id FROM facts WHERE scope_id=? AND standing IN (&#39;supported&#39;,&#39;needs_review&#39;,&#39;candidate&#39;)</code></pre>
-<p>An allowlist rather than a denylist, so a standing added next year is
-withheld by default instead of leaking until somebody remembers to
-exclude it.</p>
-<p>The sentence that makes the whole thing cohere is in
-<code>resolveFact</code>. Moving a fact to a new standing requires a
-rationale, which is redacted before it is committed, and a replacement
-must be a different existing fact. And a fact that is already
-<code>superseded</code> or <code>contradicted</code> cannot be moved
-back:</p>
-<blockquote>
-<p>"A closed interval cannot be reopened without losing history; record
-a new fact instead."</p>
-</blockquote>
-<p>That is the rule that keeps a mutable standing from undoing a
-temporal record. The standing can move forward; the interval it closed
-stays closed; the way to say "actually it is true again" is to record
-that as a new fact with its own validity, which is what a bitemporal
-store is for.</p>
-<p>The capture gate deserves a mention for one detail. It refuses
-routine chatter — <code>ok</code>, <code>done</code>, <code>lgtm</code>,
-<code>wip</code> — and tool dumps, and then
-<code>isNegationOrCorrection</code> deliberately admits corrections and
-constraints regardless. Corrections are the class most likely to look
-like noise to a filter and the most expensive to drop, and the module's
-first line names the failure it is avoiding: "Not a copy of prjct
-fail-open excess."</p>
+<p>pi-memory keeps no memory of its own. It indexes the session journals
+Pi already writes, storing search terms in a contentless SQLite FTS5
+table and a byte pointer into each journal line, and it rereads and
+redacts the text from the journal every time it returns one. The index
+can be thrown away and rebuilt. The weak side is the boundary: the
+default project scope is one argument away from <code>global</code>, a
+read by entry id ignores scope, and the read does not check that the
+line it lands on carries the id it asked for.</p>
+<p><strong>Until 14 October 2026 it was a curated temporal-fact
+store.</strong> Commit <a
+href="https://github.com/prjct-app/pi-memory/commit/a6bc833c5a8473dceaf6adaddaff5f982875e5bc"><code class="commit-id" title="a6bc833c5a8473dceaf6adaddaff5f982875e5bc">a6bc833c…</code></a>,
+released as 1.0.0, removed "curated facts, memory_record, curation, the
+daemon, retention, handoff masking, embeddings and the child view". The
+changelog gives measured reasons: a rule stated once "was gone from the
+summary by compaction 21", and of the curated store "85% of lookups came
+back empty, 46% of writes failed". Old databases are left untouched. The
+fact store, with its validity interval and its refusal to reopen a
+closed one, is described in <a
+href="#the-fact-store-it-replaced">section 9</a> against its last
+tree.</p>
+<p>The README states the problem the rewrite answers. Long sessions
+compact many times, each compaction replaces older turns with a summary,
+and Pi keeps every entry in the journal anyway. So the agent needs a way
+to find what was compacted away, or what happened in an earlier session
+of the same project, and to read it verbatim. That is the whole
+product.</p>
+<p>There is one tool, <code>memory_context</code>, with three actions:
+<code>search</code>, <code>read</code> and <code>summaries</code>.
+"Nothing is injected: no recall, no rewritten context, no retired
+turns." The model calls it when it decides it needs something from the
+past, and a committed test asserts that the extension registers no hook
+on <code>context</code>, <code>before_agent_start</code>,
+<code>before_provider_request</code>, <code>agent_end</code> or
+<code>turn_end</code>.</p>
+<p>Search is BM25 over all terms first and any term second, and the
+result says which (<code>match: "any"</code>, with a hint). Newer
+entries rank higher among equally relevant ones. FTS syntax in a query
+is quoted into literal terms, so an unbalanced quote or a stray
+<code>OR</code> is text, not an error.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>fact</strong> states something, for an interval, as of a
-moment it was recorded.</p>
-<p>A <strong>standing</strong> says how the store currently regards it.
-Two of the five values are terminal.</p>
-<p>An <strong>asOf</strong> is a question about a moment, not about
-now.</p>
-<p><strong>Evidence</strong> is what a fact rests on: a content hash, a
-provenance, an actor, a session and the tool call that produced it.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — validity time and record time are separate columns filtered by a validated asOf, while the standing is read through an allowlist and its two terminal values cannot be reopened</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: validity time and record time are separate columns filtered by a validated asOf, while the standing is read through an allowlist and its two terminal values cannot be reopened
+<p>A <strong>journal</strong> is a Pi session file, one JSON object per
+line. It is the only source of truth.</p>
+<p>An <strong>entry</strong> is one line the index understands: a user,
+assistant, tool-result, bash, custom, compaction or branch-summary
+message. Encrypted reasoning and metadata lines are left in the journal
+and not indexed, and an image leaves only an <code>[image]</code>
+marker.</p>
+<p>The <strong>index</strong> is derived. It knows where each entry's
+line starts, how long it is, and which redacted words it contains. It
+does not hold the text.</p>
+<p>A <strong>scope</strong> is a filter chosen per call.
+<code>project</code> is the outermost folder above the cwd that has
+sessions of its own, below a direct child of home; <code>session</code>
+is one journal; <code>global</code> is everything.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the journal holds the text, the index holds redacted terms and a byte pointer, and every read goes back to the journal</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the journal holds the text, the index holds redacted terms and a byte pointer, and every read goes back to the journal
 flowchart TB
-    CAP[&quot;Pi extension records ·&lt;br/&gt;daemon analyses changed sources&lt;br/&gt;while Pi is closed&quot;] --&gt; GATE{&quot;capture gate&quot;}
-    GATE --&gt;|&quot;ok · done · lgtm · wip ·&lt;br/&gt;tool dumps&quot;| DROP[&quot;refused&quot;]
-    GATE --&gt;|&quot;isNegationOrCorrection —&lt;br/&gt;corrections and constraints&lt;br/&gt;admitted regardless&quot;| RED[&quot;redactSecrets&quot;]
-    GATE --&gt;|&quot;ordinary&quot;| RED
-    RED --&gt; F[(&quot;facts: statement · standing ·&lt;br/&gt;confidence · valid_at · invalid_at ·&lt;br/&gt;recorded_at · scope_id&quot;)]
-    EV[(&quot;evidence: provenance ·&lt;br/&gt;content_hash · observed_at ·&lt;br/&gt;actor_id · tool_call_id&quot;)] --- F
-    F --&gt; READ{&quot;activeFacts:&lt;br/&gt;standing IN (&#39;supported&#39;,&lt;br/&gt;&#39;needs_review&#39;,&#39;candidate&#39;)&quot;}
-    READ --&gt;|&quot;allowlist — a standing added&lt;br/&gt;later is withheld by default&quot;| OUT[&quot;read&quot;]
-    RES[&quot;resolveFact(factId, standing,&lt;br/&gt;rationale, replacementId?)&quot;] --&gt; CHK{&quot;is the fact already&lt;br/&gt;superseded or contradicted?&quot;}
-    CHK --&gt;|&quot;yes, and the new standing is live&quot;| REF[&quot;throws: &#39;A closed interval cannot be&lt;br/&gt;reopened without losing history;&lt;br/&gt;record a new fact instead.&#39;&quot;]
-    CHK --&gt;|&quot;no&quot;| MOVE[&quot;standing moves · rationale required&lt;br/&gt;and redacted · replacement must be&lt;br/&gt;a different existing fact&quot;]
-    MOVE --&gt; F
-    Q[&quot;recall(query, asOf?)&quot;] --&gt; P{&quot;asOf parsed as ISO-8601,&lt;br/&gt;rejected if unparseable,&lt;br/&gt;defaults to now&quot;}
-    P --&gt; FED[&quot;federated: resolve the instant ONCE,&lt;br/&gt;pass it to every engine leg&quot;]
-    FED --&gt; VAL[&quot;factIsValidAt(fact, asOf) —&lt;br/&gt;the validity interval, not recorded_at&quot;]
-    VAL --&gt; RES2[&quot;results carry validAt, invalidAt,&lt;br/&gt;expiredAt AND the standing —&lt;br/&gt;retrieval labels rather than withholds&quot;]</code></pre></details></figure>
+    PI[&quot;Pi writes the session journal&lt;br/&gt;one JSON line per entry&quot;] --&gt; J[(&quot;journal .jsonl&lt;br/&gt;the only copy of the text&quot;)]
+    EV[&quot;session_start (after 3 s) ·&lt;br/&gt;message_end · session_compact ·&lt;br/&gt;session_tree&quot;] --&gt; IDX[&quot;indexFile: read from the stored&lt;br/&gt;byte cursor, complete lines only,&lt;br/&gt;12 ms slices&quot;]
+    J --&gt; IDX
+    IDX --&gt; SHRINK{&quot;journal shorter than&lt;br/&gt;the cursor?&quot;}
+    SHRINK --&gt;|&quot;yes&quot;| RESET[&quot;drop its rows and terms,&lt;br/&gt;reindex from byte 0&quot;]
+    SHRINK --&gt;|&quot;no&quot;| PARSE[&quot;entryOf: user · assistant ·&lt;br/&gt;tool_result · bash · custom ·&lt;br/&gt;compaction · branch_summary&quot;]
+    RESET --&gt; PARSE
+    PARSE --&gt; RED1[&quot;redactSecrets on the text&quot;]
+    RED1 --&gt; DB[(&quot;history.sqlite: files (cursor, cwd,&lt;br/&gt;session id) · entries (id, ts, kind,&lt;br/&gt;offset, length) · entries_fts&lt;br/&gt;contentless, redacted terms&quot;)]
+    Q[&quot;memory_context(search · read ·&lt;br/&gt;summaries, scope, since, until, kind)&quot;] --&gt; SC{&quot;scope&quot;}
+    SC --&gt;|&quot;project (default)&quot;| ROOT[&quot;cwd prefix of the derived&lt;br/&gt;project root&quot;]
+    SC --&gt;|&quot;session&quot;| SID[&quot;one session id&quot;]
+    SC --&gt;|&quot;global&quot;| ALL[&quot;no scope predicate&quot;]
+    ROOT --&gt; FTS[&quot;FTS5 MATCH all terms,&lt;br/&gt;else any term · bm25 ·&lt;br/&gt;recency discount&quot;]
+    SID --&gt; FTS
+    ALL --&gt; FTS
+    DB --&gt; FTS
+    FTS --&gt; SEEK[&quot;seek to offset, read length bytes,&lt;br/&gt;parse the line, no id check&quot;]
+    J --&gt; SEEK
+    SEEK --&gt; RED2[&quot;redactSecrets again&quot;]
+    RED2 --&gt; OUT[&quot;excerpt or a 16,000-character page&quot;]
+    GC[&quot;/memory gc → preview of junk journals&lt;br/&gt;/memory gc confirm&quot;] --&gt; DEL[&quot;rm the journal if size and mtime&lt;br/&gt;are unchanged · forget its rows&quot;]
+    DEL --&gt; J
+    DEL --&gt; DB</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -235,163 +241,265 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>src/storage/migrations.ts</code></td>
-<td>The schema: documents, chunks, episodes, evidence, entities,
-facts</td>
+<td><code>src/index.ts</code></td>
+<td>The extension: event subscriptions, the <code>memory_context</code>
+tool, the <code>/memory</code> command, the backfill lease</td>
 </tr>
 <tr>
-<td><code>src/storage/projection.ts</code></td>
-<td>The read layer, including the standing allowlist</td>
+<td><code>src/history/entry.ts</code></td>
+<td>Which journal lines become entries, and the visible text of
+each</td>
 </tr>
 <tr>
-<td><code>src/engine.ts</code></td>
-<td><code>resolveFact</code> and the reopening guard</td>
+<td><code>src/history/indexer.ts</code></td>
+<td>Incremental indexing by byte offset, redaction, backfill of other
+journals</td>
 </tr>
 <tr>
-<td><code>src/retrieval/hybrid.ts</code>, <code>federated.ts</code></td>
-<td><code>asOf</code> parsing, candidate selection, validity
-filtering</td>
+<td><code>src/history/store.ts</code></td>
+<td>The SQLite schema, the scope and date predicates, FTS search,
+forget, the lease</td>
 </tr>
 <tr>
-<td><code>src/curation/</code></td>
-<td>The pipeline, validation and publication</td>
+<td><code>src/history/query.ts</code></td>
+<td>Request handling: date boundaries, scope resolution, reranking,
+reading from the journal</td>
 </tr>
 <tr>
-<td><code>src/retention/</code></td>
-<td>Capture gate, consolidation, a value model, bounded GC</td>
+<td><code>src/history/project.ts</code></td>
+<td>The project-root heuristic behind the default scope</td>
+</tr>
+<tr>
+<td><code>src/history/gc.ts</code></td>
+<td>Junk-journal criteria, preview and exact deletion</td>
 </tr>
 <tr>
 <td><code>src/security/redact.ts</code></td>
-<td>Secret redaction on capture and on rationales</td>
-</tr>
-<tr>
-<td><code>src/eval/</code></td>
-<td>Oracles, evidence scoring and a comparison CLI</td>
-</tr>
-<tr>
-<td><code>src/daemon/</code></td>
-<td>Out-of-process analysis of changed sources</td>
+<td>Pattern-based secret redaction</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/engine.ts:358-367</code> — <code>resolveFact</code>, four
-lines of validation and the sentence that explains the model.</p>
-<p><code>src/storage/projection.ts:721-726</code> — the allowlist, and
-the scope parameter.</p>
-<p><code>src/retrieval/federated.ts:29-40</code> — one <code>asOf</code>
-resolved once and pushed to every leg.</p>
-<p><code>src/retention/capture-gate.ts:1-12</code> — what it refuses,
-and the exception for corrections.</p>
+<p><code>src/history/store.ts:35-51</code> — the schema, including the
+contentless FTS5 table with <code>contentless_delete=1</code>.</p>
+<p><code>src/history/indexer.ts:42-88</code> — the incremental reader:
+cursor, the shrink check at <code>:46</code>, complete lines only,
+redaction before the row is appended.</p>
+<p><code>src/history/query.ts:47-60</code> — <code>entryText</code>, the
+read that goes back to the journal and redacts.</p>
+<p><code>src/history/query.ts:73-85</code> and
+<code>src/history/store.ts:58-68</code> — how a scope becomes a
+predicate, and where <code>global</code> drops it.</p>
+<p><code>src/history/gc.ts:25-60</code> — what counts as junk, and the
+deletion that refuses a file that changed since the preview.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Facts sit on top of evidence rather than replacing it. An
-<code>evidence</code> row carries an origin, a provenance string, an
-optional URI, a content hash, an excerpt, an observed-at, an actor, a
-session and the tool call it came from; an <code>episode_evidence</code>
-join links episodes to the evidence they rest on, with
-<code>ON DELETE CASCADE</code> from the episode and a plain reference to
-the evidence, so deleting an episode does not delete the evidence
-another episode may also cite.</p>
-<p>A fact adds <code>kind</code>, a statement, an optional
-subject/predicate/object triple, a <code>standing</code>, a
-<code>confidence</code>, and the three timestamps. Confidence is a float
-and therefore not a trust state in the atlas's sense;
-<code>standing</code> is the discrete field, and it is the one the reads
-use.</p>
+<p>Three tables and a virtual one. <code>files</code> holds one row per
+journal path with its session id, cwd, start time and the byte cursor
+indexing has reached. <code>entries</code> holds one row per indexed
+line: the journal's own entry id and parent id, the line's timestamp,
+kind, role, tool name, character count, byte offset and length, and
+<code>tokensBefore</code> for compaction summaries.
+<code>entries_fts</code> is FTS5 with <code>content=''</code>, so it
+stores the term index and no text, and
+<code>contentless_delete=1</code>, so a row's terms can be removed.</p>
+<p><code>meta</code> holds the schema version and the backfill lease,
+written as <code>owner@expiry</code>.</p>
+<p>There is one timestamp per entry, the one Pi wrote on the journal
+line. No field records when something stated in an entry was true, and
+no field records how far an entry is to be believed. An entry is a
+record of what was said and done, not a claim the store holds.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid lexical, vector and graph retrieval over a scope, federated
-across engines. Two details are worth borrowing.</p>
-<p><code>asOf</code> is validated rather than coerced — an unparseable
-value throws instead of silently becoming now — and in the federated
-path it is resolved once and passed down, which is the difference
-between "as of last Tuesday" and "as of whenever each leg happened to
-evaluate".</p>
-<p>And the relevance gate reports rather than returns: when nothing
-clears the threshold the response carries "Insufficient evidence: no
-candidate meets the default relevance gate." A memory that can say it
-does not know is a better input to an agent than one that returns its
-three closest guesses.</p>
-<p>The honest limit is what retrieval does with <code>standing</code>.
-It is threaded into every result — <code>standing: fact.standing</code>
-beside <code>validAt</code>, <code>invalidAt</code> and
-<code>expiredAt</code> — rather than used to withhold. So the
-storage-level allowlist governs <code>activeFacts</code> and
-publication, and a caller using the hybrid API gets contradicted facts
-back, labelled. That is a defensible design for an API whose consumer is
-another program, and it means the label has to be read.</p>
+<p><code>search</code> with a query quotes every letter-or-digit run as
+a literal FTS5 term and matches them all together. If nothing has all of
+them, it runs again with <code>OR</code> and reports
+<code>match: "any"</code>. It takes up to 400 candidates by
+<code>bm25</code>, then reranks with
+<code>-score / (1 + age / 30 days)</code>, so an entry a month old
+counts half as much as an equally relevant one from today. Without a
+query, <code>search</code> lists entries newest first;
+<code>summaries</code> does the same restricted to compaction and branch
+summaries.</p>
+<p><code>since</code> and <code>until</code> accept
+<code>YYYY-MM-DD</code>, read as the user's local day from 00:00:00.000
+to 23:59:59.999, or anything <code>Date</code> parses; an unparseable
+value throws with an example of the expected form. Both compare against
+the entry's journal timestamp as an ISO string.</p>
+<p><code>read</code> finds an entry by id, preferring the current
+session, then a unique match anywhere, and otherwise returns
+<code>ambiguous</code> with each candidate's session, time, kind and
+cwd. It pages text in 16,000-character slices with a
+<code>nextOffset</code>.</p>
+<p>Every returned text comes from <code>entryText</code>, which opens
+the journal, reads <code>length</code> bytes at <code>offset</code>,
+parses the line with the same <code>entryOf</code> the indexer used, and
+redacts it. It does not compare the parsed entry's id with the id it was
+asked for. A journal that shrank is reindexed from the start; one
+rewritten to the same length or longer keeps its old pointers until a
+parse fails, and a failed parse reads as
+<code>[journal line unavailable]</code> in a search or
+<code>unavailable</code> in a read.</p>
+<p>The default scope is <code>project</code>, computed by
+<code>projectRoot</code>: the outermost ancestor of the cwd that has
+sessions of its own, where a direct child of home counts only when it is
+the cwd itself, so <code>~/Apps/prjct/prjct-be</code> searches
+<code>prjct-be</code>, its siblings and <code>~/Apps/prjct</code>, and
+not <code>~/Apps/fluenty</code>. The predicate is
+<code>f.cwd = ? OR f.cwd LIKE ?/%</code> with <code>%</code>,
+<code>_</code> and <code>\</code> escaped. <code>global</code> is one of
+three values of the tool's own <code>scope</code> argument and removes
+the predicate, and <code>read</code> applies no project filter at any
+scope. The project scope is a relevance default for one person's
+machine, which is how the README describes it, and no scope mark is
+claimed.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>The extension records; the daemon analyses. <code>/memory sync</code>
-fingerprints publishers and enqueues work rather than copying source
-bodies, which keeps the store from becoming a second copy of everything
-it has seen.</p>
-<p><code>resolveFact</code> is the state-change surface and it asks for
-three things: the new standing, a rationale, and optionally a
-replacement. The rationale passes through <code>redactSecrets</code>
-before it reaches the event log, which is the kind of detail that is
-easy to skip — a free-text explanation of why a fact was contradicted is
-exactly where somebody pastes a token.</p>
+<p>The agent writes nothing. The extension follows Pi's journal: on
+<code>message_end</code>, <code>session_compact</code> and
+<code>session_tree</code> it indexes the current journal, and three
+seconds after <code>session_start</code> it indexes the current journal
+and then backfills every other journal that grew since it was last seen,
+newest first. Overlapping requests fold into one more pass.</p>
+<p><code>indexFile</code> reads from the stored byte cursor in 1 MB
+chunks, keeps an incomplete last line for next time, and appends rows in
+transactions that move the cursor in the same commit, yielding to the
+event loop every 12 ms. Each entry's text passes through
+<code>redactAll</code>, which splits text over 1 MB at line boundaries
+for <code>redactSecrets</code>, before its terms are inserted.</p>
+<p>Only one process scans other journals at a time.
+<code>lease(owner, 120 s)</code> takes or renews
+<code>meta.backfill-lease</code> inside <code>BEGIN IMMEDIATE</code>, an
+expired lease is taken over, and the backfill renews it after every file
+and stops if it was lost. Every process indexes its own journal
+regardless.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A Pi extension and a daemon, with the caution about persistent
-services stated in the README rather than left to the installer. The
-eval CLI and oracles — <code>final-answer</code>,
-<code>grounding</code>, <code>evidence-complete</code>,
-<code>unanswerable</code> — suggest the project measures answer quality
-rather than only retrieval, and having an <code>unanswerable</code>
-oracle kind at all is a good sign: it is the case where a memory system
-is supposed to say nothing.</p>
+<p>One tool and one command. <code>memory_context</code> takes
+<code>action</code>, <code>query</code>, <code>entryId</code>,
+<code>sessionId</code>, <code>since</code>, <code>until</code>,
+<code>scope</code>, <code>kind</code> and <code>offset</code>; its
+description is under 200 characters, and a test holds it there because
+it "rides every request". Before every call the tool indexes the current
+journal, so an entry written a moment ago is searchable. While backfill
+is running, results say how many older journals are indexed so far and
+that results may be incomplete.</p>
+<p><code>/memory</code> reports sessions, entries, summaries and indexed
+megabytes; <code>/memory index</code> runs a pass;
+<code>/memory rebuild</code> deletes <code>history.sqlite</code> and its
+WAL files and builds again; <code>/memory gc</code> and
+<code>/memory gc confirm</code> are the collector. None of these is on
+the agent's tool surface.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Redaction on capture and on rationales, a capture gate, a
-compact-authority singleton with a digest, an applied-events table, and
-the reopening guard.</p>
-<p>The guard is the one to take away, and it generalises past this
-project. Any store with a mutable status over a temporal record faces
-the same question: can a closed interval be reopened? Answering yes
-quietly loses the history of the closure; answering no forces the honest
-representation — a new fact, with its own validity, recording that the
-thing became true again. pi-memory answers no, in one line, with the
-alternative in the same sentence.</p>
+<p>Secrets are redacted twice: before terms are indexed, so a key never
+becomes a search term, and on every text returned, so a key in a journal
+line is masked on read. The patterns cover key names such as
+<code>password</code>, <code>token</code> and <code>api_key</code>
+beside <code>=</code> or <code>:</code>, <code>Authorization</code>
+headers, common token prefixes, AWS key ids, JWTs, PEM private-key
+blocks, URL user-info and <code>curl -u</code>. The journal itself keeps
+the unredacted text, so the guarantee is about this extension's output,
+not about the disk.</p>
+<p>The collector is mechanical. A journal is junk when it never
+compacted and ran under a temporary folder, received no user, team or
+extension message, or got two replies or fewer; a journal quiet for less
+than 24 hours and the current one are never candidates.
+<code>confirm</code> deletes only the files the last preview listed,
+skips any whose size or mtime changed, and removes their index rows and
+terms. The deletion is of Pi's own journals, which are the only
+copy.</p>
+<p>No entry carries a status, a validity interval or an audit trail; the
+index is a function of the journals.</p>
+<h3 id="the-fact-store-it-replaced">The fact store it replaced</h3>
+<p>At <a
+href="https://github.com/prjct-app/pi-memory/tree/0f09c6b4b79c81f1c68a5a53238830d49d792d5c"><code class="commit-id" title="0f09c6b4b79c81f1c68a5a53238830d49d792d5c">0f09c6b4…</code></a>,
+the last tree read before the rewrite, facts carried a five-value
+<code>standing</code> and three times: <code>valid_at</code> and
+<code>invalid_at</code> apart from <code>recorded_at</code>. The
+<code>memory_record</code> tool accepted a model-supplied
+<code>validAt</code> and <code>invalidAt</code>. Recording a fact that
+supersedes another closed the old one's <code>invalid_at</code> at the
+new fact's <code>validAt</code> and set <code>expired_at</code> at the
+event time (<a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/src/storage/projection.ts#L379-L398"><code>src/storage/projection.ts:379-398</code></a>).
+Retrieval filtered on that interval at a validated <code>asOf</code>,
+and a committed test asserted a superseded fact was absent at the
+default <code>asOf</code> and present at an earlier one (<a
+href="https://github.com/prjct-app/pi-memory/blob/0f09c6b4b79c81f1c68a5a53238830d49d792d5c/tests/engine.test.ts#L35-L46"><code>tests/engine.test.ts:35-46</code></a>).</p>
+<p>The storage read and the prompt hook selected facts by an allowlist
+of live standings. <code>resolveFact</code> refused to move a superseded
+or contradicted fact back to a live one:</p>
+<blockquote>
+<p>"A closed interval cannot be reopened without losing history; record
+a new fact instead."</p>
+</blockquote>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>41 test files including <code>curation-safety</code>,
-<code>capture-gate</code>, <code>compact-authority</code>,
-<code>compact-promotion</code> and <code>daemon</code>, plus the eval
-oracles and a comparison CLI.</p>
-<p>What is absent is a must-not-retrieve assertion: nothing in the tree
-seeds a contradicted or superseded fact and asserts it stays out of a
-retrieval, which is the test that would pin the allowlist against a
-future refactor moving the filter. Given that the storage query is the
-single place the rule lives, that test is cheap and load-bearing.</p>
+<p>Nine test cases in two files, 245 lines, plus three in a
+release-policy test under <code>.github/release</code>. I ran none of
+them for this reading.</p>
+<p>Four of the nine carry must-not assertions on the search read path,
+each beside positive cases over the same populated store. A journal
+rewritten shorter must leave none of its old terms searchable. A key in
+a tool result must not be a search term and must not appear in the read.
+The default project search must return exactly the three entries of its
+project, which keeps the other project and the folder directly under
+home out. Deleted journals must leave no search terms. The scope test
+also asserts that <code>global</code> returns all five entries, so the
+widening is specified behaviour, not an accident.</p>
+<p>No test covers a read against a journal rewritten to the same length
+or longer, which is the case where the pointer and the line
+disagree.</p>
+<p>The README reports a measurement on 2.37 GB of real journals across
+709 sessions: 102 s for the first pass, a 270 MB index, event-loop
+pauses up to 187 ms during that pass, and search p50 21 ms. Nothing in
+the tree reproduces it.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Refuse to reopen a closed interval. If your status is mutable and
-your record is temporal, the two will eventually disagree; deciding in
-advance that terminal means terminal, and that the way forward is a new
-fact, keeps the history honest. Put the alternative in the error message
-so the caller knows what to do.</p>
-<p>Read the status through an allowlist. A denylist knows only the
-statuses somebody remembered to add; an allowlist withholds a new one by
-default, which is the direction you want to fail in.</p>
-<p>Validate <code>asOf</code> and resolve it once. Parsing it strictly
-stops a bad string silently becoming now, and resolving it once before
-fanning out is what makes a federated as-of query mean anything.</p>
-<p>Let the gate admit corrections. A noise filter tuned on "ok" and
-"done" will also catch "no, it's the other one" unless you exempt it
-deliberately, and that is the sentence you most wanted to keep.</p>
-<p>Redact free-text rationales. The field where someone explains why a
-fact was wrong is a field where someone pastes the thing that proved
-it.</p>
+<h3 id="steal">Steal</h3>
+<p>Make the transcript the source of truth and the index disposable. A
+contentless FTS table and a byte pointer per line cost little, keep no
+second copy, and turn "delete the index" into a safe operation instead
+of a data-loss event.</p>
+<p>Redact before indexing, not only on output. A secret that becomes a
+search term can be found by searching for it, and the test that pins
+this is two lines.</p>
+<p>Make deletion exact. A preview that names files, followed by a
+confirm that deletes only those and skips any that changed, is the
+difference between a collector and a sweep.</p>
+<p>Test what the extension does not do. Asserting that no context or
+prompt hook is registered keeps "nothing is injected" true through a
+refactor.</p>
+<p>From the design it replaced: refuse to reopen a closed interval, and
+put the alternative in the error message. A mutable status over a
+temporal record will otherwise quietly undo it.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Offering <code>global</code> as a value of the agent's own scope
+argument when the project scope is meant to keep projects apart. If it
+is a relevance default, say so; if it is a boundary, the agent should
+not hold the widening.</p>
+<p>Reading through a stored offset without checking the id at the far
+end. The journal line carries its id; comparing it costs one string
+comparison and turns a silent wrong answer into an
+<code>unavailable</code>.</p>
+<p>Leaving a previous version's store on disk with nothing that reads or
+removes it. A user who asked the old version to forget something has no
+path to it.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one person working in Pi on one machine, whose problem is
+that compaction loses things the journal keeps. It is not a belief
+store: it cannot say a fact was corrected, only show where it was said.
+Walk away if projects must not see each other's history, or if the
+memory must be correctable rather than searchable.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the hybrid API should withhold contradicted facts rather than
-label them. The storage layer and the publication path both exclude
-them; the retrieval API does not, and nothing in the tree records that
-as a decision either way.</p>
-<p>Whether <code>scope_id</code> will move from a parameter to a
-property of the handle. As a parameter it is the caller's to pass
-correctly, which is why no scope mark is claimed here.</p>
-<p>What the redactor does not catch. The rest of the codebase writes
-limits down; this module does not, and a pattern-based redactor always
-has some.</p>
+<p>Whether Pi ever rewrites a journal in place without shrinking it. The
+indexer assumes append-only growth and resets only on a shorter
+file.</p>
+<p>Whether the project scope is meant as a privacy boundary. The README
+describes it as a default and documents <code>global</code> as the way
+to include every project.</p>
+<p>What happens to the curated-fact databases of versions before 1.0.0.
+The changelog says they are left untouched, and no code in this tree
+opens them.</p>
+<p>What the redactor does not catch. It is a list of patterns with no
+stated limit, and the journal it reads from keeps the original.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -402,32 +510,115 @@ has some.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>src/engine.ts:358-367</code></td>
-<td>The reopening guard, and the alternative in the message</td>
+<td><code>src/index.ts:38-48</code></td>
+<td>The tool's arguments, including the three scope values</td>
 </tr>
 <tr>
-<td><code>src/storage/projection.ts:721-726</code></td>
-<td>An allowlist read, and the scope parameter</td>
+<td><code>src/index.ts:112-152</code></td>
+<td>Event subscriptions and the tool body</td>
 </tr>
 <tr>
-<td><code>src/retrieval/federated.ts:29-40</code></td>
-<td>One <code>asOf</code>, resolved once, pushed to every leg</td>
+<td><code>src/index.ts:186-199</code></td>
+<td>Collector preview and confirm</td>
 </tr>
 <tr>
-<td><code>src/storage/migrations.ts:137-176</code></td>
-<td>Evidence with provenance, and a fact's three timestamps</td>
+<td><code>src/history/store.ts:35-68</code></td>
+<td>Schema, and the scope and date predicates</td>
 </tr>
 <tr>
-<td><code>src/retention/capture-gate.ts</code></td>
-<td>What it refuses, and the exemption for corrections</td>
+<td><code>src/history/store.ts:142-158</code></td>
+<td>All-terms-then-any-term search</td>
 </tr>
 <tr>
-<td><code>src/eval/oracles.ts</code></td>
-<td>An oracle kind for the answer that should not be given</td>
+<td><code>src/history/store.ts:212-226</code></td>
+<td>The backfill lease</td>
+</tr>
+<tr>
+<td><code>src/history/indexer.ts:42-88</code></td>
+<td>Incremental indexing, the shrink check, redaction before
+indexing</td>
+</tr>
+<tr>
+<td><code>src/history/query.ts:47-60</code></td>
+<td>The read from the journal, with no id check</td>
+</tr>
+<tr>
+<td><code>src/history/query.ts:98-148</code></td>
+<td>Recency rerank and the three actions</td>
+</tr>
+<tr>
+<td><code>src/history/project.ts:11-20</code></td>
+<td>The project-root heuristic</td>
+</tr>
+<tr>
+<td><code>src/history/gc.ts:25-60</code></td>
+<td>Junk criteria and exact deletion</td>
+</tr>
+<tr>
+<td><code>tests/history.test.ts:42-98</code></td>
+<td>The must-not cases: rewritten journal, secret, project scope</td>
+</tr>
+<tr>
+<td><code>tests/gc.test.ts:17-60</code></td>
+<td>Collector preview, the changed-file skip, terms removed with the
+file</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -i -E 'standing|verified|rejected|candidate|trust' -- src index.ts</code>
+— only the collector's <code>Candidate</code> type, the project
+heuristic's <code>candidates</code> and the search's
+<code>CANDIDATES</code> constant; no epistemic state.</li>
+<li><code>git grep -n -i -E 'valid_?(at|from|to)|invalid_?at|effective' -- src index.ts</code>
+— no match; one timestamp per entry.</li>
+<li><code>git grep -n -i -E 'tombstone|suppress|denylist|blocklist' -- src index.ts</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'audit|append-only|event_log|history_log' -- src</code>
+— no match.</li>
+<li><code>git grep -n -E 'registerTool|registerCommand|pi\.on\(' -- src index.ts</code>
+— one tool, one command and five event subscriptions, all in
+<code>src/index.ts</code>.</li>
+<li><code>git grep -n -F "'global'" -- src</code> —
+<code>src/history/query.ts:12</code> and <code>src/index.ts:45</code>,
+the tool argument.</li>
+<li><code>git grep -n -E 'entryId ?===|\.entryId ?!==' -- src/history/query.ts</code>
+— no match; the read does not compare ids.</li>
+<li><code>git grep -n -E 'memory\.sqlite|\.prjct' -- src index.ts</code>
+— only <code>history.sqlite</code> path resolution in
+<code>src/index.ts</code>; nothing opens the earlier databases.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs CHANGELOG.md</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+<li><code>ls -a | grep gitmodules</code> — no match; no submodules.</li>
+<li><code>git grep -n -E 'writeFile\(' -- tests</code> — two fixture
+writers and <code>tests/history.test.ts:53</code>, which rewrites a
+journal shorter; no test rewrites one to the same length or longer.</li>
+<li><code>git ls-files scripts tests</code> — a Pi build script, an
+immutability check, two test files and a test isolation hook; no
+benchmark script.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/prjct-app/pi-memory/commit/b0e913df6e77b8e10483b2bfe7e44a607cb48a66"><code class="commit-id" title="b0e913df6e77b8e10483b2bfe7e44a607cb48a66">b0e913df…</code></a>
+— 69 commits on, version 1.0.0. The curated fact store was replaced by
+an index over Pi's session journals (<a
+href="#1-executive-summary">section 1</a>), so <code>trust_state</code>
+and <code>bitemporal</code> are withdrawn; both held at the old pin (<a
+href="#the-fact-store-it-replaced">section 9</a>).
+<code>negative_eval</code> gained, and earned at the old pin too, where
+tests asserted a superseded fact and another project's facts stayed out
+of search. Also wrong then: that retrieval labelled rather than withheld
+closed facts, the reason given for withholding
+<code>scope_enforced</code>, a capture-gate quote removed before the
+pin, and the line and test-file census. Screened from a full clone: six
+files, no auto-run, one build-time <code>prepublishOnly</code> guard,
+four dependency files inside the cooldown. Nothing was installed, built
+or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/prjct-app/pi-memory/commit/0f09c6b4b79c81f1c68a5a53238830d49d792d5c"><code class="commit-id" title="0f09c6b4b79c81f1c68a5a53238830d49d792d5c">0f09c6b4…</code></a>
 — <code>trust_state</code> re-tested and every claim held, with anchors
