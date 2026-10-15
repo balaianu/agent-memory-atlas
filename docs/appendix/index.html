@@ -3311,10 +3311,10 @@ reading and the pin describe the same bytes</li>
 <li><a
 href="https://github.com/krakozavr/MemContinuum">krakozavr/MemContinuum</a>
 at <a
-href="https://github.com/krakozavr/MemContinuum/commit/e21bfa06c0201433742a657b222ad40c8f4d95f4"><code class="commit-id" title="e21bfa06c0201433742a657b222ad40c8f4d95f4">e21bfa06…</code></a>
-— read only; one auto-run surface (fourteen hook scripts a plugin
-manifest can register), two dependency manifests inside the seven-day
-cooldown, nothing installed or run</li>
+href="https://github.com/krakozavr/MemContinuum/commit/16293db855d5bf6922360571acb027850e4bca50"><code class="commit-id" title="16293db855d5bf6922360571acb027850e4bca50">16293db8…</code></a>
+— read only; one auto-run surface (sixteen hook scripts a plugin
+manifest can register), two unpinned dependency surfaces, nothing inside
+the seven-day cooldown, nothing installed or run</li>
 <li><a href="https://github.com/l33tdawg/sage">l33tdawg/sage</a> at <a
 href="https://github.com/l33tdawg/sage/commit/43dcd61ede09a72b4087dc663d90e59227e315c7"><code class="commit-id" title="43dcd61ede09a72b4087dc663d90e59227e315c7">43dcd61e…</code></a>
 — read only; two auto-run surfaces, five build-time execution points,
@@ -17463,6 +17463,31 @@ another, described the first pin and the commit four before 6e7b14f;
 scope mark rested on the filter's presence rather than on who supplies
 it, and the ingest claim on the security package's docstring rather than
 on the pipeline's callers.</li>
+<li><strong>Six published claims about <a
+href="../systems/memcontinuum/">MemContinuum</a> were wrong at <a
+href="https://github.com/krakozavr/MemContinuum/commit/e21bfa06c0201433742a657b222ad40c8f4d95f4"><code class="commit-id" title="e21bfa06c0201433742a657b222ad40c8f4d95f4">e21bfa06…</code></a>,
+the pin they were published against, and are corrected.</strong> The
+report, its verdict and its families paragraph said the store's
+append-only check ran again in CI where <code>--no-verify</code> could
+not reach it. <code>hooks/install-hooks.md:222-225</code> recommended
+that for a shared store, and no workflow, template or script in the tree
+ran <code>--against-ref</code>; that was true at the first pin as well.
+Section 9 kept a paragraph awarding <code>human_review</code> after the
+mark was withdrawn on 2026-09-19. Section 10 said there was no benchmark
+and nothing was measured, while <code>bench/</code> held a public
+retrieval harness of 57 queries, three runners, a scorer and a negative
+control, added in <a
+href="https://github.com/krakozavr/MemContinuum/commit/05f0fe69ada44ac0ba5de9a9a8fb1a121e8b4553"><code class="commit-id" title="05f0fe69ada44ac0ba5de9a9a8fb1a121e8b4553">05f0fe69…</code></a>.
+The census and three <code>memidx.py</code> anchors were carried from <a
+href="https://github.com/krakozavr/MemContinuum/commit/161f555d74d81532362a38e8f10657eac0c29e23"><code class="commit-id" title="161f555d74d81532362a38e8f10657eac0c29e23">161f555d…</code></a>:
+1,792 test functions rather than 1,605,
+<code>invariant_enforcement_class</code> at <code>:3955</code> rather
+than 3918, <code>cmd_drift</code> at <code>:4084</code> rather than
+4047, and the hook wiring at <code>scripts/repo-init.sh:1615</code>
+rather than 1643. The "64 read queries" carrying the project predicate
+included 11 updates and deletes. And the recorded search for
+<code>declined</code> in the hooks returned two hits from unrelated
+vocabulary rather than none; the claim it grounds holds.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

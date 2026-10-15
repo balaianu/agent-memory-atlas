@@ -14633,14 +14633,18 @@ not by convention.</strong> <code>memlint.py --against-ref</code>
 compares each ruling against itself at the last commit and errors on any
 changed field outside
 <code>{link, status, superseded_by, promoted_by}</code> — a subtraction,
-so a field added later is frozen by default — and the store's own
-<code>pre-commit</code> hook exits 1 on failure, with CI running the
-same check where <code>--no-verify</code> cannot reach.</li>
+so a field added later is frozen by default — a byte comparison refuses
+a regenerated record whose values did not change, and the store's own
+<code>pre-commit</code> hook exits 1 on failure.
+<code>--no-verify</code> skips the hook, and the CI re-run the
+documentation recommends is not shipped.</li>
 <li>Second idea: <strong>a retrieval timeout that says so.</strong> When
 the two-second lookup misses its deadline the hook tells the model the
 absence of a decision was not established and this edit is unverified,
 rather than returning the empty result that reads as "nothing governs
-this file".</li>
+this file". A pre-edit miss gets the same treatment: the hook searches
+on the path's words and labels the hits as nearest by search, possibly
+unrelated.</li>
 <li>Biggest risk: <strong>the declined ruling is delivered and never
 consulted.</strong> A <code>declined</code> ruling carries the option,
 the reason it was rejected and its own authority, frozen once written,
@@ -14656,11 +14660,13 @@ on a ruling, of which only the owner's own or ratified words can fail a
 run, evidence-backed findings are reported unless
 <code>--strict-holds</code> is passed, and a provisional ruling is
 routed to revalidation and never checked.</li>
-<li>Maturity impression: MIT, 232 commits over nine days from 30 August
-2026 by two authors, 13,029 lines of Python beside 35,736 lines of tests
-holding 1,605 test functions, 10,673 lines of shell, three design
-documents and pinned tree-sitter grammars with a stated reason; three of
-seven capability marks, and no benchmark or paper.</li>
+<li>Maturity impression: MIT, 409 commits from 30 August to 13 October
+2026 under two author names the licence gives as one person, 15,519
+lines of Python beside 47,161 lines of tests holding 2,059 test
+functions, 14,340 lines of shell, three design documents and pinned
+tree-sitter grammars with a stated reason; three capability marks, and a
+public retrieval benchmark with a negative control and no committed
+score.</li>
 <li>Study when: you want the reasons behind a codebase to survive the
 session and to be citable afterwards, and you want the append-only claim
 to be something a commit can fail.</li>

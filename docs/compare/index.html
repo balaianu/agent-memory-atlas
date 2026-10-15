@@ -16743,69 +16743,71 @@ pointer; and no scope key reaches any query</td>
 <td><a
 href="../systems/memcontinuum/"><code>memcontinuum</code></a></td>
 <td>A topic — one markdown file, one question — whose body is an ordered
-list of links, newest first. A link is one ruling: <code>date</code>,
-<code>status</code>, <code>kind</code>, an optional
-<code>reverses</code> with a <code>reason_for_change</code>, a
-<code>ruling</code> and a <code>rationale</code> each carrying their own
-authority, <code>alternatives</code> with what was rejected and why,
-<code>evidence</code>, <code>revisit_if</code>, an optional checkable
-<code>invariant</code>, typed <code>edges</code>, and
-<code>recorded_by</code>/<code>recorded_at</code>. Beside topics sit
-<code>concept</code> records naming what the code already contains</td>
+list of links, newest first. A link is one ruling: date, status, kind,
+an optional reverses with a reason_for_change, a ruling and a rationale
+each carrying their own authority, alternatives with what was rejected
+and why, evidence, revisit_if, an optional checkable invariant, typed
+edges, and recorded_by and recorded_at. A topic may name some of its own
+links as standing. Beside topics sit concept records naming what the
+code already contains</td>
 <td>Markdown under a git repository that is the store —
-<code>topics/&lt;area&gt;/&lt;slug&gt;.md</code>, <code>inbox/</code>
-for proposals — projected into a SQLite index with FTS5 and whole-record
-embeddings; a separate SQLite code index of chunked source; a
-per-session JSON edit ledger and an append-only hook log under
-<code>$MEMCONTINUUM_HOME</code></td>
-<td><code>for-path</code> maps a file to every topic whose
-<code>code_refs</code> prefix, glob or <code>path#symbol</code> covers
-it and returns the whole chain, every link regardless of status;
-<code>search</code> is FTS5, vector or hybrid with a default status
-filter of active and inbox records excluded; <code>why</code> walks path
-to concept to governing topics; <code>chain</code> prints one line per
-link</td>
+topics/area/slug.md, and inbox/ for proposals — projected into a SQLite
+index with FTS5 and whole-record embeddings; a separate SQLite code
+index of chunked source; a per-session JSON edit ledger and a hook log
+rotated across a bounded number of files under MEMCONTINUUM_HOME</td>
+<td>for-path maps a file being edited to every topic whose code_refs
+cover it and returns the whole chain, every link regardless of status;
+on a miss the hook runs a labelled search on the path's words. A
+session-start digest delivers active owner-level links that topics name
+as standing. search is FTS5, vector or hybrid with a default status of
+active and inbox records excluded; an opt-in channel searches on the
+user's prompt; why walks path to concept to governing topics</td>
 <td>A person or an agent appends a link to a topic file and commits.
 Nothing extracts: there is no summariser and no consolidation pass.
-<code>current</code> is hand-set to the newest active link and the
-linter errors when it disagrees</td>
-<td>There is no update. A change of mind is a new link with
-<code>reverses</code> and a <code>reason_for_change</code>; the
-predecessor keeps its text and gains <code>status: superseded</code>
-with <code>superseded_by</code>. Three lifecycle fields may each move
-forward once and only alone; every other field is frozen against the
-last commit, and a removed link or a deleted topic file is an error</td>
-<td>One decision database per project, and the separation is enforced
-rather than assumed: <code>records</code> is keyed by <code>path</code>
-alone, so opening the same file under a second <code>--project</code> is
-refused outright with the reason in the error. A <code>project</code>
-column sits on every record and 64 read queries carry it as defence in
-depth. The code index is the multi-project store, keyed
-<code>(path, project, code_root)</code></td>
-<td>Claude Code hooks — a pre-edit lookup on Edit and Write, a post-edit
-ledger, session-start and user-prompt nudges, a precompact persist, a
-session-end stamp — plus two skills, a store-side git
-<code>pre-commit</code> and <code>post-commit</code>, an installer, and
-a per-machine registry of which repositories have a store</td>
+current is hand-set to the newest active link and the linter errors when
+it disagrees</td>
+<td>There is no update. A change of mind is a new link with reverses and
+a reason_for_change; the predecessor keeps its text and gains status
+superseded with superseded_by. Three lifecycle fields may each move
+forward once and only alone; every other field and the link's raw bytes
+are frozen against the last commit, and a removed link or a deleted
+record file is an error. Topic-level frontmatter is outside the
+guard</td>
+<td>One decision database per project, enforced rather than assumed:
+records is keyed by path alone, so opening the same file under a second
+project is refused with the reason in the error. A project column sits
+on every record and most queries carry it; the chain read keys on the
+topic path. The code index is the multi-project store, keyed by path,
+project and code root</td>
+<td>Claude Code hooks — a pre-edit lookup on Edit and Write with a
+search fallback, a post-edit ledger, session-start and user-prompt
+nudges with the standing digest and an opt-in prompt search, a
+precompact persist, a session-end stamp — plus two skills, a store-side
+git pre-commit and post-commit, an installer, an updater, and a
+per-machine registry of which repositories have a store</td>
 <td>None on the memory. A post-commit hook reindexes, a watchdog bounds
-the pre-edit lookup at two seconds, and the nudges are triggered by the
-edit ledger rather than by a timer</td>
+each hook at two seconds, and the nudges are triggered by the edit
+ledger rather than by a timer</td>
 <td>Five authorities — owner-verbatim, owner-ratified, reviewer-finding,
 code-derived, agent-inference — carried per field, and five statuses.
-Together they select one of three citation tiers, and the tier decides
-whether a violated invariant fails the run, is reported, or is
-skipped</td>
+Together they select one of three citation tiers; the tier decides
+whether a violated invariant fails a manually run drift check, is
+reported, or is skipped, and only active owner-level links reach the
+standing digest. Cited commits and file:line references are checked
+against the code root at lint time</td>
 <td>An append-only guarantee enforced by a linter and a git hook rather
-than asserted; a frozen-body check that freezes new fields by default;
-an authority vocabulary where only the owner's own or ratified words may
-block work; a retrieval timeout that says the absence of a decision was
-not established rather than staying silent; 1,605 committed test
-functions</td>
+than asserted, freezing new fields by default and raw bytes as well as
+parsed values; an authority vocabulary where only the owner's own or
+ratified words may block work or ride in every session; a retrieval
+timeout and a search miss that each say what was not established; a
+public retrieval benchmark with a negative control</td>
 <td>A declined ruling is handed to the model and nothing prevents its
-re-adoption; every hook fails open by design, so a missing index or a
-shell edit means no decision is consulted at all; nine days of history
-and two authors; the drift gate blocks only on an invariant somebody
-wrote</td>
+re-adoption; the authority and status on a link are whatever its writer
+typed, so an agent can write owner-verbatim; every hook except the
+commit gate fails open, and a shell edit gets no lookup; the drift gate
+runs only when a person invokes it; CI re-running the append-only check
+is documented and not shipped; topic frontmatter, including code_refs
+and standing, changes without a recorded event</td>
 </tr>
 <tr>
 <td><a href="../systems/memcp/"><code>memcp</code></a></td>
