@@ -4,28 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A documentation generator that
-grew a memory layer: markdown notes and per-user task memories under one
-file-backed store, where a deprecated note is dropped from a query
-outright, a draft one is returned with an [unconfirmed] prefix, and
-everything else is weighted by an authority multiplier.">
+    <meta name="description" content="A documentation generator's
+file-backed memory layer: deprecated notes leave queries, drafts return
+labelled unconfirmed, and the dedup that would block re-extraction skips
+retired notes.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="CodeWiki-Plus — Agent Memory Atlas">
-    <meta property="og:description" content="A documentation generator
-that grew a memory layer: markdown notes and per-user task memories
-under one file-backed store, where a deprecated note is dropped from a
-query outright, a draft one is returned with an [unconfirmed] prefix,
-and everything else is weighted by an authority multiplier.">
+    <meta property="og:description" content="A documentation generator's
+file-backed memory layer: deprecated notes leave queries, drafts return
+labelled unconfirmed, and the dedup that would block re-extraction skips
+retired notes.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CodeWiki-Plus — Agent Memory Atlas">
-    <meta name="twitter:description" content="A documentation generator
-that grew a memory layer: markdown notes and per-user task memories
-under one file-backed store, where a deprecated note is dropped from a
-query outright, a draft one is returned with an [unconfirmed] prefix,
-and everything else is weighted by an authority multiplier.">
+    <meta name="twitter:description" content="A documentation
+generator's file-backed memory layer: deprecated notes leave queries,
+drafts return labelled unconfirmed, and the dedup that would block
+re-extraction skips retired notes.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>CodeWiki-Plus — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +44,7 @@ and everything else is weighted by an authority multiplier.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "CodeWiki-Plus",
-      "description": "A documentation generator that grew a memory layer: markdown notes and per-user task memories under one file-backed store, where a deprecated note is dropped from a query outright, a draft one is returned with an [unconfirmed] prefix, and everything else is weighted by an authority multiplier.",
+      "description": "A documentation generator's file-backed memory layer: deprecated notes leave queries, drafts return labelled unconfirmed, and the dedup that would block re-extraction skips retired notes.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -104,25 +101,24 @@ and everything else is weighted by an authority multiplier.">
         <div class="document-hero-inner">
           <p class="eyebrow">Repository knowledge base</p>
           <h1>CodeWiki-Plus</h1>
-          <p class="document-deck">A documentation generator that grew a
-memory layer: markdown notes and per-user task memories under one
-file-backed store, where a deprecated note is dropped from a query
-outright, a draft one is returned with an [unconfirmed] prefix, and
-everything else is weighted by an authority multiplier.</p>
+          <p class="document-deck">A documentation generator's
+file-backed memory layer: deprecated notes leave queries, drafts return
+labelled unconfirmed, and the dedup that would block re-extraction skips
+retired notes.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/mambo-wang/CodeWiki-Plus">
               <span>Source</span>
               <strong>mambo-wang/CodeWiki-Plus</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/mambo-wang/CodeWiki-Plus/commit/4b826918d6fd4d954064190683a9455bb40805ff" title="4b826918d6fd4d954064190683a9455bb40805ff">
+            <a class="meta-pill revision-pill" href="https://github.com/mambo-wang/CodeWiki-Plus/commit/e06cd5badeba259f716dadf272bcf1433ff3f231" title="e06cd5badeba259f716dadf272bcf1433ff3f231">
               <span>Analyzed revision</span>
-              <code>4b826918…</code>
+              <code>e06cd5ba…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/mambo-wang--CodeWiki-Plus" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -130,7 +126,22 @@ everything else is weighted by an authority multiplier.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT,
+with the upstream FSoft-AI4Code copyright line retained</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>108,293
+lines of Python in 297 files, 27,486 of them in 85 test files; the
+memory layer read here is 10,489 lines in 12 modules</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,305
+commits on main by 20 author names, 5 September 2025 – 15 October 2026,
+the first stretch being upstream CodeWiki's history; version
+5.15.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,204
+Python test functions in 80 files, 60 of them in
+tests/test_task_manager.py, plus a script-style OKF regression file
+pytest does not collect; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -146,335 +157,683 @@ everything else is weighted by an authority multiplier.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>CodeWiki-Plus began as a fork of FSoft-AI4Code's CodeWiki and kept
-its toolchain — Tree-sitter parsing, dependency graphs, topological
-sort, Mermaid validation — while growing into something the upstream is
-not. The README's own comparison table is the clearest statement of
-that: against <em>Knowledge management</em>, <em>Knowledge trust</em>,
-<em>Task memory</em> and <em>Search</em>, the upstream column reads
-"None" four times. Every mechanism this report is about is this
-project's own addition to a documentation generator.</p>
-<p>What it added is a file-backed knowledge base with two memory kinds.
-<strong>Notes</strong> are markdown files with frontmatter, entering as
-<code>draft</code> and reaching <code>stable</code> through a
-<code>confirm_note</code> gate. <strong>Task memories</strong> are
-timestamped entries inside a per-user file, written directly with no
-gate — and the project explains the asymmetry rather than leaving it to
-be noticed: task-scoped progress knowledge carries bounded,
-task-lifetime noise cost, while notes enter the shared,
-retrieval-indexed base and keep the quality gate.</p>
-<p>The mechanism worth the reader's time is how one read path treats
-three statuses three different ways. In <code>handle_query_wiki</code>,
+<p>CodeWiki-Plus is a documentation generator that grew a file-backed
+knowledge base, and its strongest mechanism is one read path that treats
+three values of one field three ways. In <code>handle_query_wiki</code>
 a <code>deprecated</code> note hits <code>continue</code> and leaves the
-result set entirely. A <code>draft</code> note is returned, with its
-title rewritten to <code>[unconfirmed] &lt;title&gt;</code>. Everything
-else is weighted by an authority multiplier that folds status,
-confidence level, note type and source into a number clamped to 0.7–1.3.
-Excluded, labelled, or weighted — the three responses a memory system
-can have to a claim it is unsure of, all three present and applied to
-different values of the same field.</p>
-<p>Beside it is a telemetry chain that reaches further than most:
-<code>hit</code> (I saw it), <code>adopted</code> (I cited it),
-<code>outcome</code> (after using it, did the work succeed?). The
-failures that chain records become <code>negative_examples</code>
-injected into the prompt that writes the next note. The report awards
-<code>trust_state</code>, <code>tombstone</code>,
-<code>scope_enforced</code>, <code>audit_log</code> and
-<code>negative_eval</code>, and section 9 says why
-<code>human_review</code> is withheld.</p>
+result set, a <code>draft</code> note is returned under an
+<code>[unconfirmed]</code> prefix, and everything else is weighted by an
+authority multiplier clamped to 0.7–1.3. Its weakest point is the write
+side of the same lifecycle: every check that would stop a retired claim
+coming back is written to skip retired material.</p>
+<p>It began as a fork of FSoft-AI4Code's CodeWiki and kept that
+project's Tree-sitter parsing, dependency graphs and Mermaid validation.
+The README's comparison table puts "None" in the upstream column against
+knowledge management, knowledge trust, task memory and search.
+Everything this report covers is the fork's own addition.</p>
+<p><strong>Two memory kinds share one root.</strong> Notes are markdown
+files with frontmatter, entering as <code>draft</code> and reaching
+<code>stable</code> through <code>confirm_note</code>. Task memories are
+timestamped entries in a per-user file, written directly by
+<code>add_task_memory</code> with no confirm gate. The task-manager
+docstring explains the asymmetry: task-scoped progress knowledge carries
+bounded, task-lifetime noise cost, while notes enter the shared,
+retrieval-indexed base.</p>
+<p><strong>Retirement is honoured on read and ignored on write.</strong>
+<code>_is_retired_note</code> exists so that distillation's dedup and
+conflict searches skip deprecated notes; its docstring says a retired
+note winning would merge a fresh draft into dead knowledge. The
+consequence is that a claim someone rejected, when extracted again from
+a later conversation, finds nothing to match and lands as a new draft.
+The task-memory write check does the same with superseded entries. That
+is why <code>tombstone</code> is withheld, and section 9 gives the
+anchors.</p>
+<p>Two marks hold: <code>trust_state</code>, on the exclusion of
+deprecated and shadow notes, and <code>negative_eval</code>, on paired
+must-not cases. <code>scope_enforced</code> is withheld because the only
+note scope is a filter the caller may omit. <code>audit_log</code> is
+withheld because the event streams record use rather than mutation.
+<code>human_review</code> is withheld because confirm, reject and
+adjudicate are all the agent's own tools.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>Think of it as two stores with different admission rules, sharing one
-root.</p>
-<p>The <strong>note store</strong> is the shared, indexed, retrievable
-one. A note is proposed by distillation, lands as <code>draft</code>, is
-returned by queries with an <code>[unconfirmed]</code> badge, and
-becomes ordinary material when someone confirms it. Retiring it is
-<code>deprecated</code>, and that value is the one the query path
-drops.</p>
-<p>The <strong>task-memory store</strong> is per-user, append-only, and
-bounded by the task's own lifetime. An entry is a timestamped markdown
-block with a short persistent id. Correcting one does not edit it: a
+<p>Think of it as two stores with different admission rules under one
+<code>repowiki/</code> directory, with git as the ledger beneath
+both.</p>
+<p>The <strong>note store</strong> is shared and indexed. A note is
+proposed by distillation or <code>ingest_note</code>, lands as
+<code>draft</code> with confidence <code>weak</code>, and is returned by
+queries with an <code>[unconfirmed]</code> badge. It becomes ordinary
+material when <code>confirm_note</code> sets <code>stable</code>, or
+arrives as <code>stable</code> directly when the caller supplies a
+reason. Retiring it is <code>deprecated</code> plus <code>shadow</code>,
+and the query paths drop it.</p>
+<p>The <strong>task-memory store</strong> is per task and per user. An
+entry is a timestamped markdown block with a short persistent id.
+Correcting one does not edit its text: a
 <code>&gt; [superseded 2026-09-18 by #a3f2]</code> line is inserted
-above it, and the readers that assemble context partition on that line
-while a person reading the file still sees both.</p>
-<p>Around both sits a usage record that is unusually complete. Most
-systems can tell you a memory was retrieved. This one records that it
-was retrieved, that the agent actually cited it, and — at the end of the
-task — whether the work succeeded, then feeds the recent failures back
-into the prompt that writes the next batch.</p>
+under its heading, the caller's own context and search skip it, and the
+file keeps both.</p>
+<p>A <strong>retirement</strong> in either store is a property of one
+record. Nothing keyed on the retired content survives to be consulted
+when the same content is written again, and the write paths deliberately
+look past retired records.</p>
+<p>Around both sits a <strong>usage record</strong>: <code>hit</code>
+when a document is served, <code>adopted</code> when the agent cites it,
+<code>outcome</code> when the agent reports whether the work succeeded.
+The last five failures in thirty days go into the prompt that writes the
+next notes.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — notes enter as draft or, with a reason, as stable; queries drop deprecated and shadow notes and label drafts; task memories are appended directly and retired by an inline marker; every write-side duplicate check skips retired material, so a rejected claim re-extracted later lands as a new draft</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: notes enter as draft or, with a reason, as stable; queries drop deprecated and shadow notes and label drafts; task memories are appended directly and retired by an inline marker; every write-side duplicate check skips retired material, so a rejected claim re-extracted later lands as a new draft
+flowchart TB
+    subgraph Write[&quot;Write paths&quot;]
+        DIST[&quot;distill_conversation&lt;br/&gt;(notes only)&quot;]
+        ING[&quot;ingest_note&lt;br/&gt;status draft, or stable + reason&quot;]
+        ADD[&quot;add_task_memory&lt;br/&gt;direct write&quot;]
+    end
+
+    subgraph Dedup[&quot;Write-side duplicate checks&quot;]
+        RET{&quot;_is_retired_note?&quot;}
+        WC{&quot;_write_check:&lt;br/&gt;similar to a LIVE entry?&quot;}
+    end
+
+    subgraph Notes[&quot;notes/*.md&quot;]
+        DRAFT[&quot;draft · weak&quot;]
+        STABLE[&quot;stable&quot;]
+        DEP[&quot;deprecated · shadow&quot;]
+    end
+
+    subgraph Tasks[&quot;tasks/ID/memories/USER.md&quot;]
+        LIVE[&quot;live entry #id&quot;]
+        SUP[&quot;entry + superseded DATE by #new&quot;]
+        ARCH[&quot;memories-archive/USER.md&quot;]
+    end
+
+    subgraph Agent[&quot;Agent&#39;s own tools&quot;]
+        CONF[&quot;confirm_note · batch_set_status&quot;]
+        REJ[&quot;reject_note · adjudicate_conflict&quot;]
+    end
+
+    DIST --&gt; RET
+    ING --&gt; DRAFT
+    ING --&gt;|&quot;reason given&quot;| STABLE
+    RET --&gt;|&quot;retired: skipped&quot;| NEWD[&quot;no match:&lt;br/&gt;new draft written&quot;]
+    RET --&gt;|&quot;live near-duplicate&quot;| MERGE[&quot;suppressed or merged&quot;]
+    NEWD --&gt; DRAFT
+    CONF --&gt; STABLE
+    REJ --&gt; DEP
+    DRAFT --&gt; CONF
+    ADD --&gt; WC
+    WC --&gt;|&quot;yes&quot;| REJW[&quot;rejected: similar_to&quot;]
+    WC --&gt;|&quot;no, or similar only&lt;br/&gt;to a superseded entry&quot;| LIVE
+    ADD --&gt;|&quot;supersedes=#id&quot;| SUP
+    LIVE --&gt;|&quot;compaction&quot;| ARCH
+
+    subgraph Read[&quot;query_wiki and task reads&quot;]
+        Q[&quot;BM25 x authority&quot;]
+        QD[&quot;deprecated: dropped&quot;]
+        QS[&quot;shadow: dropped unless include_shadow&quot;]
+        QL[&quot;draft: [unconfirmed] title&quot;]
+        QT[&quot;task_id filter only if passed&quot;]
+        TS[&quot;own hot layer and search:&lt;br/&gt;superseded skipped&quot;]
+        TW[&quot;other users&#39; warm layer:&lt;br/&gt;not filtered&quot;]
+    end
+
+    STABLE --&gt; Q
+    DRAFT --&gt; Q
+    DEP --&gt; Q
+    Q --&gt; QD
+    Q --&gt; QS
+    Q --&gt; QL
+    QL --&gt; QT
+    LIVE --&gt; TS
+    SUP --&gt; TS
+    SUP --&gt; TW
+
+    QT --&gt; TEL[&quot;telemetry: hit · adopted · outcome&quot;]
+    TEL --&gt;|&quot;last 5 failures, 30 days&quot;| DIST</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — distillation proposes notes that enter as draft and reach stable only through confirm_note, while task memories are written straight into a per-user append-only file; a query fuses BM25 over notes and wiki pages, drops deprecated notes outright, prefixes draft ones as unconfirmed and weights the rest by an authority multiplier folding status, confidence level, type and source; and a three-event telemetry chain records that a document was seen, cited, and whether the work it informed succeeded, with recent failures fed back into the prompts that write the next notes</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: distillation proposes notes that enter as draft and reach stable only through confirm_note, while task memories are written straight into a per-user append-only file; a query fuses BM25 over notes and wiki pages, drops deprecated notes outright, prefixes draft ones as unconfirmed and weights the rest by an authority multiplier folding status, confidence level, type and source; and a three-event telemetry chain records that a document was seen, cited, and whether the work it informed succeeded, with recent failures fed back into the prompts that write the next notes
-flowchart TD
-    subgraph Capture
-        CAP[&quot;capture_conversation&lt;br/&gt;raw, task_id stamped&quot;]
-        DIST[&quot;distill_conversation&lt;br/&gt;proposes notes&quot;]
-        CONS[&quot;consolidate&lt;br/&gt;merges candidates&quot;]
-    end
-
-    subgraph Gate[&quot;Admission&quot;]
-        DRAFT[&quot;note: status=draft&quot;]
-        CONF[&quot;confirm_note / reject_note&quot;]
-        STABLE[&quot;status=stable&quot;]
-        TM[&quot;task memory&lt;br/&gt;no confirm gate (ADR-0002)&quot;]
-    end
-
-    subgraph Store[&quot;KnowledgeStore over repowiki/&quot;]
-        NOTES[&quot;notes/&quot;]
-        TASKS[&quot;tasks/&amp;lt;id&amp;gt;/memories/&amp;lt;user&amp;gt;.md&lt;br/&gt;append-only&quot;]
-        ARCH[&quot;memories-archive/&amp;lt;user&amp;gt;.md&lt;br/&gt;compacted originals&quot;]
-        META[&quot;.meta/ telemetry jsonl&lt;br/&gt;per user&quot;]
-    end
-
-    subgraph Read[&quot;query_wiki&quot;]
-        BM[&quot;BM25 + wikilink hops&quot;]
-        DEP[&quot;deprecated -&gt; dropped&quot;]
-        DR[&quot;draft -&gt; [unconfirmed] prefix&quot;]
-        AUTH[&quot;authority multiplier&lt;br/&gt;status · confidence · type · source&quot;]
-        TASKF[&quot;task_id predicate&lt;br/&gt;notes only&quot;]
-    end
-
-    subgraph Loop[&quot;Feedback&quot;]
-        HIT[&quot;hit: I saw it&quot;]
-        ADO[&quot;adopted: I cited it&quot;]
-        OUT[&quot;outcome: did the work succeed?&quot;]
-        NEG[&quot;negative_examples&lt;br/&gt;recent failures, cap 5&quot;]
-    end
-
-    CAP --&gt; DIST --&gt; CONS --&gt; DRAFT
-    DRAFT --&gt; CONF --&gt; STABLE
-    DIST --&gt; TM
-    DRAFT --&gt; NOTES
-    STABLE --&gt; NOTES
-    TM --&gt; TASKS
-    TASKS --&gt;|compaction| ARCH
-    NOTES --&gt; BM --&gt; DEP --&gt; DR --&gt; AUTH --&gt; TASKF
-    TASKF --&gt; HIT --&gt; ADO --&gt; OUT
-    OUT --&gt; META
-    HIT --&gt; META
-    ADO --&gt; META
-    META --&gt; NEG
-    NEG --&gt; DIST
-    NEG --&gt; CONS</code></pre></details></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codewiki/src/store.py</code></td>
+<td><code>KnowledgeStore</code>: atomic writes, sidecar locks, git
+auto-stage, task index, task-memory append, supersession and search</td>
+</tr>
+<tr>
+<td><code>codewiki/src/retrieval.py</code></td>
+<td>BM25 kernel and <code>_doc_authority</code>, the type, status,
+confidence and source offsets</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_query.py</code></td>
+<td><code>handle_query_wiki</code> and its five modes; the status skip,
+the draft label, the shadow gate, the task filter</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_writer.py</code>,
+<code>note_lifecycle.py</code>, <code>note_ingest.py</code></td>
+<td>Status vocabulary, the locked frontmatter rewrite, confirm, reject,
+batch status, ingest</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/task_manager.py</code></td>
+<td>Task CRUD, layered loading, the write check, compaction, task-memory
+search</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/distill_conversation.py</code>,
+<code>note_consolidation.py</code></td>
+<td>Distillation into draft notes, dedup and conflict recall, the
+negative-example payloads</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/telemetry.py</code>,
+<code>outcome_report.py</code></td>
+<td>Per-user JSONL usage streams and the outcome tool</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/conflict_case.py</code></td>
+<td>Conflict cases between two pages, flagged and adjudicated by
+tool</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/registry.py</code></td>
+<td>The 53 tool schemas</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>It is a Python package with an MCP server, a CLI and hook scripts
+copied into an IDE's configuration directory. The model is the IDE's
+own; the README's first difference from upstream is "zero-config, IDE
+model driven". Storage is plain markdown and JSONL under
+<code>repowiki/</code>, readable by hand, and every write through
+<code>atomic_write</code> is staged into git
+(<code>codewiki/src/store.py:99-124</code>). An optional gated
+auto-push, off by default, commits under a <code>codewiki:</code> prefix
+(<code>codewiki/src/git_sync.py:1-30</code>).</p>
+<p>The server and CLI call <code>maybe_self_update</code> on start
+(<code>codewiki/mcp/server.py:212-214</code>,
+<code>codewiki/cli/main.py:78-80</code>). Its module docstring describes
+a detached child that queries PyPI at most daily and pip-installs patch
+and minor releases automatically, opting out through
+<code>CODEWIKI_NO_AUTOUPDATE</code> or <code>autoupdate=false</code>
+(<code>codewiki/utils/self_update.py:1-30</code>). An installation
+therefore runs whatever minor release was published last, whatever its
+age.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<ul>
-<li><strong>Store facade and entry format:</strong>
-<code>codewiki/src/store.py</code> — <code>KnowledgeStore</code>,
-<code>format_memory_entry</code>, <code>new_entry_id</code>,
-<code>entry_is_superseded</code>, <code>supersede_memory</code>, and the
-atomic-write and locking helpers above them.</li>
-<li><strong>Query and status handling:</strong>
-<code>codewiki/mcp/tools/note_query.py</code> —
-<code>handle_query_wiki</code>, the deprecated <code>continue</code>,
-the <code>[unconfirmed]</code> prefix, the <code>task_id</code>
-predicate.</li>
-<li><strong>Ranking:</strong> <code>codewiki/src/retrieval.py</code> —
-<code>bm25_score</code> and <code>_doc_authority</code> with its status,
-confidence, type and source offsets.</li>
-<li><strong>Task memory:</strong>
-<code>codewiki/mcp/tools/task_manager.py</code> — the layout contract in
-the module docstring, the live/superseded partitions, compaction.</li>
-<li><strong>Telemetry and feedback:</strong>
-<code>codewiki/mcp/tools/telemetry.py</code>,
-<code>outcome_report.py</code>, and the <code>negative_examples</code>
-payloads in <code>distill_conversation.py</code> and
-<code>note_consolidation.py</code>.</li>
-</ul>
+<p><strong>Note query.</strong> <code>handle_query_wiki</code> resolves
+the corpus from the session or <code>repo_path</code>, returns early for
+the <code>overview</code>, <code>directory</code>, <code>detail</code>
+and <code>check</code> modes and for <code>by_file</code>, and otherwise
+runs BM25 (<code>codewiki/mcp/tools/note_query.py:797-892</code>).
+Building each note entry, it drops <code>deprecated</code>, labels
+<code>draft</code> and attaches a trust tier and the stamped
+<code>task_id</code> (<code>:1025-1053</code>). The optional filters
+follow: origin, then <code>task_id</code> (<code>:1139-1145</code>),
+then the shadow gate (<code>:1153</code>, <code>:1168-1169</code>), then
+open-conflict annotation (<code>:1175-1186</code>).</p>
+<p><strong>Note lifecycle.</strong> <code>ingest_note</code> writes
+<code>draft</code> by default; <code>stable</code> requires a
+<code>reason</code>, and an <code>evidence</code> object of
+<code>test_ref</code>, <code>commit_ref</code> or
+<code>reviewed_by</code> promotes confidence to <code>strong</code>
+(<code>codewiki/mcp/tools/note_ingest.py:289-337</code>).
+<code>confirm_note</code>, <code>reject_note</code> and
+<code>batch_set_status</code> go through
+<code>_apply_status_to_file</code>, a locked YAML round-trip that
+appends a <code>verified</code> entry and records a
+<code>reject_reason</code>
+(<code>codewiki/mcp/tools/note_writer.py:120-263</code>).</p>
+<p><strong>Task memory.</strong> <code>handle_add_task_memory</code>
+runs <code>_write_check</code> unless the write supersedes something,
+validates the <code>supersedes</code> ref with a dry run, appends, then
+writes the marker
+(<code>codewiki/mcp/tools/task_manager.py:828-929</code>).
+<code>supersede_memory</code> inserts the line under the target's
+heading inside a locked read-modify-write
+(<code>codewiki/src/store.py:1269-1341</code>).
+<code>search_memories</code> scores one task's entries and skips
+superseded ones (<code>codewiki/src/store.py:1343-1420</code>).</p>
+<p><strong>Distillation dedup.</strong>
+<code>_find_existing_note</code>, the BM25 recall and
+<code>_find_conflict_candidates</code> each skip a note for which
+<code>_is_retired_note</code> is true
+(<code>codewiki/mcp/tools/distill_conversation.py:424-435</code>,
+<code>:537</code>, <code>:697</code>, <code>:748</code>).</p>
+<p><strong>Telemetry.</strong> <code>record_hit</code> merges a same-day
+hit into an existing line and rewrites the user's file;
+<code>record_adopted</code> and <code>record_outcome</code> append
+(<code>codewiki/mcp/tools/telemetry.py:148-196</code>,
+<code>:199-214</code>, <code>:285-321</code>).
+<code>recent_outcome_failures</code> feeds the distillation and
+consolidation payloads (<code>:351</code>,
+<code>codewiki/mcp/tools/distill_conversation.py:1880-1894</code>,
+<code>codewiki/mcp/tools/note_consolidation.py:468-478</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>A <strong>note</strong> is a markdown file whose frontmatter carries
-the axes this report turns on: an OKF <code>status</code>
-(<code>draft</code> / <code>stable</code> / <code>deprecated</code>,
-with legacy vocabularies normalised on read), a
-<code>confidence_level</code> (<code>strong</code> / <code>weak</code> /
-<code>shadow</code>), a <code>verified</code> block, an optional
-<code>task_id</code>, and a note type that also feeds the authority
-multiplier (decision above pitfall above lesson and architecture above
-workaround).</p>
+an OKF <code>status</code>, a <code>confidence_level</code>, a
+<code>verified</code> list of <code>{by, at}</code> entries, an optional
+<code>task_id</code>, an optional <code>reject_reason</code>, and under
+<code>metadata</code> an optional <code>reason</code> and
+<code>verification</code> block for a stable direct write. A note type
+also feeds the authority multiplier, ranking decision above pitfall and
+procedure, above lesson and architecture, above workaround
+(<code>codewiki/src/retrieval.py:474-481</code>).</p>
 <p>A <strong>task memory</strong> is an entry inside
 <code>tasks/&lt;task_id&gt;/memories/&lt;user_id&gt;.md</code>:</p>
 <pre><code>### 2026-09-18 14:30 #a3f2
 
 &lt;content&gt;</code></pre>
-<p>The id is four base36 characters minted with
-<code>secrets.choice</code> and checked against the ids already in the
-file, falling back to eight characters rather than looping. The
-heading's timestamp is not necessarily the append time — a distilled
-conversation stamps its <code>captured_at</code>, the dialogue's own
-time, so the entry is dated when it happened rather than when it was
-written down.</p>
-<p>Retirement is a line, not a field:
-<code>&gt; [superseded 2026-09-18 by #a3f2]</code> inserted above the
-entry, carrying both halves of the correction.</p>
+<p>The id is four base36 characters checked against the ids in the file
+(<code>codewiki/src/store.py:360-372</code>). The heading time is the
+append clock: <code>format_memory_entry</code> accepts an
+<code>at</code> override whose docstring describes distillation passing
+a conversation's <code>captured_at</code>, and
+<code>append_task_memories_direct</code>, the only function that
+forwards it, has no caller (<code>codewiki/src/store.py:375-397</code>,
+<code>codewiki/mcp/tools/task_manager.py:456-483</code>).</p>
+<p>The <strong>user id</strong> is a namespace, not an identity.
+<code>resolve_user_id</code> takes <code>CODEWIKI_USER</code>, then a
+repo-local pin, then git email or name, then a cache and the login name,
+and its docstring says it is "Not an auth mechanism — a namespace"
+(<code>codewiki/src/config.py:296-349</code>). Tool responses echo the
+id and which rung produced it.</p>
+<p>No field records when a fact became true apart from when it was
+written; a note's <code>date</code> and an entry's heading are both
+write times.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p><code>handle_query_wiki</code> scores notes and wiki pages with BM25
-over a shared retrieval kernel, expands through wikilinks, and
-multiplies each document's score by an authority factor. That factor is
-pure arithmetic over frontmatter: note type, OKF status, the confidence
-dimension, and a source penalty for <code>raw/sources/</code> material,
-clamped to 0.7–1.3 so no single axis can dominate.</p>
-<p>Three things about this are worth separating, because the project
-separates them:</p>
+<p><code>handle_query_wiki</code> scores notes, wiki pages and raw
+sources with BM25, expands through wikilinks, and multiplies each score
+by <code>_doc_authority</code>. That factor is arithmetic over
+frontmatter: note type, status (draft −0.25, stable +0.05, deprecated
+−0.35), confidence (strong +0.10, weak 0.0, shadow −0.30) and a −0.20
+penalty for <code>raw/sources/</code>, clamped to 0.7–1.3
+(<code>codewiki/src/retrieval.py:470-530</code>).</p>
+<p>Four things act on the result set and they are different in kind:</p>
 <ol type="1">
-<li>The <strong>exclusion</strong> is one line:
-<code>if note_st == "deprecated": continue</code>. Only that value
-leaves the result set.</li>
-<li>The <strong>label</strong> is the draft case, which rewrites the
-title rather than hiding the note.</li>
-<li>The <strong>weight</strong> is everything else, and the code calls
-the status component a gate while implementing it as an offset — a
-distinction a reader should keep, because a deprecated note is dropped
-by the <code>continue</code> above, not by its −0.35.</li>
+<li><strong>Exclusion by status.</strong>
+<code>if note_st == "deprecated": continue</code>
+(<code>codewiki/mcp/tools/note_query.py:1034-1035</code>). The
+<code>check</code> mode and the <code>by_file</code> timeline carry the
+same skip (<code>:465</code>, <code>:676</code>). No argument returns a
+deprecated note.</li>
+<li><strong>Exclusion by confidence, overridable.</strong> Shadow
+results are dropped unless the caller passes
+<code>include_shadow=true</code> (<code>:1153</code>,
+<code>:1168-1169</code>). A rejected note is shadow as well as
+deprecated, so it is excluded twice.</li>
+<li><strong>The label.</strong> A draft's title becomes
+<code>[unconfirmed] &lt;title&gt;</code> and the entry carries
+<code>note_status: draft</code> (<code>:1036-1038</code>).</li>
+<li><strong>The weight</strong>, which the comments call a status gate
+and implement as an offset. A deprecated note never reaches the offset;
+the <code>continue</code> removes it first.</li>
 </ol>
-<p>One exemption is documented and is the kind of thing that is usually
-discovered late: the deduplication recall that distillation uses to find
-near-identical existing notes runs with
-<code>apply_authority=False</code>, so similarity is never polluted by
-confidence. Without it, a migration that dropped old notes to
-<code>shadow</code> would blind conflict detection at exactly the moment
-it mattered.</p>
+<p>The <strong>task filter</strong> is applied only when the caller
+passes <code>task_id</code>, and only to notes; wiki pages and sources
+pass unconditionally (<code>:1139-1145</code>). The <code>check</code>
+and <code>by_file</code> paths return before it (<code>:880-892</code>).
+Task memories have their own search, scoped to one named task and to the
+caller's own files unless <code>include_others=true</code>
+(<code>codewiki/src/store.py:1343-1365</code>).</p>
+<p>Distillation's near-duplicate recall runs with
+<code>apply_authority=False</code> and <code>apply_usage=False</code>
+(<code>codewiki/mcp/tools/distill_conversation.py:672-686</code>). The
+comment in <code>retrieval.py</code> gives the reason: a migration that
+dropped old notes to <code>shadow</code> would otherwise blind conflict
+detection (<code>codewiki/src/retrieval.py:491-495</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Notes arrive through capture and distillation, land as
-<code>draft</code>, and the ingest path returns the caller an
-instruction rather than assuming: the response carries the
-<code>[unconfirmed]</code> prefix and says to call
-<code>confirm_note</code> after review. <code>reject_note</code> and a
-batch status setter complete the lifecycle, and the batch tool refuses a
-transition whose current value is not what the caller asked for,
-recording <code>"reason": "not draft"</code> per skipped file.</p>
-<p>Task memories skip that gate, and ADR-0002's reasoning is recorded
-where the asymmetry lives: task-scoped progress knowledge has bounded,
-task-lifetime noise cost, while notes enter the shared retrieval-indexed
-base.</p>
-<p>The file discipline underneath is stated as a set of constraints that
-must hold: per-user files are append-only and each user writes only
-their own; concurrent writers are serialised by an atomic temp-file
-replace; compaction is author-exclusive, and <em>"nobody ever rewrites
-another user's file"</em>; <code>task_id</code> is derived from the
-title, immutable, and there is no rename tool.</p>
+<p><strong>Notes.</strong> Capture stores a raw transcript, distillation
+proposes notes (<code>distill_conversation</code> writes no task
+memories; its response declares
+<code>memories_skipped_reason: channel_exclusive</code>), and ingest
+writes them. The ingest response for a draft says to call
+<code>confirm_note</code> after review. A <code>stable</code> ingest
+must carry a <code>reason</code>, and the comment beside the check calls
+that reason an "intent declaration — visibility/friction/attribution,
+NOT a verification mechanism"
+(<code>codewiki/mcp/tools/note_ingest.py:289-307</code>).
+<code>batch_set_status</code> refuses a transition whose source is not
+<code>draft</code>, recording <code>"reason": "not draft"</code> per
+skipped file
+(<code>codewiki/mcp/tools/note_lifecycle.py:282-288</code>).</p>
+<p><strong>Task memories.</strong> <code>add_task_memory</code> is the
+only channel (the hook registry records this as ADR-0014). Before
+writing it compares the new text with the last ten live entries and the
+compaction summaries and rejects a difflib ratio above 0.85, returning
+<code>similar_to</code>
+(<code>codewiki/mcp/tools/task_manager.py:731-825</code>). The
+comparison set is built from live entries only (<code>:770</code>), so
+text matching a superseded entry is accepted. A write that names
+<code>supersedes</code> skips the check entirely.</p>
+<p><strong>Compaction.</strong> When the hot layer crosses 40 entries or
+24 KiB, <code>get_task_context</code> returns a
+<code>compaction_action</code> telling the agent to dispatch an async
+subagent that runs prepare, writes a summary and submits, with a
+<code>gate</code> field saying no user confirmation is needed
+(<code>codewiki/mcp/tools/task_manager.py:1169-1212</code>). Submit
+appends the originals to <code>memories-archive/&lt;user&gt;.md</code>,
+rewrites the caller's own file and deletes a converged legacy file
+(<code>:1370-1400</code>).</p>
+<p><strong>The stated invariants.</strong> The task-manager docstring
+lists constraints that must hold, including that per-user files are
+append-only and that "nobody ever rewrites another user's file"
+(<code>codewiki/mcp/tools/task_manager.py:1-48</code>). The second holds
+in the code read here: compaction collects only the caller's own and
+legacy files. The first is a description of the common case:
+supersession inserts into an existing entry and compaction rewrites the
+file.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Fifty-three MCP tools, driven by the IDE's own model rather than a
-configured API key — the README's first difference from upstream is
-"zero-config, IDE model driven". A CLI and hooks sit beside them, and
-session bindings under
-<code>.meta/task_bindings/&lt;session_id&gt;.json</code> let a capture
-know which task it belongs to, with the binding consumed on a successful
-write.</p>
+<p>Fifty-three MCP tools are registered in one file
+(<code>codewiki/mcp/registry.py</code>). The memory verbs are
+<code>capture_conversation</code>, <code>distill_conversation</code>,
+<code>ingest_note</code>, <code>confirm_note</code>,
+<code>reject_note</code>, <code>batch_set_status</code>,
+<code>consolidate_notes</code>, <code>flag_conflict</code>,
+<code>adjudicate_conflict</code>, <code>query_wiki</code>,
+<code>report_outcome</code>, <code>stamp_evidence</code>, and the task
+verbs <code>create_task</code>, <code>get_task_context</code>,
+<code>add_task_memory</code>, <code>search_task_memories</code>,
+<code>compact_task_memories</code>, <code>delete_task</code> and
+<code>set_session_task</code>.</p>
+<p>A SessionStart hook injects the team doctrine page and asks the user
+which task to bind; a SessionEnd hook captures the transcript in a
+detached subprocess
+(<code>codewiki/hooks/task_session_start.py:1-45</code>). Session
+bindings under <code>.meta/task_bindings/</code> tell a capture which
+task it belongs to.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>Trust state — awarded, on the exclusion.</strong>
-<code>deprecated</code> is dropped from a query outright. That is the
-state that withholds, and the mark rests on it rather than on the
-authority multiplier, which is the ranking axis. The draft case is the
-interesting middle: the note is returned and badged, which is a third
-answer to "am I sure about this" that most implementations do not
-offer.</p>
-<p><strong>Tombstone — awarded.</strong> One writer, five readers, a
-marker carrying the date and the successor, and a compaction path that
-archives originals rather than dropping them.</p>
-<p><strong>Scope enforcement — awarded on the task axis, with the user
-axis named for what it is.</strong> The <code>task_id</code> predicate
-is real and tested both ways. Per-user files are described by the
-project as <em>git-level conflict isolation</em>, and loading is layered
-rather than partitioned: another user's memories reach the caller as a
-summary and a couple of recent entries. That is a deliberate design, not
-a leak, but a reader should not mistake per-user files for per-user
-visibility.</p>
-<p><strong>Audit log — awarded.</strong> Three event kinds, per-user
-append-only JSONL, a verdict validated at the tool boundary, and an
-aggregation that folds every user's stream into per-document usage.</p>
-<p><strong>Human review — withheld, twice over.</strong> The
-<code>trust_tier</code> helper derives <code>unverified</code> /
-<code>machine-confirmed</code> / <code>human-reviewed</code> from a
-<code>verified</code> block, and <code>human-reviewed</code> is earned
-when an entry's <code>by</code> field starts with the string
-<code>human:</code> — a value the writer supplies, so the tier records a
-claim about who reviewed rather than establishing it. And the tier is
-not consumed: <code>note_query.py</code> computes it onto the result
-entry, and <code>knowledge_loop.py</code> imports
-<code>_trust_tier</code> without calling it. The label reaches a reader;
-nothing in the tree acts on it.</p>
+<code>deprecated</code> is dropped from all three note read paths with
+no override, and <code>shadow</code> is dropped from the default query.
+Both are discrete values of frontmatter fields, written by
+<code>reject_note</code> together
+(<code>codewiki/mcp/tools/note_lifecycle.py:162-170</code>). The draft
+label is the middle answer, returned and marked rather than hidden.</p>
+<p><strong>Tombstone — withheld.</strong> The supersession marker is
+keyed on an entry, and <code>deprecated</code> is a status on a note.
+Neither is consulted by a later write. <code>_is_retired_note</code> is
+applied in all three of distillation's duplicate searches so that a
+retired note is never a match
+(<code>codewiki/mcp/tools/distill_conversation.py:424-435</code>,
+<code>:537</code>, <code>:697</code>, <code>:748</code>).
+<code>_write_check</code> builds its comparison set from live entries
+only (<code>codewiki/mcp/tools/task_manager.py:770</code>). Retracted
+sources are skipped by the source-ingest duplicate checks in the same
+way (<code>codewiki/mcp/tools/source_ingest.py:443</code>,
+<code>:592</code>). Each retirement removes the retired record from the
+one search that could refuse its return.</p>
+<p><strong>Scope enforcement — withheld.</strong> The note query's only
+scope is the <code>task_id</code> argument. When the caller omits it,
+every note in the corpus is eligible; when it passes one, any task's
+notes are returned; the <code>check</code> and <code>by_file</code>
+paths ignore it (<code>codewiki/mcp/tools/note_query.py:852</code>,
+<code>:880-892</code>, <code>:1139-1145</code>). Task memories are
+addressed by a caller-named <code>task_id</code>, and the user split is
+a namespace the caller's environment chooses. The project describes
+per-user files as <em>git-level conflict isolation</em>, and loading is
+layered: other users' files reach the caller as a summary and two recent
+entries (<code>codewiki/mcp/tools/task_manager.py:265-268</code>,
+<code>:425-437</code>).</p>
+<p><strong>Audit log — withheld.</strong> The append-mode writers in the
+package are the server's lifecycle log, a <code>.gitignore</code> append
+and two telemetry events (see Recorded searches). The telemetry streams
+record use and outcome, and <code>record_hit</code> rewrites the whole
+file to merge a same-day hit
+(<code>codewiki/mcp/tools/telemetry.py:148-196</code>). Status changes
+rewrite note frontmatter in place; the <code>verified</code> list grows,
+and <code>reject_reason</code> is overwritten. The project's ledger is
+git: <code>atomic_write</code> stages every write, and the conflict
+module says "the ledger is git".</p>
+<p><strong>Human review — withheld.</strong> <code>confirm_note</code>,
+<code>reject_note</code>, <code>batch_set_status</code> and
+<code>adjudicate_conflict</code> are registered tools the producing
+agent holds (<code>codewiki/mcp/registry.py:1312</code>,
+<code>:1358</code>, <code>:1418</code>, <code>:1508</code>), and
+<code>ingest_note</code> writes <code>stable</code> given any reason.
+<code>_trust_tier</code> returns <code>human-reviewed</code> when a
+<code>verified</code> entry's <code>by</code> starts with
+<code>human:</code>, a string the caller supplies
+(<code>codewiki/mcp/tools/note_query.py:30-43</code>). The tier is
+attached to results and nothing reads it. <code>knowledge_loop.py</code>
+imports it only as a compat re-export.</p>
+<p><strong>Bi-temporal — withheld.</strong> Every timestamp is a write
+time (section 5).</p>
+<p><strong>Retired entries in other users' context.</strong>
+<code>_render_warm_author</code> takes another user's two most recent
+entries without the superseded filter the caller's own hot layer applies
+(<code>codewiki/mcp/tools/task_manager.py:293-318</code>). A teammate's
+retired entry reaches the context block with its marker line as text;
+degraded to a one-line hint, the marker is the line shown.</p>
 <p><strong>The outcome signal is self-assessed.</strong>
-<code>report_outcome</code>'s own header says collection timing is
-caller-owned — the agent reports at the natural end of a task, <em>"the
-only moment it can honestly judge the result"</em>. That is a fair
-argument for when to ask, and it leaves the grader and the graded as the
-same party. The binary vocabulary helps:
-<code>result must be 'success' or 'failure' (binary, no grading)</code>.</p>
+<code>report_outcome</code>'s header says collection timing is
+caller-owned: the agent reports at the natural end of a task, <em>"the
+only moment it can honestly judge the result"</em>
+(<code>codewiki/mcp/tools/outcome_report.py:12-14</code>). That is an
+argument for when to ask, and it leaves the grader and the graded as one
+party. The verdict is validated as binary:
+<code>result must be 'success' or 'failure' (binary, no grading)</code>
+(<code>:66</code>).</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>No paper.</strong> Searched the README and <code>docs/</code>
-for <code>arxiv</code>, <code>@article</code>, <code>@misc</code>,
-<code>doi.org</code> and a <code>CITATION.cff</code>: none. The design
-documents under <code>docs/</code> are the project's own, several of
-them studies of other systems — including an OKF adaptation plan, a
-framework this atlas covers separately.</p>
-<p>The Python suite is substantial and the two cases this report leans
-on are built correctly, each pairing an absence with the presence it is
-measured against (section 9's <code>negative_eval</code> record quotes
-both). <code>tests/</code> also carries a golden retrieval baseline, an
-OKF regression file and an MCP smoke test.</p>
-<p>Two cautions for a reader counting coverage.
-<code>tests/conftest.py</code> executes on pytest collection, which the
-screening pass flags and which matters only if you run the suite. And
-the authority tests exercise the multiplier — that deprecated clamps
-low, that ordering follows authority, that a status change refreshes it
-— rather than the <code>continue</code> that actually removes a
-deprecated note from a query; that behaviour is covered instead by the
-end-to-end note flow, which matches on the <code>[unconfirmed]</code>
-substring.</p>
+<p>The README cites the upstream paper, <em>CodeWiki: Evaluating AI's
+Ability to Generate Holistic Documentation for Large-Scale
+Codebases</em> (<a
+href="https://arxiv.org/abs/2510.24428">arXiv:2510.24428</a>), with a
+BibTeX entry (<code>README.md:883-893</code>). It evaluates
+documentation generation and does not cover the memory layer. Design
+documents under <code>docs/</code> include studies of other memory
+systems and papers.</p>
+<p>The <code>negative_eval</code> mark rests on four cases, each pairing
+an absence with the presence it is measured against on one populated
+fixture. The strongest is
+<code>test_search_skips_superseded_and_annotates</code>: supersede a JWT
+conclusion with an OAuth2 one, search, and assert the replacement
+present and the retired text absent
+(<code>tests/test_task_manager.py:1586-1620</code>). The others cover
+the <code>task_id</code> filter, the <code>by_file</code> deprecated
+skip and the shadow gate (see the evidence record).</p>
+<p>The main path's deprecated <code>continue</code> is asserted by
+<code>tests/okf_regression_test.py:674-680</code>, a script run with
+<code>python</code> that pytest's
+<code>python_files = ["test_*.py"]</code> does not collect. The
+authority tests exercise the multiplier, not the exclusion. No test
+re-extracts a rejected claim, which is the case section 9 turns on.</p>
+<p><code>tests/conftest.py</code> executes at pytest collection, which
+matters only to someone running the suite. I ran nothing.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Give yourself three responses, not two.</strong> Excluded,
-labelled, weighted. Most systems pick one and apply it to every retired
-value; here <code>deprecated</code> is dropped, <code>draft</code> is
-returned with a badge, and the rest is a multiplier.</li>
+<li><strong>Three answers to an uncertain claim.</strong> Dropped,
+labelled, weighted: <code>deprecated</code> leaves, <code>draft</code>
+is returned under a badge, the rest is ranked. Each is applied to a
+different value rather than one answer to all.</li>
 <li><strong>Put the retirement marker in the document.</strong> A
-blockquote line naming the date and the successor survives being read by
-a person, copied into a diff, or opened outside the tool.</li>
+blockquote naming the date and the successor survives a diff, a copy,
+and a reader outside the tool.</li>
 <li><strong>Record the third event.</strong> Retrieval logs stop at
-"this was returned". The chain that matters is seen, cited, and did the
-work succeed — and the third one is the only one that can be fed back as
-a negative example.</li>
-<li><strong>Exempt the dedup recall from your authority
-weighting.</strong> Similarity used for conflict detection must not
-inherit a confidence penalty, or a migration that downgrades old notes
-will blind exactly the check that catches contradictions.</li>
-<li><strong>Say what per-user files buy.</strong> Conflict isolation and
-read isolation are different properties, and a layout that delivers the
-first is easy to describe as if it delivered the second.</li>
+served. Seen, cited, and whether the work succeeded is a chain, and only
+the third link can feed a negative example.</li>
+<li><strong>Exempt the dedup recall from authority weighting.</strong>
+Similarity used for conflict detection must not inherit a confidence
+penalty.</li>
 </ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Skipping retired records in the duplicate check.</strong> It
+is the natural reading of "dead knowledge is not a match", and it makes
+every retirement reversible by the next extraction. Keep the retired
+text where the write path can see it, and refuse or flag a match against
+it.</li>
+<li><strong>A reason field as a gate.</strong> A required free-text
+reason on a direct <code>stable</code> write is friction the writer
+clears by typing.</li>
+<li><strong>Two read paths with one predicate.</strong> The caller's hot
+layer filters superseded entries and the teammate warm layer beside it
+does not.</li>
+<li><strong>Rewriting a usage log to keep it small.</strong> A same-day
+merge turns an append-only stream into a mutable file.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Study it if you are bolting a knowledge base onto a tool that writes
+documents, or deciding what retrieval should do with an unconfirmed
+claim. It does not fit a deployment that needs a rejected claim to stay
+rejected, per-user read isolation, or a review step the authoring agent
+cannot perform.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li><code>_trust_tier</code> is imported into
-<code>knowledge_loop.py</code> and never called there. Was a consumer
-planned, or is the tier meant only as a label on a query result?</li>
-<li>The authority multiplier calls the status component a gate. Is the
-<code>continue</code> on <code>deprecated</code> intended as the gate
-and the offsets as ranking, or did the offset predate the
-exclusion?</li>
-<li>Other users' task memories reach a caller as a summary. Is there a
-deployment where that is the wrong default, and is there a way to turn
-it off?</li>
+<li>Was skipping retired notes in dedup chosen over flagging a match
+against one, given that the docstring weighs only the
+merge-into-dead-knowledge case?</li>
+<li>Should the warm layer apply <code>entry_is_superseded</code>, or is
+a teammate's retired entry meant to arrive with its marker as text?</li>
+<li><code>append_task_memories_direct</code> and the <code>at</code>
+parameter it forwards have no caller since distillation stopped writing
+task memories. Is the dialogue-time heading meant to return through
+<code>add_task_memory</code>?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What to read it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codewiki/mcp/tools/note_query.py:797-892</code></td>
+<td>Query entry, mode early returns, the task and repo arguments</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_query.py:1025-1053</code></td>
+<td>The deprecated skip, the draft label, the trust tier</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_query.py:1135-1186</code></td>
+<td>Origin, task, shadow and open-conflict filters</td>
+</tr>
+<tr>
+<td><code>codewiki/src/retrieval.py:470-530</code></td>
+<td>The authority multiplier</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_writer.py:120-263</code></td>
+<td>The locked status rewrite and <code>verified</code> append</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/note_ingest.py:289-337</code></td>
+<td>Stable direct write: reason and evidence</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/distill_conversation.py:424-435</code>,
+<code>:530-540</code>, <code>:690-700</code>, <code>:745-750</code></td>
+<td><code>_is_retired_note</code> and the three dedup skips</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/task_manager.py:1-48</code></td>
+<td>The stated invariants</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/task_manager.py:293-318</code>,
+<code>:350-443</code></td>
+<td>Warm and hot layered loading</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/task_manager.py:731-825</code></td>
+<td>The write check over live entries</td>
+</tr>
+<tr>
+<td><code>codewiki/src/store.py:1225-1420</code></td>
+<td>Append, supersede, task-memory search</td>
+</tr>
+<tr>
+<td><code>codewiki/mcp/tools/telemetry.py:148-396</code></td>
+<td>Hit merge, adopted and outcome appends, failure feed</td>
+</tr>
+<tr>
+<td><code>codewiki/utils/self_update.py:1-30</code></td>
+<td>Automatic upgrade from PyPI</td>
+</tr>
+<tr>
+<td><code>tests/test_task_manager.py:1586-1620</code></td>
+<td>Superseded entry absent from search, replacement present</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>; the first four were also run at
+<code class="commit-id" title="4b826918d6fd4d954064190683a9455bb40805ff">4b826918…</code> with the same
+result apart from line numbers.</p>
 <ul>
-<li>Store, entry format, supersession:
-<code>codewiki/src/store.py</code></li>
-<li>Retrieval kernel and authority:
-<code>codewiki/src/retrieval.py</code></li>
-<li>Query path and status handling:
-<code>codewiki/mcp/tools/note_query.py</code></li>
-<li>Note lifecycle: <code>codewiki/mcp/tools/note_lifecycle.py</code>,
-<code>note_ingest.py</code>, <code>note_consolidation.py</code></li>
-<li>Task memory: <code>codewiki/mcp/tools/task_manager.py</code></li>
-<li>Telemetry and feedback:
-<code>codewiki/mcp/tools/telemetry.py</code>,
-<code>outcome_report.py</code>,
-<code>distill_conversation.py</code></li>
-<li>Tests: <code>tests/test_task_manager.py</code>,
-<code>tests/test_authority_p0.py</code></li>
+<li><code>git grep -n -E '_is_retired_note\(|entry_is_superseded\(' -- 'codewiki/*.py'</code>
+— the definitions, the three distillation skips
+(<code>distill_conversation.py:537</code>, <code>:697</code>,
+<code>:748</code>), the hot-layer, write-check, window and compaction
+partitions in <code>task_manager.py</code>, and the supersede and search
+reads in <code>store.py</code>; none in
+<code>_render_warm_author</code>, and none that refuses a write because
+it matches retired material.</li>
+<li><code>git grep -n -E "open\([^)]*['\"]a['\"]" -- 'codewiki/*.py'</code>
+— <code>mcp/server.py:167</code> (process lifecycle log),
+<code>mcp/tools/team_layout.py:131</code> (<code>.gitignore</code>),
+<code>mcp/tools/telemetry.py:213</code> and <code>:319</code> (adopted
+and outcome); no mutation log.</li>
+<li><code>git grep -n -E 'trust_tier' -- 'codewiki/*.py'</code> — two
+definitions (<code>note_query.py:30</code>,
+<code>note_writer.py:87</code>), the re-export at
+<code>knowledge_loop.py:53</code>, one assignment at
+<code>note_query.py:1044</code>; no reader.</li>
+<li><code>git grep -n -E 'task_id' -- codewiki/mcp/tools/note_query.py</code>
+— the argument read at <code>:852</code>, the stamp at
+<code>:1053</code>, the filter at <code>:1141-1144</code>; no default
+from a session binding.</li>
+<li><code>git grep -n -E 'append_task_memories_direct|append_memories\(' -- 'codewiki/*.py'</code>
+— the definition at <code>task_manager.py:456</code>, its call into the
+store at <code>:481</code>, the <code>add_task_memory</code> append at
+<code>:880</code> with no <code>at</code>, and the store method; no
+caller of <code>append_task_memories_direct</code>.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_at|valid_time|effective_(from|at)' -- 'codewiki/*.py'</code>
+— no match.</li>
+<li><code>git grep -n -E 'retracted' -- codewiki/mcp/tools/source_ingest.py</code>
+— the duplicate and name checks skip retracted entries
+(<code>:443</code>, <code>:521</code>, <code>:592</code>,
+<code>:656</code>) and the retract handler writes the status
+(<code>:937-938</code>).</li>
+<li><code>git grep -n -i -E 'arxiv|@article|@misc|doi\.org' -- README.md docs</code>
+— the upstream CodeWiki paper at <code>README.md:883-893</code> and
+<code>:1297</code>, and citations of other papers in design studies
+under <code>docs/</code>; no paper about the memory layer.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/mambo-wang/CodeWiki-Plus/commit/e06cd5badeba259f716dadf272bcf1433ff3f231"><code class="commit-id" title="e06cd5badeba259f716dadf272bcf1433ff3f231">e06cd5ba…</code></a>
+— 612 commits on, version 5.10.1 to 5.15.0. Three marks withdrawn, each
+wrong at the first pin: <code>tombstone</code>,
+<code>scope_enforced</code> and <code>audit_log</code> (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Also wrong then:
+shadow notes were already excluded by default, <code>ingest_note</code>
+already accepted <code>stable</code>, and the README cited the upstream
+paper. Overtaken: distillation writes no task memories, so entry
+headings carry the append clock (<a href="#5-memory-data-model">section
+5</a>); a stable direct write requires a reason; compaction is delegated
+to a subagent; the server updates itself from PyPI (<a
+href="#3-architecture">section 3</a>). Screened from a full clone: six
+files, no auto-run surface, <code>tests/conftest.py</code> at
+collection, <code>pyproject.toml</code> and <code>uv.lock</code> inside
+the cooldown, <code>AGENTS.md</code> read as data. Nothing was
+installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/mambo-wang/CodeWiki-Plus/commit/4b826918d6fd4d954064190683a9455bb40805ff"><code class="commit-id" title="4b826918d6fd4d954064190683a9455bb40805ff">4b826918…</code></a>
 — first reading, at the head of <code>main</code>, version 5.10.1 on
@@ -483,22 +842,22 @@ was read: no auto-run surface, one build-time execution path
 (<code>tests/conftest.py</code> at pytest collection), two dependency
 manifests inside the seven-day cooldown, and an <code>AGENTS.md</code>
 addressed to a reading agent which was read as data. Nothing was
-installed, built or run. Five marks. The reading covered the store
-facade and its entry format, the note lifecycle and its confirm gate,
-the query path's three-way treatment of status, the authority
-multiplier, the task-memory layout and its supersession marker, the
-telemetry chain and the negative-example feedback, and the two test
-cases the <code>negative_eval</code> mark rests on; the documentation
-generator the project grew out of — the Tree-sitter toolchain it
-inherited from upstream CodeWiki — was read as context rather than as
-subject. MIT, with the upstream's copyright line retained and the fork
-relationship stated in the README. Two findings worth carrying:
-<code>_trust_tier</code> is imported by <code>knowledge_loop.py</code>
-and never called there, so the OKF trust tier is a label on a query
-result rather than an input to anything; and the
-<code>human-reviewed</code> tier is earned by a <code>verified</code>
-entry whose <code>by</code> field begins with the string
-<code>human:</code>, which the writer supplies, so
+installed, built or run. Five marks.</p>
+<p>The reading covered the store facade and its entry format, the note
+lifecycle and its confirm gate, the query path's three-way treatment of
+status, the authority multiplier, the task-memory layout and its
+supersession marker, the telemetry chain and the negative-example
+feedback, and the two test cases the <code>negative_eval</code> mark
+rests on. The documentation generator the project grew out of — the
+Tree-sitter toolchain it inherited from upstream CodeWiki — was read as
+context rather than as subject. MIT, with the upstream's copyright line
+retained and the fork relationship stated in the README.</p>
+<p>Two findings worth carrying: <code>_trust_tier</code> is imported by
+<code>knowledge_loop.py</code> and never called there, so the OKF trust
+tier is a label on a query result rather than an input to anything; and
+the <code>human-reviewed</code> tier is earned by a
+<code>verified</code> entry whose <code>by</code> field begins with the
+string <code>human:</code>, which the writer supplies, so
 <code>human_review</code> is withheld on both grounds.</p>
         </article>
       </div>

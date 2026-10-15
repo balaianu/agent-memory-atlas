@@ -23346,10 +23346,10 @@ labelled, weighted — most systems pick one and apply it to everything
 retired.</li>
 <li>Second idea: <strong>record the third telemetry event.</strong> The
 vocabulary is <code>hit</code> (I saw it), <code>adopted</code> (I cited
-it) and <code>outcome</code> (after using it, did the work succeed?),
-per-user append-only JSONL, with the outcome carrying the adoption key
-so a citation and its result are linkable. Retrieval logs usually stop
-at the first of those.</li>
+it) and <code>outcome</code> (after using it, did the work succeed?), in
+per-user JSONL with the outcome carrying the adoption key so a citation
+and its result are linkable. Retrieval logs usually stop at the first of
+those.</li>
 <li>Third idea: <strong>feed the failures back into the prompt that
 writes the next memory.</strong> Recent failure notes become
 <code>negative_examples</code> — last 30 days, capped at five, newest
@@ -23360,42 +23360,51 @@ weighting.</strong> The distillation's near-duplicate search runs with
 <code>apply_authority=False</code>, and the comment says why: a
 migration that dropped old notes to <code>shadow</code> would otherwise
 blind conflict detection at the moment it mattered.</li>
-<li>Biggest risk: <strong>the outcome verdict is self-assessed.</strong>
+<li>Biggest risk: <strong>a retired claim is invisible to the check that
+would stop it coming back.</strong> <code>_is_retired_note</code> makes
+all three of distillation's duplicate searches skip deprecated notes,
+and the task-memory write check compares only live entries, so a claim
+someone rejected, extracted again from a later conversation, lands as a
+fresh draft. Every retirement is keyed on a record, and
+<code>tombstone</code> is withheld.</li>
+<li>Second risk: every lifecycle verb belongs to the agent.
+<code>confirm_note</code>, <code>reject_note</code>,
+<code>batch_set_status</code> and <code>adjudicate_conflict</code> are
+registered MCP tools, <code>ingest_note</code> writes
+<code>stable</code> given any free-text <code>reason</code>, and the
+<code>human-reviewed</code> trust tier is earned by a
+<code>verified.by</code> string beginning <code>human:</code> that the
+caller supplies. Nothing reads the tier. <code>human_review</code> is
+withheld.</li>
+<li>Third risk: <strong>the outcome verdict is self-assessed.</strong>
 The tool's own header argues that the agent should report at the natural
 end of its task because that is "the only moment it can honestly judge
 the result" — a fair answer to <em>when</em> that leaves the grader and
 the graded the same party. The binary vocabulary
 (<code>result must be 'success' or 'failure' (binary, no grading)</code>)
 limits the damage.</li>
-<li>Second risk: <code>_trust_tier</code> derives
-<code>unverified</code> / <code>machine-confirmed</code> /
-<code>human-reviewed</code> from a <code>verified</code> block, and
-<code>human-reviewed</code> is earned when an entry's <code>by</code>
-field starts with the string <code>human:</code> — supplied by the
-writer. The tier is also not consumed: <code>note_query.py</code>
-computes it onto the result and <code>knowledge_loop.py</code> imports
-the helper without calling it. <code>human_review</code> is withheld on
-both grounds.</li>
-<li>Third risk: per-user memory files are described by the project as
-<em>git-level conflict isolation</em>, and loading is layered rather
-than partitioned — another user's file contributes its summary and a
-couple of recent entries. That is deliberate, and it is not per-user
-visibility.</li>
+<li>Fourth risk: the only note scope is a <code>task_id</code> the
+caller may omit, and per-user memory files are described by the project
+as <em>git-level conflict isolation</em>: another user's file
+contributes its summary and two recent entries, and that warm layer
+skips the superseded filter the caller's own entries get.</li>
 <li>Most reusable component: the supersession marker — a
 <code>&gt; [superseded 2026-09-18 by #a3f2]</code> blockquote written
 into the entry itself, carrying the date and the successor, readable in
-a diff or outside the tool, with five readers partitioning live from
-retired on it.</li>
+a diff or outside the tool, with the caller's context, write check,
+compaction and search partitioning live from retired on it.</li>
 <li>Maturity impression: MIT with the upstream's copyright line retained
 and the fork relationship stated in the README; 53 MCP tools, a CLI,
 hooks and a web view; a substantial Python suite including a golden
-retrieval baseline and an OKF regression file; design documents under
-<code>docs/</code> that include studies of other memory systems.</li>
+retrieval baseline and an OKF regression script; design documents under
+<code>docs/</code> that include studies of other memory systems; and an
+installed server that updates itself from PyPI unless disabled.</li>
 <li>Study when: you are bolting a knowledge base onto a tool that
 generates documents, or deciding what a retrieval system should do with
 a claim nobody has confirmed yet.</li>
-<li>Do not copy when: you need per-user read isolation, or a review tier
-an author cannot assert about themselves.</li>
+<li>Do not copy when: you need a rejected claim to stay rejected,
+per-user read isolation, or a review tier an author cannot assert about
+themselves.</li>
 </ul>
 <h3 id="mira"><a href="../systems/mira/"><code>mira</code></a></h3>
 <ul>

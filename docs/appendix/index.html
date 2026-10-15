@@ -4776,12 +4776,12 @@ absent from every commit in the clone's history</li>
 <li><a
 href="https://github.com/mambo-wang/CodeWiki-Plus">mambo-wang/CodeWiki-Plus</a>
 at <a
-href="https://github.com/mambo-wang/CodeWiki-Plus/commit/4b826918d6fd4d954064190683a9455bb40805ff"><code class="commit-id" title="4b826918d6fd4d954064190683a9455bb40805ff">4b826918…</code></a>
+href="https://github.com/mambo-wang/CodeWiki-Plus/commit/e06cd5badeba259f716dadf272bcf1433ff3f231"><code class="commit-id" title="e06cd5badeba259f716dadf272bcf1433ff3f231">e06cd5ba…</code></a>
 — read only; no auto-run surface, one build-time execution path
-(<code>tests/conftest.py</code> at pytest collection), two dependency
-manifests inside the seven-day cooldown with <code>uv.lock</code> beside
-them, and an <code>AGENTS.md</code> addressed to a reading agent read as
-data; nothing installed, built or run</li>
+(<code>tests/conftest.py</code> at pytest collection),
+<code>pyproject.toml</code> and <code>uv.lock</code> inside the
+seven-day cooldown, and an <code>AGENTS.md</code> addressed to a reading
+agent read as data; nothing installed, built or run</li>
 <li><a href="https://github.com/taylorsatula/mira">taylorsatula/mira</a>
 at <a
 href="https://github.com/taylorsatula/mira/commit/e401d59bde9b6d9811d05b7abee1438907f99394"><code class="commit-id" title="e401d59bde9b6d9811d05b7abee1438907f99394">e401d59b…</code></a>
@@ -18033,6 +18033,37 @@ cited the controlled cross-namespace case as
 parameter rather than on who supplies it, the second on the pointer's
 doc comment, and the third on the event writers rather than the
 deleter.</li>
+<li><strong>Seven published claims about <a
+href="../systems/codewiki-plus/">CodeWiki-Plus</a> were wrong at <a
+href="https://github.com/mambo-wang/CodeWiki-Plus/commit/4b826918d6fd4d954064190683a9455bb40805ff"><code class="commit-id" title="4b826918d6fd4d954064190683a9455bb40805ff">4b826918…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>tombstone</code> on the task-memory supersession marker,
+which is keyed on an entry. The write check compared only live entries
+(<code>codewiki/mcp/tools/task_manager.py:756</code>) and distillation's
+three duplicate searches skipped deprecated notes
+(<code>codewiki/mcp/tools/distill_conversation.py:419</code>,
+<code>:532</code>, <code>:692</code>, <code>:743</code>), so a rejected
+claim extracted again landed as a new draft. It awarded
+<code>scope_enforced</code> on a <code>task_id</code> filter applied
+only when the caller passed one, and not on the <code>check</code> or
+<code>by_file</code> paths
+(<code>codewiki/mcp/tools/note_query.py:848</code>,
+<code>:876-887</code>, <code>:1137-1140</code>). It awarded
+<code>audit_log</code> on telemetry that recorded use rather than
+mutation, and <code>record_hit</code> rewrote the file
+(<code>codewiki/mcp/tools/telemetry.py:148-196</code>). It said a
+confidence level only adjusted ranking; shadow notes were dropped unless
+<code>include_shadow</code> was passed
+(<code>codewiki/mcp/tools/note_query.py:1149</code>,
+<code>:1164</code>). It said notes reached <code>stable</code> through
+<code>confirm_note</code>; <code>ingest_note</code> accepted
+<code>status: stable</code> (<code>codewiki/mcp/registry.py:1033</code>,
+<code>codewiki/mcp/tools/note_ingest.py:278</code>). It read the import
+of <code>_trust_tier</code> in <code>knowledge_loop.py</code> as an
+unused consumer; that module is a compat re-export facade
+(<code>codewiki/mcp/tools/knowledge_loop.py:1-14</code>). And it said no
+paper was cited; the README cited the upstream CodeWiki paper with a
+BibTeX entry (<code>README.md:875-885</code>).</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

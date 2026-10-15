@@ -5427,56 +5427,62 @@ this pin</td>
 <td><a
 href="../systems/codewiki-plus/"><code>codewiki-plus</code></a></td>
 <td>Two kinds. A note is a markdown file with frontmatter carrying an
-OKF <code>status</code>, a <code>confidence_level</code>, a
-<code>verified</code> block, an optional <code>task_id</code> and a
-type. A task memory is an entry inside a per-user markdown file, headed
-<code>### YYYY-MM-DD HH:MM #id</code> with a collision-checked 4-char
-base36 id</td>
-<td>Files under a <code>repowiki/</code> root behind a
-<code>KnowledgeStore</code> facade — notes, raw captures, tasks, meta
-and bindings directories — with atomic writes, sidecar lock files and a
-retrying replace</td>
-<td>BM25 over notes and wiki pages with an authority multiplier folding
-note type, OKF status, confidence level and source, plus wikilink
-multi-hop and progressive reading; an optional SQLite index path beside
-the file scan</td>
-<td>MCP tools capture a conversation, distill it into candidate notes,
-and consolidate them; notes enter as <code>draft</code> and reach
-<code>stable</code> through <code>confirm_note</code>, while task
-memories are written directly with no confirm gate</td>
-<td>Supersession writes a <code>&gt; [superseded DATE by #id]</code>
-line into the entry and leaves the text; compaction moves originals to a
-per-user archive file; <code>delete_task</code> cascades to the task
-directory, its index entry and any session bindings</td>
-<td>A <code>task_id</code> predicate on the note query, per-user memory
-and telemetry files, and layered loading that gives the caller their own
-file in full and other users' only a summary with a couple of recent
+OKF status, a confidence level, a verified list, an optional task_id, an
+optional reason and verification block, and a type. A task memory is an
+entry inside a per-user markdown file, headed by a timestamp and a
+collision-checked 4-char base36 id</td>
+<td>Files under a repowiki root behind a KnowledgeStore facade, written
+by temp-file replace under sidecar locks and staged into git on every
+write; an SQLite analysis cache holds the search index</td>
+<td>BM25 over notes, wiki pages and raw sources with an authority
+multiplier folding note type, OKF status, confidence level and source,
+plus wikilink hops and progressive reading modes; deprecated notes and,
+by default, shadow notes are dropped and drafts are labelled; task
+memories have their own per-task BM25 search that skips superseded
 entries</td>
-<td>53 MCP tools over an IDE-driven flow, a CLI, hooks, and a web view;
-the LLM is the IDE's own model rather than a configured key</td>
-<td>No scheduler — the passes are tools the agent calls: distillation,
-consolidation, compaction, lint with 25 checks, health scoring and
-telemetry aggregation</td>
-<td>An OKF status of draft, stable or deprecated where only deprecated
-is excluded from a query and draft is returned with an
-<code>[unconfirmed]</code> prefix; a confidence level of strong, weak or
-shadow that only ever adjusts an authority multiplier; and a trust tier
-of unverified, machine-confirmed or human-reviewed derived from a
-self-declared <code>verified.by</code> prefix</td>
-<td>A three-event telemetry chain that reaches past retrieval to whether
-the work succeeded, and feeds recent failures back into the prompt that
-writes the next note; a supersession marker that lives in the document
-and names both the date and the successor; and a module docstring that
-states its invariants as constraints that must hold, including that
-nobody ever rewrites another user's file</td>
-<td>The outcome verdict is self-reported by the agent that used the
-document, at the moment it judges its own task complete;
-<code>_trust_tier</code> is imported by <code>knowledge_loop.py</code>
-and never called there, so the tier is a label on a query result rather
-than an input to anything; and the <code>human-reviewed</code> tier is
-earned by a <code>verified</code> entry whose <code>by</code> field
-starts with the string <code>human:</code>, which the writer
-supplies</td>
+<td>Notes enter as draft through ingest_note or distillation and reach
+stable through confirm_note, or are ingested as stable with a required
+free-text reason; task memories are written directly by add_task_memory,
+which rejects a near-duplicate of a recent live entry</td>
+<td>confirm_note, reject_note, batch_set_status and adjudicate_conflict
+rewrite a note's status in its frontmatter. Supersession inserts a dated
+marker line naming the successor into a task-memory entry. Compaction
+moves originals to a per-user archive file and rewrites the live file.
+delete_task removes the task directory, archives included</td>
+<td>An optional task_id filter on the default note query and a repo
+filter for centralized layouts, both caller-supplied; task memories are
+addressed by task_id and split into per-user files, with other users'
+files loaded as a summary plus two recent entries</td>
+<td>53 MCP tools over an IDE-driven flow, a CLI, SessionStart and
+SessionEnd hooks, and a web view; the model is the IDE's own, and the
+installed server updates itself from PyPI in a detached child unless
+disabled</td>
+<td>No daemon. A SessionEnd hook captures the transcript in a detached
+subprocess; distillation, consolidation, compaction, lint and telemetry
+aggregation are tools the agent calls, with compaction handed to an
+async subagent when the hot layer crosses its threshold</td>
+<td>An OKF status of draft, stable or deprecated, where deprecated is
+dropped and draft is labelled; a confidence level of strong, weak or
+shadow that weights ranking and drops shadow by default; and a trust
+tier of unverified, machine-confirmed or human-reviewed derived from a
+self-declared verified.by prefix, attached to results and read by
+nothing</td>
+<td>Three answers to an uncertain claim on one read path: dropped,
+labelled, or weighted. A supersession marker written into the entry
+itself, naming the date and the successor. A telemetry chain that
+reaches past retrieval to whether the work succeeded, and feeds the last
+five failures into the prompt that writes the next note. A dedup recall
+exempted from authority weighting so a confidence migration cannot blind
+it</td>
+<td>Every retirement is keyed on a record: distillation dedup, the
+conflict search and the task-memory write check all skip retired
+material, so re-extracting a rejected claim produces a fresh draft.
+Every lifecycle verb, including confirm and adjudicate, is on the
+agent's own tool surface, and ingest_note writes stable directly given
+any reason. Other users' warm-layer entries are loaded without the
+superseded filter. The telemetry stream is rewritten on every hit. The
+outcome verdict is self-reported. The installed server pip-installs
+minor releases from PyPI on its own</td>
 </tr>
 <tr>
 <td><a
@@ -33291,7 +33297,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>68 of 749:</em> <a
+<p><em>67 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33299,7 +33305,6 @@ href="../systems/argos/"><code>argos</code></a>, <a
 href="../systems/breadcrumbs/"><code>breadcrumbs</code></a>, <a
 href="../systems/cass-memory-system/"><code>cass-memory-system</code></a>,
 <a href="../systems/caura/"><code>caura</code></a>, <a
-href="../systems/codewiki-plus/"><code>codewiki-plus</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
 href="../systems/fernme/"><code>fernme</code></a>, <a
@@ -33698,7 +33703,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>322 of 749:</em> <a
+<p><em>321 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33756,7 +33761,6 @@ href="../systems/claude-self-reflect/"><code>claude-self-reflect</code></a>,
 <a
 href="../systems/claude-total-memory/"><code>claude-total-memory</code></a>,
 <a href="../systems/codemem/"><code>codemem</code></a>, <a
-href="../systems/codewiki-plus/"><code>codewiki-plus</code></a>, <a
 href="../systems/cognee/"><code>cognee</code></a>, <a
 href="../systems/cognee-rs/"><code>cognee-rs</code></a>, <a
 href="../systems/cognicore/"><code>cognicore</code></a>, <a
@@ -34035,7 +34039,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>254 of 749:</em> <a
+<p><em>253 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34080,7 +34084,6 @@ href="../systems/citra/"><code>citra</code></a>, <a
 href="../systems/claude-mem/"><code>claude-mem</code></a>, <a
 href="../systems/claude-self-reflect/"><code>claude-self-reflect</code></a>,
 <a href="../systems/clawmem/"><code>clawmem</code></a>, <a
-href="../systems/codewiki-plus/"><code>codewiki-plus</code></a>, <a
 href="../systems/cognee/"><code>cognee</code></a>, <a
 href="../systems/commonground/"><code>commonground</code></a>, <a
 href="../systems/compartment/"><code>compartment</code></a>, <a
