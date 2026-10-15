@@ -7653,46 +7653,56 @@ result file</td>
 </tr>
 <tr>
 <td><a href="../systems/demarkus/"><code>demarkus</code></a></td>
-<td>A markdown document at a path, with every version retained and
-linked by a previous-hash; links between documents form a knowledge
-graph with queryable backlinks</td>
-<td>A versioned, hash-chained document store on disk behind the Mark
-Protocol over QUIC; a knowledge server and bucket store add per-world
-snapshots with document quotas</td>
-<td>Path fetch, version fetch, version history, and graph traversal over
-links and backlinks; the README is explicit that lookup, routing and
-traversal live in the agent rather than the server</td>
-<td>Publish over the protocol, gated by a capability token whose
-operations include <code>publish</code>; a publish policy governs what a
-world accepts; every change appends a version</td>
-<td>Versions are never replaced — a new version links to the previous by
-hash; archival state is tracked separately, and a prune path exists
-whose comment notes a pruned chain can be correct but built under stale
-assumptions</td>
-<td>Capability tokens with path globs and operations, per-world stores,
-a memory broker giving each identity a private world over MCP with
-OAuth, and a knowledge broker composing many worlds behind one
-endpoint</td>
-<td>Agent memory plugins, an MCP-facing memory broker with OAuth for
-Claude Desktop, ChatGPT and Cursor, a TUI, a reading room, a
-<code>demarkus-agent</code> aggregator, and installers for a read-only
-or full stack</td>
-<td>Broker world provisioning and token minting, knowledge export,
-migration between store formats verified by re-checking chains</td>
-<td>The hash chain and its reported verification, capability tokens
-stored only as hashes with expiry, a publish policy per world, and
-document quotas per world</td>
-<td>A history whose integrity is checked and reported on the read rather
-than assumed; tokens the server cannot replay because it holds only
-hashes; a licence split that says which part is AGPL, which is MIT and
-which is CC0; migration tests that re-verify every chain after moving a
-store</td>
-<td>There is no model of belief — a document has versions, not a status,
-a validity window or a supersession link, so a wrong memory is corrected
-by publishing over it; retrieval is the agent's job by design, so
-nothing in the server ranks, scopes by meaning, or refuses a stale
-answer; a corrupt chain is reported in metadata and the content is still
-returned</td>
+<td>A markdown document at a path with publisher metadata (tags,
+importance, type, typed rel- relations), each surviving version linked
+to its predecessor by a previous-hash, and a separate archive state</td>
+<td>A versioned, hash-chained file store behind the Mark Protocol over
+QUIC; the knowledge server keeps the same version bytes in an object
+bucket with a commit log, checkpoints and per-world document quotas</td>
+<td>Path and version fetch, version history with a chain verdict,
+directory listing, and LOOKUP over a catalog ranked by matched terms,
+then importance, then modification time, with a body-section mode; graph
+traversal over links and backlinks runs in the client tools</td>
+<td>PUBLISH, APPEND and ARCHIVE over the protocol under a token or an
+in-process grant carrying publish; a per-world publish policy and a
+secrets and personal-data content check run as write preconditions;
+every content write appends a version</td>
+<td>Correction by publishing a new version. ARCHIVE withholds a document
+from current reads and an empty-body PUBLISH restores it. A retention
+metadata key on any write deletes all but the newest N versions; the
+graph export publishes with a default of 20 and federation checkpoints
+with 5</td>
+<td>Capability tokens with path globs and operations; a path no read
+token covers is public. The memory broker maps each verified identity to
+one world and refuses any other; the knowledge profile exposes every
+readable world. The local plugin mints a publish and archive token over
+the whole store and no read token</td>
+<td>Plugins for Claude Code, Cowork, Cursor, OpenCode and pi; an MCP
+server and an OAuth memory broker for hosted clients; a CLI, a TUI and a
+WATCH change stream</td>
+<td>Knowledge-server compaction of the commit log into checkpoints,
+catalog rebuild at startup, broker world provisioning, and federation
+export of graph checkpoints</td>
+<td>The hash chain and its verdict on VERSIONS, token hashes with
+expiry, a publish policy with warn, ask and block, a content check that
+always blocks secrets, the archive state, and user and agent identity
+keys the writing surface stamps and a caller cannot set</td>
+<td>Integrity reported on the history read rather than assumed; a token
+store that holds only hashes; read authorization applied per row before
+LOOKUP truncates and per entry before LIST pages, so a protected
+document neither appears nor displaces a readable one; an archive state
+that the catalog, listings, fetch and the session primer all honour; a
+tenant gate that refuses an unclassified tool before provisioning a
+world</td>
+<td>Retention is publisher metadata: any writer, the agent's own
+mark_publish included, can delete all but the newest versions, and
+VerifyChain starts at the oldest surviving version, so a pruned history
+reports chain-valid true, which the conformance suite asserts; the
+deletion is recorded only as a server log line. In the file store a head
+whose body is edited with its frontmatter kept also passes, and FETCH
+never runs the check. Reads are public on any path no read token covers,
+which by default is every path on a local soul. There is no validity
+window and no record of a rejected value</td>
 </tr>
 <tr>
 <td><a href="../systems/dense-mem/"><code>dense-mem</code></a></td>
@@ -33156,7 +33166,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>192 of 749:</em> <a
+<p><em>193 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33198,6 +33208,7 @@ href="../systems/cortex-hypermnesia/"><code>cortex-hypermnesia</code></a>,
 href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/cyrene-agent/"><code>cyrene-agent</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
+href="../systems/demarkus/"><code>demarkus</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
 href="../systems/deus/"><code>deus</code></a>, <a
 href="../systems/dreamgraph/"><code>dreamgraph</code></a>, <a
@@ -33835,7 +33846,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>256 of 749:</em> <a
+<p><em>255 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33894,7 +33905,6 @@ href="../systems/cyrene-agent/"><code>cyrene-agent</code></a>, <a
 href="../systems/daem0n-mcp/"><code>daem0n-mcp</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/deepcode/"><code>deepcode</code></a>, <a
-href="../systems/demarkus/"><code>demarkus</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
 href="../systems/dreamgraph/"><code>dreamgraph</code></a>, <a
 href="../systems/dsh-continual-harness/"><code>dsh-continual-harness</code></a>,
@@ -34201,7 +34211,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>467 of 749:</em> <a
+<p><em>468 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34310,6 +34320,7 @@ href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/deepcode/"><code>deepcode</code></a>, <a
 href="../systems/deepseek-harness/"><code>deepseek-harness</code></a>,
 <a href="../systems/deja-vu/"><code>deja-vu</code></a>, <a
+href="../systems/demarkus/"><code>demarkus</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
 href="../systems/diffmem/"><code>diffmem</code></a>, <a
 href="../systems/distill-kura/"><code>distill-kura</code></a>, <a
@@ -34702,7 +34713,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-467 repositories of
+468 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

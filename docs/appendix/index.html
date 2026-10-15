@@ -3885,12 +3885,13 @@ was run</li>
 <li><a
 href="https://github.com/latebit-io/demarkus">latebit-io/demarkus</a> at
 <a
-href="https://github.com/latebit-io/demarkus/commit/dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956"><code class="commit-id" title="dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956">dd22c38a…</code></a>
-— read only, from a shallow clone; one auto-run surface (a
-<code>.claude-plugin/</code> directory), one build-time execution point,
-four unpinned surfaces and sixteen dependency files inside the seven-day
-cooldown across twenty-three scanned files, plus <code>CLAUDE.md</code>
-read as data; nothing was installed and nothing was run</li>
+href="https://github.com/latebit-io/demarkus/commit/f57b348e94c23b8b4dad14830bf3598a05253ad2"><code class="commit-id" title="f57b348e94c23b8b4dad14830bf3598a05253ad2">f57b348e…</code></a>
+— read only, from a full clone; one auto-run surface
+(<code>.claude-plugin/marketplace.json</code>), one build-time execution
+point, four unpinned surfaces and thirteen dependency files inside the
+seven-day cooldown across twenty-five scanned files, plus
+<code>CLAUDE.md</code> read as data; nothing was installed and nothing
+was run</li>
 <li><a
 href="https://github.com/JinyangWang27/people-context">JinyangWang27/people-context</a>
 at <a
@@ -12168,7 +12169,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">192
+href="../capabilities/">193
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems
@@ -17137,6 +17138,30 @@ the workspace root's placeholder version, while the package was 0.4.0.
 The first was a reading of the first pin carried through a re-pin
 without re-reading the tool registry; the second rested on the column's
 declaration rather than its writers.</li>
+<li><strong>Four published claims about <a
+href="../systems/demarkus/">Demarkus</a> were wrong at <a
+href="https://github.com/latebit-io/demarkus/commit/dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956"><code class="commit-id" title="dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956">dd22c38a…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>audit_log</code> on a history it said kept every version.
+Any write carrying the metadata key <code>retention</code> deleted the
+oldest versions (<code>protocol/store/store.go:1405-1406</code>), the
+agent's <code>mark_publish</code> offered it
+(<code>client/cmd/demarkus-mcp/main.go:459</code>), and
+<code>VerifyChain</code> compared links from its second element
+(<code>protocol/store/store.go:1679</code>), so a pruned history
+verified, as <code>testRetention</code> asserted
+(<code>server/internal/storetest/conformance.go:536-538</code>). It said
+a document had no status; an archive state withheld it from FETCH and
+LOOKUP (<code>server/internal/handler/handler.go:329-332</code>,
+<code>server/internal/filestore/filestore.go:111-112</code>), so
+<code>trust_state</code> was earned. It did not credit
+<code>negative_eval</code>, though
+<code>TestHandleLookupReadAuthFiltering</code>
+(<code>server/internal/handler/handler_lookup_test.go:180</code>) kept a
+protected document out of a populated LOOKUP beside a public control.
+And it said the server did not rank; LOOKUP ordered by matched terms and
+importance (<code>server/internal/catalog/catalog.go:303-312</code>).
+That last rested on the README rather than the handler.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

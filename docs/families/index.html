@@ -3466,28 +3466,20 @@ naming the right one beside not attributing the other. The thing no
 mechanism settles is that this is personal data about third parties who
 never consented; the project reduces accidental disclosure and cannot
 resolve the question.</p>
-<p><strong><a href="../systems/demarkus/">Demarkus</a> keeps every
-version and tells you whether the chain held.</strong> Versioned
-markdown served over QUIC as agent memory, where serializing a version
-requires the previous version's bytes — the error says so — and
-<code>VerifyChain</code> walks the retained history comparing each
-recorded previous-hash against the computed one. What lifts that above a
-stored digest is the read: the version-history response calls it and
-returns <code>chain-valid: true</code>, or
-<code>chain-valid: false</code> with a <code>chain-error</code>, in its
-metadata, so a reader learns the history is corrupt instead of being
-handed it silently, and the store-migration tests re-verify every chain
-on both sides after a move. Its capability tokens are the other thing to
-copy — <code>{hash, paths, operations, expires}</code> with the raw
-secret separated from the persisted entry so <em>"the server only ever
-sees the hash"</em>, authorization failing closed through expiry,
-operation and path glob in turn, and a matcher using
-<code>path.Match</code> rather than <code>filepath.Match</code> because
-token paths are URL-style and the <code>filepath</code> variant changes
-behaviour by OS. What it does not model is belief: a document has
-versions and no status, no validity window and no supersession, so an
-agent asking what is true of a store that answers what was written will
-take the newest text as fact.</p>
+<p><strong><a href="../systems/demarkus/">Demarkus</a> checks its
+history on the read and lets any writer shorten it.</strong> Versioned
+markdown served over QUIC as agent memory, where a version cannot be
+written without its predecessor's bytes and the version-history response
+reports whether the chain verified. The walk starts at the oldest
+version on disk, and a <code>retention</code> key any writer may set
+deletes the oldest versions, so a pruned history verifies as intact. Its
+capability tokens are the part to copy: the server keeps only the
+token's hash, and LIST and LOOKUP drop each row the caller may not read
+before paging and truncating, so a protected document is neither shown
+nor counted. An archive state withholds a document from fetch, listing,
+lookup and the session primer while its versions stay fetchable by
+number. Three marks: <code>trust_state</code>,
+<code>scope_enforced</code>, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/llm-memory-api/">LLM Memory</a> tests
 everything except the fence.</strong> A Postgres memory and multi-agent
 collaboration service whose distinctive part is deliberation —

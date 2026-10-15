@@ -1457,24 +1457,18 @@ The thing no mechanism settles is that this is personal data about third
 parties who never consented; the project reduces accidental disclosure and
 cannot resolve the question.
 
-**[Demarkus](../systems/demarkus/) keeps every version and tells you whether
-the chain held.** Versioned markdown served over QUIC as agent memory, where
-serializing a version requires the previous version's bytes — the error says
-so — and `VerifyChain` walks the retained history comparing each recorded
-previous-hash against the computed one. What lifts that above a stored digest
-is the read: the version-history response calls it and returns `chain-valid:
-true`, or `chain-valid: false` with a `chain-error`, in its metadata, so a
-reader learns the history is corrupt instead of being handed it silently, and
-the store-migration tests re-verify every chain on both sides after a move. Its
-capability tokens are the other thing to copy — `{hash, paths, operations,
-expires}` with the raw secret separated from the persisted entry so *"the
-server only ever sees the hash"*, authorization failing closed through expiry,
-operation and path glob in turn, and a matcher using `path.Match` rather than
-`filepath.Match` because token paths are URL-style and the `filepath` variant
-changes behaviour by OS. What it does not model is belief: a document has
-versions and no status, no validity window and no supersession, so an agent
-asking what is true of a store that answers what was written will take the
-newest text as fact.
+**[Demarkus](../systems/demarkus/) checks its history on the read and lets any
+writer shorten it.** Versioned markdown served over QUIC as agent memory, where
+a version cannot be written without its predecessor's bytes and the
+version-history response reports whether the chain verified. The walk starts at
+the oldest version on disk, and a `retention` key any writer may set deletes
+the oldest versions, so a pruned history verifies as intact. Its capability
+tokens are the part to copy: the server keeps only the token's hash, and LIST
+and LOOKUP drop each row the caller may not read before paging and truncating,
+so a protected document is neither shown nor counted. An archive state
+withholds a document from fetch, listing, lookup and the session primer while
+its versions stay fetchable by number. Three marks: `trust_state`,
+`scope_enforced`, `negative_eval`.
 
 **[LLM Memory](../systems/llm-memory-api/) tests everything except the fence.**
 A Postgres memory and multi-agent collaboration service whose distinctive part

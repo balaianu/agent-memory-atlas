@@ -4,28 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="Versioned markdown served over
-QUIC as agent memory, where every version is kept in a hash chain, a
-capability token carries path globs and operations the server checks
-fail-closed on every request, and the version-history response reports
-whether the chain actually verified rather than assuming it did.">
+    <meta name="description" content="Versioned markdown over QUIC as
+agent memory: hash-chained versions any writer can prune, path-glob
+capability tokens, and an archive state every current read honours.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Demarkus — Agent Memory Atlas">
-    <meta property="og:description" content="Versioned markdown served
-over QUIC as agent memory, where every version is kept in a hash chain,
-a capability token carries path globs and operations the server checks
-fail-closed on every request, and the version-history response reports
-whether the chain actually verified rather than assuming it did.">
+    <meta property="og:description" content="Versioned markdown over
+QUIC as agent memory: hash-chained versions any writer can prune,
+path-glob capability tokens, and an archive state every current read
+honours.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Demarkus — Agent Memory Atlas">
-    <meta name="twitter:description" content="Versioned markdown served
-over QUIC as agent memory, where every version is kept in a hash chain,
-a capability token carries path globs and operations the server checks
-fail-closed on every request, and the version-history response reports
-whether the chain actually verified rather than assuming it did.">
+    <meta name="twitter:description" content="Versioned markdown over
+QUIC as agent memory: hash-chained versions any writer can prune,
+path-glob capability tokens, and an archive state every current read
+honours.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Demarkus — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +43,7 @@ whether the chain actually verified rather than assuming it did.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Demarkus",
-      "description": "Versioned markdown served over QUIC as agent memory, where every version is kept in a hash chain, a capability token carries path globs and operations the server checks fail-closed on every request, and the version-history response reports whether the chain actually verified rather than assuming it did.",
+      "description": "Versioned markdown over QUIC as agent memory: hash-chained versions any writer can prune, path-glob capability tokens, and an archive state every current read honours.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,28 +98,26 @@ whether the chain actually verified rather than assuming it did.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">A history that tells you whether it is
-intact</p>
+          <p class="eyebrow">A verified history any writer can
+shorten</p>
           <h1>Demarkus</h1>
-          <p class="document-deck">Versioned markdown served over QUIC
-as agent memory, where every version is kept in a hash chain, a
-capability token carries path globs and operations the server checks
-fail-closed on every request, and the version-history response reports
-whether the chain actually verified rather than assuming it did.</p>
+          <p class="document-deck">Versioned markdown over QUIC as agent
+memory: hash-chained versions any writer can prune, path-glob capability
+tokens, and an archive state every current read honours.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/latebit-io/demarkus">
               <span>Source</span>
               <strong>latebit-io/demarkus</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/latebit-io/demarkus/commit/dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956" title="dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956">
+            <a class="meta-pill revision-pill" href="https://github.com/latebit-io/demarkus/commit/f57b348e94c23b8b4dad14830bf3598a05253ad2" title="f57b348e94c23b8b4dad14830bf3598a05253ad2">
               <span>Analyzed revision</span>
-              <code>dd22c38a…</code>
+              <code>f57b348e…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/latebit-io--demarkus" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +125,21 @@ whether the chain actually verified rather than assuming it did.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0-only
+for the implementation, MIT for plugins/, CC0-1.0 for the protocol
+specification, each stated in LICENSE</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>73,707
+lines of Go in 343 files outside tests, 79,942 in 348 test
+files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>649
+commits on main by 4 author names, one a release bot, 14 February – 15
+October 2026; modules tagged separately, server v0.65.0 and knowledge
+v0.67.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,121
+Go test functions in 334 files; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,95 +155,107 @@ whether the chain actually verified rather than assuming it did.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Demarkus is versioned markdown served over QUIC, used as agent
-memory: "it records decisions, lessons, and progress as it works and
-recalls them in every later session." The implementation is
-AGPL-3.0-only except <code>plugins/</code>, which is MIT, with the
-protocol specification under CC0-1.0 — a three-way split stated in the
-licence file rather than left to inference. 530 commits since 14
-February 2026, 59,493 lines of Go outside tests against 62,028 lines
-across 211 test files.</p>
-<p>Its architecture note is worth quoting because it explains what this
-report can and cannot find: the servers are "<strong>memory storage
-engines</strong>: deliberately simple, versioned, hash-chained document
-stores", the brokers are "the access tier that turns an engine into a
-service", and "[t]he intelligence (lookup, routing, graph traversal)
-lives in the agent."</p>
-<p>Two mechanisms earn marks.</p>
-<p><strong>The history is hash-chained, and the server says whether the
-chain held.</strong> Serializing a version requires the previous
-version's bytes — the error is literal: "previous version bytes required
-for hash chain". <code>VerifyChain</code> walks the retained versions
-comparing each recorded previous-hash against the computed one and
+<p>Demarkus is versioned markdown served over QUIC and used as agent
+memory: every content write appends a version that carries the hash of
+the one before it, and the version-history response says whether that
+chain verified. What it buys is capability scoping that filters every
+read row by row, and an archive state that withholds a document from
+every current read while its history stays fetchable. The weak point is
+the history's claim to completeness: a <code>retention</code> key that
+any writer may put on any write deletes the oldest versions, and the
+chain check starts from whatever survives, so a shortened history
+verifies as intact.</p>
+<p>The project describes itself as "memory for agents, knowledge for
+teams, a second brain for you". The implementation is AGPL-3.0-only
+except <code>plugins/</code>, which is MIT, with the protocol
+specification under CC0-1.0, stated in the licence file rather than left
+to inference.</p>
+<p><strong>The history is hash-chained and checked on the read.</strong>
+<code>SerializeVersion</code> refuses to write version N without version
+N−1's bytes — "previous version bytes required for hash chain" — and
+records their SHA-256 as <code>previous-hash</code>
+(<code>protocol/storefmt/format.go:32-40</code>).
+<code>VerifyChain</code> walks the versions on disk oldest first and
 raises <code>ErrIntegrity</code> on a missing or mismatched link. The
-part that makes this more than a stored digest is the handler: the
-version-history response calls <code>VerifyChain</code> on the requested
-path and returns <code>chain-valid: true</code>, or
-<code>chain-valid: false</code> with a <code>chain-error</code>, in its
-metadata. A reader is told that the history they are looking at is
-corrupt rather than handed it silently. Separately, the store migration
-tests re-verify every chain in both the source and destination after a
-move.</p>
-<p><strong>Authorization is a capability the server cannot
-replay.</strong> A token entry is
-<code>{hash, paths, operations, expires}</code>, and the comment is
-explicit that <code>Minted</code> "does not contain Raw — the server
-only ever sees the hash." Authorization checks expiry, then the
-operation, then <code>matchesAnyPath</code> over the token's globs, each
-failing to <code>ErrNotPermitted</code>. Patterns allow one recursive
-<code>**</code>, are validated at load time, and are matched with
-<code>path.Match</code> rather than <code>filepath.Match</code> "because
-token paths are URL-style forward slashes, and filepath.Match behavior
-varies by OS" — a portability trap noticed and documented.</p>
-<p>What Demarkus does not have is a model of belief. A document has
-versions; it does not have a status, a validity window, a supersession
-link, or any record that a value was rejected. Correcting a memory means
-publishing over it, and the old text stays in the chain because
-everything does. That is coherent for a protocol whose thesis is that
-intelligence belongs in the agent — but it means the questions this
-atlas asks about trust, time and forgetting are answered outside the
-server, if at all.</p>
-<p>One consequence to weigh: when the chain does not verify, the
-response carries <code>chain-valid: false</code> and still returns the
-history. Reporting rather than refusing is defensible for a store that
-must stay readable, and it puts the decision in the caller's hands —
-provided the caller reads the metadata.</p>
-<p>Two marks: <code>scope_enforced</code>, <code>audit_log</code>.</p>
+VERSIONS handler calls it and returns <code>chain-valid: true</code>, or
+<code>false</code> with a <code>chain-error</code>
+(<code>protocol/store/store.go:1632-1678</code>,
+<code>server/internal/handler/handler.go:698-734</code>).</p>
+<p><strong>Pruning is publisher metadata, and the chain check cannot see
+it.</strong> A write carrying <code>retention: N</code> deletes every
+version older than the newest N
+(<code>protocol/store/store.go:1420-1422</code>,
+<code>:1429-1470</code>). The specification calls version history
+append-only "with one exception" and requires the deletion to be logged;
+the reference server writes one structured log line
+(<code>server/internal/handler/handler.go:1154-1165</code>).
+<code>VerifyChain</code> compares links from its second element on
+(<code>protocol/store/store.go:1656</code>), so the surviving suffix
+reports <code>chain-valid: true</code>, and the conformance suite
+asserts exactly that. The agent's own <code>mark_publish</code> accepts
+the key; the Claude Code and Cursor plugins put a user prompt in front
+of it through a <code>PreToolUse</code> hook.</p>
+<p><strong>Authorization is a capability the server cannot replay,
+applied per row.</strong> The server keeps
+<code>{hash, paths, operations, expires}</code> and never the raw token.
+A read of a path some read token covers needs a matching token, and LIST
+and LOOKUP filter each entry and row before paging and truncating, so a
+protected document is neither shown nor counted
+(<code>server/internal/handler/handler.go:544-583</code>,
+<code>:808-822</code>). The memory broker maps each verified identity to
+one world and refuses any tool argument naming another.</p>
+<p><strong>An archived document is withheld, not deleted.</strong>
+ARCHIVE sets a sidecar state that the catalog, listings, fetch and the
+session primer all consult, and an empty-body PUBLISH clears it; the
+versions stay fetchable by number. That is the one discrete status a
+document has. There is no validity window, and a
+<code>rel-supersedes</code> relation is followed as a preferred edge
+without withholding its target.</p>
+<p>Three marks: <code>trust_state</code>, <code>scope_enforced</code>,
+<code>negative_eval</code>.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>document</strong> is markdown at a path. Publishing appends
-a <strong>version</strong>, linked to the previous by hash. Nothing is
-replaced.</p>
-<p>A <strong>capability token</strong> is a hash on the server, a secret
-with the holder, and a set of path globs plus operations with an
-optional expiry.</p>
-<p>A <strong>world</strong> is one store. The <strong>memory
-broker</strong> gives an identity a private world over MCP with OAuth;
-the <strong>knowledge broker</strong> composes worlds into one
-endpoint.</p>
-<p>A <strong>link</strong> between documents is an edge; backlinks are
-queryable, and the graph is traversed by the agent rather than by the
-server.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — every publish extends a hash chain; the history read verifies it and reports the result, and a token's globs are checked fail-closed before either</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: every publish extends a hash chain; the history read verifies it and reports the result, and a token&#39;s globs are checked fail-closed before either
+<p>A <strong>document</strong> is markdown at a path. Each content write
+appends a <strong>version</strong>, whose stored bytes begin with
+store-owned frontmatter — version number, a legacy
+<code>archived: false</code>, and <code>previous-hash</code> — followed
+by publisher metadata and the body. Publisher metadata is opaque except
+for a few keys the server and tools read: <code>tags</code> and
+<code>importance</code> rank LOOKUP, <code>rel-&lt;predicate&gt;</code>
+keys declare typed edges, and <code>retention</code> prunes.</p>
+<p>A document is in one of two states. <strong>Live</strong> documents
+are served by FETCH, LIST, LOOKUP and the <code>.context</code> primer.
+<strong>Archived</strong> documents answer FETCH with
+<code>status: archived</code> and no body and drop out of the rest.
+ARCHIVE moves a document to archived; PUBLISH with an empty body moves
+it back; a PUBLISH with a body on an archived document is refused with
+<code>archived</code>. Neither transition creates a version or touches
+stored bytes, so both leave the chain alone.</p>
+<p>Nothing in the model distinguishes a believed version from a
+disbelieved one. The newest live version is what FETCH returns.
+Correcting a memory means publishing over it, and the replaced text
+stays in the chain until a retention key prunes it.</p>
+<p>A version dies only by retention. A write that declares
+<code>retention: N</code> removes versions oldest first until N remain.
+Retention is never inherited by the next write, so it applies only on
+writes that carry it.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — versions extend a hash chain, an archive flag withholds a document from current reads, and a retention key deletes the oldest versions where the chain check cannot see</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: versions extend a hash chain, an archive flag withholds a document from current reads, and a retention key deletes the oldest versions where the chain check cannot see
 flowchart TB
-    AGENT[&quot;agent / plugin / TUI&quot;] --&gt; TOK[&quot;capability token&lt;br/&gt;(raw secret held by caller)&quot;]
-    TOK --&gt; AUTH{&quot;authorize&quot;}
-    AUTH --&gt; E1{&quot;expired?&quot;}
-    E1 --&gt;|&quot;yes&quot;| NP1[&quot;ErrTokenExpired&quot;]
-    E1 --&gt;|&quot;no&quot;| E2{&quot;hasOperation(ops, op)?&quot;}
-    E2 --&gt;|&quot;no&quot;| NP2[&quot;ErrNotPermitted&quot;]
-    E2 --&gt;|&quot;yes&quot;| E3{&quot;matchesAnyPath(globs, path)?&quot;}
-    E3 --&gt;|&quot;no&quot;| NP3[&quot;ErrNotPermitted&quot;]
-    E3 --&gt;|&quot;yes&quot;| OK[&quot;allowed&quot;]
-    STORE[(&quot;tokens: hash only&lt;br/&gt;server never sees the secret&quot;)] --&gt; AUTH
-    OK --&gt; PUB[&quot;publish&quot;]
-    PUB --&gt; SER[&quot;serialize version N&lt;br/&gt;requires version N-1 bytes&quot;]
-    SER --&gt; CHAIN[(&quot;versions v1..vN&lt;br/&gt;each recording previous-hash&quot;)]
-    OK --&gt; HIST[&quot;GET version history&quot;]
-    CHAIN --&gt; VC[&quot;VerifyChain(path)&quot;]
-    VC --&gt;|&quot;link missing or mismatched&quot;| BAD[&quot;ErrIntegrity&lt;br/&gt;meta: chain-valid = false&lt;br/&gt;+ chain-error&lt;br/&gt;history still returned&quot;]
-    VC --&gt;|&quot;ok&quot;| GOOD[&quot;meta: chain-valid = true&quot;]
-    NOTE[&quot;no status, no validity window,&lt;br/&gt;no supersession, no rejected value&quot;] -.-&gt; CHAIN
-    LINKS[&quot;document links → knowledge graph&quot;] --&gt; AGENTQ[&quot;traversal lives in the agent&quot;]</code></pre></details></figure>
+    W[&quot;PUBLISH or APPEND&lt;br/&gt;token or grant carrying publish&quot;] --&gt; S[&quot;serialize version N&lt;br/&gt;requires version N-1 bytes&quot;]
+    S --&gt; C[(&quot;surviving versions&lt;br/&gt;each records previous-hash&quot;)]
+    W --&gt;|&quot;metadata retention = k&quot;| P[&quot;delete every version&lt;br/&gt;older than the newest k&quot;]
+    P --&gt; C
+    P --&gt; LOG[&quot;one server log line&lt;br/&gt;audit: true&quot;]
+    A[&quot;ARCHIVE&quot;] --&gt; ST{&quot;archive-state&quot;}
+    U[&quot;PUBLISH with empty body&quot;] --&gt; ST
+    ST --&gt;|&quot;true&quot;| F1[&quot;FETCH: status archived, no body&quot;]
+    ST --&gt;|&quot;true&quot;| F2[&quot;LIST: skipped unless include-archived&quot;]
+    ST --&gt;|&quot;true&quot;| F3[&quot;LOOKUP: removed from catalog&quot;]
+    ST --&gt;|&quot;true&quot;| F4[&quot;context primer: status archived&quot;]
+    ST --&gt;|&quot;false&quot;| LIVE[&quot;served as current&quot;]
+    C --&gt; PIN[&quot;FETCH doc.md/vN&lt;br/&gt;served whatever the archive state&quot;]
+    C --&gt; V[&quot;VERSIONS calls VerifyChain&lt;br/&gt;links checked from the oldest survivor&quot;]
+    V --&gt;|&quot;link missing or mismatched&quot;| BAD[&quot;chain-valid: false&lt;br/&gt;version list returned anyway&quot;]
+    V --&gt;|&quot;links hold&quot;| GOOD[&quot;chain-valid: true&lt;br/&gt;including after a prune&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -247,153 +267,343 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>protocol/</code></td>
-<td>The Mark Protocol: requests, responses, auth, tokens, the store
-format and the hash chain</td>
+<td>The Mark Protocol: requests, responses, grants, the specification's
+verbs</td>
+</tr>
+<tr>
+<td><code>protocol/storefmt/</code></td>
+<td>The stored-version format, the previous-hash link, metadata rules,
+<code>retention</code></td>
 </tr>
 <tr>
 <td><code>protocol/store/</code></td>
-<td><code>format.go</code> (serialization and the previous-hash link),
-<code>store.go</code> (<code>VerifyChain</code>, pruning, archive
-state)</td>
+<td>The file store: versions, archive state, <code>VerifyChain</code>,
+pruning, the catalog walk</td>
+</tr>
+<tr>
+<td><code>protocol/publishpolicy/</code>,
+<code>protocol/contentcheck/</code></td>
+<td>Per-world publish policy, and the secrets and personal-data
+check</td>
 </tr>
 <tr>
 <td><code>server/internal/auth/</code></td>
-<td>Token loading, hashing, and the three-step authorization</td>
+<td>Token loading, read authorization, the three-step authorize, the
+glob matcher</td>
 </tr>
 <tr>
 <td><code>server/internal/handler/</code></td>
-<td>The request handlers, including the version-history chain
-report</td>
+<td>Request handlers: per-row read filtering, the chain verdict, prune
+logging</td>
+</tr>
+<tr>
+<td><code>server/internal/catalog/</code></td>
+<td>The LOOKUP index and its ranking</td>
 </tr>
 <tr>
 <td><code>server/internal/filestore/</code>,
-<code>knowledge/bucketstore/</code></td>
-<td>Snapshot locking, per-world quotas</td>
+<code>server/internal/knowledge/bucketstore/</code></td>
+<td>The file backend, and the object-bucket backend with commit log and
+checkpoints</td>
 </tr>
 <tr>
-<td><code>tools/internal/broker/</code></td>
-<td>World provisioning and write-token minting</td>
+<td><code>server/internal/fanout/</code></td>
+<td>WATCH streams, authorized per event</td>
+</tr>
+<tr>
+<td><code>knowledge/internal/broker/</code></td>
+<td>OAuth broker: a memory profile with one world per identity, a
+knowledge profile across worlds</td>
+</tr>
+<tr>
+<td><code>client/marktools/</code>, <code>client/mcpbind/</code></td>
+<td>The agent's MCP tools and their defaults</td>
+</tr>
+<tr>
+<td><code>client/token/</code></td>
+<td>Token minting, separating the raw secret from the persisted
+entry</td>
+</tr>
+<tr>
+<td><code>tools/demarkus-plugin/</code></td>
+<td>The plugin helper: provisioning, write gates, session guidance</td>
 </tr>
 <tr>
 <td><code>plugins/</code></td>
-<td>Agent memory plugins, MIT rather than AGPL</td>
-</tr>
-<tr>
-<td><code>client/</code>, <code>docs/</code>, <code>deploy/</code></td>
-<td>TUI and clients, the specification, deployment</td>
+<td>Agent plugins and their prompts, MIT</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The single-user path is a plugin that downloads
+<code>demarkus-server</code>, <code>demarkus-mcp</code> and
+<code>demarkus-token</code>, spawns a local server over a directory of
+markdown, and mints one token with <code>publish</code> and
+<code>archive</code> over <code>/**</code>
+(<code>tools/demarkus-plugin/internal/provision/tokens/tokens.go:34</code>,
+<code>:95-96</code>). Nothing else has to run and no model key is
+needed. The store is plain files: each document's versions sit in a
+per-document directory as <code>v1</code>, <code>v2</code> and so on,
+with an <code>archive-state</code> sidecar, readable and repairable by
+hand.</p>
+<p>The team path is the knowledge server with its broker, deployed by a
+Helm umbrella chart, storing worlds in a GCS bucket behind OIDC
+sign-on.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
-<li><code>protocol/store/format.go:26-45</code> — why a version cannot
-be written without its predecessor's bytes.</li>
-<li><code>protocol/store/store.go:1650-1695</code> —
-<code>VerifyChain</code> and the integrity errors.</li>
-<li><code>server/internal/handler/handler.go:644-655</code> — the chain
-report in metadata.</li>
-<li><code>server/internal/auth/auth.go:160-215</code> — the
-authorization sequence and the glob matcher, with the
-<code>path.Match</code> note.</li>
-<li><code>protocol/token/token.go:28-55</code> — the entry, and the
-hash-only guarantee.</li>
+<li><strong>Write.</strong> <code>serveWrite</code> →
+<code>authorizeWrite</code>, which accepts an in-process grant or a
+token with <code>publish</code> and refuses every write without one
+(<code>server/internal/handler/handler.go:236-286</code>) →
+<code>handlePublish</code> → the backend's <code>WriteChecked</code> →
+<code>SerializeVersion</code>
+(<code>protocol/storefmt/format.go:32-40</code>) → version file, symlink
+swap, catalog update, then pruning if the metadata carries
+<code>retention</code>
+(<code>protocol/store/store.go:1420-1422</code>).</li>
+<li><strong>Prune.</strong> <code>pruneVersions</code> removes the
+oldest versions through an <code>os.Root</code> and stops at the first
+failure (<code>protocol/store/store.go:1429-1470</code>). The bucket
+store applies the same rule to its log
+(<code>server/internal/knowledge/bucketstore/write.go:344-351</code>).
+<code>logPrune</code> records the range and token label
+(<code>server/internal/handler/handler.go:1154-1165</code>).</li>
+<li><strong>Archive.</strong> <code>handleArchive</code> and
+<code>handleUnarchive</code> (<code>:835</code>, <code>:875</code>) →
+<code>filestore.SetArchived</code>, which writes the sidecar and removes
+or restores the catalog entry under one lock
+(<code>server/internal/filestore/filestore.go:158-184</code>).</li>
+<li><strong>Read.</strong> <code>serveRead</code> opens one snapshot per
+request (<code>:188-217</code>). <code>handleFetch</code> authorizes and
+<code>serveDocument</code> answers an archived document with
+<code>status: archived</code> (<code>:384-438</code>).
+<code>readableEntries</code> and <code>filterReadableEntries</code> page
+LIST after authorization (<code>:544-583</code>), and
+<code>handleLookup</code> filters catalog rows before truncating
+(<code>:808-822</code>).</li>
+<li><strong>Integrity.</strong> <code>handleVersions</code> →
+<code>VerifyChain</code> → <code>render.VersionsResponse</code>
+(<code>server/internal/handler/handler.go:698-734</code>,
+<code>protocol/store/store.go:1632-1678</code>,
+<code>protocol/render/versions.go:21-41</code>).</li>
+<li><strong>Authorization.</strong> <code>RequiresReadAuth</code>,
+<code>AuthorizeReadHashed</code>, <code>authorizeHashed</code>,
+<code>matchesAnyPath</code>
+(<code>server/internal/auth/auth.go:140-178</code>,
+<code>:206-224</code>, <code>:241-248</code>).</li>
+<li><strong>Tenant gate.</strong> <code>tenantWorldArgs</code> and
+<code>tenantGate</code>
+(<code>knowledge/internal/broker/gateway/mcp_tenant.go:24-40</code>,
+<code>:170-201</code>).</li>
+<li><strong>Session primer.</strong> <code>Tools.Context</code> reads
+the hub, the newest journal entries and the roadmap through FETCH and
+LIST with the caller's read token
+(<code>client/marktools/context.go:30-74</code>).</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A path, a body, and a version chain. Metadata rides on the response
-rather than on a schema of belief. The knowledge graph is derived from
-links in the markdown, which means the memory's structure is the
-author's — human or agent — and not a separate index that can drift from
-it.</p>
+<p>A path, a body, publisher metadata, a version chain and an archive
+flag. The store-owned keys <code>version</code>,
+<code>previous-hash</code> and <code>archived</code> are refused in
+publisher metadata, so a writer cannot forge them
+(<code>protocol/storefmt/meta.go:38-44</code>). The identity keys
+<code>agent</code> and <code>user</code> are stamped by the writing
+surface and stripped from caller input
+(<code>protocol/protocol.go:69-80</code>,
+<code>client/marktools/promote.go:384-392</code>).</p>
+<p>The temporal fields are the file modification time and the version
+number. LOOKUP's date filter compares <code>modified-after</code> and
+<code>modified-before</code> against the modification time
+(<code>server/internal/catalog/filter.go:105-108</code>), and the OKF
+<code>timestamp</code> key is stored opaquely.</p>
+<p>The knowledge graph is derived from links in the markdown and from
+<code>rel-&lt;predicate&gt;</code> keys. <code>rel-supersedes</code> is
+one of the relations that lookup expansion prefers
+(<code>client/lookupexpand/lookupexpand.go:48</code>); it ranks the edge
+and does not withhold the superseded document.</p>
 <p>Per-world document quotas (<code>ErrDocumentQuota</code>) bound a
-world's size, which is a small thing most stores in this corpus leave
-unbounded.</p>
+knowledge world's size
+(<code>server/internal/knowledge/bucketstore/write.go:61-72</code>).</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Fetch a path, fetch a version, list history, follow links. The server
-does not rank. The README says so directly, and
-<code>demarkus-agent</code> is where aggregation across worlds happens.
-Anyone evaluating this against a retrieval-centric memory should read
-that as a scope boundary rather than a gap.</p>
+<p>The server ranks. LOOKUP in catalog mode scores each entry by the
+distinct query terms found in its tags or title, then orders by score,
+importance, modification time and path
+(<code>server/internal/catalog/catalog.go:384-400</code>); a body mode
+matches sections of the document text. The README places "lookup,
+routing, graph traversal" in the agent. That holds for traversal and
+routing: backlinks, the graph crawl and lookup expansion run in the
+client tools, over documents the server has authorized for the
+caller.</p>
+<p>Every current read honours two predicates. Read authorization runs
+per path for FETCH and VERSIONS, per entry before LIST fills a page, and
+per row before LOOKUP applies its limit, so an unreadable match neither
+appears nor displaces a readable one. The archive state removes a
+document from LIST, LOOKUP and the startup catalog walk, and FETCH
+returns <code>status: archived</code> without a body.</p>
+<p>The session primer is the <code>.context</code> pseudo-document: the
+hub, the three newest journal entries and the roadmap, each clipped at
+4,000 bytes. It reads through the same FETCH and LIST with the caller's
+token, and an archived hub ends it with
+<code>status: archived</code>.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Publish under a token carrying the <code>publish</code> operation and
-a matching path glob, subject to a per-world publish policy. The write
-extends the chain. The prune path's comment is worth noting for anyone
-implementing one: a pruned chain can be "correct hash chain, just
-created under stale assumptions".</p>
+<p>Publish under a token or grant that carries <code>publish</code> and
+a matching path glob. A per-world publish policy checks required tag
+axes, fields and allowed values with <code>warn</code>, <code>ask</code>
+or <code>block</code>; <code>ask</code> is refused on a non-interactive
+write rather than held
+(<code>server/internal/writepolicy/policy.go:18-42</code>). The content
+check always refuses a secret and blocks, warns on or ignores personal
+data by policy. Each accepted write appends a version and updates the
+catalog.</p>
+<p><strong>Retention deletes versions on the writer's say.</strong> The
+key is publisher metadata, "so any writer who may archive may set it"
+(<code>protocol/storefmt/meta.go:33-36</code>). The agent's
+<code>mark_publish</code> passes it through, its description warning
+that it "permanently deletes all but the newest N versions"
+(<code>client/mcpfmt/tooltext.go:59</code>). Two producers set it
+without asking: <code>mark_graph_publish</code> defaults to 20
+(<code>client/mcpbind/mcpbind.go:35</code>, <code>:198</code>), and
+federation publishes its checkpoint documents with 5
+(<code>knowledge/internal/federation/federation.go:34</code>,
+<code>:69</code>). The plugin helper's <code>retentionDecision</code>
+answers <code>ask</code> on a publish or append carrying the key, which
+makes Claude Code or Cursor prompt the user, and exempts the graph
+publish
+(<code>tools/demarkus-plugin/internal/gate/gate.go:95-123</code>). The
+Cowork plugin runs no hooks and the broker's hosted clients run no
+plugin, so on those surfaces the key reaches the server unprompted.</p>
+<p>The deletion's record is a log line, not a stored event.
+<code>logPrune</code> emits the path, the pruned range and the token
+label at <code>Info</code> with <code>audit: true</code>. The change
+journal that feeds WATCH is a ring rewritten in place
+(<code>server/internal/filestore/journal.go:30-33</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Writes are synchronous and model-free: no extraction, no embedding. A
+publish is visible to FETCH on return; the specification allows LOOKUP
+and LIST on another replica to lag by up to one second. No background
+pass rewrites documents.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Memory plugins for agents, a broker exposing a private world over MCP
-with OAuth for Claude Desktop, ChatGPT and Cursor, a TUI, a reading room
-renderer, and read-only or full-stack installers. The broker tier is
-what turns a single-binary store into something a team shares.</p>
+<p>The MCP tools are <code>mark_fetch</code>, <code>mark_list</code>,
+<code>mark_versions</code>, <code>mark_lookup</code>,
+<code>mark_publish</code>, <code>mark_append</code>,
+<code>mark_archive</code>, <code>mark_graph</code>,
+<code>mark_graph_publish</code>, <code>mark_backlinks</code>,
+<code>mark_explore</code>, <code>mark_discover</code>,
+<code>mark_curate</code>, <code>mark_promote</code> and
+<code>mark_doctor</code>, with <code>mark_lookup_all</code> and
+<code>mark_worlds</code> outside the memory broker. The agent writes and
+archives for itself, and the plugins' session guidance tells it to
+record decisions, bug lessons and journal entries without prompting.</p>
+<p>The Claude Code and Cursor plugins register <code>PreToolUse</code>
+gates on publish and append for tags, destination, retention and style;
+the Cowork plugin is hook-free. The memory broker serves Claude Desktop,
+ChatGPT and Cursor over OAuth, one world per identity.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The integrity story is the strongest part and it is honest about its
-own limits: verification happens on the history read, and a failure is
-reported, not enforced. If an operator wants a corrupt chain to fail
-closed, that decision is theirs to add.</p>
-<p>The token design avoids the most common failure in capability systems
-— the server holding something it could replay — by storing only hashes,
-and the glob matcher's OS-portability note suggests someone went looking
-for the difference between <code>path</code> and <code>filepath</code>
-rather than discovering it in production.</p>
-<p>What a reader should not expect is belief. There is no status to set,
-no validity window to query, no supersession edge, and no record that a
-value was rejected. The chain keeps what was written; it does not know
-which of those things is currently true.</p>
+<p><strong>The chain report catches a rewritten predecessor and misses
+truncation.</strong> A version that has a successor and is rewritten
+breaks the next link, and the conformance suite asserts the report. A
+prune from the old end is not reported, because <code>VerifyChain</code>
+compares links from its second element on, and
+<code>testRetention</code> asserts that a pruned history verifies
+(<code>server/internal/storetest/conformance.go:532-534</code>). In the
+file store the newest version's bytes are hashed nowhere: the committed
+tip-tamper case replaces the whole file and is caught only as a missing
+<code>previous-hash</code> (<code>:731-739</code>), so a body edit that
+keeps the frontmatter passes. The bucket store checks each version
+against its commit-log record
+(<code>server/internal/knowledge/bucketstore/read.go:320-358</code>).
+FETCH serves a body without running the check, and VERSIONS returns the
+list when the verdict is false.</p>
+<p><strong>Read scope is opt-in per path.</strong>
+<code>RequiresReadAuth</code> makes a path private only when some read
+token's globs cover it, and a nil token store serves every read
+(<code>server/internal/auth/auth.go:137-148</code>). The local plugin
+mints no read token, so a local soul's per-project roots are path
+conventions inside one readable store. The memory broker is the strict
+deployment: identity selects the world, a cross-world argument is
+refused, and the tool list is deny-by-default.</p>
+<p><strong>The token store holds only hashes.</strong>
+<code>client/token/token.go:37-45</code> separates <code>Raw</code> from
+the persisted <code>Entry</code>, and the server hashes the presented
+token before lookup.</p>
+<p><strong>Approval is a refusal or a prompt, never a queue.</strong> A
+policy <code>ask</code> refuses the write, and the plugin gate asks the
+user before the call. Nothing holds a memory in a pending state, and
+<code>mark_curate</code> and <code>mark_promote</code> take a proposal
+hash and an apply flag in the agent's own call.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>211 test files, more lines of test than of source. The authorization
-suite alone covers loading, the three-step authorize, expiry, recursive
-globs, the matcher in isolation, read-auth requirements, and that the
-token store holds hashes. The migration helper re-verifies every chain
-in both stores after a move, which is the right shape for a format
-change: not "did it copy" but "does the invariant still hold on both
-sides".</p>
+<p>The authorization suite covers loading, the three-step authorize,
+expiry, recursive globs, the matcher, <code>RequiresReadAuth</code> and
+a nil store (<code>server/internal/auth/auth_test.go:22-382</code>,
+<code>server/internal/auth/authorize_read_test.go</code>).</p>
+<p>Three committed cases assert that material stays out of a populated
+read, each with a positive control beside it.
+<code>testHandleLookupReadAuthFiltering</code> seeds a public and a
+protected document sharing a tag; without a token LOOKUP returns one
+match, the protected path and title absent and the public path present,
+and with the read token it returns both
+(<code>server/internal/handler/handler_lookup_test.go:161-201</code>).
+<code>testLookupArchiveLifecycle</code> asserts the exact set before an
+archive, the survivor alone after it and under match-all, and both after
+unarchiving (<code>server/internal/storetest/lookup.go:194-205</code>).
+<code>TestMemoryGraphSourcesIsolated</code> asserts each tenant's
+backlinks name its own source and none of the other tenant's
+(<code>knowledge/internal/broker/gateway/mcp_tenant_test.go:343-361</code>).</p>
+<p><code>testRetention</code> asserts that pruning removes what it
+should, that numbering continues past it, and that
+<code>VerifyChain</code> passes afterwards
+(<code>server/internal/storetest/conformance.go:524-570</code>). The two
+tamper cases assert a broken link and a stripped tip
+(<code>:731-755</code>). No test was run for this reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
 <li><strong>Report integrity on the read.</strong>
 <code>chain-valid</code> in the response metadata costs one call and
 turns a silent corruption into a visible one.</li>
-<li><strong>Require the predecessor's bytes to write a version.</strong>
-Making the chain link a precondition of serialization means a version
-cannot be written that skips it.</li>
-<li><strong>Store only the token hash, and say so in the type.</strong>
-<code>Minted</code> separating <code>Raw</code> from <code>Entry</code>
-makes the guarantee structural rather than a convention.</li>
-<li><strong>Use <code>path.Match</code> for URL-shaped
-patterns</strong>, and write down why — the <code>filepath</code>
-variant changes behaviour by OS, which is a bug that appears only on
-someone else's machine.</li>
-<li><strong>Re-verify after a migration, on both sides.</strong> The
-store-migration test checks every chain in the source and the
-destination.</li>
-<li><strong>Split the licence and say which part is which.</strong> AGPL
-for the implementation, MIT for plugins, CC0 for the specification,
-stated in one file.</li>
+<li><strong>Make the chain link a precondition of
+serialization.</strong> A version cannot be written that skips its
+predecessor.</li>
+<li><strong>Filter authorization before the limit.</strong> Checking
+each row before truncating keeps a protected document from displacing a
+readable one or revealing itself in a count.</li>
+<li><strong>Keep withheld state beside immutable versions.</strong> An
+archive sidecar withholds a document from every current read without
+rewriting a byte the chain covers.</li>
+<li><strong>Refuse an unclassified tool by default.</strong> The tenant
+gate's map must name every tool's world-bearing arguments, and a tool
+absent from it is refused before anything is provisioned.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Assuming versioning is belief.</strong> A complete history
-answers "what did this say" and never "what is true", and an agent
-asking the second question of a store that only answers the first will
-take the newest text as fact.</li>
+<li><strong>A hash chain anchored at neither end.</strong> If a prune or
+a head edit passes verification, the verdict describes what survived,
+not what was written. Record the first retained version and its
+predecessor's hash as store-owned state, and hash the head somewhere the
+head's writer cannot reach.</li>
+<li><strong>Destruction as an ordinary metadata key.</strong> Putting
+deletion in the same map as tags hands it to every writer, and a guard
+in one harness's hook does not travel to the others.</li>
 </ul>
 <h3 id="fit">Fit</h3>
-<p>Reach for this if you want a self-hosted, tamper-evident document
-store with real capability scoping and are content to put ranking,
-routing and belief in your agent. Look elsewhere if you need the store
-to model validity, supersession or forgetting.</p>
+<p>Reach for this if you want a self-hosted document store an operator
+can read with <code>cat</code>, scoped by capability, with a tamper
+report a client can check. It assumes the agent writes freely and a
+person curates by reading markdown. Look elsewhere if the history must
+be complete by construction, or if the store must know which of two
+versions is true.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>Should a failed <code>VerifyChain</code> be able to fail closed by
-configuration, rather than always reporting and returning?</li>
-<li>With every version retained, is there a story for a memory that must
-be destroyed rather than superseded — and how does that interact with
-the chain?</li>
-<li>The knowledge broker composes worlds behind one endpoint. Does a
-token's path glob compose across worlds, or is scoping per-world
-only?</li>
+<li>Should <code>VerifyChain</code> treat a history that does not start
+at version 1 as a finding unless the store recorded the prune that
+produced it?</li>
+<li>Should retention need a capability of its own, rather than running
+under any writer's publish?</li>
+<li>In the knowledge profile every readable world is visible to
+<code>mark_lookup_all</code>; is a person's view of a team's worlds
+meant to be bounded by anything but world policy?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
@@ -405,32 +615,153 @@ only?</li>
 </thead>
 <tbody>
 <tr>
-<td><code>protocol/store/format.go</code></td>
-<td>The serialization and the previous-hash requirement</td>
+<td><code>protocol/storefmt/format.go:32-40</code></td>
+<td>Serialization and the previous-hash requirement</td>
 </tr>
 <tr>
-<td><code>protocol/store/store.go</code></td>
-<td><code>VerifyChain</code>, integrity errors, pruning</td>
+<td><code>protocol/storefmt/meta.go:33-65</code></td>
+<td>The <code>retention</code> key, reserved keys,
+<code>ParseRetention</code></td>
 </tr>
 <tr>
-<td><code>protocol/token/token.go</code></td>
-<td>The capability entry and the hash-only guarantee</td>
+<td><code>protocol/store/store.go:48-92</code></td>
+<td>The archive-state sidecar</td>
 </tr>
 <tr>
-<td><code>server/internal/auth/auth.go</code></td>
-<td>The three-step authorization and the glob matcher</td>
+<td><code>protocol/store/store.go:1420-1470</code></td>
+<td>Retention and <code>pruneVersions</code></td>
 </tr>
 <tr>
-<td><code>server/internal/handler/handler.go</code></td>
-<td>The chain report in version history</td>
+<td><code>protocol/store/store.go:1632-1678</code></td>
+<td><code>VerifyChain</code> and where its comparison starts</td>
+</tr>
+<tr>
+<td><code>server/internal/handler/handler.go:348-372</code></td>
+<td>Read authorization on the canonical path</td>
+</tr>
+<tr>
+<td><code>server/internal/handler/handler.go:544-583</code>,
+<code>:808-822</code></td>
+<td>Per-entry and per-row filtering before paging and truncation</td>
+</tr>
+<tr>
+<td><code>server/internal/handler/handler.go:698-734</code></td>
+<td>The chain verdict on VERSIONS</td>
+</tr>
+<tr>
+<td><code>server/internal/handler/handler.go:1154-1165</code></td>
+<td>The prune log line</td>
+</tr>
+<tr>
+<td><code>server/internal/auth/auth.go:137-248</code></td>
+<td>Read-auth probe, authorize, glob matcher</td>
+</tr>
+<tr>
+<td><code>server/internal/filestore/filestore.go:158-184</code></td>
+<td>Archive state and catalog under one lock</td>
+</tr>
+<tr>
+<td><code>server/internal/catalog/catalog.go:384-400</code></td>
+<td>LOOKUP ordering</td>
+</tr>
+<tr>
+<td><code>knowledge/internal/broker/gateway/mcp_tenant.go:24-218</code></td>
+<td>The tenant gate</td>
+</tr>
+<tr>
+<td><code>client/marktools/context.go:30-74</code></td>
+<td>The session primer</td>
+</tr>
+<tr>
+<td><code>client/mcpbind/mcpbind.go:35</code>,
+<code>client/mcpfmt/tooltext.go:59</code></td>
+<td>The graph retention default, and the publish tool's metadata
+description</td>
+</tr>
+<tr>
+<td><code>tools/demarkus-plugin/internal/gate/gate.go:95-123</code></td>
+<td>The plugin's retention prompt</td>
+</tr>
+<tr>
+<td><code>server/internal/handler/handler_lookup_test.go:161-302</code></td>
+<td>Read-auth and archive cases on LOOKUP</td>
+</tr>
+<tr>
+<td><code>server/internal/storetest/lookup.go:194-205</code></td>
+<td>Archive lifecycle, exact sets</td>
+</tr>
+<tr>
+<td><code>server/internal/storetest/conformance.go:524-570</code></td>
+<td>Retention, and <code>VerifyChain</code> passing after a prune</td>
+</tr>
+<tr>
+<td><code>docs/SPEC.md</code> §9.1, §9.9</td>
+<td>The append-only rule and its retention exception</td>
 </tr>
 <tr>
 <td><code>LICENSE</code></td>
-<td>The AGPL / MIT / CC0 split, stated</td>
+<td>The AGPL / MIT / CC0 split</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n 'VerifyChain(' -- '*.go' ':!*_test.go'</code> —
+the store, the two backends' views, the backend interface and one
+handler call at <code>server/internal/handler/handler.go:719</code>;
+FETCH does not call it.</li>
+<li><code>git grep -n -E 'meta\["retention"\]|ArtifactMetadata\(' -- '*.go' ':!*_test.go'</code>
+— the CLI's confirmation,
+<code>client/generation/generation.go:36</code>,
+<code>client/marktools/graph.go:167</code> and the federation call at
+<code>knowledge/internal/federation/federation.go:69</code>.</li>
+<li><code>git grep -n 'logPrune' -- '*.go' ':!*_test.go'</code> — the
+definition and its two callers in <code>handler.go</code>; no stored
+record of a prune.</li>
+<li><code>git grep -n -i -E 'approv|quarantin' -- '*.go' ':!*_test.go'</code>
+— the policy <code>ask</code> comment and
+<code>ErrPolicyApprovalRequired</code>, which refuse a write, and one
+nudge regex; no pending state.</li>
+<li><code>git grep -n -i -E 'tombstone|denylist|reject(ed)?_?(value|hash)' -- '*.go' ':!*_test.go'</code>
+— tenant deprovisioning in the broker and a comment in
+<code>handler.go</code>; nothing keyed on a rejected value.</li>
+<li><code>git grep -n -i -E 'valid_?(from|to|until)|effective_?(from|at)|valid_?time' -- '*.go' ':!*_test.go'</code>
+— only <code>invalid_token</code> and <code>ErrInvalidToken</code>; no
+validity window.</li>
+<li><code>git grep -n -E '"supersedes"' -- '*.go' ':!*_test.go'</code> —
+a comment in <code>client/graph/crawl.go</code> and
+<code>PreferredRelations</code> in
+<code>client/lookupexpand/lookupexpand.go:48</code>; no read withholds a
+superseded target.</li>
+<li><code>git grep -n -E 'status[[:space:]]*(=|:)[[:space:]]*"(verified|rejected|candidate|disputed|superseded)"' -- '*.go' ':!*_test.go'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE LICENSE-PROTOCOL plugins/LICENSE</code>
+— no match; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/latebit-io/demarkus/commit/f57b348e94c23b8b4dad14830bf3598a05253ad2"><code class="commit-id" title="f57b348e94c23b8b4dad14830bf3598a05253ad2">f57b348e…</code></a>
+— 119 commits on, dated 15 October 2026. <code>audit_log</code>
+withdrawn: a <code>retention</code> key any writer may set deletes the
+oldest versions and the chain check passes over it (<a
+href="#7-write-mechanics">section 7</a>, <a
+href="#9-reliability-safety-and-trust">section 9</a>).
+<code>trust_state</code> and <code>negative_eval</code> added: the
+archive state filters every current read, and committed LOOKUP cases
+assert protected and archived documents stay out (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). All three were
+equally true at the previous pin, as was the server ranking LOOKUP (<a
+href="#6-retrieval-mechanics">section 6</a>). Overtaken: the broker
+moved into the knowledge server, WATCH arrived, and the migration tests
+and <code>demarkus-agent</code> were removed. Screened from a full
+clone: twenty-five files, one auto-run surface, one build-time execution
+point, four unpinned surfaces, thirteen inside the cooldown,
+<code>CLAUDE.md</code> read as data. Nothing was installed, built or
+run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/latebit-io/demarkus/commit/dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956"><code class="commit-id" title="dd22c38ad6f2738e5bccf32b31dbd9fc78bb7956">dd22c38a…</code></a>
 — first reading, at a commit dated 15 September 2026. Screened before
