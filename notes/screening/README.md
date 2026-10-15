@@ -126,7 +126,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`dreamgraph`](../../content/systems/dreamgraph.md) | `.github/copilot-instructions.md` |
 | [`dynamics-memory`](../../content/systems/dynamics-memory.md) | `.opencode/` |
 | [`ecc`](../../content/systems/ecc.md) | `.claude-plugin/`, `.cursor/rules/`, `.github/copilot-instructions.md`, `.mcp.json`, `.opencode/`, `.vscode/settings.json`, `hooks/`, `hooks/hooks.json` |
-| [`egc`](../../content/systems/egc.md) | `.cursor/rules/`, `.githooks/`, `.github/copilot-instructions.md`, `.mcp.json`, `.opencode/`, `hooks/`, `hooks/hooks.json` |
+| [`egc`](../../content/systems/egc.md) | `.codex/config.toml`, `.cursor/rules/`, `.githooks/`, `.github/copilot-instructions.md`, `.mcp.json`, `.opencode/`, `hooks/`, `hooks/hooks.json` |
 | [`elizaos`](../../content/systems/elizaos.md) | `.gitmodules` |
 | [`empirica`](../../content/systems/empirica.md) | `.cursorrules`, `.github/copilot-instructions.md`, `.gitmodules` |
 | [`emulo`](../../content/systems/emulo.md) | `.claude-plugin/`, `server.json`, `smithery.yaml` |

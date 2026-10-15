@@ -3770,9 +3770,9 @@ dependency files inside the cooldown; nothing installed or run, and the
 LongMemEval figures taken from the README since their result files are
 not committed</li>
 <li><a href="https://github.com/Fmarzochi/EGC">Fmarzochi/EGC</a> at <a
-href="https://github.com/Fmarzochi/EGC/commit/f24f53c2ca1ce2bb1f5120f20dff2b98780f90ee"><code class="commit-id" title="f24f53c2ca1ce2bb1f5120f20dff2b98780f90ee">f24f53c2…</code></a>
-— read only; seven auto-run surfaces, three build-time execution points
-and sixteen dependency files inside the cooldown; nothing installed or
+href="https://github.com/Fmarzochi/EGC/commit/a46dd1b2019be1c3b6a034c748b5405c03984220"><code class="commit-id" title="a46dd1b2019be1c3b6a034c748b5405c03984220">a46dd1b2…</code></a>
+— read only; eight auto-run surfaces, three build-time execution points
+and three dependency files inside the cooldown; nothing installed or
 run</li>
 <li><a
 href="https://github.com/riponcm/projectmem">riponcm/projectmem</a> at
@@ -18109,6 +18109,25 @@ calls at <code>:502-618</code>. The embedding and bookkeeping claims
 rested on comments read as descriptions of the code beneath them, and
 the rest on the first reading's text carried forward across two
 re-pins.</li>
+<li><strong>Two published claims about <a href="../systems/egc/">EGC</a>
+were wrong at <a
+href="https://github.com/Fmarzochi/EGC/commit/f24f53c2ca1ce2bb1f5120f20dff2b98780f90ee"><code class="commit-id" title="f24f53c2ca1ce2bb1f5120f20dff2b98780f90ee">f24f53c2…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>negative_eval</code>, saying no test asserted that one
+project's material stayed out of another's recall. The case
+<code>list is scoped to project_path</code>
+(<code>tests/lib/working-memory.test.js:158-174</code>) wrote one key
+under two projects and asserted each list returned only its own value,
+beside an expiry case and an overwritten-decision case in
+<code>tests/scripts/egc-memory-search.test.js:156-171</code>; neither
+file changed between that pin and
+<code class="commit-id" title="a46dd1b2019be1c3b6a034c748b5405c03984220">a46dd1b2…</code>. And it said
+<code>compress_observations</code> summarised raw observations without
+deleting them; on the <code>observations.jsonl</code> path
+<code>replaceObservation</code> overwrote the raw line with the summary
+(<code>mcp/servers/egc-memory/src/compress.ts:311-329</code> at that
+pin). The first rested on searching decisions and lessons for a
+cross-project case and not the third memory tier.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

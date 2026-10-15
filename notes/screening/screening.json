@@ -11610,12 +11610,17 @@
         "AGENT": 3,
         "EXEC": 3,
         "FLOAT": 6,
-        "FRESH": 16,
-        "NOTE": 3,
-        "RUNS": 7
+        "FRESH": 3,
+        "NOTE": 9,
+        "RUNS": 8
       },
-      "files_scanned": 38,
+      "files_scanned": 39,
       "findings": [
+        {
+          "detail": "Codex CLI config; `[mcp_servers.*]` entries start local servers — mentions command; launches a package fetched at run time (npx)",
+          "kind": "RUNS",
+          "path": ".codex/config.toml"
+        },
         {
           "detail": "editor rules injected into an agent's context — 20 entr(ies): common-agents.md, common-auto-intuition.md, common-coding-style.md, common-development-workflow.md, common-git-workflow.md, common-hooks.md, common-patterns.md, common-performance.md, common-security.md, common-testing.md, egc-context.mdc, golang-coding-style.md, golang-hooks.md, golang-patterns.md, golang-security.md, golang-testing.md, kotlin-coding-style.md, kotlin-hooks.md, kotlin-patterns.md, kotlin-security.md",
           "kind": "RUNS",
@@ -11652,67 +11657,12 @@
           "path": "hooks/hooks.json"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": ".opencode/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": ".opencode/package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "dashboard/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "dashboard/package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "docker/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "docker/package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "fuzz/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "fuzz/package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "mcp/servers/egc-guardian/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "detail": "changed 4 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "mcp/servers/egc-guardian/package.json"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "mcp/servers/egc-memory/package-lock.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "mcp/servers/egc-memory/package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 6 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "package-lock.json"
         },
@@ -11720,16 +11670,6 @@
           "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "skills/general_part2/skill-comply/pyproject.toml"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "tests/requirements.txt"
         },
         {
           "detail": "npm lifecycle `prepublishOnly`: npm run build",
@@ -11747,8 +11687,8 @@
           "path": "tests/conftest.py"
         }
       ],
-      "revision": "f24f53c2ca1ce2bb1f5120f20dff2b98780f90ee",
-      "screened_at": "2026-09-15T21:37:20+00:00",
+      "revision": "a46dd1b2019be1c3b6a034c748b5405c03984220",
+      "screened_at": "2026-10-15T20:12:39+00:00",
       "slug": "egc",
       "source": "reused-clone",
       "status": "screened",

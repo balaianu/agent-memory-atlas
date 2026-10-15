@@ -8515,47 +8515,67 @@ among them — the ledger a reader came for is a tenth of the tree</td>
 </tr>
 <tr>
 <td><a href="../systems/egc/"><code>egc</code></a></td>
-<td>Three shapes: a per-project, per-branch Markdown state document
-(context, decisions, things to avoid, preferences, next steps); SQLite
-rows for decisions (context label, text, timestamp, project path) and
-lessons (content, context, confidence, tags, author, archive flag,
-project path); and TTL working-memory entries keyed by project</td>
-<td>State documents encrypted with AES-256-GCM under <code>~/.egc</code>
-with HMAC sidecars; one plaintext SQLite database at
-<code>~/.egc/memory/state.db</code> for decisions, lessons, working
-memory, patterns and the session bus; a separate CLI state store at
-<code>~/.egc/egc/state.db</code></td>
-<td><code>get_state</code> reads the current branch's document with a
-fallback to the default branch; FTS5 BM25 over decisions and over
-lessons with a substring fallback; working memory by project and
-key</td>
+<td>Three shapes in the memory server: a per-branch Markdown state
+document (context, active decisions, things not to repeat, preferences,
+next steps); SQLite rows for decisions (context label, text, timestamp,
+project path) and lessons (content, context, confidence, tags, author,
+archive flag, project path); and TTL working-memory entries keyed by
+project. Hooks add plaintext prior-session summaries outside the
+server</td>
+<td>State documents encrypted with AES-256-GCM under
+<code>~/.egc/state</code> with HMAC sidecars, mirrored in plaintext
+(context, five decisions, five next steps) into the project's existing
+instruction files and held out of commits by a git clean filter; one
+plaintext SQLite database at <code>~/.egc/memory/state.db</code> for
+decisions, lessons, working memory, patterns and the session bus; a
+separate CLI state store at <code>~/.egc/egc/state.db</code></td>
+<td><code>get_state</code> reads the current branch's document, then
+<code>main</code>, then a flat per-project file, and appends a scrubbed
+global document; FTS5 BM25 over decisions and over lessons with
+substring fallbacks; working memory by project and key; hooks inject
+state sections on detected intents and a prior-session summary at
+session start</td>
 <td><code>update_state</code> merges into the branch document under a
-cross-process lock; <code>store_decision</code>,
-<code>lesson_save</code> and <code>working_memory_set</code> insert rows
-through a write queue; hooks capture tool observations that rule-based
-compression and pattern detection summarise</td>
-<td>State documents are merged and rewritten; lessons are reinforced,
-decayed weekly after a 30-day grace and archived below 0.2 confidence;
-decisions are append-only; working memory expires</td>
-<td>State documents and working memory are per project; decisions and
-lessons record the project path and are read without it</td>
-<td>Two MCP servers (memory and Guardian) registered into twenty coding
-tools by <code>egc install</code>, hooks per tool, a memory protocol
-written into each tool's instruction files, a session mesh, team sync
-over git, and a local cost dashboard</td>
-<td>A lesson decay sweep, rule-based observation compression and pattern
-detection when invoked, a session bus with heartbeats and file
+cross-process lock and mirrors it into instruction files;
+<code>store_decision</code>, <code>lesson_save</code> and
+<code>working_memory_set</code> insert rows through a write queue; hooks
+append a model-mined digest of the transcript and verbatim remember
+prompts to the state document; team sync merges teammates'
+documents</td>
+<td>State documents are merged and rewritten, and a rule-based
+consolidation layers old entries by age; lessons are reinforced, decayed
+weekly after a 30-day grace and archived below 0.2 confidence; decisions
+are append-only; working memory expires within at most seven days</td>
+<td>State documents are keyed by the last two path segments of the
+project and a hashed branch name; working memory by a project path the
+model may supply; decisions and lessons record the project path and are
+read without it; the session-start summary falls back to the most recent
+session of any project</td>
+<td>Two MCP servers (memory and Guardian) registered by
+<code>egc install</code> into the twenty-nine coding tools the README
+lists, hooks per tool, a memory protocol written into each tool's
+instruction files, a session mesh, team sync over git, and a local cost
+dashboard</td>
+<td>A lesson decay sweep at most daily and a working-memory sweep on
+reads; transcript mining at session end and before compaction when a
+provider key is set; rule-based observation compression and pattern
+detection when invoked; a session bus with heartbeats and file
 claims</td>
-<td>A prompt- and command-injection scanner on state, decision and
-working-memory writes, encryption and HMAC tamper warnings on state
-documents, confidence decay on lessons</td>
-<td>Branch-aware project state with a default-branch fallback, encrypted
-at rest with integrity sidecars; an injection scanner shared with the
-command guard; careful lock and quarantine handling on the encrypted
-files</td>
+<td>A prompt- and command-injection scanner on the memory server's
+free-text writes and on lesson reads, a generated-data notice and a
+second scrub on mirrored text, encryption and HMAC tamper warnings on
+state documents, confidence decay on lessons</td>
+<td>Branch-aware project state with a per-commit file for a detached
+HEAD, encrypted at rest with integrity sidecars; one injection scanner
+shared with the command guard, applied on lesson writes and again on
+lesson reads; careful lock, link and quarantine handling on the
+encrypted files</td>
 <td>Decisions and lessons from every project are returned by search and
-recall; the README's per-project encryption describes the state files,
-not those tables; lesson_save skips the injection scanner</td>
+recall; a state document's identity is the last two path segments of the
+project, so two checkouts named alike share one document; the transcript
+miner and team sync write into the state document without the injection
+scanner; the session-start load hook reads the encrypted file as UTF-8
+text</td>
 </tr>
 <tr>
 <td><a href="../systems/elai/"><code>elai</code></a></td>
@@ -34425,7 +34445,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>478 of 749:</em> <a
+<p><em>479 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34548,6 +34568,7 @@ href="../systems/dsh-mnemon/"><code>dsh-mnemon</code></a>, <a
 href="../systems/ean-agentos/"><code>ean-agentos</code></a>, <a
 href="../systems/ecc/"><code>ecc</code></a>, <a
 href="../systems/echo-agent/"><code>echo-agent</code></a>, <a
+href="../systems/egc/"><code>egc</code></a>, <a
 href="../systems/elai/"><code>elai</code></a>, <a
 href="../systems/elastic-atlas/"><code>elastic-atlas</code></a>, <a
 href="../systems/elizaos/"><code>elizaos</code></a>, <a
@@ -34937,7 +34958,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-478 repositories of
+479 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

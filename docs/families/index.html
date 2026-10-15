@@ -6320,13 +6320,15 @@ them into every prompt. A save can retract earlier observations, one
 live predicate keeps tombstones out of every read path, and a retrieval
 benchmark gates CI. The automatic save's dedup still reads tombstones,
 so a resembling capture is dropped for a week.</p>
-<p><strong><a href="../systems/egc/">EGC</a> gives twenty coding tools
-one memory, and keeps it in two stores with different
+<p><strong><a href="../systems/egc/">EGC</a> gives twenty-nine coding
+tools one memory, and keeps it in two stores with different
 guarantees.</strong> An installer registers a memory server, a command
 guard and a session bus into each tool. Project state is a Markdown
-document per git branch, encrypted and integrity-checked. Decisions and
-lessons are plaintext SQLite rows that record their project, and search
-and recall return every project's rows.</p>
+document per git branch, encrypted and integrity-checked, keyed by the
+last two segments of the project path and mirrored in plaintext into the
+project's instruction files. Decisions and lessons are plaintext SQLite
+rows that record their project, and search and recall return every
+project's rows.</p>
 <p><strong><a href="../systems/projectmem/">projectmem</a> keeps a
 repository's memory as the debugging record itself.</strong> Issues,
 attempts and their outcomes, fixes and decisions are appended to one
