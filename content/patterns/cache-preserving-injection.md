@@ -238,6 +238,7 @@ on how to write one.
   deliberately forces a cold respawn rather than letting a warm process serve
   the old notes. The cost is that turn two onward sees the breadcrumbs only
   through conversation history.
+- **[dsh-auto-memory](../../systems/dsh-auto-memory/)** — stability bought by rounding rather than by anchoring. The injected index is ordered by importance times a recency decay counted in whole days, so a ranking that moves with use changes the text at most once a day. A read bumps its counter on disk and rebuilds the index only when it revives a hidden memory, leaving the new order for the next write (`src/store.ts:298-308`, `:432-448`). An empty store injects nothing at all.
 
 Note that [MemOS](../../systems/memos/)'s "activation memory: KV/prefix cache" is
 a *different* mechanism — reusing model state rather than positioning text — and

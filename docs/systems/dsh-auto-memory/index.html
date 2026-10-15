@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A DeepSeek Harness plugin porting
+Claude Code's auto-memory: one Markdown file per memory, a rebuilt
+MEMORY.md index injected each step, and opt-in session-end
+consolidation.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="dsh-auto-memory — Agent Memory Atlas">
+    <meta property="og:description" content="A DeepSeek Harness plugin
+porting Claude Code's auto-memory: one Markdown file per memory, a
+rebuilt MEMORY.md index injected each step, and opt-in session-end
+consolidation.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="dsh-auto-memory — Agent Memory Atlas">
+    <meta name="twitter:description" content="A DeepSeek Harness plugin
+porting Claude Code's auto-memory: one Markdown file per memory, a
+rebuilt MEMORY.md index injected each step, and opt-in session-end
+consolidation.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>dsh-auto-memory — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "dsh-auto-memory",
+      "description": "A DeepSeek Harness plugin porting Claude Code's auto-memory: one Markdown file per memory, a rebuilt MEMORY.md index injected each step, and opt-in session-end consolidation.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Claude Code-style memory files for DeepSeek
+Harness</p>
+          <h1>dsh-auto-memory</h1>
+          <p class="document-deck">A DeepSeek Harness plugin porting
+Claude Code's auto-memory: one Markdown file per memory, a rebuilt
+MEMORY.md index injected each step, and opt-in session-end
+consolidation.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/AskTheWay/dsh-auto-memory">
+              <span>Source</span>
+              <strong>AskTheWay/dsh-auto-memory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/AskTheWay/dsh-auto-memory/commit/5bcf1c6d4f1ff303195c1e51fea56274810b3717" title="5bcf1c6d4f1ff303195c1e51fea56274810b3717">
+              <span>Analyzed revision</span>
+              <code>5bcf1c6d…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/AskTheWay--dsh-auto-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>AskTheWay--dsh-auto-memory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>2,117
+lines of TypeScript in 10 files under src/, plus a 644-line browser
+panel under src/client/; the memory path is store.ts, tools.ts,
+prompt.ts, consolidate.ts and matching.ts, 1,571 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>41
+commits on main under four author names, 22 September – 14 October 2026;
+eleven tags from v0.1.0 to v0.7.2</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>124
+Vitest cases in 10 spec files, 6 under tests/ and 4 under evals/l0/, run
+in CI by npm test; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>dsh-auto-memory ports Claude Code's auto-memory into a <a
+href="../deepseek-harness/">DeepSeek Harness</a> plugin: each memory is
+a Markdown file with typed frontmatter, and a derived
+<code>MEMORY.md</code> index of one line per memory is injected into the
+system prompt on every step. What is notable is the discipline around a
+deliberately small design. The index is bounded, stable within a day and
+absent when the store is empty, every writer funnels through one
+redaction point, and the exclusion behaviour carries committed tests
+with positive controls. What is weak is correction. Updates overwrite in
+place with no prior version, background consolidation picks its
+overwrite target with a lexical matcher that can reach across layers,
+and nothing stops a deleted fact from being extracted again.</p>
+<p>The primary user is one developer running DeepSeek Harness locally,
+with memory scoped by working directory. The model writes memories
+through six tools and is told when to in a policy block appended to the
+index. A person can edit the same files by hand or through a browser
+panel that lists every project's memories. An opt-in pass at session end
+asks the session's model to propose up to five more.</p>
+<p>The strongest code is the store. <code>MemoryStore.write</code>
+normalizes names to <code>[a-z0-9-]</code>, refuses <code>memory</code>
+because it collides with <code>MEMORY.md</code> on case-insensitive
+filesystems, takes a cross-process lock on the index, rebuilds it
+atomically, and recovers a lock whose holder pid is dead
+(<code>src/store.ts:67-79</code>, <code>:386-421</code>,
+<code>:531-553</code>). The weakest part is the identity decision
+consolidation relies on, which is shared with the evaluation that grades
+it (<code>src/matching.ts:86-121</code>,
+<code>evals/runners/l3-consolidation.mjs:17</code>).</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a fact the model, a person or the consolidation pass
+chose to keep, stored as text with a name. There is no notion of
+evidence or of a candidate: a file that parses is a belief, and its
+presence in the index is what makes the model act on it. The four types
+are a genre that sets a default importance — feedback 8, user 7, project
+6, reference 4 — and nothing else
+(<code>src/store.ts:291-296</code>).</p>
+<p>Visibility, not truth, is the state that changes. A memory in the
+index is <em>visible</em>. Setting <code>disabled: true</code> makes it
+<em>muted</em>: out of the index, but returned by
+<code>memory_list</code> and <code>memory_read</code>. With
+<code>staleAfterDays</code> above zero, a memory never read and not
+updated within that window becomes <em>stale</em> and drops out the same
+way; one read makes it visible again and exempt for good
+(<code>src/store.ts:222-229</code>). <code>pinned: true</code> exempts
+it from staleness and sorts it first, so budget truncation reaches it
+last. All three flags are writable by the model through
+<code>memory_write</code>.</p>
+<p>A memory stops being a belief only by being overwritten or deleted.
+Overwrite replaces the body and description and keeps the creation time
+and read count (<code>src/store.ts:173-180</code>). Delete unlinks the
+file. Neither leaves a record of the previous value, so afterwards a
+correction is indistinguishable from the original never having existed.
+A fact the user asked to forget can be re-proposed by the next
+consolidation under a fresh name.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a memory reaches the model, how it leaves the index, and the two overwrite paths with no history</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a memory reaches the model, how it leaves the index, and the two overwrite paths with no history
+flowchart TB
+    TOOL[&quot;memory_write&lt;br/&gt;model tool&quot;] --&gt; W[&quot;store.write&lt;br/&gt;redact, escape tag, lock&quot;]
+    PANEL[&quot;browser panel&lt;br/&gt;memory.write route&quot;] --&gt; W
+    END[&quot;root agent disposed&lt;br/&gt;autoSummarize on&quot;] --&gt; LLM[&quot;session model proposes&lt;br/&gt;at most 5 candidates&quot;]
+    LLM --&gt; MATCH{&quot;matcher: exact name,&lt;br/&gt;name coverage 0.6,&lt;br/&gt;description Jaccard 0.7&quot;}
+    MATCH --&gt;|&quot;match in either layer&quot;| OVER[&quot;overwrite the matched file&lt;br/&gt;in its layer, no prior version&quot;]
+    MATCH --&gt;|&quot;no match&quot;| W
+    OVER --&gt; W
+    W --&gt; FILE[(&quot;name.md&lt;br/&gt;in _user or project dir&quot;)]
+    FILE --&gt; REB[&quot;rebuild MEMORY.md&lt;br/&gt;drop disabled and stale&quot;]
+    REB --&gt; IDX[(&quot;MEMORY.md index&quot;)]
+    IDX --&gt;|&quot;every step, 4,096-byte budget&quot;| PROMPT[&quot;system prompt section&lt;br/&gt;inside memory_context&quot;]
+    PROMPT --&gt; READ[&quot;memory_read by name&quot;]
+    READ --&gt;|&quot;reads plus 1&quot;| FILE
+    DEL[&quot;memory_delete&lt;br/&gt;unlink&quot;] --&gt; FILE
+    HAND[&quot;hand edit of a file&quot;] -.-&gt;|&quot;index unchanged&lt;br/&gt;until next rebuild&quot;| FILE</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>The plugin is one Cordis module loaded into the DeepSeek Harness
+process. <code>apply</code> builds a <code>MemoryStore</code> rooted at
+<code>memoryDir</code> or <code>$DSH_HOME/memory</code>, registers the
+tools and the consolidation listeners, and registers the panel routes
+once the <code>connection</code> service exists. It then adds one
+system-prompt section whose text is recomputed on every step
+(<code>src/index.ts:54-104</code>). There is no daemon, database,
+embedding model or network call of its own; the only model call is
+consolidation, which borrows the session's provider and model.</p>
+<p>Storage is the filesystem. The <code>_user</code> directory and one
+<code>--&lt;slug&gt;--</code> directory per working directory each hold
+<code>&lt;name&gt;.md</code> files and a <code>MEMORY.md</code> index;
+the slug is DeepSeek Harness's own <code>projectKey</code> encoding,
+copied so it matches the harness's sessions directory
+(<code>src/store.ts:40-60</code>). File IO uses <code>node:fs</code>
+directly rather than the harness's sandboxed <code>ctx.fs</code>, whose
+writable roots do not include <code>$DSH_HOME</code>, and writes go
+through <code>@deepseek-ai/dsh-atomic-write</code>.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Installation is
+<code>dsh plugin --profile demo add dsh-auto-memory</code>, with peer
+ranges on DeepSeek Harness packages from 0.1.5-rc.2 to below 0.3.0.
+Nothing else has to run, it works offline, and no API key is needed to
+store anything; only consolidation needs a model route. The store is
+plain Markdown with YAML frontmatter, editable by hand and safe to keep
+under git. <code>MEMORY.md</code> is derived and overwritten on the next
+write, so a person repairing the store edits the memory files, not the
+index.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<ul>
+<li><strong>Tool write.</strong> <code>memory_write.execute</code> takes
+<code>cwd</code> from the owning agent's session header and refuses
+without one. It looks the normalized name up in the available layers and
+writes to the explicit scope, else the layer where the name exists, else
+<code>project</code> (<code>src/tools.ts:102-124</code>). Description,
+body and title are cut to 160, 2,000 and 80 characters, and
+<code>store.write</code> does the rest inside the index lock
+(<code>src/store.ts:386-421</code>).</li>
+<li><strong>Sanitizing.</strong> <code>sanitizeContent</code> runs
+<code>redactSecrets</code> and <code>stripMemoryTags</code> on title,
+description and body for every caller
+(<code>src/store.ts:234-284</code>). The patterns cover AWS, GitHub,
+npm, OpenAI-style, Slack and Google keys, bearer tokens, Chinese mobile
+numbers, and 18-digit resident ID numbers that pass the GB 11643 check
+digit.</li>
+<li><strong>Index rebuild.</strong> <code>rebuildIndex</code> lists the
+directory and drops stale records; <code>renderIndexBody</code> drops
+disabled ones and orders the rest pinned first, then by
+<code>importance × 0.995^days</code>, then by name
+(<code>src/store.ts:194-212</code>, <code>:557-567</code>,
+<code>:302-308</code>). An empty result deletes
+<code>MEMORY.md</code>.</li>
+<li><strong>Injection.</strong> <code>renderMemoryIndexText</code> reads
+the user and project indexes synchronously and truncates line by line to
+the byte budget, after reserving room for the policy text and wrapper.
+It skips an over-long line rather than stopping at it, then wraps
+everything in <code>&lt;memory_context&gt;</code> and splits every
+<code>{{</code> (<code>src/prompt.ts:33-80</code>).</li>
+<li><strong>Read.</strong> <code>memory_read</code> searches user then
+project, fires a best-effort <code>touch</code> that rewrites the file's
+<code>reads</code> and <code>lastRead</code>, and expands up to three
+<code>[[name]]</code> links into one-line summaries
+(<code>src/tools.ts:164-178</code>, <code>src/store.ts:427-452</code>,
+<code>src/links.ts:24-38</code>).</li>
+<li><strong>Consolidation.</strong> <code>registerConsolidation</code>
+buffers user text from <code>user/message</code> events whose source is
+the user, and assistant text, up to 40 lines and 24,000 characters
+(<code>src/consolidate.ts:211-238</code>). On
+<code>agent/disposed</code> for a root agent it builds a prompt listing
+existing names and a digest of the workspace's AGENTS.md and CLAUDE.md
+chain, streams one completion, and parses a JSON array
+(<code>src/consolidate.ts:240-298</code>). Each sanitized candidate goes
+to <code>decideConsolidationAction</code> and is written as an update to
+the match or as a new file
+(<code>src/consolidate.ts:300-323</code>).</li>
+<li><strong>Delete and forget.</strong> <code>memory_delete</code>
+unlinks one file in the first layer that has it.
+<code>memory_prune</code> lists, or with <code>dryRun: false</code>
+deletes, memories not updated within a threshold, and
+<code>memory_delete_all</code> clears a layer under one lock
+(<code>src/tools.ts:246-405</code>,
+<code>src/store.ts:460-525</code>).</li>
+<li><strong>Approval hook.</strong> A <code>tools/pre-execute</code>
+listener turns an <code>allow</code> decision for
+<code>memory_delete_all</code>, or for <code>memory_prune</code> with
+<code>dryRun: false</code>, into <code>ask</code>
+(<code>src/tools.ts:410-420</code>).</li>
+<li><strong>Panel.</strong> Four routes under
+<code>/api/auto-memory/</code> list every group, read one memory, and
+write or delete with a <code>cwd</code> the browser supplies
+(<code>src/memory-api.ts:111-209</code>);
+<code>src/client/MemoryPage.tsx</code> renders them.</li>
+</ul>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>MemoryRecord</code> is the whole schema: <code>name</code>,
+<code>title</code>, <code>description</code>, <code>type</code>,
+<code>body</code>, <code>scope</code>, <code>pinned</code>,
+<code>disabled</code>, <code>importance</code>, <code>createdMs</code>,
+<code>updatedMs</code>, <code>lastReadMs</code> and <code>reads</code>
+(<code>src/types.ts:14-38</code>). <code>scope</code> is not serialized,
+and <code>parseMemory</code> assigns it from the directory the file was
+read from (<code>src/store.ts:118-169</code>). A file that fails to
+parse, has an empty description or a name that does not normalize is
+skipped rather than raising. Symlinked entries are skipped so content
+outside the store cannot be pulled into the prompt.</p>
+<p>The temporal fields are all write-clock or read-clock: creation, last
+update, last read. There is no field for when a fact was true and no
+version chain. <code>created</code> survives an overwrite, so a memory
+rewritten with a different fact keeps the original date.</p>
+<p>Scope is two physical layers. The project layer is keyed on the exact
+session cwd, so a session opened in a subdirectory writes to and reads
+from a different directory than one opened at the repository root. The
+slug is cut at 251 characters, so two working directories whose encoded
+paths agree on their first 251 characters share a layer
+(<code>src/store.ts:59</code>). The user layer is shared by every
+workspace and can be switched off with
+<code>enableUserScope: false</code>.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>There is no search. Recall is the index the model sees on every step
+plus a fetch by exact name, which is the Claude Code design: the model
+reads one-line descriptions and decides which bodies to open. Ordering
+is deterministic — pinned, then importance times recency decayed per
+whole day, then name. The day granularity keeps the injected text
+unchanged within a day so the provider's prefix cache survives
+(<code>src/store.ts:298-308</code>). For the same reason a read rebuilds
+the index only when it revives a stale memory
+(<code>src/store.ts:432-448</code>).</p>
+<p>The budget covers the whole section, policy text and wrapper
+included, and defaults to 4,096 bytes. Truncation keeps whole lines from
+the top and appends a marker telling the model to call
+<code>memory_list</code>. The section is an empty string when neither
+layer has an index, so an empty store costs no tokens
+(<code>src/prompt.ts:42-56</code>). User memories come first, so a large
+user layer crowds out project memories under truncation.</p>
+<p>The failure mode is the one the project's own evaluation names. Under
+budget pressure retention is positional: what survives is what sorts
+first, not what is relevant to the current task. Pinning and importance
+are the levers, and the model or a person sets both.
+<code>memory_list</code> returns everything, including muted and stale
+memories, in the same order.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>The model writes synchronously through <code>memory_write</code>, and
+the change is in the index the next time the prompt is assembled,
+because the tool rebuilds <code>MEMORY.md</code> inside its own lock.
+The policy block tells the model what to keep: who the user is,
+corrections with <strong>Why:</strong> and <strong>How to
+apply:</strong> lines, project facts with absolute dates, and external
+references. It also says to reuse an existing name rather than create a
+near-duplicate, and not to copy anything the AGENTS.md or CLAUDE.md
+chain records (<code>src/prompt.ts:83-100</code>).</p>
+<p>Consolidation is off by default (<code>src/index.ts:50</code>). When
+on, it runs once per root agent at disposal, in the background, with
+failures logged and swallowed. The lag before its memories are visible
+is one model call after the session ends. It never rereads the whole
+store; it lists names and rewrites at most five files. Candidates are
+validated field by field, and a requested <code>user</code> scope is
+downgraded to <code>project</code> when the user layer is off
+(<code>src/consolidate.ts:136-151</code>).</p>
+<p>The identity decision is where the design is thinnest.
+<code>pickBestMatch</code> scores an existing memory 1 for an exact
+name. Otherwise it takes the share of the existing name's words found in
+the candidate's name and accepts 0.6, counting prefixes of five or more
+characters as equal; failing that, description Jaccard at 0.7
+(<code>src/matching.ts:31-110</code>). The coverage is directional, so a
+short existing name is covered by any candidate whose name contains it.
+An existing <code>deploy-staging</code> matches a candidate
+<code>deploy-staging-credentials</code>, and the candidate's description
+and body replace the old file.</p>
+<p>The update target's layer comes from the match, not the candidate.
+<code>listAll</code> includes the user layer even when
+<code>enableUserScope</code> is false, so a project session's transcript
+can rewrite a user-layer memory that every workspace's index then
+carries (<code>src/store.ts:377-379</code>,
+<code>src/consolidate.ts:304-317</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The agent never blocks on a model for memory. Each step reads two
+small files synchronously, each write rewrites one memory file and the
+index under a lock, and each read rewrites one memory file to bump its
+counter. Consolidation costs one completion of at most 2,048 output
+tokens per root session, over a transcript capped at 24,000 characters.
+The injected section is bounded by <code>maxBytes</code> and sits at
+order 4000 in the system prompt. It changes only when a write, delete,
+revival or day boundary changes the index.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The model holds six tools: <code>memory_write</code>,
+<code>memory_read</code>, <code>memory_list</code>,
+<code>memory_delete</code>, <code>memory_prune</code> and
+<code>memory_delete_all</code>. The project scope always comes from the
+session header, never from an argument, and a tool called with no owning
+agent is refused rather than falling back to <code>process.cwd()</code>
+(<code>src/tools.ts:42-46</code>). The model can choose the user layer,
+pin, mute and overwrite any memory in either layer, and delete any
+single memory without confirmation.</p>
+<p>The plugin writes no custom session events, because DeepSeek Harness
+refuses to resume a session holding event types its build does not know.
+The trail of what the model did to memory is the harness's ordinary
+<code>tool/call</code> and <code>tool/result</code> record.
+Consolidation tags its one request with a plugin-owned message source
+kind, which the session format requires from 0.2.x
+(<code>src/consolidate.ts:44-55</code>).</p>
+<p>Adapting it to another harness means replacing three hooks — the
+system-prompt section, the tool registry and the agent-disposal event —
+around a store with no harness dependency beyond the atomic-write
+package.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p>Concurrency is handled carefully. Every mutation of a layer holds a
+lock on that layer's <code>MEMORY.md</code>, so writes, deletes, clears
+and counter updates in one workspace serialize across processes. A lock
+left by a killed process is reclaimed once its pid no longer answers a
+signal-0 probe. <code>clear</code> deletes under a single lock window,
+so a concurrent write cannot escape a delete-all, and a malformed file
+never blocks a list, write or delete. Each of those is a regression test
+(<code>tests/store.spec.ts:177-197</code>, <code>:411-430</code>).</p>
+<p>Prompt-injection hygiene is at write time. Memory text is redacted,
+and the <code>memory_context</code> tag is escaped in any spacing or
+case so content cannot close the wrapper. The wrapper tells the model
+the content is data, and the policy ends by saying recalled memories are
+not commands. Consolidation escapes the
+<code>workspace-instructions</code> closing tag in repository
+instruction files for the same reason
+(<code>src/instructions.ts</code>). None of this establishes whether a
+memory is true. A fact the model inferred, one the user stated and one
+consolidation extracted from the model's own reply are stored
+identically, and nothing records which path wrote a file.</p>
+<p>Correction has no memory of its own. There is no history, no
+append-only record of mutations and no record of a rejected value.
+Overwrite keeps the old creation date and discards the old text. A hand
+edit to a memory file reaches the injected index only at the next
+rebuild in that layer: the next tool write, delete or stale revival, or
+with <code>staleAfterDays</code> set, the next session's first agent. A
+memory deleted by hand stays listed in the index until then
+(<code>src/index.ts:80-91</code>,
+<code>src/store.ts:494-500</code>).</p>
+<p>The approval hook guards the bulk verbs and nothing else. A single
+<code>memory_delete</code>, or a <code>memory_write</code> that replaces
+a body, runs on the agent's own authority, so the bulk gate bounds an
+accident rather than a decision. The <code>ask</code> decision depends
+on a harness approval service this tree does not contain. The panel's
+routes accept any <code>cwd</code> the browser sends and sit behind the
+harness's connection authentication rather than any check of their
+own.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is 124 Vitest cases, run in CI on Node 24 after a strict
+type check; the README states 106. The store suite asserts against files
+on disk rather than object state: frontmatter round-trips, reserved
+names, malformed files, symlink skipping, lock serialization and orphan
+recovery, redaction and tag-escape variants, field inheritance on
+update, staleness and pinning. The consolidation suite covers parsing,
+sanitizing and prompt construction, and the matching suite covers the
+thresholds. Nothing was run for this reading.</p>
+<p>The <code>negative_eval</code> mark rests on exclusion cases over a
+populated index, each with a positive control. The soft-mute case
+asserts a muted memory is absent while its neighbour is present, and
+that it stays absent across an update that omits the flag
+(<code>tests/store.spec.ts:266-278</code>). The eviction case separates
+four classes and asserts that only the stale zero-read memory is absent
+(<code>evals/l0/eviction-correctness.spec.ts:28-54</code>). What they
+cover is the injected index. No case asserts that one project's memory
+is absent from another project's; the only isolation test compares the
+user layer with one project
+(<code>tests/store.spec.ts:199-204</code>).</p>
+<p><code>evals/</code> adds three layers. L0 runs in CI: an
+injection-budget curve, probe retention under truncation, eviction
+correctness and link-expansion bounds, with baselines in
+<code>evals/README.md</code>. L1 writes gold facts directly and checks
+they reach the index, so its 100% is an upper bound by construction. L3
+calls a real model over a ten-session synthetic dataset, and a run with
+<code>deepseek-chat</code> on 8 October 2026 is committed with recall
+75, precision 80, zero pollution and update correctness 100
+(<code>evals/results/l3-standard.json</code>).</p>
+<p>Two things limit the L3 numbers. Its update-correctness check passes
+when the new value appears in any memory and does not assert that the
+superseded value is gone. Its mapping from produced memories to gold
+facts uses the same <code>nameCoverage</code> the product uses to decide
+what to overwrite, so a matcher that merges two facts in the product can
+also count the merged memory as covering both.
+<code>evals/README.md</code> links a
+<code>docs/landscape-2026-09.md</code> that is not in the tree, and no
+paper is cited.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make the injected index a derived file, rebuilt under the
+same lock as the write.</strong> The prompt reads one small file
+synchronously, the change is live on the next step, and a crashed
+rebuild leaves the previous index rather than a half-written one.</li>
+<li><strong>Decay on whole days.</strong> Rounding recency to the day
+keeps the injected text byte-identical within a day, so ranking by
+recency does not cost the prefix cache on every read.</li>
+<li><strong>One sanitizing write path for every producer.</strong>
+Tools, the panel and background extraction all reach the file through
+one function that redacts and escapes, so a new producer cannot forget
+to.</li>
+<li><strong>Reclaim a lock by probing its holder.</strong> Write the pid
+into the lock file and, after a timeout, remove it only if the pid is
+gone; an interactive CLI killed with Ctrl-C otherwise wedges the store
+for good.</li>
+<li><strong>Mute as a third state between keep and delete.</strong> A
+memory a person wants out of the prompt but not destroyed needs its own
+flag, and an update that does not mention the flag should inherit
+it.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Letting extraction choose an overwrite target with a lexical
+matcher and keep no prior version.</strong> A false match is then
+indistinguishable from a correction. Keep the old body, or require an
+exact name to overwrite.</li>
+<li><strong>Grading an identity decision with the same function that
+makes it.</strong> An evaluation that maps output to gold through the
+product's matcher cannot see that matcher's merges.</li>
+<li><strong>Gating the bulk verb and not the single one.</strong> An
+approval on delete-all that a loop of single deletes walks around
+protects against a slip, not against an agent acting on injected
+instructions.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits a single developer who wants Claude Code's memory
+behaviour inside DeepSeek Harness and is willing to curate the files by
+hand. It costs nothing to run, is easy to inspect, and fails visibly.
+Walk away if memory has to be correctable with a trail, shared between
+people, or trusted after automatic extraction: the store has no history,
+the background pass overwrites by guess, and nothing distinguishes what
+the user said from what the model inferred. Turn on
+<code>autoSummarize</code> only if someone reads the files.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>What the DeepSeek Harness approval service does with an
+<code>ask</code> for a plugin's tool in each composition — CLI, desktop
+and web — and whether a composition without one denies, as the comment
+in <code>src/tools.ts</code> states.</li>
+<li>How often the 0.6 name-coverage threshold merges distinct facts in
+real use; the committed L3 runs report duplicates and not false
+merges.</li>
+<li>Whether DeepSeek Harness's <code>tool/result</code> record keeps
+enough of each <code>memory_write</code> call to reconstruct an
+overwritten body, which would make the harness log a usable history for
+this store.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong> <code>src/types.ts</code>,
+<code>src/store.ts</code> (<code>MemoryStore</code>,
+<code>parseMemory</code>, <code>serializeMemory</code>,
+<code>projectKey</code>, <code>normalizeName</code>).</li>
+<li><strong>Write path:</strong> <code>src/tools.ts</code>
+(<code>memory_write</code>), <code>src/store.ts</code>
+(<code>write</code>, <code>redactSecrets</code>,
+<code>stripMemoryTags</code>, <code>withLockRecovery</code>).</li>
+<li><strong>Consolidation:</strong> <code>src/consolidate.ts</code>,
+<code>src/matching.ts</code>, <code>src/instructions.ts</code>.</li>
+<li><strong>Retrieval and injection:</strong>
+<code>src/prompt.ts</code>, <code>src/store.ts</code>
+(<code>renderIndexBody</code>, <code>memoryScore</code>,
+<code>isStale</code>, <code>readIndexSync</code>),
+<code>src/tools.ts</code> (<code>memory_read</code>,
+<code>memory_list</code>), <code>src/links.ts</code>.</li>
+<li><strong>Delete and approval:</strong> <code>src/tools.ts</code>
+(<code>memory_delete</code>, <code>memory_prune</code>,
+<code>memory_delete_all</code>, the <code>tools/pre-execute</code>
+listener), <code>src/store.ts</code> (<code>delete</code>,
+<code>clear</code>).</li>
+<li><strong>Plugin wiring and panel:</strong> <code>src/index.ts</code>,
+<code>src/memory-api.ts</code>, <code>src/client/</code>.</li>
+<li><strong>Tests and evals:</strong> <code>tests/*.spec.ts</code>,
+<code>evals/l0/</code>, <code>evals/runners/</code>,
+<code>evals/results/</code>, <code>evals/README.md</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the clone root at the pin.</p>
+<pre class="sh"><code># No mutation history, journal or audit file is written by the store (empty)
+git grep -nE &quot;appendFile|audit|journal|\.jsonl|history&quot; -- src
+
+# No record of a rejected or deleted value (one tool-description string only)
+git grep -niE &quot;tombstone|blocklist|denylist|rejected|forgotten|suppress&quot; -- src
+
+# No valid-time field; the only times are created, updated and lastRead (empty)
+git grep -niE &quot;validFrom|valid_from|validAt|effective|expires|validUntil|valid_to&quot; -- src
+
+# scope is not serialized: serializeMemory takes the record without it
+git grep -nE &quot;serializeMemory\(record: Omit&lt;MemoryRecord, &#39;scope&#39;&gt;&quot; -- src/store.ts
+
+# listAll always includes the user layer, whatever enableUserScope says
+git grep -nE &quot;async listAll|this.list\(&#39;user&#39;\)&quot; -- src/store.ts
+
+# The approval hook names only the two bulk verbs
+git grep -nE &quot;exec.name === &#39;memory_&quot; -- src/tools.ts
+
+# The session-start index refresh runs only with staleAfterDays above 0
+git grep -nE &quot;staleAfterDays &gt; 0|agent/created&quot; -- src/index.ts
+
+# No test uses a second project cwd (one CWD constant per file)
+git grep -nE &quot;^const CWD|CWD2|OTHER_CWD|otherCwd&quot; -- tests evals/l0
+
+# The L3 runner imports the product&#39;s matcher for its gold mapping
+git grep -nE &quot;import .*nameCoverage&quot; -- evals/runners
+
+# The linked landscape document is not in the tree (only the link)
+git ls-files docs
+git grep -n &quot;landscape-2026-09&quot;
+
+# No paper or citation (empty)
+git grep -niE &quot;arxiv|bibtex|@article|doi\.org|CITATION&quot; -- . &#39;:!package-lock.json&#39;
+
+# No rename or fork notice in the docs (empty)
+git grep -niE &quot;renamed|formerly|forked from&quot; -- &#39;*.md&#39;</code></pre>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/AskTheWay/dsh-auto-memory/commit/5bcf1c6d4f1ff303195c1e51fea56274810b3717"><code class="commit-id" title="5bcf1c6d4f1ff303195c1e51fea56274810b3717">5bcf1c6d…</code></a>
+— first reading, at the head of <code>main</code>, the v0.7.2 commit of
+14 October 2026. Screened from a full clone before reading: no auto-run
+surface, one build-time execution point (the npm <code>prepare</code>
+script running <code>tsdown</code>), <code>package.json</code> inside
+the seven-day cooldown, and 16 floating ranges against a
+<code>package-lock.json</code> unchanged since 26 September 2026. A
+different owner and store from the other DeepSeek Harness plugins in the
+atlas, and no rename or fork notice. Nothing was installed, built or
+run. One mark, <code>negative_eval</code>.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

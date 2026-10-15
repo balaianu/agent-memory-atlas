@@ -633,6 +633,16 @@ the host model may accept, three per pass
 calls every table a cache, and <code>mem rebuild</code> drops the file.
 <strong>Usage that decides removal is state; keep it beside the truth,
 not in the projection.</strong></p>
+<p><strong><a href="../../systems/dsh-auto-memory/">dsh-auto-memory</a>
+forgets by hiding, and one read is a permanent pardon.</strong> With
+<code>staleAfterDays</code> set, a memory never read and not updated
+within the window drops out of the injected index while its file stays
+listable. A single <code>memory_read</code> revives it, and
+<code>isStale</code> exempts any memory with a non-zero read count from
+then on (<code>src/store.ts:222-229</code>). Pinned memories never go
+stale. The setting defaults to 0, and the eviction suite asserts that
+the stale zero-read memory is the only one hidden among four classes,
+with every file kept.</p>
 <p><strong><a href="../../systems/gambletan-cortex/">Cortex
 (gambletan)</a> decays on last access and never records an
 access.</strong> Episode half-life is 72 hours plus 144 times base

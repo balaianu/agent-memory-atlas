@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 740
+    <meta name="description" content="The 741
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 740
+    <meta property="og:description" content="The 741
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-740 systems grouped by eight architectural
+741 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 740 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 741 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 740 systems
+          <p class="document-deck">The 741 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>740 systems do not fall into 182 categories. They
+<p>741 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -2962,7 +2962,9 @@ href="../systems/skillcorpus/"><code>skillcorpus</code></a>, plus hosted
 providers, <a
 href="../systems/dsh-layered-memory/"><code>dsh-layered-memory</code></a>,
 <a
-href="../systems/dsh-continual-harness/"><code>dsh-continual-harness</code></a></p>
+href="../systems/dsh-continual-harness/"><code>dsh-continual-harness</code></a>,
+<a
+href="../systems/dsh-auto-memory/"><code>dsh-auto-memory</code></a></p>
 <p>The runtime ships an interface, not a memory model.
 <strong>Hermes</strong> bounds its own curated Markdown hard and freezes
 it into the prompt at session start while mounting one external
@@ -3772,6 +3774,18 @@ id. The read half is thin: the default stable block lists entry ids, and
 no plugin tool reads one back. The optional global-write approval guards
 one verb while promotion and rollback reach the same store, and
 session-local skills are written into the shared skills directory.</p>
+<p><strong><a href="../systems/dsh-auto-memory/">dsh-auto-memory</a>
+ports Claude Code's auto-memory onto <a
+href="../systems/deepseek-harness/">DeepSeek Harness</a> and keeps it
+small.</strong> One Markdown file per memory sits in a directory per
+working directory or in a shared user directory, and a derived
+<code>MEMORY.md</code> index is injected on every step under a byte
+budget. The index is ordered by importance and a recency decay rounded
+to whole days, so the prompt prefix changes at most once a day. Every
+writer passes one redaction point, and muted and stale memories are
+tested out of the index beside controls. Correction keeps nothing: an
+overwrite discards the old text, and opt-in consolidation overwrites
+whatever its name-coverage matcher picks, in either layer.</p>
 <h2 id="local-coding-agent-memory">Local coding-agent memory</h2>
 <p><a href="../systems/rekal/"><code>rekal</code></a>, <a
 href="../systems/engram/"><code>engram</code></a>, <a

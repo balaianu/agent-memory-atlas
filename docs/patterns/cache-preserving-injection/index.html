@@ -379,6 +379,15 @@ the other way: they sit in the hashed identity, so an edit deliberately
 forces a cold respawn rather than letting a warm process serve the old
 notes. The cost is that turn two onward sees the breadcrumbs only
 through conversation history.</li>
+<li><strong><a
+href="../../systems/dsh-auto-memory/">dsh-auto-memory</a></strong> —
+stability bought by rounding rather than by anchoring. The injected
+index is ordered by importance times a recency decay counted in whole
+days, so a ranking that moves with use changes the text at most once a
+day. A read bumps its counter on disk and rebuilds the index only when
+it revives a hidden memory, leaving the new order for the next write
+(<code>src/store.ts:298-308</code>, <code>:432-448</code>). An empty
+store injects nothing at all.</li>
 </ul>
 <p>Note that <a href="../../systems/memos/">MemOS</a>'s "activation
 memory: KV/prefix cache" is a <em>different</em> mechanism — reusing

@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 740 reports.</strong></p>
+<p><strong>This page covers all 741 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30692,6 +30692,53 @@ the bookkeeping files and an as-of query over authored validity.</li>
 <li>Do not copy when: agent writes must be reviewed before they count, a
 page's status must keep it out of answers, or several principals share
 one server.</li>
+</ul>
+<h3 id="dsh-auto-memory"><a
+href="../systems/dsh-auto-memory/"><code>dsh-auto-memory</code></a></h3>
+<ul>
+<li>Best idea: <strong>the injected index is a derived file, rebuilt
+under the same lock as the write.</strong> Every tool, panel and
+consolidation write takes a cross-process lock on the layer's
+<code>MEMORY.md</code>, rewrites the memory file atomically and rebuilds
+the index, so the next prompt carries the change. The index is bounded
+at 4,096 bytes including its policy text, absent when the store is
+empty, and ordered by <code>importance × 0.995^days</code> with the day
+rounded so the text is stable within a day.</li>
+<li>Biggest risk: <strong>consolidation overwrites by guess and keeps no
+prior version.</strong> <code>pickBestMatch</code> accepts an exact
+name, a 0.6 share of the existing name's words in the candidate's name,
+or description Jaccard 0.7, and the matched file's body and description
+are replaced. The coverage is directional, so
+<code>deploy-staging</code> is overwritten by
+<code>deploy-staging-credentials</code>, and the target's layer comes
+from the match, so a project session can rewrite a user-layer memory
+every workspace injects.</li>
+<li>Most reusable component: <code>MemoryStore</code> in
+<code>src/store.ts</code> — name normalization with a reserved-name
+guard, one <code>write</code> that redacts secrets and escapes the
+wrapper tag for every producer, and <code>withLockRecovery</code>, which
+reclaims a lock whose holder pid is dead.</li>
+<li>Second risk: <strong>forgetting leaves nothing behind.</strong>
+Delete unlinks the file, overwrite discards the old text and keeps the
+old creation date, and no record of a removed value exists, so the next
+consolidation can extract it again. The approval hook asks only for
+<code>memory_delete_all</code> and a non-dry-run
+<code>memory_prune</code>; single deletes and overwrites run on the
+agent's authority.</li>
+<li>Maturity impression: MIT, 2,117 lines of TypeScript under
+<code>src/</code> plus a 644-line browser panel, 41 commits under four
+author names between 22 September and 14 October 2026, tagged v0.1.0 to
+v0.7.2. 124 Vitest cases run in CI, and one mark,
+<code>negative_eval</code>, on muted and stale memories asserted out of
+the index beside controls. A committed L3 run against
+<code>deepseek-chat</code> grades consolidation with the product's own
+matcher.</li>
+<li>Study when: you want Claude Code's file-per-memory design on another
+harness, with a bounded, cache-stable index and a store a person can
+grep and fix.</li>
+<li>Do not copy when: corrections need a trail, a deleted fact must stay
+deleted, or automatic extraction must not overwrite what a person
+wrote.</li>
 </ul>
 <h3 id="gambletan-cortex"><a
 href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a></h3>

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 740 reports.**
+**This page covers all 741 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6706,6 +6706,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 15,722 lines of Python and 40 skills, 359 commits by 39 authors between 6 April and 12 October 2026. Two marks, `bitemporal` and `negative_eval`, the second on exact-list exclusion tests with positive controls. 1,165 pytest functions; the server suite skips in CI, and the README's agent study has no run logs in the tree.
 - Study when: you want a human-readable knowledge vault an agent builds and a person fixes by hand, with a concurrency-safe writer for the bookkeeping files and an as-of query over authored validity.
 - Do not copy when: agent writes must be reviewed before they count, a page's status must keep it out of answers, or several principals share one server.
+
+### [`dsh-auto-memory`](../systems/dsh-auto-memory/)
+
+- Best idea: **the injected index is a derived file, rebuilt under the same lock as the write.** Every tool, panel and consolidation write takes a cross-process lock on the layer's `MEMORY.md`, rewrites the memory file atomically and rebuilds the index, so the next prompt carries the change. The index is bounded at 4,096 bytes including its policy text, absent when the store is empty, and ordered by `importance × 0.995^days` with the day rounded so the text is stable within a day.
+- Biggest risk: **consolidation overwrites by guess and keeps no prior version.** `pickBestMatch` accepts an exact name, a 0.6 share of the existing name's words in the candidate's name, or description Jaccard 0.7, and the matched file's body and description are replaced. The coverage is directional, so `deploy-staging` is overwritten by `deploy-staging-credentials`, and the target's layer comes from the match, so a project session can rewrite a user-layer memory every workspace injects.
+- Most reusable component: `MemoryStore` in `src/store.ts` — name normalization with a reserved-name guard, one `write` that redacts secrets and escapes the wrapper tag for every producer, and `withLockRecovery`, which reclaims a lock whose holder pid is dead.
+- Second risk: **forgetting leaves nothing behind.** Delete unlinks the file, overwrite discards the old text and keeps the old creation date, and no record of a removed value exists, so the next consolidation can extract it again. The approval hook asks only for `memory_delete_all` and a non-dry-run `memory_prune`; single deletes and overwrites run on the agent's authority.
+- Maturity impression: MIT, 2,117 lines of TypeScript under `src/` plus a 644-line browser panel, 41 commits under four author names between 22 September and 14 October 2026, tagged v0.1.0 to v0.7.2. 124 Vitest cases run in CI, and one mark, `negative_eval`, on muted and stale memories asserted out of the index beside controls. A committed L3 run against `deepseek-chat` grades consolidation with the product's own matcher.
+- Study when: you want Claude Code's file-per-memory design on another harness, with a bounded, cache-stable index and a store a person can grep and fix.
+- Do not copy when: corrections need a trail, a deleted fact must stay deleted, or automatic extraction must not overwrite what a person wrote.
 
 ### [`gambletan-cortex`](../systems/gambletan-cortex/)
 
