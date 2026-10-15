@@ -166,12 +166,15 @@ supplies judgement; the store supplies memory.</p>
 <p>It is AGPL-3.0-or-later, with a separate commercial licence offered
 in <code>COMMERCIAL.md</code> and contributions taken under a CLA. The
 screen found one auto-run surface (<code>server.json</code>, which
-declares version 0.20.3 against a package at 0.22.2) and five build-time
-execution paths: the <code>Makefile</code>, the client-setup module,
-flagged by its filename, and three pytest <code>conftest.py</code>
-files. It found one unpinned dependency surface with a lockfile beside
-it, and <code>pyproject.toml</code> changed on 13 October 2026, inside
-the seven-day cooldown, so nothing was installed, built or run.</p>
+declares version 0.20.3 against a package at 0.22.2) and flagged five
+files for inspection as possible execution points: the
+<code>Makefile</code>; the client-setup module, matched by its filename,
+which runs only as the explicitly invoked <code>slowave setup</code>;
+and three pytest <code>conftest.py</code> files, which execute when the
+tests are collected. It found one unpinned dependency surface with a
+lockfile beside it, and <code>pyproject.toml</code> changed on 13
+October 2026, inside the seven-day cooldown, so nothing was installed,
+built or run.</p>
 <p><strong>Cross-scope reach is earned, not granted.</strong> Every
 schema carries a scope, the store's candidate queries filter on it in
 SQL, and the widening rule lives in the predicate rather than in the
@@ -367,15 +370,16 @@ tables, a dashboard of over 4,000 lines, a CLI of over 2,000, and a
 client-setup module of 2,366 lines. <code>slowave setup</code> writes
 configuration for eight client keys and installs daemon, worker and
 backup user services. It runs when invoked: the build backend is plain
-setuptools with no install hook, so a pip or pipx install executes
-nothing. The Homebrew formula in the tree is the exception, calling
-<code>slowave setup</code> from its <code>post_install</code>
-(<code>Formula/slowave.rb:21-25</code>); the tap the install guide names
-is a different repository, <code>mrsalty/slowave</code>, which this
-reading did not open. The multilingual encoder is fetched from Hugging
-Face at a pinned revision on a cache miss
-(<code>symbolic/retrieval_encoder.py</code>). Read the setup module
-before running it, because it edits files outside the project.</p>
+setuptools with no install hook, so pip and pipx installation do not run
+<code>slowave setup</code>. The Homebrew formula in the tree is the
+exception, calling <code>slowave setup</code> from its
+<code>post_install</code> (<code>Formula/slowave.rb:21-25</code>); the
+tap the install guide names is a different repository,
+<code>mrsalty/slowave</code>, which this reading did not open. The
+multilingual encoder is fetched from Hugging Face at a pinned revision
+on a cache miss (<code>symbolic/retrieval_encoder.py</code>). Read the
+setup module before running it, because it edits files outside the
+project.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
@@ -626,11 +630,13 @@ the browser's own private-network rules allow it.</p>
 memory it shows exposures, uses, the use rate, and reports of
 irrelevant, stale and wrong (<code>dashboard/app.py:1180-1192</code>).
 Per retrieval kind it counts what was exposed, assessed, used and left
-unassessed, and how many items were delivered in two or more tasks
-(<code>dashboard/metrics.py:178-186</code>). Per session it shows
-whether feedback came back (<code>dashboard/app.py:3215</code>), and per
-tool response an estimated token overhead, characters divided by four
-where no estimate was stored
+unassessed, and how many memories and procedures the agent reported
+using in two or more distinct task sessions
+(<code>dashboard/metrics.py:162-186</code>); a procedure's own
+originating session and sessions before it existed do not count. Per
+session it shows whether feedback came back
+(<code>dashboard/app.py:3215</code>), and per tool response an estimated
+token overhead, characters divided by four where no estimate was stored
 (<code>dashboard/metrics.py:236-244</code>). Each figure is a delivery
 count or the agent's own report, so it shows whether memory was used,
 not whether a task went better.</p>
@@ -645,11 +651,12 @@ session, or re-formed from the retained <code>raw_events</code> by the
 rebuild that follows a logic-version change, is a new schema with
 nothing in the store positioned to intercept it (<a
 href="#1-executive-summary">section 1</a> sets out both directions of
-the rebuild). The trade runs the other way too: a store that keeps no
-record of what it deleted has nothing to leak. The procedure-search rows
-a procedure delete leaves behind are not a tombstone either: they are
-keyed on <code>proc_&lt;session_id&gt;</code>, and no write path
-consults them.</p>
+the rebuild). The trade runs the other way too: no deletion record is
+kept, though the deleted content stays in <code>raw_events</code> and in
+any retained backup. The procedure-search rows a procedure delete leaves
+behind are not a tombstone either: they are keyed on
+<code>proc_&lt;session_id&gt;</code>, and no write path consults
+them.</p>
 <p><strong>Recovery is a snapshot.</strong> <code>slowave backup</code>
 takes an online SQLite <code>.backup()</code> copy, gzips it and keeps
 the last seven, or <code>SLOWAVE_BACKUP_KEEP</code>
@@ -1038,13 +1045,16 @@ git grep -n -i -E &#39;csrf|authorization|origin&#39; -- slowave/dashboard/app.p
 href="https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d"><code class="commit-id" title="23c951420944009ce8cea8762fa4d4a30eff810d">23c95142…</code></a>,
 same pin. Corrected: consolidation's reinforcement in place leaves a
 schema's status unchanged, so a stale schema is not reactivated (<a
-href="#7-write-mechanics">section 7</a>); <code>slowave setup</code>
-runs when invoked, and a pip install executes nothing, while the in-tree
-Homebrew formula runs it from <code>post_install</code>. Added: salience
-decay of unrecalled schemas, procedure ranking by recorded outcome, the
-dashboard's feedback measurements, and daily backup with restore. The
-rebuild and deletion account is stated once, in section 1. No mark
-moved.</p>
+href="#7-write-mechanics">section 7</a>). <code>slowave setup</code>
+runs when invoked: pip and pipx installation do not run it, and the
+in-tree Homebrew formula runs it from <code>post_install</code>. The
+screen's five flagged files are inspection candidates, not build hooks.
+The dashboard's cross-task figure counts reported use in distinct
+sessions, not delivery, and a deletion leaves its content in
+<code>raw_events</code> and backups. Added: salience decay of unrecalled
+schemas, procedure ranking by recorded outcome, the dashboard's feedback
+measurements, and daily backup with restore. The rebuild and deletion
+account is stated once, in section 1. No mark moved.</p>
 <p><strong>2026-10-15</strong> — <a
 href="https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d"><code class="commit-id" title="23c951420944009ce8cea8762fa4d4a30eff810d">23c95142…</code></a>,
 version 0.22.2, 43 commits past the previous pin. Three marks stand,

@@ -48,9 +48,10 @@ memory.
 It is AGPL-3.0-or-later, with a separate commercial licence offered in
 `COMMERCIAL.md` and contributions taken under a CLA. The screen found one
 auto-run surface (`server.json`, which declares version 0.20.3 against a
-package at 0.22.2) and five build-time execution paths: the `Makefile`, the
-client-setup module, flagged by its filename, and three pytest `conftest.py`
-files. It found one unpinned dependency surface with a lockfile beside it, and
+package at 0.22.2) and flagged five files for inspection as possible execution
+points: the `Makefile`; the client-setup module, matched by its filename, which
+runs only as the explicitly invoked `slowave setup`; and three pytest
+`conftest.py` files, which execute when the tests are collected. It found one unpinned dependency surface with a lockfile beside it, and
 `pyproject.toml` changed on 13 October 2026, inside the seven-day cooldown, so
 nothing was installed, built or run.
 
@@ -247,8 +248,8 @@ The surface is wide for work dated 8 June to 14 October 2026: 33 tables, a
 dashboard of over 4,000 lines, a CLI of over 2,000, and a client-setup module of
 2,366 lines. `slowave setup` writes configuration for eight client keys and
 installs daemon, worker and backup user services. It runs when invoked: the
-build backend is plain setuptools with no install hook, so a pip or pipx
-install executes nothing. The Homebrew formula in the tree is the exception,
+build backend is plain setuptools with no install hook, so pip and pipx
+installation do not run `slowave setup`. The Homebrew formula in the tree is the exception,
 calling `slowave setup` from its `post_install` (`Formula/slowave.rb:21-25`);
 the tap the install guide names is a different repository, `mrsalty/slowave`,
 which this reading did not open. The multilingual encoder is fetched from
@@ -477,8 +478,10 @@ own private-network rules allow it.
 The dashboard also measures memory through its own ledgers. Per memory it
 shows exposures, uses, the use rate, and reports of irrelevant, stale and wrong
 (`dashboard/app.py:1180-1192`). Per retrieval kind it counts what was exposed,
-assessed, used and left unassessed, and how many items were delivered in two or
-more tasks (`dashboard/metrics.py:178-186`). Per session it shows whether
+assessed, used and left unassessed, and how many memories and procedures the
+agent reported using in two or more distinct task sessions
+(`dashboard/metrics.py:162-186`); a procedure's own originating session and
+sessions before it existed do not count. Per session it shows whether
 feedback came back (`dashboard/app.py:3215`), and per tool response an
 estimated token overhead, characters divided by four where no estimate was
 stored (`dashboard/metrics.py:236-244`). Each figure is a delivery count or the
@@ -495,8 +498,8 @@ proposition re-derived from a later session, or re-formed from the retained
 `raw_events` by the rebuild that follows a logic-version change, is a new
 schema with nothing in the store positioned to intercept it ([section
 1](#1-executive-summary) sets out both directions of the rebuild). The trade
-runs the other way too: a store that keeps no record of what it deleted has
-nothing to leak. The procedure-search rows a procedure delete leaves behind are
+runs the other way too: no deletion record is kept, though the deleted content
+stays in `raw_events` and in any retained backup. The procedure-search rows a procedure delete leaves behind are
 not a tombstone either: they are keyed on `proc_<session_id>`, and no write
 path consults them.
 
@@ -730,7 +733,7 @@ git grep -n -i -E 'csrf|authorization|origin' -- slowave/dashboard/app.py   # no
 
 ## History
 
-**2026-10-15** — [`23c951420944009ce8cea8762fa4d4a30eff810d`](https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d), same pin. Corrected: consolidation's reinforcement in place leaves a schema's status unchanged, so a stale schema is not reactivated ([section 7](#7-write-mechanics)); `slowave setup` runs when invoked, and a pip install executes nothing, while the in-tree Homebrew formula runs it from `post_install`. Added: salience decay of unrecalled schemas, procedure ranking by recorded outcome, the dashboard's feedback measurements, and daily backup with restore. The rebuild and deletion account is stated once, in section 1. No mark moved.
+**2026-10-15** — [`23c951420944009ce8cea8762fa4d4a30eff810d`](https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d), same pin. Corrected: consolidation's reinforcement in place leaves a schema's status unchanged, so a stale schema is not reactivated ([section 7](#7-write-mechanics)). `slowave setup` runs when invoked: pip and pipx installation do not run it, and the in-tree Homebrew formula runs it from `post_install`. The screen's five flagged files are inspection candidates, not build hooks. The dashboard's cross-task figure counts reported use in distinct sessions, not delivery, and a deletion leaves its content in `raw_events` and backups. Added: salience decay of unrecalled schemas, procedure ranking by recorded outcome, the dashboard's feedback measurements, and daily backup with restore. The rebuild and deletion account is stated once, in section 1. No mark moved.
 
 **2026-10-15** — [`23c951420944009ce8cea8762fa4d4a30eff810d`](https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d), version 0.22.2, 43 commits past the previous pin. Three marks stand, each re-verified at both pins. Upstream: the MCP tools deliver from a declarative catalog with a multilingual channel and without the stage-2 discount ([section 6](#6-retrieval-mechanics)); a retrieval-decision trail; a feedback-derived learning projection; Copilot CLI setup; procedure admission on the applicability cosine alone; the Home procedure count reading raw events. Wrong at the previous pin: `occurred_at` is an event-time clock, so not every timestamp was a record time; the rebuild does not re-form remembered schemas, so the derived layers could not always be rebuilt; and seven cases, not three, paired required with forbidden content. Screened first: one auto-run surface, five build-time execution points, one unpinned surface, `pyproject.toml` inside the cooldown. Nothing installed, built or run.
 
