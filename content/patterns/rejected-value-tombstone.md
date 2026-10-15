@@ -1009,6 +1009,8 @@ that fresh evidence arguably *should* revive a claim — which is the tradeoff t
 page's *Tradeoffs* section names, and nothing in the repository states it as a
 decision.
 
+**[pi-jarvis](../../systems/pi-jarvis/) keys its tombstone on the slot a fact occupies, and its tests assert that choice.** A note's id is a SHA-256 of its scope, project and normalized title, and a forget writes that id into `tombstones`. Every automatic save with the id returns `forgotten`, and only a person's `remember` command lifts it (`memory-store.ts:90-95`, `:491-499`). A rename tombstones the old title in the same transaction. The committed test saves a changed body under a forgotten title and asserts the refusal (`test/memory-store.test.ts:181-182`), so the record refuses the slot rather than the value, and the same fact under a new title is a new identity. **Key the tombstone on what a writer will re-assert, and decide whether that is the title or the body.**
+
 ## Tests to require
 
 - **Run the laundering sequence**: reject a value, supersede the claim with a

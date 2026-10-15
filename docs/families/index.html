@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 739
+    <meta name="description" content="The 740
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 739
+    <meta property="og:description" content="The 740
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-739 systems grouped by eight architectural
+740 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 739 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 740 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 739 systems
+          <p class="document-deck">The 740 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>739 systems do not fall into 182 categories. They
+<p>740 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -3999,6 +3999,7 @@ href="../systems/cloud-alter-ego/"><code>cloud-alter-ego</code></a>, <a
 href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
 <a href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
+href="../systems/pi-jarvis/"><code>pi-jarvis</code></a>, <a
 href="../systems/brain-mcp/"><code>brain-mcp</code></a>, <a
 href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
@@ -8040,6 +8041,19 @@ that 85% of its lookups came back empty. Against that:
 <code>global</code> is a value of the agent's own scope argument, a read
 by id ignores scope, and the read does not check the id of the line it
 lands on. One mark, <code>negative_eval</code>.</p>
+<p><strong><a href="../systems/pi-jarvis/">pi-jarvis</a> keys a note on
+its scoped title, and the tombstone inherits the key.</strong> An MIT
+TypeScript extension for <a href="../systems/pi/">Pi</a> that gives the
+main session and a side session, Jarvis, one <code>node:sqlite</code>
+store of model-curated notes and captured turns. Each request gets an
+FTS5 keyword recall that is never written to the transcript. A forget or
+a rename tombstones the title's hash, so the model's next save of that
+title is refused until a person restores it. Against that: the same fact
+under a new title is admitted, the model's same-title save overwrites a
+note a person wrote with no prior version kept, and the search tool's
+<code>all</code> scope reads every project with no gate, while the
+repository's opt-in session archive asks a person before the same
+widening. One mark, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/mnemo/">Mnemo</a> supersedes carefully
 and forgets loosely.</strong> An Apache-2.0 HTTP MCP server on one
 SQLite file per namespace: FTS5 tiers and sqlite-vec cosine fused by

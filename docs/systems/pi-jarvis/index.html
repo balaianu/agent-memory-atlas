@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Pi extension giving the main
+agent and a side session one local SQLite store of curated notes and
+captured turns, recalled by keyword.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="pi-jarvis — Agent Memory Atlas">
+    <meta property="og:description" content="A Pi extension giving the
+main agent and a side session one local SQLite store of curated notes
+and captured turns, recalled by keyword.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="pi-jarvis — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Pi extension giving the
+main agent and a side session one local SQLite store of curated notes
+and captured turns, recalled by keyword.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>pi-jarvis — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "pi-jarvis",
+      "description": "A Pi extension giving the main agent and a side session one local SQLite store of curated notes and captured turns, recalled by keyword.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Shared notes for a Pi agent and its side
+session, keyed and tombstoned by scoped title</p>
+          <h1>pi-jarvis</h1>
+          <p class="document-deck">A Pi extension giving the main agent
+and a side session one local SQLite store of curated notes and captured
+turns, recalled by keyword.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/crustyhacker/pi-jarvis">
+              <span>Source</span>
+              <strong>crustyhacker/pi-jarvis</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/crustyhacker/pi-jarvis/commit/1dab7a41ad9c2a7a2a5249da396faa4aa316108b" title="1dab7a41ad9c2a7a2a5249da396faa4aa316108b">
+              <span>Analyzed revision</span>
+              <code>1dab7a41…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/crustyhacker--pi-jarvis" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>crustyhacker--pi-jarvis</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>16,322
+lines of TypeScript outside test/: 3,090 in the nine memory files, 5,470
+in the fourteen archive files, the rest the side-session overlay,
+watchers and MCP</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>56
+commits on main by one author, 6 April – 11 October 2026; version
+1.14.0; shared memory arrived in 1.7.0, the archive in 1.8.0, the editor
+in 1.12.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>877
+node:test cases in 46 files; the eight memory files hold 229 and the
+archive files 405; CI runs them on Node 22.19.0 and 24; none run for
+this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>pi-jarvis is an extension for the <a href="../pi/">Pi</a> coding
+agent that adds a side conversation, called Jarvis, and gives it and the
+main session one shared memory. The memory is a local SQLite file of
+curated notes the model saves through a tool, plus bounded captures of
+finalized user and assistant messages. Each model request gets a small
+keyword recall injected for that request only. What is notable is
+identity: a note's id is a hash of its scoped, normalized title, so a
+forget or a rename leaves a tombstone that refuses the model's next save
+of that title until a person restores it. What is weak is that the key
+is the title and not the fact, and the model's same-title save
+overwrites a note a person wrote.</p>
+<p>The extension has a second, separate store: an opt-in archive of raw
+Pi session entries, off by default, searchable by three read-only model
+tools and encryptable with a password. It is a transcript, and section 3
+treats it as infrastructure. A sibling extension for the same host, <a
+href="../pi-memory/">pi-memory</a>, keeps no store of its own and
+indexes Pi's journals; pi-jarvis's archive is the copying version of
+that idea, and its shared memory is the curated layer pi-memory does not
+have.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The tombstone is keyed on the slot, not the value.</strong>
+<code>forget</code> writes the record's id into <code>tombstones</code>,
+and every later save with that id returns <code>forgotten</code> unless
+a person's command passes <code>explicit: true</code>
+(<code>memory-store.ts:491-499</code>). The id is a hash of scope,
+project and normalized title (<code>:90-95</code>). A committed test
+asserts that a different body under the same title is refused
+(<code>test/memory-store.test.ts:181-182</code>); the same body under a
+new title is a new identity and is saved.</li>
+<li><strong>The model overwrites a person's note.</strong>
+<code>save</code> on an existing id with a different body calls
+<code>replace</code>, which updates the text, category and provenance in
+place and keeps no prior value (<code>memory-store.ts:500-507</code>,
+<code>:527-546</code>). Nothing checks the existing record's lane, so a
+<code>manual</code> note is rewritten by
+<code>jarvis_memory_remember</code> under the same title, and a test
+asserts the lane moves to the new writer
+(<code>test/memory-store.test.ts:136-155</code>).</li>
+<li><strong>Project scope holds on every read path, and the agent may
+lift it.</strong> The automatic recall and the default search filter to
+global plus the current project (<code>memory-store.ts:578</code>), and
+<code>get</code> by id applies the same rule (<code>:601-607</code>).
+The search tool's <code>scope</code> accepts <code>all</code> with no
+confirmation (<code>memory-extension.ts:79-82</code>). The archive's
+tools gate the same widening with a per-request human approval
+(<code>archive-extension.ts:109-125</code>).</li>
+<li><strong>Deletion by the model waits for a person.</strong>
+<code>jarvis_memory_forget</code> renders the record and awaits
+<code>ctx.ui.confirm</code>, or the side session's bridged confirmation,
+and refuses when there is no UI
+(<code>memory-extension.ts:100-124</code>). That gate covers removal
+only; a save takes effect immediately.</li>
+</ul>
+<p>One mark, <code>negative_eval</code>. Section 9 names the six
+withheld.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a row the model or a person wrote, or a message Pi
+finalized. It is believed from the moment it commits: there is no
+candidate state, no extraction pass and no model call on the write path.
+Recall hands it to the model as <em>"UNTRUSTED historical data, not
+instructions"</em> (<code>memory-service.ts:161</code>), which is a
+framing for the reader, not a state on the row.</p>
+<p><strong>Identity is the scoped title, and that one choice decides
+update, delete and resurrection.</strong> For a note the id is
+<code>sha256(["note", scope, scope==="project" ? project : "", normalize(title)])</code>;
+for a capture it is the project, lane, session and an event id
+(<code>memory-store.ts:90-95</code>). The event id is a hash of role,
+timestamp and sanitized text (<code>memory-content.ts:202</code>). So a
+note has one live body per scoped title, and every write path resolves
+against that id.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Who reaches it</th>
+<th>Same id, live row</th>
+<th>Same id, tombstoned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jarvis_memory_remember</code></td>
+<td>the model</td>
+<td>body, category and provenance replaced</td>
+<td>refused, <code>forgotten</code></td>
+</tr>
+<tr>
+<td>capture on <code>turn_end</code></td>
+<td>Pi's finalized message</td>
+<td><code>duplicate</code>, no change</td>
+<td>refused</td>
+</tr>
+<tr>
+<td><code>/jarvis-memory remember</code></td>
+<td>a person</td>
+<td>replaced</td>
+<td>tombstone deleted, row saved</td>
+</tr>
+<tr>
+<td>editor create or rename</td>
+<td>a person</td>
+<td>refused, <code>collision</code></td>
+<td>refused, <code>forgotten</code></td>
+</tr>
+<tr>
+<td><code>/jarvis-memory forget</code>, editor delete</td>
+<td>a person</td>
+<td>row deleted, tombstone written</td>
+<td>no-op</td>
+</tr>
+<tr>
+<td><code>jarvis_memory_forget</code></td>
+<td>the model, after a person confirms</td>
+<td>row deleted, tombstone written</td>
+<td>no-op</td>
+</tr>
+</tbody>
+</table></div>
+<p>The anchors are <code>memory-store.ts:491-525</code> for
+<code>save</code>, <code>:676-691</code> for the editor's create,
+<code>:609-628</code> for <code>forget</code> and
+<code>memory-service.ts:310-317</code> for the command that passes
+<code>explicit: true</code>.</p>
+<p><strong>A rename forgets the old title.</strong> When
+<code>replace</code> or the editor changes a note's title, the old id
+goes into <code>tombstones</code> in the same transaction
+(<code>memory-store.ts:528-536</code>, <code>:710-715</code>). A model
+that saves under the old title afterwards is refused, so a person's
+correction of a title is not undone by the next automatic save. A
+correction of the <em>body</em> under the same title has no such
+protection: the model's next save of that title replaces it.</p>
+<p><strong>A note dies three ways.</strong> A forget deletes the row and
+tombstones the id. A bulk forget does the same for a scope
+(<code>memory-store.ts:748-762</code>). Captures beyond the newest
+10,000 are deleted without a tombstone, inside the transaction of the
+save that exceeds the cap (<code>:510-516</code>). Nothing decays,
+expires or is superseded.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a pi-jarvis note is written, which writes a tombstone refuses, which reads carry the project predicate, and where the agent can lift it</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a pi-jarvis note is written, which writes a tombstone refuses, which reads carry the project predicate, and where the agent can lift it
+flowchart TD
+    M[&quot;model: jarvis_memory_remember&lt;br/&gt;title, body, scope&quot;] --&gt; ID[&quot;id = sha256 of scope,&lt;br/&gt;project and normalized title&quot;]
+    H[&quot;person: /jarvis-memory remember&lt;br/&gt;explicit: true&quot;] --&gt; ID
+    C[&quot;Pi finalized message&lt;br/&gt;on turn_end&quot;] --&gt; CID[&quot;id = project, lane,&lt;br/&gt;session, event hash&quot;]
+    ID --&gt; T{&quot;id in tombstones?&quot;}
+    CID --&gt; T
+    T -- &quot;yes, model or capture&quot; --&gt; REF[&quot;refused: forgotten&quot;]
+    T -- &quot;yes, person&quot; --&gt; LIFT[&quot;tombstone deleted&quot;]
+    T -- &quot;no&quot; --&gt; L{&quot;live row&lt;br/&gt;with this id?&quot;}
+    LIFT --&gt; L
+    L -- &quot;note&quot; --&gt; OW[&quot;body, category and&lt;br/&gt;provenance overwritten,&lt;br/&gt;no prior value kept&quot;]
+    L -- &quot;capture&quot; --&gt; DUP[&quot;duplicate, unchanged&quot;]
+    L -- &quot;none&quot; --&gt; NEW[&quot;row inserted,&lt;br/&gt;FTS indexed&quot;]
+    OW --&gt; R[&quot;records&quot;]
+    NEW --&gt; R
+    R --&gt; REC[&quot;recall per request:&lt;br/&gt;global + current project&quot;]
+    R --&gt; S{&quot;jarvis_memory_search&lt;br/&gt;scope argument&quot;}
+    S -- &quot;current or global&quot; --&gt; SC[&quot;filtered&quot;]
+    S -- &quot;all&quot; --&gt; ALL[&quot;every project,&lt;br/&gt;no confirmation&quot;]
+    R --&gt; F[&quot;forget: model needs a&lt;br/&gt;person&#39;s confirmation&quot;]
+    F --&gt; TS[&quot;row deleted,&lt;br/&gt;id tombstoned&quot;]
+    TS --&gt; T
+    NT[&quot;same fact, new title&quot;] -.-&gt; ID</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>The extension loads into Pi as one module. <code>index.ts</code>
+builds a single <code>SharedMemoryService</code> over the agent
+directory (<code>index.ts:142</code>) and mounts the memory extension
+factory twice: once in the main session with lane <code>main</code>
+(<code>:944-951</code>) and once inside the Jarvis side session with
+lane <code>jarvis</code> (<code>side-session.ts:524-529</code>). Both
+lanes share the service and the database connection, so a note saved in
+one is recalled in the other on its next request.</p>
+<p><strong>Storage.</strong> <code>MemoryStore</code> opens
+<code>&lt;agentDir&gt;/extensions/pi-jarvis-memory/memory.sqlite</code>
+through <code>node:sqlite</code>, lazily, on the first read or write
+(<code>memory-store.ts:239-243</code>). It creates the directory
+<code>0700</code> and the file <code>0600</code>, refuses symlinks, hard
+links and foreign owners in its subtree, and validates the exact schema,
+the record budget, a <code>quick_check</code>, every row's identity hash
+and the FTS index against its content before use
+(<code>:383-413</code>). An unknown schema is an error and is never
+reset. Writes take <code>BEGIN IMMEDIATE</code>, and WAL coordinates
+several Pi processes on one store.</p>
+<p><strong>The archive is a second store with its own controls.</strong>
+<code>ArchiveStore</code> keeps raw Pi session entries — every entry
+type and branch, unredacted — in <code>archive.sqlite</code>, with an
+FTS5 index, a project and session key, and its own tombstones keyed on
+project, session and entry id (<code>archive-store.ts:22-48</code>,
+<code>:610-632</code>). It is off by default and records only when
+enabled, from the session journal on turn and session boundaries
+(<code>archive-extension.ts:235-257</code>). A person can import old Pi
+session files after a preview and a sensitive-data confirmation.
+Optional encryption moves the database to
+<code>better-sqlite3-multiple-ciphers</code> with a random data key
+wrapped by scrypt and AES-256-GCM (<code>archive-crypto.ts:9-13</code>).
+The archive is never injected into context; it is a transcript, and
+nothing in it can be corrected.</p>
+<p><strong>Controls.</strong> Memory policy is three booleans,
+<code>enabled</code>, <code>capture</code> and <code>recall</code>,
+resolved project over global over default, with global
+<code>enabled: false</code> a master switch and an untrusted project or
+unreadable settings forcing all three off
+(<code>memory-config.ts:25-47</code>). The archive has four, adding
+<code>modelAccess</code> and <code>modelWideSearch</code>, and defaults
+<code>enabled</code> to false
+(<code>archive-config.ts:45-49</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing runs beside Pi. Install the npm package into Pi, reload, and
+memory is on in trusted projects. It needs Node 22.19 or later for
+<code>node:sqlite</code>, no API key and no network. The store is a
+SQLite file a person can open and read, and the README gives the reset:
+stop every Pi process and delete the directory, which removes the
+tombstones too. The archive's encryption needs an optional native
+binding, validated on Linux only according to
+<code>docs/archive-encryption-design.md</code>. The extension's UI
+requires Pi's TUI mode; memory itself also works headless and discloses
+itself on stderr.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Model write.</strong> <code>jarvis_memory_remember</code>
+(<code>memory-extension.ts:85-99</code>) checks the live policy, trust,
+session generation and service epoch, then calls
+<code>SharedMemoryService.remember</code>
+(<code>memory-service.ts:175-186</code>). That rejects text the
+sanitizer redacted or omitted, defaults scope to <code>project</code>
+and category to <code>project</code>, and calls
+<code>MemoryStore.save</code> without <code>explicit</code>
+(<code>memory-store.ts:491-525</code>). The tool is annotated
+<code>destructiveHint: true</code> because the upsert can replace a fact
+(<code>memory-extension.ts:89-91</code>).</p>
+<p><strong>Capture.</strong> <code>message_end</code> records only an
+anchor — the session leaf id, role, session and epoch — for a user or
+assistant message (<code>memory-extension.ts:240-250</code>). On
+<code>turn_end</code> or <code>agent_settled</code>,
+<code>flushCaptures</code> walks the newly persisted suffix of the
+session tree back to that anchor, at most 1,024 entries, and captures
+the first entry of the right role after each anchor
+(<code>:139-175</code>). <code>extractMemoryText</code> keeps only text
+parts, drops failed or aborted assistant output, and hashes the event id
+(<code>memory-content.ts:168-207</code>); <code>capture</code> saves it
+as a <code>conversation</code> record
+(<code>memory-service.ts:129-146</code>). A pending anchor is discarded
+on any policy, trust or session change.</p>
+<p><strong>Recall and injection.</strong> On Pi's <code>context</code>
+event, <code>recall</code> turns the last prompt into at most 12 literal
+terms after removing stop words (<code>memory-service.ts:19-27</code>),
+then makes three store reads: the 3 newest global notes, 5 notes in the
+current scope by keyword, and 4 captures by keyword with the current
+session's removed and 2 kept (<code>:155-158</code>). It dedupes, keeps
+7 and renders JSON capped at 6,000 bytes (<code>:159-161</code>). The
+hook prepends the result as a hidden custom message and removes any
+earlier copy, so nothing is persisted
+(<code>memory-extension.ts:209-215</code>). A second hook injects the
+memory policy text next to the system message
+(<code>:216-239</code>).</p>
+<p><strong>Search.</strong> <code>jarvis_memory_search</code> calls
+<code>service.search</code> with the tool's <code>scope</code>, default
+<code>current</code> (<code>memory-extension.ts:74-84</code>,
+<code>memory-service.ts:168-173</code>), which reaches
+<code>MemoryStore.list</code>
+(<code>memory-store.ts:561-599</code>).</p>
+<p><strong>Forget.</strong> The model's
+<code>jarvis_memory_forget</code> reads the record in the current scope,
+renders it, awaits a person's confirmation and then calls
+<code>forget</code> with the reviewed snapshot, which is compared to the
+row inside the delete's transaction
+(<code>memory-extension.ts:100-124</code>,
+<code>memory-store.ts:609-628</code>). The main lane's confirmation
+refuses while the overlay, the editor or a picker is open
+(<code>index.ts:944-951</code>); the side lane bridges to the overlay
+(<code>side-session.ts:528</code>). Human commands reach
+<code>forget</code> and <code>forgetAll</code> directly
+(<code>memory-service.ts:325-336</code>).</p>
+<p><strong>Human editor.</strong> <code>/jarvis-memory editor</code>
+opens a TUI over notes only (<code>index.ts:1574-1582</code>). Its
+create, update and delete run through <code>editorCreate</code>,
+<code>editorUpdate</code> and <code>editorForget</code>, each in a
+transaction that compares the complete reviewed version before writing
+(<code>memory-store.ts:676-745</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The memory schema is two tables and an index
+(<code>memory-store.ts:25-50</code>). <code>records</code> is
+<code>STRICT</code> with <code>CHECK</code> constraints on every column.
+It holds a 64-hex <code>id</code>, <code>kind</code> note or
+conversation, <code>category</code> user, feedback, project or
+reference, <code>scope</code> global or project, and an absolute
+<code>project</code> path. Beside them sit <code>lane</code> main,
+jarvis or manual, <code>session_id</code>, <code>event_id</code>, an
+optional <code>role</code>, <code>created_at</code> and
+<code>updated_at</code> in milliseconds, a 160-character
+<code>title</code>, a body of at most 16 KiB, and normalized copies of
+both for search. <code>tombstones</code> holds an id and
+<code>deleted_at</code>, nothing else. <code>records_fts</code> is an
+external-content FTS5 table over the two normalized columns with
+<code>unicode61 remove_diacritics 2</code>.</p>
+<p><strong>Scope is a column and a key component.</strong> A project
+note's id includes the project path; a global note's does not, so a
+global note saved from a second project updates the same row and
+rewrites its <code>project</code> column to the newer writer
+(<code>test/memory-store.test.ts:149-153</code>). The
+<code>project</code> field on a global note is therefore the last
+writer's project, not a boundary.</p>
+<p><strong>Provenance is one tuple and is overwritten.</strong> Lane,
+session, event and role describe the most recent write, and
+<code>replace</code> sets them from the new input
+(<code>memory-store.ts:539-543</code>). There is no history table; the
+earlier body and its source are gone after an upsert.</p>
+<p><strong>Time is the write clock.</strong> <code>created_at</code> is
+set on insert and <code>updated_at</code> on each change, kept monotonic
+by <code>Math.max(Date.now(), existing.updatedAt + 1)</code>
+(<code>memory-store.ts:543</code>). No field records when a fact was
+true.</p>
+<p><strong>Budgets are hard.</strong> 1,000 notes, 10,000 captures,
+100,000 tombstones, and 100,000 identities across live rows and
+tombstones (<code>memory-store.ts:17</code>). A new identity fails at
+capacity while forgetting stays available, because each live row
+reserves its future tombstone (<code>:477-483</code>). Notes are never
+evicted; a save past 1,000 fails.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>All retrieval is FTS5 over normalized text. <code>list</code> quotes
+each term, joins them with <code>OR</code>, ranks by
+<code>bm25(records_fts, 8.0, 1.0)</code>, and orders notes before
+captures, then by rank and recency, at most 50 rows
+(<code>memory-store.ts:569-597</code>). User operators and wildcards
+cannot change the query grammar. With no terms it returns the newest
+rows in scope.</p>
+<p><strong>The automatic recall is three fixed reads.</strong> The 3
+newest global notes are injected on every request regardless of the
+prompt (<code>memory-service.ts:155</code>). The keyword reads follow
+the prompt's terms; when every word is a stop word the note read returns
+the 5 newest notes in scope. Captures are only recalled with terms, and
+the current session's are filtered out because they are in context
+(<code>:157-158</code>). Each record's text is cut to 2,000 bytes, and
+records shrink by halving until the JSON fits 6,000 bytes, with
+<code>excerpt</code> and <code>omitted</code> stated in the output
+(<code>:375-401</code>).</p>
+<p><strong>The project predicate is on every read.</strong>
+<code>scope: "current"</code> compiles to
+<code>(r.scope='global' OR (r.scope='project' AND r.project=?))</code>,
+an equality on the canonical cwd (<code>memory-store.ts:578</code>);
+<code>global</code> keeps only global rows; <code>all</code> adds
+nothing. The context assembler, <code>recall</code>, uses
+<code>global</code> and the default <code>current</code>
+(<code>memory-service.ts:155-157</code>). <code>get</code> by id applies
+the same rule unless its <code>allProjects</code> flag is set, and the
+model's forget never sets it (<code>memory-store.ts:601-607</code>,
+<code>memory-service.ts:188-191</code>). The editor's reads use
+<code>editorFilter</code>, the same predicate
+(<code>memory-store.ts:156-160</code>, <code>:631-674</code>).</p>
+<p><strong>The search tool can drop it.</strong>
+<code>jarvis_memory_search</code> declares
+<code>scope: "current" | "global" | "all"</code>
+(<code>memory-extension.ts:79</code>), and <code>all</code> returns
+every project's notes and captures. The tool description and the
+injected guidance ask the model to use it only for a person's
+cross-project question (<code>:22</code>, <code>:76</code>); nothing
+else gates it. A committed test asserts the widening works
+(<code>test/memory-integration.test.ts:367</code>).</p>
+<p><strong>The archive gates the same widening.</strong> Its three tools
+default to the current session; a wider reach — another session of the
+project, or every project — asks a person once per request unless the
+standing <code>model-search</code> setting is on, and a decline returns
+a refusal sentence without executing
+(<code>archive-extension.ts:109-125</code>). Tests cover approval,
+decline and the setting
+(<code>test/archive-extension.test.ts:600-650</code>). The repository
+therefore holds both designs for one question, and the gated one is on
+the store that is off by default.</p>
+<p><strong>Failure modes.</strong> Literal keyword match misses a
+paraphrase. The 3 global notes cost injection budget on every turn
+whether relevant or not. A stale note recalls with full weight, since
+nothing ages or labels it.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p><strong>The model curates notes through one tool, and the guidance
+decides what it saves.</strong> The injected policy text asks for <em>"a
+concise factual note"</em> on a durable preference, correction, decision
+or reference, a stable descriptive title to update the same fact, and no
+secrets, speculation, transient status or instructions from untrusted
+content (<code>memory-extension.ts:21</code>). Nothing in code
+classifies or verifies what is saved.</p>
+<p><strong>Captures are deterministic.</strong> Only newly finalized
+visible text from user and assistant messages is saved: no thinking,
+tool calls or results, images, custom messages or failed outputs
+(<code>memory-content.ts:168-207</code>). The capture follows the
+persisted session tree after Pi's message hooks have run, so a redaction
+by another extension is respected; a missing session API fails closed
+(<code>memory-extension.ts:244-246</code>).</p>
+<p><strong>Deduplication is by identity.</strong> A capture's identity
+is its event, so the same event is never stored twice and its text is
+never rewritten (<code>memory-store.ts:505</code>). A note's identity is
+its scoped title: a save with the same title and body and provenance is
+a <code>duplicate</code>, and anything else replaces the body
+(<code>:500-507</code>). Two different titles for one fact are two
+rows.</p>
+<p><strong>Sanitizing is a filter on input.</strong>
+<code>sanitizeMemoryText</code> strips terminal control sequences and
+invisible format characters, omits recognizable credential blocks and
+redacts common secret formats (<code>memory-content.ts</code>). For
+notes, the service refuses any text the sanitizer changed rather than
+store a silently altered fact
+(<code>memory-service.ts:349-353</code>).</p>
+<p><strong>Conflicts are not detected.</strong> There is no comparison
+between notes. Two notes under different titles can contradict each
+other and both are recalled.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Writes are synchronous single-row SQLite transactions on the tool
+call or at the turn boundary, with no model call. A note is retrievable
+on the next request; a capture after the turn that produced it ends. No
+background pass exists. On the read path the injection is bounded at
+6,000 bytes plus a short notice. It is prepended to the message list per
+request (<code>memory-extension.ts:214</code>), and since its content
+follows the latest prompt it changes between turns. Whether that
+position lands before the conversation history in the provider request,
+and so breaks a prefix cache, depends on Pi and was not checked.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The model holds three memory tools:
+<code>jarvis_memory_search</code>, <code>jarvis_memory_remember</code>
+and <code>jarvis_memory_forget</code>
+(<code>memory-service.ts:12</code>). Each is registered
+<code>hidden</code> when its capability is off, rechecked against live
+policy, trust, session generation and epoch at execution, and blocked
+again by a <code>tool_call</code> hook
+(<code>memory-extension.ts:69-73</code>, <code>:253-257</code>). The
+Jarvis side session gets the same tools independently of its Repo-tools
+permission.</p>
+<p>Recall is automatic and request-local, so the model does not need to
+search to benefit, and the guidance is injected the same way and
+stripped from any forced system prompt
+(<code>memory-extension.ts:192-239</code>). The person has
+<code>/jarvis-memory</code> in both lanes and the TUI editor, none of
+which needs a model call or waits for queued side work
+(<code>index.ts:1696-1712</code>).</p>
+<p><strong>What the agent cannot reach.</strong>
+<code>explicit: true</code> is passed only by the human
+<code>remember</code> command (<code>memory-service.ts:316</code>), so
+the model cannot lift a tombstone. <code>forgetAll</code>,
+<code>update</code> and the editor's methods have no model-tool caller,
+and the store's own comment says <em>"never expose this method as a
+model tool"</em> (<code>memory-store.ts:747</code>). Settings commands
+are human-only and the guidance tells the model not to change them
+through other tools.</p>
+<p>Adapting the store to another agent would be direct:
+<code>MemoryStore</code> has no Pi dependency, and the service's Pi
+coupling is the context type and the session manager.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance is honest and shallow.</strong> Every recalled
+record carries lane, session, event, project and dates, and the JSON
+escapes <code>&lt;</code> and <code>&gt;</code>
+(<code>memory-service.ts:375-401</code>). Provenance names the latest
+writer only.</p>
+<p><strong>Prompt-injected memories have one barrier.</strong> The
+guidance tells the model not to save instructions found in untrusted
+content, and recall frames records as untrusted. A model that saves an
+injected instruction under a plausible title has it recalled as a note
+in every later request that matches. The only stored distinction between
+a person's note and the model's is <code>lane</code>, and an upsert
+overwrites it.</p>
+<p><strong>Concurrency is engineered.</strong> Writes take
+<code>BEGIN IMMEDIATE</code>, WAL initialization retries only on
+<code>SQLITE_BUSY</code> or <code>SQLITE_LOCKED</code> within a
+deadline, and an uncertain commit is never replayed
+(<code>memory-store.ts:190-223</code>, <code>:415-455</code>). The
+editor and the model's forget compare a full reviewed snapshot inside
+the write transaction and report a conflict rather than overwrite.</p>
+<p><strong>Deletion is logical and stated as such.</strong> A forget
+removes the row and its FTS entry and keeps the id. Pi's own
+transcripts, the archive, backups and context sent to the provider are
+untouched, which the forget result says each time
+(<code>memory-service.ts:198</code>).</p>
+<p><strong>The archive is the larger exposure.</strong> It keeps raw
+entries, including tool output and possibly secrets, in plaintext unless
+encrypted, and model reads of it reach the provider. Its controls are
+stricter than shared memory's — off by default, model access a separate
+opt-in, wider reach approved per request — and the README says so. A
+trusted project's <code>.pi/jarvis.json</code> can set its own archive
+and memory policy, under the global master switch.</p>
+<p><strong>Marks withheld.</strong></p>
+<ul>
+<li><code>tombstone</code> — withheld. The tombstone is durable,
+consulted on every automatic write path and lifted only by a person. It
+is keyed on the scoped title, and a test asserts that a changed body
+under that title is refused
+(<code>test/memory-store.test.ts:181-182</code>). The same fact under
+any other title is a new identity, so the record refuses a slot rather
+than a value.</li>
+<li><code>scope_enforced</code> — withheld. The predicate is on every
+read path, including the context assembler and get-by-id. The agent's
+own search tool takes <code>all</code>, which removes it with no gate.
+This matches the reading of <a href="../pi-memory/">pi-memory</a>, whose
+<code>global</code> argument is the same shape.</li>
+<li><code>human_review</code> — withheld. A model write takes effect at
+commit; the editor is a person editing after the fact; the forget
+confirmation gates removal, not admission.</li>
+<li><code>trust_state</code> — withheld. <code>category</code> is a
+write-time genre and no read filters on a status.</li>
+<li><code>bitemporal</code> — withheld. Both timestamps are the write
+clock.</li>
+<li><code>audit_log</code> — withheld. No table records a mutation, and
+an upsert discards the prior body. The archive, when on, records the
+session entries that carry memory tool calls; it is a transcript, off by
+default, and not the store's own log.</li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is <code>node:test</code> under <code>tsx</code>, listed
+file by file in the <code>test</code> script and run by CI on Node
+22.19.0 and 24 (<code>package.json</code>,
+<code>.github/workflows/ci.yml</code>). I did not run it.</p>
+<p><strong>Shared memory</strong> has 229 cases in eight files. The
+store tests cover scope isolation, title deduplication, capture
+identity, tombstones, rename, literal keyword recall, retention, the
+identity budget, symlink and hard-link refusal, schema and integrity
+refusal, WAL retry without replay, two concurrent writer processes and a
+10,000-capture bound (<code>test/memory-store.test.ts</code>). The
+integration tests drive the extension through mocked and real Pi SDK
+runtimes: request-local injection, revocation on policy and trust
+change, capture of only final text, and the forget confirmation's
+refusal paths (<code>test/memory-integration.test.ts</code>).</p>
+<p><strong>The negative cases have positive controls.</strong> The scope
+test saves rows in two projects and a global row, and asserts the
+default list returns exactly the current project's and the global one
+(<code>test/memory-store.test.ts:112-134</code>). The cross-project
+recall assertion uses <code>assert.doesNotMatch</code> on the recall
+string, which throws on <code>undefined</code>, so a filter returning
+nothing fails it (<code>test/memory-integration.test.ts:369</code>). The
+echo test asserts a prior session's capture is in the injected string
+and the current session's is not, in one string (<code>:876-880</code>).
+That is <code>negative_eval</code>.</p>
+<p><strong>Gaps.</strong> No case asserts that a forgotten note is
+absent from a recall beside a live note; the forget tests read the row
+back by id or assert an empty list
+(<code>test/memory-store.test.ts:173-191</code>,
+<code>test/memory-integration.test.ts:496-504</code>). No case covers
+two titles for one fact. The model overwriting a person's note is
+asserted as intended behaviour. There is no retrieval-quality evaluation
+and no benchmark. No paper is cited in the tree.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make the id a hash of the natural key and tombstone the
+id.</strong> One table of ids makes "forget" survive every automatic
+writer, at a cost of 64 bytes per forgotten slot. Reserve a tombstone
+slot for each live row so forgetting never fails at capacity.</li>
+<li><strong>Tombstone the old key on a rename.</strong> A correction to
+a title is then not undone by the next automatic save of the old
+one.</li>
+<li><strong>Lift a tombstone only through a path the model cannot
+call.</strong> Pass the flag from the human command handler, not from an
+argument on the tool.</li>
+<li><strong>Inject recall per request and never persist it.</strong> The
+transcript stays clean, a disable takes effect on the next request, and
+nothing recalled becomes evidence for the next recall.</li>
+<li><strong>Refuse rather than silently alter.</strong> A note the
+sanitizer would change is rejected with a reason, so a stored fact is
+the text the writer sent.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A key that is not the fact.</strong> A title-keyed tombstone
+refuses the next body under that title and admits the same body under a
+new one; key on the normalized value if the goal is that a forgotten
+fact stays forgotten.</li>
+<li><strong>An upsert that ignores who wrote the row.</strong> If a
+person's note can be replaced by the model's same-title save, keep the
+prior version or refuse the write when the lanes differ.</li>
+<li><strong>Two scope policies in one product.</strong> If cross-scope
+reach needs a person on one store, it needs one on the other.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one developer on one machine who wants Pi and a side
+session to share preferences and decisions without running anything, and
+who will curate by hand in the editor. The cost is low and the
+engineering around the SQLite file is careful. It does not suit a shared
+or regulated setting: projects are a relevance default the agent can
+widen, corrections leave no record, and the model's saves land without
+review. Teams that need a forgotten fact to stay forgotten under any
+wording, or a record of what was believed when, should not adopt it.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Where does Pi place a custom message prepended by a
+<code>context</code> hook in the provider request, and does the per-turn
+recall invalidate a prefix cache?</li>
+<li>Does the model choose stable titles in practice, so that the upsert
+and the tombstone act on the fact a person meant, or does the same fact
+accumulate under several titles?</li>
+<li>How often does the model pass <code>scope: "all"</code>, given that
+only prose restrains it?</li>
+<li>What does the project's own use of the archive show about how often
+curated notes miss what the transcript holds?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong> <code>memory-store.ts</code>,
+<code>memory-types.ts</code>, <code>memory-editor-types.ts</code>.</li>
+<li><strong>Write path:</strong> <code>memory-service.ts</code>
+(<code>remember</code>, <code>capture</code>, <code>command</code>),
+<code>memory-extension.ts</code> (<code>flushCaptures</code>,
+<code>jarvis_memory_remember</code>),
+<code>memory-content.ts</code>.</li>
+<li><strong>Retrieval and injection:</strong>
+<code>memory-service.ts</code> (<code>recall</code>,
+<code>search</code>, <code>renderMemoryRecords</code>,
+<code>memoryRecallQuery</code>), <code>memory-extension.ts</code>
+(<code>context</code> and <code>context_with_system</code> hooks).</li>
+<li><strong>Policy:</strong> <code>memory-config.ts</code>,
+<code>archive-config.ts</code>.</li>
+<li><strong>Human surfaces:</strong> <code>index.ts</code>
+(<code>dispatchMemoryCommand</code>, <code>confirmForget</code>),
+<code>memory-editor.ts</code>, <code>memory-editor-controller.ts</code>,
+<code>side-session.ts</code>.</li>
+<li><strong>Archive:</strong> <code>archive-store.ts</code>,
+<code>archive-service.ts</code>, <code>archive-extension.ts</code>,
+<code>archive-import.ts</code>, <code>archive-crypto.ts</code>,
+<code>archive-sqlite.ts</code>,
+<code>docs/archive-encryption-design.md</code>.</li>
+<li><strong>Tests:</strong> <code>test/memory-store.test.ts</code>,
+<code>test/memory-integration.test.ts</code>,
+<code>test/memory-editor-store.test.ts</code>,
+<code>test/archive-extension.test.ts</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>git grep</code> in the checkout at the pinned
+revision, from the tree root.</p>
+<ul>
+<li><code>git grep -n -E 'CREATE TABLE|CREATE VIRTUAL TABLE' -- memory-store.ts archive-store.ts</code>
+— each store has <code>records</code>, <code>tombstones</code> and an
+FTS5 table; no history or audit table.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_until|as_of|valid_at|effective_' -- '*.ts' ':!test'</code>
+— no match.</li>
+<li><code>git grep -n -i -E '\b(status|verified|candidate|pending|approved|rejected)\b' -- memory-store.ts memory-types.ts</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'audit|mutation|history' -- 'memory-*.ts'</code>
+— comments and UI strings only; no mutation record.</li>
+<li><code>git grep -n -E 'remember\(|explicit' -- memory-service.ts memory-extension.ts</code>
+— <code>explicit</code> is <code>true</code> only at
+<code>memory-service.ts:316</code>, the human command; the tool at
+<code>memory-extension.ts:97</code> passes none.</li>
+<li><code>git grep -n "FROM tombstones WHERE id" -- memory-store.ts</code>
+— checked in <code>save</code>, <code>replace</code>,
+<code>editorCreate</code> and <code>editorUpdate</code>; deleted only in
+<code>save</code> under <code>explicit</code>.</li>
+<li><code>git grep -n -E '"all"' -- memory-extension.ts memory-service.ts</code>
+— the search tool's <code>scope</code> union at
+<code>memory-extension.ts:79</code>; the rest are human command
+flags.</li>
+<li><code>git grep -n -E 'ui\.confirm\(' -- '*.ts' ':!test'</code> — the
+archive reach gate, the main lane's forget confirmation and the forget
+tool's fallback; no confirmation on the memory search tool.</li>
+<li><code>git grep -n -i -E 'embed|vector|cosine' -- 'memory-*.ts' 'archive-*.ts'</code>
+— no match.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/crustyhacker/pi-jarvis/commit/1dab7a41ad9c2a7a2a5249da396faa4aa316108b"><code class="commit-id" title="1dab7a41ad9c2a7a2a5249da396faa4aa316108b">1dab7a41…</code></a>
+— first reading, at the head of <code>main</code>, the v1.14.0 release
+commit of 11 October 2026. One mark, <code>negative_eval</code>.
+Screened before reading from a full clone: no auto-run surface and no
+build-time execution point; <code>package.json</code> and
+<code>package-lock.json</code> inside the seven-day cooldown, changed
+three days before the pin; three floating dev-dependency ranges against
+a present lockfile; an <code>AGENTS.md</code> addressed to a reading
+agent, read as data. MIT, no rider. Read with <code>git grep</code> and
+<code>sed</code>; nothing was installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

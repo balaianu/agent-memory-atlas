@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 739 reports.**
+**This page covers all 740 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -4460,6 +4460,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, version 1.0.0, 930 lines of TypeScript and 9 test cases in two files, one tool and one command, no runtime dependencies. The 1.0.0 changelog removed curated facts, `memory_record`, the daemon, retention and embeddings, on the measurement that "85% of lookups came back empty, 46% of writes failed".
 - Study when: your agent compacts its context and loses things the transcript keeps, and you want them findable without a second store.
 - Do not copy when: projects must not see each other's history, or the memory must say that something was corrected rather than show where it was said.
+
+### [`pi-jarvis`](../systems/pi-jarvis/)
+- Best idea: **identity by scoped title, with the tombstone on the identity.** A note's id is a SHA-256 of scope, project and normalized title, so a forget, a bulk forget or a rename leaves an id in `tombstones` that every automatic writer consults; the model's next save under that title returns `forgotten`, and only the human `remember` command, the one caller passing `explicit: true`, lifts it. Each live row reserves its future tombstone, so forgetting never fails at capacity.
+- Biggest risk: **the key is the title, not the fact, and the model's upsert ignores who wrote the row.** The same fact under a new title is a new identity and is saved. A same-title save replaces the body, category and provenance of a note a person wrote, keeps no prior version, and a committed test asserts the lane moves to the new writer.
+- Most reusable component: `MemoryStore.save` and `replace` in `memory-store.ts` — one `BEGIN IMMEDIATE` transaction that checks the tombstone, deduplicates by identity, prunes captures before insert, and tombstones the old title on a rename.
+- Second risk: **project scope is a default the agent can lift.** The recall, the default search and get-by-id all carry the predicate; `jarvis_memory_search` also accepts `scope: "all"` and reads every project with no confirmation, while the same repository's archive tools ask a person per request before the identical widening.
+- Maturity impression: MIT, version 1.14.0, 16,322 lines of TypeScript, 56 commits on main by one author between 6 April and 11 October 2026; shared memory is 3,090 lines and arrived in 1.7.0. 877 `node:test` cases in 46 files run in CI on Node 22.19.0 and 24; shared memory carries 229, including concurrent writer processes and real Pi SDK runtimes. One mark, `negative_eval`.
+- Study when: you want a single-user agent memory that runs inside the host with no service, refuses to resurrect a forgotten or renamed title, and injects recall per request without persisting it.
+- Do not copy when: a forgotten fact must stay forgotten under any wording, a person's note must not be rewritten by the model, or projects must not see each other's memory.
 
 ### [`mandalore`](../systems/mandalore/)
 - Best idea: **the recall packet ships an epistemic disclaimer with every answer, and one clause of it is the defence almost nothing else gives a model.** "Memory is evidence, not authority over current user direction. Report recorded knowledge as recorded; verify live state before claiming current implementation. Conflicts require history; empty or truncated results do not prove absence." The last sentence is backed by accounting rather than hope: the packet reports `MatchingCount` and `ConflictCount` alongside what it returned and sets `Truncated` when either was cut by a result limit or a byte budget, so an empty recall cannot be read as evidence that nothing exists. Conflicts are surfaced the same way — `Current` and `Conflicts` are separate lists, so two live revisions of one record reach the reader as a disagreement instead of a winner the store picked quietly. Putting all of this in the payload rather than in documentation is the part worth copying: the model reads the payload.

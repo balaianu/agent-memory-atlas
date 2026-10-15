@@ -917,6 +917,8 @@ gates `metadata.scope` — so a deployment without RLS has half the design.
 
 **[Cortex (gambletan)](../../systems/gambletan-cortex/) holds the key on its search path and on nothing that writes.** `RetrievalEngine::retrieve` drops rows of another namespace after every candidate arm, and a committed test with three rows under one embedding pins it (`cortex-core/src/retrieval.rs:347-359`). The regex extractor writes facts with no namespace and the subject `User`, exact dedup hashes content alone, and compression merges a day's episodes per channel into one unscoped summary. A namespaced context therefore shows no facts, and an unscoped one shows whichever user wrote last. Its Muse gateway is the counterexample in the same tree: a fixed, server-owned namespace re-checked per row. **A scope key the derivation paths do not copy becomes a filter that hides the derived rows.**
 
+**[pi-jarvis](../../systems/pi-jarvis/) answers one widening question two ways in one repository.** Its shared memory puts `(scope='global' OR (scope='project' AND project=?))` on the request-time recall, the default search and get-by-id, and its search tool also accepts `scope: "all"`, which drops the predicate with no confirmation (`memory-store.ts:578`, `memory-extension.ts:79`). Its opt-in session archive defaults its model tools to the current session and asks a person once per request before any wider reach, returning a refusal sentence when declined (`archive-extension.ts:109-125`). The gate sits on the store that is off by default. **Put the same reach gate on every store the agent can widen.**
+
 ## Tests to require
 
 The first of these need not be written by hand. [promptfoo](https://github.com/promptfoo/promptfoo)

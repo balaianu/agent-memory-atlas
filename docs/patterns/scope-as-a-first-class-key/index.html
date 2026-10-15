@@ -1388,6 +1388,18 @@ no facts, and an unscoped one shows whichever user wrote last. Its Muse
 gateway is the counterexample in the same tree: a fixed, server-owned
 namespace re-checked per row. <strong>A scope key the derivation paths
 do not copy becomes a filter that hides the derived rows.</strong></p>
+<p><strong><a href="../../systems/pi-jarvis/">pi-jarvis</a> answers one
+widening question two ways in one repository.</strong> Its shared memory
+puts <code>(scope='global' OR (scope='project' AND project=?))</code> on
+the request-time recall, the default search and get-by-id, and its
+search tool also accepts <code>scope: "all"</code>, which drops the
+predicate with no confirmation (<code>memory-store.ts:578</code>,
+<code>memory-extension.ts:79</code>). Its opt-in session archive
+defaults its model tools to the current session and asks a person once
+per request before any wider reach, returning a refusal sentence when
+declined (<code>archive-extension.ts:109-125</code>). The gate sits on
+the store that is off by default. <strong>Put the same reach gate on
+every store the agent can widen.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <p>The first of these need not be written by hand. <a
 href="https://github.com/promptfoo/promptfoo">promptfoo</a> ships a

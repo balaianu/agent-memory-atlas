@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 739 reports.</strong></p>
+<p><strong>This page covers all 740 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -19710,6 +19710,47 @@ store.</li>
 <li>Do not copy when: projects must not see each other's history, or the
 memory must say that something was corrected rather than show where it
 was said.</li>
+</ul>
+<h3 id="pi-jarvis"><a
+href="../systems/pi-jarvis/"><code>pi-jarvis</code></a></h3>
+<ul>
+<li>Best idea: <strong>identity by scoped title, with the tombstone on
+the identity.</strong> A note's id is a SHA-256 of scope, project and
+normalized title, so a forget, a bulk forget or a rename leaves an id in
+<code>tombstones</code> that every automatic writer consults; the
+model's next save under that title returns <code>forgotten</code>, and
+only the human <code>remember</code> command, the one caller passing
+<code>explicit: true</code>, lifts it. Each live row reserves its future
+tombstone, so forgetting never fails at capacity.</li>
+<li>Biggest risk: <strong>the key is the title, not the fact, and the
+model's upsert ignores who wrote the row.</strong> The same fact under a
+new title is a new identity and is saved. A same-title save replaces the
+body, category and provenance of a note a person wrote, keeps no prior
+version, and a committed test asserts the lane moves to the new
+writer.</li>
+<li>Most reusable component: <code>MemoryStore.save</code> and
+<code>replace</code> in <code>memory-store.ts</code> — one
+<code>BEGIN IMMEDIATE</code> transaction that checks the tombstone,
+deduplicates by identity, prunes captures before insert, and tombstones
+the old title on a rename.</li>
+<li>Second risk: <strong>project scope is a default the agent can
+lift.</strong> The recall, the default search and get-by-id all carry
+the predicate; <code>jarvis_memory_search</code> also accepts
+<code>scope: "all"</code> and reads every project with no confirmation,
+while the same repository's archive tools ask a person per request
+before the identical widening.</li>
+<li>Maturity impression: MIT, version 1.14.0, 16,322 lines of
+TypeScript, 56 commits on main by one author between 6 April and 11
+October 2026; shared memory is 3,090 lines and arrived in 1.7.0. 877
+<code>node:test</code> cases in 46 files run in CI on Node 22.19.0 and
+24; shared memory carries 229, including concurrent writer processes and
+real Pi SDK runtimes. One mark, <code>negative_eval</code>.</li>
+<li>Study when: you want a single-user agent memory that runs inside the
+host with no service, refuses to resurrect a forgotten or renamed title,
+and injects recall per request without persisting it.</li>
+<li>Do not copy when: a forgotten fact must stay forgotten under any
+wording, a person's note must not be rewritten by the model, or projects
+must not see each other's memory.</li>
 </ul>
 <h3 id="mandalore"><a
 href="../systems/mandalore/"><code>mandalore</code></a></h3>

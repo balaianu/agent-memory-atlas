@@ -127,7 +127,7 @@ belief.</p>
 <p><strong>Reported:</strong> a durable record keyed on the rejected
 <em>value</em> rather than on the row, and consulted on the write path,
 recurs across the corpus. 66 systems of
-739 carry the mark, and <a
+740 carry the mark, and <a
 href="#sorted-by-what-actually-stops-the-value">the table below</a>
 sorts the holders this page discusses by what actually stops the value.
 The idea's history runs from invention to independent arrival: Verel
@@ -292,7 +292,7 @@ not the hard half.</li>
 </ul>
 <h3 id="every-instance">Every instance</h3>
 <p><strong>66 systems of
-739 in the atlas carry the mark.</strong> The
+740 in the atlas carry the mark.</strong> The
 entries below are the ones whose mechanism this page discusses.</p>
 <p><a href="../../systems/verel/">Verel</a> uses rejected memory records
 as a correctness mechanism and protects rejected states from ordinary
@@ -1568,6 +1568,20 @@ argument for the current behaviour is that fresh evidence arguably
 <em>should</em> revive a claim — which is the tradeoff this page's
 <em>Tradeoffs</em> section names, and nothing in the repository states
 it as a decision.</p>
+<p><strong><a href="../../systems/pi-jarvis/">pi-jarvis</a> keys its
+tombstone on the slot a fact occupies, and its tests assert that
+choice.</strong> A note's id is a SHA-256 of its scope, project and
+normalized title, and a forget writes that id into
+<code>tombstones</code>. Every automatic save with the id returns
+<code>forgotten</code>, and only a person's <code>remember</code>
+command lifts it (<code>memory-store.ts:90-95</code>,
+<code>:491-499</code>). A rename tombstones the old title in the same
+transaction. The committed test saves a changed body under a forgotten
+title and asserts the refusal
+(<code>test/memory-store.test.ts:181-182</code>), so the record refuses
+the slot rather than the value, and the same fact under a new title is a
+new identity. <strong>Key the tombstone on what a writer will re-assert,
+and decide whether that is the title or the body.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li><strong>Run the laundering sequence</strong>: reject a value,
