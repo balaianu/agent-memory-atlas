@@ -18357,21 +18357,16 @@
     "kannaka-memory": {
       "counts": {
         "EXEC": 2,
-        "FRESH": 3,
+        "FRESH": 2,
         "NOTE": 1,
         "RUNS": 1
       },
-      "files_scanned": 6,
+      "files_scanned": 7,
       "findings": [
         {
-          "detail": "cargo executes this at build time",
-          "kind": "EXEC",
-          "path": "build.rs"
-        },
-        {
-          "detail": "npm lifecycle `postinstall`: node install.js",
-          "kind": "EXEC",
-          "path": "packaging/npm/package.json"
+          "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 1 entr(ies): plugin.json",
+          "kind": "RUNS",
+          "path": ".claude-plugin/"
         },
         {
           "detail": "changed 2 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
@@ -18384,25 +18379,20 @@
           "path": "Cargo.toml"
         },
         {
-          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
+          "detail": "cargo executes this at build time",
+          "kind": "EXEC",
+          "path": "build.rs"
+        },
+        {
+          "detail": "npm lifecycle `postinstall`: node install.js",
+          "kind": "EXEC",
           "path": "packaging/npm/package.json"
-        },
-        {
-          "detail": "lockfile(s) present: Cargo.lock",
-          "kind": "NOTE",
-          "path": "-"
-        },
-        {
-          "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 1 entr(ies): plugin.json",
-          "kind": "RUNS",
-          "path": ".claude-plugin/"
         }
       ],
-      "revision": "2b35b46d05ceb3b84bedce9d7a520618b204effe",
-      "screened_at": "2026-09-19",
+      "revision": "4bd8db6e9880b8707ff950f8efbe4abf239125cf",
+      "screened_at": "2026-10-15T03:32:30+00:00",
       "slug": "kannaka-memory",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/kannaka-labs/kannaka-memory"
     },

@@ -9642,38 +9642,35 @@ to <code>private</code> and is deliberately not a read filter, pinned by
 authorship's model and session fields are never set. Three marks.</p>
 <p><strong><a href="../systems/kannaka-memory/">kannaka-memory</a> reads
 like mysticism on the surface and like a security review at the
-wire.</strong> 119,396 lines of Rust at version 0.16.5 with 1,433 test
-functions, pitched as "a wave-interference memory system with bilateral
-chiral hemispheres" on a 10,000-dimensional medium "where recall is
-matrix multiplication, not search". The substrate is real
-hyperdimensional computing — <code>encoding.rs</code> is a
-text→embedding→hypervector pipeline with a pluggable backend, a codebook
-projection and HDC algebra — but the prose gives a reader no way to tell
-mechanism from decoration without opening the files. The reason to read
-it is that memories cross between agents over NATS and Nostr, so the
+wire.</strong> A Rust memory at version 0.16.16, pitched as "a
+wave-interference memory system with bilateral chiral hemispheres" on a
+10,000-dimensional medium "where recall is matrix multiplication, not
+search". The substrate is real hyperdimensional computing —
+<code>encoding.rs</code> is a text→embedding→hypervector pipeline with a
+pluggable backend, a codebook projection and HDC algebra — but the prose
+gives a reader no way to tell mechanism from decoration without opening
+the files. Memories cross between agents over NATS and Nostr, so the
 real problem is that a remote peer can say anything, and three modules
 hold that boundary. <code>provenance.rs</code> signs with ed25519 over
 domain-separated, length-prefixed canonical bytes "so a signature minted
-for one statement type fail[s] verification as any other", keeps a
-bounded fail-closed replay set, and makes verification pure — it "never
-reads the clock; the caller passes <code>now_ms</code> so tests are
-deterministic". <code>absorb_gate.rs</code> is "the single write-side
-chokepoint every wire→store absorb path routes through", and its
-sanitisation runs "even when the gate is dormant", clamping the wave
-fields and — the mark — forcing <code>hallucinated</code> "to the local
-default, NEVER the wire value (an attacker must not be able to set/clear
-the immune flag over the wire)"; consolidation then filters flagged
-memories out of belief formation, so a node's verdict about a peer's
-claim is one the peer cannot write. <code>serve_guard.rs</code> names
-the exposure it closed — a node with a paid provider was "a public,
-unmetered endpoint for anyone on the bus" — derives the route from local
-config "and from nothing else" while logging the wire's ignored routing
-fields, caps hops so "two brainless nodes cannot bounce one question
-between them forever", and splits its rate limiter because "[a]n abuse
+for one statement type fail[s] verification as any other", and keeps a
+bounded fail-closed replay set. <code>absorb_gate.rs</code> is "the
+single write-side chokepoint every wire→store absorb path routes
+through", and its sanitisation runs "even when the gate is dormant",
+forcing <code>hallucinated</code> "to the local default, NEVER the wire
+value". <code>serve_guard.rs</code> derives the route from local config
+"and from nothing else" and splits its rate limiter because "[a]n abuse
 control that a stranger can turn into an outage cheaper than the abuse
-is not a control". One mark. The licence is the bespoke SPACE CHILD
-LICENSE v1.0, whose "Peaceful Purpose" field-of-use restrictions make it
-not an open-source licence under the OSI definition.</p>
+is not a control". Inside the boundary the flag marks what dreams
+synthesise: remember's exact-repeat match skips those rows, recall drops
+them only when an operator asks, and belief-core snapshots include them.
+The temporal fields carry more weight. <code>effective_at</code> and
+<code>expires_at</code> sit beside <code>created_at</code>, recall drops
+a fact expired as of the instant asked about, and a committed case with
+a control arm asserts the superseded value stays out. Three marks. The
+licence is the bespoke SPACE CHILD LICENSE v1.0, whose "Peaceful
+Purpose" field-of-use restrictions make it not an open-source licence
+under the OSI definition.</p>
 <p><strong><a href="../systems/agent-memory-guard/">OWASP Agent Memory
 Guard</a> is the only subject here whose purpose is naming what goes
 wrong in somebody else's memory.</strong> An Apache-2.0 Python library

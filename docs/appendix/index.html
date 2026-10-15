@@ -4059,13 +4059,13 @@ built or run</li>
 <li><a
 href="https://github.com/kannaka-labs/kannaka-memory">kannaka-labs/kannaka-memory</a>
 at <a
-href="https://github.com/kannaka-labs/kannaka-memory/commit/2b35b46d05ceb3b84bedce9d7a520618b204effe"><code class="commit-id" title="2b35b46d05ceb3b84bedce9d7a520618b204effe">2b35b46d…</code></a>
-— read only, from a shallow clone. Licensed under the bespoke SPACE
-CHILD LICENSE v1.0, whose field-of-use restrictions make it not an
-open-source licence under the OSI definition. Six files scanned, one
-auto-run surface, two build-time execution points, no unpinned surfaces
-and three dependency files inside the seven-day cooldown. Nothing was
-installed, built or run</li>
+href="https://github.com/kannaka-labs/kannaka-memory/commit/4bd8db6e9880b8707ff950f8efbe4abf239125cf"><code class="commit-id" title="4bd8db6e9880b8707ff950f8efbe4abf239125cf">4bd8db6e…</code></a>
+— read only, from a full clone. Licensed under the bespoke SPACE CHILD
+LICENSE v1.0, whose field-of-use restrictions make it not an open-source
+licence under the OSI definition. Seven files scanned, one auto-run
+surface (a Claude Code plugin manifest), two build-time execution
+points, no unpinned surfaces and two dependency files inside the
+seven-day cooldown. Nothing was installed, built or run</li>
 <li><a href="https://github.com/repairman29/chump">repairman29/chump</a>
 at <a
 href="https://github.com/repairman29/chump/commit/c532a7fa50f9a7ff4a0e5ee163f9aee408e0a1d1"><code class="commit-id" title="c532a7fa50f9a7ff4a0e5ee163f9aee408e0a1d1">c532a7fa…</code></a>
@@ -16264,6 +16264,39 @@ and the first History entry named this pin for a reading made at the
 other. The first rested on the one caller of <code>update_status</code>
 rather than on every caller of <code>transition_status</code>, and the
 last on a re-pin that moved the frontmatter without recounting.</li>
+<li><strong>Six published claims about <a
+href="../systems/kannaka-memory/">kannaka-memory</a> were wrong at <a
+href="https://github.com/kannaka-labs/kannaka-memory/commit/2b35b46d05ceb3b84bedce9d7a520618b204effe"><code class="commit-id" title="2b35b46d05ceb3b84bedce9d7a520618b204effe">2b35b46d…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the <code>!m.hallucinated &amp;&amp; m.amplitude &gt; 0.01</code>
+filters at <code>src/consolidation.rs:1673</code> and <code>:1812</code>
+keep a flagged memory out of belief formation. They chose which memories
+a new dream is compared against in a quality gate, and
+<code>belief_core_snapshot</code>
+(<code>src/medium/chiral.rs:1565</code>) read every right-hemisphere
+wavefront, dreams included; <code>trust_state</code> held on remember's
+duplicate match, which excluded flagged rows
+(<code>src/openclaw.rs:645</code>). It said there was no validity
+interval. <code>effective_at</code>, <code>observed_at</code> and
+<code>expires_at</code> sat on <code>HyperMemory</code>
+(<code>src/memory.rs:181-187</code>), written by
+<code>kannaka remember --effective/--observed/--expires</code>
+(<code>src/bin/kannaka.rs:1870-1879</code>) and read by
+<code>swarm brief</code> (<code>:4296</code>), so
+<code>bitemporal</code> was earned. It said merge records leave behind
+who a consolidation merged with; the <code>collective::merge</code>
+functions that write them had no caller outside tests, and
+<code>src/hrm_store.rs:655</code> and <code>:690</code> rebuilt every
+memory with an empty list. It said a consumer of recall output could
+check the flag; <code>RecallResult</code> carried no such field. It
+listed an MCP surface, deleted on 22 March 2026 in <a
+href="https://github.com/kannaka-labs/kannaka-memory/commit/19cbd73bd1f8e88f5dff85b65c07ba3015ded5d6"><code class="commit-id" title="19cbd73bd1f8e88f5dff85b65c07ba3015ded5d6">19cbd73b…</code></a>.
+And it gave version 0.16.5 where <code>Cargo.toml</code> read 0.16.6.
+Two counts were also off: the gate's tests assert the flag five times
+rather than four, and one of three <code>evals/</code> directories has
+no Dockerfile, instruction or probes. The first rested on a filter's
+predicate rather than on what the filtered list was for, and the third
+on a field's declaration rather than its writers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -13021,64 +13021,58 @@ design note, survives a snapshot revert of everything else</td>
 <tr>
 <td><a
 href="../systems/kannaka-memory/"><code>kannaka-memory</code></a></td>
-<td>A <code>HyperMemory</code>: a hypervector with an amplitude, a
-frequency, a phase, a hallucination flag, links to other memories and
-merge records naming the source agent</td>
-<td>A local holographic medium persisted through chiral layers, with a
-<code>.hrm</code> store file; memories cross between agents over NATS
-and Nostr</td>
-<td>Resonance against the medium — cosine over hyperdimensional vectors
-with beam expansion — rather than an index lookup</td>
-<td>Local capture and wire absorption, both routed through one
-<code>absorb_gate</code> chokepoint that sanitises unconditionally and
-gates promotion conditionally</td>
-<td>Amplitude decay and destructive interference rather than deletion;
-consolidation merges memories and records the merge with before and
-after amplitudes</td>
-<td>Per-agent identity with ed25519 keys and a pubkey-keyed reputation
-core; memory itself is not scope-partitioned</td>
-<td>A CLI, ACP and MCP surfaces, NATS and Nostr transports, and bridges
-to other agent systems</td>
-<td>Dream consolidation, belief formation, Kuramoto phase coupling,
-swarm loops and collective sensemaking</td>
+<td>A HyperMemory: a hypervector with amplitude, frequency and phase, a
+hallucination flag with parent ids, an effective, observed and expiry
+time beside the creation time, links to other memories and a retention
+tier</td>
+<td>A local holographic medium in a .hrm file persisted through chiral
+hemisphere layers, with sidecar files for links, sightings and
+reactivations; memories cross between agents over NATS and Nostr</td>
+<td>Resonance against the medium, cosine over hypervectors with optional
+beam and temporal factors; rows expired as of the query instant are
+dropped by default, and dream rows only on request</td>
+<td>Local remember with exact-repeat reinforcement that never matches a
+dream row, dream synthesis that flags what it invents, and wire
+absorption through one absorb_gate chokepoint that sanitises
+unconditionally and gates promotion on corroboration</td>
+<td>Amplitude decay and destructive interference, a validity window set
+when a fact is written, and hard delete by id through forget; nothing
+records a rejected value</td>
+<td>Per-agent ed25519 identity and a pubkey-keyed reputation core for
+peers; the memory store itself is not partitioned by any key</td>
+<td>A CLI, an ACP binary, an agent loop with recall, remember and dream
+tools, a Claude Code plugin and skill, NATS and Nostr transports, and a
+hive bridge</td>
+<td>Dream consolidation with Kuramoto phase coupling and hallucination
+bridges, belief-core telemetry, swarm loops and collective
+sensemaking</td>
 <td>Ed25519 provenance with domain-separated canonical bytes and a
-fail-closed replay set, a pubkey-keyed reputation core, an absorb
-chokepoint that never trusts the wire's immune flag, and a serve guard
-bounding what an inbound ask may spend</td>
-<td>The trust boundary is where the trust boundary belongs — the wire —
-and the modules that hold it are written like a security review.
-<code>provenance.rs</code> signs with domain-separated, length-prefixed
-canonical bytes so "a signature minted for one statement type fail[s]
-verification as any other", keeps a bounded fail-closed replay set, and
-makes <code>verify_mem</code> pure so it "never reads the clock; the
-caller passes <code>now_ms</code> so tests are deterministic."
-<code>absorb_gate</code> is one chokepoint for every wire→store path
-whose sanitisation runs even when the gate is dormant.
-<code>serve_guard</code> states its invariant — "[a] served (inbound)
-ask must never be able to spend without a ceiling, and must never let
-the caller choose what it costs" — explains where it deliberately
-departs from its own ADR and why, derives the route from local config
-"and from nothing else" while collecting wire routing fields so it can
-log that they were ignored, caps hop count so "two brainless nodes
-cannot bounce one question between them forever", and splits its rate
-limiter because "[a]n abuse control that a stranger can turn into an
-outage cheaper than the abuse is not a control"</td>
-<td>The licence is bespoke: the SPACE CHILD LICENSE v1.0 grants broad
-permissions for "Peaceful Purpose" and restricts use directed at armed
-aggression or the targeting of civilians. Field-of-use restrictions of
-that kind are not open source under the OSI definition, whatever the
-intent, and adopters should read it rather than the shape of the file.
-The README's register — "[m]emories don't get stored. They resonate",
-spiral cores, chiral hemispheres — describes a real
-hyperdimensional-computing substrate but gives a reader no way to tell
-which claims are mechanism and which are metaphor without opening the
-code; <code>encoding.rs</code> is a conventional
-text→embedding→hypervector pipeline with a pluggable backend and a hash
-encoder for offline use. The <code>hallucinated</code> flag gates
-consolidation and not recall, so a flagged memory is still returned to a
-caller that does not check it. At 119,396 lines across a swarm, a
-medium, a hive, QUBO tooling and research surfaces, the memory core is a
-minority of the tree</td>
+fail-closed replay set, a quarantine staging tier for uncorroborated
+peer content, a hallucination flag the wire can never set, and a serve
+guard bounding what an inbound ask may spend</td>
+<td>The trust boundary is at the wire, and the modules that hold it are
+written like a security review. <code>absorb_gate</code> is one
+chokepoint for every wire-to-store path whose sanitisation runs even
+when the corroboration gate is dormant, and it forces the hallucination
+flag to the local default. <code>provenance.rs</code> signs with
+domain-separated, length-prefixed canonical bytes and keeps verification
+pure. <code>serve_guard</code> states its invariant, derives the route
+from local config "and from nothing else", and splits its rate limiter
+because "[a]n abuse control that a stranger can turn into an outage
+cheaper than the abuse is not a control". The recall tests carry control
+arms that state why: "asserting 'the dream is absent' proves nothing
+unless the dream DOES come back by default"</td>
+<td>The licence is the bespoke SPACE CHILD LICENSE v1.0, whose Peaceful
+Purpose grant and paid Offensive Military licence make it not open
+source under the OSI definition, while plugin.json and the npm
+package.json declare MIT. Dream rows are returned by recall by default
+and RecallResult carries no flag, so the agent's recall tool hands
+dreams to the model unlabelled. Belief-core snapshots read every
+right-hemisphere wavefront, dream syntheses included. Validity bounds
+are set only when a memory is written. Merge records and the disputed
+flag have no production writer. The memory core is about a quarter of a
+tree that also holds a swarm, a hive, mail, QUBO tooling and research
+surfaces</td>
 </tr>
 <tr>
 <td><a href="../systems/kektordb/"><code>kektordb</code></a></td>
@@ -32591,7 +32585,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>121 of 734:</em> <a
+<p><em>122 of 734:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32636,6 +32630,7 @@ href="../systems/hexis/"><code>hexis</code></a>, <a
 href="../systems/hippo-memory/"><code>hippo-memory</code></a>, <a
 href="../systems/inite-brain/"><code>inite-brain</code></a>, <a
 href="../systems/janus-graph/"><code>janus-graph</code></a>, <a
+href="../systems/kannaka-memory/"><code>kannaka-memory</code></a>, <a
 href="../systems/kimetsu/"><code>kimetsu</code></a>, <a
 href="../systems/knowl/"><code>knowl</code></a>, <a
 href="../systems/lerim/"><code>lerim</code></a>, <a
@@ -33423,7 +33418,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>450 of 734:</em> <a
+<p><em>451 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33605,7 +33600,8 @@ href="../systems/jumbo/"><code>jumbo</code></a>, <a
 href="../systems/kaeru/"><code>kaeru</code></a>, <a
 href="../systems/kage/"><code>kage</code></a>, <a
 href="../systems/kagura-memory-cloud/"><code>kagura-memory-cloud</code></a>,
-<a href="../systems/kektordb/"><code>kektordb</code></a>, <a
+<a href="../systems/kannaka-memory/"><code>kannaka-memory</code></a>, <a
+href="../systems/kektordb/"><code>kektordb</code></a>, <a
 href="../systems/kept/"><code>kept</code></a>, <a
 href="../systems/kglite/"><code>kglite</code></a>, <a
 href="../systems/khoj/"><code>khoj</code></a>, <a
@@ -33906,7 +33902,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-450 repositories of
+451 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
