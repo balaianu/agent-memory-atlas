@@ -4,31 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A four-tier local memory in plain
-SQLite whose facts carry a visibility that three of its four L4 reads
-exclude, whose every read binds the layer and user from the handle
-rather than an argument, and whose saves and deletes each append a
-before-and-after ledger row — all three degrading to a warning rather
-than failing the write.">
+    <meta name="description" content="A four-tier SQLite memory whose
+visibility flag survives automatic re-saves and filters search, while
+the context builders read every fact unfiltered.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="a-memory — Agent Memory Atlas">
-    <meta property="og:description" content="A four-tier local memory in
-plain SQLite whose facts carry a visibility that three of its four L4
-reads exclude, whose every read binds the layer and user from the handle
-rather than an argument, and whose saves and deletes each append a
-before-and-after ledger row — all three degrading to a warning rather
-than failing the write.">
+    <meta property="og:description" content="A four-tier SQLite memory
+whose visibility flag survives automatic re-saves and filters search,
+while the context builders read every fact unfiltered.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="a-memory — Agent Memory Atlas">
-    <meta name="twitter:description" content="A four-tier local memory
-in plain SQLite whose facts carry a visibility that three of its four L4
-reads exclude, whose every read binds the layer and user from the handle
-rather than an argument, and whose saves and deletes each append a
-before-and-after ledger row — all three degrading to a warning rather
-than failing the write.">
+    <meta name="twitter:description" content="A four-tier SQLite memory
+whose visibility flag survives automatic re-saves and filters search,
+while the context builders read every fact unfiltered.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>a-memory — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -50,7 +41,7 @@ than failing the write.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "a-memory",
-      "description": "A four-tier local memory in plain SQLite whose facts carry a visibility that three of its four L4 reads exclude, whose every read binds the layer and user from the handle rather than an argument, and whose saves and deletes each append a before-and-after ledger row \u2014 all three degrading to a warning rather than failing the write.",
+      "description": "A four-tier SQLite memory whose visibility flag survives automatic re-saves and filters search, while the context builders read every fact unfiltered.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,29 +96,26 @@ than failing the write.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">Hidden survives a rewrite, because a
-re-save reads the old flag first</p>
+          <p class="eyebrow">Hidden survives a silent re-save, and six
+context builders never read it</p>
           <h1>a-memory</h1>
-          <p class="document-deck">A four-tier local memory in plain
-SQLite whose facts carry a visibility that three of its four L4 reads
-exclude, whose every read binds the layer and user from the handle
-rather than an argument, and whose saves and deletes each append a
-before-and-after ledger row — all three degrading to a warning rather
-than failing the write.</p>
+          <p class="document-deck">A four-tier SQLite memory whose
+visibility flag survives automatic re-saves and filters search, while
+the context builders read every fact unfiltered.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/Cipher208/a-memory">
               <span>Source</span>
               <strong>Cipher208/a-memory</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/Cipher208/a-memory/commit/32edbb91da0f54ad25b157e13bf6867c0a409526" title="32edbb91da0f54ad25b157e13bf6867c0a409526">
+            <a class="meta-pill revision-pill" href="https://github.com/Cipher208/a-memory/commit/598e2ab14bb02bdd1999ca443f159db4eeb4d80e" title="598e2ab14bb02bdd1999ca443f159db4eeb4d80e">
               <span>Analyzed revision</span>
-              <code>32edbb91…</code>
+              <code>598e2ab1…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Cipher208--a-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -135,7 +123,19 @@ than failing the write.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>84,391
+lines of Python in 617 files, 41,776 of them under tests/; the L4 store,
+core/memory.py, is 531 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>967
+commits on main by 6 author names, 22 June – 14 October 2026; version
+1.12.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,014
+test functions in 302 test files; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -151,139 +151,142 @@ than failing the write.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>a-memory is "4-tier agent memory with hybrid search and a real
-knowledge graph — all in plain SQLite files. Zero cloud. Zero external
-APIs." MIT, Python, 66,891 lines with 281 test files and 1,606 test
-functions, on PyPI, with an MCP server and an optional embeddings
-extra.</p>
-<p>The four tiers are an L1 reflex buffer (now persisted — "was
-in-memory only since forever"), an L2 session store, L3 episodes and L4
-core facts. Three mechanisms in the L4 store are worth the visit, and
-they share a weakness.</p>
-<p><strong>Visibility is a quarantine that sticks.</strong> A fact
-carries <code>visible | pinned | private | hidden</code>. Search and key
-lookup both select
-<code>WHERE layer=? AND user_id=? AND visibility NOT IN ('private','hidden')</code>,
-and the pinned-injection block selects only
-<code>visibility='pinned'</code> — with the invariant written down
-beside it: "C8: private facts never leave the store via recall (the
-inject pinned block does not read them)."</p>
-<p>What makes it a quarantine rather than a flag is the re-save path.
-Passing no visibility on a write re-reads the stored one before
-updating, under a comment that records both the bug and its date:</p>
+<p>a-memory is a four-tier local agent memory in plain SQLite, reached
+through an MCP server, whose long-term facts carry a
+<code>visibility</code> flag that search excludes in SQL and that an
+automatic re-save cannot reset. The weak side is everything that reads
+around search: the session-start and context builders read facts through
+<code>get_all</code>, which carries no visibility predicate, so the
+invariant written beside the search query — <em>"C8: private facts never
+leave the store via recall"</em> — holds for that query and not for what
+reaches the prompt.</p>
+<p>It describes itself as "4-tier agent memory with hybrid search and a
+real knowledge graph — all in plain SQLite files. Zero cloud. Zero
+external APIs." The tiers are an L1 reflex buffer persisted per layer
+and user, an L2 session store, L3 episodes and L4 core facts, with an L0
+journal that captures raw input before distillation.</p>
+<p><strong>Visibility is four states, and an absent argument keeps the
+stored one.</strong> A fact is <code>visible</code>,
+<code>pinned</code>, <code>private</code> or <code>hidden</code>,
+validated on write (<code>core/memory.py:99-101</code>). A save that
+passes no visibility re-reads the stored flag before updating
+(<code>:106-118</code>), under a comment that records the bug and its
+date:</p>
 <blockquote>
 <p>"a 'hidden' row re-saved with the same canonical key would otherwise
 be back to 'visible' — F1 sanitation, 2026-09-12"</p>
 </blockquote>
-<p>So, as the API docstring puts it, "'hidden' works as a key
-quarantine: future writes update the row but never un-hide it." A memory
-suppressed once cannot be resurrected by writing to it again, which is
-the failure most systems with a suppression flag have. The quarantine is
-also asymmetric in the useful direction: <code>visibility</code> is an
-argument on the MCP write tool
-(<code>mcp_server/tools/memory.py:37</code>, <code>:78</code>), so the
-agent can hide a key for itself — and the re-save rule means it cannot
-unhide one.</p>
-<p><strong>The predicate is in three queries and not in the
-fourth.</strong> <code>search</code> (<code>core/memory.py:407</code>),
-the key lookup (<code>:450</code>) and the pinned-injection read
-(<code>:348</code>) each carry the visibility clause in SQL.
-<code>get_all</code> (<code>:328-334</code>) does not: it selects every
-row for the layer and user, orders by importance and takes a limit. One
-caller adds the missing test in Python —
-<code>features/inject.py:222</code> keeps only
-<code>visibility == 'visible'</code> — and five production callers do
-not:</p>
+<p>The writers that never pass a visibility are the ones that matter:
+the distiller and the consolidation sweep re-upsert by canonical key,
+and the rule keeps their output under an operator's flag. An explicit
+argument overrides it. The MCP write tool takes <code>visibility</code>
+and forwards it (<code>mcp_server/tools/memory.py:37</code>,
+<code>:86</code>, <code>:89</code>), and
+<code>test_resave_preserves_operator_visibility</code> asserts that
+<code>visibility="visible"</code> clears a hidden flag
+(<code>tests/test_lifecycle/test_c8_tails.py:127-129</code>). The
+quarantine holds against automatic writes; the agent can lift it.</p>
+<p><strong>Search filters, and the context builders do not.</strong>
+<code>search</code> selects
+<code>visibility NOT IN ('private','hidden')</code>
+(<code>core/memory.py:414</code>), the superseded-pair lookup inside it
+does the same (<code>:457</code>), and <code>get_pinned</code> selects
+only <code>pinned</code> (<code>:353</code>). <code>get_all</code>
+(<code>:333-347</code>) selects every row for the layer and user by
+importance. Six builders read it and render <code>key=value</code>:</p>
 <ul>
-<li><code>features/inject.py:165-170</code>, the compaction block,
-twenty lines from the one that does, emits every fact at or above the
-importance threshold</li>
-<li><code>features/smart_context.py:51-56</code>, same threshold, into
-the important-candidate list</li>
-<li><code>features/recall.py:62-64</code>, which emits facts whose key
-begins <code>dream_</code> or whose importance is at least 0.95</li>
-<li><code>core/__init__.py:106-108</code>, the <code>summary()</code>
-helper, which emits all ten</li>
-<li><code>mcp_server/tools/ops.py:93-94</code>, which writes the facts
-string into a <code>CONTEXT.md</code> snapshot</li>
+<li><code>features/inject.py:165-170</code>, the rehydrate block after a
+compaction</li>
+<li><code>features/inject.py:221-228</code>, the important-facts
+block</li>
+<li><code>features/recall.py:62-64</code>, the recall protocol's marker
+axis</li>
+<li><code>features/smart_context.py:51-56</code>, the smart-context
+candidate list</li>
+<li><code>mcp_server/tools/ops.py:97-98</code>, the
+<code>memory_context</code> tool</li>
+<li><code>mcp_server/tools/ops.py:244-245</code>,
+<code>memory_context_inject</code>, which also writes the text to a
+<code>CONTEXT.md</code> file (<code>:267-278</code>)</li>
 </ul>
-<p>Each renders <code>key=value</code>, so a <code>private</code> or
-<code>hidden</code> fact with high importance reaches a prompt — or a
-file — through any of them. That is the same sentence the store
-disproves two files away: <em>"C8: private facts never leave the store
-via recall."</em> The invariant is true of the query it is written
-beside and of no other read. The distiller is the one deliberate
-exception and says so: hidden rows stay in its novelty-gate select
-(<code>lifecycle/distiller.py:244-250</code>) because a paraphrase aimed
-at a quarantined key has to be suppressed too — it compares against the
-value without emitting it.</p>
-<p>The search that finds this is one line: list the callers of
-<code>get_all</code> and check each for a <code>visibility</code>
-test.</p>
-<pre class="bash"><code>grep -rn &quot;get_all(&quot; --include=*.py . | grep -v tests</code></pre>
-<p><strong>Scope is a property of the handle.</strong>
-<code>MemoryManager.get_layer(layer_type, user_id)</code> returns a
-<code>MemoryLayer</code> that carries both and builds its episodic and
-core stores beneath it; <code>user_memory()</code> and
-<code>agent_memory()</code> are the named accessors. Every core-memory
-read begins <code>WHERE layer=? AND user_id=?</code>, and
-<code>episodes</code> carries a <code>layer</code> column with two
-indexes on <code>(layer, user_id)</code>.</p>
-<p>That is a predicate on a shared table, not a file per layer, and the
-caller never passes it — which is what the README's "[u]ser facts and
-agent identity never share a namespace" amounts to in code, and the
-reason it earns the mark rather than reading as a filing convention.</p>
-<p><strong>Every mutation appends a before-and-after row.</strong>
+<p>The second has a filter that does nothing. It keeps facts where
+<code>getattr(f, "visibility", "visible") == "visible"</code>, and
+<code>CoreEntry</code> (<code>core/memory.py:34-44</code>), built by
+<code>_row_to_entry</code> (<code>:498-510</code>), has no
+<code>visibility</code> field. The default answers every time, so
+pinned, private and hidden facts above the importance threshold all
+pass. A private fact the search tests prove absent from recall is
+injected at session start.</p>
+<p><strong>Scope is carried by the handle.</strong>
+<code>MemoryManager.get_layer(layer_type, user_id)</code> builds a
+<code>MemoryLayer</code> whose <code>EpisodicMemory</code> and
+<code>CoreMemory</code> are constructed with that layer
+(<code>core/__init__.py:38-54</code>, <code>:122-132</code>), and every
+read on those two classes begins
+<code>WHERE layer=? AND user_id=?</code>. The MCP tools take
+<code>layer</code> and <code>user_id</code> as arguments and resolve a
+handle from them, so the binding is a property of the Python API rather
+than of the agent surface. One cache sits in front of it and drops the
+layer. <code>MemoryLayer.recall</code> keys its results
+<code>recall:{user_id}:{query}:{limit}</code> (<code>:81</code>) in a
+<code>MemoryCache</code> that <code>AppContext</code> hands to every
+handle (<code>mcp_server/context.py:22-23</code>). A recall on the agent
+layer within 300 seconds of the same query on the user layer returns the
+user layer's facts.</p>
+<p><strong>Every <code>CoreMemory</code> mutation appends a
+before-and-after row, and the ledger is never rewritten.</strong>
 <code>_record_history</code> writes "one A2.2 ledger row with full
-before/after row JSON" and is called from all three paths: update with
-the old row and the new, insert with a null before, and delete with a
-null after attributed <code>triggered_by or "delete"</code>. Beside it,
-<code>_record_temporal</code> maintains an interval chain per key in
-<code>core_memory_temporal</code>, closing the open interval and opening
-a new one on each write, with a point-in-time read selecting
-<code>valid_from &lt;= ? AND (valid_to IS NULL OR valid_to &gt; ?)</code>.</p>
-<p>The shared weakness is that the last two are advisory.
-<code>_record_history</code> "[d]egrades to a warning so memory writes
-never fail on history"; <code>_record_temporal</code> is "advisory,
-never fails a save". Both are wrapped in a bare exception handler. The
-intent is right — a ledger failure should not lose a memory — but the
-implementation drops the record silently, so a gap in the ledger and a
-broken interval chain are both invisible after the fact, and nothing
-counts them.</p>
-<p>The interval chain is also not a second time axis.
-<code>valid_from</code> is set to the write instant, the same clock as
-<code>updated_at</code>, so the point-in-time query answers what the
-store held at a past moment rather than when anything was true in the
-world. No bitemporal mark is claimed.</p>
+before/after row JSON" from save and delete
+(<code>core/memory.py:121</code>, <code>:129</code>, <code>:368</code>),
+and no production statement updates or deletes
+<code>core_memory_history</code>. The ledger's reach stops at those two
+methods. The 15-minute forgetting loop archives and deletes rows
+directly (<code>lifecycle/forgetting.py:194-219</code>,
+<code>:597-600</code>, called from
+<code>mcp_server/lifespan.py:61</code>), as do
+<code>forget(scope='recent')</code>, branch deletion and the importance
+and kind updates. The row snapshot also omits <code>visibility</code>
+(<code>core/memory.py:208-220</code>), so hiding a key leaves no ledger
+trace. Both the ledger and the interval chain beside it sit under bare
+exception handlers that log a warning and let the save commit.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>layer</strong> is user or agent, and you are handed one
-rather than naming it.</p>
-<p>A <strong>fact</strong> is a key and a value with an importance, a
-kind, a source and a visibility.</p>
-<p><strong>Hidden</strong> is a decision about a key that later writes
-inherit.</p>
-<p>A <strong>ledger row</strong> is what changed, with both images and
-who triggered it.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the layer and user are bound into the handle and appear in every read; a re-save with no visibility re-reads the stored flag first, so a hidden key stays hidden</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the layer and user are bound into the handle and appear in every read; a re-save with no visibility re-reads the stored flag first, so a hidden key stays hidden
+<p>A <strong>fact</strong> is a key and a value in one layer for one
+user, with an importance, a kind, a source and a visibility. A fact is
+believed when it is stored and <code>visible</code> or
+<code>pinned</code>. It stops being believed by deletion, by archiving,
+or by being marked <code>private</code> or <code>hidden</code>, which
+hides it from search but not from the context builders.</p>
+<p>A <strong>layer</strong> is <code>user</code> or <code>agent</code>.
+A handle carries one layer and one user; the MCP surface lets the caller
+name both.</p>
+<p><strong>Hidden</strong> is a flag a later automatic write inherits
+and an explicit write can clear.</p>
+<p>A <strong>ledger row</strong> is what <code>CoreMemory.save</code> or
+<code>delete</code> changed, with both images and who triggered it.
+Writes that bypass those two methods leave none.</p>
+<p>A <strong>contradiction</strong> produces two rows, not an overwrite:
+the distiller marks the earlier <code>scope: earlier</code> and writes
+the new clause under <code>key::vN</code> with <code>scope: later</code>
+(<code>lifecycle/distiller.py:413-456</code>), and search hides the
+earlier one when its later version exists.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the layer and user are bound into the handle; a save with no visibility keeps the stored flag; search filters visibility in SQL, the context builders read get_all and do not</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the layer and user are bound into the handle; a save with no visibility keeps the stored flag; search filters visibility in SQL, the context builders read get_all and do not
 flowchart TB
-    MGR[&quot;MemoryManager.get_layer(layer_type, user_id)&quot;] --&gt; H[&quot;MemoryLayer — carries&lt;br/&gt;layer_type and user_id&quot;]
-    H --&gt; UM[&quot;user_memory()&quot;]
-    H --&gt; AM[&quot;agent_memory()&quot;]
-    H --&gt; TIERS[&quot;L1 ReflexBuffer (persisted) ·&lt;br/&gt;L2 SessionStore ·&lt;br/&gt;L3 EpisodicMemory(layer=…) ·&lt;br/&gt;L4 CoreMemory&quot;]
-    W[&quot;remember(key, value, …, visibility=None)&quot;] --&gt; EX{&quot;key already exists?&quot;}
-    EX --&gt;|&quot;yes, and visibility is None&quot;| REREAD[&quot;SELECT visibility FROM core_memory&lt;br/&gt;WHERE entry_id=? — keep the stored flag&lt;br/&gt;(&#39;F1 sanitation, 2026-09-12&#39;)&quot;]
-    REREAD --&gt; UPD[&quot;update in place&quot;]
-    EX --&gt;|&quot;no&quot;| INS[&quot;insert&quot;]
-    UPD --&gt; LEDG[(&quot;A2.2 ledger row:&lt;br/&gt;old row JSON · new row JSON ·&lt;br/&gt;triggered_by&quot;)]
-    INS --&gt; LEDG
-    DEL[&quot;delete&quot;] --&gt; LEDG
-    UPD &amp; INS --&gt; TEMP[(&quot;core_memory_temporal:&lt;br/&gt;close the open interval,&lt;br/&gt;open a new one at now&quot;)]
-    LEDG -.-&gt;|&quot;&#39;degrades to a warning so memory&lt;br/&gt;writes never fail on history&#39;&quot;| GAP[&quot;a failed append is dropped&lt;br/&gt;and nothing counts it&quot;]
-    TEMP -.-&gt;|&quot;&#39;advisory, never fails a save&#39;&quot;| GAP
-    TIERS --&gt; R{&quot;reads&quot;}
-    R --&gt;|&quot;search · key lookup&quot;| F1[&quot;WHERE layer=? AND user_id=?&lt;br/&gt;AND visibility NOT IN (&#39;private&#39;,&#39;hidden&#39;)&quot;]
-    R --&gt;|&quot;pinned injection&quot;| F2[&quot;WHERE layer=? AND user_id=?&lt;br/&gt;AND visibility=&#39;pinned&#39;&lt;br/&gt;— C8: private facts never leave&lt;br/&gt;the store via recall&quot;]
-    TEMP --&gt; AS[&quot;point-in-time read:&lt;br/&gt;valid_from &lt;= ? AND&lt;br/&gt;(valid_to IS NULL OR valid_to &gt; ?)&lt;br/&gt;— one clock, the write instant&quot;]</code></pre></details></figure>
+    MCP[&quot;MCP tool call&lt;br/&gt;(layer, user_id, key, value, visibility)&quot;] --&gt; H[&quot;MemoryManager.get_layer(layer, user_id)&lt;br/&gt;→ MemoryLayer handle&quot;]
+    AUTO[&quot;distiller · consolidation sweep&lt;br/&gt;(no visibility argument)&quot;] --&gt; SAVE
+    H --&gt; SAVE[&quot;CoreMemory.save&quot;]
+    SAVE --&gt; EX{&quot;key exists?&quot;}
+    EX --&gt;|&quot;yes, visibility is None&quot;| KEEP[&quot;re-read stored flag&lt;br/&gt;— hidden stays hidden&lt;br/&gt;(F1 sanitation, 2026-09-12)&quot;]
+    EX --&gt;|&quot;yes, explicit visibility&quot;| OVR[&quot;explicit value wins&lt;br/&gt;— visibility=&#39;visible&#39; un-hides&quot;]
+    EX --&gt;|&quot;no&quot;| INS[&quot;insert, default &#39;visible&#39;&quot;]
+    KEEP &amp; OVR &amp; INS --&gt; LEDG[(&quot;core_memory_history&lt;br/&gt;before / after JSON · triggered_by&lt;br/&gt;— visibility not in the snapshot&quot;)]
+    LOOP[&quot;15-minute forgetting loop&lt;br/&gt;archive · decay · dedup&quot;] --&gt;|&quot;DELETE / UPDATE core_memory&lt;br/&gt;no ledger row&quot;| CM[(&quot;core_memory&quot;)]
+    SAVE --&gt; CM
+    CM --&gt; R{&quot;reads&quot;}
+    R --&gt;|&quot;search · pair lookup&quot;| F1[&quot;WHERE layer=? AND user_id=?&lt;br/&gt;AND visibility NOT IN&lt;br/&gt;(&#39;private&#39;,&#39;hidden&#39;)&quot;]
+    R --&gt;|&quot;get_pinned&quot;| F2[&quot;visibility=&#39;pinned&#39;&quot;]
+    R --&gt;|&quot;get_all&quot;| F3[&quot;WHERE layer=? AND user_id=?&lt;br/&gt;— no visibility predicate&quot;]
+    F3 --&gt; CTX[&quot;inject blocks · recall protocol ·&lt;br/&gt;smart context · memory_context ·&lt;br/&gt;memory_context_inject → CONTEXT.md&quot;]
+    F1 --&gt; RC[&quot;MemoryLayer.recall&lt;br/&gt;cache key recall:user:query:limit&lt;br/&gt;— no layer&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -295,33 +298,58 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>core/__init__.py</code></td>
-<td><code>MemoryManager</code>, <code>MemoryLayer</code>, and the tier
-wiring</td>
+<td><code>MemoryManager</code>, <code>MemoryLayer</code>, the recall
+cache and the handle binding</td>
 </tr>
 <tr>
 <td><code>core/memory.py</code></td>
 <td><code>CoreMemory</code>: save, the visibility rules, the ledger, the
-interval chain</td>
+interval chain, search</td>
 </tr>
 <tr>
 <td><code>core/episodic.py</code></td>
-<td>L3 episodes, layer-scoped with its own indexes</td>
+<td>L3 episodes, layer-scoped with <code>(layer, user_id)</code>
+indexes</td>
 </tr>
 <tr>
-<td><code>core/session.py</code>, <code>reflex.py</code></td>
-<td>L2 and L1</td>
+<td><code>core/session.py</code>, <code>core/reflex.py</code></td>
+<td>L2 sessions and the L1 buffer persisted per layer and user</td>
 </tr>
 <tr>
-<td><code>graph/</code>, <code>rag/</code></td>
-<td>The knowledge graph and hybrid retrieval</td>
+<td><code>shared/l0.py</code></td>
+<td>The L0 capture journal that the distiller and replay read</td>
 </tr>
 <tr>
-<td><code>lifecycle/</code>, <code>features/</code></td>
-<td>Consolidation, promotion and TTL</td>
+<td><code>lifecycle/distiller.py</code>,
+<code>lifecycle/consolidation.py</code></td>
+<td>Extraction into L4 and episode promotion</td>
 </tr>
 <tr>
-<td><code>mcp_server/</code>, <code>hooks/</code></td>
-<td>The agent surfaces</td>
+<td><code>lifecycle/forgetting.py</code></td>
+<td>Decay, archiving into <code>archived_memories</code>, restore</td>
+</tr>
+<tr>
+<td><code>features/inject.py</code>, <code>features/recall.py</code>,
+<code>features/smart_context.py</code></td>
+<td>The context builders</td>
+</tr>
+<tr>
+<td><code>features/staging.py</code></td>
+<td>Staged mutation proposals and their decide path</td>
+</tr>
+<tr>
+<td><code>features/history.py</code>,
+<code>features/versioning.py</code></td>
+<td>Ledger reads, rollback, snapshots</td>
+</tr>
+<tr>
+<td><code>rag/</code>, <code>graph/</code>, <code>wiki/</code></td>
+<td>Hybrid retrieval, the epistemic graph and wiki pages</td>
+</tr>
+<tr>
+<td><code>mcp_server/</code></td>
+<td>Tool registry, the per-process <code>AppContext</code>, the
+background loop</td>
 </tr>
 <tr>
 <td><code>alembic/</code></td>
@@ -329,112 +357,287 @@ interval chain</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Everything runs in one Python process over SQLite files in one data
+directory (<code>MCP_MEMORY_DATA_DIR</code>, default
+<code>~/.mcp-ariel-memory</code>). No API key is required to store or
+search. Embeddings and the spaCy NER model are optional extras, and the
+privacy gate falls back to a regex tier without the model. The store is
+ordinary SQLite and repairable by hand, and several scripts under
+<code>scripts/</code> exist to do exactly that. Several processes may
+serve one base; the background loop takes a per-base maintenance lock so
+only one runs housekeeping
+(<code>mcp_server/lifespan.py:46-58</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>core/memory.py:110-131</code> — the re-save that preserves
-visibility, the ledger call and the interval close, in one block.</p>
-<p><code>core/memory.py:398-410</code> — the search predicate, and the
-C8 comment.</p>
-<p><code>core/__init__.py:38-53</code> and <code>:122-132</code> — how a
-handle comes to carry its own scope.</p>
+<p><strong>Write.</strong> <code>memory_remember</code>
+(<code>mcp_server/tools/memory.py:29-94</code>) strips secrets, checks
+the rate limit and an importance gate, captures an L0 row and closes it
+as <code>routed_direct</code>, then calls
+<code>MemoryLayer.remember</code> (<code>core/__init__.py:56-78</code>)
+and <code>CoreMemory.save</code> (<code>core/memory.py:80-133</code>).
+The save path validates visibility, finds the row by
+<code>(layer, user_id, key)</code>, preserves or overrides visibility,
+updates or inserts, appends a ledger row and maintains the interval
+chain, then commits once.</p>
+<p><strong>Extraction.</strong> <code>distill_and_route</code>
+(<code>lifecycle/distiller.py</code>) classifies clauses, applies the
+dialogic guard, a novelty gate against same-key rows including hidden
+ones (<code>:390-405</code>), a semantic duplicate check and a conflict
+check, and saves with <code>created_at</code> set to the source message
+time (<code>:444-460</code>).</p>
+<p><strong>Retrieval.</strong> <code>memory_recall</code> consults a
+layer-keyed tool cache (<code>mcp_server/tools/memory.py:124</code>),
+then <code>MemoryLayer.recall</code>
+(<code>core/__init__.py:80-96</code>), which consults its own layer-less
+cache and calls <code>CoreMemory.search</code> and
+<code>EpisodicMemory.search</code>.</p>
+<p><strong>Context assembly.</strong> <code>build_inject_blocks</code>
+(<code>features/inject.py:74-252</code>) runs at session start from the
+<code>session_started</code> hook
+(<code>hooks/user_hooks.py:202-210</code>) and from an HTTP endpoint
+that takes the layer from the request body
+(<code>mcp_server/endpoints/hooks.py:58-77</code>).
+<code>build_smart_context</code>, <code>recall_protocol</code>,
+<code>memory_context</code> and <code>memory_context_inject</code> are
+the other builders.</p>
+<p><strong>Forget.</strong> The <code>forget</code> primitive
+(<code>mcp_server/tools/primitives/forget.py</code>) takes
+<code>exact</code>, <code>fuzzy</code>, <code>recent</code>,
+<code>episode_ids</code> or <code>undo</code>. The first, second and
+fourth copy rows into a shadow archive before deleting, with a dry run
+that writes nothing. <code>recent</code> purges with no archive and no
+preview. <code>undo</code> restores from the archive through
+<code>ForgettingSystem.restore_entries</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>An L4 fact is a key, a value, an importance, a memory kind, a
-visibility, a source, an optional expiry and a layer and user.
-<code>source</code> is a documented provenance contract —
-<code>user_explicit</code>, <code>staging_promotion</code>,
-<code>episode_promotion</code> or <code>manual</code> — which
-distinguishes a fact a person stated from one the consolidation sweep
-promoted out of an episode. That distinction is the one the atlas most
-often finds missing in systems that extract from their own output.</p>
-<p>Memory kind is validated and optionally reclassified on save, which
-makes it a write-time genre rather than an epistemic state;
-<code>importance</code> is a float. <code>visibility</code> is the
-discrete field that governs what a reader sees.</p>
+<p><code>core_memory</code> holds <code>layer</code>,
+<code>user_id</code>, <code>key</code>, <code>value</code>,
+<code>importance</code>, <code>memory_kind</code>,
+<code>expires_at</code>, <code>source</code>, <code>metadata</code>,
+<code>visibility</code>, <code>created_at</code> and
+<code>updated_at</code>, unique on <code>(layer, user_id, key)</code>
+(<code>core/memory.py:56-71</code>). <code>source</code> is a documented
+provenance contract — <code>user_explicit</code>,
+<code>staging_promotion</code>, <code>episode_promotion</code> or
+<code>manual</code> — which distinguishes a fact a person stated from
+one promoted out of an episode.</p>
+<p><code>created_at</code> and <code>updated_at</code> are separable on
+insert: <code>created_at</code> takes the caller's value, which the
+distiller, replay and import set to the source message's timestamp, and
+<code>updated_at</code> is the write instant (<code>:189-197</code>).
+That is the time a thing was said and the time it was stored. Neither is
+when the fact held in the world.</p>
+<p><code>core_memory_temporal</code> keeps an interval per key with
+<code>valid_from</code> set to the write instant
+(<code>:270-287</code>). <code>get_at_time</code> and
+<code>get_intervals</code> read it (<code>:299-326</code>), and no
+production code calls either. A backfilled fact can carry a
+<code>created_at</code> months earlier than its interval's
+<code>valid_from</code>.</p>
+<p><code>core_memory_history</code> stores <code>old_value</code>,
+<code>new_value</code>, both importances, a 16-character
+<code>commit_hash</code>, <code>triggered_by</code>,
+<code>created_at</code> and the two row images as JSON
+(<code>:241-258</code>). The image is built by
+<code>_row_snapshot</code> (<code>:208-220</code>) from key, value,
+importance, kind, expiry, source and metadata. Visibility is not in
+it.</p>
+<p>Archived rows go to <code>archived_memories</code> with eight
+columns. A restore reports the destination columns the archive could not
+fill, read from the schema rather than a hand-kept list
+(<code>lifecycle/forgetting.py:78-100</code>).</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid lexical and vector search over the core store with a knowledge
-graph beside it, over-fetching ten times the limit so Python-side
-ranking can prefer rows matching more query tokens.</p>
-<p>The two exclusions are the part to copy. <code>private</code> and
-<code>hidden</code> never appear in search results or key lookups, and
-the pinned block that injects facts into context reads only
-<code>pinned</code> — so the set a model sees is narrower than the set a
-search returns, deliberately.</p>
+<p><code>CoreMemory.search</code> (<code>core/memory.py:387-487</code>)
+splits the query on whitespace, selects rows matching any token in key
+or value with the visibility predicate, over-fetches ten times the limit
+and ranks by matched-token count, then importance. Contradiction pairs
+are resolved at read time: an <code>earlier</code> row is hidden when
+its <code>later</code> row is on the page or exists under the same key
+or <code>key::vN</code>, and a private later version does not hide a
+public earlier one. Expired facts stay in results with an
+<code>[EXPIRED]</code> prefix.</p>
+<p>The multi-source retriever behind <code>dream</code> fuses RAG pages,
+wiki, episodes, core facts, graph nodes and entity matches. Its episodic
+and core sources call the same layer-bound classes, and its graph and
+entity reads filter <code>epi_nodes</code> on <code>layer</code> and
+<code>user_id</code> (<code>rag/multi_source.py</code>).</p>
+<p>The builders read differently from search.
+<code>build_inject_blocks</code> adds RAG hits for the current text, the
+last day of L1, recent <code>diff_gap</code> episodes, the scratchpad, a
+rehydrate block after a compaction, pending proposals, disclosure
+triggers, the important block and the pinned block. Each is capped at
+400 characters and charged against a token budget. The scratchpad is
+read with the layer fixed to <code>user</code>
+(<code>features/inject.py:141</code>), and proposals are listed by user
+alone, so an agent-layer injection shows the user layer's scratchpad and
+both layers' proposals. Query-independent blocks go first, ahead of a
+<code>&lt;cache:break&gt;</code> marker, so a provider's prompt cache
+can hit the prefix.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>One save path handling both update and insert, each appending a
-ledger row and maintaining the interval chain, with delete doing the
-same in reverse.</p>
-<p>The re-save visibility rule is the design decision worth naming: an
-explicit <code>visibility</code> argument wins, and its absence means
-<em>keep what is stored</em> rather than <em>use the default</em>. Those
-two readings of a missing argument are easy to conflate and the
-difference here is whether a quarantine holds.</p>
+<p>One save path handles both update and insert, keyed on
+<code>(layer, user_id, key)</code>. There is no append-only fact table;
+the ledger is the record of what a key held. The distiller is the main
+automatic writer, gated by a dialogic guard, a same-key novelty gate, a
+semantic duplicate check and the contradiction split. The hourly sweep
+drains staged dream output into proposals and promotes high-weight
+episodes.</p>
+<p>Staged proposals (<code>features/staging.py</code>) are the review
+lane. <code>propose</code> absorbs a duplicate pending proposal and, for
+seven days, one whose key was already rejected or expired
+(<code>:42-63</code>). Decided rows are purged after fourteen days
+(<code>:127-146</code>). <code>decide</code> applies or rejects, reached
+through the <code>memory_proposals</code> MCP tool with
+<code>approve=true|false</code>
+(<code>mcp_server/tools/ops.py:848</code>), and
+<code>auto_apply_pending</code> applies <code>session_close</code> and
+<code>dream</code> proposals that pass the promotion gate
+(<code>features/staging.py:155-191</code>).</p>
+<p>Two paths put a hidden fact back as visible.
+<code>memory_history(action='rollback')</code> of a delete reinserts the
+old image through <code>save</code> with no visibility, which on an
+absent key inserts <code>visible</code>
+(<code>features/versioning.py:120-156</code>). And
+<code>forget(scope='undo')</code> restores from the archive with an
+<code>INSERT</code> that leaves <code>visibility</code> to its default
+(<code>lifecycle/forgetting.py:504-539</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Writes are synchronous SQLite statements with no model call on the
+explicit path. The distiller runs in hooks and replay, so extraction
+does not block the MCP write. The 15-minute loop reads every
+<code>core_memory</code> row for decay
+(<code>lifecycle/forgetting.py:158-192</code>), and a nightly pass
+enriches the graph. Injection is bounded by a token budget of 2,000 by
+default and a 400-character per-block cap.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>An MCP server, hooks, and an OpenAPI surface, with the layer
-accessors as the integration seam: an agent tool bound to
-<code>agent_memory()</code> cannot reach the user layer through any
-argument it accepts.</p>
+<p>The MCP server registers a flat tool set —
+<code>memory_remember</code>, <code>memory_recall</code>,
+<code>memory_context</code>, <code>memory_context_inject</code>,
+<code>memory_history</code>, <code>memory_proposals</code> and others —
+and a primitive set of <code>think</code>, <code>dream</code>,
+<code>forget</code>, <code>evolve</code>, <code>project</code>,
+<code>memory_hook</code> and <code>wake_up</code>. Every memory tool
+takes <code>layer</code> and <code>user_id</code> as arguments. The
+agent can therefore write and read either layer for any user id, set or
+clear <code>visibility</code>, decide its own staged proposals, and roll
+back any ledger row by id.</p>
+<p><code>memory_history(action='get')</code> returns a ledger row with
+both JSON images by <code>history_id</code> alone
+(<code>mcp_server/tools/ops.py:1492-1496</code>,
+<code>features/history.py:47-55</code>), and <code>rollback</code>
+writes into the row's own layer and user
+(<code>features/versioning.py:120-128</code>). Neither checks the
+<code>layer</code> and <code>user_id</code> the call named. Ledger rows
+carry private and hidden values like any other, since the table records
+no visibility.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The three mechanisms above are the trust story, and each has a
-caveat: two degrade rather than fail, and the third holds in the queries
-that carry it and not in the read that does not.</p>
-<p><strong>The visibility predicate is written per query, not
-once.</strong> Three L4 reads carry it in SQL and <code>get_all</code>
-does not, so whether a <code>private</code> fact reaches a prompt
-depends on which helper a caller happened to use — and five callers
-render <code>key=value</code> with no test. The structural fix is the
-one <a href="../muninndb/">MuninnDB</a> reaches for: put the predicate
-in an admission function every read path constructs, so a path that
-forgets it also forgets lifecycle, scope and expiry and fails visibly.
-Here the same decision lives in four places, three agree and the fourth
-is the default.</p>
-<p>A ledger that "never fails a write" is the correct policy and a
-silent <code>except</code> is the wrong implementation of it, for the
-same reason it was wrong in the other systems this atlas has found doing
-it. The fix is small: count the drops, expose the count, and a ledger
-can be both non-blocking and honest about its holes.</p>
-<p>The interval chain has the same handling and one further limit —
-closing and opening intervals outside a guarantee means a crash between
-the two statements leaves a key with either two open intervals or none,
-and nothing reconciles it.</p>
+<p><strong>The visibility decision is written per query.</strong> Three
+L4 queries carry it in SQL; <code>get_all</code>, <code>get</code> and
+the two interval reads do not, and the six builders that reach a prompt
+all use <code>get_all</code>. The Python-side check at
+<code>features/inject.py:222</code> reads an attribute the entry object
+does not have. The tests assert the exclusion on <code>search</code> and
+nowhere else, which is why it held there. Putting the predicate in one
+admission function every read path calls, as <a
+href="../muninndb/">MuninnDB</a> does, would make a builder that forgot
+it fail visibly.</p>
+<p><strong>The ledger's guarantee is narrower than its
+docstring.</strong> It is append-only and complete for
+<code>CoreMemory.save</code> and <code>delete</code>. The forgetting
+loop's archive deletes, <code>delete_older_than</code>, branch deletion,
+<code>deduplicate_core</code>, importance decay,
+<code>importance_scheduler</code>, the quality and replay importance
+updates, and kind reclassification all write <code>core_memory</code>
+directly. The archive path records a <code>memory_transitions</code> row
+instead; the others record nothing in the memory store.</p>
+<p><strong>Failures are dropped, not counted.</strong>
+<code>_record_history</code> "[d]egrades to a warning so memory writes
+never fail on history", and <code>_record_temporal</code> is "advisory,
+never fails a save". Both run inside the save's transaction under
+<code>except Exception</code>, log at warning level and let the save
+commit. If the interval <code>INSERT</code> fails after the
+<code>UPDATE</code> that closed the previous interval, the key commits
+with no open interval, and nothing reconciles it.</p>
+<p><strong>The recall cache crosses layers.</strong> One
+<code>MemoryCache</code> with a 300-second TTL backs every handle, and
+the recall key has no layer. The project fixed the same class of defect
+in its multi-source retriever on 6 October 2026
+(<code class="commit-id" title="d8ec04fedfd80bb76ee803e3d27a72397eae16f4">d8ec04fe…</code>, issue #78),
+where the agent-layer instance had answered with user-layer rows. That
+commit's message explains that every unit test built the retriever
+explicitly, so the construction site was never exercised.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>281 test files and 1,606 test functions, with an <code>eval/</code>
-directory, a CI badge and coverage reporting. The repository also
-carries an <code>AUDIT_REPORT_20260629.md</code> and an
-<code>ARIEL_RULES.md</code>, so the F1 and C8 labels in the comments
-appear to index a review process; that process was not read here.</p>
+<p>2,014 test functions in 302 test files, with an <code>eval/</code>
+harness, hypothesis property tests and chaos tests. I ran none of
+them.</p>
+<p>The negative cases are specific.
+<code>test_visibility_pinned_and_private</code>
+(<code>tests/test_lifecycle/test_c8_tails.py:73-90</code>) saves a
+pinned and a private fact and asserts the private one's search returns
+<code>[]</code> while the pinned one is found.
+<code>test_hidden_first_class_excluded_from_search</code>
+(<code>:133-149</code>) asserts a hidden fact is absent, the same key
+made visible is found, and re-hiding removes it.
+<code>test_episodic_and_core_sources_follow_the_instance_layer</code>
+(<code>tests/test_rag/test_prod_wire.py:169-193</code>) writes one token
+into both layers and asserts each layer's search returns only its own
+rows, and <code>test_e2e_dream_respects_layer_isolation</code>
+(<code>tests/test_e2e_pipeline.py:158-170</code>) asserts a user-layer
+dream finds nothing from the agent layer.</p>
+<p>The gaps are adjacent to those cases. No test drives a private or
+hidden fact through <code>build_inject_blocks</code>,
+<code>build_smart_context</code>, <code>recall_protocol</code> or the
+two context tools; <code>test_inject_pinned_block</code>
+(<code>:152-186</code>) asserts only that a pinned fact is present. No
+test exercises <code>MemoryLayer.recall</code> across layers with a
+shared cache. <code>test_resave_preserves_operator_visibility</code>
+(<code>:104-129</code>) asserts the explicit override as intended
+behaviour.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Decide what a missing argument means, and write it down.
+<h3 id="steal">Steal</h3>
+<p>Decide what a missing argument means and write it down.
 <code>visibility=None</code> meaning "keep the stored flag" rather than
-"use the default" is the whole difference between a quarantine and a
-suggestion, and the comment recording the bug that taught them is what
-will stop it regressing.</p>
-<p>Bind scope to the handle, not the query. <code>user_memory()</code>
-and <code>agent_memory()</code> return objects that carry their own
-predicate, so isolation is not something a caller can forget to pass —
-which is the failure mode this atlas finds in almost every system whose
-scope is an argument.</p>
-<p>Narrow the injected set further than the searched set. Search
-excludes private and hidden; the block that actually reaches the model
-reads only pinned. Two different questions, two different
-predicates.</p>
-<p>And if a ledger must never block a write, count what it drops. A
-silent <code>except</code> turns "we never lose a memory" into "we
-sometimes lose the record and cannot tell".</p>
+"use the default" is what stops an automatic re-upsert from resurrecting
+a suppressed key, and the dated comment is what will stop it
+regressing.</p>
+<p>Pair every exclusion test with a positive control in the same store.
+The hidden-fact test makes the key visible and asserts it is found
+before hiding it again, so a filter that excluded everything would
+fail.</p>
+<p>Resolve contradictions into two rows with a read-time rule.
+<code>scope: earlier</code> and <code>scope: later</code> with a
+<code>contradicts</code> reference keep both values and let search show
+the current one.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Writing the privacy predicate beside one query. Six builders that
+render facts into a prompt read through a method without it, and a
+seventh path filters on a field the object does not carry.</p>
+<p>A cache key that omits a dimension the query below it uses. The layer
+is in the SQL and in the tool-level cache, and missing from the one
+between them.</p>
+<p>A ledger documented as the mutation record when half the mutators
+bypass it, and a row image that leaves out the trust field.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one operator running a local agent who wants facts,
+episodes, a graph and a review queue in SQLite with no service to stand
+up. Walk away if a private fact must never reach a prompt, if the agent
+must not be able to clear a quarantine, or if the mutation ledger must
+be complete.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether anything reconciles a broken interval chain.
-<code>_record_temporal</code> closes and opens in two statements under
-an advisory handler, and no repair pass was found.</p>
-<p>What the F1, C8 and A2.2 labels index. They read as review findings,
-and <code>AUDIT_REPORT_20260629.md</code> exists; the relationship was
-not traced.</p>
-<p>Whether the unfiltered <code>get_all</code> callers are an oversight
-or a decision. One sibling block in the same file adds the visibility
-test and the other does not, which reads as an oversight; but the
-distiller's unfiltered select is deliberate and says why, so the pattern
-is not uniform. Nothing in the tree states which reads are meant to
-honour <code>private</code>.</p>
+<p>Whether <code>get_all</code>'s callers are meant to honour
+<code>private</code>. The one that tries reads an absent attribute,
+which reads as intent; the distiller's same-key select includes hidden
+rows deliberately and says why.</p>
+<p>Whether the interval chain will get a reader.
+<code>get_at_time</code> and <code>get_intervals</code> are tested and
+uncalled.</p>
+<p>Whether <code>memory_history</code> is meant to be agent-facing as it
+stands. Its <code>get</code> and <code>rollback</code> take a bare
+<code>history_id</code>, and
+<code>mcp_server/annotations.py:74-76</code> marks the tool read-only
+although <code>rollback</code> and <code>snapshot_restore</code>
+write.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -445,28 +648,129 @@ honour <code>private</code>.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>core/memory.py:110-131</code></td>
-<td>A re-save that cannot un-hide, with the dated bug behind it</td>
+<td><code>core/memory.py:80-133</code></td>
+<td>The save path, the visibility rule and the ledger and interval
+calls</td>
 </tr>
 <tr>
-<td><code>core/memory.py:398-410</code></td>
-<td>The search predicate and the C8 invariant</td>
+<td><code>core/memory.py:222-261</code></td>
+<td>The ledger append and its bare exception handler</td>
 </tr>
 <tr>
-<td><code>core/__init__.py:38-53</code>, <code>:122-132</code></td>
-<td>Scope carried by the handle</td>
+<td><code>core/memory.py:333-357</code></td>
+<td><code>get_all</code> with no visibility predicate,
+<code>get_pinned</code> with one</td>
 </tr>
 <tr>
-<td><code>core/memory.py:217-231</code></td>
-<td>The before-and-after ledger, and what it does on failure</td>
+<td><code>core/memory.py:387-487</code></td>
+<td>Search: the visibility predicate, the C8 comment, the contradiction
+pair rule</td>
 </tr>
 <tr>
-<td><code>core/memory.py:265-300</code></td>
-<td>An interval chain on one clock, and a point-in-time read</td>
+<td><code>core/__init__.py:38-132</code></td>
+<td>The handle, the layer-less recall cache key</td>
+</tr>
+<tr>
+<td><code>features/inject.py:74-252</code></td>
+<td>The session-start assembler and the no-op visibility check</td>
+</tr>
+<tr>
+<td><code>mcp_server/tools/ops.py:79-297</code></td>
+<td><code>memory_context</code> and <code>memory_context_inject</code>,
+the <code>CONTEXT.md</code> write</td>
+</tr>
+<tr>
+<td><code>mcp_server/tools/ops.py:1466-1520</code></td>
+<td><code>memory_history</code>: get and rollback by id</td>
+</tr>
+<tr>
+<td><code>lifecycle/forgetting.py:158-219</code>, <code>:504-539</code>,
+<code>:597-600</code></td>
+<td>Decay, archive deletes outside the ledger, restore without
+visibility</td>
+</tr>
+<tr>
+<td><code>lifecycle/distiller.py:390-460</code></td>
+<td>The novelty gate over hidden rows, the contradiction split,
+<code>created_at</code></td>
+</tr>
+<tr>
+<td><code>features/staging.py:32-262</code></td>
+<td>Proposals, the seven-day key guard, decide</td>
+</tr>
+<tr>
+<td><code>tests/test_lifecycle/test_c8_tails.py:73-186</code></td>
+<td>The visibility tests, positive and negative</td>
+</tr>
+<tr>
+<td><code>tests/test_rag/test_prod_wire.py:157-219</code></td>
+<td>The layer-isolation tests added with the retriever fix</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>; its extended regex has no
+<code>\b</code>, so the patterns below avoid it.</p>
+<ul>
+<li><code>git grep -n -E '\.get_all\(' -- '*.py' ':!tests'</code> — ten
+hits: the six builders, two dashboard reads,
+<code>features/branches.py:81</code>, and
+<code>core/__init__.py:106</code> in <code>get_context</code>, which has
+no caller.</li>
+<li><code>git grep -n -E 'visibility' -- '*.py' ':!tests' ':!core/memory.py' ':!alembic'</code>
+— reads at <code>features/inject.py:222</code> (the no-op),
+<code>lifecycle/distiller.py:398</code> and
+<code>mcp_server/tools/wiki.py:122</code>; writes through
+<code>core/__init__.py:77</code> and
+<code>mcp_server/tools/memory.py:86</code>, <code>:89</code>.</li>
+<li><code>git grep -n -E '(UPDATE|DELETE FROM|DROP TABLE( IF EXISTS)?) core_memory_history' -- '*.py'</code>
+— the downgrade migration only.</li>
+<li><code>git grep -n -E 'DELETE FROM core_memory[ "]' -- '*.py' ':!tests'</code>
+— <code>core/memory.py:371</code>, <code>:380</code>,
+<code>features/branches.py:157</code>,
+<code>features/compression.py:32</code>,
+<code>lifecycle/forgetting.py:600</code>, <code>:609</code>, two purge
+scripts and one migration; only <code>:371</code> is preceded by a
+ledger append.</li>
+<li><code>git grep -n -E 'get_at_time\(|get_intervals\(|get_context\(' -- '*.py' ':!tests'</code>
+— definitions only.</li>
+<li><code>git grep -n -E 'recall:\{' -- core</code> —
+<code>core/__init__.py:81</code>, no layer in the key.</li>
+<li><code>git grep -n -F 'read_entries(user_id, "user")' -- features/inject.py</code>
+— <code>:141</code>.</li>
+<li><code>git grep -n -i -E 'tombstone' -- '*.py' ':!tests'</code> —
+<code>features/staging.py:42</code>, <code>:128</code> and a docstring
+in <code>lifecycle/consolidation.py:193</code>; a seven-day guard keyed
+on a proposal's key, not a value.</li>
+<li><code>git grep -n -E 'assert hits == \[\]' -- tests/test_lifecycle/test_c8_tails.py</code>
+— <code>:87</code>, <code>:142</code>, <code>:149</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE NOTICE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/Cipher208/a-memory/commit/598e2ab14bb02bdd1999ca443f159db4eeb4d80e"><code class="commit-id" title="598e2ab14bb02bdd1999ca443f159db4eeb4d80e">598e2ab1…</code></a>
+— 110 commits on. <code>negative_eval</code> gained, earned at the first
+pin: the C8 search tests asserted private and hidden facts absent (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Also wrong then:
+the <code>inject.py:222</code> filter reads a field
+<code>CoreEntry</code> lacks, so six builders are unfiltered, not five;
+the key lookup carries no predicate; an explicit <code>visibility</code>
+lets the agent un-hide; the ledger covers only
+<code>CoreMemory.save</code> and <code>delete</code> (<a
+href="#1-executive-summary">section 1</a>). The recall cache key omits
+the layer at both pins (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Overtaken:
+<code>created_at</code> carries source time, the multi-source retriever
+binds its layer (<code>d8ec04f</code>), forget gained dry run and undo.
+Screened from a full clone: ten files, two auto-run surfaces, one
+build-time execution point, <code>pyproject.toml</code> and
+<code>uv.lock</code> inside the cooldown, <code>AGENTS.md</code>,
+<code>CLAUDE.md</code> and <code>.cursorrules</code> read as data.
+Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/Cipher208/a-memory/commit/32edbb91da0f54ad25b157e13bf6867c0a409526"><code class="commit-id" title="32edbb91da0f54ad25b157e13bf6867c0a409526">32edbb91…</code></a>
 — <code>trust_state</code> re-tested against the narrowed line.
@@ -479,9 +783,9 @@ is a validated four-value state, three L4 queries carry it in SQL —
 and a re-save with no visibility re-reads the stored flag, so a hidden
 key stays hidden. The report said private and hidden are excluded from
 <em>both</em> read paths. There are more than two, and the predicate is
-written per query rather than once. <code>get_all</code>
-(<code>:328-334</code>) selects every row for the layer and user ordered
-by importance and takes no visibility clause.
+written per query rather than once.</p>
+<p><code>get_all</code> (<code>:328-334</code>) selects every row for
+the layer and user ordered by importance and takes no visibility clause.
 <code>features/inject.py:222</code> adds the test in Python; five
 production callers do not — <code>features/inject.py:165-170</code> (the
 compaction block, twenty lines from the one that does),
@@ -498,14 +802,15 @@ query it is written beside. The distiller is the one deliberate
 exception and says so: hidden rows stay in its novelty-gate select
 (<code>lifecycle/distiller.py:244-250</code>) so a paraphrase aimed at a
 quarantined key is suppressed too, and it compares against the value
-without emitting it. One open question is now answered:
-<code>hidden</code> is reachable from the agent-facing tools —
-<code>visibility</code> is an argument on the MCP write tool
-(<code>mcp_server/tools/memory.py:37</code>, <code>:78</code>), which
-makes the quarantine asymmetric in the useful direction, since the
-re-save rule means the agent can hide a key and not unhide it. Section
-1, section 9, the matrix rows and the open questions were rewritten.
-Screened again first; nothing was installed and no suite was run.</p>
+without emitting it.</p>
+<p>One open question is now answered: <code>hidden</code> is reachable
+from the agent-facing tools — <code>visibility</code> is an argument on
+the MCP write tool (<code>mcp_server/tools/memory.py:37</code>,
+<code>:78</code>), which makes the quarantine asymmetric in the useful
+direction, since the re-save rule means the agent can hide a key and not
+unhide it. Section 1, section 9, the matrix rows and the open questions
+were rewritten. Screened again first; nothing was installed and no suite
+was run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/Cipher208/a-memory/commit/32edbb91da0f54ad25b157e13bf6867c0a409526"><code class="commit-id" title="32edbb91da0f54ad25b157e13bf6867c0a409526">32edbb91…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

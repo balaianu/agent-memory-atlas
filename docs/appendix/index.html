@@ -4095,11 +4095,15 @@ was installed, built or run</li>
 <li><a
 href="https://github.com/Cipher208/a-memory">Cipher208/a-memory</a> at
 <a
-href="https://github.com/Cipher208/a-memory/commit/32edbb91da0f54ad25b157e13bf6867c0a409526"><code class="commit-id" title="32edbb91da0f54ad25b157e13bf6867c0a409526">32edbb91…</code></a>
-— read only, from a shallow clone; eight files scanned, two auto-run
-surfaces, one build-time execution point, no unpinned surfaces and two
-dependency files inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/Cipher208/a-memory/commit/598e2ab14bb02bdd1999ca443f159db4eeb4d80e"><code class="commit-id" title="598e2ab14bb02bdd1999ca443f159db4eeb4d80e">598e2ab1…</code></a>
+— read only, from a full clone; ten files scanned, two auto-run surfaces
+(<code>.cursorrules</code>, <code>hooks/</code>), one build-time
+execution point (<code>tests/conftest.py</code>), no unpinned surfaces
+and two dependency files inside the seven-day cooldown
+(<code>pyproject.toml</code>, <code>uv.lock</code>);
+<code>AGENTS.md</code>, <code>CLAUDE.md</code> and
+<code>.cursorrules</code> read as data. Nothing was installed, built or
+run</li>
 <li><a href="https://github.com/phanijapps/memex">phanijapps/memex</a>
 at <a
 href="https://github.com/phanijapps/memex/commit/069cd03bcfca62f41d5b670c91e694c3cd24d5da"><code class="commit-id" title="069cd03bcfca62f41d5b670c91e694c3cd24d5da">069cd03b…</code></a>
@@ -16022,6 +16026,37 @@ narratives whose semantic fields were never updated
 counting <code>assert</code> rather than reading what the scripts did
 with their results, and the last two on reading the schema's history
 tables without the rest of it.</li>
+<li><strong>Five published claims about <a
+href="../systems/a-memory/">a-memory</a> were wrong at <a
+href="https://github.com/Cipher208/a-memory/commit/32edbb91da0f54ad25b157e13bf6867c0a409526"><code class="commit-id" title="32edbb91da0f54ad25b157e13bf6867c0a409526">32edbb91…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>negative_eval</code>, though
+<code>tests/test_lifecycle/test_c8_tails.py:73-90</code> and
+<code>:133-149</code> asserted that private and hidden facts were absent
+from <code>search</code> in a store holding a matching pinned or visible
+fact. It said <code>features/inject.py:222</code> filtered visibility in
+Python; <code>CoreEntry</code> (<code>core/memory.py:34-44</code>) had
+no <code>visibility</code> field, so the check always passed. The
+unfiltered builders were six — both <code>inject.py</code> blocks,
+<code>recall.py:62</code>, <code>smart_context.py:51</code>,
+<code>ops.py:93</code> and <code>ops.py:240</code>, the
+<code>CONTEXT.md</code> writer — and <code>core/__init__.py:106</code>
+was an uncalled helper. It said the key lookup carried the predicate;
+<code>:450</code> was the superseded-pair query inside
+<code>search</code>, and <code>get</code> (<code>:258-263</code>) had
+none. It said the agent could hide a key and not unhide it; the MCP tool
+forwarded an explicit <code>visibility</code>
+(<code>mcp_server/tools/memory.py:78</code>), which overrode the stored
+flag. And it said every delete appended a ledger row; the 15-minute
+forgetting loop's archive deletes
+(<code>lifecycle/forgetting.py:224</code>) and
+<code>delete_older_than</code> wrote <code>core_memory</code> with none.
+Separately, the recall cache key omitted the layer
+(<code>core/__init__.py:81</code>), and the agent-layer multi-source
+retriever answered with user-layer rows until
+<code class="commit-id" title="d8ec04fedfd80bb76ee803e3d27a72397eae16f4">d8ec04fe…</code>. Most rested on
+the comment or docstring beside the code rather than on the object or
+caller it described.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

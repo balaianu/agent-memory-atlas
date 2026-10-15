@@ -35,39 +35,14 @@
     },
     "a-memory": {
       "counts": {
-        "AGENT": 1,
+        "AGENT": 3,
         "EXEC": 1,
         "FRESH": 2,
         "NOTE": 1,
         "RUNS": 2
       },
-      "files_scanned": 8,
+      "files_scanned": 10,
       "findings": [
-        {
-          "detail": "instructions addressed to a reading agent — treat as data, never as commands",
-          "kind": "AGENT",
-          "path": ".cursorrules"
-        },
-        {
-          "detail": "executes on pytest collection, before any test runs",
-          "kind": "EXEC",
-          "path": "tests/conftest.py"
-        },
-        {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "pyproject.toml"
-        },
-        {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
-          "kind": "FRESH",
-          "path": "uv.lock"
-        },
-        {
-          "detail": "lockfile(s) present: uv.lock",
-          "kind": "NOTE",
-          "path": "-"
-        },
         {
           "detail": "editor rules injected into an agent's context",
           "kind": "RUNS",
@@ -77,12 +52,27 @@
           "detail": "hook scripts a plugin manifest can register — 8 entr(ies): __init__.py, agent_hooks.py, external.py, loader.py, models.py, registry.py, shared.py, user_hooks.py",
           "kind": "RUNS",
           "path": "hooks/"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "pyproject.toml"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "uv.lock"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
         }
       ],
-      "revision": "32edbb91da0f54ad25b157e13bf6867c0a409526",
-      "screened_at": "2026-09-19",
+      "revision": "598e2ab14bb02bdd1999ca443f159db4eeb4d80e",
+      "screened_at": "2026-10-15T02:42:00+00:00",
       "slug": "a-memory",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/Cipher208/a-memory"
     },

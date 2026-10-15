@@ -20000,55 +20000,55 @@ href="../systems/a-memory/"><code>a-memory</code></a></h3>
 <ul>
 <li>Best idea: <strong>a missing argument means <em>keep what is
 stored</em>, not <em>use the default</em>.</strong> A re-save that
-passes no <code>visibility</code> re-reads the stored flag first, so
-writing to a <code>hidden</code> key updates it without bringing it back
-— and the comment records the bug and the date that taught them: "a
-'hidden' row re-saved with the same canonical key would otherwise be
-back to 'visible' — F1 sanitation, 2026-09-12". That one line is the
-difference between a quarantine and a suggestion, and most suppression
-flags in this corpus do not survive the next write.</li>
-<li>Biggest risk: <strong>the visibility predicate is written per query,
-and one query does not have it.</strong> <code>search</code>, the key
-lookup and the pinned-injection read each carry
+passes no <code>visibility</code> re-reads the stored flag first, so the
+distiller and the consolidation sweep, which never pass one, update a
+<code>hidden</code> key without bringing it back. The comment records
+the bug and the date: "a 'hidden' row re-saved with the same canonical
+key would otherwise be back to 'visible' — F1 sanitation, 2026-09-12".
+An explicit argument overrides the flag, and the tests assert that as
+intended.</li>
+<li>Biggest risk: <strong>the visibility predicate is written beside the
+search query and nowhere a prompt is built.</strong> <code>search</code>
+and its superseded-pair lookup carry
 <code>visibility NOT IN ('private','hidden')</code> in SQL;
-<code>get_all</code> carries nothing, orders by importance and returns
-the row whatever its visibility. One caller adds the test in Python and
-five do not — including the compaction block twenty lines from the one
-that does — so a private or hidden fact above the importance threshold
-is rendered as <code>key=value</code> into an injected block, a
-smart-context candidate list, a recall string or a
-<code>CONTEXT.md</code> snapshot. The comment two files away says it
-cannot: <em>"C8: private facts never leave the store via recall."</em>
-It is true of the query it is written beside.</li>
-<li>Also risky: <strong>the ledger and the interval chain are both
-advisory, and neither counts what it drops.</strong>
-<code>_record_history</code> "[d]egrades to a warning so memory writes
-never fail on history"; <code>_record_temporal</code> is "advisory,
-never fails a save". Both sit under a bare exception handler, so a
-serialisation or disk failure leaves a gap in the audit record and a
-broken interval chain while the write succeeds, with nothing to reveal
-either afterwards. The policy is right and the implementation loses the
-evidence — counting the drops would fix it.</li>
-<li>Most reusable component: the scope binding.
-<code>get_layer(layer_type, user_id)</code> hands back an object
-carrying its own predicate, <code>user_memory()</code> and
-<code>agent_memory()</code> name the two, and every core read begins
-<code>WHERE layer=? AND user_id=?</code>. Isolation a caller cannot
-forget to pass, which is the failure this atlas keeps finding in systems
-whose scope is an argument.</li>
-<li>Maturity impression: MIT, Python, 66,891 lines with 281 test files
-and 1,606 test functions, on PyPI, with an MCP server, hooks, Alembic
-migrations, coverage reporting and an audit report in-tree. The F1, C8
-and A2.2 labels in the comments index some review process that was not
-traced here.</li>
+<code>get_all</code> carries nothing. Six context builders read
+<code>get_all</code> and render <code>key=value</code> — two inject
+blocks, the recall protocol, smart context, <code>memory_context</code>
+and <code>memory_context_inject</code>, which also writes
+<code>CONTEXT.md</code>. The one Python-side check reads
+<code>visibility</code> from a <code>CoreEntry</code> that has no such
+field, so it always passes. The comment beside the search says <em>"C8:
+private facts never leave the store via recall."</em> It is true of that
+query.</li>
+<li>Also risky: <strong>the ledger covers two methods and drops failures
+silently.</strong> <code>_record_history</code> runs from
+<code>CoreMemory.save</code> and <code>delete</code> only; the 15-minute
+forgetting loop's archive deletes, <code>forget(scope='recent')</code>,
+branch deletion and the importance and kind updates write
+<code>core_memory</code> directly, and the row image omits
+<code>visibility</code>. The ledger and the interval chain both sit
+under bare exception handlers. Separately, the recall cache key omits
+the layer, so one layer's recall is served to the other for 300
+seconds.</li>
+<li>Most reusable component: the paired exclusion test.
+<code>test_hidden_first_class_excluded_from_search</code> hides a fact
+and asserts it is absent, makes the same key visible and asserts it is
+found, then hides it again — so a filter that excluded everything would
+fail. Beside it, the scope binding:
+<code>get_layer(layer_type, user_id)</code> hands back an object whose
+stores carry their own layer.</li>
+<li>Maturity impression: MIT, Python, version 1.12.0, 84,391 lines in
+617 files with 2,014 test functions, on PyPI, with an MCP server, hooks,
+Alembic migrations and commit messages that state how a defect got past
+the tests.</li>
 <li>Study when: you have a suppression or privacy flag and have not
-decided what a write with no flag means, or you want scope carried by
-the handle rather than the query.</li>
-<li>Do not copy when: you need a second time axis —
-<code>valid_from</code> is the write instant on the same clock as
-<code>updated_at</code>, so the point-in-time read answers what the
-store held, never when anything was true. Three marks: trust state,
-scope enforced, audit log.</li>
+decided what a write with no flag means, or you want contradictions kept
+as two rows with a read-time rule.</li>
+<li>Do not copy when: a private fact must never reach a prompt, or the
+mutation record must be complete — the predicate and the ledger each
+cover the path they were written beside. <code>valid_from</code> is the
+write instant and nothing reads the interval chain. Four marks: trust
+state, scope enforced, audit log, negative eval.</li>
 </ul>
 <h3 id="memex"><a href="../systems/memex/"><code>memex</code></a></h3>
 <ul>
