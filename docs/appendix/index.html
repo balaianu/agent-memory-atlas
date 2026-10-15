@@ -4766,14 +4766,13 @@ not inspected. Open WebUI License, a BSD-3 variant whose added condition
 governs branding in deployments above fifty users</li>
 <li><a href="https://github.com/eleboucher/memini">eleboucher/memini</a>
 at <a
-href="https://github.com/eleboucher/memini/commit/452ff2299c185530c7010cb164d83cce8006f78a"><code class="commit-id" title="452ff2299c185530c7010cb164d83cce8006f78a">452ff229…</code></a>
-— read only; two auto-run surfaces (a Claude Code plugin manifest and a
-devcontainer <code>postCreateCommand</code>), four floating dependency
-ranges, every manifest inside the seven-day cooldown as an artefact of a
-<code>--depth 1</code> clone rather than a statement about the upstream;
-nothing installed, built or run, and the benchmark table's
-<code>results/</code> source confirmed absent from the tree against
-<code>.gitignore</code></li>
+href="https://github.com/eleboucher/memini/commit/72a7377b4c21eef5a453dcef540f2d10b4de092e"><code class="commit-id" title="72a7377b4c21eef5a453dcef540f2d10b4de092e">72a7377b…</code></a>
+— read only; the same two auto-run surfaces (a Claude Code plugin
+manifest and a devcontainer <code>postCreateCommand</code>), four
+floating dependency surfaces, and every manifest inside the seven-day
+cooldown after a run of dependency updates; nothing installed, built or
+run, and the benchmark table's <code>results/</code> source confirmed
+absent from every commit in the clone's history</li>
 <li><a
 href="https://github.com/mambo-wang/CodeWiki-Plus">mambo-wang/CodeWiki-Plus</a>
 at <a
@@ -17974,6 +17973,32 @@ said contradiction demoted the lower-credibility side of every detected
 pair; only a polarity flip did, and a value divergence was recorded for
 the operator with both facts left verified
 (<code>SRC/neothd/src/memory/contradiction.rs:422-427</code>).</li>
+<li><strong>Four published claims about <a
+href="../systems/memini/">memini</a> were wrong at <a
+href="https://github.com/eleboucher/memini/commit/452ff2299c185530c7010cb164d83cce8006f78a"><code class="commit-id" title="452ff2299c185530c7010cb164d83cce8006f78a">452ff229…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code> and said working and episodic
+memories never cross a namespace boundary on a read;
+<code>memory_list</code>, <code>memory_get</code> and
+<code>memory_history</code> took a model-supplied <code>namespace</code>
+that <code>tools.ns</code>
+(<code>internal/api/mcp/mcp.go:639-648</code>) accepted for any valid
+name, at every tier, and <code>scope="everywhere"</code> read the
+subtree at the full tier filter. It awarded <code>tombstone</code> to a
+supersession pointer, a record-keyed mechanism the rubric excludes, and
+the exact-dedup lookup <code>GetByFingerprint</code> required
+<code>superseded_by IS NULL</code>, so a superseded value written again
+was stored live. It awarded <code>audit_log</code> to an event table
+that <code>PruneEvents</code> deleted from hourly, by default after
+<code>720h</code> and beyond <code>100000</code> rows
+(<code>internal/config/config.go:618-622</code> at that pin). And it
+cited the controlled cross-namespace case as
+<code>testCrossNamespaceUpsert</code>; the case at
+<code>internal/store/storetest/conformance.go:73-145</code> was
+<code>testIDsByPrefix</code>. The first rested on the store's namespace
+parameter rather than on who supplies it, the second on the pointer's
+doc comment, and the third on the event writers rather than the
+deleter.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

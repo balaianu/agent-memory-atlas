@@ -4,28 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A single Go binary serving
-remember and recall over MCP and REST, which tiers an untiered write
-with a deterministic regex classifier that can only raise it,
-deduplicates twice — once before paying for an embedding and once after
-— and restricts every cross-namespace read leg to durable tiers.">
+    <meta name="description" content="A Go memory service whose recall
+cascade admits only durable tiers past the primary namespace, while five
+MCP tools take any namespace the model names.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="memini — Agent Memory Atlas">
-    <meta property="og:description" content="A single Go binary serving
-remember and recall over MCP and REST, which tiers an untiered write
-with a deterministic regex classifier that can only raise it,
-deduplicates twice — once before paying for an embedding and once after
-— and restricts every cross-namespace read leg to durable tiers.">
+    <meta property="og:description" content="A Go memory service whose
+recall cascade admits only durable tiers past the primary namespace,
+while five MCP tools take any namespace the model names.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="memini — Agent Memory Atlas">
-    <meta name="twitter:description" content="A single Go binary serving
-remember and recall over MCP and REST, which tiers an untiered write
-with a deterministic regex classifier that can only raise it,
-deduplicates twice — once before paying for an embedding and once after
-— and restricts every cross-namespace read leg to durable tiers.">
+    <meta name="twitter:description" content="A Go memory service whose
+recall cascade admits only durable tiers past the primary namespace,
+while five MCP tools take any namespace the model names.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>memini — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ deduplicates twice — once before paying for an embedding and once after
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "memini",
-      "description": "A single Go binary serving remember and recall over MCP and REST, which tiers an untiered write with a deterministic regex classifier that can only raise it, deduplicates twice \u2014 once before paying for an embedding and once after \u2014 and restricts every cross-namespace read leg to durable tiers.",
+      "description": "A Go memory service whose recall cascade admits only durable tiers past the primary namespace, while five MCP tools take any namespace the model names.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -104,25 +98,23 @@ deduplicates twice — once before paying for an embedding and once after
         <div class="document-hero-inner">
           <p class="eyebrow">Shared memory service</p>
           <h1>memini</h1>
-          <p class="document-deck">A single Go binary serving remember
-and recall over MCP and REST, which tiers an untiered write with a
-deterministic regex classifier that can only raise it, deduplicates
-twice — once before paying for an embedding and once after — and
-restricts every cross-namespace read leg to durable tiers.</p>
+          <p class="document-deck">A Go memory service whose recall
+cascade admits only durable tiers past the primary namespace, while five
+MCP tools take any namespace the model names.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/eleboucher/memini">
               <span>Source</span>
               <strong>eleboucher/memini</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/eleboucher/memini/commit/452ff2299c185530c7010cb164d83cce8006f78a" title="452ff2299c185530c7010cb164d83cce8006f78a">
+            <a class="meta-pill revision-pill" href="https://github.com/eleboucher/memini/commit/72a7377b4c21eef5a453dcef540f2d10b4de092e" title="72a7377b4c21eef5a453dcef540f2d10b4de092e">
               <span>Analyzed revision</span>
-              <code>452ff229…</code>
+              <code>72a7377b…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/eleboucher--memini" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -130,7 +122,21 @@ restricts every cross-namespace read leg to durable tiers.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>106,228
+lines of Go in 354 files, 53,979 of them in 190 test files; the memory
+engine (internal/service, store, search, memory, nsresolve, maintenance)
+is 24,685 lines in 60 files outside tests</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>975
+commits on main by 5 author names, 9 June – 14 October 2026; release
+v0.7.36</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,219
+Go test functions in 186 files, plus a store conformance suite of
+lower-case cases run against each backend; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,40 +153,34 @@ restricts every cross-namespace read leg to durable tiers.</p>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
 <p>memini is a memory service rather than a library: one Go binary that
-any MCP-capable agent talks to, holding a store of tiered memories
-behind <code>remember</code> and <code>recall</code>. It boots with no
-configuration on an embedded SQLite file and runs the same code against
-Postgres. The licence is AGPL-3.0, with the full text in the tree.</p>
-<p>Two decisions shape everything else. The first is that <strong>an
-untiered write is classified by regex, not by a model</strong>. A caller
-who names no tier gets <code>working</code>, a 72-hour intake tier,
-unless a deterministic marker heuristic raises it — and the heuristic
-can only ever raise. It never demotes, never touches a write whose
-caller picked a tier, and fails safe: a miss leaves the memory in
-<code>working</code>, where it can still earn durability later. That
-makes tiering instant and identical on every deployment, including one
-with no LLM configured at all.</p>
-<p>The second is that <strong>the scope that widens a read narrows it on
-another axis at the same time</strong>. A recall resolves a set of
-namespaces — the primary, then ancestors nearest-first, then the
-caller's home, then stored links — and every leg past the primary is
-restricted to the durable tiers. Working and episodic memories never
-cross a namespace boundary on a read. A system that cascades without
-that rule leaks session chatter between projects; memini's cascade can
-only ever surface distilled facts from elsewhere.</p>
-<p>The report awards five marks: <code>scope_enforced</code>,
-<code>tombstone</code>, <code>bitemporal</code>, <code>audit_log</code>
-and <code>negative_eval</code>. It withholds <code>trust_state</code>,
-and section 9 says why — the epistemic axis here is a number, and the
-discrete state that withholds a memory is the supersession pointer the
-<code>tombstone</code> mark already covers.</p>
-<p>The sharpest finding is in section 10. The benchmark README publishes
-a full results table and says it is <em>"sourced from the committed
-<code>results/</code> JSON"</em>, linking that directory.
-<code>.gitignore</code> line 24 is <code>/bench/results/</code>. The
-harness is real and the datasets for one suite are committed; the
-numbers in the headline table are not reproducible from a clone of this
-repository.</p>
+MCP-capable agents share, holding tiered memories behind
+<code>remember</code> and <code>recall</code>. Its retrieval is the
+strong side. The recall cascade bounds every namespace past the primary
+to durable tiers, and the ranking composite multiplies relevance instead
+of adding bonuses. The weak side is the boundary under that cascade:
+five MCP tools take a namespace from the model and resolve any namespace
+on the server, at every tier.</p>
+<p>It boots with no configuration on an embedded SQLite file and runs
+the same code against Postgres. The licence is AGPL-3.0, with the full
+text in the tree.</p>
+<p>Two decisions shape the design. <strong>An untiered write is
+classified by regex, not by a model.</strong> A caller who names no tier
+gets <code>working</code>, a 72-hour intake tier, unless a deterministic
+marker heuristic raises it. The heuristic can only raise, never touches
+a write whose caller picked a tier, and fails safe: a miss leaves the
+memory in <code>working</code>, where it can earn durability later.</p>
+<p><strong>The scope that widens a recall narrows it on another axis at
+the same time.</strong> A recall resolves the primary, then ancestors
+nearest-first, then the caller's home, then stored links, and every leg
+past the primary is restricted to the durable tiers
+(<code>internal/service/readset.go</code>).
+<code>scope="everywhere"</code> adds the primary's subtree at the
+request's full tier filter, which the scoping document states.</p>
+<p>The report awards two marks, <code>bitemporal</code> and
+<code>negative_eval</code>, and section 9 gives the reason for each of
+the five it withholds. Three of those are near misses with real
+mechanisms behind them: a namespace filter on every store read, a
+supersession pointer, and an eleven-kind activity log.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>Think of memini as a retrieval service with a lifecycle bolted to the
 front of it, not as a database with search on top.</p>
@@ -188,113 +188,130 @@ front of it, not as a database with search on top.</p>
 and <code>episodic</code> are short-term — transient, TTL'd at 72 hours
 and 30 days — and <code>semantic</code> and <code>procedural</code> are
 long-term, durable and curated, with no default expiry. The mapping is a
-method on the tier itself rather than a table someone maintains, so "is
-this short-term" and "when does this expire" have exactly one answer
+method on the tier itself (<code>internal/memory/types.go:48-56</code>),
+so "is this short-term" and "when does this expire" have one answer
 each.</p>
 <p>A memory moves up that ladder in one of three ways: a caller names
 its tier, the regex classifier raises it at write time, or a later
-consolidation pass promotes it. It moves down by expiring, by being
-demoted by a maintenance pass, or by being superseded — which does not
-delete it, but stamps the interval it was true for and points at what
-replaced it.</p>
-<p>The retrieval side is where the design opinion lives. Most memory
-systems advertise a blend of relevance, recency and importance. memini
-computes <code>relevance × (0.80 + 0.20 × quality)</code> and leaves the
-standalone recency and importance weights at zero, a fact the
-documentation states under the heading <em>"Ranking, honestly"</em> and
-the code confirms: <code>RerankWeights</code> has four fields and the
-production default sets two of them.</p>
-<h2 id="3-architecture">3. Architecture</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a write is validated and tiered by a raise-only regex classifier, routed to a namespace, scrubbed and sanitized, gated for signal, deduplicated once before the embedder is paid for and once after, then stored; a recall resolves a read set whose non-primary legs are durable-tier only, runs vector and keyword legs per namespace in parallel, fuses twice with first-seen order breaking ties, and re-scores with relevance multiplied by a quality modifier before reserves, guards and an optional reranker; both paths write to a closed-vocabulary activity log, and ten maintenance passes act on the store behind them</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a write is validated and tiered by a raise-only regex classifier, routed to a namespace, scrubbed and sanitized, gated for signal, deduplicated once before the embedder is paid for and once after, then stored; a recall resolves a read set whose non-primary legs are durable-tier only, runs vector and keyword legs per namespace in parallel, fuses twice with first-seen order breaking ties, and re-scores with relevance multiplied by a quality modifier before reserves, guards and an optional reranker; both paths write to a closed-vocabulary activity log, and ten maintenance passes act on the store behind them
+promotion pass raises it. It moves down by expiring, by being demoted by
+the sweeper, or by being superseded. Supersession does not delete: it
+stamps the end of the interval the fact held and points at what replaced
+it.</p>
+<p>A superseded fact is a record, not a rejected value. The exact-dedup
+lookup that guards a write matches live rows only
+(<code>superseded_by IS NULL</code> in <code>GetByFingerprint</code>),
+so a later write of the superseded content stores a new live memory.
+Corroboration is a number used for ranking; no discrete state decides
+whether a memory may be believed.</p>
+<p>The retrieval side is where the design opinion lives. memini computes
+<code>relevance × (0.80 + 0.20 × quality)</code> and leaves the
+standalone recency and importance weights at zero. The documentation
+states this under the heading <em>"Ranking, honestly"</em>, and the code
+agrees: <code>RerankWeights</code> has four fields and
+<code>DefaultRerankWeights</code> sets two
+(<code>internal/search/rank.go:23-34</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the session namespace comes from a header or the key's default; recall, briefing and answer resolve a read set whose cascade legs are durable-tier only, while five addressing tools let the model replace the namespace outright; writes dedup against live rows only, supersession stamps valid_to, and the activity log is pruned hourly</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the session namespace comes from a header or the key&#39;s default; recall, briefing and answer resolve a read set whose cascade legs are durable-tier only, while five addressing tools let the model replace the namespace outright; writes dedup against live rows only, supersession stamps valid_to, and the activity log is pruned hourly
 flowchart TD
-    subgraph Callers
-        MCP[&quot;MCP tools&lt;br/&gt;remember · recall · answer&lt;br/&gt;briefing · history · forget&quot;]
-        REST[&quot;REST API&lt;br/&gt;generated from OpenAPI&quot;]
-        CLI[&quot;CLI and UI&quot;]
+    HDR[&quot;session namespace&lt;br/&gt;X-Memini-Namespace header,&lt;br/&gt;else the key&#39;s default&quot;]
+    MODEL[&quot;model&#39;s tool call&quot;]
+
+    subgraph Bounded[&quot;recall · briefing · answer — no namespace argument&quot;]
+        RS[&quot;resolve read set&quot;]
+        PRI[&quot;primary namespace&lt;br/&gt;all requested tiers&quot;]
+        SUB[&quot;scope=everywhere subtree&lt;br/&gt;all requested tiers&quot;]
+        CAS[&quot;ancestors · home · links&lt;br/&gt;durable tiers only&quot;]
     end
 
-    subgraph Write[&quot;Write pipeline (internal/service)&quot;]
-        V[&quot;validate · resolve tier&lt;br/&gt;regex classifier, raise-only&quot;]
-        NS[&quot;route namespace&lt;br/&gt;by visibility&quot;]
-        SCRUB[&quot;scrub secrets&quot;]
-        SAN[&quot;sanitize bytes&lt;br/&gt;quarantine = downrank&quot;]
-        GATE[&quot;value gate&lt;br/&gt;accepted, not stored&quot;]
-        D1[&quot;exact dedup&lt;br/&gt;before paying for a vector&quot;]
-        EMB[&quot;embed&lt;br/&gt;absent embedder degrades&quot;]
-        D2[&quot;near-duplicate dedup&lt;br/&gt;supersede · hint · coalesce&quot;]
+    subgraph Open[&quot;list · get · history · update · forget&quot;]
+        NSARG[&quot;namespace argument&lt;br/&gt;tools.ns: any valid name&quot;]
     end
 
-    subgraph Read[&quot;Recall pipeline (internal/search)&quot;]
-        RS[&quot;resolve read set&lt;br/&gt;primary · ancestors · home · links&quot;]
-        LEGS[&quot;vector + keyword legs&lt;br/&gt;per namespace, in parallel&quot;]
-        FUSE[&quot;fuse within, then across&lt;br/&gt;first-seen breaks ties&quot;]
-        COMP[&quot;composite&lt;br/&gt;relevance x quality&quot;]
-        ADJ[&quot;reserve · turn-echo guard&lt;br/&gt;dedup · optional reranker&quot;]
+    STORE[&quot;Store reads&lt;br/&gt;filtered by the namespace string&quot;]
+
+    subgraph Write[&quot;write path&quot;]
+        FP[&quot;exact dedup&lt;br/&gt;live rows only&quot;]
+        NEW[&quot;new live row&quot;]
+        SUP[&quot;supersede&lt;br/&gt;superseded_by + valid_to&quot;]
     end
 
-    subgraph Store[&quot;Store interface&quot;]
-        SQL[&quot;SQLite + vector ext&quot;]
-        PG[&quot;Postgres&quot;]
-        EV[&quot;activity log&lt;br/&gt;eleven closed kinds&quot;]
-    end
+    EV[&quot;activity log&lt;br/&gt;eleven kinds&quot;]
+    PRUNE[&quot;hourly sweep&lt;br/&gt;720h retention, 100,000-row cap&quot;]
+    ASOF[&quot;as_of read&lt;br/&gt;window contains t&quot;]
 
-    subgraph Maint[&quot;Maintenance passes&quot;]
-        M[&quot;forget · demote · dedup&lt;br/&gt;tombstone · reembed · backfill&lt;br/&gt;renamespace · scrub · repair · assess&quot;]
-    end
-
-    MCP --&gt; V
-    REST --&gt; V
-    CLI --&gt; V
-    V --&gt; NS --&gt; SCRUB --&gt; SAN --&gt; GATE --&gt; D1 --&gt; EMB --&gt; D2 --&gt; SQL
-    D2 -.-&gt; PG
-    MCP --&gt; RS
-    REST --&gt; RS
-    RS --&gt; LEGS --&gt; FUSE --&gt; COMP --&gt; ADJ
-    LEGS --&gt; SQL
-    LEGS -.-&gt; PG
-    V --&gt; EV
-    ADJ --&gt; EV
-    SQL --&gt; M
-    M --&gt; SQL</code></pre></details></figure>
-<p>The <code>Store</code> interface is the seam worth studying. Its
-method comments are the contract the two backends are held to —
+    HDR --&gt; RS
+    MODEL --&gt; RS
+    RS --&gt; PRI --&gt; STORE
+    RS --&gt; SUB --&gt; STORE
+    RS --&gt; CAS --&gt; STORE
+    MODEL --&gt; NSARG --&gt; STORE
+    MODEL --&gt; FP
+    FP -- &quot;no live match,&lt;br/&gt;even if superseded&quot; --&gt; NEW
+    NEW -.-&gt; SUP
+    STORE --&gt; ASOF
+    NEW --&gt; EV
+    SUP --&gt; EV
+    EV --&gt; PRUNE</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>One binary serves MCP over stdio or streamable HTTP, a REST API
+generated from <code>api/openapi.yaml</code>, a CLI and a web UI. Behind
+them, <code>internal/service</code> holds the write and recall pipelines
+and <code>internal/store</code> the <code>Store</code> interface, with
+<code>sqlitevec</code> and <code>postgres</code> implementations.</p>
+<p>The <code>Store</code> interface is the seam to study. Its method
+comments are the contract the two backends are held to.
 <code>Upsert</code> states what happens to a vectorless row and to a
-stale vector-index entry, <code>GetEmbedding</code> explains why a
-vector is deliberately absent from <code>Get</code> (dims × 4 bytes on
-every read path) and warns that a Get-then-Upsert round trip is
-therefore lossy. One shared conformance suite runs those contracts
-against SQLite and Postgres alike, which is what makes a claim about
-"the store" in this report a claim about both.</p>
+stale vector-index entry. <code>GetEmbedding</code> explains why a
+vector is kept off <code>Get</code> (dims × 4 bytes on every read path)
+and warns that a Get-then-Upsert round trip is therefore lossy. One
+shared conformance suite runs those contracts, on SQLite under a plain
+<code>go test</code> and on Postgres when
+<code>MEMINI_TEST_POSTGRES_DSN</code> is set.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to be running for a first boot: SQLite is embedded, and a
+missing or slow embedder degrades writes and recalls to keyword-only.
+Postgres, an OpenAI-compatible embedder, a chat model for consolidation
+and distillation, and a cross-encoder reranker are each optional. A
+chart under <code>charts/memini</code> and a <code>compose.yaml</code>
+cover hosted deployment.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
-<li><strong>Write:</strong> <code>internal/service</code> — validate,
-classify, route, scrub, sanitize, gate, dedup, embed, dedup again,
-store.</li>
-<li><strong>Tier classification:</strong> a pure regex pass with three
-vetoes (length 20–400 runes, a transcript veto on
-<code>User:</code>/<code>Assistant:</code> scaffolding, a hedge veto on
-tentative phrasing) and five marker families.</li>
-<li><strong>Recall:</strong> <code>internal/search</code> — read-set
-resolution, parallel legs, the semantic floor, double fusion, the
-composite, the adjustment sequence.</li>
-<li><strong>Supersession:</strong>
-<code>internal/service/consolidate.go</code>
-(<code>applySupersede</code>, <code>asyncSupersede</code>) and the REST
-<code>SupersedeMemory</code> handler, both reaching
+<li><strong>Write:</strong> <code>Service.Remember</code>
+(<code>internal/service/service.go:1370</code>) — validate, classify,
+route, scrub, sanitize, gate, <code>fingerprintHit</code>
+(<code>:1899</code>), embed, <code>runSplitDedup</code>,
+<code>Upsert</code>, auto-supersede.</li>
+<li><strong>Tier classification:</strong> a pure regex pass bounded by
+<code>MinFactChars</code> (20) and <code>ClassifyMaxChars</code> (400)
+in <code>internal/extract/extract.go</code>, with transcript and hedge
+vetoes and five marker families.</li>
+<li><strong>Recall:</strong> <code>Service.Recall</code> and
+<code>resolveReadSet</code> (<code>internal/service/readset.go</code>) —
+parallel legs, the semantic floor, double fusion, the composite, the
+adjustment sequence.</li>
+<li><strong>Addressing tools:</strong> <code>tools.ns</code>
+(<code>internal/api/mcp/mcp.go:629-648</code>) and its five callers,
+<code>get</code>, <code>history</code>, <code>update</code>,
+<code>list</code> and <code>forget</code>
+(<code>:1197-1344</code>).</li>
+<li><strong>Supersession:</strong> <code>applySupersede</code> and
+<code>asyncSupersede</code>
+(<code>internal/service/consolidate.go:352</code>, <code>:486</code>),
+<code>Service.Supersede</code> (<code>service.go:3775</code>) and the
+REST <code>SupersedeMemory</code> handler
+(<code>internal/api/rest/rest.go:418</code>), all reaching
 <code>Store.SetSuperseded</code>.</li>
 <li><strong>Activity log:</strong>
-<code>internal/service/events.go</code> and <code>LogConfigEvent</code>,
-with the kind vocabulary and its validator in
-<code>internal/store/store.go</code>.</li>
-<li><strong>Maintenance:</strong> ten passes in
-<code>internal/maintenance</code>, each its own file with its own
-test.</li>
+<code>internal/service/events.go</code>, the kind vocabulary at
+<code>internal/store/store.go:1125-1161</code>, and
+<code>PruneEvents</code> in both backends.</li>
+<li><strong>Maintenance:</strong> <code>Sweeper.sweep</code>
+(<code>internal/maintenance/maintenance.go</code>) and the pass files
+beside it.</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A <code>Memory</code> carries more axes than most records in this
-corpus, and the type's comments are unusually careful about what each
-one means when it is absent:</p>
+<p>A <code>Memory</code> carries more axes than most records, and the
+type's comments say what each one means when it is absent:</p>
 <ul>
 <li><strong><code>Tier</code></strong> — <code>working</code>,
 <code>episodic</code>, <code>semantic</code>, <code>procedural</code>,
@@ -302,252 +319,423 @@ with <code>Term()</code> and <code>DefaultTTL()</code> as methods on the
 tier.</li>
 <li><strong><code>Level</code></strong> — <code>explicit</code> or
 <code>deduced</code>, recording whether a fact was stated or inferred.
-The comment notes that the empty string is legacy and <em>passes filters
-unconstrained</em>, so the permissive case is the absent one.</li>
+The type comment says the empty legacy value <em>"passes filters
+unconstrained"</em>. That holds only when no level filter is set: both
+backends render a level filter as <code>level IN (…)</code> or
+<code>level = ANY(…)</code>, so a legacy row is excluded by any level
+filter a caller sends.</li>
 <li><strong><code>Confidence</code></strong> — a corroboration number in
 [0,1] that grows logistically on re-observation and decays without
 reinforcement. <code>nil</code> means untracked, and the comment says it
 is <em>treated as fully trusted so existing data is never retroactively
-penalized</em> — a migration-safety decision stated rather than
-discovered.</li>
+penalized</em>.</li>
 <li><strong><code>AssessedImportance</code></strong> — an LLM judgement
-in [0.1,0.9] with an invariant written into the field comment: it is
-cleared whenever a caller supplies an explicit importance, so a non-nil
-value always refines a tier-seeded guess and never overrides what a user
-asked for.</li>
+in [0.1,0.9], cleared whenever a caller supplies an explicit importance,
+so a non-nil value refines a tier-seeded guess and never overrides what
+a user asked for.</li>
 <li><strong><code>SupersededBy</code></strong>,
 <strong><code>ValidFrom</code></strong>,
 <strong><code>ValidTo</code></strong> — the correction axes, covered in
 sections 7 and 9.</li>
 <li><strong><code>LinkedMemoryIDs</code></strong> — advisory links from
-the consolidator, with stale ones (target superseded) resolved at recall
-rather than at write.</li>
+the consolidator, with stale ones (target superseded or deleted) skipped
+at recall rather than at write.</li>
 </ul>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p>Read-set resolution runs concurrently with the query embedding. Each
 namespace in the set gets a vector leg and a keyword leg in parallel,
-and failure is isolated per leg on purpose: an unreachable ancestor is
-dropped and named in the response's degradation note, a failed vector
-leg falls back to that namespace's keyword results, and only losing the
-primary namespace's keyword leg — the one leg every recall has — fails
-the call.</p>
+and failure is isolated per leg. An unreachable ancestor is dropped and
+named in the response's degradation note. A failed vector leg falls back
+to that namespace's keyword results. Only losing the primary namespace's
+keyword leg fails the call.</p>
 <p>Before fusion, an absolute semantic gate drops vector candidates
-below a raw similarity floor (0.46 by default). The reasoning is stated
-and is the kind of thing that is usually learned the hard way: without
-an absolute bar, min-max normalization turns a batch of uniformly
-irrelevant candidates into competitive-looking scores. A keyword hit
-with no vector score is not gated — vectorless rows stay eligible — but
-a keyword hit whose vector score is known and below the floor is dropped
-from both legs.</p>
-<p>Fusion happens twice, and the second one is where scoping and ranking
-meet: per-namespace lists fuse into one ranking and <strong>ties at
-equal score break by first-seen order across the read set</strong>,
-which is why the cascade appends ancestors nearest-first. At equal
-relevance a memory in <code>acme/phoenix</code> outranks the same-scored
-one in <code>acme</code> because its namespace was seen first.</p>
-<p>Then the composite, then a fixed sequence: a durable-tier reserve
-holding up to two top-k slots for semantic and procedural memories but
-only when the durable is relevance-competitive; a turn-echo guard
-dropping conversation turns captured in the last five minutes, because a
-just-captured turn is still in the caller's live context and echoing it
-makes the agent parrot itself; dedup by normalized content; and an
-optional reranker whose failure or timeout falls back to the composite
-order rather than erroring the recall.</p>
+below a raw similarity floor
+(<code>MEMINI_RECALL_MIN_SEMANTIC_SCORE</code>, 0.46 by default).
+Without an absolute bar, min-max normalization turns a batch of
+uniformly irrelevant candidates into competitive-looking scores. A
+keyword hit with no vector score is not gated, but one whose vector
+score is known and below the floor is dropped from both legs.</p>
+<p>Fusion happens twice. Per-namespace lists fuse into one ranking and
+<strong>ties at equal score break by first-seen order across the read
+set</strong>, which is why the cascade appends ancestors nearest-first.
+At equal relevance a memory in <code>acme/phoenix</code> outranks the
+same-scored one in <code>acme</code>.</p>
+<p>Then the composite, then a fixed sequence:</p>
+<ul>
+<li>a durable-tier reserve holding up to two top-k slots for semantic
+and procedural memories when they are relevance-competitive;</li>
+<li>a turn-echo guard dropping conversation turns captured inside the
+server's window, because a just-captured turn is in the caller's live
+context;</li>
+<li>dedup by normalized content;</li>
+<li>an optional reranker whose failure or timeout falls back to the
+composite order.</li>
+</ul>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>The pipeline is ten ordered steps, and three of them are decisions
 other implementations tend to skip.</p>
 <p><strong>Dedup runs twice, either side of the embedder.</strong> An
-exact content match in the same tier reinforces the existing memory
-instead of duplicating it — <em>before</em> paying for an embedding.
-Only a write that survives that is vectorized, and then a vector search
-over the same tier decides whether it should supersede, hint at, or
-coalesce into an existing memory. Putting the cheap check first is an
-obvious saving that is easy to get backwards.</p>
+exact content match among live rows in the same tier reinforces the
+existing memory instead of duplicating it, before an embedding is paid
+for. Only a write that survives that is vectorized. A vector search over
+the same tier then decides whether it should supersede, hint at, or
+coalesce into an existing memory.</p>
 <p><strong>A write can be accepted and not stored.</strong> The value
-gate strips harness boilerplate from auto-captured conversation turns
-and drops low-signal episodic writes, returning
-<code>stored: false</code> with the resolved tier. The documentation is
-explicit that this is a feature rather than an error, which matters for
-a client that would otherwise retry.</p>
+gate strips harness boilerplate from auto-captured turns and drops
+low-signal episodic writes, returning <code>stored: false</code> with
+the resolved tier. The documentation calls this a feature rather than an
+error, which matters for a client that would otherwise retry.</p>
 <p><strong>Degradation is designed rather than incidental.</strong> A
-slow or absent embedder degrades the write to keyword-only instead of
-failing it, and the store keeps the row searchable with no vector-index
-entry. <code>Upsert</code>'s comment states the matching invariant — a
-stale vector-index entry from a prior upsert of the same ID is removed,
-and <code>VectorSearch</code> never returns a vectorless row.</p>
-<p>Correction is supersession rather than deletion: the predecessor
-keeps its row, gains a <code>SupersededBy</code> pointer and a
+slow or absent embedder degrades the write to keyword-only, and the
+store keeps the row searchable with no vector-index entry.
+<code>Upsert</code>'s comment states the matching invariant: a stale
+vector-index entry from a prior upsert of the same ID is removed, and
+<code>VectorSearch</code> never returns a vectorless row.</p>
+<p><strong>Correction is supersession.</strong> The predecessor keeps
+its row, gains a <code>SupersededBy</code> pointer and a
 <code>ValidTo</code> stamp, and drops out of live recall while staying
-reachable by the <code>IncludeSuperseded</code> filter and by time
-travel.</p>
+reachable through <code>IncludeSuperseded</code>,
+<code>memory_history</code> and an as-of read. A contradiction found by
+the lexical detector in <code>internal/contradict</code> stamps the
+stale fact's <code>valid_to</code> at the write clock. That records when
+the store learned of the change, not when the fact stopped holding,
+unless a caller supplied the end.</p>
+<p><strong>The pointer guards nothing on the way in.</strong>
+<code>fingerprintHit</code> calls <code>GetByFingerprint</code>, whose
+SQL requires <code>superseded_by IS NULL</code>
+(<code>internal/store/sqlitevec/store.go:691-697</code>). A later write
+of the superseded text therefore lands as a fresh live memory. The only
+reads that include superseded rows are maintenance passes and
+<code>Stats</code> (Recorded searches).</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
 <p>Nine MCP tools: <code>memory_remember</code>,
 <code>memory_recall</code>, <code>memory_get</code>,
 <code>memory_list</code>, <code>memory_update</code>,
 <code>memory_forget</code>, <code>memory_history</code>,
-<code>memory_briefing</code> and <code>memory_answer</code>. Alongside
-them a REST API generated from an OpenAPI document, a CLI, a web UI, and
-plugins for several harnesses.</p>
-<p>Three pull surfaces have different defaults, and the difference
-between them is argued rather than assumed. The session-start briefing
-is query-less, full-scope and <strong>never reinforces</strong>: it
-fires on every session start over the same top-N regardless of
-relevance, so counting a briefing serve as a use would inflate access
-counts uniformly and distort the promotion and ranking that depend on
-them. The per-prompt injection runs after shape gates and is
-client-dependent. Explicit <code>memory_recall</code> reinforces — each
-served memory's access count bumps and its expiry slides forward by its
-own lifetime — and an automatic caller can send
-<code>reinforce: false</code> to search without changing retention. All
-three still appear in the activity log, so the record of what was served
-stays complete even where the counters deliberately do not move.</p>
+<code>memory_briefing</code> and <code>memory_answer</code>
+(<code>internal/api/mcp/mcp.go:239-359</code>). Alongside them a REST
+API generated from an OpenAPI document, a CLI, a web UI, and plugins for
+several harnesses.</p>
+<p>The tool surface splits on the namespace.
+<code>memory_remember</code>, <code>memory_recall</code>,
+<code>memory_briefing</code> and <code>memory_answer</code> take no
+namespace argument; they use the session namespace and are steered by
+<code>scope</code> or <code>visibility</code>. The other five take an
+optional <code>namespace</code>. The comment on <code>tools.ns</code>
+says that value is <em>"never a value the LLM chooses"</em>, and the
+tool description tells the model to copy it from a prior result. The
+handler checks only that the string is a valid namespace name and
+returns it, and the HTTP handler's comment says <em>"tool calls may
+still override it per-call"</em> (<code>mcp.go:401</code>,
+<code>:629-648</code>).</p>
+<p>Three pull surfaces have different reinforcement defaults. The
+session-start briefing is query-less and <strong>never
+reinforces</strong>, because a fixed top-N served on every session open
+would inflate the access counts that promotion and ranking depend on.
+Explicit <code>memory_recall</code> reinforces: each served memory's
+access count bumps and its expiry slides forward. An automatic caller
+can send <code>reinforce: false</code>. All three appear in the activity
+log.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>Scope enforcement — awarded.</strong> The namespace is a
-parameter on the store's methods rather than a clause a caller
-remembers, <code>Upsert</code> refuses an id that exists under a
-different namespace, and the cascade's durable-tier restriction means
-widening the read set cannot widen it to session material. The
-conformance suite's cross-namespace case is the control, and it runs on
-both backends.</p>
-<p><strong>Tombstone — awarded.</strong> One store writer, two shipped
-producers, a read filter that is off by default, and a reverse lookup
-for the versions a given id replaced. The predecessor survives;
-<code>maintenance/repair.go</code> exists to find tombstones whose
-chains no longer reach a live memory.</p>
-<p><strong>Bitemporal — awarded.</strong>
-<code>valid_from</code>/<code>valid_to</code> are settable through MCP
-and REST and are stamped by supersession, and <code>Filter.AsOf</code>
-switches a read to the rows whose window contained that instant. The
-implementation detail that earns the mark rather than merely claiming
-it: for a time-travel query the backend evaluates <em>live</em> at the
-as-of instant rather than at the current clock, so expiry and
-supersession move with the query.</p>
-<p><strong>Audit log — awarded.</strong> Eleven kinds, a closed
-validator, a producer for each, and <code>Forget</code> snapshotting the
-row before the delete so the feed can say what went.</p>
-<p><strong>Trust state — withheld, and the reason is worth
-stating.</strong> memini has an epistemic axis and it is a number:
-<code>Confidence</code> grows logistically on re-observation and decays
-without reinforcement, with <code>nil</code> treated as fully trusted.
-That is corroboration used for ranking — it feeds the quality term in
-the composite — and the mark asks for a discrete state that decides
-whether a memory may be treated as true. The field that does withhold is
-<code>SupersededBy</code>, and it is already carrying
-<code>tombstone</code>; awarding both to the same pointer would count
-one mechanism twice. <code>Level</code> (<code>explicit</code> /
-<code>deduced</code>) is a write-time provenance genre and the atlas
-does not award this mark for those.</p>
-<p><strong>Human review — not awarded.</strong> No approval state gates
-what a memory may be used for; API keys identify a writer
-(<code>metadata.author</code> is stamped from a named key) but nothing
-holds a memory pending anyone's decision.</p>
+<p><strong>Bitemporal — awarded.</strong> <code>valid_from</code> and
+<code>valid_to</code> are settable through <code>memory_remember</code>
+and REST, <code>resolveValidity</code> lets an explicit value win over
+the write clock, and supersession stamps <code>valid_to</code> without
+overwriting a caller's value. <code>Filter.AsOf</code> keeps the rows
+whose window contained the instant and evaluates expiry at that instant
+(<code>internal/store/sqlitevec/helpers.go:179-205</code>).
+<code>TestRememberTemporalValidity</code> backdates a window and asserts
+both an as-of inside it and one before it.</p>
+<p><strong>Negative evaluation — awarded.</strong>
+<code>testVectorRanking</code> seeds a foreign-namespace row with the
+query's exact vector and asserts the ranked same-namespace pair and that
+no result leaks the foreign row. <code>TestHomeMergesDurableOnly</code>
+asserts the durable home memory surfaces and the episodic one does not.
+Both run against a populated store with a positive half (section
+10).</p>
+<p><strong>Scope enforcement — withheld.</strong> The store filters by
+namespace on every read, and <code>Upsert</code> refuses an id that
+exists under another namespace. The recall cascade is bounded as section
+1 describes. The mark fails on the addressing tools:
+<code>memory_list</code> with a model-supplied <code>namespace</code>
+enumerates any namespace on the server at every tier, and
+<code>memory_get</code> and <code>memory_history</code> fetch by id in
+it (<code>internal/api/mcp/mcp.go:629-648</code>,
+<code>:1197-1223</code>, <code>:1283-1329</code>). Keys do not close it.
+<code>docs/api-keys.md</code> says <em>"Any valid key — admin, named, or
+file-sourced — can read <strong>any</strong> namespace"</em>, and
+<code>Principal</code> carries a home and a default namespace but no
+grant. The isolation table in <code>docs/scopes.md</code> lists
+<em>"Caller → another person's home"</em> as <em>"not expressible"</em>.
+Through <code>memory_list</code> it is one argument.</p>
+<p><strong>Tombstone — withheld.</strong> Supersession is a pointer on
+the replaced record, and the exact-dedup lookup that would meet a
+re-asserted value excludes superseded rows (section 7). No store keyed
+on a rejected value exists for a later write to consult (Recorded
+searches). <code>PurgeTombstones</code> hard-deletes superseded rows
+when <code>MEMINI_TOMBSTONE_TTL</code> is set, and that TTL defaults to
+0.</p>
+<p><strong>Audit log — withheld.</strong> The activity log has eleven
+kinds with a closed validator, and <code>Forget</code> reads the row
+before the delete so the event can describe it. It is not append-only.
+The hourly sweeper calls <code>PruneEvents</code>, which deletes events
+older than <code>MEMINI_ACTIVITY_RETENTION</code> (default
+<code>720h</code>) and beyond <code>MEMINI_ACTIVITY_MAX_ROWS</code>
+(default <code>100000</code>) in both backends
+(<code>internal/store/sqlitevec/events.go:211-235</code>). The
+configuration reference says the row cap, not the window, <em>"is
+usually what bounds the table"</em>. The kind comment at
+<code>internal/store/store.go:1129-1134</code> says <code>pin</code>,
+<code>unpin</code> and <code>settings</code> landed ahead of the paths
+that emit them and points at
+<code>internal/api/rest/config_stubs.go</code>. Six handlers emit them,
+and that file is not in the tree.</p>
+<p><strong>Trust state — withheld.</strong> The epistemic axis is a
+number: <code>Confidence</code> grows on re-observation and decays
+without reinforcement, and feeds the quality term in the composite. The
+<code>quarantined</code> metadata flag zeroes importance so a garbled
+write sinks in ranking, and is not read as a filter. <code>Level</code>
+is a write-time provenance genre.</p>
+<p><strong>Human review — withheld.</strong> No approval state gates
+what a memory may be used for. API keys identify a writer
+(<code>metadata.author</code> is stamped from a named key), and the only
+per-key authorization bits are <code>admin</code> and
+<code>read_only</code>.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>No paper.</strong> Searched the README and <code>docs/</code>
-for <code>arxiv</code>, <code>@article</code>, <code>@misc</code>,
-<code>doi.org</code> and a <code>CITATION.cff</code>: none. This is a
-product repository, and its evaluation claims are its own.</p>
+<p><strong>No paper.</strong> <code>README.md</code>, <code>docs/</code>
+and <code>bench/README.md</code> cite LongMemEval and another project's
+paper as sources and carry no paper of memini's own; there is no
+<code>CITATION.cff</code>.</p>
+<p><strong>The negative cases are controlled.</strong>
+<code>testVectorRanking</code>
+(<code>internal/store/storetest/conformance.go:1781-1804</code>) is the
+strongest: same vector, foreign namespace, ranked-pair assertion first.
+<code>testIDsByPrefix</code> (<code>:73-145</code>) asserts the short-id
+resolver returns exactly two same-namespace collisions while a foreign
+row shares the prefix.
+<code>TestContradictionInvalidatesStaleFact</code>
+(<code>internal/service/contradict_test.go:71</code>) asserts a
+contradicted fact leaves live recall.
+<code>testCrossNamespaceUpsert</code> (<code>:1746</code>) is a write
+test: it asserts <code>ErrConflict</code> and that the foreign namespace
+holds no copy.</p>
+<p><strong>One isolation test lacks its positive half.</strong>
+<code>TestRecallNamespaceIsolation</code>
+(<code>internal/service/service_test.go:677</code>) writes to
+<code>alice</code> and asserts a recall from <code>bob</code> is empty,
+with nothing establishing that <code>alice</code> sees the memory. A
+recall broken for everybody passes it. The one MCP test that passes a
+<code>namespace</code> argument checks that a 300-character name is
+rejected (<code>internal/api/mcp/mcp_test.go:1238</code>); none
+exercises the override on <code>memory_list</code>.</p>
 <p><strong>The harness is committed and the results are not.</strong>
-<code>bench/</code> holds a real retrieval harness —
-<code>cmd/bench</code>, <code>dataset.go</code>, and suites behind a
-<code>bench</code> build tag so they stay out of the default
-<code>go test ./...</code>, which the README explains rather than hides
-(<em>"a plain <code>go test ./bench/</code> reports 'no test files' by
-design"</em>). Three datasets ship: <code>sample.json</code>,
-<code>codingagent_pilot.json</code> and
-<code>codingagent_v1.json</code>. The large public datasets are
-deliberately excluded with a comment saying so —
-<code>bench/data/.gitignore</code> carries
-<code>longmemeval_*.json</code> and <code>locomo*.json</code> under
-<em>"download on demand … never commit"</em> — which is ordinary and
-fine.</p>
-<p>The result files are a different matter. The README's "Full results"
-table publishes recall@5, recall@10 and MRR for five retrieval
-strategies across three dataset slices, and introduces them as
-<em>"sourced from the committed <code>results/</code> JSON"</em> and
-links it. There is no <code>results/</code> directory anywhere in the
-tree (<code>find . -type d -name results</code> returns nothing), and
-<code>.gitignore</code> line 24 is <code>/bench/results/</code>. So the
-link in the published table resolves to nothing for anyone who clones
-the repository, and no figure in it — including the headline comparison
-at README line 117, that memini's hybrid retrieval <em>"beats
-<code>agentmemory</code>'s published LongMemEval-S numbers on the same
-model, dataset and metric (98.4% recall@5 against 95.2%)"</em> —
-recomputes from what is committed. The commands to regenerate them are
-given, so this is reproducible work whose artifacts are excluded, not a
-claim with nothing behind it; but a reader cannot check a single number
-without first obtaining two datasets and standing up an embedder.</p>
-<p><strong>The unit suite is large and mostly well-built</strong>, and
-one case is worth naming because it is the shape this atlas checks for.
-<code>service_test.go:645</code>,
-<code>TestRecallNamespaceIsolation</code>, writes one memory to
-<code>alice</code> and asserts that a recall from <code>bob</code>
-returns zero results. Nothing in it establishes that a recall from
-<code>alice</code> returns the memory, so a <code>Recall</code> that
-returned nothing for anybody would pass. The repair is one call. The
-mark is not withheld on its account, because the store conformance suite
-carries a properly controlled cross-namespace case — but a reader
-counting isolation coverage should count that one and not this one.</p>
+<code>bench/</code> holds a retrieval harness behind a
+<code>bench</code> build tag, the README explains why a plain
+<code>go test ./bench/</code> reports no test files, and three datasets
+ship. The large public datasets are excluded with a comment saying so.
+The README's "Full results" table is introduced as <em>"sourced from the
+committed <code>results/</code> JSON"</em> and links it.
+<code>.gitignore</code> line 24 is <code>/bench/results/</code>, and no
+commit in the clone's history ever added a file under it. No figure in
+the table recomputes from a clone, including the README line 117
+comparison of <em>"98.4% recall@5 against 95.2%"</em> with
+<code>agentmemory</code>'s LongMemEval-S numbers.</p>
+<p><strong>The table's own reading disagrees with the table.</strong>
+<code>bench/README.md:57-59</code> says hybrid <em>"never trails either
+single leg on the saturated session sets (it ties keyword on
+LoCoMo-session…)"</em>. On LoCoMo session-level the table gives keyword
+92.6 / 96.8 / 79.4 and hybrid 90.9 / 96.6 / 74.3, so hybrid trails on
+recall@5, recall@10 and MRR.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <ul>
 <li><strong>Put the cheap dedup before the embedder.</strong> An exact
-content match in the same tier reinforces without paying for a vector.
-The expensive near-duplicate check still runs, afterwards, on what
-survived.</li>
+content match in the same tier reinforces without paying for a vector,
+and the near-duplicate check runs afterwards on what survived.</li>
 <li><strong>Multiply the quality modifier by relevance instead of adding
 it.</strong> An off-topic memory has almost no score to amplify, so a
-corroborated durable fact can rise above comparably relevant chatter
-without ever beating something genuinely more relevant. Leaving the
-unused weights at zero and saying so in the docs is the other half of
-that.</li>
+corroborated durable fact rises above comparably relevant chatter
+without beating something more relevant. Leave the unused weights at
+zero and say so.</li>
 <li><strong>Narrow one axis when you widen another.</strong> A cascade
-that reaches ancestors, home and links is a leak waiting to happen
-unless the legs past the primary are restricted — here, to durable
-tiers.</li>
-<li><strong>Decide what counts as a use.</strong> The briefing serves
-memories and refuses to reinforce them, because a fixed top-N served on
-every session start would inflate the counters that promotion depends
-on. Logging the serve while not counting it is the distinction most
-systems collapse.</li>
-<li><strong>Snapshot before you delete.</strong> An activity feed that
-can only say "some memory was forgotten" is not worth much.</li>
+that reaches ancestors, home and links leaks session chatter unless the
+legs past the primary are restricted, here to durable tiers.</li>
+<li><strong>Decide what counts as a use.</strong> Log the briefing's
+serve and do not count it as reinforcement.</li>
 </ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A bounded read path beside an unbounded one.</strong> A
+carefully clamped recall cascade protects nothing if a list tool takes
+the namespace as an argument. Bind the namespace to the session or the
+credential and refuse an override.</li>
+<li><strong>A correction keyed on the record.</strong> If the dedup
+lookup reads live rows only, the corrected value comes back on the next
+write. Record the rejected value and consult it on the way in.</li>
+<li><strong>An audit log with a row cap.</strong> A cap sized for read
+telemetry deletes the mutation events with it; keep mutations in a table
+the sweeper does not touch.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>A good fit for a single team, or a single person across machines,
+running one instance that every agent on the team may read in full, who
+want strong retrieval with no LLM on the write path. It is the wrong fit
+where namespaces are a boundary between people: the documentation says
+hard isolation means separate instances, and the tool surface
+agrees.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>The event-kind comment still describes <code>pin</code>,
-<code>unpin</code> and <code>settings</code> as vocabulary that
-<em>"landed ahead of the pin/settings write paths that will actually
-emit them"</em>. Six handlers now emit them. Is the comment stale, or is
-some further write path still intended?</li>
-<li><code>Level</code> is stamped on writes and the comment says an
-empty value passes filters unconstrained. Which read paths filter on it
-at all, and what happens to a corpus that predates the field?</li>
-<li>The bench README's <code>results/</code> link and the
-<code>.gitignore</code> entry disagree. Were the results committed once
-and removed, or was the table always written against a local
-directory?</li>
+<li>Is the <code>namespace</code> argument on the five addressing tools
+meant to reach namespaces outside the session's read set, or only to
+address a memory a cascade recall returned? The <code>tools.ns</code>
+comment and the handler disagree.</li>
+<li>Should a superseded value block a later identical write, or is
+re-assertion after supersession intended?</li>
+<li>Was the <code>bench/README.md</code> table written against a local
+<code>results/</code> directory from the start? No commit in the clone
+ever added one.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What to read it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>internal/memory/types.go</code></td>
+<td>The <code>Memory</code> record, tiers, <code>Level</code> and the
+validity fields</td>
+</tr>
+<tr>
+<td><code>internal/store/store.go</code></td>
+<td>The store contract, <code>Filter</code>, the event vocabulary and
+<code>PruneEvents</code></td>
+</tr>
+<tr>
+<td><code>internal/store/sqlitevec/</code>,
+<code>internal/store/postgres/</code></td>
+<td>Both backends, <code>GetByFingerprint</code>,
+<code>SetSuperseded</code>, the as-of clause</td>
+</tr>
+<tr>
+<td><code>internal/store/storetest/conformance.go</code></td>
+<td>The shared suite, including <code>testVectorRanking</code> and
+<code>testTemporalAsOf</code></td>
+</tr>
+<tr>
+<td><code>internal/service/service.go</code></td>
+<td><code>Remember</code>, <code>fingerprintHit</code>,
+<code>resolveValidity</code>, <code>Forget</code>,
+<code>Supersede</code></td>
+</tr>
+<tr>
+<td><code>internal/service/readset.go</code></td>
+<td>The cascade and its durable-tier restriction</td>
+</tr>
+<tr>
+<td><code>internal/service/consolidate.go</code>,
+<code>internal/contradict/</code></td>
+<td>Supersession and the lexical contradiction detector</td>
+</tr>
+<tr>
+<td><code>internal/api/mcp/mcp.go</code></td>
+<td>The nine tools, <code>tools.ns</code>, the HTTP handler's namespace
+resolution</td>
+</tr>
+<tr>
+<td><code>internal/apiauth/apiauth.go</code>,
+<code>docs/api-keys.md</code></td>
+<td>Keys as identity, with no namespace grant</td>
+</tr>
+<tr>
+<td><code>internal/maintenance/maintenance.go</code>,
+<code>events.go</code>, <code>tombstone.go</code></td>
+<td>The hourly sweep, event pruning, tombstone purge</td>
+</tr>
+<tr>
+<td><code>internal/search/rank.go</code></td>
+<td>The composite and its weights</td>
+</tr>
+<tr>
+<td><code>bench/README.md</code>, <code>.gitignore</code></td>
+<td>The results table and the excluded <code>results/</code>
+directory</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>.</p>
 <ul>
-<li>Domain types: <code>internal/memory/types.go</code></li>
-<li>Store contract and event vocabulary:
-<code>internal/store/store.go</code></li>
-<li>Backends: <code>internal/store/sqlitevec/</code>,
-<code>internal/store/postgres/</code></li>
-<li>Shared conformance suite:
-<code>internal/store/storetest/conformance.go</code></li>
-<li>Write path and supersession:
-<code>internal/service/service.go</code>,
-<code>internal/service/consolidate.go</code></li>
-<li>Ranking: <code>internal/search/rank.go</code></li>
-<li>Activity log: <code>internal/service/events.go</code></li>
-<li>Maintenance passes: <code>internal/maintenance/</code></li>
-<li>Surfaces: <code>internal/api/mcp/</code>,
-<code>internal/api/rest/</code>, <code>cmd/</code></li>
-<li>Benchmark harness: <code>bench/</code>, <code>cmd/bench</code></li>
+<li><code>git grep -n -E 'IncludeSuperseded: *true' -- internal ':!*_test.go'</code>
+— <code>maintenance/forget.go:15</code>, <code>reembed.go:44</code>,
+<code>renamespace.go:30</code>, <code>repair.go:51</code>,
+<code>tombstone.go:26</code>, <code>service/query.go:163</code>
+(<code>Stats</code>) and a conformance fixture; no write-path read.</li>
+<li><code>git grep -n -i -E 'blocklist|denylist|suppress(ed|ion)?_(list|set|key)|rejected_(value|content|fact)' -- '*.go'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'allowed_?namespaces|AllowedNS' -- '*.go'</code>
+— no match; no namespace grant on a key.</li>
+<li><code>git grep -n -E 't\.ns\(' -- internal/api/mcp/mcp.go</code> —
+five callers: <code>get</code>, <code>history</code>,
+<code>update</code>, <code>list</code>, <code>forget</code>.</li>
+<li><code>git grep -n -E '(UPDATE|DELETE FROM)[[:space:]]+memory_events' -- '*.go' ':!*_test.go'</code>
+— the four <code>PruneEvents</code> statements in
+<code>sqlitevec/events.go</code> and <code>postgres/events.go</code>; no
+update.</li>
+<li><code>git grep -n -E 'ActivityRetention|ActivityMaxRows' -- internal/config/config.go</code>
+— <code>envDefault:"720h"</code> and
+<code>envDefault:"100000"</code>.</li>
+<li><code>git grep -n -E 'LogConfigEvent\(' -- internal ':!*_test.go'</code>
+— six calls in <code>internal/api/rest/</code>
+(<code>apikeys.go:274</code>, <code>:402</code>,
+<code>pins.go:94</code>, <code>:160</code>,
+<code>selfsettings.go:89</code>, <code>settingsdefaults.go:76</code>)
+and the definition.</li>
+<li><code>git ls-files -- internal/api/rest/config_stubs.go</code> —
+empty.</li>
+<li><code>git grep -n -E 'Arguments: map\[string\]any\{[^}]*"namespace"' -- 'internal/api/mcp/*_test.go'</code>
+— one hit, <code>mcp_test.go:1238</code>, an over-long name
+rejected.</li>
+<li><code>git ls-files | grep -c -E '(^|/)results/'</code> — 0;
+<code>git log --all --diff-filter=A --format=%h -- 'bench/results/*'</code>
+— empty.</li>
+<li><code>git grep -n -i -E 'quarantin' -- 'internal/*.go' ':!*_test.go'</code>
+— the write-side flag and a consolidation guard; no read filter on
+it.</li>
+<li><code>git grep -n -i -E 'approv' -- '*.go' ':!*_test.go'</code> —
+one comment in <code>cmd/memini/root.go:556</code> about embedder
+aliases; no review state.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs bench/README.md</code>
+— three citations of others' work in <code>bench/README.md</code>;
+<code>CITATION.cff</code> absent.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the AGPL-3.0 text carries no rider.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/eleboucher/memini/commit/72a7377b4c21eef5a453dcef540f2d10b4de092e"><code class="commit-id" title="72a7377b4c21eef5a453dcef540f2d10b4de092e">72a7377b…</code></a>
+— v0.7.36, 99 commits on, nearly all dependency updates; the memory
+paths change by two string-splitting refactors and one embed call, now
+<code>EmbedQueryOne</code> for separate document and query prefixes. A
+separate distillation model and reranker query caps also arrived.
+Screened first: the same two auto-run surfaces, every manifest inside
+the cooldown; nothing installed, built or run. Three marks were wrong at
+the first pin and are withdrawn: <code>scope_enforced</code>, because
+five MCP tools resolve any model-supplied namespace (<a
+href="#9-reliability-safety-and-trust">section 9</a>);
+<code>tombstone</code>, because supersession is record-keyed and dedup
+reads live rows only; <code>audit_log</code>, because the event log is
+pruned hourly by default. The negative case was misnamed
+<code>testCrossNamespaceUpsert</code>; it is
+<code>testIDsByPrefix</code>. The benchmark README's own reading
+contradicts its table (<a href="#10-tests-evals-and-benchmarks">section
+10</a>).</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/eleboucher/memini/commit/452ff2299c185530c7010cb164d83cce8006f78a"><code class="commit-id" title="452ff2299c185530c7010cb164d83cce8006f78a">452ff229…</code></a>
 — first reading, at the head of <code>main</code>. Screened with

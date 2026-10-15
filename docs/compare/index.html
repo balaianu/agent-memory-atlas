@@ -17315,21 +17315,26 @@ namespace, stamp provenance, scrub secrets, sanitize, gate low-signal
 captures, exact-dedup before embedding, embed, near-duplicate dedup,
 then store and hand off to background jobs. Some writes are accepted but
 not stored, and the response says so</td>
-<td><code>memory_forget</code> deletes by id after snapshotting the row
-for the activity log, and by tag in bulk; supersession tombstones a
-predecessor by pointer and stamps its <code>valid_to</code>; a
-maintenance package carries separate forget, demote, dedup, tombstone,
-scrub and repair passes</td>
+<td><code>memory_forget</code> deletes by id after reading the row for
+the activity log; supersession points a predecessor at its replacement
+and stamps its <code>valid_to</code>; an optional tombstone TTL, off by
+default, hard-deletes superseded rows. Re-writing a superseded value
+creates a fresh live row, because the exact-dedup lookup reads live rows
+only</td>
 <td>Namespaces with a cascade — primary, ancestors nearest-first, home,
-links — where every non-primary leg is restricted to durable tiers, so
-episodic and working memories never cross a boundary on a read</td>
+links — where every cascade leg is restricted to durable tiers. Recall,
+briefing and answer take no namespace argument; memory_list, memory_get,
+memory_history, memory_update and memory_forget take one from the model
+and accept any valid namespace, and API keys carry no namespace
+grant</td>
 <td>Nine MCP tools including <code>memory_answer</code>,
 <code>memory_briefing</code> and <code>memory_history</code>, a REST API
 generated from an OpenAPI document, a CLI, a UI, and plugins for several
 agent harnesses</td>
-<td>Maintenance passes for forgetting, demotion, deduplication,
-tombstone sweeps, re-embedding, backfill, renamespacing, scrubbing,
-repair and LLM importance assessment</td>
+<td>An hourly sweeper purging expired rows, capping short-term tiers,
+demoting stale durables, optionally purging old tombstones and pruning
+the activity log; separate jobs for promotion, repair, chunk backfill,
+periodic dedup and LLM importance assessment</td>
 <td>A corroboration <code>confidence</code> that grows logistically on
 re-observation and decays without reinforcement, nil meaning untracked
 and treated as fully trusted; a derivation <code>level</code> of
@@ -17342,15 +17347,13 @@ weights left at zero and the documentation saying so; a write path that
 degrades to keyword-only rather than failing when the embedder is slow
 or absent; a store interface whose comments state the contracts the
 backends are held to, and one conformance suite that runs them</td>
-<td>The benchmark table's own source is excluded from the repository —
-<code>bench/README.md</code> calls the numbers sourced from the
-committed <code>results/</code> JSON and <code>.gitignore</code> carries
-<code>/bench/results/</code>, so no published figure recomputes from a
-clone; the service-level namespace isolation test asserts only that a
-foreign reader sees nothing, with no control establishing that the owner
-sees the memory; and a comment in the event vocabulary still says the
-pin and settings kinds landed ahead of the write paths that emit them,
-which six shipped handlers have since made untrue</td>
+<td>Five MCP tools accept a model-supplied namespace and resolve any
+valid one, at every tier, with no grant on the key, so the tier-bounded
+cascade is not the only cross-namespace read; the activity log is pruned
+hourly to 720 hours and 100,000 rows by default; the benchmark table's
+source JSON is gitignored and was never committed, and the README's
+reading of that table says hybrid never trails a single leg on the
+session sets where the table shows it trailing keyword</td>
 </tr>
 <tr>
 <td><a href="../systems/memlayer/"><code>memlayer</code></a></td>
@@ -33285,7 +33288,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>69 of 749:</em> <a
+<p><em>68 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33305,7 +33308,6 @@ href="../systems/inspeximus/"><code>inspeximus</code></a>, <a
 href="../systems/loreai/"><code>loreai</code></a>, <a
 href="../systems/marm-memory/"><code>marm-memory</code></a>, <a
 href="../systems/memesh/"><code>memesh</code></a>, <a
-href="../systems/memini/"><code>memini</code></a>, <a
 href="../systems/memmy-agent/"><code>memmy-agent</code></a>, <a
 href="../systems/memo-local/"><code>memo-local</code></a>, <a
 href="../systems/memoir-cli/"><code>memoir-cli</code></a>, <a
@@ -33693,7 +33695,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>323 of 749:</em> <a
+<p><em>322 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33859,7 +33861,6 @@ href="../systems/memento/"><code>memento</code></a>, <a
 href="../systems/memento-brain/"><code>memento-brain</code></a>, <a
 href="../systems/memesh/"><code>memesh</code></a>, <a
 href="../systems/memhop/"><code>memhop</code></a>, <a
-href="../systems/memini/"><code>memini</code></a>, <a
 href="../systems/memmachine/"><code>memmachine</code></a>, <a
 href="../systems/memobase/"><code>memobase</code></a>, <a
 href="../systems/memoir/"><code>memoir</code></a>, <a
@@ -34031,7 +34032,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>255 of 749:</em> <a
+<p><em>254 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34160,7 +34161,6 @@ href="../systems/megamemory/"><code>megamemory</code></a>, <a
 href="../systems/mem0/"><code>mem0</code></a>, <a
 href="../systems/membrane/"><code>membrane</code></a>, <a
 href="../systems/memcontinuum/"><code>memcontinuum</code></a>, <a
-href="../systems/memini/"><code>memini</code></a>, <a
 href="../systems/memledger/"><code>memledger</code></a>, <a
 href="../systems/memmy-agent/"><code>memmy-agent</code></a>, <a
 href="../systems/memo-local/"><code>memo-local</code></a>, <a

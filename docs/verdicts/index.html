@@ -23286,68 +23286,66 @@ href="../systems/memini/"><code>memini</code></a></h3>
 <ul>
 <li>Best idea: <strong>narrow one axis while you widen the
 other.</strong> A recall cascades from the primary namespace through its
-ancestors nearest-first, the caller's home and stored links — and every
-leg past the primary is restricted to the durable tiers, so working and
-episodic memories never cross a namespace boundary on a read. A link may
+ancestors nearest-first, the caller's home and stored links, and every
+leg past the primary is restricted to the durable tiers. A link may
 narrow that further and never widen it. The cascade is the feature most
-likely to leak between projects, and the tier restriction is what makes
-it safe to ship on by default.</li>
+likely to leak session chatter between projects, and the tier
+restriction is what bounds it.</li>
 <li>Second idea: <strong>put the cheap dedup in front of the
-embedder.</strong> An exact content match in the same tier reinforces
-the existing memory rather than duplicating it, before a vector is paid
-for; only what survives is embedded, and a second vector-space check
-then decides whether the write supersedes, hints at, or coalesces into
-an existing memory. Two dedup passes either side of the expensive call,
-in the order that saves the money.</li>
+embedder.</strong> An exact content match among live rows in the same
+tier reinforces the existing memory before a vector is paid for; only
+what survives is embedded, and a second vector-space check then decides
+whether the write supersedes, hints at, or coalesces into an existing
+memory.</li>
 <li>Third idea: <strong>multiply the quality modifier by relevance
 instead of adding it.</strong> The composite is
 <code>relevance × (0.80 + 0.20 × quality)</code>, so an off-topic memory
 has almost no score to amplify and a corroborated durable fact can rise
-above comparably relevant chatter without ever outranking something
-genuinely more relevant. The struct still carries standalone recency and
-importance weights; the shipped default leaves both at zero, and the
-documentation says so under the heading "Ranking, honestly".</li>
+above comparably relevant chatter without outranking something more
+relevant. The struct carries standalone recency and importance weights;
+the shipped default leaves both at zero, and the documentation says so
+under the heading "Ranking, honestly".</li>
 <li>Fourth idea: <strong>decide what counts as a use, and log the serve
 anyway.</strong> The session-start briefing serves memories and
 deliberately does not reinforce them, because a fixed top-N fired on
 every session open would inflate the access counts that promotion and
-ranking depend on. The activity log still records what it served.</li>
-<li>Biggest risk: <strong>the benchmark table's own source is excluded
-from the repository.</strong> <code>bench/README.md</code> introduces
-its full results table as "sourced from the committed
-<code>results/</code> JSON" and links <code>results/</code>; there is no
-such directory in the tree and <code>.gitignore</code> line 24 is
-<code>/bench/results/</code>. The harness, the commands and a
-coding-agent dataset are all committed, so this is reproducible work
-whose artifacts are absent rather than a claim with nothing behind it —
-but no published figure, including the comparison against <a
-href="../systems/agentmemory/"><code>agentmemory</code></a>'s
-LongMemEval-S numbers, recomputes from a clone.</li>
-<li>Second risk: the service-level namespace isolation test writes one
-memory to <code>alice</code> and asserts that <code>bob</code> sees
-nothing, with no control establishing that <code>alice</code> does. A
-recall broken for everybody would pass it. The store conformance suite
-carries a properly controlled cross-namespace case, so the coverage
-exists — it is just not the test whose name a reader would look
-for.</li>
+ranking depend on.</li>
+<li>Biggest risk: <strong>the bounded cascade sits beside an unbounded
+read.</strong> <code>memory_list</code>, <code>memory_get</code>,
+<code>memory_history</code>, <code>memory_update</code> and
+<code>memory_forget</code> take an optional <code>namespace</code> from
+the model, and <code>tools.ns</code> accepts any valid namespace name,
+at every tier. API keys carry a home and a default namespace and no
+grant, and <code>docs/api-keys.md</code> says any valid key can read any
+namespace. The isolation table that calls another person's home "not
+expressible" is one tool argument from false.</li>
+<li>Second risk: correction is keyed on the record. Supersession sets a
+pointer and stamps <code>valid_to</code>, and the exact-dedup lookup
+reads live rows only, so the superseded text written again lands as a
+fresh live memory. The activity log, with eleven kinds and a pre-delete
+snapshot, is pruned hourly to 720 hours and 100,000 rows by
+default.</li>
+<li>Third risk: the benchmark table's source JSON is gitignored and no
+commit ever added it, so no figure recomputes from a clone; and the
+README's reading of the table says hybrid never trails a single leg on
+the session sets, where on LoCoMo session-level it trails keyword on all
+three columns.</li>
 <li>Most reusable component: the <code>Store</code> interface in
 <code>internal/store/store.go</code>, whose method comments are the
-contract both backends are held to — what happens to a vectorless row,
-why a vector is kept off <code>Get</code> and why that makes a
-Get-then-Upsert round trip lossy — with one shared conformance suite
-running them against SQLite and Postgres alike.</li>
-<li>Maturity impression: AGPL-3.0 with the licence text in the tree, a
-Go service with two storage backends behind one conformance suite, ten
-named maintenance passes each with its own test, an OpenAPI-generated
-REST layer, nine MCP tools, and documentation that explains its own
-defaults rather than advertising them.</li>
-<li>Study when: you are building a memory service several agents share,
-or deciding how a retrieval cascade should be bounded, or looking for a
-worked example of a ranking composite whose unused terms are left at
-zero and admitted to.</li>
-<li>Do not copy when: you need a discrete state that withholds a memory
-from being believed — corroboration here is a number that feeds ranking,
-and the only state that withholds is the supersession pointer.</li>
+contract both backends are held to, with one shared conformance suite
+running them on SQLite by default and on Postgres when a test database
+is named.</li>
+<li>Maturity impression: AGPL-3.0, a Go service with two storage
+backends behind one conformance suite, an OpenAPI-generated REST layer,
+nine MCP tools, and documentation that explains its own defaults; two
+capability marks, <code>bitemporal</code> and
+<code>negative_eval</code>.</li>
+<li>Study when: you are deciding how a retrieval cascade should be
+bounded, or want a ranking composite whose unused terms are left at zero
+and admitted to.</li>
+<li>Do not copy when: namespaces must be a boundary between people or
+teams on one instance, or a correction must stop the old value coming
+back.</li>
 </ul>
 <h3 id="codewiki-plus"><a
 href="../systems/codewiki-plus/"><code>codewiki-plus</code></a></h3>
