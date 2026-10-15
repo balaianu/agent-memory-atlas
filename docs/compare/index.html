@@ -22315,31 +22315,41 @@ re-enter as a fresh candidate</td>
 </tr>
 <tr>
 <td><a href="../systems/omniclaude/"><code>omniclaude</code></a></td>
-<td>Not stored here — a pattern fetched over HTTP from OmniIntelligence,
-plus a local injection record of what was placed in the prompt</td>
-<td>No memory store of its own; a SQLite cost-accounting database and
-JSONL hook logs under the state directory</td>
-<td><code>GET /api/v1/patterns</code> against OmniIntelligence,
-over-fetched 10x, then filtered by domain, confidence, lifecycle and
-evidence</td>
-<td>Writes no memory; emits injection records carrying the cohort, the
-seed, the compiled content and the token count</td>
+<td>Not stored here — a pattern fetched from OmniIntelligence, plus an
+emitted injection record of what was placed in the prompt</td>
+<td>No memory store of its own; patterns come from an in-process
+projection cache or OmniIntelligence's HTTP API, and telemetry goes to a
+SQLite cost database, JSONL hook logs and an emit daemon</td>
+<td>A per-domain projection cache, falling back to GET /api/v1/patterns
+over-fetched 10x; then domain and confidence filters, provisional
+patterns dropped by default, and a sort that reduces to confidence then
+pattern id because every mapped pattern scores zero</td>
+<td>Writes no memory; emits an injection.recorded event carrying the
+cohort, the seed, the effective salt and percentage, the compiled
+content and the token count</td>
 <td>None — correction lives in OmniIntelligence</td>
-<td>None applied; the pattern query passes domain, confidence and limit,
-and no project or user key</td>
-<td>A Claude Code plugin whose manifest registers 28 narrowly-scoped
-hooks and no injection hook, in an internal-dev marketplace; the
-consumer marketplace ships two delegation skills and zero hooks</td>
-<td>A cost-accounting hook, a trajectory log, and a read-only harness
-comparing hooks-off against hooks-on windows</td>
-<td>Consumes OmniIntelligence's lifecycle states and dampens provisional
-patterns to half score rather than excluding them</td>
+<td>None on the pattern read: the query carries domain, confidence and
+limit, and a docstring says scoping is server-side while no key is sent
+for it to act on. An off-by-default memory-fabric source sends the
+repository's directory name</td>
+<td>A Claude Code plugin whose internal-dev manifest registers 56 hook
+commands and no injection hook; the consumer marketplace ships one
+delegation skill and zero hooks; a separate delegation installer merges
+a SessionStart hook into the user's own settings</td>
+<td>A cost-accounting hook, an all-events capture hook, a trajectory
+log, and a read-only harness comparing hooks-off against hooks-on
+windows</td>
+<td>Consumes OmniIntelligence's lifecycle status: provisional patterns
+are excluded by default and dampened to half score only when admitted;
+any other status maps to none, which scores as validated</td>
 <td>One session in five is hashed into a control cohort that receives no
-injection, and the assignment's parameters are recorded on the row</td>
+injection, and the assignment's parameters are recorded on the emitted
+row</td>
 <td>Cohort identity falls back to the session id, so the same user is
-re-randomized every session and the arms are not independent; and
-registration is one of four ways a hook goes dark, three of which are
-per-machine or per-session facts no repository gate can see</td>
+re-randomized every session; the ranking formula is inert on the
+production call, because the mapper sets usage to zero and the caller
+passes no evidence resolver; and registration is the only switch a
+repository gate can see among four that turn a hook off</td>
 </tr>
 <tr>
 <td><a

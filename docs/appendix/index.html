@@ -2503,14 +2503,16 @@ search</li>
 <li><a
 href="https://github.com/OmniNode-ai/omniclaude">OmniNode-ai/omniclaude</a>
 at <a
-href="https://github.com/OmniNode-ai/omniclaude/commit/6f062cd55e9141360d2fa7cda151df040874522a"><code class="commit-id" title="6f062cd55e9141360d2fa7cda151df040874522a">6f062cd5…</code></a>
-— read only, on the <code>dev</code> default branch; same private
-framework dependencies, and both dependency manifests were inside the
-seven-day cooldown at this pin, so nothing was installed. Audited on
-2026-09-20 at the same pin: one sentence said two cohort-identity
-parameters are never passed anywhere in the repository, and the tests
-pass both at five call sites — the production call site passes neither,
-which is what the finding rests on.</li>
+href="https://github.com/OmniNode-ai/omniclaude/commit/ad7861d77053d701cdac37f764bcc00d5845bb87"><code class="commit-id" title="ad7861d77053d701cdac37f764bcc00d5845bb87">ad7861d7…</code></a>
+— read only, on the <code>dev</code> default branch; the
+<code>omnibase-*</code> framework dependencies resolve from PyPI and the
+sibling OmniNode packages from pinned public git revisions. Both
+dependency manifests were inside the seven-day cooldown at this pin, so
+nothing was installed. Audited on 2026-09-20 at the earlier pin: one
+sentence said two cohort-identity parameters are never passed anywhere
+in the repository, and the tests pass both at five call sites — the
+production call site passes neither, which is what the finding rests
+on.</li>
 <li><a
 href="https://github.com/roandejager/Hillock">roandejager/Hillock</a> at
 <a
@@ -17001,6 +17003,37 @@ card's fact absent
 census of 197 commits and version 0.9.0 was the first reading's; this
 pin held 268 commits and version 0.11.1. The first rested on a code
 comment rather than the replay it described.</li>
+<li><strong>Four published claims about <a
+href="../systems/omniclaude/">OmniClaude</a>'s injection path were wrong
+at <a
+href="https://github.com/OmniNode-ai/omniclaude/commit/6f062cd55e9141360d2fa7cda151df040874522a"><code class="commit-id" title="6f062cd55e9141360d2fa7cda151df040874522a">6f062cd5…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+provisional patterns are admitted at half score rather than excluded;
+<code>include_provisional</code> defaults to <code>False</code>
+(<code>src/omniclaude/hooks/injection_limits.py:455</code>) and the
+selector drops them at <code>:774</code>. It presented a composite score
+with an evidence multiplier as the ranking; the mapper sets
+<code>usage_count=0</code> on every cache and API record
+(<code>src/omniclaude/hooks/handler_context_injection.py:733</code>), so
+every score is zero, and the single production call (<code>:556</code>)
+passes no evidence resolver, so the order is confidence, then pattern
+id. It said a <code>budget.cap.hit</code> event fires when the token cap
+bites; that call passes no <code>run_id</code>, which the emit condition
+requires (<code>injection_limits.py:939</code>). And it said the model
+cannot save or search memory; the internal plugin's <code>recall</code>
+and <code>decision_store</code> skills, present since March and April
+2026, tell it to do both against stores in other services. Smaller
+errors at the same pin: the <code>negative_eval</code> evidence said one
+helper made a single case run the parse, the filter and the caps
+together, which no case does; the injection record was described as lost
+when the API is unreachable, while it goes to a local emit daemon; the
+file index treated the inventory's <code>disabled_hooks</code> as the
+count of dark hooks, while the two injector scripts were dark and
+declared in neither half; and the inspected-list line called the
+framework dependencies private when <code>omnibase-core</code> 0.47
+releases were on PyPI from 29 August 2026. Each rested on a docstring, a
+default left unread, or a field's declaration rather than its
+writer.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

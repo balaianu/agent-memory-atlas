@@ -29650,12 +29650,12 @@
     "omniclaude": {
       "counts": {
         "AGENT": 1,
-        "EXEC": 11,
+        "EXEC": 13,
         "FRESH": 2,
         "NOTE": 4,
         "RUNS": 1
       },
-      "files_scanned": 21,
+      "files_scanned": 23,
       "findings": [
         {
           "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 1 entr(ies): marketplace.json",
@@ -29690,6 +29690,11 @@
         {
           "detail": "executes on pytest collection, before any test runs",
           "kind": "EXEC",
+          "path": "tests/hooks_system/conftest.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
           "path": "tests/integration/conftest.py"
         },
         {
@@ -29706,6 +29711,11 @@
           "detail": "executes on pytest collection, before any test runs",
           "kind": "EXEC",
           "path": "tests/routing/conftest.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/scripts/conftest.py"
         },
         {
           "detail": "executes on pytest collection, before any test runs",
@@ -29728,8 +29738,8 @@
           "path": "tests/unit/skills/conftest.py"
         }
       ],
-      "revision": "6f062cd55e9141360d2fa7cda151df040874522a",
-      "screened_at": "2026-09-17T19:03:17+00:00",
+      "revision": "ad7861d77053d701cdac37f764bcc00d5845bb87",
+      "screened_at": "2026-10-15T14:55:58+00:00",
       "slug": "omniclaude",
       "source": "reused-clone",
       "status": "screened",
