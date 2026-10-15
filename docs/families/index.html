@@ -2073,43 +2073,44 @@ href="../systems/hestia/">Hestia</a>.</p>
 spent on filtering rather than on discounting.</strong> An observation
 carries <code>MemoryState { New, Current, Deprecated }</code> beside a
 separate <code>weight</code> float, and the state is used to exclude
-rather than to rank: <code>AppendEpisodic</code> skips a
+rather than to rank. <code>AppendEpisodic</code> skips a
 <code>Deprecated</code> row before it can enter the assembled episodic
 block (<code>src/kernel/context/ActiveMemoryProvider.cpp:258</code>),
+unified search drops it in SQL with
+<code>memory_state &lt;&gt; 2</code>,
 <code>ListObservationsDueForReview</code> will not put one in front of
 the model again, and <code>RunPerspectiveRevision</code> refuses to
-regenerate a layer's narrative when nothing in it is live — the reason
-written into the comment, that generating from a retired layer makes
-<em>"the LLM invent narratives from training context rather than
-reflecting on data"</em>. The same file declines to apply the rule to
-ontology properties, and says so: <em>"Deprecated properties may still
-be relevant context for the agent."</em> Seven layers named for
-durations decide <em>when</em> a review fires; the model decides what
-moves, and a verdict of <em>demote</em> on the bottom layer is a hard
+regenerate a layer's narrative when nothing in it is live. The reason is
+written into the comment: generating from a retired layer means <em>"the
+LLM invents narratives from training context rather than reflecting on
+data"</em>. The same codebase declines to apply the rule to ontology
+properties, and says so: <em>"Deprecated properties may still be
+relevant context for the agent."</em> Seven layers named for durations
+decide <em>when</em> a review fires; the model decides what moves, and a
+verdict of <em>demote</em> on the bottom layer is a hard
 <code>DELETE</code> whose audit row keeps the reason and not the
 text.</p>
-<p>It is also the sharpest illustration in this corpus of a scope key
-declared everywhere and enforced in most of the places it is needed.
-<code>MemorySearch</code> carries <code>ml.agent_id=?</code> into the
-SQL on both dialects, and the diary, memory-file and session arms filter
-too — but the ontology arm carries no agent predicate,
-<code>ontology_entities</code> is uniquely keyed on
+<p>Around that state, the scope key is declared everywhere and enforced
+on the observation path only. <code>MemorySearch</code> carries
+<code>ml.agent_id=?</code> into the SQL on both dialects, and the diary,
+memory-file and session arms filter too. The ontology arm carries no
+agent predicate, <code>ontology_entities</code> is uniquely keyed on
 <code>(root_category, full_path)</code> with no agent in the key, and
 <code>ontology_properties.agent_id</code> is
-<code>NOT NULL DEFAULT 'default'</code> with no writer: the insert binds
-eight columns and that is not one of them. Agent deletion then runs
-<code>DELETE FROM ontology_properties WHERE agent_id=?</code>, which
-removes nothing for an ordinary tenant and every property in the
-database for an agent whose id is the string <code>default</code>. The
-Lua bridge is the same gap one layer up: <code>ConsolidationTool</code>
-states the invariant in a comment — <em>"Agent ID is always from
-<code>__agent_id</code> (ChainRunner-injected), never from params"</em>
-— and <code>ToolExecutionService::InjectContext</code> upholds it, but
-<code>LuaToolProxyCall</code> marshals a script's own table straight
-into <code>call.arguments</code> and calls
-<code>handler-&gt;Execute(call)</code> without passing through that
-service, so a script naming whichever agent it likes satisfies the
-ownership check. See <a href="../systems/animus/">Animus</a>.</p>
+<code>NOT NULL DEFAULT 'default'</code> with no writer, while agent
+deletion runs
+<code>DELETE FROM ontology_properties WHERE agent_id=?</code> against
+it. The seven default layers are seeded at fixed ids 1 to 7 through a
+lookup that does not compare the agent, so every agent after the first
+gets no layers. And two call paths step around the tool boundary. The
+dispatcher runs any registered handler the model names, whatever the
+session was offered, and the consolidation tool's action whitelist
+applies only under its three session prefixes.
+<code>LuaToolProxyCall</code> marshals a script's own table into
+<code>call.arguments</code> without passing through
+<code>ToolExecutionService</code>, so a script naming whichever agent it
+likes satisfies the ownership check. See <a
+href="../systems/animus/">Animus</a>.</p>
 <p><strong>RAGFlow is the family's case of memory as a feature inside a
 much larger product, and it is instructive on both halves.</strong> The
 Memory subsystem is a per-tenant message index beside a RAG engine: an

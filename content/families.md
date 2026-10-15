@@ -924,35 +924,35 @@ deliberately deleted looks new again the next time it is mentioned. See
 **Animus is the family's clearest case of an epistemic state spent on filtering
 rather than on discounting.** An observation carries
 `MemoryState { New, Current, Deprecated }` beside a separate `weight` float, and
-the state is used to exclude rather than to rank: `AppendEpisodic` skips a
+the state is used to exclude rather than to rank. `AppendEpisodic` skips a
 `Deprecated` row before it can enter the assembled episodic block
-(`src/kernel/context/ActiveMemoryProvider.cpp:258`),
-`ListObservationsDueForReview` will not put one in front of the model again, and
-`RunPerspectiveRevision` refuses to regenerate a layer's narrative when nothing
-in it is live — the reason written into the comment, that generating from a
-retired layer makes *"the LLM invent narratives from training context rather than
-reflecting on data"*. The same file declines to apply the rule to ontology
-properties, and says so: *"Deprecated properties may still be relevant context
-for the agent."* Seven layers named for durations decide *when* a review fires;
-the model decides what moves, and a verdict of *demote* on the bottom layer is a
-hard `DELETE` whose audit row keeps the reason and not the text.
+(`src/kernel/context/ActiveMemoryProvider.cpp:258`), unified search drops it in
+SQL with `memory_state <> 2`, `ListObservationsDueForReview` will not put one in
+front of the model again, and `RunPerspectiveRevision` refuses to regenerate a
+layer's narrative when nothing in it is live. The reason is written into the
+comment: generating from a retired layer means *"the LLM invents narratives from
+training context rather than reflecting on data"*. The same codebase declines to
+apply the rule to ontology properties, and says so: *"Deprecated properties may
+still be relevant context for the agent."* Seven layers named for durations
+decide *when* a review fires; the model decides what moves, and a verdict of
+*demote* on the bottom layer is a hard `DELETE` whose audit row keeps the reason
+and not the text.
 
-It is also the sharpest illustration in this corpus of a scope key declared
-everywhere and enforced in most of the places it is needed. `MemorySearch`
-carries `ml.agent_id=?` into the SQL on both dialects, and the diary, memory-file
-and session arms filter too — but the ontology arm carries no agent predicate,
-`ontology_entities` is uniquely keyed on `(root_category, full_path)` with no
-agent in the key, and `ontology_properties.agent_id` is `NOT NULL DEFAULT
-'default'` with no writer: the insert binds eight columns and that is not one of
-them. Agent deletion then runs `DELETE FROM ontology_properties WHERE
-agent_id=?`, which removes nothing for an ordinary tenant and every property in
-the database for an agent whose id is the string `default`. The Lua bridge is the
-same gap one layer up: `ConsolidationTool` states the invariant in a comment —
-*"Agent ID is always from `__agent_id` (ChainRunner-injected), never from
-params"* — and `ToolExecutionService::InjectContext` upholds it, but
-`LuaToolProxyCall` marshals a script's own table straight into `call.arguments`
-and calls `handler->Execute(call)` without passing through that service, so a
-script naming whichever agent it likes satisfies the ownership check.
+Around that state, the scope key is declared everywhere and enforced on the
+observation path only. `MemorySearch` carries `ml.agent_id=?` into the SQL on
+both dialects, and the diary, memory-file and session arms filter too. The
+ontology arm carries no agent predicate, `ontology_entities` is uniquely keyed
+on `(root_category, full_path)` with no agent in the key, and
+`ontology_properties.agent_id` is `NOT NULL DEFAULT 'default'` with no writer,
+while agent deletion runs `DELETE FROM ontology_properties WHERE agent_id=?`
+against it. The seven default layers are seeded at fixed ids 1 to 7 through a
+lookup that does not compare the agent, so every agent after the first gets no
+layers. And two call paths step around the tool boundary. The dispatcher runs
+any registered handler the model names, whatever the session was offered, and
+the consolidation tool's action whitelist applies only under its three session
+prefixes. `LuaToolProxyCall` marshals a script's own table into
+`call.arguments` without passing through `ToolExecutionService`, so a script
+naming whichever agent it likes satisfies the ownership check.
 See [Animus](../systems/animus/).
 
 **RAGFlow is the family's case of memory as a feature inside a much larger

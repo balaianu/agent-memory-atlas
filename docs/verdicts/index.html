@@ -13839,48 +13839,50 @@ href="../systems/animus/"><code>animus</code></a></h3>
 <ul>
 <li>Best idea: an epistemic state spent on filtering rather than on
 ranking. <code>MemoryState { New, Current, Deprecated }</code> sits
-beside a separate <code>weight</code> float, and three call sites use it
+beside a separate <code>weight</code> float, and four call sites use it
 to exclude — <code>AppendEpisodic</code> skips a <code>Deprecated</code>
-observation before it can enter the assembled prompt block,
-<code>ListObservationsDueForReview</code> never shows one to the model
-again, and <code>RunPerspectiveRevision</code> refuses to regenerate a
-layer's narrative when nothing in it is live, because generating from a
-retired layer makes <em>"the LLM invent narratives from training context
-rather than reflecting on data"</em>.</li>
-<li>Biggest risk: four memory mechanisms are declared and never wired.
-Intake calls the LLM and discards the response it asked for, inferring
-what was written by comparing row counts before and after;
-<code>createdObservations</code> is passed by pointer to two functions
-that never fill it, so the ontology reconciler returns on its first
-line; <code>DeleteEntity</code>, <code>DeleteProperty</code> and
-<code>MoveEntity</code> have no caller outside their own file and all
-six ontology HTTP routes are <code>GET</code>, so a wrong node is
-permanent; and <code>ontology_properties.agent_id</code> is
-<code>NOT NULL DEFAULT 'default'</code> with no writer, while agent
-deletion runs <code>DELETE … WHERE agent_id=?</code> against it —
-nothing for an ordinary tenant, every property in the database for an
-agent whose id is <code>default</code>.</li>
+observation before it can enter the assembled prompt block, unified
+search drops it in SQL, <code>ListObservationsDueForReview</code> never
+shows one to the model again, and <code>RunPerspectiveRevision</code>
+refuses to regenerate a layer's narrative when nothing in it is live,
+because generating from a retired layer means <em>"the LLM invents
+narratives from training context rather than reflecting on
+data"</em>.</li>
+<li>Biggest risk: the boundaries around the memory are looser than its
+comments say. The default layers are seeded at fixed ids 1 to 7 through
+a lookup that does not compare the agent, so every agent after the first
+gets none. The dispatcher runs any registered tool the model names, the
+consolidation tool's action whitelist applies only under its three
+session prefixes, and the Lua bridge never injects
+<code>__agent_id</code>. Beside them, intake discards the LLM response
+it asked for, <code>createdObservations</code> is never filled so the
+ontology reconciler returns on its first line, and
+<code>ontology_properties.agent_id</code> has no writer while agent
+deletion runs <code>DELETE … WHERE agent_id=?</code> against it.</li>
 <li>Most reusable component:
 <code>src/kernel/consolidation/ConsolidationPipeline.cpp</code> — the
-session-typed action whitelist, where the run that ingests untrusted
-text gets <code>create</code> and not <code>retire</code> and the
-curating run gets the reverse, beside the two guards that stop a summary
-being regenerated from nothing.</li>
-<li>Maturity impression: Apache-2.0, v0.3.10, 405 commits from a 12 July
-2026 squashed import, roughly 94,700 lines of C++ plus a 46,199-line Vue
-SPA compiled into the binary. Three of seven capability marks. No paper,
-no <code>CITATION.cff</code>, no eval or benchmark directory, and eleven
-memory rows marked Live in the README with no committed measurement
-behind any of them — while two of the four memory test suites carry
-assertions that cannot pass at this pin, both traceable to a 14 July
-intake rewrite the tests never followed.</li>
-<li>Study when: you want a single self-hosted binary running several
-long-lived agents with memory that distinguishes reviewed-and-kept from
+two guards that stop a summary being regenerated from nothing — beside
+the session-typed action whitelist in
+<code>src/kernel/tools/ConsolidationTool.cpp</code>, where the run that
+ingests untrusted text gets <code>create</code> and not
+<code>retire</code> and the curating run gets the reverse.</li>
+<li>Maturity impression: Apache-2.0, v0.4.6, 693 commits from a 12 July
+2026 squashed import, about 109,000 lines of C++ plus a 47,840-line Vue
+SPA compiled into the binary, with optional replication of the memory
+tables between nodes. Four of seven capability marks. No paper, no
+<code>CITATION.cff</code>, no eval or benchmark directory, and no
+committed measurement behind the memory rows the README marks Live. The
+memory suites do carry a search case asserting that retired and
+superseded observations stay out, and a curation case for ontology
+deletion.</li>
+<li>Study when: you want a single self-hosted binary running a
+long-lived agent with memory that distinguishes reviewed-and-kept from
 written-and-unexamined from retired, and a worked example of layering an
 LLM review loop over a time-ordered store.</li>
-<li>Do not copy when: you run agents for other people. The ontology
-namespace is global across tenants, its search arm has no agent filter,
-its per-agent cleanup deletes nothing, and the Lua bridge lets any
+<li>Do not copy when: you run agents for other people, or more than one
+agent of your own. The ontology namespace is global across tenants, its
+search arm has no agent filter, its per-agent cleanup deletes nothing,
+default layers serve the first agent only, and the Lua bridge lets any
 in-process script name whichever agent it likes —
 <code>ToolExecutionService</code> overwrites <code>__agent_id</code>,
 and <code>LuaToolProxyCall</code> never calls it.</li>

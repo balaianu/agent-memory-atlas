@@ -2290,55 +2290,64 @@ it an ontology <code>(entity, key) → value</code> property and a whole
 <td>One shared <code>IDataStore</code> connection, SQLite by default and
 PostgreSQL behind <code>-DANIMUS_WITH_POSTGRESQL=ON</code>; every store
 calls <code>EnsureSchema()</code> in its own constructor and branches on
-<code>Dialect()</code> for FTS5 versus tsvector</td>
+<code>Dialect()</code> for FTS5 versus tsvector; with federation
+configured, memory tables replicate between nodes through a trigger-fed
+outbox</td>
 <td>Two arms that never meet — FTS5 <code>bm25</code> or tsvector
 <code>ts_rank</code> across five domains in <code>MemorySearch</code>,
-normalised as <code>1/(1+score)</code> and sorted; and a brute-force
-in-process cosine scan over <code>memory_file_chunks.embedding</code> in
-the prompt assembler, with keyword counting as the degraded
-fallback</td>
-<td>Nothing writes memory except a tool call. The scheduler opens an
-<code>consolidation:intake:</code> session and the LLM must call
-<code>consolidation</code> with <code>action: "create"</code>; the
-pipeline never parses the model's text and infers the count by comparing
-row totals before and after</td>
+mapped monotonically to <code>q/(1+q)</code> and merge-sorted; and a
+brute-force in-process cosine scan over
+<code>memory_file_chunks.embedding</code> in the prompt assembler, with
+keyword counting as the degraded fallback</td>
+<td>Nothing writes memory except a tool call, an admin request or a boot
+repair. The scheduler opens a <code>consolidation:intake:</code> session
+and the LLM must call <code>consolidation</code> with
+<code>action: "create"</code>; the pipeline never parses the model's
+text and infers the count by comparing row totals before and after</td>
 <td><code>revise</code> is copy-on-write with <code>superseded_by</code>
 on the old row; <code>retire</code> sets <code>Deprecated</code>;
-<code>merge</code> deprecates its sources. Archive is a hard
-<code>DELETE FROM observations</code> reached when the model says
-<em>demote</em> on the bottom layer, and the audit row it leaves does
-not carry the text</td>
+<code>merge</code> deprecates its sources; a boot pass retires the newer
+of two identical live observations. Archive is a hard
+<code>DELETE FROM observations</code> when the model says demote on the
+bottom layer, and its audit row does not carry the text.
+<code>ontology:delete</code> removes an entity with a logged motivation;
+nothing removes or moves a single property</td>
 <td><code>agent_id</code> on layers, observations, entities, properties
-and diary entries; the layer is the enforced boundary on the read path,
-and the ontology arm of unified search has no agent predicate</td>
+and diary entries; the layer is the enforced boundary on every
+observation read path, the ontology arm of unified search has no agent
+predicate, and the ontology's unique key omits the agent</td>
 <td>One <code>animusd</code> binary — Drogon HTTP API, a Vue 3 admin SPA
-compiled into the executable, twelve channel adapters, a Lua 5.4
-scripting runtime, two agent-facing tools (<code>memory</code>,
+compiled into the executable, Lua channel adapters, a Lua 5.4 scripting
+runtime, two agent-facing tools (<code>memory</code>,
 <code>consolidation</code>) and an <code>ActiveMemoryProvider</code> at
 priority 30 in the prompt</td>
 <td>Cron schedules registered per agent and per layer at startup —
 hourly intake into <code>day</code>, a review pass per layer from every
 two hours to yearly, and a session-report pass; <code>millennium</code>
-is excluded from both</td>
+is excluded from both; a federation pull loop when peers are
+configured</td>
 <td><code>MemoryState { New, Current, Deprecated }</code> on an
 observation and on the ontology property linked to it, filtered out of
-the assembled prompt and out of the review batch — but returned by
-unified search labelled <code>retired</code> rather than withheld</td>
-<td>A discrete epistemic state that is genuinely used to withhold rather
-than to discount; two append-only mutation logs, one of which snapshots
-the row before and after; a perspective pass that refuses to run on a
-layer with nothing live in it; and an admin surface that shows the
-reviewer the assembled context block itself</td>
-<td>The ontology has no reachable correction path —
-<code>DeleteEntity</code>, <code>DeleteProperty</code> and
-<code>MoveEntity</code> have no caller anywhere outside their own file
-and all six HTTP routes are <code>GET</code>; the intake phase discards
-the LLM response it asks for;
-<code>ReconcileOntologyFromObservations</code> is always handed an empty
-vector; the Lua tool bridge never injects <code>__agent_id</code>, so a
-script names its own; and agent deletion runs
+the assembled prompt, the review batch and unified search; an ontology
+property in a selected entity is printed whatever its state</td>
+<td>A discrete epistemic state spent on withholding rather than
+discounting, on four read paths; two append-only mutation logs, one of
+which snapshots the row before and after; a perspective pass that
+refuses to run on a layer with nothing live in it; write receipts taken
+from <code>INSERT ... RETURNING</code> rather than store-global row
+counts; and an admin surface that shows the reviewer the assembled
+context block itself</td>
+<td>Default-layer seeding by fixed id leaves every agent after the first
+with no layers; the tool dispatcher executes any registered handler by
+name without checking what the session was offered, and the
+consolidation tool applies no action whitelist outside its three session
+prefixes; the Lua tool bridge never injects <code>__agent_id</code>, so
+a script names its own; the intake phase discards the LLM response it
+asks for; <code>ReconcileOntologyFromObservations</code> is always
+handed an empty vector; the ontology namespace and its search arm are
+global across agents; and agent deletion runs
 <code>DELETE FROM ontology_properties WHERE agent_id=?</code> against a
-column nothing ever writes</td>
+column nothing writes</td>
 </tr>
 <tr>
 <td><a
@@ -33449,7 +33458,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>447 of 734:</em> <a
+<p><em>448 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33486,6 +33495,7 @@ href="../systems/alphaonedev-ai-memory/"><code>alphaonedev-ai-memory</code></a>,
 href="../systems/anatid/"><code>anatid</code></a>, <a
 href="../systems/anda-brain/"><code>anda-brain</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
+href="../systems/animus/"><code>animus</code></a>, <a
 href="../systems/anolisa-agent-memory/"><code>anolisa-agent-memory</code></a>,
 <a href="../systems/archeus/"><code>archeus</code></a>, <a
 href="../systems/arcon/"><code>arcon</code></a>, <a
@@ -33929,7 +33939,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-447 repositories of
+448 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

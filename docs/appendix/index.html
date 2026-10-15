@@ -2214,10 +2214,10 @@ were counted with <code>grep</code>; the CI workflow's own comment says
 <li><a
 href="https://github.com/railstracks/animus">railstracks/animus</a> at
 <a
-href="https://github.com/railstracks/animus/commit/6d0e14fb12d460b71d8cf44e155b0504c5c3a780"><code class="commit-id" title="6d0e14fb12d460b71d8cf44e155b0504c5c3a780">6d0e14fb…</code></a>
+href="https://github.com/railstracks/animus/commit/67e5f15d47dbe66cbc61b09f275624775325ff36"><code class="commit-id" title="67e5f15d47dbe66cbc61b09f275624775325ff36">67e5f15d…</code></a>
 — read only; the screen found no auto-run surface and no build-time
 execution, one unpinned manifest (<code>admin-ui/package.json</code>, 12
-floating ranges behind a lockfile) and both lockfiles unchanged for 50
+floating ranges behind a lockfile) and both lockfiles unchanged for 94
 days, so nothing was installed, no <code>cmake</code>,
 <code>make</code>, <code>npm</code> or Lua command was run, and no
 binary from the checkout was executed, including the committed
@@ -16113,6 +16113,35 @@ architecture table named <code>src/api.rs</code> and four other paths
 that had moved under <code>crates/</code>. The first rested on column
 names rather than on the insert's bindings, and the third on a field's
 storage rather than its reader.</li>
+<li><strong>Four published claims about <a
+href="../systems/animus/">Animus</a> were wrong at <a
+href="https://github.com/railstracks/animus/commit/6d0e14fb12d460b71d8cf44e155b0504c5c3a780"><code class="commit-id" title="6d0e14fb12d460b71d8cf44e155b0504c5c3a780">6d0e14fb…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+search scores were normalised so that a lower BM25 became a higher
+relevance. <code>ScoreFromBm25</code> clamped every negative
+<code>bm25()</code> value to zero, so every SQLite match scored 1.0, and
+<code>ScoreFromTsRank</code> ranked the best PostgreSQL match lowest
+(<code>src/kernel/memory/MemorySearch.cpp:26-35</code>). It said
+ordinary conversation could not mutate episodic memory.
+<code>ToolExecutionService::Execute</code> resolved any registered
+handler by name
+(<code>src/kernel/chain/ToolExecutionService.cpp:169</code>), and
+<code>ConsolidationTool</code> applied no action whitelist to a session
+key carrying none of its three prefixes
+(<code>src/kernel/tools/ConsolidationTool.cpp:113-115</code>). Its
+<code>audit_log</code> record placed mutation producers on every
+reachable ontology write. <code>UpdateEntity</code>,
+<code>DeleteEntity</code> and <code>DeleteProperty</code> had no caller,
+and <code>SyncPropertyStatesFromObservations</code>, called at every
+boot (<code>src/kernel/AgentKernel.cpp:344</code>), rewrote property
+states with no log row
+(<code>src/kernel/ontology/OntologyStore.cpp:656-705</code>). And the
+census in its summary, v0.3.10 with 405 commits and sixteen test
+binaries over 8,364 lines, described the first pin; this one was v0.4.0
+plus six commits, with 526 commits and 22 CTest registrations over
+10,630 lines. The first rested on the formula rather than the sign of
+its input, and the second on the tool schema a session is offered rather
+than on the dispatcher.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
