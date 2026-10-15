@@ -517,6 +517,8 @@ first row's reason and time.
 
 [Particles](../../systems/particles/) keeps no separate rejection table: the retired particle is the tombstone. A row retired with `EXPLICIT_RETRACTION`, `EXPLICIT_SUPERSESSION` or a review's `CONFLICT_RESOLVED` stays in the store, and its identity — normalised text, resolved subject set, stance holder — is looked up on both the extraction and the agent-assert path before the conflict ladder runs. A match is stored quarantined behind an `INCONSISTENCY` record that only a review lifts, so the source's restatement is on record and not believed. Two edges are deliberate: a review `DISCARD` retracts with a reason outside the judgment set, so a discarded value re-mints, and the match is exact, so a paraphrase or a different subject resolution walks past.
 
+[Stella](../../systems/stella/) puts the tombstone on its proposal loop and keys it on the wording. A rule or skill proposal mined from the agent's reflections carries the lineage `prp_<kind>_<slug>-<hash8>` over the cluster's representative text, `stella proposals ignore` appends a `Rejected` promotion event to a ledger whose update and delete are refused by SQLite triggers, and both halves of the next induction skip a lineage that folds to Rejected before the eligibility gate and before any file is written. A later Keep on the same lineage lifts it, and a test pins each direction. The key is exact wording, so a lesson that re-clusters under a different representative mints a new lineage; and what the codebase itself calls a tombstone, its node-suppression marker, is keyed on the row and lifted by the next upsert of the same node.
+
 ### Sorted by what actually stops the value
 
 The mark covers four different mechanisms. The table sorts the holders this page

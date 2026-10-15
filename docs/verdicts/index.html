@@ -23967,39 +23967,52 @@ Re-extracting the same evidence computes the same id, so a replay is a
 silent no-op — while the same id arriving with a different hash is
 raised as an error, since that means two different records claimed one
 identity.</li>
-<li>Biggest risk: the domain scope excludes only nodes tagged
-<em>exclusively</em> out of scope, so an untagged node is visible in
-every scope. It is documented as the intended reading — most memories
-carry no domain tag and a scope that dropped them would empty the
-channel — but it narrows a tagged corpus rather than partitioning an
-arbitrary one.</li>
-<li>Second risk: node content is not versioned. Only edges carry live
-world and belief intervals; the node columns for them exist and are
-never written, and the row type deliberately does not project them so
-nobody reads the NULL as an absence of valid time. Fact history is
-recoverable, node content history is not.</li>
-<li>Third risk: a vocabulary collision worth knowing before you read the
-source. This codebase calls its node-suppression marker a tombstone; it
-is a reversible soft delete keyed on the row, not a durable record of a
-rejected value keyed on the value, and re-ingesting the same sentence
-produces a live node again.</li>
+<li>Seventh idea: <strong>key a decline on the proposal's wording and
+read it before writing.</strong> Rules and skills are induced from the
+agent's reflections, and a proposal's lineage is
+<code>prp_&lt;kind&gt;_&lt;slug&gt;-&lt;hash8&gt;</code> over the
+cluster's representative wording. <code>stella proposals ignore</code>
+appends a <code>Rejected</code> event to the trigger-guarded ledger, and
+both halves of the next induction skip that lineage before anything is
+written; a later Keep is the only thing that lifts it, and both
+directions are pinned by tests.</li>
+<li>Biggest risk: the domain scope partitions nothing in practice.
+Recall excludes nodes tagged only with out-of-scope domains, and its one
+production caller passes every domain in the workspace taxonomy as the
+session scope, so the filter removes only nodes tagged with a domain
+since dropped from the taxonomy. The per-query scope ranks and admits
+and never excludes.</li>
+<li>Second risk: the world-time axis is an observation time. Edges carry
+<code>valid_from</code> and <code>valid_to</code>, and the neighbour
+query applies both beside belief time, but no production caller writes
+<code>valid_from</code> and <code>valid_to</code> is the clock of the
+anchor scan that noticed a file was gone. The single-valued correction
+path has no production caller, and node content is overwritten in
+place.</li>
+<li>Third risk: the review verbs are CLI subcommands the agent's own
+shell can run. <code>stella proposals keep</code> and
+<code>stella context promote</code> record <code>$USER</code> or an
+<code>--approver</code> flag without verifying it, so the queue holds
+against the agent's declared tools and not against its shell.</li>
 <li>Most reusable component:
-<code>crates/stella-records/src/records/trust.rs</code> — ninety lines
+<code>crates/stella-records/src/records/trust.rs</code> — 113 lines
 including its tests, and the clearest statement in this corpus's reading
 of why a record cannot establish the authority it claims.</li>
 <li>Maturity impression: thirty Rust crates with a committed
 <code>Cargo.lock</code>, installers, a TUI, a plugin consent boundary
-with a verification ladder, a fleet layer, a benchmark tree,
-undocumented public items failing the lint build, and code comments that
-name the defect each rule exists to prevent. Dual-licensed AGPL-3.0-only
-or commercial, with the "or any later version" clause deliberately not
-granted.</li>
+with a verification ladder, a fleet layer, a benchmark tree with a
+committed Terminal-Bench 2.1 head-to-head, undocumented public items
+failing the lint build, and code comments that name the defect each rule
+exists to prevent. Dual-licensed AGPL-3.0-only or commercial, with the
+"or any later version" clause deliberately not granted.</li>
 <li>Study when: you need a worked example of a memory whose claims
 expire, get re-probed, and change what the agent sees — or of enforcing
 an invariant somewhere a future contributor cannot quietly undo it.</li>
-<li>Do not copy when: you need "forget that value, everywhere, forever".
-Suppression here is keyed on the row and is an exact inverse by design;
-nothing refuses the same content arriving again.</li>
+<li>Do not copy when: you need scoped retrieval or valid-time history.
+The scope filter receives the whole taxonomy and the world-time column
+records when a scan noticed a change; and forgetting a context-plane
+node is a row-keyed marker that the next upsert of the same node
+lifts.</li>
 </ul>
 <h3 id="agent-memory-dotnet"><a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a></h3>

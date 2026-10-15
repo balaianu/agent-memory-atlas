@@ -4,31 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A Rust coding agent whose context
-plane keeps a bi-temporal property graph in one SQLite file and
-re-checks every committed claim before it can steer — demoting a lapsed
-one out of the cached prefix, dropping a refuted one entirely, and
-stamping a record's authority from the directory it was read out of
-rather than from anything it says about itself.">
+    <meta name="description" content="A Rust coding agent that re-probes
+its committed policy claims before they steer, keeps an append-only
+ledger under SQLite triggers, and remembers declined proposals.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Stella — Agent Memory Atlas">
-    <meta property="og:description" content="A Rust coding agent whose
-context plane keeps a bi-temporal property graph in one SQLite file and
-re-checks every committed claim before it can steer — demoting a lapsed
-one out of the cached prefix, dropping a refuted one entirely, and
-stamping a record's authority from the directory it was read out of
-rather than from anything it says about itself.">
+    <meta property="og:description" content="A Rust coding agent that
+re-probes its committed policy claims before they steer, keeps an
+append-only ledger under SQLite triggers, and remembers declined
+proposals.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Stella — Agent Memory Atlas">
-    <meta name="twitter:description" content="A Rust coding agent whose
-context plane keeps a bi-temporal property graph in one SQLite file and
-re-checks every committed claim before it can steer — demoting a lapsed
-one out of the cached prefix, dropping a refuted one entirely, and
-stamping a record's authority from the directory it was read out of
-rather than from anything it says about itself.">
+    <meta name="twitter:description" content="A Rust coding agent that
+re-probes its committed policy claims before they steer, keeps an
+append-only ledger under SQLite triggers, and remembers declined
+proposals.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Stella — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -50,7 +43,7 @@ rather than from anything it says about itself.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Stella",
-      "description": "A Rust coding agent whose context plane keeps a bi-temporal property graph in one SQLite file and re-checks every committed claim before it can steer \u2014 demoting a lapsed one out of the cached prefix, dropping a refuted one entirely, and stamping a record's authority from the directory it was read out of rather than from anything it says about itself.",
+      "description": "A Rust coding agent that re-probes its committed policy claims before they steer, keeps an append-only ledger under SQLite triggers, and remembers declined proposals.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,26 +100,23 @@ rather than from anything it says about itself.">
         <div class="document-hero-inner">
           <p class="eyebrow">Context plane</p>
           <h1>Stella</h1>
-          <p class="document-deck">A Rust coding agent whose context
-plane keeps a bi-temporal property graph in one SQLite file and
-re-checks every committed claim before it can steer — demoting a lapsed
-one out of the cached prefix, dropping a refuted one entirely, and
-stamping a record's authority from the directory it was read out of
-rather than from anything it says about itself.</p>
+          <p class="document-deck">A Rust coding agent that re-probes
+its committed policy claims before they steer, keeps an append-only
+ledger under SQLite triggers, and remembers declined proposals.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/macanderson/stella">
               <span>Source</span>
               <strong>macanderson/stella</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/macanderson/stella/commit/e5faf774aaa3bd67c819ec3a6c4e72ac5366c25a" title="e5faf774aaa3bd67c819ec3a6c4e72ac5366c25a">
+            <a class="meta-pill revision-pill" href="https://github.com/macanderson/stella/commit/111aff2c257495f04a4ab5fd1b5465b4ddf8ed34" title="111aff2c257495f04a4ab5fd1b5465b4ddf8ed34">
               <span>Analyzed revision</span>
-              <code>e5faf774…</code>
+              <code>111aff2c…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/macanderson--stella" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -134,7 +124,24 @@ rather than from anything it says about itself.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>6</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0-only
+or a negotiated commercial licence; the 'or any later version' clause is
+not granted</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>833,787
+lines of Rust in 1,779 files, 238,156 of them in 554 test files; the
+context plane, crates/stella-context, is 10,428 lines in 27 files
+outside tests, and the record plane, crates/stella-records, 14,560 lines
+in 32</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>3,594
+commits on main by 11 author names, 11 July – 11 October 2026; version
+0.9.494</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>11,473
+Rust test functions in 1,288 files, 581 of them in 49 files under
+crates/stella-context and crates/stella-records; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -150,15 +157,19 @@ rather than from anything it says about itself.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Stella is a terminal coding agent in Rust — thirty crates, its own
-TUI, a plugin consent boundary, a fleet layer. The part this atlas reads
-is the <strong>context plane</strong>, described in its own header as
-the single door between the engine and everything the agent knows that
-isn't already in the prompt: one SQLite file holding a bi-temporal
-property graph, a fingerprinted embedding index and episodic memory,
-with a budgeted, cited retrieval pipeline on top.</p>
-<p>Six marks, and what they have in common is that each one is enforced
-somewhere a later contributor cannot quietly undo.</p>
+<p>Stella is a terminal coding agent in Rust with two memory planes. The
+<strong>record plane</strong> holds policy: rule files that steer the
+prompt, each carrying a truth axis that a sweep re-probes before the
+record may steer, with a refuted claim dropped and an expired one
+demoted out of the cached prefix. The <strong>context plane</strong> is
+one SQLite file per workspace holding a property graph, an embedding
+index and episodic memory, beside an append-only ledger whose
+immutability is a database trigger. The weak side is two mechanisms the
+code describes most carefully: the domain scope recall receives is the
+whole taxonomy, and the world-time axis has no producer other than a
+scan clock.</p>
+<p>Its own header calls the context plane the single door between the
+engine and everything the agent knows that is not in the prompt.</p>
 <p><strong>Append-only is a database trigger, not a rule.</strong> The
 lifecycle ledger's migration installs <code>BEFORE UPDATE</code> and
 <code>BEFORE DELETE</code> triggers that abort, and the module says why
@@ -167,87 +178,123 @@ in one sentence: the guarantee then holds against every writer
 exists."</em></p>
 <p><strong>Authority is stamped from the filesystem.</strong> A record's
 <code>origin</code>, <code>truth.basis</code> and
-<code>verified_by</code> are fields inside the file being judged, and a
-checkout can assert them as easily as it asserts anything else. So the
-trust tier is set by the loader from <em>which directory the file was
-read out of</em>, and nothing in the file can change it — <em>"a decree
-only counts when somebody signed it."</em> The default is the lower
+<code>verified_by</code> are fields inside the file being judged. The
+trust tier is set by the loader from which directory the file was read
+out of, and nothing in the file can change it. The default is the lower
 tier, with a test asserting that a forgotten stamp fails toward the
 restrictive answer.</p>
 <p><strong>A committed claim is re-checked before it can steer.</strong>
 The truth sweep's own motivating case is a <code>CLAUDE.md</code> that
 says <em>"we use Node 20"</em> while <code>.nvmrc</code> has said
-<code>22</code> for months — a claim probed once at extraction and never
-again, teaching the agent something false on every turn with the full
-authority of a reviewed policy file. A refuted claim is dropped from the
-block; a merely expired one is demoted into the volatile channel, where
-the reason can be said out loud without putting a clock into the
-byte-stable cached prefix.</p>
-<p><strong>Two time axes, closed by different writers.</strong> An edge
-carries when the fact held in the world and when the store believed it,
-and the neighbour query applies both at once.</p>
-<p>The one mark withheld that the code appears to claim is the
-tombstone. Stella uses the word for its node-suppression marker, which
-is a soft delete keyed on the row. It is reversible, tested as an exact
-inverse, and applied before the budget rather than after — but nothing
-here is keyed on a rejected <em>value</em>.</p>
+<code>22</code> for months. A refuted claim is dropped from the block; a
+merely expired one is demoted into the volatile channel, where the
+reason can be said without putting a clock into the byte-stable cached
+prefix.</p>
+<p><strong>A declined proposal stays declined.</strong> Rules and skills
+are induced from the agent's reflections, and each proposal's lineage is
+a hash of its wording. <code>stella proposals ignore</code> appends a
+<code>Rejected</code> event to the ledger, and the next induction drops
+that lineage before it writes anything.</p>
+<p><strong>The scope and the second time axis are thinner than their
+names.</strong> Recall excludes nodes tagged only with out-of-scope
+domains, and the one production caller passes every domain in the
+workspace taxonomy as the scope. Edges carry <code>valid_from</code> and
+<code>valid_to</code>; no production writer sets the first, and the
+second is the clock of the scan that noticed a file had gone.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>Two planes, and it is worth keeping them apart.</p>
 <p><strong>The context plane</strong> is the graph: nodes, edges,
-embeddings, episodes. It answers <em>what do we know, and what did we
-know at T1</em>. Facts are edges, and a correction closes intervals
-rather than deleting rows.</p>
+embeddings, episodes. It answers <em>what do we know</em>. A node is
+upserted by identity and its content is overwritten in place. Forgetting
+one writes a <code>superseded_at</code> marker that every candidate
+reader filters on, and a later upsert of the same node clears it.</p>
 <p><strong>The record plane</strong> is policy: rule files and record
 files, merged into one order and rendered into the prompt. It answers
 <em>what should steer this turn</em>. Records carry a truth axis, get
 probed on a cadence, and are dispositioned before rendering.</p>
-<p>The design constraint that shapes the second plane is prompt caching.
+<p><strong>The proposal loop joins them.</strong> Each turn's
+reflections are mined into skill and rule proposals and appended to the
+ledger. A skill that clears the distinct-task bar is written as a file.
+A rule is written only on a person's Keep, or by auto-activation at
+confidence 85 with an environment-measured grade, and always as
+advisory. A Keep, an Ignore and an auto-activation are each an immutable
+event, and the loop reads them back by lineage.</p>
+<p>The design constraint that shapes the record plane is prompt caching.
 The <code>must</code>/<code>should</code> records ride a byte-stable
 cached prefix built once per session, so nothing turn-varying may enter
-it — which is why a stale record is not annotated in place but moved to
-the volatile channel, and why staleness is deliberately <em>not</em> a
-record status but a separate derived selection-health value.</p>
-<h2 id="3-architecture">3. Architecture</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — records load from the repository's and the user's rules directories with a trust tier stamped from the directory itself, pass a deterministic ingest gate that quarantines executable content and refuses to arm a command-running probe on mined content, and are dispositioned by a truth sweep before rendering — a refuted claim dropped from the prompt, a lapsed one demoted out of the byte-stable cached prefix into the volatile channel; separately the context plane keeps a bi-temporal property graph in one SQLite file where a correction closes the prior belief's intervals rather than deleting, recall fuses vector, recency and graph adjacency under a domain-scope exclusion and a token budget with a citation on every frame, and every lifecycle record lands in an append-only ledger whose immutability is enforced by database triggers</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: records load from the repository&#39;s and the user&#39;s rules directories with a trust tier stamped from the directory itself, pass a deterministic ingest gate that quarantines executable content and refuses to arm a command-running probe on mined content, and are dispositioned by a truth sweep before rendering — a refuted claim dropped from the prompt, a lapsed one demoted out of the byte-stable cached prefix into the volatile channel; separately the context plane keeps a bi-temporal property graph in one SQLite file where a correction closes the prior belief&#39;s intervals rather than deleting, recall fuses vector, recency and graph adjacency under a domain-scope exclusion and a token budget with a citation on every frame, and every lifecycle record lands in an append-only ledger whose immutability is enforced by database triggers
+it. That is why a stale record is moved to the volatile channel rather
+than annotated in place, and why staleness is a separate derived
+selection-health value rather than a record status.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — Policy records load with a directory-stamped trust tier and pass a truth sweep before rendering, the proposal loop writes rules only after a Keep or a measured auto-activation and skips declined lineages, and context-plane recall runs under a domain scope equal to the whole taxonomy.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: Policy records load with a directory-stamped trust tier and pass a truth sweep before rendering, the proposal loop writes rules only after a Keep or a measured auto-activation and skips declined lineages, and context-plane recall runs under a domain scope equal to the whole taxonomy.
 flowchart TD
+    subgraph Loop[&quot;proposal loop, each turn&quot;]
+        REF[&quot;reflections&quot;] --&gt; IND[&quot;induce rule and skill proposals&lt;br/&gt;lineage = prp_kind_slug-hash8 of wording&quot;]
+        IND --&gt; DEC{&quot;decisions fold&lt;br/&gt;Rejected for this lineage?&quot;}
+        DEC --&gt;|yes| SKIP[&quot;skipped, nothing written&quot;]
+        DEC --&gt;|no| ELIG{&quot;eligible, confidence 85&lt;br/&gt;and a measured grade?&quot;}
+        ELIG --&gt;|no| WAIT[&quot;waits as a proposal&lt;br/&gt;stella proposals list&quot;]
+        ELIG --&gt;|yes| AUTO[&quot;auto-activated, advisory&lt;br/&gt;PromotionActor System&quot;]
+        WAIT --&gt;|keep| PUB[&quot;rule file in .stella/rules&quot;]
+        WAIT --&gt;|ignore| REJ[&quot;Rejected event&quot;]
+        AUTO --&gt; PUB
+    end
+
     subgraph RecordPlane[&quot;record plane&quot;]
-        RF[&quot;rules files&lt;br/&gt;repo · user home&quot;] --&gt; LOAD[&quot;loader stamps Trust&lt;br/&gt;from the directory&lt;br/&gt;the file cannot claim it&quot;]
-        LOAD --&gt; GATE{&quot;ingest gate&lt;br/&gt;atomic? executable quarantined?&lt;br/&gt;probe gated by origin?&lt;br/&gt;probe can refute?&quot;}
-        GATE --&gt; SWEEP{&quot;truth sweep&lt;br/&gt;basis · probe verdict · ttl · on_expiry&quot;}
-        SWEEP --&gt;|refuted| DROP[&quot;Drop — leaves the prompt&lt;br/&gt;still visible to validate/explain&quot;]
-        SWEEP --&gt;|expired| STALE[&quot;SelectStale — demoted to&lt;br/&gt;the volatile channel&quot;]
-        SWEEP --&gt;|unfalsifiable| UNF[&quot;renders, stated unverified&lt;br/&gt;never folded into supported&quot;]
-        SWEEP --&gt;|believed| SEL[&quot;Select&quot;]
-        SEL --&gt; PREFIX[[&quot;byte-stable cached prefix&quot;]]
-        STALE --&gt; VOL[[&quot;volatile channel, per turn&quot;]]
-        UNF --&gt; VOL
+        RF[&quot;rules files&lt;br/&gt;repo · user home · steering repo&quot;] --&gt; LOAD[&quot;loader stamps Trust&lt;br/&gt;from the directory&quot;]
+        PUB --&gt; RF
+        LOAD --&gt; SWEEP{&quot;status active?&lt;br/&gt;stored probe verdict · ttl · on_expiry&quot;}
+        SWEEP --&gt;|retracted or archived| BLK[&quot;Block&quot;]
+        SWEEP --&gt;|refuted| DROP[&quot;Drop&quot;]
+        SWEEP --&gt;|expired| STALE[&quot;SelectStale&lt;br/&gt;volatile channel&quot;]
+        SWEEP --&gt;|believed| SEL[&quot;Select&lt;br/&gt;cached prefix&quot;]
     end
 
-    subgraph ContextPlane[&quot;context plane — one SQLite file&quot;]
-        UP[&quot;upsert&quot;] --&gt; TX{&quot;one transaction&quot;}
-        TX --&gt; NODE[(&quot;node&lt;br/&gt;current state&lt;br/&gt;superseded_at marker&quot;)]
-        TX --&gt; EDGE[(&quot;edge&lt;br/&gt;valid_from/valid_to · world&lt;br/&gt;recorded_at/superseded_at · belief&quot;)]
-        TX --&gt; EMB[(&quot;embedding&lt;br/&gt;keyed by content hash + fingerprint&quot;)]
-        TX --&gt; LED[(&quot;lifecycle ledger&lt;br/&gt;BEFORE UPDATE/DELETE triggers abort&quot;)]
-
-        Q[&quot;recall&quot;] --&gt; SCOPE[&quot;exclude nodes tagged&lt;br/&gt;only out of scope&quot;]
+    subgraph ContextPlane[&quot;context plane, one SQLite file per workspace&quot;]
+        Q[&quot;recall&quot;] --&gt; SCOPE[&quot;exclude nodes tagged only&lt;br/&gt;outside the session scope&lt;br/&gt;scope = every taxonomy domain&quot;]
         SCOPE --&gt; FUSE[&quot;vector + recency + graph&lt;br/&gt;reciprocal-rank fusion&quot;]
-        FUSE --&gt; BUD[&quot;budget pack&lt;br/&gt;citation on every frame&lt;br/&gt;drops reported, never silent&quot;]
-        NODE --&gt; Q
-        EDGE --&gt; Q
-        EMB --&gt; Q
-        ASOF[&quot;facts_as_of / valid_at&quot;] --&gt; EDGE
+        FUSE --&gt; BUD[&quot;budget pack&lt;br/&gt;citation on every frame&quot;]
+        LED[(&quot;lifecycle ledger&lt;br/&gt;BEFORE UPDATE/DELETE abort&quot;)]
     end
 
-    PREFIX --&gt; TURN[&quot;the turn&quot;]
-    VOL --&gt; TURN
+    IND --&gt; LED
+    REJ --&gt; LED
+    AUTO --&gt; LED
+    LED --&gt; DEC
+    SEL --&gt; TURN[&quot;the turn&quot;]
+    STALE --&gt; TURN
     BUD --&gt; TURN</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>A Cargo workspace of thirty crates. The memory paths are
+<code>stella-context</code> (the store, recall and the ledger),
+<code>stella-records</code> (record parsing, the truth sweep, rendering
+and trust), <code>stella-learn</code> (the miner) and the memory,
+proposals and context modules of <code>stella-cli</code>, which wire
+them into a session. The TUI, the fleet, the autonomy loop, plugins and
+model adapters touch memory only through those paths.</p>
+<p>Policy records arrive from three places. The user's
+<code>~/.stella/rules</code> loads at user trust. The repository's
+<code>.claude/rules</code> and <code>.stella/rules</code> load at
+project trust, and only when the session's authority policy allows
+project prompts. The third is the <code>steering/</code> folder of an
+Oxagen steering repository, recognised by a <code>governance/v1</code>
+or <code>workspace/v1</code> marker and gated by the same project
+check.</p>
+<p>A steering record loads at project trust and keeps the
+<code>id</code> and <code>hash</code> Oxagen assigned. It skips the
+one-sentence and compound-claim checks, because its statement is a
+Markdown body, and it carries no truth block. A record targeting tools,
+skills, a toolbelt or other repositories is withheld rather than
+broadened.</p>
+<p>Schema v14 adds two read-only views, <code>export_memories_v1</code>
+and <code>export_memory_uses_v1</code>, for other programs on the same
+machine. The first lists each memory's live revision while its mirror
+node is live. The second lists the ledger's <code>context_use</code>
+rows for memory nodes, with the row id as a resumable cursor.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
 <li><strong>The plane's contract:</strong>
-<code>crates/stella-context/src/lib.rs</code> — four jobs, and the
-binding lessons it names.</li>
+<code>crates/stella-context/src/lib.rs</code>.</li>
 <li><strong>Store and schema:</strong>
 <code>crates/stella-context/src/store.rs</code>,
 <code>store/schema.rs</code>, <code>store/node.rs</code>,
@@ -256,219 +303,371 @@ binding lessons it names.</li>
 <code>crates/stella-context/src/store/ledger.rs</code>.</li>
 <li><strong>Write-back:</strong>
 <code>crates/stella-context/src/writeback.rs</code>.</li>
-<li><strong>Recall:</strong>
+<li><strong>Recall and scope:</strong>
 <code>crates/stella-context/src/retrieval.rs</code>,
-<code>candidates.rs</code>.</li>
-<li><strong>Scope:</strong>
-<code>crates/stella-context/src/store/domain.rs</code>.</li>
+<code>retrieval/scope.rs</code>, <code>store/domain.rs</code>, and the
+caller in <code>crates/stella-cli/src/contextgraph.rs</code>.</li>
 <li><strong>Truth sweep and rendering:</strong>
 <code>crates/stella-records/src/records/sweep.rs</code>,
 <code>registry.rs</code>, <code>render.rs</code>,
 <code>trust.rs</code>.</li>
-<li><strong>Ingest gate:</strong>
-<code>crates/stella-records/src/ingest/gate.rs</code>.</li>
+<li><strong>Proposal loop:</strong>
+<code>crates/stella-cli/src/memory/learning.rs</code>,
+<code>crates/stella-cli/src/proposals_cmd.rs</code>,
+<code>crates/stella-records/src/context_record/lifecycle.rs</code>.</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>Nodes carry a typed kind — file, symbol, concept, fact, episode,
-person, artifact, task, memory — and the vocabulary has a stated
-fallback: an unknown stored kind reads back as <code>concept</code>
-rather than failing.</p>
-<p>Edges carry four time columns. Nodes carry them too, and two of the
-four are never written, which the schema comment addresses head-on:
-dropping a column in SQLite rewrites the table, so they stay, and the
-row type <em>deliberately does not project them</em> so no consumer can
-read the NULL as an absence of valid time rather than an absence of node
-versioning. Fact history is recoverable; node content history is not,
-and the file says so.</p>
+person, artifact, task, memory — and an unknown stored kind reads back
+as <code>concept</code> rather than failing. A node's public id is a
+hash of its kind and natural key, so an upsert of the same identity
+lands on the same row and overwrites its content.</p>
+<p>Edges carry four time columns: <code>valid_from</code> and
+<code>valid_to</code> for world time, <code>recorded_at</code> and
+<code>superseded_at</code> for belief time. Nodes carry the same four;
+two are never written, and the row type deliberately does not project
+them. The schema comment says so: fact history is recoverable, node
+content history is not.</p>
+<p>The world-time columns on edges have one live writer.
+<code>FactAssertion</code> documents <code>valid_from</code> as world
+time that may precede recording, and its only production constructor,
+<code>record_taxonomy</code>, leaves both bounds empty on a multivalued
+<code>covers_path</code> fact. Anchors to files are written with both
+bounds empty. <code>valid_to</code> is set by the anchor scan, at mount
+and from <code>stella memory validate --end-stale</code>, to the scan's
+own clock when a file is found missing. The correction path closes every
+live single-valued belief at the new fact's <code>valid_from</code> or
+at now, and no production fact reaches it.</p>
 <p>On the record side, <code>RecordStatus</code> is the stored canonical
 field — active, retracted, archived — while <code>EffectiveStatus</code>
 is derived at query time from the historical prefix, adding superseded
 and expired, and is excluded from the record hash because it is a
 projection rather than state.</p>
-<p>The most instructive type in the tree is an enum variant.
-<code>EpisodeOutcome</code> carries an <code>Unverified</code> value
-whose documentation is the clearest statement of the idea anywhere in
-this reading: the episode ran to completion and nothing proved it.
-Deliberately not <code>Success</code>, because episodes are recalled
-into later sessions as grounding and labelling an unproven run a success
-hands a future turn a worked example that was never checked.
-Deliberately not <code>Failure</code>, because nothing found the work
-wrong and a retrieval that reads it as a mistake teaches the opposite
-lesson. Distinct from <code>Partial</code>, which is a claim about how
-much of the goal landed — <em>"this is a claim about the
-evidence."</em></p>
+<p>A proposal record carries the miner's candidate id, a title, a body,
+its supporting observations, a provenance grade derived from them, a
+score and a confidence. Its lineage is
+<code>prp_&lt;kind&gt;_&lt;candidate_id&gt;</code>, namespaced by kind
+so declining a rule does not decline the skill mined from the same
+lesson.</p>
+<p><code>EpisodeOutcome</code> carries an <code>Unverified</code> value:
+the episode ran to completion and nothing proved it. Not
+<code>Success</code>, because episodes are recalled into later sessions
+as grounding; not <code>Failure</code>, because nothing found the work
+wrong.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p>Recall fuses vector, recency and graph-adjacency channels by
 reciprocal rank, deduplicates by content hash, and packs to the caller's
-token budget. Three rules are enforced rather than advised: every frame
-must carry a human citation label, and a frame constructed without one
-is a constructor error; silent truncation is banned, so assembly reports
-what it dropped; and weak coverage falls back to bounded lexical search
-<strong>labelled as such</strong> rather than dressed up as
-grounding.</p>
-<p>Scope is an exclusion set built by anti-join and applied during
-retrieval. Its one asymmetry is documented in the entry point rather
-than discovered later: a node tagged exclusively with out-of-scope
-domains is excluded, and an untagged node is not, because most memories
-carry no domain tag and a scope that dropped them would empty the
-channel.</p>
-<p>Point-in-time recall applies the as-of predicate before the budget,
-which is the same discipline suppression needed and for the same
-reason.</p>
+token budget. Every frame must carry a human citation label, and a frame
+built without one is a <code>MissingCitation</code> error; assembly
+reports what it dropped; weak coverage falls back to bounded lexical
+search, labelled as such.</p>
+<p><strong>Scope is an exclusion set built by anti-join.</strong>
+<code>node_ids_excluded_by_scope</code> returns every live node that
+carries a domain tag and none in scope, and recall removes them before
+ranking. Untagged nodes stay candidates. The production caller,
+<code>ScopedStore::query</code>, builds the scope with
+<code>session: self.domains.names()</code>, so the session scope is
+every domain in <code>.stella/domains.toml</code>. Node tags come from
+that taxonomy, so the filter excludes only a node tagged with a domain
+since removed from it. The per-query scope, derived from the files the
+goal names, ranks by overlap and serves as admission evidence when it is
+a proper subset of the session; it never excludes.</p>
+<p>Live recall passes <code>valid_at = now</code>, so an anchor whose
+world validity the scan ended stops feeding graph adjacency. An
+<code>as_of</code> query reads belief time only.</p>
+<p>Point-in-time recall and suppression both apply before the budget. A
+suppressed node is filtered at the SQL boundary; quarantine, which is
+derived from untruthful-citation counts and stored nowhere, arrives as
+an excluded-id set applied where candidate metadata is assembled.</p>
+<p>Policy records reach the prompt by a separate path.
+<code>assemble_system_prompt</code> renders the registry's cached
+channel, and each turn renders the volatile channel; both go through
+<code>channel_of</code>, which drops any record whose disposition is not
+selected. The workspace's <code>.stella/memories/</code> files are
+appended to the same prompt when project prompts are allowed, with no
+disposition.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Every write batch is one transaction, so a kill mid-index rolls back
-to a consistent store. Vectors are keyed by content hash and embedder
-fingerprint together: identical content is never re-embedded, and
-retrieval never mixes fingerprints.</p>
-<p>Corrections close and supersede. The function that finds what to
-close is worth reading for its bug note: it used to be a single-valued
-<code>ORDER BY id DESC LIMIT 1</code>, so an assert closed the newest
-belief and left every older live one open, and the store kept answering
-with two simultaneous beliefs for a fact that is single-valued by
-definition. It now closes all of them, and the note explains how two
-live edges arise honestly — the same predicate asserted multivalued and
-later corrected as single-valued.</p>
-<p>Compaction is bounded by the same guarantee it must not break: it
-reclaims only derived index entries whose owner is already gone,
-<em>precisely because</em> deleting them cannot change what
-<code>facts_as_of</code> answers, and edges, memory revisions and
-superseded node rows are named exclusions.</p>
+<p>Every write batch is one transaction. Vectors are keyed by content
+hash and embedder fingerprint together: identical content is never
+re-embedded, and retrieval never mixes fingerprints.</p>
+<p>Upserting a node clears its <code>superseded_at</code>, and the
+comment states the intent: writing a node is the claim that it holds, so
+re-learning a forgotten memory lifts the marker exactly as
+<code>restore_node</code> would.</p>
+<p>The single-valued fact path closes every live belief for a subject
+and predicate, not only the newest; the comment records the bug it
+replaced, an <code>ORDER BY id DESC LIMIT 1</code> that left older
+beliefs open. No production caller asserts a single-valued fact.</p>
+<p>Compaction reclaims only derived index entries whose owner is gone,
+because deleting them cannot change what <code>facts_as_of</code>
+answers; edges, memory revisions and superseded node rows are named
+exclusions.</p>
+<p>The proposal loop writes to the ledger before it writes a file. A
+proposal is appended whether or not it is eligible. A rule file lands
+only in a workspace whose prompts the session may write, and an
+auto-activation is refused by the provenance gate when its only evidence
+is mined reflection.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
 <p>A terminal agent with its own TUI, an MCP crate, a plugin system with
 a consent prompt and a verification ladder, an autonomy layer, a fleet
-layer and an observatory. Dual-licensed: AGPL-3.0-only, or a negotiated
-commercial licence, with the "or any later version" clause deliberately
-not granted.</p>
+layer and an observatory. The agent's tools are a shell, file tools
+confined to the workspace, one search, a task board, delegation, a
+scratch state plane, an environment probe, a question tool and forge
+tools.</p>
+<p>None of those tools writes a proposal decision or a promotion. The
+review and governance verbs are CLI subcommands —
+<code>stella proposals list</code>, <code>keep</code>,
+<code>edit</code>, <code>ignore</code> and <code>retract</code>, and
+<code>stella context promote</code> and <code>govern</code> — and the
+shell tool can reach them.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>Trust state — awarded.</strong> A stored truth axis, a probe
-verdict, and a disposition resolved before rendering, with the
-unselected dispositions removed from the prompt by the channel function
-rather than annotated in place. The distinction the module draws between
-<em>refuted</em> and <em>expired</em> is the part worth copying: one has
-been measured against the world and lost, the other has merely gone
-unchecked, and they get opposite defaults.</p>
-<p><strong>Bi-temporal — awarded</strong>, on two intervals written by
-different operations and applied together in one predicate. The limit is
-stated in the schema comment rather than left for a reader to find: only
-edges are versioned.</p>
-<p><strong>Scope enforced — awarded</strong>, with the untagged-node
-asymmetry in the evidence record and documented in the code.</p>
+<p><strong>Trust state — awarded.</strong> A stored <code>status</code>
+and a stored probe verdict each decide whether a record reaches the
+prompt, and the renderer removes the unselected ones rather than
+annotating them. The split between <em>refuted</em> and <em>expired</em>
+is the part worth copying: one has been measured against the world and
+lost, the other has gone unchecked, and they get opposite defaults.</p>
+<p><strong>Tombstone — awarded</strong>, on the proposal loop rather
+than the context plane. A declined proposal's lineage is a hash of its
+wording, the decline is a ledger event, and both halves of induction
+skip it before anything is written. The codebase also calls
+<code>supersede_node</code> a tombstone; that marker is keyed on the
+row, and an upsert of the same node lifts it.</p>
 <p><strong>Audit log — awarded.</strong> Triggers, not convention;
 content-derived ids so a replay is a no-op; a different hash under the
-same id raised as an error rather than swallowed.</p>
-<p><strong>Human review — awarded</strong>, on the strongest shape
-available: the reviewer's authority is the one fact the reviewed
-artefact cannot assert about itself. The gate requires a loader-stamped
-user tier, a truth basis of decree, and a non-empty signature, and its
-two callers each add a condition locally rather than widening the shared
-half — the comment notes that moving either one inward would tighten the
-other gate silently.</p>
-<p><strong>Negative eval — awarded.</strong> See the evidence record;
-the assertion that an excluded id is absent from the <em>dropped</em>
-list too is the one that distinguishes a filter applied before ranking
-from one applied after.</p>
-<p><strong>Tombstone — withheld, and the vocabulary needs
-stating.</strong> The codebase calls <code>supersede_node</code> a
-tombstone, and by its own definition it is one: a marker rather than a
-delete, reversible, invisible to every reader but the restore path. What
-this atlas means by the word is narrower — a durable record of a
-rejected <em>value</em>, keyed on the value, so a later extraction
-cannot silently re-assert it. Stella's marker is keyed on the row.
-Re-ingesting the same sentence from the same file produces a live node
-again. The nearest thing to a value-keyed refusal is elsewhere and is
-about alerts rather than content: a dismissed ingest lineage never
-produces a drift alert again, and its module is explicit that
-<em>"dismissal says nothing about the records themselves: they stay live
-and recallable."</em></p>
+same id raised as an error. The ledger records proposals and decisions,
+not context-plane node edits.</p>
+<p><strong>Human review — awarded.</strong> A rule proposal below the
+auto-activation bar waits until a person keeps it, and blocking
+enforcement waits for a grant the loop cannot write:
+<code>PromotionEventRecord::new</code> refuses blocking from a system
+actor or an auto-activation. The agent's declared tools carry no review
+verb. The limit is the shell: <code>stella proposals keep</code> and
+<code>stella context promote</code> are reachable through it, and record
+<code>$USER</code> or an <code>--approver</code> flag unverified.</p>
+<p><strong>Negative eval — awarded.</strong> The assertion that an
+excluded id is absent from the dropped list too distinguishes a filter
+applied before ranking from one applied after.</p>
+<p><strong>Bi-temporal — withheld.</strong> Edges carry both axes and
+the neighbour query applies both in one predicate. The world axis has no
+producer that records when a fact became true: <code>valid_from</code>
+is never set by a production caller, and <code>valid_to</code> is the
+scan clock at the moment a missing file was noticed. That is an
+observation time.</p>
+<p><strong>Scope enforced — withheld.</strong> The exclusion is real
+code applied during retrieval, and the scope it receives is the entire
+taxonomy, so no stored scope key narrows what a session reads. Workspace
+isolation is a separate SQLite file per workspace, a path rather than a
+key.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>No paper</strong> and no <code>CITATION.cff</code>.</p>
+<p>No paper on arXiv and no <code>CITATION.cff</code>.
+<code>docs/papers/</code> holds four project-written analyses of the
+architecture; none measures memory.</p>
 <p>Tests live beside the code as Rust unit modules, with integration
-suites per crate and a <code>bench/</code> tree carrying a
-terminal-bench adapter, a loop benchmark and a request benchmark. No
-benchmark results are committed.</p>
-<p>The recall suite is the one to read, and its distinguishing habit is
-that the docstring on each case names the defect it exists to prevent —
-suppression running after the budget so a one-frame recall returned zero
-frames; a point-in-time parameter that <em>"looked honored and was
-not"</em>; a migration test that reuses the store's own legacy fixture
-builder because <em>"two fixture builders for one schema ladder is how a
-migration test ends up asserting against a shape the ladder never
-produces."</em></p>
-<p>Two more enforcement mechanisms sit outside the test suite and are
-worth counting as evals in spirit. Undocumented public items are a build
-failure under the lint profile, which the comment explains as closing a
-gap that <em>"cannot reopen one field at a time"</em>. And the
-append-only guarantee is checked by the database rather than by a test,
-which is the difference between an invariant and a habit.</p>
+suites per crate. I ran none of them for this reading.</p>
+<p>The recall suite is the one to read. The docstring on each case names
+the defect it prevents — suppression running after the budget, so a
+one-frame recall returned zero frames; a point-in-time parameter that
+<em>"looked honored and was not"</em>. The proposal guarantees in
+<code>memory/learning/guarantees.rs</code> pin the tombstone from both
+sides: a declined proposal is not written back by a later session over
+the same log, and a later Keep lets it promote.</p>
+<p><code>bench/evidence/tb21-hh10-20260731/</code> commits a
+Terminal-Bench 2.1 head-to-head over 89 tasks, one attempt each: Stella
+at a 65.17% pass@1 and a Claude Code arm at 49.44%, on the same host and
+model, with per-trial rows, a score file and a preregistration. It
+measures the coding agent end to end, not memory.</p>
+<p>Undocumented public items in <code>stella-context</code> fail the
+build under <code>clippy -D warnings</code>, and the append-only
+guarantee is checked by the database rather than by a test.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <ul>
 <li><strong>Enforce append-only in the storage engine.</strong> A
 <code>BEFORE UPDATE</code> trigger that aborts costs one migration and
-survives every future writer, including the one who never reads your
-module header.</li>
+survives every future writer.</li>
 <li><strong>Stamp authority from something the artefact cannot
 write.</strong> A record's own <code>origin</code> field is worth
 exactly as much as the trust you already extend to whoever wrote the
 file.</li>
-<li><strong>Default the trust tier to the restrictive value, and test
-it.</strong> The failure mode of the other default is a checkout
-silently inheriting a person's authority.</li>
 <li><strong>Separate refuted from expired.</strong> Dropping every claim
 whose owner went on holiday makes a time-to-live a foot-gun; keeping a
 measured-and-lost claim with a warning attached is the harm rather than
 the mitigation.</li>
+<li><strong>Key a decline on the proposal's wording and read it before
+writing.</strong> A decline stored on a record nobody re-reads comes
+back the next turn.</li>
 <li><strong>Apply suppression before the budget.</strong> Filtering
-after ranking spends a slot on a row you then throw away, and the turn
-gets less context than it asked for with nothing reporting it.</li>
-<li><strong>Derive record ids from content.</strong> A replay then
-converges instead of duplicating, and a genuine identity collision
-becomes an error you can see.</li>
+after ranking spends a slot on a row you then throw away.</li>
 </ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A scope whose only caller passes everything.</strong> Check
+what the production caller hands the filter, not what the filter does
+with a narrower value.</li>
+<li><strong>A world-time column whose only writer is a scan
+clock.</strong> "When did we notice" and "when did it stop being true"
+are different questions, and the column answers the first.</li>
+<li><strong>Review verbs reachable from the agent's own shell.</strong>
+A CLI that records <code>$USER</code> as the actor is a person's door
+only when the agent has no shell.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>A worked example of policy memory whose claims expire, get re-probed
+and change what the agent sees, and of a proposal loop that remembers
+what a person declined. It is not a template for scoped retrieval or
+valid-time history.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>Node content is not versioned while the columns for it exist and are
-deliberately unprojected. Is versioning nodes a planned step, or is the
-current split — fact history recoverable, node content history not — the
-intended end state?</li>
-<li>The domain scope excludes only nodes tagged exclusively out of
-scope. Is there a deployment where the opposite reading is wanted, and
-would that need a distinction between an untagged node and one tagged
-with a domain nobody named?</li>
-<li>The one tool that collected a model's judgement of whether a shown
-memory was useful has been retired, on the stated ground that marking a
-memory truthful because it was shown <em>"would be a guess dressed up as
-evidence"</em>, with its tables kept unused for a later holdout sweep.
-What does that sweep look like, and what evidence would it use
-instead?</li>
+<li>The session scope is every taxonomy domain. Is a narrower session
+scope — a sub-agent's or a worktree's domains — intended, and would it
+come from the caller or from the taxonomy?</li>
+<li><code>FactAssertion::valid_from</code> is documented as world time
+that may precede recording. Which writer is meant to supply it — the
+taxonomy, a git-history provider, or the model?</li>
+<li>Node content is overwritten in place while the valid-time columns
+for it exist and are deliberately unprojected. Is node versioning a
+planned step?</li>
+<li>The decline key is the representative wording's hash. Is
+re-clustering under a different representative expected to re-surface a
+declined lesson?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What to read it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>crates/stella-context/src/store/ledger.rs:1-58</code></td>
+<td>Append-only by trigger, and why a replay is a no-op</td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/store/schema.rs:394-401</code></td>
+<td>The two triggers</td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/store/edge.rs:26-52</code>,
+<code>:191-230</code></td>
+<td>Both time axes in one predicate; close versus end world
+validity</td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/writeback.rs:199-243</code>,
+<code>:1014-1098</code></td>
+<td><code>FactAssertion</code> and the single-valued correction</td>
+</tr>
+<tr>
+<td><code>crates/stella-cli/src/memory/anchor_scan.rs:166-185</code>,
+<code>:236-250</code></td>
+<td>The only writer of <code>valid_to</code></td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/retrieval/scope.rs:21-59</code></td>
+<td>The two scopes and why they are separate</td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/store/domain.rs:103-143</code></td>
+<td>The exclusion anti-join</td>
+</tr>
+<tr>
+<td><code>crates/stella-cli/src/contextgraph.rs:150-168</code></td>
+<td>The session scope the production caller passes</td>
+</tr>
+<tr>
+<td><code>crates/stella-records/src/records/sweep.rs:1-37</code>,
+<code>:225-276</code></td>
+<td>Refuted versus expired, and the disposition</td>
+</tr>
+<tr>
+<td><code>crates/stella-records/src/records/registry.rs:353-375</code>,
+<code>:553-574</code></td>
+<td>Status and retirement to <code>Block</code></td>
+</tr>
+<tr>
+<td><code>crates/stella-records/src/records/trust.rs:1-90</code></td>
+<td>The directory-stamped tier</td>
+</tr>
+<tr>
+<td><code>crates/stella-records/src/ingest/steering.rs:586-628</code></td>
+<td>Steering records: project trust, no truth block</td>
+</tr>
+<tr>
+<td><code>crates/stella-cli/src/memory/learning.rs:1104-1190</code>,
+<code>:1296-1318</code></td>
+<td>Decline consulted; auto-activation gate</td>
+</tr>
+<tr>
+<td><code>crates/stella-cli/src/proposals_cmd.rs:1-31</code>,
+<code>:254-262</code>, <code>:400-430</code></td>
+<td>The review surface and the decisions fold</td>
+</tr>
+<tr>
+<td><code>crates/stella-cli/src/memory/learning/guarantees.rs:767-840</code></td>
+<td>The decline tests</td>
+</tr>
+<tr>
+<td><code>crates/stella-context/src/retrieval/tests/recall.rs:453-594</code></td>
+<td>The must-not-retrieve cases</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>.</p>
 <ul>
-<li>Plane contract: <code>crates/stella-context/src/lib.rs</code></li>
-<li>Store, schema, nodes, edges:
-<code>crates/stella-context/src/store.rs</code>,
-<code>store/schema.rs</code>, <code>store/node.rs</code>,
-<code>store/edge.rs</code></li>
-<li>Ledger: <code>crates/stella-context/src/store/ledger.rs</code></li>
-<li>Domains and scope:
-<code>crates/stella-context/src/store/domain.rs</code></li>
-<li>Write-back: <code>crates/stella-context/src/writeback.rs</code></li>
-<li>Recall: <code>crates/stella-context/src/retrieval.rs</code>,
-<code>crates/stella-context/src/candidates.rs</code></li>
-<li>Truth sweep, registry, rendering, trust:
-<code>crates/stella-records/src/records/sweep.rs</code>,
-<code>records/registry.rs</code>, <code>records/render.rs</code>,
-<code>records/trust.rs</code></li>
-<li>Ingest gate and lineages:
-<code>crates/stella-records/src/ingest/gate.rs</code>,
-<code>ingest/lineage.rs</code></li>
-<li>Tests:
-<code>crates/stella-context/src/retrieval/tests/recall.rs</code>,
-<code>crates/stella-context/src/store/tests.rs</code>,
-<code>crates/stella-records/src/records/tests.rs</code></li>
+<li><code>git grep -n 'session: self.domains.names()' -- crates/stella-cli/src/contextgraph.rs</code>
+— <code>:160</code>, the same line at both pins.</li>
+<li><code>git grep -n -E 'RecallScope \{' -- '*.rs' ':!*tests*'</code> —
+the struct, its impl, and one construction at
+<code>contextgraph.rs:159</code>.</li>
+<li><code>git grep -n 'FactAssertion::new' -- '*.rs' ':!crates/stella-context/src/**' ':!*tests*'</code>
+— one hit, <code>crates/stella-cli/src/memory.rs:1164</code>,
+multivalued with no validity.</li>
+<li><code>git grep -n -E 'end_anchor_validity\(' -- crates/stella-cli/src ':!*tests*'</code>
+— <code>anchor_scan.rs:178</code> and <code>:242</code>, both passing
+<code>SystemClock.now_rfc3339()</code>.</li>
+<li><code>git grep -n -E 'UPDATE context_records|DELETE FROM context_records|DROP TRIGGER' -- '*.rs'</code>
+— three test files asserting the triggers refuse; no production
+statement.</li>
+<li><code>git grep -n 'PromotionAction::Rejected' -- crates/stella-cli/src/memory/learning.rs</code>
+— <code>:1121</code> and <code>:1176</code>, the skills and rules
+halves.</li>
+<li><code>git grep -n -i -E 'proposals?_|"proposals?"|proposals_cmd|PromotionEvent' -- crates/stella-tools/src crates/stella-mcp/src crates/stella-serve/src crates/stella-engine/src</code>
+— no match.</li>
+<li><code>git grep -n -E 'stella (context|proposals)' -- crates/stella-tools/src</code>
+— no match; the shell tool does not guard the review verbs.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md</code>
+— no match; <code>git ls-files | grep -i citation</code> lists no
+<code>CITATION.cff</code>.</li>
+<li><code>git ls-files bench/evidence | grep -E 'results\.md$|score\.json$'</code>
+— the <code>tb21-hh10-20260731</code> run and its comparator.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE LICENSING.md</code>
+— no match; no rider.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/macanderson/stella/commit/111aff2c257495f04a4ab5fd1b5465b4ddf8ed34"><code class="commit-id" title="111aff2c257495f04a4ab5fd1b5465b4ddf8ed34">111aff2c…</code></a>
+— 152 commits on, version 0.9.494. Steering-repository records and two
+export views arrived (<a href="#3-architecture">section 3</a>); no other
+memory path moved. Three marks were wrong at the first pin:
+<code>tombstone</code> was earned by the proposal decline (<a
+href="#9-reliability-safety-and-trust">section 9</a>),
+<code>bitemporal</code> rested on a world axis whose only writer is a
+scan clock (<a href="#5-memory-data-model">section 5</a>), and
+<code>scope_enforced</code> on a filter whose only caller passes the
+whole taxonomy (<a href="#6-retrieval-mechanics">section 6</a>). Also
+wrong then: no committed benchmark result, and no paper (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Screened from a
+full clone: three auto-run surfaces, seven build-time execution points,
+floating ranges in the website package, seven manifests inside the
+cooldown, two agent instruction files read as data. Nothing was
+installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/macanderson/stella/commit/e5faf774aaa3bd67c819ec3a6c4e72ac5366c25a"><code class="commit-id" title="e5faf774aaa3bd67c819ec3a6c4e72ac5366c25a">e5faf774…</code></a>
 — first reading, at the head of <code>main</code>. Screened with
@@ -483,18 +682,18 @@ is an artefact of a <code>--depth 1</code> clone dating every file to
 the tip; <code>Cargo.lock</code> is committed. Nothing was installed,
 built or run. Dual-licensed AGPL-3.0-only or commercial, with the "or
 any later version" clause deliberately not granted and no rider
-restricting analysis. Six marks. The reading covered the context plane
-end to end — schema and both time axes, the node and edge writers, the
-ledger and its triggers, write-back and supersession, recall with its
-scope exclusion and budget, compaction's stated bound — and the record
-plane's loader trust tier, ingest gate, truth sweep, registry and
-renderer, plus the recall and trust test suites; the TUI, fleet,
-autonomy, plugin and model crates were read only where they touched
-those paths. <code>tombstone</code> is withheld and the reason is a
-vocabulary difference worth recording: this codebase uses the word for a
-reversible node-suppression marker keyed on the row, and the atlas
-reserves it for a durable record of a rejected value keyed on the
-value.</p>
+restricting analysis. Six marks.</p>
+<p>The reading covered the context plane end to end — schema and both
+time axes, the node and edge writers, the ledger and its triggers,
+write-back and supersession, recall with its scope exclusion and budget,
+compaction's stated bound — and the record plane's loader trust tier,
+ingest gate, truth sweep, registry and renderer, plus the recall and
+trust test suites. The TUI, fleet, autonomy, plugin and model crates
+were read only where they touched those paths. <code>tombstone</code> is
+withheld and the reason is a vocabulary difference worth recording: this
+codebase uses the word for a reversible node-suppression marker keyed on
+the row, and the atlas reserves it for a durable record of a rejected
+value keyed on the value.</p>
         </article>
       </div>
     </main>

@@ -29301,50 +29301,62 @@ invariant protects is only live when a tenant is configured</td>
 </tr>
 <tr>
 <td><a href="../systems/stella/"><code>stella</code></a></td>
-<td>A node in a property graph — file, symbol, concept, fact, episode,
-person, artifact, task or memory — with edges carrying a relation, a
-weight and two time intervals; alongside a context record, an immutable
-hashed row in a lifecycle ledger</td>
+<td>A node in a property graph (file, symbol, concept, fact, episode,
+person, artifact, task or memory) with edges carrying a relation, a
+weight and two time intervals; beside it a context record, an immutable
+hashed row in a lifecycle ledger; and a policy record, a TOML or
+Markdown file carrying a statement, a force and a truth axis</td>
 <td>One SQLite file per workspace holding the graph, a fingerprinted
-embedding index, episodic memory and the append-only ledger; records
-also live as files in the repository's and the user's rules
-directories</td>
+embedding index, episodic memory and the append-only ledger; policy
+records live as files in the repository's and the user's rules
+directories, and in the steering folder of an Oxagen steering
+repository</td>
 <td>Vector, recency and graph adjacency fused by reciprocal rank,
-deduplicated by content hash, packed to a token budget, every frame
+deduplicated by content hash and packed to a token budget, every frame
 carrying a citation label and a source chain, with a coverage gate that
-falls back to bounded lexical search and labels it as such</td>
-<td>One transaction per batch; facts close and supersede rather than
-being deleted, and byte-identical content under the active embedder
-fingerprint is never re-embedded</td>
-<td>Correction closes the prior belief's intervals and links the
-replacement; suppression writes a marker on the node and is an exact
-inverse; compaction reclaims only derived index entries whose owner is
-already gone</td>
-<td>Domain tags in their own table, applied as an exclusion set during
-recall, with the session scope and the per-query scope held as separate
-values</td>
+falls back to bounded lexical search and labels it as such; policy
+records render through a truth sweep into a cached and a volatile
+channel</td>
+<td>One transaction per batch; byte-identical content under the active
+embedder fingerprint is never re-embedded; rules and skills are induced
+from reflections, recorded as proposals, and a rule file is written only
+on a person's Keep or a measured auto-activation</td>
+<td>Forgetting a node writes a reversible superseded_at marker that a
+later upsert of the same node lifts; node content is overwritten in
+place; a declined proposal is a Rejected event keyed on its lineage that
+induction consults; compaction reclaims only derived index entries whose
+owner is gone</td>
+<td>One SQLite file per workspace. Domain tags sit in their own table,
+but the session scope recall receives is every domain name in the
+workspace taxonomy, so the exclusion removes only nodes tagged with a
+domain since removed from it; the per-query scope ranks and admits and
+never excludes</td>
 <td>A terminal coding agent with its own TUI, an MCP surface, a plugin
-system with a consent boundary, a fleet layer and a plugin verification
-ladder</td>
+system with a consent boundary, a fleet layer, a plugin verification
+ladder, and read-only export views for other programs on the same
+machine</td>
 <td>A truth sweep that re-probes committed claims on their declared
-cadence, embedding catch-up warmed at mount rather than on first query,
-and a staleness scan that ends the world validity of anchors whose files
-have moved on</td>
-<td>A stored truth axis on every record — basis, probe, time to live,
-on-expiry — resolved into a disposition before rendering: selected,
-selected but stated unverified, demoted to the volatile channel,
-dropped, or blocked</td>
+cadence, embedding catch-up warmed at mount, a mount-time scan that ends
+the world validity of anchors whose files have gone, and per-turn
+induction of rule and skill proposals from reflections</td>
+<td>A stored truth axis on every record (basis, probe, time to live,
+on-expiry) and a stored probe verdict, resolved into a disposition
+before rendering: selected, selected but stated unverified, demoted to
+the volatile channel, dropped, or blocked; a non-active status always
+blocks</td>
 <td>An append-only guarantee enforced by database triggers rather than
-by convention; two time axes written by different operations and applied
-together in one predicate; and a trust tier that is stamped from the
-filesystem because it is the one thing a file cannot assert about
-itself</td>
-<td>The domain scope excludes only nodes tagged exclusively out of
-scope, so untagged content is visible everywhere; node content is not
-versioned even though the columns for it exist, so only fact history
-survives a correction; and the codebase calls its node suppression
-marker a tombstone, which is a different mechanism from the one this
-atlas means by the word</td>
+by convention; a refuted claim dropped from the prompt and an expired
+one demoted out of the cached prefix; a trust tier stamped from the
+directory a file was read out of; and a declined proposal that stays
+declined because induction reads the decision by lineage</td>
+<td>The domain scope recall runs under is the whole taxonomy, so it
+partitions nothing. No production caller writes an edge's valid_from,
+and valid_to is the clock of the scan that noticed a file was gone, so
+world time is an observation time. The single-valued correction path has
+no production caller. Re-writing a forgotten memory lifts its
+suppression. The agent's bash tool can run the review and promotion
+commands, which record an unverified actor. The export view lists every
+live memory with no domain predicate</td>
 </tr>
 <tr>
 <td><a
@@ -33190,7 +33202,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>66 of 749:</em> <a
+<p><em>67 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33249,7 +33261,8 @@ href="../systems/scope-recall-hermes/"><code>scope-recall-hermes</code></a>,
 href="../systems/skillcorpus/"><code>skillcorpus</code></a>, <a
 href="../systems/sonder-runtime/"><code>sonder-runtime</code></a>, <a
 href="../systems/sqlite-memory-mcp/"><code>sqlite-memory-mcp</code></a>,
-<a href="../systems/tidemind/"><code>tidemind</code></a>, <a
+<a href="../systems/stella/"><code>stella</code></a>, <a
+href="../systems/tidemind/"><code>tidemind</code></a>, <a
 href="../systems/titen/"><code>titen</code></a>, <a
 href="../systems/universal-memory-engine/"><code>universal-memory-engine</code></a>,
 <a href="../systems/utopia/"><code>utopia</code></a>, <a
@@ -33459,7 +33472,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>125 of 749:</em> <a
+<p><em>124 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33571,7 +33584,6 @@ href="../systems/smriti/"><code>smriti</code></a>, <a
 href="../systems/spector/"><code>spector</code></a>, <a
 href="../systems/sqlite-memory-mcp/"><code>sqlite-memory-mcp</code></a>,
 <a href="../systems/statewave/"><code>statewave</code></a>, <a
-href="../systems/stella/"><code>stella</code></a>, <a
 href="../systems/superlocalmemory/"><code>superlocalmemory</code></a>,
 <a href="../systems/temvera/"><code>temvera</code></a>, <a
 href="../systems/theurian/"><code>theurian</code></a>, <a
@@ -33592,7 +33604,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>326 of 749:</em> <a
+<p><em>325 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33892,7 +33904,6 @@ href="../systems/sonder-runtime/"><code>sonder-runtime</code></a>, <a
 href="../systems/sqlite-memory-mcp/"><code>sqlite-memory-mcp</code></a>,
 <a href="../systems/stash/"><code>stash</code></a>, <a
 href="../systems/statewave/"><code>statewave</code></a>, <a
-href="../systems/stella/"><code>stella</code></a>, <a
 href="../systems/strands-agents/"><code>strands-agents</code></a>, <a
 href="../systems/stratagate/"><code>stratagate</code></a>, <a
 href="../systems/superlocalmemory/"><code>superlocalmemory</code></a>,
