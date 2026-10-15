@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 737 reports.</strong></p>
+<p><strong>This page covers all 738 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30609,6 +30609,49 @@ the bookkeeping files and an as-of query over authored validity.</li>
 <li>Do not copy when: agent writes must be reviewed before they count, a
 page's status must keep it out of answers, or several principals share
 one server.</li>
+</ul>
+<h3 id="gambletan-cortex"><a
+href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a></h3>
+<ul>
+<li>Best idea: <strong>give a third-party agent one export and nothing
+else.</strong> The Muse gateway loads only the reserved
+<code>muse-export</code> namespace, keeps a row only if it is Private
+and carries the <code>muse-export:</code> hash prefix that
+<code>allow</code> alone writes, caps each snippet at 500 characters and
+each response at 4 KiB, and refuses to disclose when the audit write
+fails.</li>
+<li>Biggest risk: <strong>the namespace is a search filter, not a
+key.</strong> Extracted facts carry no namespace and the fixed subject
+<code>User</code>, so one user's "I live in" supersedes another's; exact
+dedup by content hash is global and answers <code>stored</code> for a
+write it dropped; <code>memory_context</code> with a channel returns
+every namespace's episodes.</li>
+<li>Most reusable component:
+<code>cortex-mcp-server/src/gateway.rs</code> —
+<code>export_rows</code>, <code>is_export_row</code>, <code>rank</code>
+and <code>call_remember</code> — with
+<code>cortex-mcp-server/tests/gateway_acceptance.rs:464-510</code> as
+the leak test to copy.</li>
+<li>Second risk: <strong>forgetting by age presented as forgetting by
+use.</strong> Retrieval never writes <code>last_accessed</code> and
+<code>EpisodeStore::touch</code> has no product caller, so at default
+settings an episode at salience 0.5 is archived out of recall about 20
+days after ingest, at the next consolidation, however often it was
+recalled.</li>
+<li>Maturity impression: MIT, 25,857 lines of Rust outside tests across
+six crates, 283 commits on main under nine author names between 11 March
+and 8 October 2026, 797 Rust test functions run in CI. Two marks:
+<code>scope_enforced</code> and <code>negative_eval</code>.
+<code>human_review</code> is withheld: Muse cannot clear its own inbox
+and the self-hosted drain is a person-only CLI, but on the cloud path
+the local assistant's <code>muse_inbox</code> tool approves, allowed by
+default. The README's LoCoMo figure has no committed result file.</li>
+<li>Study when: you want a hosted agent to read a curated slice of local
+memory, with budgets, revocation, an audit trail and a quarantine for
+what it writes back.</li>
+<li>Do not copy when: several users or projects share one database, a
+correction must outrank the value it replaces, or the REST server will
+run where untrusted pages can reach it.</li>
 </ul>
         </article>
       </div>

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 737 reports.**
+**This page covers all 738 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6687,3 +6687,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 15,722 lines of Python and 40 skills, 359 commits by 39 authors between 6 April and 12 October 2026. Two marks, `bitemporal` and `negative_eval`, the second on exact-list exclusion tests with positive controls. 1,165 pytest functions; the server suite skips in CI, and the README's agent study has no run logs in the tree.
 - Study when: you want a human-readable knowledge vault an agent builds and a person fixes by hand, with a concurrency-safe writer for the bookkeeping files and an as-of query over authored validity.
 - Do not copy when: agent writes must be reviewed before they count, a page's status must keep it out of answers, or several principals share one server.
+
+### [`gambletan-cortex`](../systems/gambletan-cortex/)
+
+- Best idea: **give a third-party agent one export and nothing else.** The Muse gateway loads only the reserved `muse-export` namespace, keeps a row only if it is Private and carries the `muse-export:` hash prefix that `allow` alone writes, caps each snippet at 500 characters and each response at 4 KiB, and refuses to disclose when the audit write fails.
+- Biggest risk: **the namespace is a search filter, not a key.** Extracted facts carry no namespace and the fixed subject `User`, so one user's "I live in" supersedes another's; exact dedup by content hash is global and answers `stored` for a write it dropped; `memory_context` with a channel returns every namespace's episodes.
+- Most reusable component: `cortex-mcp-server/src/gateway.rs` — `export_rows`, `is_export_row`, `rank` and `call_remember` — with `cortex-mcp-server/tests/gateway_acceptance.rs:464-510` as the leak test to copy.
+- Second risk: **forgetting by age presented as forgetting by use.** Retrieval never writes `last_accessed` and `EpisodeStore::touch` has no product caller, so at default settings an episode at salience 0.5 is archived out of recall about 20 days after ingest, at the next consolidation, however often it was recalled.
+- Maturity impression: MIT, 25,857 lines of Rust outside tests across six crates, 283 commits on main under nine author names between 11 March and 8 October 2026, 797 Rust test functions run in CI. Two marks: `scope_enforced` and `negative_eval`. `human_review` is withheld: Muse cannot clear its own inbox and the self-hosted drain is a person-only CLI, but on the cloud path the local assistant's `muse_inbox` tool approves, allowed by default. The README's LoCoMo figure has no committed result file.
+- Study when: you want a hosted agent to read a curated slice of local memory, with budgets, revocation, an audit trail and a quarantine for what it writes back.
+- Do not copy when: several users or projects share one database, a correction must outrank the value it replaces, or the REST server will run where untrusted pages can reach it.

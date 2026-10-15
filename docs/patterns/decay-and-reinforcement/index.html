@@ -633,6 +633,18 @@ the host model may accept, three per pass
 calls every table a cache, and <code>mem rebuild</code> drops the file.
 <strong>Usage that decides removal is state; keep it beside the truth,
 not in the projection.</strong></p>
+<p><strong><a href="../../systems/gambletan-cortex/">Cortex
+(gambletan)</a> decays on last access and never records an
+access.</strong> Episode half-life is 72 hours plus 144 times base
+salience, and consolidation archives an episode below 0.05 effective
+salience (<code>cortex-core/src/episode.rs:153-221</code>,
+<code>cortex-core/src/consolidation.rs:288-318</code>).
+<code>EpisodeStore::touch</code>, which would refresh
+<code>last_accessed</code> and raise <code>access_boost</code>, has no
+caller outside a test, and retrieval writes nothing back. A default
+episode therefore leaves recall about 478 hours after ingest, however
+often it was returned. <strong>Reinforcement needs a writer on the read
+path, or decay is a retention timer.</strong></p>
 <h2 id="implementation-checklist">Implementation checklist</h2>
 <ul>
 <li>Store retrieval strength separately from confidence and trust.</li>

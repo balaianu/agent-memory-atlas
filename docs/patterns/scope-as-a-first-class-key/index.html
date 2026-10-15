@@ -1362,6 +1362,19 @@ the filter and scan the whole brain, and the agent-facing
 <code>recall_unified</code> passes no agent at all. <strong>A scope
 predicate applied after truncation is a page filter, and every lane that
 inserts rows afterwards needs it again.</strong></p>
+<p><strong><a href="../../systems/gambletan-cortex/">Cortex
+(gambletan)</a> holds the key on its search path and on nothing that
+writes.</strong> <code>RetrievalEngine::retrieve</code> drops rows of
+another namespace after every candidate arm, and a committed test with
+three rows under one embedding pins it
+(<code>cortex-core/src/retrieval.rs:347-359</code>). The regex extractor
+writes facts with no namespace and the subject <code>User</code>, exact
+dedup hashes content alone, and compression merges a day's episodes per
+channel into one unscoped summary. A namespaced context therefore shows
+no facts, and an unscoped one shows whichever user wrote last. Its Muse
+gateway is the counterexample in the same tree: a fixed, server-owned
+namespace re-checked per row. <strong>A scope key the derivation paths
+do not copy becomes a filter that hides the derived rows.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <p>The first of these need not be written by hand. <a
 href="https://github.com/promptfoo/promptfoo">promptfoo</a> ships a

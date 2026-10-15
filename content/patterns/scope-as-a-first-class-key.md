@@ -913,6 +913,8 @@ gates `metadata.scope` — so a deployment without RLS has half the design.
 
 **[FluctlightDB](../../systems/fluctlightdb/) filters on the key after the work is done, then hands the result to lanes that never saw it.** `activate_scoped` truncates to `top_k` before keeping the rows whose `agent_id` matches, so a scoped query can come back empty while the agent's own rows exist. Two override lanes, a balance-cue ledger lookup and an exact-query injection of verified rows, run after the filter and scan the whole brain, and the agent-facing `recall_unified` passes no agent at all. **A scope predicate applied after truncation is a page filter, and every lane that inserts rows afterwards needs it again.**
 
+**[Cortex (gambletan)](../../systems/gambletan-cortex/) holds the key on its search path and on nothing that writes.** `RetrievalEngine::retrieve` drops rows of another namespace after every candidate arm, and a committed test with three rows under one embedding pins it (`cortex-core/src/retrieval.rs:347-359`). The regex extractor writes facts with no namespace and the subject `User`, exact dedup hashes content alone, and compression merges a day's episodes per channel into one unscoped summary. A namespaced context therefore shows no facts, and an unscoped one shows whichever user wrote last. Its Muse gateway is the counterexample in the same tree: a fixed, server-owned namespace re-checked per row. **A scope key the derivation paths do not copy becomes a filter that hides the derived rows.**
+
 ## Tests to require
 
 The first of these need not be written by hand. [promptfoo](https://github.com/promptfoo/promptfoo)

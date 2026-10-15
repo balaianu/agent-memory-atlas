@@ -13584,6 +13584,48 @@
       "status": "screened",
       "url": "https://github.com/jkubo/gaius"
     },
+    "gambletan-cortex": {
+      "counts": {
+        "EXEC": 2,
+        "FLOAT": 3,
+        "NOTE": 3,
+        "RUNS": 3
+      },
+      "files_scanned": 22,
+      "findings": [
+        {
+          "detail": "agent harness hook scripts — 1 entr(ies): skeptic-suggest.sh",
+          "kind": "RUNS",
+          "path": ".claude/hooks/"
+        },
+        {
+          "detail": "agent harness hooks (SessionStart / PreToolUse / Stop) — mentions SessionStart, command, hooks",
+          "kind": "RUNS",
+          "path": ".claude/settings.json"
+        },
+        {
+          "detail": "MCP server manifest; declares a start command",
+          "kind": "RUNS",
+          "path": "server.json"
+        },
+        {
+          "detail": "npm lifecycle `postinstall`: node ./bin/install.js",
+          "kind": "EXEC",
+          "path": "npm/package.json"
+        },
+        {
+          "detail": "npm lifecycle `prepublishOnly`: npm run build",
+          "kind": "EXEC",
+          "path": "openclaw-plugin/package.json"
+        }
+      ],
+      "revision": "951aca3e6bac84669dec65865dd6f774ca13b67e",
+      "screened_at": "2026-10-15T04:14:09+00:00",
+      "slug": "gambletan-cortex",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/gambletan/cortex"
+    },
     "gastown": {
       "counts": {
         "AGENT": 1,

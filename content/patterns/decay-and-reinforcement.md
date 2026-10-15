@@ -389,6 +389,8 @@ permanent."*
 
 **[Tigerless agent-memory](../../systems/tigerless-agent-memory/) keeps the evidence for forgetting in the cache it tells users to delete.** Each sleep adds 0.5 to a memory's weight per read since the last sleep, at most three, and subtracts 0.1 after 30 days without access. Weight multiplies the recall score and admits a memory to the injected `MEMORY.md` index at 0.75 (`manage.py:371-391`, `memory_md.py:10-31`). A memory at the 0.05 floor with no lifetime hits becomes a delete proposal the host model may accept, three per pass (`manage.py:609-623`). Reads and hits live in `access_log` inside `index.db`, whose docstring calls every table a cache, and `mem rebuild` drops the file. **Usage that decides removal is state; keep it beside the truth, not in the projection.**
 
+**[Cortex (gambletan)](../../systems/gambletan-cortex/) decays on last access and never records an access.** Episode half-life is 72 hours plus 144 times base salience, and consolidation archives an episode below 0.05 effective salience (`cortex-core/src/episode.rs:153-221`, `cortex-core/src/consolidation.rs:288-318`). `EpisodeStore::touch`, which would refresh `last_accessed` and raise `access_boost`, has no caller outside a test, and retrieval writes nothing back. A default episode therefore leaves recall about 478 hours after ingest, however often it was returned. **Reinforcement needs a writer on the read path, or decay is a retention timer.**
+
 ## Implementation checklist
 
 - Store retrieval strength separately from confidence and trust.
