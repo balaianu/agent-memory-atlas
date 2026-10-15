@@ -21978,60 +21978,47 @@ Two marks: scope enforced, mutation audit.</li>
 </ul>
 <h3 id="cogz"><a href="../systems/cogz/"><code>cogz</code></a></h3>
 <ul>
-<li>Best idea: <strong>the status vocabulary is a state machine with a
-terminal value, written out as a transition table rather than as a
-convention.</strong> <code>src/storage/status.rs</code> fixes the legal
-moves in code and in its own doc comment — active to stale, rejected or
-superseded; stale back to active; rejected and superseded onward to
-pruned; pruned terminal — and <code>transition_status</code> returns a
-typed <code>IllegalTransition</code> naming both ends, with a unit test
-asserting every exit from <code>pruned</code> fails. The read paths then
-honour the column broadly, which is the half most systems skip: the
-batch fetch and entity query filter <code>status = 'active'</code>, the
-usage sweeps and doctor checks exclude <code>status != 'pruned'</code>,
-and KNN candidates are dropped by status before they can "consume KNN
-slots" rather than after, so a filtered result set does not silently
-shrink.</li>
-<li>Biggest risk: <strong>the lattice guards a door almost nothing goes
-through.</strong> <code>transition_status</code> has exactly one caller,
-<code>update_status</code>, and that has exactly one production caller,
-which passes the literal <code>"stale"</code> — a transition the machine
-permits from <code>active</code> unconditionally, so the guard never
-refuses anything actually attempted. The canonical record is markdown,
-and <code>EntityFile::parse</code> validates a hand-edited
-<code>status:</code> against <code>is_valid_status</code> — membership
-in the five-word list — then hands it to <code>update_entity</code>,
-which writes <code>status = ?6</code> with no reference to the table. A
-file edit can move an entity from active straight to pruned, or back out
-of the state documented as terminal. No production code writes
-<code>rejected</code> at all, so the only way to reject a claim is that
-unchecked door, and dedup then declines to consult the verdict by
-design: the candidate set is restricted to <code>active</code> on the
-stated ground that "a new observation that matches a rejected one is not
-a duplicate", so a rejected claim can be recorded again verbatim with
-nothing to object.</li>
-<li>Most reusable component: the delivery instrumentation.
-<code>deliveries</code> records each batch shown to the agent and
-<code>entity_usage</code> records <code>pending</code>, <code>hit</code>
-or <code>miss</code> per entity, with misses assigned when the next
-delivery boundary closes — two small tables that answer the question
-most memory systems cannot, whether any of the assembled context was
-read. The schema comment keeps it honest about its own standing: both
-tables are "[d]erived state ... disposable and rebuilt from agent
-activity, never from canonical files". No ranking path consumes the
-signal yet.</li>
-<li>Maturity impression: MIT, Rust, version 0.1.5, 31,088 lines over 145
-files, one binary with a CLI and an MCP server over stdio offering
-thirteen tools, markdown under <code>.cogz/</code> as the record with a
-rebuildable SQLite projection carrying FTS5 and a vector extension, plus
-lifecycle hooks, deferred consolidation and a secret scanner that
-refuses a write. No auto-run surface and two dependency files inside the
+<li>Best idea: <strong>put the status lattice on the file path.</strong>
+<code>transition_status</code> fixes the legal moves with a terminal
+<code>pruned</code> and a typed <code>IllegalTransition</code>, and
+<code>update_entity_preserving_status</code> runs it on every sync of an
+existing row, so a person editing <code>status:</code> in the markdown
+meets the same rules as a tool call. A <code>pruned</code> file still
+carrying text is refused as "an attempt to mint a terminal record
+through the parse path". Reads honour the column at every layer, and KNN
+applies it inside the subquery so stale rows do not take slots before
+the cut.</li>
+<li>Biggest risk: <strong>the lattice needs a predecessor, and
+<code>cogz reset</code> removes every one.</strong> Reset deletes the
+database and <code>cogz index</code> inserts every file with whatever
+status it declares, so a rejection hand-edited back to
+<code>active</code> is refused at sync and accepted after a rebuild.
+Rejection is advisory at the next write:
+<code>check_rejected_match</code> runs after the new entity is synced as
+active, answers only the writing agent, stores nothing, and loses the
+rejected row when doctor prunes it after 90 days. The event table is
+telemetry, swept after 30 days at every session end, with pre-images
+stripped on prune.</li>
+<li>Most reusable component: the rejected-match pass. On every MCP
+write, the new entity's title, exactly and fuzzily, and its embedding
+are compared with up to 100 rejected entities of the same type, and a
+hit returns the old id, the similarity and the recorded
+<code>rejected_reason</code> — the value-keyed lookup a tombstone needs,
+built on the rows a rejection already leaves behind. Storing the hit and
+refusing on it would complete it.</li>
+<li>Maturity impression: MIT, Rust, version 0.5.8, 44,582 lines in 182
+files under <code>src/</code> plus 9,891 lines of integration tests and
+799 test attributes, nineteen CLI subcommands and fifteen MCP tools,
+hooks configured for five harnesses, local embedding and NLI models, and
+a Python benchmark harness run against release builds. One auto-run
+surface, an MCP registry manifest, and two dependency files inside the
 cooldown at this pin.</li>
 <li>Study when: you have written an epistemic state machine and want to
-know whether every write path reaches it.</li>
+see it enforced on hand-edited files, and where a check against a
+projection stops.</li>
 <li>Do not copy when: a rejected claim must stay rejected against the
-next identical write. Three marks: trust state, mutation audit, negative
-eval.</li>
+next identical write, or a mutation must be answerable after a month.
+Two marks: trust state, negative eval.</li>
 </ul>
 <h3 id="leteo"><a href="../systems/leteo/"><code>leteo</code></a></h3>
 <ul>

@@ -17,7 +17,7 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 346 |
+| Repositories with an auto-run surface (`RUNS`) | 347 |
 | Repositories with a dependency surface inside the cooldown (`FRESH`) | 400 |
 | Repositories with build-time execution (`EXEC`) | 534 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
@@ -87,6 +87,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`codemem`](../../content/systems/codemem.md) | `.claude-plugin/`, `.opencode/` |
 | [`cognee`](../../content/systems/cognee.md) | `.devcontainer/devcontainer.json` |
 | [`cognicore`](../../content/systems/cognicore.md) | `.claude-plugin/`, `.cursorrules` |
+| [`cogz`](../../content/systems/cogz.md) | `server.json` |
 | [`commonground`](../../content/systems/commonground.md) | `.gitmodules` |
 | [`compartment`](../../content/systems/compartment.md) | `.claude-plugin/`, `mcp.json`, `server.json` |
 | [`context-engineering`](../../content/systems/context-engineering.md) | `.gitattributes` |

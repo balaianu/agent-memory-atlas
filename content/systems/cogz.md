@@ -1,376 +1,428 @@
 ---
 title: "CogZ"
-eyebrow: "The status lattice is validated on the one path that only ever writes `stale`"
-description: "A local-first Rust memory for coding agents whose entity status is a documented state machine with a terminal value, enforced by a function called once in production and bypassed entirely by the markdown frontmatter a person edits."
+eyebrow: "The status lattice guards every update, and a rebuild inserts every file as new"
+description: "A local-first Rust memory for coding agents whose five-value status lattice guards every update, and whose rejected claims warn a matching write without refusing it."
 root: ../..
 page_kind: system
 source_name: "balaianu/CogZ"
 source_url: https://github.com/balaianu/CogZ
 archive_name: "balaianu--CogZ"
-revision: 6d664c869e503b942f7728e108cd680cda84c936
-revision_url: https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936
-analyzed_at: 2026-09-19
-capabilities: "trust_state, audit_log, negative_eval"
+revision: edb40d72e9208341bf7bc96d6eb23641801b61c3
+revision_url: https://github.com/balaianu/CogZ/commit/edb40d72e9208341bf7bc96d6eb23641801b61c3
+analyzed_at: 2026-10-15
+licence: "MIT"
+size: "44,582 lines of Rust in 182 files under src/, plus 9,891 lines in 16 integration-test files and a 475-file benchmark harness"
+activity: "316 commits on master, 296 by one author and 20 by Dependabot, 27 August – 14 October 2026; version 0.5.8"
+tests: "799 Rust test attributes in 86 files, 555 of them under src/; benchmark scripts including a tombstone integrity check; none run for this reading"
+capabilities: "trust_state, negative_eval"
 capability_evidence:
-  trust_state: "a five-value status column, indexed, resolved once by a shared helper that defaults closed and takes an explicit token to widen | src/storage/schema.rs:62-73, src/storage/status.rs:42 (`VALID_STATUSES`), src/mcp/helpers.rs:189-202 (the resolver), src/storage/query.rs:9-21 (`EntityFilter` and its `Default`), :42-45, :291, :301, :311, src/storage/crud_batch.rs:33, :80, src/storage/usage.rs:276, src/doctor/checks.rs:301, src/doctor/checks_analysis.rs:16 | `entities.status TEXT DEFAULT active` carries its own index, and `VALID_STATUSES` fixes the vocabulary at active, stale, superseded, rejected, pruned. This is a stored epistemic status rather than a ranking input or a write-time genre, and the read path consults it rather than merely recording it. The shape is a default a caller widens, never one they can omit: the MCP resolver maps a missing status to active, the literal string all to no filter, and anything else to a literal match, with the same rule mirrored in `search::resolve_status_filter`, while `EntityFilter::default()` independently sets `status: Some(active)`. Beneath that the count queries, the batch fetch and the usage and doctor sweeps hard-code their own clause. The mark rests on the reads, not on the column | src/search/graph_retrieval_tests.rs:227 `respects_status_filter` inserts a stale neighbour on a live edge, asserts the active-filtered traversal returns nothing, then re-runs the identical query under stale and asserts exactly one row comes back"
-  audit_log: "an append-only domain-event table with one INSERT writer, no DELETE anywhere, and edit rows that carry the prior text | src/storage/events.rs:78-90, src/storage/schema.rs:152-161, src/files/events.rs:33-47 | `record_event` holds the only `INSERT INTO events` in the tree, and a corpus-wide search for `DELETE FROM events` returns nothing, so rows are never removed. The vocabulary is mutation-shaped rather than access-shaped — `observation_created`, `observation_edited`, `observation_rejected`, `rule_promoted`, `knowledge_merged`, `contradiction_found` — and the module states the scope deliberately: \"Only domain events are recorded — never indexing operations.\" The edit event is the strong part, because `record_edit_event` writes the pre-image into the payload as `old_content`, so the log preserves what a memory said before it was changed rather than only that it changed | src/storage/crud_batch.rs:158, :203 qualify the claim: the cascade delete runs `UPDATE events SET entity_id = NULL` to clear the foreign key before removing an entity, so the event row and its `old_content` payload survive a hard delete while the pointer naming which entity it described does not"
-  negative_eval: "a committed must-not-retrieve assertion at the store level, with the same query under a different filter as its positive control | src/search/graph_retrieval_tests.rs:227-263 | `respects_status_filter` builds the adversarial case rather than asserting on an empty database: it inserts an active seed and a `stale` entity, joins them with a real `references` edge so the traversal would reach it, and then asserts `active.is_empty()` when `graph_retrieve` runs with `Some(\"active\")`. The control is the discriminating half — the identical call with `Some(\"stale\")` asserts `stale_results.len() == 1`, which proves the row was reachable and that the filter, not a broken fixture, is what suppressed it. The assertion is on what the retrieval layer returns rather than on a scoring function | the same file's neighbouring cases exercise the surrounding traversal, so a change that silently stopped filtering would have to break this test specifically rather than fail an unrelated one first"
-stack_storage: "sqlite"
+  trust_state: "the read path: a five-value status column that every retrieval surface filters, defaulting to active and widened only by the literal word all | src/storage/schema.rs:81, :88, src/storage/status.rs:16-46, src/storage/query.rs:17-27, :42-45, src/mcp/helpers.rs:185-202, src/search/hybrid_helpers.rs:134-142, src/search/hybrid.rs:67, src/storage/embeddings.rs:288-318, src/storage/graph_queries.rs:146-183 | `entities.status` is indexed and its vocabulary is fixed by `VALID_STATUSES` at active, stale, superseded, rejected and pruned; every value but active keeps a row out of default reads. `EntityFilter::default()` sets `status: Some(\"active\")`, and both the MCP resolver and `search::resolve_status_filter` map a missing status to active, `all` to no filter and anything else to a literal match. The KNN subquery applies the status before the nearest-neighbour cut, and the edit-scoped rules pack hard-codes `e.status = 'active'`. The mark rests on these reads, and the status has writers on reachable paths: `cogz reject` and the `reject_entity` MCP tool write `rejected`, consolidation writes `superseded`, orphaned anchors write `stale` | src/search/graph_retrieval_tests.rs:227-263 `respects_status_filter`; tests/test_search.rs:385-410 `search_excludes_stale_by_default`"
+  negative_eval: "the retrieval layer: a stale row reachable over a live edge must not come back under the default status, beside the same query under stale returning it | src/search/graph_retrieval_tests.rs:227-263, tests/test_search.rs:385-438 | `respects_status_filter` inserts an active seed and a `stale` function, joins them with a real `references` edge, and asserts `active.is_empty()` when `graph_retrieve` runs under `Some(\"active\")`. The identical call under `Some(\"stale\")` asserts exactly one row, so the fixture is shown reachable and the filter is what suppressed it. At the hybrid-search level, `search_excludes_stale_by_default` asserts an empty result for a stale observation with an embedding, and `search_includes_stale_with_status_all` returns the same row under `all`. `benchmark/tombstone_check.py` asserts pruned observations are absent from search beside an untouched active neighbour, against a built binary | the control in the second pair is a sibling test rather than the same function, so it proves the fixture and not the call"
+stack_storage: "sqlite, files"
 stack_retrieval: "lexical, vector, graph"
 stack_source: "reviewed"
 matrix:
   memory_unit: "An entity — observation, rule, knowledge, or a derived code symbol — stored as a markdown file with YAML frontmatter and mirrored into a SQLite row"
-  storage: "One local SQLite database per repository under `.cogz/`, with an FTS5 external-content index and a vector extension, rebuildable from the markdown files"
-  retrieval: "Hybrid full-text and vector search with graph expansion over an edges table, assembled into a token-budgeted context pack"
-  write: "An agent calls an MCP tool, or a person edits the markdown; every insert runs title and embedding duplicate detection plus contradiction checking"
-  update_delete: "Status moves through a documented lattice ending at a `pruned` tombstone whose content is blanked; rows are hard-deleted only when pruned tombstones exceed a retention limit"
-  scoping: "The repository directory. There is no tenant, project or namespace key on an entity — separation is one database per checkout"
-  integration: "A Rust binary with a CLI, an MCP server over stdio offering thirteen tools, and lifecycle hooks an agent harness calls at session and tool boundaries"
-  background: "Deferred consolidation promotes supported observations to rules and merges confirmed duplicates; background embedding and reindex run as spawned processes"
-  trust: "A validated five-state status machine, a domain-event log holding pre-images, delivery instrumentation recording whether context was used, and a secret scanner that refuses a write"
-  strengths: "The status vocabulary is a real state machine, not a convention. `src/storage/status.rs` fixes the legal transitions in code and in a doc comment — active to stale, rejected or superseded; stale back to active; rejected and superseded onward to pruned; pruned terminal — and `transition_status` returns a typed `IllegalTransition` naming both ends. The read path then honours the column broadly and consistently, which is the part most systems skip: the batch fetch, the entity query, the usage sweeps, the doctor checks and the KNN candidate filter all exclude by status, so a superseded claim does not quietly occupy a retrieval slot. `respects_status_filter` pins that behaviour with a positive control. The event log is equally deliberate, scoped to domain mutations rather than indexing noise, with edit rows carrying `old_content` so the log records what a memory used to say. And the usage instrumentation is honest about its own epistemics: `deliveries` and `entity_usage` record whether delivered context was touched (`hit`), ignored at the next boundary (`miss`), or still open (`pending`), and the schema comment calls both tables \"[d]erived state ... disposable and rebuilt from agent activity, never from canonical files\""
-  risks: "The lattice governs a door almost nobody uses. `update_status` is the only function that calls `transition_status`, and it has exactly one production caller, which passes the literal `\"stale\"` — a transition the machine permits from `active` unconditionally. The path a person actually takes is the markdown frontmatter, and `EntityFile::parse` checks the new value against `is_valid_status` — membership in the five-word list — and never against the transition table. That parsed status flows into `insert_entity` and `update_entity`, neither of which consults the state machine, so editing a file can move an entity from `active` straight to `pruned`, or back out of the terminal state the machine declares has no exits. The `rejected` verdict compounds this: no production code writes it at all, so the only way to reject a claim is to hand-edit a file through the unchecked door. Nothing then remembers the rejection, because dedup deliberately declines to consult it — the candidate set is restricted to `active` entities on the stated grounds that \"a new observation that matches a rejected one is not a duplicate\", so a rejected claim can be re-recorded verbatim and nothing objects. The duplicate and contradiction flags that might have reached a person are returned in the MCP tool response to the agent that just wrote the entity. And the usage signal, carefully collected, is read only by the doctor's dead-weight report: no ranking path consults it"
+  storage: "Markdown files under .cogz/ as the record, optionally committed for a team, with one local SQLite database per repository as a projection carrying FTS5 and a vector extension"
+  retrieval: "Hybrid full-text and vector search with graph expansion and git co-change terms, status-filtered before the KNN cut, assembled into a token-budgeted context pack"
+  write: "An agent calls create_entity, or a person edits the markdown; MCP writes run title and embedding dedup, a rejected-match pass and NLI contradiction checking after the file is synced"
+  update_delete: "Status moves through a five-value lattice checked on every update of an existing row; reject is a CLI command and an MCP tool; pruned tombstones blank content and are hard-deleted past a retention count"
+  scoping: "The repository directory. There is no tenant, project or user key on an entity; separation is one database per checkout"
+  integration: "A Rust binary with nineteen CLI subcommands, an MCP server over stdio offering fifteen tools, and hooks configured for Claude Code, Cursor, Codex, Gemini CLI and Copilot"
+  background: "Session-end consolidation promotes supported observations to rules and merges duplicates; every index recomputes knowledge drift against referenced code; a 30-day telemetry sweep deletes old events at session end"
+  trust: "A validated status lattice on the update path, a rejected-match warning to the writer, drift annotations against code hashes, delivery hit and miss instrumentation, and a secret scanner at the write and sync boundaries"
+  strengths: "The status vocabulary is a state machine that the update path honours: `transition_status` fixes the legal moves with a typed `IllegalTransition`, and every sync of an existing row, hand-edited file included, goes through `update_entity_preserving_status`, which refuses an illegal move before the row changes. A file claiming `pruned` while carrying text is refused as a minted tombstone. Rejection has a producer on both surfaces and a consumer at write time: `check_rejected_match` compares a new entity's title and embedding against up to 100 rejected rows of its type and returns the prior verdict and its `rejected_reason`. Every retrieval surface filters the status, the KNN filter runs before the cut so stale rows do not take slots, and `respects_status_filter` pins the behaviour with a positive control. Knowledge carries `verified_against` hashes of the code it describes, and orphaned anchors demote it to stale automatically"
+  risks: "The lattice is checked against the projection, not the record. `cogz reset` deletes the database and `cogz index` inserts every file as a creation, so a status hand-edited from rejected back to active is refused at sync and accepted after a rebuild. The rejected-match pass runs after the new entity is written and synced as active, reaches only the writing agent, and is never stored; once doctor prunes a rejected observation its title is blanked and the match cannot fire. The event table is telemetry rather than an audit: `sweep_old_telemetry` deletes every event older than 30 days at each session end, pruning strips `old_content` from payloads, and the cascade nulls `entity_id`. The agent holds `reject_entity` and `verify_knowledge`, the second clearing the stale review queue, and no event records which actor did either"
 ---
 
 ## 1. Executive Summary
 
-CogZ is "[l]ocal-first, code-aware engineering cognition for AI coding agents" —
-MIT, Rust, version 0.1.5, 31,088 lines across 145 files in `src/`, giving "a
-coding agent persistent memory, contextual retrieval, and continuous cognition
-about a software repository — all running locally on your machine, no cloud
-services required."
+CogZ is a local-first memory for coding agents in Rust, with markdown files as
+the record and a SQLite database as a rebuildable projection. Its entity status
+is a five-value lattice with a terminal state, and every update of an existing
+row passes through it, including a person's hand edit at sync. Rejection is a
+verb on both the CLI and the agent's tool surface, and a later matching write is
+warned with the prior verdict and not refused. The weak side is durability: the
+lattice holds only while the projection does, and the event log is pruned at 30
+days.
 
-**The mechanism to take away is the two doors into the status column.** CogZ
-does something this corpus rewards: it writes its epistemic vocabulary down as
-an enforceable machine rather than a set of strings. `src/storage/status.rs`
-opens with the lattice as a diagram in its own doc comment:
+It describes itself as "[l]ocal-first, code-aware engineering cognition for AI
+coding agents", giving an agent "persistent memory, contextual retrieval, and
+continuous cognition about a software repository".
 
-> ```text
-> active    → stale | rejected | superseded
-> stale     → active
-> rejected  → pruned
-> superseded→ pruned
-> pruned    → (terminal)
-> ```
+**The lattice is enforced on updates.** `src/storage/status.rs` opens with the
+legal moves in its doc comment — active to stale, rejected or superseded; stale
+to active, rejected or superseded; rejected and superseded to pruned; pruned
+terminal — and `transition_status` implements that table, returning a typed
+`IllegalTransition` naming both ends. Five production paths call it:
+`update_status` (`src/storage/crud.rs:232`), the file-sync update
+`update_entity_preserving_status` (`src/files/sync_ops.rs:103`), duplicate
+merging (`src/consolidate/merge.rs:280`), observation promotion
+(`src/consolidate/promote.rs:265`) and stale flagging
+(`src/index/stale_flagging.rs:158`). The rejection writer pre-checks it before
+touching the file (`src/files/reject.rs:96`). The sync path is the one that
+matters, because the markdown is canonical. When a person edits `status:` in a
+file, the sync compares it with the stored row and refuses an illegal move, with
+the comment that this "prevents silent divergence between the canonical file and
+DB."
 
-`transition_status` implements exactly that table and returns a typed
-`StorageError::IllegalTransition` naming the attempted move. A unit test asserts
-that every target out of `pruned` is an error. This is the real thing, and it is
-rarer than it should be.
+**What it does not cover is a row with no predecessor.** The insert branch of
+`sync_parsed_file` (`src/files/sync_ops.rs:83-88`) writes whatever status the
+file carries, and every file takes that branch after `cogz reset`, which deletes
+the database (`src/commands/mod.rs:356-391`) before `cogz index` rebuilds it.
+A claim rejected through the tool and hand-edited back to `active` is refused at
+the next sync and becomes active at the next rebuild. The one status the insert
+branch guards is `pruned`: a file claiming it while carrying a title or body is
+refused as "an attempt to mint a terminal record through the parse path"
+(`src/files/sync_ops.rs:48-61`).
 
-**The question a state machine has to answer is which writes go through it.**
-`transition_status` has exactly one caller in the whole tree: `update_status`
-(`src/storage/crud.rs:220`), whose own doc comment describes it as the
-"[u]pdate only the status field (frontmatter-only change)" path that "[v]alidates
-the transition through the state machine." `update_status` in turn has exactly
-one production caller — `mark_deleted_as_stale` at
-`src/files/sync_ops.rs:156` — which passes the literal `"stale"`, guarding a
-transition the machine allows from `active` in every case.
+**Rejection closes as a warning.** `reject_entity_file` writes
+`status: rejected` and an optional `rejected_reason` into the canonical file,
+syncs it and records an `entity_rejected` event. It is reached from `cogz reject`
+(`src/commands/mod.rs:580-606`) and from the `reject_entity` MCP tool
+(`src/mcp/tools.rs:58-67`). On every MCP write, `check_duplicate` then runs a
+second pass, `check_rejected_match` (`src/consolidate/dedup.rs:159-197`), which
+compares the new entity's title and embedding against up to 100 rejected entities
+of the same type. A hit is returned in the tool response with the old id, the
+similarity and the recorded reason. Its own comment states the policy: "Surfaced
+to the writer, never a block." The new entity has been written and synced as
+`active` before the pass runs, and nothing stores the match.
 
-Every other write of a status goes around it. The canonical record in CogZ is
-the markdown file, and `EntityFile::parse` reads the frontmatter's `status:`
-value and validates it — but against membership, not motion:
-
-> "invalid status '{}': must be one of active, stale, superseded, rejected,
-> pruned"
-
-That check is `is_valid_status`, a lookup in `VALID_STATUSES`. The parsed value
-is copied into an `Entity` at `src/files/sync_ops.rs:113` and handed to
-`insert_entity` or `update_entity`, and `update_entity` writes `status = ?6`
-alongside title and content with no reference to the lattice. Editing a file can
-therefore move an entity from `active` directly to `pruned`, or lift one back
-out of the state the machine documents as terminal. The rule is spelled out
-correctly in the module that owns it and is not consulted on the path the
-product actually routes a person down.
-
-**The `rejected` value shows the gap at full width.** Searching the tree for a
-production write of `"rejected"` returns nothing: every occurrence is in a test
-fixture or in the transition table itself. The status exists, the events
-vocabulary reserves `observation_rejected` for it, the prune path treats
-`rejected` as one of the two states eligible for tombstoning — and no shipped
-surface, CLI or MCP, ever sets it. The only way to reject a claim is to open the
-markdown and type the word, through the door that does not check.
-
-**What happens next is the part worth copying, in the negative.** Having a
-rejected verdict is useful only if something consults it later. CogZ's
-deduplication explicitly declines to, and says so:
-
-> "Only compare against active entities. Stale, rejected, superseded, and
-> pruned entities should not trigger duplicate warnings — a new observation
-> that matches a rejected one is not a duplicate."
-
-That is a coherent position about *warnings* — you do not want a resurfacing
-claim flagged as redundant with a corpse. But it is also the exact inverse of a
-tombstone, and it is the reason this report withholds that mark. The rejected
-value is keyed to a row, not to its content, and no write path consults it, so a
-claim a person threw out can be recorded again verbatim and nothing in the
-system registers that it has been here before. The judgement is not retained
-where a judgement has to live: on the next attempt to write the same thing.
-
-**The event log, by contrast, keeps more than it needs to.** `events` is
-append-only in the strict sense — `record_event` holds the only INSERT, and no
-DELETE against the table exists anywhere in the tree — and the edit events carry
-the prior text in their payload as `old_content`. That makes it a genuine
-mutation record rather than a notification stream. It also means the cascade
-delete has a seam: when a pruned tombstone exceeds its retention limit,
-`delete_entity_cascade` runs `UPDATE events SET entity_id = NULL` to satisfy the
-foreign key and then deletes the entity, so the event row survives with its
-`old_content` intact and its link to the entity erased. The body text outlives
-the deletion; only the label saying whose it was goes away.
+**The event table is telemetry.** `record_event` holds the only production
+`INSERT INTO events`, and edit events carry the pre-image as `old_content`. Three
+production statements then change the table. `sweep_old_telemetry` deletes every
+event older than 30 days, mutation and telemetry rows alike, at each session end
+(`src/storage/usage.rs:310-339`, called from `src/hooks/lifecycle.rs:495-504`).
+`tombstone_entity_with_timestamp` strips `old_content`, `new_content` and `title`
+from the entity's event payloads when it prunes, on the stated ground that
+"pruning hides the record, so its text must not survive inside the audit log"
+(`src/storage/crud_batch.rs:175-183`). And the cascade delete nulls `entity_id`
+on every event of a removed entity (`:198-204`). The sweep's own doc comment calls
+the table "derived telemetry", which is what the code makes it.
 
 ## 2. Mental Model
 
-CogZ is a filesystem-of-record with a disposable index, and almost every
-question about it resolves by asking which of the two is being written.
+CogZ is a filesystem of record with a disposable index. The markdown under
+`.cogz/` is canonical, can be committed so a team shares it, and is the only
+thing `cogz reset` keeps. The SQLite database is a projection that sync and
+index derive from the files, plus tables of derived state — delivery usage,
+access counts, knowledge drift, git co-change terms — that are "disposable and
+rebuilt from agent activity, never from canonical files".
 
-The markdown files under `.cogz/` are canonical. The SQLite database is a
-projection that `cogz reset` throws away and rebuilds. This is a good split, and
-CogZ is disciplined about it in the places where it matters most: the usage
-tables are annotated as "[d]erived state ... disposable and rebuilt from agent
-activity, never from canonical files," and the code entities derived from source
-are kept separate from the file-backed ones.
-
-The trouble is that validation lives on the projection side while authorship
-lives on the canonical side. The state machine is a storage-layer function; the
-person edits a file. Between them sits a parser that checks spelling and a
-generic upsert that checks nothing.
+The status lattice lives on the projection side and is checked by comparing a
+file's declared status with the row it would replace. That makes it a guard on
+motion, which is the right shape for a lattice, and it means the guard needs the
+previous row to exist. Writers that originate in the program — reject, merge,
+promote, stale flagging, verify — write the file first and let sync apply the
+lattice. The two DB-only writers keep to legal moves by their `WHERE` clauses:
+the batch stale-marking `UPDATE`s match `status = 'active'`
+(`src/storage/crud_batch.rs:37`, `:99`) and the tombstone matches
+`status IN ('rejected', 'superseded')` (`:154`).
 
 ```mermaid
-%% caption: two write paths reach the same status column — the guarded one is called once in production and only ever writes stale, while the path a person edits is checked for membership in the vocabulary and never for a legal transition
+%% caption: every update of an existing row crosses the lattice, including a hand-edited file at sync; a file with no stored predecessor, which after cogz reset is every file, is inserted with whatever status it declares
 flowchart TB
-    LATTICE["src/storage/status.rs — the documented lattice:<br/>active to stale, rejected, superseded<br/>stale back to active<br/>rejected and superseded to pruned<br/>pruned is TERMINAL"]
-    LATTICE --> TS["transition_status(current, next)<br/>returns IllegalTransition naming both ends"]
-    TS --> US["update_status — crud.rs:220<br/>THE ONLY CALLER of transition_status"]
-    US --> ONE["one production caller: sync_ops.rs:156<br/>passes the literal 'stale'"]
-    ONE -.->|"a transition the machine permits<br/>from active unconditionally"| MOOT["the guard never refuses anything<br/>that is actually attempted"]
+    LATTICE["status.rs — transition_status<br/>active to stale, rejected, superseded<br/>stale to active, rejected, superseded<br/>rejected, superseded to pruned<br/>pruned TERMINAL"]
 
-    HUMAN["a person edits .cogz/observations/x.md<br/>and types status: rejected"] --> PARSE{"EntityFile::parse — entities.rs:229-242"}
-    PARSE -->|"is_valid_status: is the word<br/>one of the five?"| OK["accepted"]
-    PARSE -.->|"transition_status is NEVER called here"| GAP["no check that the move is legal"]
-    OK --> EF["entity_from_file — sync_ops.rs:113<br/>status copied straight across"]
-    EF --> UE["update_entity / insert_entity<br/>UPDATE entities SET ... status = ?6"]
-    UE --> COL[("entities.status<br/>active · stale · superseded · rejected · pruned")]
-    US --> COL
-    GAP -.->|"active straight to pruned, or back out<br/>of the state declared terminal"| COL
+    HUMAN["a person edits status in .cogz/x.md"] --> SYNC{"sync_parsed_file<br/>sync_ops.rs:42-91"}
+    REJ["cogz reject · reject_entity MCP tool<br/>reject.rs:55-152"] -->|"pre-check, then write file"| SYNC
+    MERGE["merge · promote · stale flagging · verify"] -->|"write file first"| SYNC
 
-    COL --> READS["the reads DO honour the column:<br/>crud_batch.rs:33, :80 · query.rs:291, :301<br/>usage.rs:186 · doctor/checks.rs:293 · KNN filter"]
-    READS --> MARK["trust_state — earned on the read path"]
+    SYNC -->|"pruned file still carrying text"| REFUSE1["refused: minted tombstone"]
+    SYNC -->|"row exists"| UEPS["update_entity_preserving_status<br/>sync_ops.rs:97-114"]
+    UEPS -->|"checks"| LATTICE
+    UEPS -->|"illegal move"| REFUSE2["IllegalTransition<br/>row keeps its status"]
+    UEPS -->|"legal move"| COL[("entities.status")]
+    SYNC -->|"no row: new file,<br/>or every file after cogz reset"| INSERT["insert_entity<br/>status copied from the file,<br/>lattice NOT consulted"]
+    INSERT --> COL
 
-    REJ["no production code writes 'rejected'<br/>every occurrence is a test fixture"] -.->|"the only way to reject a claim<br/>is the unchecked door"| HUMAN
-    COL --> DEDUP{"check_duplicate — dedup.rs:72-76"}
-    DEDUP -->|"candidate set restricted to active:<br/>'a new observation that matches<br/>a rejected one is not a duplicate'"| NOTOMB["the rejected value is NOT consulted on write"]
-    NOTOMB -.->|"a rejected claim can be recorded again<br/>verbatim and nothing objects"| WITHHELD["no tombstone mark"]
-    DEDUP --> FLAG["dedup_flagged and duplicate_warning"]
-    FLAG -->|"returned in the MCP response —<br/>entity_helpers.rs:176-178"| AGENT["to the agent that just wrote the entity"]
-    AGENT -.->|"the reviewer is the writer"| NOHR["no human_review mark"]
+    COL --> READS["reads filter it: EntityFilter default active,<br/>resolve_status_filter, KNN before the cut,<br/>scoped rules pack status = active"]
+    READS --> MARK["trust_state"]
+
+    NEW["agent calls create_entity"] --> WRITTEN["file written and synced as active"]
+    WRITTEN --> DEDUP{"check_rejected_match<br/>dedup.rs:159-197<br/>title and embedding vs 100 rejected rows"}
+    DEDUP -->|"match"| RESP["rejected_match in the tool response<br/>to the writing agent only"]
+    RESP -.->|"not stored, not a block"| NOTOMB["no tombstone mark"]
+
+    COL --> EVENTS[("events")]
+    EVENTS -->|"session_end: DELETE older than 30 days<br/>usage.rs:335"| GONE["mutation rows removed"]
+    EVENTS -->|"prune: json_remove old_content<br/>crud_batch.rs:179-183"| SCRUB["pre-images stripped"]
+    GONE --> NOAUDIT["no audit_log mark"]
+    SCRUB --> NOAUDIT
 ```
 
 ## 3. Architecture
 
 | Area | Role |
 | --- | --- |
-| `src/files/` | The canonical layer: markdown with YAML frontmatter, parsed into `EntityFile`, synced into SQLite |
-| `src/storage/` | SQLite schema, migrations, CRUD, the status state machine, embeddings, and the events and usage tables |
-| `src/search/` | Hybrid FTS5 and vector retrieval with graph expansion over the edges table |
-| `src/context/` | Context-pack assembly: ranking, compression, and token budgeting |
-| `src/consolidate/` | Deduplication, contradiction detection, observation-to-rule promotion, and duplicate merging |
-| `src/mcp/` | Thirteen MCP tools over stdio — the agent's surface |
-| `src/hooks/` | Lifecycle events from an agent harness, which drive delivery tracking and hit detection |
-| `src/doctor/` | Integrity checks, the prune path, and the dead-weight report |
+| `src/files/` | The canonical layer: frontmatter parsing, file-to-row sync, the rejection writer |
+| `src/storage/` | Schema and migrations, CRUD, the status lattice, embeddings, events, usage and access tables |
+| `src/search/` | Hybrid FTS5 and vector retrieval, graph expansion, co-change terms, an answer-coverage silence gate |
+| `src/context/` | Context-pack assembly: baseline rules and knowledge, scoring, compression, token budget |
+| `src/consolidate/` | Dedup and the rejected-match pass, NLI contradiction with a numeric-slot gate, promotion, merging |
+| `src/index/` | Code indexing, stale flagging, knowledge drift, verification, re-anchoring after moves |
+| `src/mcp/` | Fifteen MCP tools over stdio |
+| `src/hooks/` | Lifecycle handlers, delivery tracking, write-back nudges |
+| `src/doctor/` | Integrity checks, the review queue, observation pruning |
+| `benchmark/` | Retrieval, pack, drift, consolidation and tombstone checks against built binaries |
+
+### Deployment and ergonomics
+
+One binary, installed by script or as an OCI image declared in `server.json`.
+`cogz configure` writes hook and MCP entries for five harnesses. Embedding,
+code-embedding and NLI models download on first use unless disabled; every model
+runs locally.
 
 ## 4. Essential Implementation Paths
 
-- `src/storage/status.rs:16-38` — `transition_status`, the lattice in code.
-- `src/storage/crud.rs:220-243` — `update_status`, the only caller of the above.
-- `src/files/sync_ops.rs:156` — the only production call to `update_status`, passing `"stale"`.
-- `src/files/entities.rs:229-242` — frontmatter status parsed and checked for membership only.
-- `src/files/sync_ops.rs:113` — the file's status copied into the `Entity` bound for an unguarded upsert.
-- `src/storage/crud.rs:193-210` — `update_entity`, writing `status = ?6` with no transition check.
-- `src/storage/events.rs:78-90` — `record_event`, the single INSERT into the event log.
-- `src/files/events.rs:33-47` — the edit event that carries `old_content`.
-- `src/storage/crud_batch.rs:154-162` — the cascade delete that nulls `entity_id` and keeps the payload.
-- `src/consolidate/dedup.rs:72-76` — the candidate set restricted to `active`, with its rationale.
+- `src/storage/status.rs:1-46` — the lattice, `transition_status` and `VALID_STATUSES`.
+- `src/files/sync_ops.rs:42-91` — `sync_parsed_file`: the pruned guard, the update branch, the insert branch.
+- `src/files/sync_ops.rs:97-114` — `update_entity_preserving_status`, the lattice on the file path.
+- `src/commands/mod.rs:356-391` — `run_reset`, which deletes the database and keeps the files.
+- `src/files/reject.rs:55-152` — rejection: pre-check, file write under a lock, sync, event.
+- `src/consolidate/dedup.rs:83-197` — the active dedup pass and the rejected-match pass.
+- `src/mcp/entity_helpers.rs:192-200` — the write response carrying `rejected_match`.
+- `src/storage/query.rs:17-45` and `src/mcp/helpers.rs:185-202` — the default status and its resolver.
+- `src/storage/embeddings.rs:288-318` — the status filter inside the KNN subquery.
+- `src/storage/usage.rs:310-339` — the 30-day telemetry sweep over events.
+- `src/storage/crud_batch.rs:146-207` — the tombstone, the payload scrub, the cascade.
+- `src/index/verify.rs:40-120` — verification, which reactivates stale knowledge.
 
 ## 5. Memory Data Model
 
 An entity is a markdown file with frontmatter carrying `id`, `title`, `type`,
-`status`, `created_at`, `updated_at` and `references`; anything else in the
-frontmatter is folded into a JSON `properties` column. Three file-backed types
-exist — observation, rule, knowledge — alongside code entities (function, class,
-file, module) derived from the source tree and managed by the index layer rather
-than by files.
+`status`, `created_at`, `updated_at` and `references`; any other key is folded
+into a JSON `properties` column, together with a `_semantic_hash` that drift
+compares instead of raw bytes. File-backed types are observation, rule and
+knowledge. Code entities — function, class, file, module — are derived from the
+source tree with deterministic UUID v5 ids and managed by the index.
 
-The SQLite mirror adds `content_hash` for change detection and the `status`
-column this report is largely about. Edges live in their own table; an FTS5
-external-content table is kept in sync by insert, delete and update triggers.
-Time is single-axis: `created_at` and `updated_at` are write-time stamps, with
-no separate field for when a claim was true as distinct from when it was
-recorded, so no bitemporal mark applies.
+`src/volatility.rs` splits the file-backed entities in two. `living` entities,
+which are rules and most knowledge, are claims about current code and carry
+`verified_against`, a list of `uuid=hash` pairs for the code they describe.
+`record` entities, which are observations and knowledge in dated categories, are
+"immutable dated history" exempt from drift. Time is single-axis: `created_at`
+and `updated_at` are write stamps, `verified_against` holds content hashes rather
+than times, and the commit timestamps on co-change rows describe code history.
+No bitemporal mark applies.
 
-There is no scope key. Separation is one database per repository checkout, which
-is a reasonable choice for a local-first tool and is not a stored predicate any
-read path enforces, so no scope mark applies either.
+There is no scope key. Separation is one database per repository checkout, a
+reasonable choice for a local tool and not a stored predicate any read enforces.
 
 ## 6. Retrieval Mechanics
 
-Retrieval is hybrid: FTS5 lexical search and vector KNN, combined and then
-expanded across the graph. Status filtering runs at every layer — the batch
-fetch and the count queries append `status = 'active'`, the usage and doctor
-sweeps exclude `status != 'pruned'`, and `src/storage/embeddings.rs:261`
-excludes by status before candidates "consume KNN slots," which is the right
-place for it: filtering after the nearest-neighbour cut would silently shrink
-the result set rather than fill it with live rows.
+Search fuses FTS5 and vector KNN, expands across the edges table, and adds
+co-change terms mined from `git log`, then assembles a context pack under a
+token budget. A silence gate weighs IDF-weighted coverage of the query's terms
+in the top results and silences the answer when coverage falls below a floor.
 
-The general entity query is the one to look at, because its base SQL carries no
-status clause at all — `SELECT … FROM entities WHERE 1=1`
-(`src/storage/query.rs:35`), with the predicate appended only `if let Some(st) =
-filter.status` (`:42-45`). What keeps that from being a hole is that the
-omission is unreachable from the two places a caller arrives: `EntityFilter`
-implements `Default` with `status: Some("active")` (`:17-21`), and the MCP path
-resolves the request field through a documented rule before building the filter
-— `None` becomes `"active"`, the literal `"all"` becomes no filter, anything
-else is matched literally (`src/mcp/helpers.rs:189-202`), with the same rule
-mirrored in `search::resolve_status_filter`. So widening is a word a caller has
-to write, and forgetting the field narrows rather than widens. That is the
-shape this atlas keeps asking for, and it is worth noting that it is carried by
-a default and a resolver rather than by the query itself.
+The status filter reaches every layer. `search::resolve_status_filter` runs
+first (`src/search/hybrid.rs:67`) and passes the result to FTS, KNN and graph
+expansion. `knn_search_with_filters` puts it inside the KNN subquery so
+"stale/rejected/superseded embeddings" cannot starve active results in a bounded
+window. The general entity query has no clause in its base SQL — `WHERE 1=1`
+at `src/storage/query.rs:35` — and is closed by its callers: `EntityFilter`'s
+`Default` sets active, and the MCP resolver maps a missing field to active and
+the literal `all` to no filter. Widening takes a word, and forgetting the field
+narrows. The edit-scoped rules pack pushed at `file_save` hard-codes
+`e.status = 'active'` (`src/storage/graph_queries.rs:165`), with a test that a
+stale rule is left out.
 
-`graph_retrieve` takes the status filter as an explicit parameter, and
-`respects_status_filter` is the test that pins it. Context assembly then ranks,
-applies MMR for diversity, and compresses to a token budget.
+Ranking reads access counts, how often an entity has been delivered, as a score
+input (`src/context/baseline.rs:64`). The delivery outcomes, `hit` and `miss`,
+are read only by the doctor.
 
 ## 7. Write Mechanics
 
-Two checks run on every insert. Title matching compares against existing
-entities — case-insensitively, then fuzzily — and embedding similarity flags a
-duplicate above a configured cosine threshold. Both degrade gracefully: without
-an embedding model only the title check runs.
+`create_entity` writes the file, syncs it, then runs two dedup passes. The
+active pass compares the title exactly and fuzzily, then embedding similarity,
+against up to 100 active entities of the type, and logs that "duplicates of
+older {entity_type} entities may be missed" when the cap is reached. The
+rejected pass repeats the comparison against up to 100 rejected entities, the
+most recently updated, with no cap warning. NLI contradiction checking follows,
+with a numeric-slot gate that decides number-against-number cases symbolically
+before deferring to the model. Every flag is returned in the tool response.
 
-The candidate set for both is capped, and the code says so honestly:
-`get_entities_by_type(conn, entity_type, Some("active"), 100)`, with a warning
-logged when the set hits the cap noting that "duplicates of older {entity_type}
-entities may be missed." That is a real scale limit stated plainly rather than
-hidden, and it belongs in any assessment of how much the dedup layer can be
-relied on.
+A secret scanner runs at the MCP write and again at the sync boundary, because
+"canonical files can also arrive by hand edit or git pull"; a matching file stays
+on disk as a retained sync error and never reaches FTS or embeddings.
 
-A secret scanner runs before the write and refuses it on a match, with the
-preview truncated to four characters so the refusal message does not itself leak
-the credential — a small detail done correctly.
+Knowledge is the only type the MCP surface edits in place; observations and
+rules change by supersession, though a person can edit any file. Consolidation
+at session end promotes an observation with enough supporters to a rule and marks
+the source `superseded`, and merges confirmed duplicate observations the same
+way. Knowledge is "flagged, not auto-merged (human-curated)".
 
-Consolidation runs deferred: supported observations are promoted to rules,
-confirmed duplicates merged with the loser marked `superseded` and carrying a
-`superseded_by` frontmatter field that graph expansion follows to reach the
-survivor. Knowledge is "flagged, not auto-merged (human-curated)," and rules are
-"surfaced for review, not auto-merged."
+Pruning is a CLI action, `cogz doctor --prune-observations --confirm`. It turns
+a rejected or superseded observation older than 90 days into a tombstone with an
+empty title and body, in the file and the row, and hard-deletes the oldest
+tombstones past a count of 1,000. Rules and knowledge are never pruned.
 
 ## 8. Agent Integration
 
-Thirteen MCP tools cover recording observations, creating rules and knowledge,
-querying each type, search, context assembly, status, listing, consolidation and
-event capture. Lifecycle hooks are the other half: `session_start` and
-`prompt_submit` print a context pack for injection, `file_save` triggers a
-single-file reindex, `session_end` runs consolidation.
+Fifteen MCP tools: `create_entity`, `update_knowledge`, `verify_knowledge`,
+`reject_entity`, `query_entities`, `search`, `get_context`, `get_callers`,
+`get_impact`, `find_orphans`, `suggest_observations`, `get_status`,
+`list_entities`, `consolidate` and `capture_event`. Hooks inject a context pack
+at `session_start` and `prompt_submit`, push the rules that reference a saved
+file at `file_save`, credit delivered entities the agent touched at
+`post_tool_use`, and run consolidation and the telemetry sweep at `session_end`.
 
-`post_tool_use` is where the usage loop closes. `detect_touched_entities`
-compares the tool's file path and result against what a pending delivery
-surfaced, and `record_hits` marks those rows `hit`. The comment there records a
-lesson worth repeating:
-
-> "We no longer auto-create observation files for every tool use — that flooded
-> `.cogz/observations/` with low-value entries. The agent decides what's salient
-> via the `record_observation` MCP tool."
+Write-back is nudged rather than automatic. Mining passes over the event and
+usage tables propose observation drafts, and the hook surfaces them at the moment
+they apply, because, as the module says, measured adoption shows the agent never
+pulls `suggest_observations` on its own. The lifecycle comment records why
+nothing is written for the agent: auto-created observations "flooded
+.cogz/observations/ with low-value entries."
 
 ## 9. Reliability, Safety, and Trust
 
-The event log is the strongest instrument. It is append-only with a single
-writer, scoped deliberately to domain mutations rather than indexing operations,
-and its edit rows carry pre-images. The qualification is the cascade delete,
-which preserves the payload and nulls the entity link, so the retention limit
-that removes a pruned tombstone does not remove the text that tombstone was
-hiding.
+**Rejection is advisory at the next write.** A rejected row is keyed on the row,
+and the rejected-match pass reaches it by value — title and embedding — which is
+the half of a tombstone a row status alone does not give. The other half is
+missing. The pass
+runs after the new entity is active, its result goes only to the writing agent,
+and it leaves no edge, property or event on the new entity. It also does not
+outlive the row: pruning blanks a rejected observation's title and moves it to
+`pruned`, out of the candidate set, after 90 days. No tombstone mark follows.
 
-The usage instrumentation is the most interesting thing CogZ builds and the most
-under-used. `deliveries` records each batch shown to the agent; `entity_usage`
-records `pending`, `hit` or `miss` per entity, with misses assigned at the next
-delivery boundary. This is the measurement most memory systems in this corpus
-never take — whether the context they assembled was looked at. But no ranking
-path reads it. The signal terminates in the doctor's dead-weight report, which
-lists entities never delivered since a timestamp. The loop is instrumented and
-not closed, which is a defensible early-stage choice and worth knowing before
-assuming the system learns from delivery outcomes.
+**Review belongs to whoever holds the tool.** The doctor and the session-end
+notice print a review queue of stale and drifted knowledge, cleared by
+verification, which `src/index/verify.rs:43` calls "operator attestation — 'I
+checked, still true'". The same verification is the `verify_knowledge` MCP tool
+(`src/mcp/tools_write.rs:178`), and rejection is `reject_entity`, both on the
+agent's surface. Neither event records an actor. No human_review mark follows.
 
-The dedup and contradiction flags do not reach a person. They are returned in
-the MCP tool response at `src/mcp/entity_helpers.rs:176-178` to the agent that
-performed the write, so the entity that judges the duplicate is the entity that
-created it. No human_review mark follows: the test is on the approver, and here
-the approver is the writer.
+**The event log describes the last 30 days.** Mutation events — creations,
+edits with their pre-images, rejections with reasons, merges, promotions — are
+recorded, and the sweep deletes them with the telemetry rows they share a table
+with. Pruning removes the pre-images of the pruned entity's edits at once. The
+log answers what changed recently and why, and nothing older. No audit_log mark
+follows.
+
+The usage instrumentation records `pending`, `hit` and `miss` per delivered
+entity, closing a delivery at the next boundary. It feeds the doctor's
+dead-weight and hit-rate reports and is swept with the events after 30 days.
 
 ## 10. Tests, Evals, and Benchmarks
 
-Tests live beside the code as `#[cfg(test)]` modules and dedicated `*_tests.rs`
-files. `respects_status_filter` is the retrieval-level negative test described
-above, with its positive control. The status module tests the transition table
-directly, including that every move out of `pruned` fails. `fresh_db_has_all_tables`
-checks the migration chain end to end.
+Tests live beside the code as `#[cfg(test)]` modules and `*_tests.rs` files, with
+integration tests under `tests/`. The status module asserts each legal move and
+that every move out of `pruned` fails (`src/storage/status.rs:105-110`).
+`respects_status_filter` is the retrieval-level negative case with its positive
+control, and `search_excludes_stale_by_default` with
+`search_includes_stale_with_status_all` is the same pair at the hybrid-search
+layer. `reject_tests.rs` covers rejecting an active and a stale entity, rejecting
+twice, and refusing a code entity. `sync_rejects_pruned_file_with_content`
+covers the minted-tombstone guard.
 
-What is missing is a test that the frontmatter path respects the lattice —
-which is unsurprising, because it does not. The state machine's tests assert the
-function behaves; nothing asserts that the function is the only way in.
+No test asserts that a hand-edited illegal status is refused at sync, and none
+asserts what a rebuild does with one.
+
+`benchmark/` holds Python harnesses run against a release build: retrieval and
+pack metrics over versioned query sets, drift precision, reindex equivalence,
+determinism, an NLI comparison, and `tombstone_check.py`. That one prunes a
+rejected and a superseded observation on a fixture and asserts they leave search
+while an active neighbour stays, and that `reset` plus `index` reproduces the
+tombstone. None of it was run for this reading.
 
 ## 11. For Your Own Build
 
-The status lattice is worth copying, and so is the lesson about where to put it.
-A transition table in a storage module is a description of intent; it becomes an
-invariant only when every write path is routed through it. If your canonical
-representation is a file a person edits, the parser is the enforcement point,
-and `is_valid_status` is the wrong check there — the right one takes the current
-value as well as the new one.
+### Steal
 
-The KNN status filter placement is a detail worth stealing outright: exclude by
-status before the nearest-neighbour cut, not after, so a filtered result set
-does not silently shrink.
+Put the lattice on the file path, not beside it. Comparing the declared status
+with the stored one at sync is what makes a hand edit subject to the same rules
+as a tool call.
 
-The delivery and usage tables are the cheapest honest instrument here. Recording
-`hit`, `miss` and `pending` per delivered entity costs two small tables and
-answers the question most memory systems cannot: was any of this read? Build it
-early, even if nothing consumes it yet.
+Refuse a terminal record that arrives with content. A `pruned` file carrying
+text is either malformed or an attempt to mint a tombstone, and the parser is
+the only place to catch it.
 
-And the dedup cap warning is a model for how to state a limit. The code does not
-pretend the comparison is exhaustive; it logs that duplicates of older entities
-may be missed when the candidate set saturates.
+Filter status inside the KNN subquery, before the cut, so a filtered result set
+fills with live rows instead of shrinking.
+
+Consult rejected rows by value at write time. Matching a new claim's title and
+embedding against what was ruled wrong, and returning the recorded reason, is
+the input a tombstone needs; storing the hit and refusing on it is the rest.
+
+### Avoid
+
+Checking a lattice only against a projection the product tells people to
+delete. If reset re-derives every row from files, the previous status has to
+live in the files, or in a log that survives the reset.
+
+Sharing one table between mutation events and per-prompt telemetry. A retention
+sweep sized for the second deletes the first.
+
+Putting the verb that clears the review queue on the agent's tool surface while
+calling it operator attestation.
+
+### Fit
+
+This suits one developer or a small team keeping engineering memory beside a
+repository, where the files are the source of truth and git is the history. Walk
+away if a rejected claim must stay rejected against the next identical write, or
+if you need to answer who changed a memory more than a month ago.
 
 ## 12. Open Questions
 
-- Should the frontmatter parser call `transition_status` against the current
-  database value? That would make the lattice binding on the path people use, at
-  the cost of rejecting hand-edits the parser currently accepts.
-- What surface is intended to write `rejected`? The status, its event type and
-  its prune eligibility are all built; only the producer is missing.
-- Once a claim is rejected, should a later identical write be told? The current
-  rationale for excluding rejected rows from dedup is sound for duplicate
-  *warnings*, but it leaves no mechanism that notices a rejected claim returning.
-- Will the usage outcomes feed ranking? The data is being collected in a shape
-  that would support it.
+Whether a rebuild should carry the lattice. Recording the last legal status in
+the file, or refusing a rebuilt row whose status could not have been reached,
+would close the reset path.
+
+Whether the rejected match will be stored. An edge or property on the new
+entity naming the rejected one would let a reader see the re-assertion after the
+tool response is gone.
+
+Whether `entity_rejected` events will carry an actor, since both the CLI and
+the agent produce them.
+
+The `reject_entity` tool description says "Only `active` entities can be
+rejected", and the lattice and `rejects_stale_entity_succeeds` allow `stale`;
+which is intended is not stated.
 
 ## Appendix: File Index
 
-| Path | What lives there |
+| Path | What to read it for |
 | --- | --- |
-| `src/storage/status.rs` | The transition table, `VALID_STATUSES`, and their tests |
-| `src/storage/crud.rs` | Entity insert, update, `update_status`, and counts |
-| `src/storage/crud_batch.rs` | Batch fetch and update, tombstoning, cascade delete |
-| `src/storage/events.rs` | `EventType`, `record_event`, and event queries |
-| `src/storage/usage.rs` | Deliveries, hits, misses, and the dead-weight query |
-| `src/storage/schema.rs` | Tables, indexes, FTS5 triggers, and the migration chain |
-| `src/files/entities.rs` | Frontmatter parsing and the `is_valid_status` check |
-| `src/files/sync_ops.rs` | File-to-row sync and `mark_deleted_as_stale` |
-| `src/consolidate/dedup.rs` | Title and embedding duplicate detection |
-| `src/consolidate/merge.rs` | Superseded marking via canonical frontmatter |
-| `src/search/graph_retrieval_tests.rs` | `respects_status_filter` and its positive control |
-| `src/mcp/entity_helpers.rs` | The write path that returns dedup flags to the agent |
+| `src/storage/status.rs` | The lattice, `VALID_STATUSES`, transition tests |
+| `src/files/sync_ops.rs` | File-to-row sync, the lattice on update, the insert branch, deleted files marked stale |
+| `src/files/reject.rs` | The rejection writer |
+| `src/consolidate/dedup.rs` | Active dedup and the rejected-match pass |
+| `src/storage/query.rs` | `EntityFilter`, its default, status-filtered queries |
+| `src/storage/embeddings.rs` | The status filter inside KNN |
+| `src/storage/events.rs` | The event vocabulary, `record_event`, `annotate_event` |
+| `src/storage/usage.rs` | Deliveries, usage outcomes, the telemetry sweep |
+| `src/storage/crud_batch.rs` | Batch stale marking, the tombstone, the payload scrub, the cascade |
+| `src/commands/mod.rs` | `run_reset` and `run_reject` |
+| `src/index/verify.rs` | Verification and stale reactivation |
+| `src/search/graph_retrieval_tests.rs` | `respects_status_filter` |
+| `tests/test_search.rs` | The stale exclusion pair at the search layer |
+| `benchmark/tombstone_check.py` | Pruned rows leaving search on a built binary |
+
+### Recorded searches
+
+Run at the tree root of the pinned checkout with `git grep`.
+
+- `git grep -n 'transition_status' -- src ':!*_tests.rs' ':!*/tests.rs'` — the definition, five production callers and the rejection pre-check.
+- `git grep -n 'update_status(' -- src ':!*_tests.rs' ':!*/tests.rs'` — one production caller, `src/files/sync_ops.rs:203`.
+- `git grep -n -E "SET status|status = \?[0-9]*," -- src ':!*_tests.rs' ':!*/tests.rs'` — `update_entity`, `update_status`, the two batch stale-marking statements and one test helper.
+- `git grep -n '"rejected"' -- src ':!*_tests.rs' ':!*/tests.rs' ':!src/storage/status.rs'` — the rejection writer, its MCP response and the rejected-match candidate fetch.
+- `git grep -n -i -E 'DELETE FROM events|UPDATE events' -- src ':!*_tests.rs'` — the sweep at `src/storage/usage.rs:335`, the scrub at `src/storage/crud_batch.rs:180`, the cascade at `:199` and `:248`, and `annotate_event` at `src/storage/events.rs:175`.
+- `git grep -n 'rejected_match' -- src` — the dedup result, the pass, and one consumer, the MCP response at `src/mcp/entity_helpers.rs:199`.
+- `git grep -n -i -E 'valid_(from|to|until|at)|effective_(from|at)|observed_at|occurred_at|event_time|as_of' -- src ':!*_tests.rs'` — no match.
+- `git grep -n -i -E '\b(tenant|namespace|user_id|agent_id|project_id|workspace_id)\b' -- src ':!*_tests.rs'` — two UUID v5 namespace constants; no scope key.
+- `git grep -n -i -E '"(pending|proposed|candidate|needs_review|approved|draft)"|approve|isatty|is_terminal' -- src ':!*_tests.rs'` — no match; no review state and no terminal check.
+- `git grep -n -E 'entity_usage|deliveries' -- src ':!*_tests.rs' ':!src/storage/usage.rs' ':!src/storage/schema.rs'` — delivery bookkeeping and the doctor check; no ranking reader.
+- `git grep -n -i -E 'arxiv|bibtex|@article|doi\.org' -- README.md docs` — no match.
+- `git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE` — no match; the MIT text carries no rider.
 
 ## History
 
-**2026-09-19** — [`6d664c869e503b942f7728e108cd680cda84c936`](https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936) — `trust_state` re-tested against the narrowed line, and the record's universal claim — that every retrieval surface filters on the status — was worth pulling on. The hard-coded clauses are all still there and the anchors are re-mapped: the count queries at `src/storage/query.rs:291`, `:301` and a third at `:311`, the batch fetch at `src/storage/crud_batch.rs:33` and `:80`, the usage sweep now at `src/storage/usage.rs:276` and the doctor check at `src/doctor/checks.rs:301`, with a new one in `src/doctor/checks_analysis.rs:16`. But the general entity query has no clause in its base SQL — `WHERE 1=1` at `:35`, with the predicate appended only when the caller supplies one. The omission is unreachable rather than absent: `EntityFilter::default()` sets `status: Some("active")` (`:17-21`), and the MCP path resolves the request field first — missing becomes active, the literal `all` becomes no filter, anything else matches literally (`src/mcp/helpers.rs:189-202`), mirrored in `search::resolve_status_filter`. So the accurate statement is not that every query carries the predicate but that widening takes a word a caller has to write, and forgetting the field narrows. The record and section 6 now say that. Screened again first; nothing was installed and no suite was run.
+**2026-10-15** — [`edb40d72e9208341bf7bc96d6eb23641801b61c3`](https://github.com/balaianu/CogZ/commit/edb40d72e9208341bf7bc96d6eb23641801b61c3) — 158 commits on, version 0.2.1 to 0.5.8. `audit_log` withdrawn: a 30-day sweep deletes events at session end and pruning strips pre-images ([section 9](#9-reliability-safety-and-trust)), and at the old pin the cascade already rewrote mutation rows. Wrong at the old pin: that the frontmatter path skipped the lattice and `transition_status` had one caller ([section 1](#1-executive-summary)), the batch-fetch anchors, and the census. Overtaken: `rejected` gained producers on the CLI and MCP surfaces and a write-time warning, `stale` gained exits to rejected and superseded, and contentful `pruned` files are refused, the last citing the atlas at the old pin in `ed78398f9e664bef3a5803ff9de746bf2c2ae41b`. Screened from a full clone: six files, one auto-run surface (`server.json`), no build-time execution, `Cargo.toml` and `Cargo.lock` inside the cooldown, `AGENTS.md` read as data. Nothing was installed, built or run.
 
-**2026-09-16** — [`6d664c869e503b942f7728e108cd680cda84c936`](https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936) — first reading, at a commit dated 16 September 2026. Screened before opening, from a shallow clone: three files scanned, no auto-run surface, no build-time execution point and no unpinned dependency surface, with two dependency files inside the seven-day cooldown and `Cargo.lock` present. `AGENTS.md` is addressed to a reading agent and was recorded as data. Nothing was installed, built or run.
+**2026-09-19** — [`6d664c869e503b942f7728e108cd680cda84c936`](https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936) — `trust_state` re-tested against the narrowed line, and the record's universal claim — that every retrieval surface filters on the status — was worth pulling on. The hard-coded clauses are all still there and the anchors are re-mapped: the count queries at `src/storage/query.rs:291`, `:301` and a third at `:311`, the batch fetch at `src/storage/crud_batch.rs:33` and `:80`, the usage sweep now at `src/storage/usage.rs:276` and the doctor check at `src/doctor/checks.rs:301`, with a new one in `src/doctor/checks_analysis.rs:16`.
+
+But the general entity query has no clause in its base SQL — `WHERE 1=1` at `:35`, with the predicate appended only when the caller supplies one. The omission is unreachable rather than absent: `EntityFilter::default()` sets `status: Some("active")` (`:17-21`), and the MCP path resolves the request field first — missing becomes active, the literal `all` becomes no filter, anything else matches literally (`src/mcp/helpers.rs:189-202`), mirrored in `search::resolve_status_filter`. So the accurate statement is not that every query carries the predicate but that widening takes a word a caller has to write, and forgetting the field narrows. The record and section 6 now say that. Screened again first; nothing was installed and no suite was run.
+
+**2026-09-16** — [`3b8486d8fae8bb5e13922a5246ea5ed161bbdff5`](https://github.com/balaianu/CogZ/commit/3b8486d8fae8bb5e13922a5246ea5ed161bbdff5) — first reading, at a commit dated 16 September 2026. Screened before opening, from a shallow clone: three files scanned, no auto-run surface, no build-time execution point and no unpinned dependency surface, with two dependency files inside the seven-day cooldown and `Cargo.lock` present. `AGENTS.md` is addressed to a reading agent and was recorded as data. Nothing was installed, built or run.

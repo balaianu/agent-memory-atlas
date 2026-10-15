@@ -4465,12 +4465,13 @@ inside the seven-day cooldown, with <code>Cargo.lock</code> present.
 reading agent and were recorded as data. Nothing was installed, built or
 run and no benchmark was reproduced. MIT OR Apache-2.0</li>
 <li><a href="https://github.com/balaianu/CogZ">balaianu/CogZ</a> at <a
-href="https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936"><code class="commit-id" title="6d664c869e503b942f7728e108cd680cda84c936">6d664c86…</code></a>
-— read only; three files scanned, no auto-run surface, no build-time
-execution point and no unpinned dependency surface, with two dependency
-files inside the seven-day cooldown and <code>Cargo.lock</code> present.
-<code>AGENTS.md</code> is addressed to a reading agent and was recorded
-as data. Nothing was installed, built or run. MIT</li>
+href="https://github.com/balaianu/CogZ/commit/edb40d72e9208341bf7bc96d6eb23641801b61c3"><code class="commit-id" title="edb40d72e9208341bf7bc96d6eb23641801b61c3">edb40d72…</code></a>
+— read only, from a full clone. Six files scanned, one auto-run surface
+(<code>server.json</code>, an MCP registry manifest declaring an OCI
+image), no build-time execution point, no unpinned dependency surface,
+and <code>Cargo.toml</code> and <code>Cargo.lock</code> inside the
+seven-day cooldown; <code>AGENTS.md</code> read as data. Nothing was
+installed, built or run. MIT</li>
 <li><a href="https://github.com/asanabrial/leteo">asanabrial/leteo</a>
 at <a
 href="https://github.com/asanabrial/leteo/commit/78bc1738b7b73a5ec7e0e03c561ff4986214e12a"><code class="commit-id" title="78bc1738b7b73a5ec7e0e03c561ff4986214e12a">78bc1738…</code></a>
@@ -16233,6 +16234,36 @@ close rewrote the one <code>valid_until</code> column in place
 <code>src/facts/model.ts:263-268</code>), so <code>asOf</code> combined
 with an earlier <code>asKnownAt</code> answered from a close learned
 afterwards.</li>
+<li><strong>Four published claims about <a
+href="../systems/cogz/">CogZ</a> were wrong at <a
+href="https://github.com/balaianu/CogZ/commit/6d664c869e503b942f7728e108cd680cda84c936"><code class="commit-id" title="6d664c869e503b942f7728e108cd680cda84c936">6d664c86…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+<code>transition_status</code> had one caller and that a hand-edited
+frontmatter status reached an upsert that never consulted the lattice,
+so a file edit could move an entity from active to pruned or out of the
+terminal state. <code>sync_parsed_file</code> sent every update of an
+existing row through <code>update_entity_preserving_status</code>, which
+returned <code>IllegalTransition</code>
+(<code>src/files/sync_ops.rs:59-76</code>), and
+<code>src/consolidate/merge.rs:280</code> and
+<code>src/index/stale_flagging.rs:159</code> called the lattice too; all
+three were present at <a
+href="https://github.com/balaianu/CogZ/commit/3b8486d8fae8bb5e13922a5246ea5ed161bbdff5"><code class="commit-id" title="3b8486d8fae8bb5e13922a5246ea5ed161bbdff5">3b8486d8…</code></a>,
+the first reading's commit. It awarded <code>audit_log</code> to an
+append-only event table while <code>delete_entity_cascade</code> rewrote
+mutation rows with <code>UPDATE events SET entity_id = NULL</code>
+(<code>src/storage/crud_batch.rs:158</code>, <code>:203</code>), and
+edit payloads carried no id, so a rewritten row no longer said which
+entity had changed; the mark is withdrawn. Its <code>trust_state</code>
+record cited <code>crud_batch.rs:33</code> and <code>:80</code> as a
+batch fetch filtering on status; both were batch stale-marking
+<code>UPDATE</code>s. And the census — version 0.1.5, 31,088 lines in
+145 files, thirteen MCP tools — described the first reading's commit;
+this one was 0.2.1, with 33,082 lines in 152 files and seventeen tools,
+and the first History entry named this pin for a reading made at the
+other. The first rested on the one caller of <code>update_status</code>
+rather than on every caller of <code>transition_status</code>, and the
+last on a re-pin that moved the frontmatter without recounting.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -6707,41 +6707,32 @@ the one this page keeps finding: <code>domain</code> filters most reads,
 and <code>maturity.py</code> builds the clause as
 <code>"AND domain = ?" if parsed.domain else ""</code>, so one path
 returns the whole corpus to a caller who supplied nothing.</p>
-<p><strong><a href="../systems/cogz/">CogZ</a> writes its status lattice
-down as an enforceable machine and then routes the person around
-it.</strong> An MIT Rust runtime at version 0.1.5 — 31,088 lines over
-145 files — giving a coding agent "persistent memory, contextual
-retrieval, and continuous cognition about a software repository", with
-markdown under <code>.cogz/</code> as the record of truth and a
-disposable SQLite projection over it. <code>src/storage/status.rs</code>
-states the legal moves in its own doc comment — active to stale,
-rejected or superseded; stale back to active; rejected and superseded
-onward to pruned; pruned terminal — and <code>transition_status</code>
-implements exactly that table, returning a typed
-<code>IllegalTransition</code> that names both ends. The read paths
-honour the column broadly, which is the half most systems skip: the
-batch fetch and entity query filter <code>status = 'active'</code>, the
-usage and doctor sweeps exclude <code>status != 'pruned'</code>, and KNN
-candidates are dropped by status before they can "consume KNN slots".
-What the lattice does not govern is the door people use.
-<code>transition_status</code> has one caller,
-<code>update_status</code>, and that has one production caller, which
-passes the literal <code>"stale"</code> — a move the machine permits
-from <code>active</code> in every case. A person edits the frontmatter
-instead, and <code>EntityFile::parse</code> checks the new value with
-<code>is_valid_status</code> — membership in the five-word list — before
-handing it to an upsert that writes <code>status = ?6</code> without
-consulting the table, so a file edit can go from active straight to
-pruned or back out of the terminal state. The <code>rejected</code>
-value shows the gap at full width: no production code writes it
-anywhere, and dedup then declines to consult it by design, on the stated
-ground that "a new observation that matches a rejected one is not a
-duplicate" — so a claim a person threw out can be recorded again
-verbatim with nothing to notice. Its event log is the sturdier
-instrument, append-only with a single writer and edit rows carrying
-<code>old_content</code>, though the cascade delete nulls
-<code>entity_id</code> and keeps the payload, so a pruned entity's
-former text outlives the row it belonged to.</p>
+<p><strong><a href="../systems/cogz/">CogZ</a> checks its status lattice
+on every update, and on nothing that lacks a predecessor.</strong> An
+MIT Rust memory for coding agents at version 0.5.8, with markdown under
+<code>.cogz/</code> as the record of truth and a disposable SQLite
+projection over it carrying FTS5, vectors, graph edges and git co-change
+terms. <code>src/storage/status.rs</code> states the legal moves in its
+doc comment — active to stale, rejected or superseded; stale to active,
+rejected or superseded; rejected and superseded to pruned; pruned
+terminal — and <code>transition_status</code> returns a typed
+<code>IllegalTransition</code>. Every sync of an existing row goes
+through it, a person's hand edit included, and a <code>pruned</code>
+file still carrying text is refused as a minted tombstone. The insert
+branch is what escapes: <code>cogz reset</code> deletes the database and
+<code>cogz index</code> inserts every file with whatever status it
+declares, so a rejection hand-edited back to active is refused at sync
+and accepted after a rebuild. Rejection has a producer on the CLI and on
+the agent's MCP surface, and a consumer at write time.
+<code>check_rejected_match</code> compares a new entity's title and
+embedding with up to 100 rejected rows and returns the recorded reason,
+but the new entity is already active and the match is "[s]urfaced to the
+writer, never a block." Reads filter the status at every layer, KNN
+included, before the nearest-neighbour cut. The event table is
+telemetry: a 30-day sweep deletes events at every session end, and
+pruning strips their pre-images. Two marks: <code>trust_state</code>,
+and <code>negative_eval</code> on a stale neighbour suppressed beside a
+positive control.</p>
 <p><strong><a href="../systems/leteo/">Leteo</a> writes down what each
 decision cost to find out, and hides a superseded memory from every read
 while its save path writes into it.</strong> An MIT Rust memory at

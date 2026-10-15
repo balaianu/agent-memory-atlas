@@ -5537,72 +5537,62 @@ resolve for nobody</td>
 <td>An entity — observation, rule, knowledge, or a derived code symbol —
 stored as a markdown file with YAML frontmatter and mirrored into a
 SQLite row</td>
-<td>One local SQLite database per repository under <code>.cogz/</code>,
-with an FTS5 external-content index and a vector extension, rebuildable
-from the markdown files</td>
-<td>Hybrid full-text and vector search with graph expansion over an
-edges table, assembled into a token-budgeted context pack</td>
-<td>An agent calls an MCP tool, or a person edits the markdown; every
-insert runs title and embedding duplicate detection plus contradiction
-checking</td>
-<td>Status moves through a documented lattice ending at a
-<code>pruned</code> tombstone whose content is blanked; rows are
-hard-deleted only when pruned tombstones exceed a retention limit</td>
-<td>The repository directory. There is no tenant, project or namespace
-key on an entity — separation is one database per checkout</td>
-<td>A Rust binary with a CLI, an MCP server over stdio offering thirteen
-tools, and lifecycle hooks an agent harness calls at session and tool
+<td>Markdown files under .cogz/ as the record, optionally committed for
+a team, with one local SQLite database per repository as a projection
+carrying FTS5 and a vector extension</td>
+<td>Hybrid full-text and vector search with graph expansion and git
+co-change terms, status-filtered before the KNN cut, assembled into a
+token-budgeted context pack</td>
+<td>An agent calls create_entity, or a person edits the markdown; MCP
+writes run title and embedding dedup, a rejected-match pass and NLI
+contradiction checking after the file is synced</td>
+<td>Status moves through a five-value lattice checked on every update of
+an existing row; reject is a CLI command and an MCP tool; pruned
+tombstones blank content and are hard-deleted past a retention
+count</td>
+<td>The repository directory. There is no tenant, project or user key on
+an entity; separation is one database per checkout</td>
+<td>A Rust binary with nineteen CLI subcommands, an MCP server over
+stdio offering fifteen tools, and hooks configured for Claude Code,
+Cursor, Codex, Gemini CLI and Copilot</td>
+<td>Session-end consolidation promotes supported observations to rules
+and merges duplicates; every index recomputes knowledge drift against
+referenced code; a 30-day telemetry sweep deletes old events at session
+end</td>
+<td>A validated status lattice on the update path, a rejected-match
+warning to the writer, drift annotations against code hashes, delivery
+hit and miss instrumentation, and a secret scanner at the write and sync
 boundaries</td>
-<td>Deferred consolidation promotes supported observations to rules and
-merges confirmed duplicates; background embedding and reindex run as
-spawned processes</td>
-<td>A validated five-state status machine, a domain-event log holding
-pre-images, delivery instrumentation recording whether context was used,
-and a secret scanner that refuses a write</td>
-<td>The status vocabulary is a real state machine, not a convention.
-<code>src/storage/status.rs</code> fixes the legal transitions in code
-and in a doc comment — active to stale, rejected or superseded; stale
-back to active; rejected and superseded onward to pruned; pruned
-terminal — and <code>transition_status</code> returns a typed
-<code>IllegalTransition</code> naming both ends. The read path then
-honours the column broadly and consistently, which is the part most
-systems skip: the batch fetch, the entity query, the usage sweeps, the
-doctor checks and the KNN candidate filter all exclude by status, so a
-superseded claim does not quietly occupy a retrieval slot.
-<code>respects_status_filter</code> pins that behaviour with a positive
-control. The event log is equally deliberate, scoped to domain mutations
-rather than indexing noise, with edit rows carrying
-<code>old_content</code> so the log records what a memory used to say.
-And the usage instrumentation is honest about its own epistemics:
-<code>deliveries</code> and <code>entity_usage</code> record whether
-delivered context was touched (<code>hit</code>), ignored at the next
-boundary (<code>miss</code>), or still open (<code>pending</code>), and
-the schema comment calls both tables "[d]erived state ... disposable and
-rebuilt from agent activity, never from canonical files"</td>
-<td>The lattice governs a door almost nobody uses.
-<code>update_status</code> is the only function that calls
-<code>transition_status</code>, and it has exactly one production
-caller, which passes the literal <code>"stale"</code> — a transition the
-machine permits from <code>active</code> unconditionally. The path a
-person actually takes is the markdown frontmatter, and
-<code>EntityFile::parse</code> checks the new value against
-<code>is_valid_status</code> — membership in the five-word list — and
-never against the transition table. That parsed status flows into
-<code>insert_entity</code> and <code>update_entity</code>, neither of
-which consults the state machine, so editing a file can move an entity
-from <code>active</code> straight to <code>pruned</code>, or back out of
-the terminal state the machine declares has no exits. The
-<code>rejected</code> verdict compounds this: no production code writes
-it at all, so the only way to reject a claim is to hand-edit a file
-through the unchecked door. Nothing then remembers the rejection,
-because dedup deliberately declines to consult it — the candidate set is
-restricted to <code>active</code> entities on the stated grounds that "a
-new observation that matches a rejected one is not a duplicate", so a
-rejected claim can be re-recorded verbatim and nothing objects. The
-duplicate and contradiction flags that might have reached a person are
-returned in the MCP tool response to the agent that just wrote the
-entity. And the usage signal, carefully collected, is read only by the
-doctor's dead-weight report: no ranking path consults it</td>
+<td>The status vocabulary is a state machine that the update path
+honours: <code>transition_status</code> fixes the legal moves with a
+typed <code>IllegalTransition</code>, and every sync of an existing row,
+hand-edited file included, goes through
+<code>update_entity_preserving_status</code>, which refuses an illegal
+move before the row changes. A file claiming <code>pruned</code> while
+carrying text is refused as a minted tombstone. Rejection has a producer
+on both surfaces and a consumer at write time:
+<code>check_rejected_match</code> compares a new entity's title and
+embedding against up to 100 rejected rows of its type and returns the
+prior verdict and its <code>rejected_reason</code>. Every retrieval
+surface filters the status, the KNN filter runs before the cut so stale
+rows do not take slots, and <code>respects_status_filter</code> pins the
+behaviour with a positive control. Knowledge carries
+<code>verified_against</code> hashes of the code it describes, and
+orphaned anchors demote it to stale automatically</td>
+<td>The lattice is checked against the projection, not the record.
+<code>cogz reset</code> deletes the database and <code>cogz index</code>
+inserts every file as a creation, so a status hand-edited from rejected
+back to active is refused at sync and accepted after a rebuild. The
+rejected-match pass runs after the new entity is written and synced as
+active, reaches only the writing agent, and is never stored; once doctor
+prunes a rejected observation its title is blanked and the match cannot
+fire. The event table is telemetry rather than an audit:
+<code>sweep_old_telemetry</code> deletes every event older than 30 days
+at each session end, pruning strips <code>old_content</code> from
+payloads, and the cascade nulls <code>entity_id</code>. The agent holds
+<code>reject_entity</code> and <code>verify_knowledge</code>, the second
+clearing the stale review queue, and no event records which actor did
+either</td>
 </tr>
 <tr>
 <td><a
@@ -33070,7 +33060,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>254 of 734:</em> <a
+<p><em>253 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33117,7 +33107,6 @@ href="../systems/claude-self-reflect/"><code>claude-self-reflect</code></a>,
 <a href="../systems/clawmem/"><code>clawmem</code></a>, <a
 href="../systems/codewiki-plus/"><code>codewiki-plus</code></a>, <a
 href="../systems/cognee/"><code>cognee</code></a>, <a
-href="../systems/cogz/"><code>cogz</code></a>, <a
 href="../systems/commonground/"><code>commonground</code></a>, <a
 href="../systems/compartment/"><code>compartment</code></a>, <a
 href="../systems/core-memory/"><code>core-memory</code></a>, <a

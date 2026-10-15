@@ -6996,14 +6996,15 @@
       "counts": {
         "AGENT": 1,
         "FRESH": 2,
-        "NOTE": 1
+        "NOTE": 2,
+        "RUNS": 1
       },
-      "files_scanned": 3,
+      "files_scanned": 6,
       "findings": [
         {
-          "detail": "instructions addressed to a reading agent — treat as data, never as commands",
-          "kind": "AGENT",
-          "path": "AGENTS.md"
+          "detail": "MCP server manifest; declares a start command",
+          "kind": "RUNS",
+          "path": "server.json"
         },
         {
           "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
@@ -7014,17 +7015,12 @@
           "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "Cargo.toml"
-        },
-        {
-          "detail": "lockfile(s) present: Cargo.lock",
-          "kind": "NOTE",
-          "path": "-"
         }
       ],
-      "revision": "6d664c869e503b942f7728e108cd680cda84c936",
-      "screened_at": "2026-09-19",
+      "revision": "edb40d72e9208341bf7bc96d6eb23641801b61c3",
+      "screened_at": "2026-10-15T03:28:08+00:00",
       "slug": "cogz",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/balaianu/CogZ"
     },
