@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-746, generated from each report's frontmatter —
+747, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-746, generated from each report's frontmatter —
+747, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-746, generated from each report's frontmatter —
+747, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 746, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 747, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-746, generated from each report's frontmatter —
+747, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 746 systems by the seven mechanisms
+filters all 747 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -22439,6 +22439,65 @@ holding distilled conversation content is created without the
 and never write it</td>
 </tr>
 <tr>
+<td><a href="../systems/ontofelia/"><code>ontofelia</code></a></td>
+<td>An RDF triple in a named graph, paired with a core:Claim (subject,
+predicate, object, status, confidence, sourceKind, learnedAt,
+assertedInGraph) and an optional core:Evidence holding the source span,
+message id or document hash. Beside it, episodes, skill traces and goals
+in cog graphs behind default-off flags</td>
+<td>Embedded Oxigraph (WASM) in process, the whole dataset rewritten to
+one dataset.nq file by temp file and rename after every update; Fuseki
+as a legacy option. Named graphs per role: self, worldview, one per
+user, schema, claims, evidence, conflicts, inferred and per-user
+inferred. Session transcripts as JSONL with a SQLite index</td>
+<td>Each turn the runtime injects the sender's user graph and the self
+graph, 30 triples from worldview plus user graph with no ordering, and
+one-hop facts for entities a label matcher finds in the message. Tools:
+memory_ask templates, memory_explain provenance and model-written SPARQL
+behind an AST allowlist</td>
+<td>Automatic and synchronous: a parser LLM extracts facts from every
+non-trivial user message and attachment before the answer model runs,
+and each is stored accepted with a claim and evidence; memory_store lets
+the model write directly. Two reasoner runs per fact materialise
+derivations into an inferred graph</td>
+<td>A new value on an owl:FunctionalProperty supersedes the accepted
+claim in the same graph, deleting its triple and writing a Conflict
+record. memory_retract, owner-only and Guardian-approved by default,
+hard-deletes the triple, its claims and evidence and rebuilds the
+inferred graph. DELETE /api/knowledge drops everything after writing a
+backup</td>
+<td>Named graph per user, keyed by the channel sender id, applied as a
+VALUES or GRAPH predicate on every runtime read and enforced on model
+SPARQL by a parsed allowlist. A shared worldview takes the owner's
+third-party facts and a non-owner's when the model passes source user.
+Host tools, including memory_retract, are owner-only</td>
+<td>A Fastify gateway with WebChat, Telegram, Discord and WebSocket node
+channels, a React web UI and a CLI; memory context assembled into the
+system prompt every turn; memory_store, memory_ask, memory_explain,
+memory_sparql, memory_query, memory_retract, memory_reflect and ontology
+tools on the agent's tool surface</td>
+<td>None on the default path. A reflection route runs the conflict
+detector on request and stores unresolved conflicts nothing resolves; an
+episodic retention sweep is a no-op unless its flag is set; procedural
+consolidation and the cognitive cycle run only behind flags that default
+off</td>
+<td>Claim status accepted or superseded, with confidence recorded as a
+label and number that gate nothing; provenance per claim with source
+span and evidence; Guardian approval on memory_retract and
+ontology_propose as tool calls; no candidate state and no review queue
+for facts</td>
+<td>The named graph as a scope key on every quad, with a SPARQL AST
+allowlist for model-written queries; supersession that keeps the old
+claim and links it forward; truth maintenance that removes only
+inferences the retired triple alone supported; tests on a real embedded
+store asserting cross-user absence beside a positive control</td>
+<td>The eval's forget and contradiction results run eval-local code with
+20 functional predicates; forgetting leaves nothing keyed on the value
+and keeps it in episodes and transcripts; the reasoner runs twice per
+write for output no automatic read uses; recent facts are unordered;
+non-owners cannot forget their own facts</td>
+</tr>
+<tr>
 <td><a href="../systems/ontomem/"><code>ontomem</code></a></td>
 <td>One merged record per composite key, shaped by a caller-supplied
 Pydantic schema, with the raw pre-merge extractions of each contributing
@@ -32917,7 +32976,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 746:</em> <a
+<p><em>67 of 747:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32988,7 +33047,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>191 of 746:</em> <a
+<p><em>192 of 747:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33122,7 +33181,7 @@ href="../systems/omi/"><code>omi</code></a>, <a
 href="../systems/omniintelligence/"><code>omniintelligence</code></a>,
 <a
 href="../systems/one-agent-many-hats/"><code>one-agent-many-hats</code></a>,
-<a
+<a href="../systems/ontofelia/"><code>ontofelia</code></a>, <a
 href="../systems/open-graph-memory/"><code>open-graph-memory</code></a>,
 <a
 href="../systems/open-second-brain/"><code>open-second-brain</code></a>,
@@ -33187,7 +33246,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>125 of 746:</em> <a
+<p><em>125 of 747:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33320,7 +33379,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>328 of 746:</em> <a
+<p><em>329 of 747:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33557,6 +33616,7 @@ href="../systems/octopoda-os/"><code>octopoda-os</code></a>, <a
 href="../systems/omega-memory/"><code>omega-memory</code></a>, <a
 href="../systems/omi/"><code>omi</code></a>, <a
 href="../systems/omnimem/"><code>omnimem</code></a>, <a
+href="../systems/ontofelia/"><code>ontofelia</code></a>, <a
 href="../systems/open-graph-memory/"><code>open-graph-memory</code></a>,
 <a
 href="../systems/open-second-brain/"><code>open-second-brain</code></a>,
@@ -33664,7 +33724,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>256 of 746:</em> <a
+<p><em>256 of 747:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33930,7 +33990,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>97 of 746:</em> <a
+<p><em>97 of 747:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -34031,7 +34091,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>460 of 746:</em> <a
+<p><em>461 of 747:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34355,7 +34415,8 @@ href="../systems/omniclaude/"><code>omniclaude</code></a>, <a
 href="../systems/omniintelligence/"><code>omniintelligence</code></a>,
 <a href="../systems/omnimem/"><code>omnimem</code></a>, <a
 href="../systems/one-agent-many-hats/"><code>one-agent-many-hats</code></a>,
-<a href="../systems/open-cowork/"><code>open-cowork</code></a>, <a
+<a href="../systems/ontofelia/"><code>ontofelia</code></a>, <a
+href="../systems/open-cowork/"><code>open-cowork</code></a>, <a
 href="../systems/open-graph-memory/"><code>open-graph-memory</code></a>,
 <a
 href="../systems/open-second-brain/"><code>open-second-brain</code></a>,
@@ -34524,8 +34585,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-460 repositories of
-746 assert that particular material must
+461 repositories of
+747 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -34598,7 +34659,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 746 is the real figure for the second kind, and
+of 747 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

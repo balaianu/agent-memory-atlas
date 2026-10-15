@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 746 reports.**
+**This page covers all 747 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6756,6 +6756,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 25,857 lines of Rust outside tests across six crates, 283 commits on main under nine author names between 11 March and 8 October 2026, 797 Rust test functions run in CI. Two marks: `scope_enforced` and `negative_eval`. `human_review` is withheld: Muse cannot clear its own inbox and the self-hosted drain is a person-only CLI, but on the cloud path the local assistant's `muse_inbox` tool approves, allowed by default. The README's LoCoMo figure has no committed result file.
 - Study when: you want a hosted agent to read a curated slice of local memory, with budgets, revocation, an audit trail and a quarantine for what it writes back.
 - Do not copy when: several users or projects share one database, a correction must outrank the value it replaces, or the REST server will run where untrusted pages can reach it.
+
+### [`ontofelia`](../systems/ontofelia/)
+
+- Best idea: **the scope key is the graph, and model-written queries are parsed against it.** Every quad carries its named graph, the context assembler lists the sender's graph and the worldview in a `VALUES` clause, and `checkSparqlScope` walks the SPARQL AST to refuse `GRAPH ?var`, `SERVICE`, graph-less patterns and any graph outside the sender's allowlist.
+- Biggest risk: **the evaluated forget is not the shipped forget.** The eval backend's `retractFact` deletes every value of a subject and predicate in every fact graph and writes a `retracted` status no product path writes, beside 20 functional predicates where the product declares 2. The product's `memory_retract` hard-deletes one graph's triple with its claims and leaves nothing keyed on the value, so the next mention is extracted again.
+- Most reusable component: `packages/semantic-memory/src/sparql/scopeGuard.ts` with `retireSupersededClaim` in `KnowledgeEngine.ts:1214-1353` — an AST allowlist for model SPARQL, and supersession that keeps the old claim with `supersededBy` and removes only the inferences the retired triple alone caused.
+- Second risk: **the prompt's memory blocks are unordered and the reasoner feeds none of them.** `getRecentFacts` takes `LIMIT 30` with no `ORDER BY`, the inferred graphs are excluded from recall, and every fact pays two reasoner runs and several full-file flushes before the reply.
+- Maturity impression: Apache-2.0, 38,704 lines of TypeScript outside tests, 100 commits on main between 29 June and 14 October 2026 under one human author name and several agent identities, labelled a v0.0.1 research preview. Three marks, `negative_eval` on cross-user absence tests against a real embedded store. 129 Vitest files; the pilot outputs behind the README's table are gitignored.
+- Study when: you want per-user isolation in a shared triplestore that holds when the model writes its own queries, or provenance-carrying supersession over RDF.
+- Do not copy when: forgetting must hold past the next mention, several untrusted users share the agent's worldview, or the store will grow past a few thousand facts with writes on the reply path.
 
 ### [`binder`](../systems/binder/)
 

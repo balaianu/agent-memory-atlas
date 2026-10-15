@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A self-hosted agent gateway
+storing parser-extracted facts as RDF quads in per-user named graphs,
+with functional-predicate supersession, claim provenance and OWL RL
+materialization.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Ontofelia — Agent Memory Atlas">
+    <meta property="og:description" content="A self-hosted agent gateway
+storing parser-extracted facts as RDF quads in per-user named graphs,
+with functional-predicate supersession, claim provenance and OWL RL
+materialization.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ontofelia — Agent Memory Atlas">
+    <meta name="twitter:description" content="A self-hosted agent
+gateway storing parser-extracted facts as RDF quads in per-user named
+graphs, with functional-predicate supersession, claim provenance and OWL
+RL materialization.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Ontofelia — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Ontofelia",
+      "description": "A self-hosted agent gateway storing parser-extracted facts as RDF quads in per-user named graphs, with functional-predicate supersession, claim provenance and OWL RL materialization.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A governed RDF knowledge graph behind a
+self-hosted agent gateway</p>
+          <h1>Ontofelia</h1>
+          <p class="document-deck">A self-hosted agent gateway storing
+parser-extracted facts as RDF quads in per-user named graphs, with
+functional-predicate supersession, claim provenance and OWL RL
+materialization.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/semantification-org/Ontofelia">
+              <span>Source</span>
+              <strong>semantification-org/Ontofelia</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/semantification-org/Ontofelia/commit/a9313c0fcc43a459fde9dd74918ea0ee7a23560e" title="a9313c0fcc43a459fde9dd74918ea0ee7a23560e">
+              <span>Analyzed revision</span>
+              <code>a9313c0f…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/semantification-org--Ontofelia" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>semantification-org--Ontofelia</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>38,704
+lines of TypeScript outside tests across 20 packages and apps;
+packages/semantic-memory is 7,977 of them and KnowledgeEngine.ts alone
+2,351; a 107-line Rust napi wrapper over the reasonable
+reasoner</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>100
+commits on main, 29 June 2026 – 14 October 2026, under one human author
+name and several agent commit identities; README labels it a v0.0.1
+research preview</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>129
+Vitest files in 16,934 lines, most semantic-memory cases on a real
+embedded Oxigraph store; a multi-model eval harness whose pilot outputs
+are gitignored; a committed storeFact scaling benchmark</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Ontofelia is a self-hosted agent gateway in TypeScript whose
+long-term memory is an RDF dataset. Every non-trivial user message
+passes through a parser LLM before the answer model runs, and each
+extracted fact lands as a triple in a named graph chosen by who said it
+and what it is about, beside a provenance claim and the source span.
+What is notable is the boundary: the graph IRI is the scope key on every
+quad, every read the runtime assembles names its graphs, and
+model-written SPARQL is parsed and refused unless each pattern sits
+inside an allowed <code>GRAPH</code>. What is weak is correction:
+supersession fires on two predicates in the shipped ontology, a forget
+is a hard delete that leaves nothing to stop the next message
+re-asserting the value, and the README's forget result comes from an
+eval-only delete path.</p>
+<p>The project calls itself a neuro-symbolic research preview at v0.0.1.
+Its hypothesis is that a governed, reasoning graph can forget when told
+and flag contradictions where a vector store cannot, and the README
+reports a pilot against a vector-RAG baseline in its own harness. It
+also states that the code was written by Claude Code, Codex and Gemini
+under human direction. The memory core is
+<code>packages/semantic-memory</code>, wrapped by a Fastify gateway, an
+agent runtime, chat channels and a web UI.</p>
+<p>Five findings shape the rest of this report.</p>
+<ul>
+<li><strong>The evaluated forget is not the shipped forget.</strong> The
+eval backend's <code>retractFact</code> deletes every value of a subject
+and predicate from every fact graph and sets the claims to
+<code>retracted</code>, a status no product path writes
+(<code>packages/eval/src/backends/SemanticBackend.ts:486-524</code>).
+The product's <code>memory_retract</code> deletes the matching triple
+from one graph and hard-deletes its claims. The same backend declares 20
+predicates functional where the shipped ontology declares 2, ingests
+pre-parsed facts, and surfaces <code>[CONFLICT]</code> markers the
+runtime prompt never carries.</li>
+<li><strong>Forgetting keeps no memory of itself.</strong>
+<code>memory_retract</code> removes the triple, its claims and evidence
+without trace, so a later message restating the value is extracted and
+accepted again. The original sentence stays in the episodic graph's
+payload and the JSONL transcript.</li>
+<li><strong>The reasoner's output reaches no automatic read.</strong>
+<code>storeFact</code> runs two full OWL 2 RL materialisations per fact
+before replying and writes the difference to an inferred graph. The
+recall graphs deliberately exclude the inferred graphs
+(<code>KnowledgeEngine.ts:561-570</code>), so only model-written SPARQL
+and the graph browser read them.</li>
+<li><strong>The shared worldview is writable from a non-owner
+session.</strong> A non-owner's third-party fact reaches the worldview
+every user reads when <code>sourceKind</code> is <code>user</code>, and
+<code>memory_store</code> takes that value from the model.</li>
+<li><strong>Recent facts are not recent.</strong>
+<code>getRecentFacts</code> selects 30 triples with
+<code>LIMIT 30</code> and no <code>ORDER BY</code>
+(<code>KnowledgeEngine.ts:665-708</code>), and that block goes into
+every prompt.</li>
+</ul>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a triple the system believes, plus a claim saying why.
+The parser turns a message into
+<code>{subject, predicate, object}</code> candidates, and
+<code>SemanticIngestionService.ingest</code> stores every non-question
+as <code>accepted</code>
+(<code>ingestion/SemanticIngestionService.ts:75-97</code>). Confidence
+is recorded on the claim and gates nothing; the service's own comment
+says contradictions are handled later by belief revision rather than a
+proposal stage. A fact is therefore true from the moment it is
+parsed.</p>
+<p><strong>Where a fact lands is the scope decision.</strong>
+<code>resolveTargetGraph</code> sends a fact whose subject is a user
+alias, or a user's request of the agent, to
+<code>urn:ontofelia:user:&lt;senderId&gt;</code>, and everything else to
+the shared <code>urn:ontofelia:worldview</code>
+(<code>KnowledgeEngine.ts:1073-1095</code>). For a non-owner, a fact
+with any <code>sourceKind</code> other than <code>user</code> stays
+private. The self graph holding the persona is never a write target.</p>
+<p><strong>A fact stops being believed in one of two ways.</strong> A
+new value on a predicate declared <code>owl:FunctionalProperty</code>
+supersedes the accepted claim on the same subject and predicate in the
+same graph. <code>retireSupersededClaim</code> flips its status to
+<code>superseded</code>, stamps <code>supersededAt</code> and
+<code>supersededBy</code>, deletes the base triple, removes the
+inferences only that triple supported, and writes a
+<code>core:Conflict</code> record
+(<code>KnowledgeEngine.ts:1214-1353</code>). The old claim stays, so
+<code>memory_explain</code> can answer what replaced a value and when. A
+predicate that is not functional accumulates values, which is
+deliberate: <code>worksAt</code> and <code>hasRole</code> are
+multi-valued so a career history survives.</p>
+<p>The second way is <code>memory_retract</code>, which removes the
+triple, its claims and its evidence with no residue
+(<code>packages/tools/src/memory/memory_retract.ts:103-150</code>). The
+system prompt tells the model to call it whenever a user asks to forget
+(<code>apps/gateway/src/index.ts:173-179</code>). Nothing records that
+the value was refused.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Written by</th>
+<th>Base triple</th>
+<th>Read as true by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accepted</code></td>
+<td><code>storeFact</code>, every parsed or tool-stored fact</td>
+<td>present</td>
+<td>every read</td>
+</tr>
+<tr>
+<td><code>superseded</code></td>
+<td><code>retireSupersededClaim</code>, on a functional predicate</td>
+<td>deleted</td>
+<td><code>memory_explain</code> only, labelled</td>
+</tr>
+<tr>
+<td><code>rejected</code></td>
+<td>no product writer</td>
+<td>never inserted</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td><code>retracted</code></td>
+<td>the eval backend only</td>
+<td>deleted</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td>hard-deleted</td>
+<td><code>memory_retract</code></td>
+<td>deleted</td>
+<td>nothing, and nothing remembers it</td>
+</tr>
+</tbody>
+</table></div>
+<p>The reads that withhold a superseded claim do it two ways. The
+context assembler reads fact graphs, where the triple is gone. The claim
+reads — <code>findConflictingClaims</code>, the
+<code>recent_facts</code> and <code>facts_by_confidence</code> templates
+and the <code>claim_clash</code> scan — select
+<code>status "accepted"</code>. Nothing holds a fact in doubt: there is
+no candidate state, and conflicts the detector stores as
+<code>unresolved</code> have no resolver.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a parsed fact becomes an accepted triple in an Ontofelia named graph, the two ways it stops being believed, and which reads see each state</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a parsed fact becomes an accepted triple in an Ontofelia named graph, the two ways it stops being believed, and which reads see each state
+flowchart TD
+    MSG[&quot;user message&lt;br/&gt;or attachment&quot;] --&gt; PARSE[&quot;parser LLM:&lt;br/&gt;subject, predicate, object&quot;]
+    TOOL[&quot;memory_store,&lt;br/&gt;source chosen by model&quot;] --&gt; ROUTE
+    PARSE --&gt; ROUTE{&quot;resolveTargetGraph&quot;}
+    ROUTE --&gt;|&quot;user alias, or&lt;br/&gt;non-owner non-user source&quot;| UG[&quot;user graph&lt;br/&gt;urn:ontofelia:user:id&quot;]
+    ROUTE --&gt;|&quot;third party, owner&lt;br/&gt;or source user&quot;| WV[&quot;shared worldview&quot;]
+    UG --&gt; ACC[&quot;triple + Claim accepted&lt;br/&gt;+ Evidence span&quot;]
+    WV --&gt; ACC
+    ACC --&gt; FP{&quot;new value on a&lt;br/&gt;functional predicate?&quot;}
+    FP -- &quot;yes: livesIn,&lt;br/&gt;hasBirthday&quot; --&gt; SUP[&quot;Claim superseded,&lt;br/&gt;triple deleted,&lt;br/&gt;Conflict record&quot;]
+    FP -- &quot;no&quot; --&gt; MULTI[&quot;values accumulate&quot;]
+    ACC --&gt; RET[&quot;memory_retract:&lt;br/&gt;owner, Guardian approval&quot;]
+    RET --&gt; GONE[&quot;triple, claims and&lt;br/&gt;evidence deleted&quot;]
+    GONE -.-&gt;|&quot;next message restates it&quot;| PARSE
+    ACC --&gt; CTX[&quot;context assembler:&lt;br/&gt;user + self graph,&lt;br/&gt;30 unordered triples,&lt;br/&gt;NER one-hop facts&quot;]
+    SUP --&gt; EXP[&quot;memory_explain:&lt;br/&gt;every status, labelled&quot;]
+    ACC --&gt; INF[&quot;inferred graph,&lt;br/&gt;two reasoner runs&quot;]
+    INF -.-&gt;|&quot;not read&quot;| CTX</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>The runtime is one Node process. <code>apps/gateway</code> starts
+Fastify, the channel adapters, the triplestore and one
+<code>AgentRuntime</code>; <code>packages/agent-runtime</code> builds
+the prompt and runs the tool loop; <code>packages/semantic-memory</code>
+owns the graph. The default backend is embedded Oxigraph, the WASM build
+of the Rust store, held in memory
+(<code>packages/config/src/schema.ts:186</code>). Apache Jena Fuseki is
+a second backend, and an in-memory adapter is a stub.</p>
+<p>Oxigraph persistence is a full rewrite.
+<code>OxigraphAdapter.flush</code> serialises the whole dataset to
+N-Quads and replaces <code>dataset.nq</code> by temp file and rename
+after every update (<code>adapters/OxigraphAdapter.ts:69-76</code>). A
+<code>storeFact</code> issues several updates, so it rewrites the file
+several times. Boot reloads the file.</p>
+<p>Reasoning runs in <code>packages/reasoner</code>, a napi wrapper over
+the <code>reasonable</code> crate, which CONTRIBUTING.md and
+<code>docs/known-limitations.md</code> describe as an OWL 2 RL forward
+chainer. The README advertises OWL-DL reasoning with consistency
+checking. <code>ReasonableEngine.materialize</code> reasons over the
+TBox plus the context graphs twice, with and without the new triple, and
+keeps the difference (<code>reasoning/ReasonableEngine.ts:26-80</code>).
+The reasoner is created only for the Oxigraph backend.</p>
+<p>The core ontology is loaded into <code>urn:shared:ontology</code> at
+gateway start
+(<code>apps/gateway/src/services/triplestore.ts:63-71</code>), and
+<code>bootstrap/*.ttl</code> seeds the self, meta and setup graphs.
+Sessions are JSONL transcripts with a SQLite index in
+<code>packages/session-store</code>. A cognitive layer — episodic,
+procedural and working memory, a goal stack, metacognition — writes
+further <code>cog:</code> graphs, and its cycle path runs only when
+<code>cog.flagCycleManager</code> is set
+(<code>packages/agent-runtime/src/cognitive/CognitiveConfig.ts:1-37</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li>What has to run: the gateway process and an LLM provider. No
+database server on the default backend; Fuseki needs Java.</li>
+<li>Offline: the store, reasoner and retrieval are local; the parser and
+answer models are whatever provider is configured, with
+<code>google/gemma-3-27b-it:free</code> as the parser's default model id
+(<code>ingestion/SemanticParser.ts:44-48</code>).</li>
+<li>An API key is needed to store anything automatically, because
+extraction is an LLM call; <code>memory_store</code> writes without
+one.</li>
+<li>Install is <code>install.sh</code> or <code>install.ps1</code> and a
+pnpm build, including a Rust build of the reasoner binding where no
+prebuilt binary matches.</li>
+<li>The store is human-readable N-Quads, and a full wipe through
+<code>DELETE /api/knowledge</code> writes a Turtle backup first. Repair
+by hand means editing quads or SPARQL updates.</li>
+</ul>
+<p>The committed scaling benchmark prices the design. At 10,000 facts a
+steady <code>storeFact</code> takes 2.2 s, at 60,000 it takes 26.6 s,
+and boot at 60,000 facts spends three minutes loading the file
+(<code>bench/BENCHMARK_RESULTS.md</code>, table A). Its breakdown at
+about 270,000 triples attributes 3.4 s to the two reasoner runs and
+about 600 ms to each full flush.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>AgentRuntime</code> handles a message
+in <code>packages/agent-runtime/src/index.ts</code>. It extracts
+attachment text, then calls <code>semanticParser.parse</code> on the
+message plus that text (<code>:727-735</code>) and
+<code>ingestionService.ingest</code> with the sender id and
+<code>isOwner</code> (<code>:748-758</code>). The stored facts are
+echoed into the prompt as "Just-Stored Facts"
+(<code>:765-771</code>).</p>
+<p><strong>Store.</strong> <code>KnowledgeEngine.storeFact</code>
+(<code>KnowledgeEngine.ts:1453-1699</code>): validate any source URI;
+<code>isDuplicate</code> against the target graph; pick the graph;
+resolve the subject through <code>canonicalSubjectUri</code>, which pins
+user aliases to <code>entity:user:&lt;id&gt;</code> and agent
+self-references to the agent entity; resolve the predicate, registering
+a new one in the agent schema graph; resolve the object with type-aware
+label matching. Then supersede, materialise, insert the triple, link
+<code>owl:sameAs</code> when the user states their own name, insert the
+inferences, and write evidence and claim through
+<code>ClaimProvenanceService</code>.</p>
+<p><strong>Supersede.</strong> <code>isFunctionalProperty</code> asks
+the TBox and schema graphs (<code>:1190-1203</code>);
+<code>findConflictingClaims</code> selects accepted claims on the same
+subject and predicate whose <code>assertedInGraph</code> equals the
+target graph (<code>:1129-1182</code>);
+<code>retireSupersededClaim</code> validates every stored term before
+the first write, then runs four separate updates
+(<code>:1214-1353</code>). None of the steps of <code>storeFact</code>
+share a transaction.</p>
+<p><strong>Retrieve for the prompt.</strong>
+<code>index.ts:658-720</code> appends, in order, the graph registry from
+<code>urn:shared:meta</code>, <code>getSystemPromptContext</code> (self
+graph and the sender's user graph, plus onboarding gaps),
+<code>getRecentFacts(agentId, 30, senderId)</code>, and
+<code>getFactsAbout</code> for entities that <code>EntityMatcher</code>
+finds in the message. Binding directives from the self graph go last
+(<code>:858-876</code>).</p>
+<p><strong>Retrieve by tool.</strong> <code>memory_ask</code> runs four
+fixed templates (<code>packages/tools/src/memory/memory_ask.ts</code>);
+<code>memory_reflect</code> dumps the worldview and sender graph;
+<code>memory_explain</code> returns claim provenance with supersession
+(<code>memory_explain.ts</code>); <code>memory_sparql</code> runs SELECT
+or ASK and <code>memory_query</code> SELECT or CONSTRUCT, both behind
+<code>checkSparqlScope</code>
+(<code>packages/semantic-memory/src/sparql/scopeGuard.ts</code>).
+<code>memory_query</code> is in the gateway's default deny list
+(<code>apps/gateway/src/services/tools.ts:65</code>).</p>
+<p><strong>Forget.</strong> <code>memory_retract</code> validates the
+graph against the registry and the caller's two allowed graphs, deletes
+the triple, deletes matching claims and their evidence, and rebuilds or
+clears the matching inferred graph
+(<code>memory_retract.ts:55-150</code>). It is <code>hostOnly</code>, so
+<code>ToolPolicyEngine</code> refuses it to a non-owner on a person
+channel and requires approval otherwise
+(<code>packages/security/src/ToolPolicy.ts:59-89</code>).</p>
+<p><strong>Detect.</strong>
+<code>ConflictDetector.detectConflicts</code> finds disjoint-class and
+range violations and accepted-claim clashes, and
+<code>storeConflicts</code> writes them as <code>unresolved</code>
+(<code>reasoning/ConflictDetector.ts:36-178</code>). It runs from
+<code>GET /api/reasoning/conflicts</code> and
+<code>POST /api/reasoning/reflect</code>; the
+<code>memory_reflect</code> tool only reads the worldview and the sender
+graph.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>A stored fact is three things. The base triple sits in its target
+graph with an entity URI of the form
+<code>urn:ontofelia:entity:&lt;Name&gt;</code> and a predicate in
+<code>urn:ontofelia:core#</code>. The claim sits in
+<code>urn:ontofelia:claims</code> with <code>claimSubject</code>,
+<code>claimPredicate</code>, <code>claimObject</code>,
+<code>status</code>, <code>confidence</code>,
+<code>confidenceLabel</code>, <code>sourceKind</code>,
+<code>ingestionRunId</code>, <code>learnedAt</code>, and either
+<code>assertedInGraph</code> plus <code>acceptedAt</code> or, for a
+non-accepted claim, <code>targetGraph</code>
+(<code>provenance/ClaimProvenanceService.ts:101-184</code>). The
+evidence sits in <code>urn:ontofelia:evidence</code> with
+<code>evidenceType</code>, <code>capturedAt</code>, the raw span,
+message id, session, channel, and for documents a <code>sourceUri</code>
+and <code>contentHash</code>.</p>
+<p><strong>Scope is the graph.</strong> <code>GraphUriResolver</code>
+names every graph from the agent id: <code>self</code>,
+<code>skills</code>, <code>setup</code>, <code>worldview</code>,
+<code>schema</code>, <code>claims</code>, <code>evidence</code>,
+<code>conflicts</code>, <code>inferred</code>,
+<code>user:&lt;id&gt;</code>, <code>inferred:user:&lt;id&gt;</code>,
+<code>session:&lt;id&gt;</code>, and the <code>cog:</code> family.
+<code>GraphRegistry.assertWritable</code> refuses a write to an
+unregistered pattern, so a hallucinated graph IRI never reaches the
+store. Claims, evidence and conflicts are agent-wide and carry the scope
+as <code>assertedInGraph</code>.</p>
+<p><strong>Time is record time only.</strong> <code>learnedAt</code>,
+<code>acceptedAt</code>, <code>capturedAt</code>,
+<code>supersededAt</code> and <code>detectedAt</code> are all written
+from the clock at the moment of the write. No field records when a fact
+held in the world, and a supersession says when the system changed its
+mind, not when the person moved.</p>
+<p><strong>Confidence is metadata.</strong> The parser's
+<code>high</code>, <code>medium</code> or <code>low</code> maps to 0.95,
+0.6 or 0.3 on the claim, and <code>memory_store</code> defaults to
+<code>high</code>. The <code>facts_by_confidence</code> template filters
+on the label when the model asks for it; nothing else reads either
+value.</p>
+<p>Declared and unread: the gateway's <code>memoryPolicy</code> sets
+<code>autoFlushBeforeCompaction</code>, <code>defaultConfidence</code>
+and <code>trustUntrustedContent: false</code>
+(<code>apps/gateway/src/index.ts:180</code>), and no code outside the
+type definition reads any of the three.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is graph lookup and string matching; there is no embedding
+on any product path. Each turn injects three memory blocks, unbounded in
+tokens except by their SPARQL limits.</p>
+<p><strong>The identity and user block.</strong>
+<code>getSystemPromptContext</code> reads the whole self graph and the
+whole sender graph and renders them as bullets under "What I Know About
+the User", telling the model not to ask again
+(<code>KnowledgeEngine.ts:1842-1934</code>). A user graph grows without
+a cap, and so does this block.</p>
+<p><strong>The recent-facts block.</strong> <code>getRecentFacts</code>
+selects <code>?s ?p ?o</code> across the worldview and the sender graph,
+filters out typing and label predicates, and takes <code>LIMIT 30</code>
+with no ordering. Despite its docstring, which promises the most recent
+facts, the block is whichever 30 triples Oxigraph returns first. Once
+the worldview holds more than 30 facts, a new fact may never appear in
+it.</p>
+<p><strong>The entity block.</strong>
+<code>EntityMatcher.extractEntities</code> matches message text against
+labels from <code>listKnownEntities</code>, which takes
+<code>LIMIT 500</code> labels, also unordered
+(<code>KnowledgeEngine.ts:519-542</code>). <code>getFactsAbout</code>
+then returns up to 20 one-hop triples in either direction for the
+matched entities (<code>:603-655</code>). Matching is by entity URI
+built from the name, so an entity minted under a disambiguated URI such
+as <code>Paris_Place</code> is not reached by the plain name. The label
+list is cached for 60 seconds on the one matcher the runtime holds,
+keyed on nothing (<code>ner/EntityMatcher.ts:19-45</code>). For that
+minute, the labels loaded for one sender drive entity matching for the
+next. The facts query that follows is scoped, so the effect is missed
+recall rather than a leak of facts, though another user's private labels
+sit in the matcher's memory.</p>
+<p><strong>What retrieval does not see.</strong> The inferred graphs are
+excluded on purpose, with the comment that "recall does not surface
+inferences yet" (<code>KnowledgeEngine.ts:561-565</code>). Claims are
+not read on the prompt path, so the model learns of a supersession or a
+stored conflict only if it calls <code>memory_explain</code>. The
+episodic retrieval that the cognitive cycle performs writes into a
+per-cycle working-memory graph whose only reader is the inspector UI
+(<code>cognitive/CycleManager.ts:897-923</code>,
+<code>CogInspector.ts:192-194</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes are automatic. The parser prompt classifies each statement as
+a fact, a question or uncertain, and returns ontology proposals beside
+it (<code>ingestion/SemanticParser.ts:53-195</code>). A
+<code>TrivialMessageDetector</code> skips greetings and
+acknowledgements. The ingestion service stores every non-question as
+accepted, whatever its confidence; the docstring above it, which says
+low confidence becomes a proposal, describes a removed stage.</p>
+<p><strong>Deduplication is exact.</strong> <code>isDuplicate</code>
+asks whether the same subject, predicate and object triple exists in the
+target graph, after the same canonicalisation the write uses
+(<code>KnowledgeEngine.ts:724-759</code>). Near-duplicates with a
+different predicate spelling are folded only when
+<code>findPropertyByLabel</code> matches an existing label.</p>
+<p><strong>Entity resolution is label-based and type-aware.</strong> A
+same-label entity is reused when it carries the target class or no
+class, and a differently typed one forces a disambiguated URI, so a
+person and a city named Paris stay apart (<code>:247-327</code>). User
+aliases collapse onto one node per sender, and a user stating their own
+name adds a symmetric <code>owl:sameAs</code> to the named entity
+(<code>:1596-1640</code>).</p>
+<p><strong>Attachments are parsed as facts.</strong> Document text is
+concatenated to the message before parsing
+(<code>index.ts:731-733</code>), and the result is accepted like
+anything the user typed. Nothing distinguishes a fact from a forwarded
+CV from a fact the owner asserted.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write blocks the reply. Parsing is an LLM call, and each fact
+then pays two reasoner runs over the TBox and its context graphs plus
+several full-file flushes before the answer model is called. The
+committed benchmark puts a steady <code>storeFact</code> at 111 ms with
+500 facts in the store and 2.2 s at 10,000, per fact, so a message with
+five facts at that size waits about eleven seconds for memory. A stored
+fact is retrievable on the same turn, and the turn's own facts are
+echoed into its prompt.</p>
+<p>No background pass rewrites the store on the default path. The
+reflection route rescans worldview conflicts on request and appends a
+fresh set of <code>unresolved</code> records each time, with no dedup
+against earlier runs. On the read side, the injected blocks are bounded
+only by the user graph's size and the two SPARQL limits, and they
+precede the transcript in the system prompt, which changes whenever a
+fact is stored and so invalidates a provider's prefix cache from that
+point.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The agent reaches memory three ways. The prompt carries the assembled
+blocks every turn. The tool surface registers <code>memory_store</code>,
+<code>memory_query</code>, <code>memory_ask</code>,
+<code>memory_sparql</code>, <code>memory_explain</code>,
+<code>ontology_inspect</code>, <code>ontology_propose</code>,
+<code>memory_reflect</code> and <code>memory_retract</code>
+(<code>apps/gateway/src/services/tools.ts:32-56</code>). The self
+graph's directive tells the model that ordinary facts are captured by
+the pipeline and that <code>memory_store</code> is for deliberate writes
+(<code>bootstrap/self.ttl:144</code>).</p>
+<p><strong>Agency is wide on write and narrow on delete.</strong>
+<code>memory_store</code> is open to every sender and lets the model
+choose <code>source</code> among <code>user</code>, <code>agent</code>
+and <code>tool</code> (<code>memory_store.ts:27</code>).
+<code>memory_retract</code>, <code>memory_query</code> and
+<code>ontology_propose</code> are host tools: a non-owner on a person
+channel never gets them, and the owner's call waits for a Guardian
+approval in the UI or an inline keyboard unless the tool is on the allow
+list (<code>ToolPolicy.ts:14-18</code>, <code>:59-89</code>). A
+non-owner who asks the agent to forget something about themselves cannot
+have it done.</p>
+<p><strong>Ontology proposals are a file queue nothing
+consumes.</strong> <code>ontology_propose</code> writes a proposal JSON
+and, when the model passes <code>autoApprove: true</code>, approves it
+in the same call (<code>ontology_propose.ts:13-16</code>,
+<code>:37-40</code>). Approval writes a new versioned Turtle file and an
+<code>active.json</code>; no code outside <code>OntologyManager</code>
+reads either, and the triplestore's TBox is loaded from the packaged
+ontology at boot. The gateway's approve and reject routes act on the
+same files.</p>
+<p>Channels are WebChat, Telegram, Discord and WebSocket nodes, and the
+session policy is per channel peer. The integration is specific to this
+gateway: the memory package exports <code>KnowledgeEngine</code> and the
+tools, and adopting it in another agent means supplying the sender
+identity and owner flag that its routing depends on.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance is the strongest part.</strong> Every accepted
+fact has a claim with the span, session and source kind, and document
+evidence carries a SHA-256 content hash that <code>hasEvidence</code>
+uses to skip unchanged re-imports
+(<code>KnowledgeEngine.ts:1403-1416</code>). On the supersession path
+every store-derived term is re-validated before it is rendered into an
+update, and a term that cannot be rendered safely makes supersession
+skip that claim rather than half-apply.</p>
+<p><strong>Injection lands as accepted truth.</strong> A sentence in a
+pasted document or a forwarded message is extracted and accepted with
+the same status as the owner's own statement. <code>sourceKind</code> is
+not set by the ingestion service, and confidence filters nothing. For
+the owner, a third-party fact from an attachment goes to the shared
+worldview that every user's prompt reads.</p>
+<p><strong>The worldview is a shared write surface.</strong> The routing
+comment states the intent: for a non-owner, a model-chosen source must
+never open a path into the worldview
+(<code>KnowledgeEngine.ts:1056-1067</code>). The code keeps that only
+for <code>agent</code>, <code>tool</code> and a missing source, and
+<code>memory_store</code> hands the model the <code>user</code> value.
+The test file pins the open case as deliberate
+(<code>__tests__/NonOwnerFactRouting.test.ts:129-135</code>). A paired
+Telegram user can therefore have a claim about a third person written
+where the owner reads it.</p>
+<p><strong>Deletion does not reach the source.</strong>
+<code>memory_retract</code> covers the triple, claims and evidence. The
+message that stated the fact is kept as an episode's
+<code>payload</code> and as a line in the session JSONL, and other
+claims extracted from the same message keep their own spans. The
+episodic retention sweep that would drop payloads after 30 days is a
+no-op unless its flag is set
+(<code>cognitive/EpisodicMemory.ts:328-410</code>). A full wipe through
+<code>DELETE /api/knowledge</code> writes a Turtle backup of everything,
+then reloads the core ontology into <code>urn:ontofelia:tbox</code>
+(<code>apps/gateway/src/routes/memory.ts:186-193</code>), a graph
+<code>isFunctionalProperty</code> and the reasoner never read, so
+supersession is off until the next restart reloads
+<code>urn:shared:ontology</code>.</p>
+<p><strong>Writes are not atomic.</strong> A <code>storeFact</code> is a
+sequence of SPARQL updates — supersession, triple, <code>sameAs</code>,
+inferences, evidence, claim — each flushed on its own, so a crash
+between them leaves a triple without a claim or a retired claim without
+its replacement. The audit log of tool calls is a hash-chained JSONL
+file whose chain head lives in process memory and whose files are
+deleted after 90 days
+(<code>packages/tools/src/audit/AuditLog.ts:9</code>,
+<code>:50-65</code>); the parser's writes do not pass through it.</p>
+<p><strong>Identity is the channel's.</strong> The user graph key is the
+sender id the channel reports. The gateway's single bearer token admits
+<code>POST /api/chat</code>, whose body sets <code>senderId</code> and
+derives <code>isOwner</code> from it being <code>owner</code>
+(<code>apps/gateway/src/routes/agent.ts:17-31</code>), so the token
+holder acts as any user.</p>
+<p>Marks withheld:</p>
+<ul>
+<li><code>tombstone</code> — nothing durable is keyed on a rejected
+value. The <code>rejected</code> status has no product writer, and
+neither <code>isDuplicate</code> nor <code>storeFact</code> consults
+rejected or retracted claims before accepting.</li>
+<li><code>bitemporal</code> — every time field is the write clock.</li>
+<li><code>audit_log</code> — the conflicts graph appends one record per
+supersession and covers no insert or retraction; claims are mutated in
+place and deleted by <code>memory_retract</code>; the tool audit file
+misses the parser path and expires.</li>
+<li><code>human_review</code> — no fact waits in a state for a person.
+Guardian approval gates a deletion or a proposal as a tool call,
+<code>ontology_propose</code> takes <code>autoApprove</code> from the
+model, and approved ontology versions are read by nothing.</li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I did not run the suite. The tree holds 129 Vitest files, and the
+semantic-memory cases mostly open a real embedded
+<code>OxigraphAdapter</code> in a temp directory, which makes their
+assertions about stored quads rather than mocks. The privacy cases are
+the best of them: <code>PrivacyGraphIsolation</code>,
+<code>CrossUserGraphScoping</code> and <code>NonOwnerFactRouting</code>
+assert absence beside a present control, and
+<code>PrivacyGraphIsolation</code> adds a validity case that the data is
+there under <code>GRAPH ?g</code>.</p>
+<p><strong>Correction is tested by mechanism, not outcome.</strong>
+<code>supersedes functional property values (hasBirthday)</code> stores
+two birthdays and asserts only that an <code>ASK</code> mentioning
+<code>FunctionalProperty</code> was issued
+(<code>__tests__/SupersessionMultiValue.test.ts:167-201</code>).
+<code>ClaimSupersededBy</code> checks the claim chain on a real store.
+The <code>memory_retract</code> tests count the SPARQL strings sent to a
+mock adapter
+(<code>packages/tools/src/memory/__tests__/memory_graphs.test.ts:103-162</code>).
+No committed case stores a fact, retracts or supersedes it, and asserts
+it is absent from <code>getRecentFacts</code> or
+<code>getFactsAbout</code>.</p>
+<p><strong>The eval harness measures a different system.</strong>
+<code>packages/eval</code> runs synthetic personas through three
+backends behind one answer model and scores H0–H6 with McNemar and
+Wilcoxon tests. <code>SemanticBackend</code> ingests the scenario's
+pre-parsed facts through the real <code>storeFact</code>, which is the
+shared part. It seeds 20 predicates as functional, including
+<code>worksAt</code> and <code>hasRole</code> which the product keeps
+multi-valued (<code>SemanticBackend.ts:48-69</code>,
+<code>:159-168</code>). It retrieves through its own composition of
+entity queries, provenance and <code>[CONFLICT]</code> markers for the
+probe's declared entities (<code>:197-265</code>), and it forgets
+through its own <code>retractFact</code> (<code>:486-524</code>). The
+README's H6 forgetting and H3 contradiction results therefore describe
+the engine under eval-local retrieval and deletion, not the runtime a
+user talks to.</p>
+<p><strong>The headline does not recompute from the tree.</strong> The
+pilot outputs go to <code>packages/eval/out/</code>, which
+<code>.gitignore</code> excludes, so the README's table has no committed
+artifact behind it. The README is candid about scale: 127 probes per
+model, three models, synthetic personas, no human-adjudicated agreement.
+No paper accompanies the project.</p>
+<p><strong>The scaling benchmark is committed and useful.</strong>
+<code>bench/BENCHMARK_RESULTS.md</code> reports per-operation timings
+with the scripts beside it, measured on one Windows machine.</p>
+<p>Tests I would want first: a retracted value restated in the next
+message must not return to <code>getRecentFacts</code>; a superseded
+value must be absent from every prompt block with its replacement
+present; a non-owner's <code>memory_store</code> with
+<code>source: user</code> must not reach the owner's prompt; and the
+eval's H6 rerun through <code>memory_retract</code>.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make the scope key part of every record's identity and name
+it on every read.</strong> A named graph per user turns isolation into a
+query predicate the store applies, and reads that list their graphs in a
+<code>VALUES</code> clause cannot forget the user.</li>
+<li><strong>Parse model-written queries and allowlist what they
+touch.</strong> Walking the SPARQL AST and refusing variable graphs,
+<code>SERVICE</code> and graph-less patterns closes the hole that a
+free-form query tool opens in any partitioned store.</li>
+<li><strong>Retire a superseded claim forward.</strong> Keep the old
+claim with a pointer to its replacement and a time, delete only the
+asserted value, and history stays answerable without the old value
+reaching a prompt.</li>
+<li><strong>Retract derivations by difference.</strong> Re-materialising
+the retired triple alone against the remaining store yields exactly the
+inferences it caused, so nothing independently derivable is
+removed.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Evaluating a path the product does not ship.</strong> A
+benchmark backend with its own delete, its own retrieval and a different
+schema measures the benchmark; run the eval through the tools the agent
+calls.</li>
+<li><strong>Hard delete as the forget verb.</strong> Without a record
+keyed on the refused value, the extractor that wrote it once writes it
+again from the next mention.</li>
+<li><strong>A "recent" read with a limit and no order.</strong> It
+returns a stable-looking sample of the oldest rows and hides every new
+one.</li>
+<li><strong>Paying for inference nothing reads.</strong> If the recall
+path excludes the derived graph, the reasoner is a per-write cost with
+no consumer.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one owner running a personal assistant across a few chat
+channels, who wants to inspect and query what the agent believes about
+named people and places, and who will stay below a few thousand facts.
+The write cost grows with the store and sits in front of every reply,
+and the persistence model rewrites the whole dataset per update, so a
+busy or long-lived deployment hits the benchmark's tens of seconds. Walk
+away if several untrusted users share one agent, since the worldview is
+a common write surface, or if "forget" must survive the next
+conversation. The reasoning layer is the project's research subject and
+is not yet on the read path.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Was the README's H6 result run before or after the product's
+<code>memory_retract</code> was made executable, and would it hold
+through that tool?</li>
+<li>Is the <code>user</code> value on <code>memory_store</code>'s
+<code>source</code> meant to be available to a model serving a
+non-owner?</li>
+<li>Should <code>getRecentFacts</code> order by the claim's
+<code>learnedAt</code>, as <code>memory_ask</code>'s
+<code>recent_facts</code> template does?</li>
+<li>Which component is meant to read approved ontology versions, and is
+<code>autoApprove</code> meant to survive on the agent's tool?</li>
+<li>Is the inferred graph planned for the recall path, and at what cost
+per turn?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Engine and model:</strong>
+<code>packages/semantic-memory/src/KnowledgeEngine.ts</code>,
+<code>provenance/ClaimProvenanceService.ts</code>,
+<code>utils/GraphUriResolver.ts</code>,
+<code>utils/GraphRegistry.ts</code>, <code>types.ts</code>,
+<code>ontologies/ontofelia-core.ttl</code>,
+<code>bootstrap/meta.ttl</code>, <code>bootstrap/self.ttl</code>.</li>
+<li><strong>Write path:</strong>
+<code>ingestion/SemanticParser.ts</code>,
+<code>ingestion/SemanticIngestionService.ts</code>,
+<code>ingestion/TrivialMessageDetector.ts</code>,
+<code>packages/tools/src/memory/memory_store.ts</code>.</li>
+<li><strong>Retrieval and context:</strong>
+<code>packages/agent-runtime/src/index.ts</code>,
+<code>ner/EntityMatcher.ts</code>,
+<code>packages/tools/src/memory/memory_ask.ts</code>,
+<code>memory_explain.ts</code>, <code>memory_sparql.ts</code>,
+<code>memory_query.ts</code>, <code>sparql/scopeGuard.ts</code>.</li>
+<li><strong>Correction:</strong> <code>memory_retract.ts</code>,
+<code>reasoning/ConflictDetector.ts</code>,
+<code>reasoning/ReasonableEngine.ts</code>,
+<code>reflection/ReflectionRunner.ts</code>,
+<code>packages/reasoner/src/lib.rs</code>,
+<code>ontology/OntologyManager.ts</code>,
+<code>packages/tools/src/memory/ontology_propose.ts</code>.</li>
+<li><strong>Storage and policy:</strong>
+<code>adapters/OxigraphAdapter.ts</code>,
+<code>apps/gateway/src/services/triplestore.ts</code>,
+<code>apps/gateway/src/services/tools.ts</code>,
+<code>apps/gateway/src/routes/memory.ts</code>,
+<code>packages/security/src/ToolPolicy.ts</code>,
+<code>packages/tools/src/audit/AuditLog.ts</code>,
+<code>packages/session-store/src/index.ts</code>.</li>
+<li><strong>Cognitive layer:</strong>
+<code>cognitive/EpisodicMemory.ts</code>,
+<code>packages/agent-runtime/src/cognitive/CycleManager.ts</code>,
+<code>cognitive/CognitiveConfig.ts</code>,
+<code>cognitive/CogInspector.ts</code>.</li>
+<li><strong>Tests and evals:</strong>
+<code>__tests__/NonOwnerFactRouting.test.ts</code>,
+<code>__tests__/CrossUserGraphScoping.test.ts</code>,
+<code>__tests__/PrivacyGraphIsolation.test.ts</code>,
+<code>__tests__/SupersessionMultiValue.test.ts</code>,
+<code>__tests__/ClaimSupersededBy.test.ts</code>,
+<code>packages/tools/src/memory/__tests__/memory_graphs.test.ts</code>,
+<code>packages/eval/src/backends/SemanticBackend.ts</code>,
+<code>bench/BENCHMARK_RESULTS.md</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E "\"(retracted|rejected)\"|'(retracted|rejected)'" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— <code>retracted</code> is written only in
+<code>packages/eval/src/backends/SemanticBackend.ts:512</code>;
+<code>rejected</code> on claims appears only in the type and the
+<code>storeFact</code> branch, with no caller passing it.</li>
+<li><code>git grep -n -E "status\s*:" -- packages/semantic-memory/src/ingestion packages/tools/src/memory</code>
+— the ingestion service and vault mapper pass <code>accepted</code>;
+<code>memory_store</code> passes no status.</li>
+<li><code>git grep -n -E "FunctionalProperty" -- ':!**/__tests__/**' ':!*.test.ts' ':!packages/eval/**'</code>
+— <code>livesIn</code> and <code>hasBirthday</code> in
+<code>ontofelia-core.ttl</code>; the rest are docs, examples and the
+engine's own check.</li>
+<li><code>git grep -n -E "getInferredGraph|getReadableInferredGraphs|getUserInferredGraph|:inferred" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— readers are <code>scopeGuard.ts</code> and the gateway graph browser;
+no prompt path.</li>
+<li><code>/usr/bin/grep -n -E "ORDER BY|LIMIT" packages/semantic-memory/src/KnowledgeEngine.ts</code>
+— <code>getRecentFacts</code> and <code>listKnownEntities</code> carry
+<code>LIMIT</code> with no <code>ORDER BY</code>.</li>
+<li><code>git grep -n -E "getActiveVersion|activeFile|createVersion" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— every hit is inside <code>OntologyManager.ts</code>.</li>
+<li><code>git grep -n -E "trustUntrustedContent|autoFlushBeforeCompaction|defaultConfidence" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— the gateway literal and the type only.</li>
+<li><code>git grep -n -E "valid(From|To|Until|Time|At)|validity|effectiveFrom" -- '*.ts' '*.ttl'</code>
+— no temporal-validity field.</li>
+<li><code>git grep -n -i -E "shacl|sh:NodeShape|validateShape" -- '*.ts'</code>
+— no match; SHACL appears in <code>bootstrap/meta.ttl</code> and docs
+only.</li>
+<li><code>git grep -n -E "wm\.(read|list|snapshot)|readBuffer" -- packages/agent-runtime/src ':!**/__tests__/**' ':!*.test.ts'</code>
+— only <code>CogInspector.ts</code> reads working memory.</li>
+<li><code>git grep -n -E "retentionTick\(" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— one caller, gated on <code>isRetentionEnabled</code>.</li>
+<li><code>/usr/bin/grep -n -E "CACHE_TTL_MS|refreshEntities|userId" packages/semantic-memory/src/ner/EntityMatcher.ts</code>
+— the cache check compares only the time and list length;
+<code>userId</code> is passed to the loader and not stored.</li>
+<li><code>git grep -n -E "unresolved" -- '*.ts' ':!**/__tests__/**' ':!*.test.ts'</code>
+— written in <code>ConflictDetector.ts:167</code>; no reader moves
+it.</li>
+<li><code>git grep -n -i -E "arxiv|bibtex|@article|@misc|doi\.org|zenodo" -- '*.md' '*.cff'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+<li><code>git grep -n -l "pilot-2026"</code> and
+<code>/usr/bin/grep -n "eval/out" .gitignore</code> — the README only;
+<code>packages/eval/out/</code> is ignored.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/semantification-org/Ontofelia/commit/a9313c0fcc43a459fde9dd74918ea0ee7a23560e"><code class="commit-id" title="a9313c0fcc43a459fde9dd74918ea0ee7a23560e">a9313c0f…</code></a>
+— first reading, at the head of <code>main</code>, a merge of 14 October
+2026. Three marks: <code>scope_enforced</code>,
+<code>trust_state</code>, <code>negative_eval</code>. Screened before
+reading from a full clone: no auto-run surface, one build-time execution
+point (<code>packages/reasoner/build.rs</code>), nothing inside the
+cooldown, and 23 unpinned surfaces, most of them workspace package
+manifests resolved by the root <code>pnpm-lock.yaml</code>, unchanged
+for 8 days. Apache-2.0 with no rider. Read with <code>git grep</code>
+and <code>sed</code>; nothing was installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

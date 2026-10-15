@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 746 reports.</strong></p>
+<p><strong>This page covers all 747 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30903,6 +30903,48 @@ what it writes back.</li>
 <li>Do not copy when: several users or projects share one database, a
 correction must outrank the value it replaces, or the REST server will
 run where untrusted pages can reach it.</li>
+</ul>
+<h3 id="ontofelia"><a
+href="../systems/ontofelia/"><code>ontofelia</code></a></h3>
+<ul>
+<li>Best idea: <strong>the scope key is the graph, and model-written
+queries are parsed against it.</strong> Every quad carries its named
+graph, the context assembler lists the sender's graph and the worldview
+in a <code>VALUES</code> clause, and <code>checkSparqlScope</code> walks
+the SPARQL AST to refuse <code>GRAPH ?var</code>, <code>SERVICE</code>,
+graph-less patterns and any graph outside the sender's allowlist.</li>
+<li>Biggest risk: <strong>the evaluated forget is not the shipped
+forget.</strong> The eval backend's <code>retractFact</code> deletes
+every value of a subject and predicate in every fact graph and writes a
+<code>retracted</code> status no product path writes, beside 20
+functional predicates where the product declares 2. The product's
+<code>memory_retract</code> hard-deletes one graph's triple with its
+claims and leaves nothing keyed on the value, so the next mention is
+extracted again.</li>
+<li>Most reusable component:
+<code>packages/semantic-memory/src/sparql/scopeGuard.ts</code> with
+<code>retireSupersededClaim</code> in
+<code>KnowledgeEngine.ts:1214-1353</code> — an AST allowlist for model
+SPARQL, and supersession that keeps the old claim with
+<code>supersededBy</code> and removes only the inferences the retired
+triple alone caused.</li>
+<li>Second risk: <strong>the prompt's memory blocks are unordered and
+the reasoner feeds none of them.</strong> <code>getRecentFacts</code>
+takes <code>LIMIT 30</code> with no <code>ORDER BY</code>, the inferred
+graphs are excluded from recall, and every fact pays two reasoner runs
+and several full-file flushes before the reply.</li>
+<li>Maturity impression: Apache-2.0, 38,704 lines of TypeScript outside
+tests, 100 commits on main between 29 June and 14 October 2026 under one
+human author name and several agent identities, labelled a v0.0.1
+research preview. Three marks, <code>negative_eval</code> on cross-user
+absence tests against a real embedded store. 129 Vitest files; the pilot
+outputs behind the README's table are gitignored.</li>
+<li>Study when: you want per-user isolation in a shared triplestore that
+holds when the model writes its own queries, or provenance-carrying
+supersession over RDF.</li>
+<li>Do not copy when: forgetting must hold past the next mention,
+several untrusted users share the agent's worldview, or the store will
+grow past a few thousand facts with writes on the reply path.</li>
 </ul>
 <h3 id="binder"><a
 href="../systems/binder/"><code>binder</code></a></h3>

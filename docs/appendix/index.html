@@ -682,6 +682,7 @@ href="../systems/hermes-fleet-memory/"><code>hermes-fleet-memory</code></a></li>
 <li><a href="../systems/aigent-os/"><code>aigent-os</code></a></li>
 <li><a href="../systems/crystalline/"><code>crystalline</code></a></li>
 <li><a href="../systems/binder/"><code>binder</code></a></li>
+<li><a href="../systems/ontofelia/"><code>ontofelia</code></a></li>
 </ul>
 <h2 id="repos-inspected">Repos Inspected</h2>
 <ul>
@@ -6729,6 +6730,17 @@ of them workspace manifests (<code>packages/cli</code>,
 lockfile beside them against the root <code>bun.lock</code>;
 <code>AGENTS.md</code> was treated as data. Nothing was installed, built
 or run</li>
+<li><a
+href="https://github.com/semantification-org/Ontofelia">semantification-org/Ontofelia</a>
+at <a
+href="https://github.com/semantification-org/Ontofelia/commit/a9313c0fcc43a459fde9dd74918ea0ee7a23560e"><code class="commit-id" title="a9313c0fcc43a459fde9dd74918ea0ee7a23560e">a9313c0f…</code></a>
+— read only, at the head of <code>main</code>, a merge of 14 October
+2026. Apache-2.0 with no rider. Screened before reading from a full
+clone: no auto-run surface, one build-time execution point
+(<code>packages/reasoner/build.rs</code>), nothing inside the cooldown,
+and 23 unpinned surfaces, most of them workspace package manifests
+resolved by the root <code>pnpm-lock.yaml</code>. Nothing was installed,
+built or run</li>
 </ul>
 <h2 id="what-the-licences-actually-say">What the licences actually
 say</h2>
@@ -12116,7 +12128,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">191
+href="../capabilities/">192
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems

@@ -1415,6 +1415,22 @@ href="../../systems/synapse-layer/">Synapse Layer</a> shows with a
 content hash. Underneath, one Qdrant API key reads every domain and
 every node holds it. <strong>A scope the agent cannot widen is the right
 default; say in the threat model that the machine can.</strong></p>
+<p><strong><a href="../../systems/ontofelia/">Ontofelia</a> makes the
+key part of every record's identity and parses the model's queries
+against it.</strong> Each quad carries its named graph, a per-user
+<code>urn:ontofelia:user:</code> graph or the shared worldview, and
+every read the runtime assembles lists the sender's graph and the
+worldview in a <code>VALUES</code> clause
+(<code>packages/semantic-memory/src/KnowledgeEngine.ts:566-570</code>).
+The free-form query tool is where a partitioned store usually leaks, and
+<code>checkSparqlScope</code> walks the parsed AST to refuse
+<code>GRAPH ?var</code>, <code>SERVICE</code>, graph-less patterns and
+any graph outside the sender's allowlist
+(<code>packages/semantic-memory/src/sparql/scopeGuard.ts</code>). The
+boundary is a read boundary. A non-owner's <code>memory_store</code>
+call with the model-chosen source <code>user</code> writes a third-party
+fact into the worldview every user reads, and a committed test pins that
+case as intended.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <p>The first of these need not be written by hand. <a
 href="https://github.com/promptfoo/promptfoo">promptfoo</a> ships a
