@@ -152,12 +152,12 @@ removing a single vector. See <a
 href="#the-layer-below-delete-what-the-storage-engine-does-with-the-vector">the
 layer below delete</a>.</li>
 <li><strong>Scope is the most implemented mechanism and the
-shallowest.</strong> 330 of
+shallowest.</strong> 329 of
 749 apply a scope key as a filter on the read path.
 It is also the mark most often satisfied by a single predicate that a
 background job then ignores.</li>
 <li><strong>Negative evidence is almost never tested.</strong>
-468 of 749
+469 of 749
 commit a case asserting that particular material must <em>not</em>
 appear — the assertion every scope, deletion and correction claim
 ultimately rests on. The mark spans two strengths and does not
@@ -336,7 +336,7 @@ the difference should be read as a gap in the atlas rather than a
 finding about the products.</p>
 <p>Two consequences worth stating plainly. The atlas's headline counts —
 67 tombstones,
-468 negative-eval suites — are
+469 negative-eval suites — are
 counts <em>over inspectable code</em>, and a closed system could hold
 any of these mechanisms without this method ever knowing. And a
 mechanism's absence here is weaker evidence about the field than its
@@ -365,7 +365,7 @@ discard the source cannot.</li>
 levels, and the atlas's <code>scope_enforced</code> mark only certifies
 the middle one. A scope <em>tag</em> stored beside the memory is a hope.
 A scope <em>key applied as a filter on the read path</em> is what
-330 of 749
+329 of 749
 systems here have, and is what the mark means. A scope <em>boundary</em>
 — authenticated identity, grants, and a filter that a caller cannot
 widen by passing a different argument — is rarer than the count
@@ -578,10 +578,12 @@ retrieval index while exchange text remains stored. Its Leiden partition
 uses embedding similarity plus positional weight, despite docs also
 claiming entity-weighted partitioning.</p>
 <p><a href="../systems/rainbox/"><code>rainbox</code></a> does not
-center on automatic extraction in the inspected paths. Explicit user
-commands and assistant actions create/update claims; evidence rows
-record whether a claim was user-confirmed, model-inferred, imported, or
-observed.</p>
+center on automatic extraction in the inspected paths. The assistant's
+<code>memory_remember</code> action writes a room-scoped candidate and
+the <code>/memory</code> review page activates, rejects and corrects;
+handlers for explicit chat commands exist in <code>memory/ops.py</code>
+and have no caller. Evidence rows record whether a claim was
+user-confirmed, model-inferred, imported, or observed.</p>
 <p><a
 href="../systems/llm-wiki-memory/"><code>llm-wiki-memory</code></a>
 automatically distills coding transcripts into schema-constrained atoms
@@ -2301,11 +2303,11 @@ dispatch in
 <code>scripts/lib/wiki-mutate.mjs</code>; transcript capture in
 <code>scripts/hooks/flush-worker.mjs</code>; promotion in
 <code>scripts/compile-promote.mjs</code>.</li>
-<li><a href="../systems/rainbox/"><code>rainbox</code></a>: explicit
-commands in <code>rainbox/source/memory/ops.py</code>; assistant actions
-in <code>rainbox/source/agents/assistant.py</code>; review UI actions in
-<code>rainbox/source/webapp/memory_api.py</code>; DB helpers in
-<code>rainbox/source/db/memory.py</code>.</li>
+<li><a href="../systems/rainbox/"><code>rainbox</code></a>: assistant
+actions in <code>rainbox/source/agents/assistant.py</code>; review UI
+actions in <code>rainbox/source/webapp/memory_api.py</code>; DB helpers
+in <code>rainbox/source/db/memory.py</code>; chat-command handlers in
+<code>rainbox/source/memory/ops.py</code> have no caller.</li>
 <li><a href="../systems/letta/"><code>letta</code></a>:
 <code>letta/letta/services/tool_executor/core_tool_executor.py</code>;
 <code>letta/letta/services/block_manager.py</code>;

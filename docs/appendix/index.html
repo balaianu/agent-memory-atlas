@@ -759,7 +759,11 @@ established by sweeping every non-test reference to the metadata field,
 not by executing a recall</li>
 <li><a href="https://github.com/neoneye/RainBox">neoneye/RainBox</a> at
 <a
-href="https://github.com/neoneye/RainBox/commit/e09dd4f6ca2fc2ff0d35ab9743b76b37bc690bfc"><code class="commit-id" title="e09dd4f6ca2fc2ff0d35ab9743b76b37bc690bfc">e09dd4f6…</code></a></li>
+href="https://github.com/neoneye/RainBox/commit/aaa084eae4c5133ab1d01582d6fe6fc27033020a"><code class="commit-id" title="aaa084eae4c5133ab1d01582d6fe6fc27033020a">aaa084ea…</code></a>
+— read only; no auto-run surface, three build-time execution points (two
+<code>conftest.py</code> files and a <code>postinstall</code> in the
+Python sandbox's <code>package.json</code>) and one floating range
+behind a lockfile, so nothing was installed and no suite was run</li>
 <li><a href="https://github.com/letta-ai/letta">letta-ai/letta</a> at <a
 href="https://github.com/letta-ai/letta/commit/5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a"><code class="commit-id" title="5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a">5bcdd177…</code></a></li>
 <li><a
@@ -17162,6 +17166,39 @@ protected document out of a populated LOOKUP beside a public control.
 And it said the server did not rank; LOOKUP ordered by matched terms and
 importance (<code>server/internal/catalog/catalog.go:303-312</code>).
 That last rested on the README rather than the handler.</li>
+<li><strong>Four published claims about <a
+href="../systems/rainbox/">RainBox</a> were wrong at <a
+href="https://github.com/neoneye/RainBox/commit/e09dd4f6ca2fc2ff0d35ab9743b76b37bc690bfc"><code class="commit-id" title="e09dd4f6ca2fc2ff0d35ab9743b76b37bc690bfc">e09dd4f6…</code></a>,
+the pin they were made at, and are corrected.</strong> It awarded
+<code>scope_enforced</code> on the main retrieval's filter, but the uuid
+arm of the same <code>memory_query</code> tool
+(<code>source/agents/assistant.py:1268-1305</code>) applied no room or
+agent predicate, and <code>memory_forget</code> by text
+(<code>:2277-2287</code>) matched claims in every room and listed their
+uuids on an ambiguous match, so the assistant could read another room's
+claim in two calls on its own surface. It did not credit
+<code>negative_eval</code>, though
+<code>test_hard_filters_exclude_secret_expired_out_of_scope</code>
+(<code>source/memory/test_hybrid_retrieval.py:77-94</code>,
+byte-identical at both pins) asserted that a secret, an expired and
+another room's claim were absent from a populated store beside a public
+claim that had to be returned. It described chat commands —
+<code>remember that</code>, <code>forget</code>,
+<code>correct that OLD -&gt; NEW</code>,
+<code>what do you remember?</code> — as a live write path and as the
+producer of the <code>explicit_human_command</code> actor;
+<code>parse_memory_command</code> and <code>handle_memory_command</code>
+(<code>source/memory/ops.py:51</code>, <code>:326</code>) had no caller
+outside tests after <a
+href="https://github.com/neoneye/RainBox/commit/1bdbdf48648449769856474ebbd2984387498c01"><code class="commit-id" title="1bdbdf48648449769856474ebbd2984387498c01">1bdbdf48…</code></a>
+retired the query agents on 1 September 2026, and it presented five
+actors as a structural trust model when two had a producer. And its
+<code>trust_state</code> record cited the write-time conflict query
+(<code>source/db/memory.py:644</code>) as the read path; retrieval's
+status filter is <code>hard_filtered_claims</code>
+(<code>source/memory/retrieval.py:217</code>), and the mark holds on it.
+The scope mark rested on the query arm alone, the commands on their
+handlers and direct tests rather than a caller.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

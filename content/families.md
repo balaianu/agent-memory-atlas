@@ -619,8 +619,10 @@ makes it drop. Three states where the safest is the least likely to be
 configured, stated candidly in the file. The verdict is also not written back, so
 a chunk that fails screening is re-scanned on every retrieval and the store never
 learns that one of its entries is hostile. **Letta** separates core, archival,
-and recall memory inside the loop. **RainBox** routes every belief through one
-governed write path with a five-actor trust model. **MemOS** mounts textual,
+and recall memory inside the loop. **RainBox** routes every new belief through one
+governed write path that lands a model's claim as a candidate no retrieval
+returns, and reads the operator's diary files through a room-bound, read-only
+`diary_query`. **MemOS** mounts textual,
 preference, skill, KV-cache, and parametric memory as one cube. **Mastra**
 compresses older messages into dated observations and activates them without
 blocking. **TencentDB** layers L0 conversation evidence through L3 persona with

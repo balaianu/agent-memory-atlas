@@ -305,7 +305,7 @@ These designs still differ sharply in trust: provenance supports correction, but
 
 [`swafra`](../systems/swafra/) also avoids LLM extraction. Regexes annotate entities, date strings, and preference phrases; conversations get a synthetic facts chunk that acts as a retrieval index while exchange text remains stored. Its Leiden partition uses embedding similarity plus positional weight, despite docs also claiming entity-weighted partitioning.
 
-[`rainbox`](../systems/rainbox/) does not center on automatic extraction in the inspected paths. Explicit user commands and assistant actions create/update claims; evidence rows record whether a claim was user-confirmed, model-inferred, imported, or observed.
+[`rainbox`](../systems/rainbox/) does not center on automatic extraction in the inspected paths. The assistant's `memory_remember` action writes a room-scoped candidate and the `/memory` review page activates, rejects and corrects; handlers for explicit chat commands exist in `memory/ops.py` and have no caller. Evidence rows record whether a claim was user-confirmed, model-inferred, imported, or observed.
 
 [`llm-wiki-memory`](../systems/llm-wiki-memory/) automatically distills coding transcripts into schema-constrained atoms with chunked map/reduce, stores them in dated daily leaves, then compiles them into durable knowledge or lessons. Compile retrieves same-type/facet candidates and asks an LLM for create/update/skip, except same-error-pattern lessons are force-updated deterministically. This path is recoverable and well tested, but promoted atoms become active without a verification gate.
 
@@ -1209,7 +1209,7 @@ the same shape, and nothing in this corpus has one.
 - [`mempalace`](../systems/mempalace/): `process_file()` and `mine()` in `mempalace/mempalace/miner.py`; `tool_add_drawer()` in `mempalace/mempalace/mcp_server.py`; collection access in `mempalace/mempalace/palace.py`.
 - [`swafra`](../systems/swafra/): `add_knowledge()`, `leiden_chunk()`, and `chunk_conversation()` in `swafra/swafra/engine.py`.
 - [`llm-wiki-memory`](../systems/llm-wiki-memory/): MCP dispatch in `llm-wiki-memory/mcp-server/mcp-write-dispatch.mjs`; `writeMemory()` / `saveDocument()` in `scripts/lib/wiki-mutate.mjs`; transcript capture in `scripts/hooks/flush-worker.mjs`; promotion in `scripts/compile-promote.mjs`.
-- [`rainbox`](../systems/rainbox/): explicit commands in `rainbox/source/memory/ops.py`; assistant actions in `rainbox/source/agents/assistant.py`; review UI actions in `rainbox/source/webapp/memory_api.py`; DB helpers in `rainbox/source/db/memory.py`.
+- [`rainbox`](../systems/rainbox/): assistant actions in `rainbox/source/agents/assistant.py`; review UI actions in `rainbox/source/webapp/memory_api.py`; DB helpers in `rainbox/source/db/memory.py`; chat-command handlers in `rainbox/source/memory/ops.py` have no caller.
 - [`letta`](../systems/letta/): `letta/letta/services/tool_executor/core_tool_executor.py`; `letta/letta/services/block_manager.py`; `letta/letta/services/passage_manager.py`.
 - [`supermemory`](../systems/supermemory/): `supermemory/packages/ai-sdk/src/tools.ts`, `supermemory/apps/mcp/src/server.ts`, `supermemory/apps/mcp/src/client.ts`.
 - [`verel`](../systems/verel/): `verel/src/verel/memory/local.py`, `verel/src/verel/memory/remember.py`.

@@ -1656,8 +1656,10 @@ least likely to be configured, stated candidly in the file. The verdict
 is also not written back, so a chunk that fails screening is re-scanned
 on every retrieval and the store never learns that one of its entries is
 hostile. <strong>Letta</strong> separates core, archival, and recall
-memory inside the loop. <strong>RainBox</strong> routes every belief
-through one governed write path with a five-actor trust model.
+memory inside the loop. <strong>RainBox</strong> routes every new belief
+through one governed write path that lands a model's claim as a
+candidate no retrieval returns, and reads the operator's diary files
+through a room-bound, read-only <code>diary_query</code>.
 <strong>MemOS</strong> mounts textual, preference, skill, KV-cache, and
 parametric memory as one cube. <strong>Mastra</strong> compresses older
 messages into dated observations and activates them without blocking.
