@@ -9718,14 +9718,14 @@ current. <code>validate.py --export-schema</code> regenerates
 <code>schemas/frontmatter.schema.json</code> and CI fails when the
 committed copy drifts, so the published contract cannot describe a
 validator that no longer exists.</li>
-<li>Biggest risk: the three invariants the project states as its
-philosophy are the three nothing checks. <code>evidence/README.md</code>
-says "Every accepted ADR and confirmed pivot should have at least one
-evidence file. Claims without evidence are hypotheses" — there are eight
-accepted ADRs, five accepted pivots and zero evidence files. Two ADR
-files declare <code>adr_id: ADR-0010</code> with unrelated decisions.
-And the corpus's single supersession pair is reciprocal because someone
-did it carefully, not because anything verifies that
+<li>Biggest risk: the rule the project leads with is the one nothing
+checks. The README says a decision is not accepted "until the evidence
+artifact exists and is referenced"; the <code>evidence</code> type was
+removed when OCC became the sole evidence authority, and none of the 32
+accepted ADRs and 5 accepted pivots links a receipt, a CI run or a pull
+request. Eighteen carry an <code>## Evidence</code> section, and it is
+prose. The corpus's single supersession pair is reciprocal because
+someone did it carefully, not because anything verifies that
 <code>supersedes</code> and <code>superseded_by</code> agree.</li>
 <li>Most reusable component: <code>check_index_freshness</code>, which
 regenerates the three indexes in memory and fails the build if they
@@ -9735,12 +9735,13 @@ file-backed store, and it is a dozen lines. Beside it,
 <code>check_text_sanitization.py</code>, which applies the artifact
 patterns to commit messages and PR bodies and deliberately refuses the
 <code># sanitization-ok:</code> allowlist there.</li>
-<li>Maturity impression: Apache-2.0, 89 files, 56 artifacts across five
-populated directories, 735 lines of Python in four scripts, five
-CI-gated checks and no tests on any of them. Three of the nine
-documented artifact types — evidence, plans, experiments — have no
-instances at all, and the experiment schema is the one with a
-first-class
+<li>Maturity impression: MIT, 1,536 lines of Python in six scripts,
+eight validator checks and 91 pytest functions that CI runs before them,
+over 430 Markdown artifacts in eight populated sections. ADR ids are
+unique with no exemption; the one collision, ADR-0010, was resolved by
+renumbering the later file to ADR-0052 with a former-id line.
+<code>experiments/</code> has no instances, and the experiment schema is
+the one with a first-class
 <code>outcome: confirmed | refuted | inconclusive</code>.</li>
 <li>Study when: you are designing frontmatter for a knowledge store
 somebody has to keep honest, and you want a worked example of typed

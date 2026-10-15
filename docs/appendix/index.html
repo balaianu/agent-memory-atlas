@@ -2595,7 +2595,7 @@ installed and no test was run</li>
 <li><a
 href="https://github.com/OmniNode-ai/knowledge_base">OmniNode-ai/knowledge_base</a>
 at <a
-href="https://github.com/OmniNode-ai/knowledge_base/commit/cb724907605ed9a1c6ba1b574168153080a0d2a7"><code class="commit-id" title="cb724907605ed9a1c6ba1b574168153080a0d2a7">cb724907…</code></a>
+href="https://github.com/OmniNode-ai/knowledge_base/commit/d7ff5a73fd3f36c6372d1e048fd5a35af5dc38bb"><code class="commit-id" title="d7ff5a73fd3f36c6372d1e048fd5a35af5dc38bb">d7ff5a73…</code></a>
 — read only; nothing was installed and the counts come from reading the
 frontmatter of every artifact in the tree</li>
 <li><a
@@ -17713,6 +17713,27 @@ rested on the absence of prose about the mechanism rather than a search
 for its writers, the scope mark on the library path rather than the
 surface the agent reaches, and the last three on a census taken before
 the pin was set.</li>
+<li><strong>Seven published claims about <a
+href="../systems/omninode-knowledge-base/">OmniNode Knowledge Base</a>
+were wrong at <a
+href="https://github.com/OmniNode-ai/knowledge_base/commit/cb724907605ed9a1c6ba1b574168153080a0d2a7"><code class="commit-id" title="cb724907605ed9a1c6ba1b574168153080a0d2a7">cb724907…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The body described the tree of the first pin. It said
+<code>validate.py</code> ran five checks and that nothing checked that
+an ADR id identified one record. The validator ran eight, including
+<code>check_adr_id_uniqueness</code> with one exact-path exemption for
+ADR-0010 (<code>scripts/validate.py:456-520</code>). It said the scripts
+had no tests; <code>tests/</code> held 92 pytest functions in five
+files, and <code>.github/workflows/ci.yml:40</code> ran them. It listed
+<code>deep-dive</code> and <code>evidence</code> artifact types and
+quoted <code>evidence/README.md</code>; both types and directories were
+removed on 26 August 2026. It counted 37 accepted ADRs and 7 accepted
+pivots, where there were 32 and 5. It quoted the <code>CLAUDE.md</code>
+reconciliation stamp as the 2026-06-21 refresh; the file read
+2026-08-19. The matrix said a <code>superseded</code> status was used
+once, where three artifacts carried it. The verdict entry and the
+families paragraph kept the first pin's counts, a five-check validator
+and an Apache-2.0 licence. No mark changes.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -1941,14 +1941,14 @@ competes on and which most of this atlas does not model at all.
 its clearest instance of a rule that is written rather than checked. Every
 artifact carries typed frontmatter validated against a discriminated union, so a
 decision record has its own status vocabulary — proposed, accepted, superseded,
-deprecated, rejected — and CI fails a file that steps outside it, along with a
-`refs:` entry that does not resolve, a stale generated index, or forbidden
-content in a commit message. What none of the five checks covers is the rule the
-project leads with: *"Every accepted ADR and confirmed pivot should have at least
-one evidence file. Claims without evidence are hypotheses."* Eight accepted ADRs,
-five accepted pivots, and `evidence/` holds a README and nothing else. The same
-gap admits two ADR files sharing `adr_id: ADR-0010`, and leaves the one
-supersession pair in the corpus reciprocal by hand. It sits beside
+deprecated, rejected — and CI fails a file that steps outside it. Eight validator
+checks and a pytest suite gate every merge: a file in an unregistered location, a
+duplicate ADR id, a `refs:` entry that does not resolve, a stale generated index
+and forbidden content in a commit message all fail. What none covers is the rule
+the README leads with, that a decision is not accepted *"until the evidence
+artifact exists and is referenced"*. Evidence is held in another OmniNode
+repository, and none of the 37 accepted ADRs and pivots links a receipt, a run or
+a pull request. The one supersession pair is reciprocal by hand. It sits beside
 [agent-mesh](../systems/agent-mesh/), which models the same decision-ledger shape
 and enforces its status transitions in code.
 

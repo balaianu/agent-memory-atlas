@@ -22549,34 +22549,40 @@ a pool that ignores the SQL</td>
 <tr>
 <td><a
 href="../systems/omninode-knowledge-base/"><code>omninode-knowledge-base</code></a></td>
-<td>A Markdown artifact with typed YAML frontmatter — one of eight
-kinds, each with its own status vocabulary, id and cross-reference
-list</td>
-<td>Git. 56 artifacts across five populated directories, plus three
+<td>A Markdown artifact with typed YAML frontmatter, one of nine kinds,
+each with its own status vocabulary, plus an id, topics and a
+cross-reference list</td>
+<td>Git. 430 artifacts across eight populated sections, plus three
 generated index files</td>
-<td>None the repository runs. Three generated indexes — chronological,
-by topic, by type — plus grep over the tree</td>
-<td>A pull request. Five checks run in CI: frontmatter schema,
-<code>refs:</code> resolution, sanitization, index freshness, and
-relative links</td>
-<td>Supersession by frontmatter — <code>supersedes</code>,
-<code>superseded_by</code>, and a status moved to
-<code>superseded</code>. Used once, and nothing enforces the pair</td>
-<td>A <code>topics:</code> list used to group a generated index; not
-applied as a filter anywhere</td>
-<td>A <code>CLAUDE.md</code> addressed to a coding agent, listing the
-commands and the four rules; no API, no tool surface</td>
-<td>None. <code>generate_indexes.py</code> runs on demand, and CI fails
-if its output differs from what was committed</td>
+<td>None the repository runs. Three generated indexes, chronological, by
+topic and by type, plus grep over the tree</td>
+<td>A pull request. CI runs pytest, then eight validator checks:
+registered locations, frontmatter schema, filename shape, unique ADR
+ids, refs resolution, sanitization, index freshness and relative links;
+a separate job scans commit messages and PR text</td>
+<td>Supersession by frontmatter on ADRs only: supersedes, superseded_by
+and a status moved to superseded. One pair uses it, and nothing checks
+that the two sides agree. Two architecture documents carry superseded
+with no field to say by what</td>
+<td>A topics list used to group a generated index; not applied as a
+filter anywhere</td>
+<td>A CLAUDE.md addressed to a coding agent, listing the commands and
+the rules; no API, no tool surface. Other OmniNode repositories call a
+reusable drift-guard workflow that reads this repository's migration
+manifest</td>
+<td>None. generate_indexes.py runs on demand, and CI fails if its output
+differs from what was committed</td>
 <td>A per-type status enum validated against a discriminated union on
-every file, then printed as a label in the generated index; no code
-reads it back to decide anything</td>
-<td>The checks that exist are real and gate merges, and the sanitization
-gate deliberately refuses its own allowlist on commit messages and PR
-bodies</td>
-<td>The three rules the project states as its philosophy — evidence
-before acceptance, unique decision ids, reciprocal supersession — are
-the three nothing checks</td>
+every file, then printed as a label in the by-type index; no code reads
+it back to decide anything</td>
+<td>Every check gates a merge, and the validator's checks have tests
+behind them; ADR ids are unique with no exemption; the commit-message
+and PR-text gate refuses the author allowlist the artifact scan
+honours</td>
+<td>The rule the README leads with, that a decision is not accepted
+until its evidence artifact exists and is referenced, has no check, and
+no accepted ADR or pivot links one. Supersession reciprocity is by
+hand</td>
 </tr>
 <tr>
 <td><a
