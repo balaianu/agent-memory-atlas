@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 750 reports.**
+**This page covers all 751 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6810,6 +6810,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0, 24,295 lines of Python under `app/`, five commits on master between 16 March and 7 September 2026, the first a monorepo sync. 387 test functions needing Postgres and a seeded user, no CI. Two marks: `scope_enforced` and `audit_log`. `negative_eval` is withheld: the one must-not-retrieve case cannot run at the pin, because its fixture reaches the missing import, and it puts both animas under one user, so it tests the anima predicate rather than the RLS it names. `trust_state`, `bitemporal`, `human_review` and `tombstone` are withheld.
 - Study when: you want a curation pass whose every rewrite is inspectable, provenance from memory to events and from knowledge to memory, or tenant isolation done in Postgres row-level security.
 - Do not copy when: you need to self-host from this repository as published, deletion must reach derived knowledge and cached packs, late or back-dated events must still become memories, or tenants who do not trust each other share a deployment, since the manual workflow trigger runs the Dreamer for any anima id.
+
+### [`hyperconsciousness`](../systems/hyperconsciousness/)
+
+- Best idea: **check every grant in the delegation chain against every record, on the node holding the key.** Grants are signed structs over kind, tags, sensitivity and a write-time window; a subagent holds an attenuated child that cannot widen any dimension, and every MCP read, the by-ref `record` included, requires all links to allow the decrypted labels before releasing text.
+- Biggest risk: **the agent skill's discovery command reads around the grants and the corrections.** `hc find --scope hc` on a key-holding device scans every note and file with an empty chain, no sensitivity ceiling and no capture-visibility check, so secret notes and superseded or retracted captures come back. `hc read` beside it does apply visibility.
+- Most reusable component: `src/grant.rs` (`Scope::allows`, `Scope::contains`, `attenuate`, `verify_chain`) with `src/capture_state.rs` — a pure-function permission check over a signed chain, and a versioned source whose identity includes the authenticated writer, so only that writer can supersede or retract it.
+- Second risk: **ordinary notes cannot be corrected or forgotten.** No CLI, HTTP or MCP verb retracts or deletes a plain note, sensitivity is whatever the writer typed, and a `remember` with `kind: "revoke"` revokes the writer's own grant.
+- Maturity impression: MIT developer alpha, 70,941 lines of Rust under `src/`, 63 commits under two author names between 14 September and 14 October 2026, the first adding 70,261 lines. 633 Rust test functions run in CI on Linux, macOS and Windows; a recall eval with a committed first-run baseline sits outside CI. Three marks: `scope_enforced`, `audit_log` and `negative_eval`. `trust_state`, `tombstone`, `bitemporal` and `human_review` are withheld: no status field, retraction keyed on the source rather than the value, grant time is the write clock, and no memory waits for review.
+- Study when: you want agents to read slices of a private, replicated, offline-capable store with expiry, revocation, one-time owner approval and a signed log of every write and read.
+- Do not copy when: wrong facts must be correctable or deletable, sensitivity must be classified rather than declared, or agents run with a shell on the owner's device and the bundled skill.
 
 ### [`ken`](../systems/ken/)
 

@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Rust store of signed, encrypted
+per-device logs whose agents read and write through expiring grants
+scoped by kind, tags, sensitivity and time.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Hyperconsciousness — Agent Memory Atlas">
+    <meta property="og:description" content="A Rust store of signed,
+encrypted per-device logs whose agents read and write through expiring
+grants scoped by kind, tags, sensitivity and time.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hyperconsciousness — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Rust store of signed,
+encrypted per-device logs whose agents read and write through expiring
+grants scoped by kind, tags, sensitivity and time.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Hyperconsciousness — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Hyperconsciousness",
+      "description": "A Rust store of signed, encrypted per-device logs whose agents read and write through expiring grants scoped by kind, tags, sensitivity and time.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">An encrypted, signed append-only log with
+grant-scoped agent reads</p>
+          <h1>Hyperconsciousness</h1>
+          <p class="document-deck">A Rust store of signed, encrypted
+per-device logs whose agents read and write through expiring grants
+scoped by kind, tags, sensitivity and time.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/louis030195/hyperconsciousness">
+              <span>Source</span>
+              <strong>louis030195/hyperconsciousness</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/louis030195/hyperconsciousness/commit/0f0c8653c26e89c68d3f3ef844ef960b40f26b24" title="0f0c8653c26e89c68d3f3ef844ef960b40f26b24">
+              <span>Analyzed revision</span>
+              <code>0f0c8653…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/louis030195--hyperconsciousness" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>louis030195--hyperconsciousness</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>70,941
+lines of Rust under src/, inline test modules included; main.rs 11,022,
+mcp.rs 3,869, search_index.rs 3,675, query.rs 3,064; an optional
+3,676-line Next.js dashboard</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>63
+commits on main under two author names for one maintainer, 14 September
+– 14 October 2026; the first commit adds 70,261 lines, so earlier
+history is not in this repository</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>633
+Rust test functions, 587 inline under src/ and 46 in tests/, 5 of them
+ignored; CI runs cargo test on Linux, macOS and Windows; three Node eval
+suites with committed first-run baselines, outside CI; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Hyperconsciousness (<code>hc</code>, formerly Brainmesh) is an
+encrypted personal and company knowledge store that agents reach through
+narrowly scoped grants. Each device appends signed, sealed records to
+its own log, devices replicate those logs, and an agent gets a grant
+over record kinds, tags, a sensitivity ceiling and a time window. What
+is notable is where enforcement sits: on the node holding the key,
+record by record, across a whole delegation chain. What is weak is
+correction, and one read path the project's own agent skill sends agents
+to first.</p>
+<p>The store is a single Rust binary with no model, no vector index and
+no external service. The MCP server is started with one grant id and
+exposes ten tools: search, recent, record, overview, files, remember,
+remember_many, request_access, access_status and use_secret. Search is
+literal substring by default with an opt-in BM25 relevance mode. An
+encrypted trigram fold narrows candidates without storing plaintext. The
+licence is MIT. The README calls the project a developer alpha with no
+independent security audit.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>Every grant read checks every grant in the chain.</strong>
+Search, recent, record-by-ref, overview and files each require
+<code>chain.iter().all(|g| g.allows(item, READ, now))</code> on the
+decrypted labels (<code>src/query.rs:2295</code>, <code>:2625</code>,
+<code>:3036</code>). A tool argument can only narrow. The one widening
+argument, <code>access_request_id</code>, selects a short-lived grant
+the owner approved behind a separate credential
+(<code>src/mcp.rs:1686-1730</code>).</li>
+<li><strong><code>hc find --scope hc</code> reads around all of
+it.</strong> On a key-holding device it scans every decryptable note and
+file with no grant, no sensitivity ceiling and no retraction filter
+(<code>src/main.rs:417-448</code>, <code>:520-544</code>). The
+<code>hyperconsciousness</code> agent skill lists <code>hc find</code>
+ahead of the MCP tools.</li>
+<li><strong>Ordinary notes cannot be corrected or deleted.</strong>
+Correction exists only for versioned "managed captures", and only the
+grantee that wrote one can supersede or retract it
+(<code>src/capture_state.rs:54-96</code>). No CLI or HTTP route retracts
+anything.</li>
+<li><strong>The log is the audit trail.</strong> Every write,
+retraction, grant, revocation and read receipt is a hash-chained signed
+record, and nothing in the production code removes one
+(<code>src/log.rs:339-370</code>).</li>
+</ul>
+<p>Three marks: <code>scope_enforced</code>, <code>audit_log</code> and
+<code>negative_eval</code>. Section 9 names the four withheld.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a record a caller wrote. It becomes a belief the moment
+the append is fsynced: there is no extraction, no model call and no
+candidate state. A record's payload is JSON with a <code>kind</code>,
+<code>tags</code>, a <code>sensitivity</code> from 0 (normal) to 3
+(secret) and <code>text</code> (<code>src/mcp.rs:2313-2331</code>).
+Those labels are the whole permission surface.
+<code>inspect_payload</code> turns them into an <code>Item</code> whose
+<code>at</code> is the record's hybrid logical clock, the write time
+(<code>src/query.rs:90-147</code>). An unparseable payload or an
+unlabelled unknown kind gets sensitivity 255 and is denied to every
+grant (<code>src/query.rs:118-121</code>).</p>
+<p><strong>An ordinary note never stops being a belief.</strong> There
+is no delete verb, no supersede verb and no status field for notes. The
+mission statement says that retracted is not erased; for ordinary notes
+nothing is retracted either.</p>
+<p><strong>A managed capture is a versioned source.</strong> A
+<code>remember</code> call carrying both a <code>context</code> and a
+<code>change</code> of <code>{version, operation}</code> becomes one
+version of a source. The source identity is a hash of the authenticated
+grantee, <code>producer</code>, <code>source_id</code> and
+<code>record_id</code> (<code>src/capture_state.rs:54-96</code>). The
+client cannot choose the principal, so only the same grantee can correct
+its own capture. <code>State::visible</code> returns a record only when
+it is the latest version, the operation is <code>upsert</code>, and no
+two different payloads share that version number
+(<code>src/capture_state.rs:206-221</code>). A later version hides
+earlier ones. A <code>retract</code> hides the source. A conflicting
+duplicate hides the version.</p>
+<p><strong>Which readers honour that</strong> decides what the agent
+sees:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Read path</th>
+<th>Grant scope</th>
+<th>Capture visibility</th>
+<th>Anchor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP <code>search</code>, <code>recent</code>, <code>files</code>
+(scan, snapshot, index)</td>
+<td>every grant in chain</td>
+<td>yes</td>
+<td><code>query.rs:2290-2295</code>, <code>:2398-2406</code>,
+<code>:2536-2539</code></td>
+</tr>
+<tr>
+<td>MCP relevance search</td>
+<td>every grant in chain</td>
+<td>yes</td>
+<td><code>query/ranked.rs:274-285</code>, <code>:376-378</code></td>
+</tr>
+<tr>
+<td>MCP <code>record</code> by ref</td>
+<td>every grant in chain</td>
+<td>yes, point read</td>
+<td><code>query.rs:2616-2625</code>, <code>:2709-2716</code>,
+<code>:2782-2788</code></td>
+</tr>
+<tr>
+<td>MCP <code>overview</code></td>
+<td>every grant in chain</td>
+<td>yes</td>
+<td><code>query.rs:2889-2892</code>, <code>:2957-2965</code>,
+<code>:3031-3036</code></td>
+</tr>
+<tr>
+<td><code>hc ask &lt;grant&gt;</code></td>
+<td>every grant in chain</td>
+<td>yes</td>
+<td><code>main.rs:6447-6497</code>, <code>query.rs:2501</code>,
+<code>:2536-2539</code></td>
+</tr>
+<tr>
+<td><code>hc read</code> (owner)</td>
+<td>none</td>
+<td>yes</td>
+<td><code>main.rs:3563-3575</code></td>
+</tr>
+<tr>
+<td><code>hc find --scope hc</code> (owner keys)</td>
+<td>none</td>
+<td><strong>no</strong></td>
+<td><code>main.rs:417-448</code>, <code>:520-544</code>,
+<code>search_index.rs:375-405</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The index folds managed-capture metadata regardless of the reader's
+scope. A correction made under a tag the reader cannot see suppresses
+the old version the reader can (<code>docs/SPEC.md:723-725</code>,
+<code>src/search_index.rs:1394</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a Hyperconsciousness note or managed capture becomes readable, which transitions exist, and which read path ignores them</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a Hyperconsciousness note or managed capture becomes readable, which transitions exist, and which read path ignores them
+flowchart TD
+    W[&quot;remember / hc write:&lt;br/&gt;kind, tags, sensitivity, text&quot;] --&gt; V{&quot;carries context&lt;br/&gt;and change?&quot;}
+    V -- &quot;no&quot; --&gt; N[&quot;ordinary note:&lt;br/&gt;appended, signed,&lt;br/&gt;no later transition&quot;]
+    V -- &quot;yes&quot; --&gt; S[&quot;managed capture version N&lt;br/&gt;keyed on grantee, producer,&lt;br/&gt;source_id, record_id&quot;]
+    S --&gt; U{&quot;later record for&lt;br/&gt;the same source?&quot;}
+    U -- &quot;upsert, version above N&quot; --&gt; HID[&quot;version N hidden;&lt;br/&gt;kept in the log&quot;]
+    U -- &quot;retract&quot; --&gt; RET[&quot;source hidden;&lt;br/&gt;every version kept in the log&quot;]
+    U -- &quot;different payload,&lt;br/&gt;same version&quot; --&gt; CON[&quot;version hidden&lt;br/&gt;as conflicted&quot;]
+    U -- &quot;none&quot; --&gt; CUR[&quot;current version&quot;]
+    N --&gt; G{&quot;grant read:&lt;br/&gt;every grant in chain&lt;br/&gt;allows kind, tags,&lt;br/&gt;sensitivity, time?&quot;}
+    CUR --&gt; G
+    G -- &quot;yes&quot; --&gt; OUT[&quot;returned by search,&lt;br/&gt;recent, record, overview,&lt;br/&gt;files, hc ask&quot;]
+    G -- &quot;no&quot; --&gt; WH[&quot;withheld,&lt;br/&gt;counted in the read receipt&quot;]
+    HID --&gt; F[&quot;hc find --scope hc&lt;br/&gt;on a key-holding device:&lt;br/&gt;no grant, no ceiling,&lt;br/&gt;no visibility check&quot;]
+    RET --&gt; F
+    N --&gt; F
+    CUR --&gt; F
+    F --&gt; OWN[&quot;every matching note&lt;br/&gt;and file returned&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p><code>hc</code> is one Rust binary over a store directory,
+<code>~/.brain</code> by default. It holds
+<code>log/&lt;author&gt;/</code> segments of fixed-header binary
+records, content-addressed encrypted blobs, an identity, and a
+<code>cache/</code> of rebuildable encrypted folds
+(<code>src/log.rs</code>, <code>src/blob.rs</code>,
+<code>src/identity.rs</code>). A record is a 122-byte header (magic
+<code>BRN1</code>, key type, author, <code>seq</code>,
+<code>prev</code>, HLC, epoch, nonce, payload length), an
+XChaCha20-Poly1305 payload sealed with the header as associated data,
+and an Ed25519 signature over both (<code>src/record.rs:5-24</code>,
+<code>:135-170</code>). Segments roll at 1 MiB
+(<code>src/log.rs:39</code>).</p>
+<p><strong>Processes.</strong> <code>hc mcp --as &lt;grant&gt;</code> is
+a stdio JSON-RPC server bound to one grant chain
+(<code>src/main.rs:6500-6521</code>). <code>hc serve-http</code> serves
+the same tools on <code>POST /mcp</code> behind an OAuth authorization
+server with PKCE and optional DPoP, and adds <code>/capture</code> and
+phone audio and context intake (<code>src/http.rs:1039-1352</code>,
+<code>src/oauth.rs</code>). A company gateway mode checks signed
+per-device requests against owner-signed membership policy
+(<code>src/access.rs</code>, <code>src/mcp.rs:151-194</code>).
+<code>hc service install</code> runs background replication. Sync is a
+four-verb protocol carried over SSH, TCP, a blind relay or an
+S3-compatible bucket (<code>src/sync.rs:4-16</code>).</p>
+<p><strong>Caches.</strong> The search fold is encrypted metadata and
+opaque trigram postings per log segment, bound to the signed heads and a
+key fingerprint, and rebuilt whenever either changes
+(<code>docs/ARCHITECTURE.md</code>,
+<code>src/search_index.rs:38-47</code>). A permission fold holds revoked
+grant ids and verified grant blobs (<code>src/revocation.rs</code>). A
+missing or stale cache causes a rebuild, never a grant.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The documented install is a checksum-verified prebuilt binary into
+<code>~/.local/bin</code>, or
+<code>cargo build --release --locked</code> on Rust 1.88.0. Installer
+copies check GitHub for updates at most every six hours and replace
+themselves on the next launch. Nothing else has to run: no database, no
+model, no API key. A store works offline, and a second device needs
+pairing and sync. The store is not hand-repairable: records are sealed
+binary, so <code>hc read</code>, <code>hc audit</code> and the optional
+dashboard are the only views. The dashboard is a separate Bun and
+Next.js app that reads through the CLI and an authenticated MCP reader.
+The npm package's <code>postinstall</code> builds the crate from source
+with <code>cargo</code> (<code>npm/scripts/install.js</code>).</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<ul>
+<li><strong>Owner write.</strong> <code>hc write</code> builds
+<code>{kind, sensitivity, tags, text}</code> with sensitivity defaulting
+to normal and calls <code>append</code>
+(<code>src/main.rs:4999-5045</code>).</li>
+<li><strong>Agent write.</strong> <code>remember</code> parses
+<code>RememberInput</code>, checks labels with
+<code>valid_record_labels</code>, and calls
+<code>permit_write_indexed</code>, which requires every grant in the
+chain to allow <code>WRITE</code> on the item and returns the leaf grant
+(<code>src/mcp.rs:1283-1316</code>, <code>:2237-2300</code>,
+<code>src/query.rs:2032-2070</code>). <code>payload</code> stamps
+<code>provenance</code>, <code>grant</code> and <code>grantee</code>
+(<code>src/mcp.rs:2313-2331</code>). The record is signed by the hosting
+node's device key.</li>
+<li><strong>Managed capture write.</strong>
+<code>append_capture_changes</code> loads the capture fold, refuses a
+version not above the current one, refuses to retract an unknown source,
+refuses when a prior version's labels fall outside the current grant,
+and rechecks scope at the signed timestamp
+(<code>src/capture_writer.rs:40-130</code>). An exact retry returns the
+original receipt without appending.</li>
+<li><strong>Search and recent.</strong> <code>call_once</code> builds a
+<code>Filter</code> from the arguments, then runs
+<code>look_snapshot</code>, <code>look_indexed</code> or the ranked
+variants with the server's chain (<code>src/mcp.rs:856-1104</code>). The
+release check after a read reopens keys, re-verifies the chain and
+validates the log tail (<code>src/mcp.rs:1666-1683</code>). Each read
+appends a receipt.</li>
+<li><strong>Point read.</strong> <code>record</code> resolves an
+<code>author-prefix:seq</code> ref through
+<code>record_by_ref_indexed</code>, <code>_snapshot</code> or the plain
+scan, each checking grant and point-read visibility
+(<code>src/query.rs:2587-2820</code>).</li>
+<li><strong>Owner discovery.</strong> <code>find_command</code> searches
+skills, PKM, the store and secret descriptors. Its store branch uses
+<code>visit_local_discovery</code> with an empty grant chain, or a full
+scan fallback, and <code>collect_hc_discovery_hit</code> keeps any note
+or file whose text or name contains the query
+(<code>src/main.rs:348-519</code>, <code>:520-544</code>,
+<code>src/search_index.rs:375-405</code>).</li>
+<li><strong>Revocation.</strong> <code>hc revoke</code> appends
+<code>{"kind":"revoke","grant":&lt;id&gt;}</code>; both folds treat any
+such record as revoking that grant and every grant below it
+(<code>src/query.rs:149-153</code>,
+<code>src/revocation.rs:606-612</code>).</li>
+<li><strong>One-time widening.</strong> <code>request_access</code>
+stores an owner-visible request;
+<code>/mobile/permissions/&lt;id&gt;/approve</code> mints a grant, two
+minutes by default, behind the approval credential;
+<code>call_chain</code> consumes it for one call
+(<code>src/permission.rs:480-620</code>,
+<code>src/http.rs:1002-1038</code>,
+<code>src/mcp.rs:1686-1730</code>).</li>
+<li><strong>Tests.</strong> <code>src/query.rs</code> tests,
+<code>src/capture_change_tests.rs</code>,
+<code>src/context_tests.rs</code>,
+<code>tests/capture_projection.rs</code>,
+<code>tests/access_policy.rs</code>, and the Node-run recall suite over
+<code>tests/recall_evals.rs</code>.</li>
+</ul>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><strong>Envelope.</strong>
+<code>Record { key_type, author, seq, prev, hlc, epoch, nonce, sealed, sig }</code>
+(<code>src/record.rs:54-64</code>). <code>seq</code> is gapless per
+author and <code>prev</code> is the BLAKE3 of the author's previous
+record. Two different records at one <code>seq</code> freeze that
+author's log until a person re-enrols the device
+(<code>src/log.rs:627-648</code>).</p>
+<p><strong>Payload.</strong> JSON with no schema enforced on the owner
+path. The permission view is
+<code>Item { at, kind, tags, sensitivity }</code>
+(<code>src/grant.rs:40-45</code>). Legacy unlabelled notes read as
+normal; legacy files read as personal
+(<code>src/query.rs:118-121</code>).</p>
+<p><strong>Grant.</strong>
+<code>Grant { issuer, to, scope, actions, not_after, parent, sig }</code>
+with <code>Scope { after, before, kinds, tags, max_sensitivity }</code>
+and actions READ, WRITE, SEND and USE (<code>src/grant.rs:22-28</code>,
+<code>:50-58</code>, <code>:266-275</code>). Empty kinds or tags mean
+any; a tag list is any-of. <code>attenuate</code> signs a narrower child
+and <code>Scope::contains</code> refuses widening on any dimension
+(<code>src/grant.rs:100-130</code>, <code>:468-508</code>). The time
+window is on write time, not on any time the content describes.</p>
+<p><strong>Capture context.</strong>
+<code>Context { producer, source_id, record_id, revision, observed_at_ms, material, source_refs }</code>,
+with <code>material</code> one of observation, derived, task handoff or
+procedure candidate (<code>src/capture.rs:13-33</code>). The schema's
+own description says these fields grant nothing and change no filtering
+(<code>src/capture.rs:90</code>). No reader filters on
+<code>material</code> or <code>observed_at_ms</code>.</p>
+<p><strong>Other compartments.</strong> Workspace files carry
+<code>workspace:&lt;name&gt;</code> and
+<code>workspace:&lt;name&gt;/path:&lt;path&gt;</code> tags, so a path
+grant is a tag grant (<code>src/workspace.rs:395-420</code>,
+<code>src/main.rs:6034-6046</code>). A space is a separately keyed
+brain. Company roles are separately keyed compartments, so a device not
+given a role never holds that ciphertext's key
+(<code>src/main.rs:6957-6960</code>).</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is tool-mediated; nothing is injected into a prompt.
+Default search is a case-insensitive substring match over decrypted
+text, newest first, with a cursor bound to the filters and the first
+page's resolved time window (<code>src/mcp.rs:1897-1996</code>).
+Relevance mode tokenises on non-alphanumerics, drops a stopword list,
+matches word prefixes of at least three characters and ranks by BM25
+computed over authorized candidates only. Collection statistics
+therefore do not reflect what the grant cannot see
+(<code>src/query/ranked.rs:5-8</code>, <code>:274-285</code>). It
+refuses rather than truncates beyond 10,000 candidates.</p>
+<p>The encrypted trigram fold is a candidate superset; every candidate
+body is decrypted, signature-checked and exact-matched
+(<code>docs/SPEC.md:735-740</code>). Segment summaries of time,
+sensitivity, kinds and tags let a grant skip whole segments it cannot
+read (<code>src/search_index.rs:1662-1700</code>).</p>
+<p>Output is budgeted: 12,000 characters per response by default and
+64,000 at most, 600 per excerpt, with each line carrying a date and a
+ref so the model can reopen the record (<code>src/mcp.rs:56-63</code>).
+Structured output is <code>hc.context.v1</code>, marked
+<code>content_role: "untrusted_evidence"</code>, with
+<code>capture_trust: "producer_claims_unverified"</code> on captures
+(<code>src/mcp.rs:2134</code>, <code>:2193</code>). The tool
+descriptions tell the model that rank and ingestion time do not
+establish truth and that a miss is not proof of absence.</p>
+<p>The failure modes are lexical. A paraphrase misses. The committed
+recall baseline records the 7 capability cases failing, all paraphrase,
+alias or relevance-order cases, beside 19 contract cases passing
+(<code>evals/recall/baseline.json:19-30</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is explicit: an owner command, an agent tool call, or an
+ingestion skill that an agent runs against a source and then calls
+<code>remember_many</code>. HC itself extracts nothing. A write is one
+record per note, appended under the author lock and fsynced before the
+call returns (<code>src/log.rs:650-722</code>). A local CLI writer waits
+up to three seconds for a busy lock. <code>remember_many</code> takes up
+to 250 items and 8 MiB, checks each against the grant, and appends none
+if any fails (<code>src/mcp.rs:64-65</code>,
+<code>:1317-1366</code>).</p>
+<p>Ordinary writes are not idempotent; a retried <code>remember</code>
+can duplicate. Versioned captures are: the same version with the same
+digest returns the original receipt, and the same version with different
+content is refused (<code>src/capture_state.rs:222-239</code>). The
+digest excludes the <code>grant</code> field so a renewed grant does not
+break a retry.</p>
+<p>Labels are the writer's claim. <code>hc write</code> without
+<code>--sensitivity</code> writes a normal note whatever it says, and
+nothing classifies text. A grant caps what a writer may label, so a
+work-notes grant cannot file a medical note
+(<code>src/mcp.rs:2606-2610</code>).</p>
+<p><code>kind</code> is free text. A <code>remember</code> call with
+<code>kind: "revoke"</code> under a grant whose kinds are unrestricted
+produces <code>{"kind":"revoke","grant":&lt;leaf grant id&gt;}</code>,
+because <code>payload</code> stamps the effective grant into
+<code>grant</code>. Both revocation folds read any record of that shape
+(<code>src/mcp.rs:2257-2262</code>, <code>:2313-2322</code>,
+<code>src/query.rs:2070</code>, <code>src/revocation.rs:609-611</code>).
+The reach is the agent's own grant, so this is self-revocation rather
+than escalation. It was found by reading, and no test exercises it.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write blocks on one fsync and no model call. A record is
+retrievable on the next read: the search fold catches up from the
+verified tail inside the query, within a three-pass, 10,000-record, 64
+MiB budget, failing closed past it (<code>docs/SPEC.md:762-768</code>).
+No background pass rewrites the store, and log segments are never
+rewritten. A cold index build folds the whole signed history once; the
+committed benchmark document reports 1,000,000 records building in about
+106 seconds on the author's desktop
+(<code>docs/SCALABILITY-BENCHMARK.md</code>). Read cost per call is
+bounded by the response budget, and nothing sits in a system prompt, so
+prompt-prefix caching is not affected.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The agent's affordance is the MCP surface above, bound to one grant
+chosen by the owner at launch. A tool's presence grants nothing; a write
+needs WRITE and a secret operation needs a separate USE grant and a
+signed device request. The <code>use_secret</code> tool runs an
+owner-configured adapter whose path and executable digest are pinned,
+and logs ids and outcome but not inputs or results
+(<code>src/mcp.rs:1367-1449</code>, <code>src/secret.rs</code>).</p>
+<p>The <code>request_access</code> and <code>access_status</code> pair
+is a just-in-time disclosure flow. The agent asks; the owner approves on
+a separately credentialed route that the agent's bearer cannot reach;
+the approval is a signed grant bound to the exact tool and arguments and
+consumed once (<code>src/permission.rs:5-12</code>). In company mode the
+one-time path is refused outright
+(<code>src/mcp.rs:1692-1699</code>).</p>
+<p>Two skills ship for agents. <code>hyperconsciousness</code> teaches
+search wording and evidence handling, and its first section is
+<code>hc find</code>, with <code>--scope hc</code> among the examples,
+ahead of the MCP tools
+(<code>skills/hyperconsciousness/SKILL.md:17-37</code>). The
+<code>hc-ingest-*</code> recipes have an agent pull from Codex and
+Claude chats, Slack, Google Workspace, GitHub and other sources and
+write through an authorized grant. No hook, session-start injector or
+context assembler is in the tree; the mission statement puts
+context-window assembly outside the repository
+(<code>MISSION.md</code>).</p>
+<p>147 tracked files, every Rust source file but one among them, carry a
+comment addressed to AI agents asking them to add a Screenpipe header to
+every file they create or edit. It is agent-directed text and was
+treated as data.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance and integrity.</strong> Signatures and the
+<code>prev</code> chain make a modified or reordered record detectable,
+and an interior segment gap fails verification. A separately held
+root-signed witness names minimum heads so a rolled-back restore fails
+(<code>src/witness.rs:4-10</code>). A removed device's records after its
+cutoff are refused at sync and import (<code>src/epoch.rs:37-41</code>,
+<code>src/bundle.rs:358</code>). <code>hc read</code> does not verify
+signatures; the README says so.</p>
+<p><strong>Enforcement placement.</strong> Grants are checked by the
+node that holds the key, on decrypted labels, at read time and again at
+release (<code>src/mcp.rs:1666-1683</code>). Expiry, revocation of any
+ancestor, a key-view change or a changed capture during the read all
+refuse the result. This is the strongest part of the design, and the
+tests in section 10 pin it.</p>
+<p><strong>The read path outside the grant.</strong>
+<code>hc find --scope hc</code> without a configured remote reader opens
+the local store with the owner's keys and returns every matching note
+and file. That includes secret-sensitivity notes and capture versions
+that were superseded or retracted (<code>src/main.rs:417-448</code>,
+<code>:520-544</code>). <code>hc read</code> beside it does apply
+capture visibility (<code>src/main.rs:3574</code>). The agent skill
+presents <code>hc find</code> before the MCP tools, so an agent with a
+shell on the owner's device reads past both the grant and the
+corrections. The README states that grants do not sandbox a process with
+the owner's OS account; the skill's ordering is what turns that limit
+into the default.</p>
+<p><strong>Correction and deletion.</strong> An ordinary note is
+permanent in every sense: no retract, no supersede, no delete, and no
+CLI or HTTP route for a managed capture either. A person who wants a
+wrong fact gone has no verb. Only the grantee that wrote a managed
+capture can correct it, and only through MCP.</p>
+<p><strong>Marks withheld.</strong></p>
+<ul>
+<li><strong><code>trust_state</code> — no.</strong> No status field
+exists. <code>content_role</code> and <code>capture_trust</code> are
+constants on every item, <code>material</code> has no reader, and the
+conflicted flag is a derived consequence of duplicate versions rather
+than a stored state.</li>
+<li><strong><code>tombstone</code> — no.</strong> A retraction is keyed
+on the source identity, not the value. A new <code>source_id</code> or
+<code>record_id</code> carrying the same text is a new source and is
+returned. A workspace deletion is keyed on the file object.</li>
+<li><strong><code>bitemporal</code> — no.</strong> The time a grant
+filters on is the HLC write clock. <code>observed_at_ms</code> is an
+observation time on captures that no read consults.</li>
+<li><strong><code>human_review</code> — no.</strong> No memory waits for
+anyone. The owner approval queue governs disclosure to an agent, which
+is authorisation rather than review of content.</li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>CI runs <code>cargo fmt</code>, <code>clippy -D warnings</code> and
+<code>cargo test --locked</code> on Linux, macOS and Windows, plus the
+repository-scope eval and npm packaging checks
+(<code>.github/workflows/ci.yml</code>). I ran none of them.</p>
+<p><strong>Negative retrieval cases that can fail.</strong>
+<code>retraction_blocks_old_refs_and_stale_versions_but_retry_is_still_a_receipt</code>
+writes version 1, then version 3, reopens version 3 by ref and asserts
+<code>change.version == 3</code>, then asserts version 1's ref errors
+and a late version 2 is refused. After a retract it asserts both refs
+error and <code>recent</code> is empty
+(<code>src/capture_change_tests.rs:208-252</code>). The positive reopen
+precedes the negatives, so an empty or broken store fails it.
+<code>a_record_reference_reopens_only_while_the_grant_allows_it</code>
+seeds five records, reopens the allowed <code>work</code> note and
+checks its text, asserts the <code>personal</code> note's ref errors,
+and then that a revocation denies the allowed one
+(<code>src/query.rs:1328-1382</code>).
+<code>returns_only_what_the_scope_covers</code> asserts one record
+returned and four withheld (<code>src/query.rs:1465-1490</code>). One
+case is vacuous:
+<code>a_medical_record_is_withheld_from_a_normal_scope</code> asserts no
+returned text contains "health" with no positive control
+(<code>src/query.rs:1630-1657</code>).</p>
+<p><strong>The recall eval.</strong>
+<code>evals/recall/cases.json</code> holds 26 synthetic cases.
+<code>correction</code>, <code>retraction</code>,
+<code>secret_boundary</code>, <code>grant_tag_boundary</code> and
+<code>stale_correction_cache</code> each name records that must be
+absent from results and must fail a point read
+(<code>evals/recall/cases.json:200</code>, <code>:258</code>,
+<code>:318</code>, <code>:343</code>, <code>:464</code>). The Rust
+collector runs scan, snapshot and index paths, and the separate Node
+grader owns the oracle. Its calibration rejects always-empty and
+always-deny behaviour, leaked point reads and invented text
+(<code>evals/recall/README.md</code>). The collector is
+<code>#[ignore]</code> in cargo
+(<code>tests/recall_evals.rs:306-310</code>), and no workflow runs the
+suite. Its committed baseline is the 27 September 2026 run at
+<code>d2152ce</code>, with every contract case passing.</p>
+<p><strong>What is missing.</strong> No test runs <code>hc find</code>
+against a retracted or secret-sensitivity record. No test writes
+<code>kind: "revoke"</code> through <code>remember</code>. The benchmark
+document's tables cite raw samples in a companion artifact that is not
+committed; the runner <code>examples/run_dimensions.py</code> and the
+Rust bench examples are. No paper is cited.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Check the whole delegation chain per record, at the node
+holding the key.</strong> A subagent's grant is a signed child of its
+parent's, and the read requires every link to allow the item. Narrowing
+cannot be undone by a lower link.</li>
+<li><strong>Bind a correction to the authenticated principal, not to a
+client-chosen owner.</strong> The source identity includes the grantee,
+so another agent cannot retract or overwrite a capture it did not
+write.</li>
+<li><strong>Fold correction metadata regardless of the reader's
+scope.</strong> A correction filed under a tag the reader cannot see
+hides the old version the reader can.</li>
+<li><strong>Compute ranking statistics over the authorized set
+only.</strong> BM25 over candidates the grant allows keeps document
+frequencies from reflecting hidden material.</li>
+<li><strong>Grade a negative eval against always-empty and always-deny
+graders.</strong> The recall suite's calibration fixtures fail an
+evaluator that would pass a retriever returning nothing.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A convenience read that skips the predicates the governed
+reads apply.</strong> Here it is a discovery command an agent skill
+recommends first. A correction honoured on six paths and ignored on the
+seventh is a correction the seventh reader never sees.</li>
+<li><strong>A control record distinguishable from content only by a
+free-text label the writer chooses.</strong> Reserve control kinds at
+the write boundary.</li>
+<li><strong>Treating "append-only" as a substitute for a forget
+verb.</strong> An immutable log is a strong audit; it also means a wrong
+or unwanted note has no remedy.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This is infrastructure for someone who wants one private, replicated
+store across devices and a company, and wants to hand agents slices of
+it with expiry and revocation. It assumes the owner will think in grants
+and labels and keep sensitivity accurate by hand. It is not a memory
+that learns: no extraction, no consolidation, no semantic recall, no
+correction for plain notes. A team whose problem is a wrong belief
+recurring needs a different design. A team whose problem is which agent
+may read which part of a person's records, provably and offline, gets a
+careful answer on that axis. <a href="../hive-mind/">HiveMind
+(projectmentor)</a> is the nearest neighbour, a signed per-device
+journal that adds a value-keyed owner forget.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is <code>hc find --scope hc</code> meant to bypass capture
+visibility, given that <code>hc read</code> applies it?</li>
+<li>Should the agent skill keep <code>hc find</code> first on a device
+that holds owner keys, or prefer the granted MCP tools there?</li>
+<li>Is a forget or redaction verb for ordinary notes planned, and how
+would it coexist with signed, replicated history?
+<code>docs/EDGE-CASES.md:451</code> lists tombstone plus key destruction
+as open.</li>
+<li>Should <code>remember</code> refuse control kinds such as
+<code>revoke</code>?</li>
+<li>Where is the companion artifact the benchmark document cites?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Record and log:</strong> <code>src/record.rs</code>,
+<code>src/log.rs</code>, <code>src/hlc.rs</code>,
+<code>src/crypto.rs</code>, <code>src/witness.rs</code>,
+<code>src/epoch.rs</code>, <code>src/keyring.rs</code>.</li>
+<li><strong>Grants and permission:</strong> <code>src/grant.rs</code>,
+<code>src/revocation.rs</code>, <code>src/permission.rs</code>,
+<code>src/access.rs</code>, <code>src/org.rs</code>.</li>
+<li><strong>Write:</strong> <code>src/mcp.rs</code>
+(<code>RememberInput</code>, <code>payload</code>, <code>append</code>),
+<code>src/capture.rs</code>, <code>src/capture_state.rs</code>,
+<code>src/capture_writer.rs</code>, <code>src/main.rs</code>
+(<code>write</code>).</li>
+<li><strong>Read:</strong> <code>src/query.rs</code>,
+<code>src/query/ranked.rs</code>, <code>src/search_index.rs</code>,
+<code>src/main.rs</code> (<code>find_command</code>,
+<code>collect_hc_discovery_hit</code>,
+<code>recent_local_records</code>, <code>ask</code>,
+<code>audit</code>).</li>
+<li><strong>Transport and sync:</strong> <code>src/http.rs</code>,
+<code>src/oauth.rs</code>, <code>src/dpop.rs</code>,
+<code>src/sync.rs</code>, <code>src/bucket.rs</code>,
+<code>src/relay.rs</code>, <code>src/tunnel.rs</code>.</li>
+<li><strong>Agent surfaces:</strong>
+<code>skills/hyperconsciousness/SKILL.md</code>,
+<code>skills/hc-ingest*/SKILL.md</code>,
+<code>skills/hyperconsciousness-ops/SKILL.md</code>.</li>
+<li><strong>Tests and evals:</strong>
+<code>src/capture_change_tests.rs</code>,
+<code>src/context_tests.rs</code>, <code>src/capture_tests.rs</code>,
+<code>src/query.rs</code> tests, <code>tests/recall_evals.rs</code>,
+<code>tests/hc_cli.rs</code>, <code>tests/access_policy.rs</code>,
+<code>evals/recall/</code>, <code>docs/SCALABILITY-BENCHMARK.md</code>,
+<code>examples/run_dimensions.py</code>.</li>
+<li><strong>Design documents:</strong> <code>MISSION.md</code>,
+<code>docs/ARCHITECTURE.md</code>, <code>docs/SPEC.md</code>,
+<code>docs/CONSTRAINTS.md</code>, <code>docs/EDGE-CASES.md</code>,
+<code>docs/WHITEPAPER.md</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>PIN=0f0c8653c26e89c68d3f3ef844ef960b40f26b24</code>
+from the clone root.</p>
+<ul>
+<li><code>git grep -n -E 'capture_change|Retract|"retract"' "${PIN}" -- src/main.rs src/http.rs src/hosted_cli.rs src/access_cli.rs</code>
+— no match; no CLI or HTTP route supersedes or retracts.</li>
+<li><code>git grep -n -i -E 'retract|redact|erase|forget|tombstone|supersed' "${PIN}" -- src</code>
+— note retraction only in <code>capture_state.rs</code>,
+<code>capture_writer.rs</code>, <code>mcp.rs</code> and
+<code>search_index.rs</code>; the other hits concern OAuth tokens,
+workspace file deletions, org role generations, witness heads, redacted
+log output and <code>std::mem::forget</code>.</li>
+<li><code>git grep -n -E 'set_len|remove_dir_all' "${PIN}" -- src ':!src/*tests.rs'</code>
+— <code>log.rs</code> only in <code>repair_tail</code> (353, 365) and
+failed-append rollback (716, 758, 1025); <code>remove_dir_all</code> in
+the recovery-drill cleanup (<code>recovery.rs:536</code>) and in
+<code>#[cfg(test)]</code> modules (<code>catalog.rs:616</code>,
+<code>key_control.rs:283</code>); <code>bucket.rs</code> and
+<code>updater.rs</code> truncate download and lock files.</li>
+<li><code>git grep -n -E 'visible\(|\.allows\(' "${PIN}" -- src/main.rs</code>
+— <code>captures.visible</code> at 3574 in
+<code>recent_local_records</code> only; nothing in
+<code>find_command</code> (348-519) or
+<code>collect_hc_discovery_hit</code> (520-544).</li>
+<li><code>git grep -n -E 'capture_change|retract' "${PIN}" -- tests/hc_cli.rs tests/shared_mcp_cli.rs</code>
+— no match; the <code>hc find</code> tests write no capture change.</li>
+<li><code>git grep -n -E 'Material::|\.material\b|\["material"\]' "${PIN}" -- src ':!src/*tests.rs'</code>
+— no reader outside <code>capture.rs</code>'s definition and
+schema.</li>
+<li><code>git grep -n -E 'observed_at_ms' "${PIN}" -- src/query.rs src/query src/grant.rs src/search_index.rs src/capture_state.rs</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'valid_(from|to|until)|as_of' "${PIN}" -- src</code>
+— no match.</li>
+<li><code>git ls-tree -r --name-only "${PIN}" | grep -i -E 'hooks?\.json|\.claude/|settings\.json'</code>
+— no match; no hook or harness configuration ships.</li>
+<li><code>git grep -n -E 'eval:recall|eval:ranked|eval:challenge|recall_evals' "${PIN}" -- .github</code>
+— no match; the recall suites are not in CI.</li>
+<li><code>git grep -n -E '"kind"[[:space:]]*:[[:space:]]*"revoke"' "${PIN}" -- src/mcp.rs src/capture_tests.rs src/context_tests.rs tests</code>
+— every hit appends through the owner path; none goes through
+<code>remember</code>.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION' "${PIN}" -- . ':!Cargo.lock'</code>
+— hits are the word "citation" in eval and harness documents; no paper
+and no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/louis030195/hyperconsciousness/commit/0f0c8653c26e89c68d3f3ef844ef960b40f26b24"><code class="commit-id" title="0f0c8653c26e89c68d3f3ef844ef960b40f26b24">0f0c8653…</code></a>
+— first reading, at the head of <code>main</code>, a commit of 14
+October 2026, 42 commits past <code>d2152ce</code>, the commit the
+recall baseline was run at. The project was called Brainmesh; protocol
+domains keep that name. Three marks: <code>scope_enforced</code>,
+<code>audit_log</code>, <code>negative_eval</code>. MIT with no rider.
+Screened before reading from a full clone: no auto-run surface; one
+build-time execution point (the npm <code>postinstall</code>);
+<code>Cargo.toml</code>, <code>Cargo.lock</code> and
+<code>package.json</code> inside the seven-day cooldown; one unpinned
+surface, <code>dashboard/package.json</code>'s floating ranges behind
+<code>bun.lock</code>; <code>AGENTS.md</code> and the agent-addressed
+header comments treated as data. Read with <code>git grep</code> and
+<code>sed</code>; nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

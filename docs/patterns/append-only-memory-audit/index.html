@@ -835,6 +835,19 @@ next rebuild. The one store write outside it is an
 on the other side of the retention question. An owner's forget is itself
 a journal line, so the forgotten text is retained, signed and replicated
 to every device for good.</p>
+<p><strong><a
+href="../../systems/hyperconsciousness/">Hyperconsciousness</a> makes
+the log the store and signs every record of it.</strong> Each record
+carries a gapless per-author sequence and the BLAKE3 of its predecessor
+in a header that is both the cipher's associated data and part of the
+signed bytes. Two records at one sequence freeze that author's log for a
+person to resolve (<code>src/record.rs:5-24</code>,
+<code>src/log.rs:627-648</code>). An agent write names its grant and
+grantee, a retraction is another record, and the only truncation in the
+log trims an unacknowledged torn tail (<code>src/log.rs:339-370</code>).
+The retention cost is starker than <a
+href="../../systems/hive-mind/">HiveMind</a>'s: nothing removes a
+record, and ordinary notes have no forget verb at all.</p>
 <p><strong><a href="../../systems/ken/">ken</a> logs one of its two
 stores.</strong> The premise store's <code>Memory.record</code> replaces
 or retracts a source bundle and appends an <code>events</code> row with

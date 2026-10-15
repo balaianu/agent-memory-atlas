@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 750 reports.</strong></p>
+<p><strong>This page covers all 751 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31149,6 +31149,52 @@ published, deletion must reach derived knowledge and cached packs, late
 or back-dated events must still become memories, or tenants who do not
 trust each other share a deployment, since the manual workflow trigger
 runs the Dreamer for any anima id.</li>
+</ul>
+<h3 id="hyperconsciousness"><a
+href="../systems/hyperconsciousness/"><code>hyperconsciousness</code></a></h3>
+<ul>
+<li>Best idea: <strong>check every grant in the delegation chain against
+every record, on the node holding the key.</strong> Grants are signed
+structs over kind, tags, sensitivity and a write-time window; a subagent
+holds an attenuated child that cannot widen any dimension, and every MCP
+read, the by-ref <code>record</code> included, requires all links to
+allow the decrypted labels before releasing text.</li>
+<li>Biggest risk: <strong>the agent skill's discovery command reads
+around the grants and the corrections.</strong>
+<code>hc find --scope hc</code> on a key-holding device scans every note
+and file with an empty chain, no sensitivity ceiling and no
+capture-visibility check, so secret notes and superseded or retracted
+captures come back. <code>hc read</code> beside it does apply
+visibility.</li>
+<li>Most reusable component: <code>src/grant.rs</code>
+(<code>Scope::allows</code>, <code>Scope::contains</code>,
+<code>attenuate</code>, <code>verify_chain</code>) with
+<code>src/capture_state.rs</code> — a pure-function permission check
+over a signed chain, and a versioned source whose identity includes the
+authenticated writer, so only that writer can supersede or retract
+it.</li>
+<li>Second risk: <strong>ordinary notes cannot be corrected or
+forgotten.</strong> No CLI, HTTP or MCP verb retracts or deletes a plain
+note, sensitivity is whatever the writer typed, and a
+<code>remember</code> with <code>kind: "revoke"</code> revokes the
+writer's own grant.</li>
+<li>Maturity impression: MIT developer alpha, 70,941 lines of Rust under
+<code>src/</code>, 63 commits under two author names between 14
+September and 14 October 2026, the first adding 70,261 lines. 633 Rust
+test functions run in CI on Linux, macOS and Windows; a recall eval with
+a committed first-run baseline sits outside CI. Three marks:
+<code>scope_enforced</code>, <code>audit_log</code> and
+<code>negative_eval</code>. <code>trust_state</code>,
+<code>tombstone</code>, <code>bitemporal</code> and
+<code>human_review</code> are withheld: no status field, retraction
+keyed on the source rather than the value, grant time is the write
+clock, and no memory waits for review.</li>
+<li>Study when: you want agents to read slices of a private, replicated,
+offline-capable store with expiry, revocation, one-time owner approval
+and a signed log of every write and read.</li>
+<li>Do not copy when: wrong facts must be correctable or deletable,
+sensitivity must be classified rather than declared, or agents run with
+a shell on the owner's device and the bundled skill.</li>
 </ul>
 <h3 id="ken"><a href="../systems/ken/"><code>ken</code></a></h3>
 <ul>
