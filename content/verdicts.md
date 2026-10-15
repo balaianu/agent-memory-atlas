@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 742 reports.**
+**This page covers all 743 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6696,6 +6696,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, version 2.1.1, 2,468 lines of Python in the recorder after a rebuild that removed the v1 embedding and summarisation pipeline; 78 commits, all but one by the author; 55 pytest functions in CI on Ubuntu and macOS. The changelog states for each release how many new tests fail against the previous one. Two marks, `audit_log` and `negative_eval`.
 - Study when: you want an agent's transcript history kept verbatim, searchable and citable, with no model in the loop.
 - Do not copy when: a pasted secret must leave what the agent can retrieve, projects must not see each other's history, or the model should not hold a tool that copies the whole corpus to a path it chooses.
+
+### [`hive-mind`](../systems/hive-mind/)
+
+- Best idea: **belief that repetition cannot raise.** Confidence is a projection over the distinct signed identities that asserted the exact text, with a same-device discount, a 0.70 cap for one principal and zero weight for `introspect` claims, recomputed from the journal on every read, so one agent saying a thing twice changes nothing.
+- Biggest risk: **the grounding rule depends on every adapter.** The Hermes mirror tags the model's own reasoning `speculation` and passes no channel; the core reads an absent channel as `sense` and never reads the tag, so inferences corroborate at full weight.
+- Most reusable component: `hivemind/parts/04_projection.py` `_content_evidence` with `_governed_side` and `_content_confidence` — evidence keyed by identity, governed by admission, discounted per device and capped per principal, with owner acts on a separate timeline where the latest signed act wins.
+- Second risk: **a forget hides and keeps.** The owner forget pins the text to -1.0 everywhere and survives restatement, but the journal is append-only and replicated, the FTS row and `/v1/feed` keep the text, and `hv search --min-confidence -1` returns it. A cross-device supersede waits for the owner on a `doctor` list that the owner's re-issue cannot clear.
+- Maturity impression: AGPL-3.0 with a contributor licence agreement, 27,298 non-test lines of standard-library Python, 707 commits on main between 6 June and 15 October 2026 under six author names including a signing bot. 2,054 pytest functions in 166 files run in CI on Ubuntu and macOS, with a frozen-oracle differential and mutant-planting guards. Three marks: `tombstone`, `audit_log`, `negative_eval`.
+- Study when: several agents on several of your own machines should share notes, agreement between them should count for more than one agent's repetition, and you want the store to be a signed log you can replay.
+- Do not copy when: memory must be erased for privacy, teams or projects need isolation inside one store, recall must work by meaning, or the journal will grow to hundreds of thousands of entries.
 
 ### [`obsidian-wiki`](../systems/obsidian-wiki/)
 

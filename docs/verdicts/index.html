@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 742 reports.</strong></p>
+<p><strong>This page covers all 743 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30653,6 +30653,48 @@ searchable and citable, with no model in the loop.</li>
 retrieve, projects must not see each other's history, or the model
 should not hold a tool that copies the whole corpus to a path it
 chooses.</li>
+</ul>
+<h3 id="hive-mind"><a
+href="../systems/hive-mind/"><code>hive-mind</code></a></h3>
+<ul>
+<li>Best idea: <strong>belief that repetition cannot raise.</strong>
+Confidence is a projection over the distinct signed identities that
+asserted the exact text, with a same-device discount, a 0.70 cap for one
+principal and zero weight for <code>introspect</code> claims, recomputed
+from the journal on every read, so one agent saying a thing twice
+changes nothing.</li>
+<li>Biggest risk: <strong>the grounding rule depends on every
+adapter.</strong> The Hermes mirror tags the model's own reasoning
+<code>speculation</code> and passes no channel; the core reads an absent
+channel as <code>sense</code> and never reads the tag, so inferences
+corroborate at full weight.</li>
+<li>Most reusable component:
+<code>hivemind/parts/04_projection.py</code>
+<code>_content_evidence</code> with <code>_governed_side</code> and
+<code>_content_confidence</code> — evidence keyed by identity, governed
+by admission, discounted per device and capped per principal, with owner
+acts on a separate timeline where the latest signed act wins.</li>
+<li>Second risk: <strong>a forget hides and keeps.</strong> The owner
+forget pins the text to -1.0 everywhere and survives restatement, but
+the journal is append-only and replicated, the FTS row and
+<code>/v1/feed</code> keep the text, and
+<code>hv search --min-confidence -1</code> returns it. A cross-device
+supersede waits for the owner on a <code>doctor</code> list that the
+owner's re-issue cannot clear.</li>
+<li>Maturity impression: AGPL-3.0 with a contributor licence agreement,
+27,298 non-test lines of standard-library Python, 707 commits on main
+between 6 June and 15 October 2026 under six author names including a
+signing bot. 2,054 pytest functions in 166 files run in CI on Ubuntu and
+macOS, with a frozen-oracle differential and mutant-planting guards.
+Three marks: <code>tombstone</code>, <code>audit_log</code>,
+<code>negative_eval</code>.</li>
+<li>Study when: several agents on several of your own machines should
+share notes, agreement between them should count for more than one
+agent's repetition, and you want the store to be a signed log you can
+replay.</li>
+<li>Do not copy when: memory must be erased for privacy, teams or
+projects need isolation inside one store, recall must work by meaning,
+or the journal will grow to hundreds of thousands of entries.</li>
 </ul>
 <h3 id="obsidian-wiki"><a
 href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></h3>

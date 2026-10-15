@@ -803,6 +803,21 @@ The redaction event is recorded and nothing consults it, so the DuckDB
 index keeps the redacted text and search returns it; a test that
 searches for the removed value is what this pattern's audit would have
 needed beside it.</p>
+<p><strong><a href="../../systems/hive-mind/">HiveMind
+(projectmentor)</a> has no audit table because the log is the
+store.</strong> Every fact, retraction, link, decision, idea and
+governance act is a JSONL line carrying a per-device sequence number,
+the previous entry's hash and an Ed25519 signature, appended under a
+lock to a file opened only in append mode
+(<code>hivemind/parts/02_store_journal.py:969-1010</code>,
+<code>:782-795</code>). SQLite is a projection that
+<code>rebuild_db</code> empties and replays, so coverage holds by
+construction: a mutation that is not a journal line is gone after the
+next rebuild. The one store write outside it is an
+<code>access_count</code> bump that no projection reads. The cost sits
+on the other side of the retention question. An owner's forget is itself
+a journal line, so the forgotten text is retained, signed and replicated
+to every device for good.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Mutation and audit event commit or roll back together.</li>

@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A peer-to-peer fact journal shared
+by several agents and devices, whose confidence is derived from
+independent signed identities and whose owner can forget a value.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="HiveMind
+(projectmentor) — Agent Memory Atlas">
+    <meta property="og:description" content="A peer-to-peer fact journal
+shared by several agents and devices, whose confidence is derived from
+independent signed identities and whose owner can forget a value.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HiveMind
+(projectmentor) — Agent Memory Atlas">
+    <meta name="twitter:description" content="A peer-to-peer fact
+journal shared by several agents and devices, whose confidence is
+derived from independent signed identities and whose owner can forget a
+value.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>HiveMind (projectmentor) — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "HiveMind (projectmentor)",
+      "description": "A peer-to-peer fact journal shared by several agents and devices, whose confidence is derived from independent signed identities and whose owner can forget a value.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A signed peer-to-peer journal of agent
+facts, believed by corroboration</p>
+          <h1>HiveMind (projectmentor)</h1>
+          <p class="document-deck">A peer-to-peer fact journal shared by
+several agents and devices, whose confidence is derived from independent
+signed identities and whose owner can forget a value.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/projectmentor/hive-mind">
+              <span>Source</span>
+              <strong>projectmentor/hive-mind</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/projectmentor/hive-mind/commit/739b63e97e116b2ea43dd4bcaa6df79addd3fef7" title="739b63e97e116b2ea43dd4bcaa6df79addd3fef7">
+              <span>Analyzed revision</span>
+              <code>739b63e9…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/projectmentor--hive-mind" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>projectmentor--hive-mind</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0,
+with a contributor licence agreement</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>12,621
+lines of Python in <code>hv</code> and its 16 part files; 27,298
+non-test Python lines in 53 files, standard library only</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>707
+commits on main under six author names, one of them a manifest-signing
+bot, 6 June – 15 October 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,054
+pytest functions in 166 files and 41,981 lines, 8 of them integration
+files skipped by default; CI runs the suite on Ubuntu and macOS; none
+run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>HiveMind is shared memory for several AI agents on several machines.
+Each agent writes facts, decisions and hypotheses through one CLI,
+<code>hv</code>, into an append-only journal that devices copy to each
+other over Tailscale. Nothing is stored as a confidence. A fact's
+confidence is recomputed from how many distinct signed identities
+asserted the identical text, so an agent repeating itself gains
+nothing.</p>
+<p>What is notable is how far the corroboration rule is carried.
+Identities are device keys, several agents on one device count for less,
+one person's devices cap at 0.70, and an assertion on the
+<code>introspect</code> channel weighs zero by default. The owner's key
+sits outside the agent's command entirely, and import graph tests
+enforce that. The owner's forget is keyed on the text, so a restatement
+stays forgotten. What is weak is that the corroboration rule depends on
+adapters labelling reasoning honestly, and the Hermes adapter does not.
+Forgotten text stays in every copy of the journal.</p>
+<p>The project is a Python 3 standard-library program: <code>hv</code>
+is one executable that executes 16 ordered part files into its own
+namespace, and <code>hive-mind</code> is the owner's control plane over
+the same library. It runs on Linux, macOS, WSL and Android under Termux.
+It is AGPL-3.0 with a contributor licence agreement, so a modified copy
+offered over a network has to offer its source.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>A forget follows the value, not the row.</strong>
+<code>hive-mind retract --owner</code> names one fact entry. The
+projection resolves it to the fact's exact text and pins every row with
+that text to <code>FORGET_FLOOR</code>, and a later
+<code>hv remember</code> of the same string lands on the same row
+(<code>hivemind/parts/04_projection.py:55-67</code>,
+<code>:1158-1201</code>). That earns <code>tombstone</code>, on exact
+bytes.</li>
+<li><strong>The grounding rule has a hole in one adapter.</strong> The
+Hermes plugin mirrors every built-in memory write and tags agent
+reasoning <code>speculation</code>, but sends no <code>--channel</code>.
+The core counts a missing channel as <code>sense</code>, so the model's
+own inferences corroborate at full weight
+(<code>integrations/hermes/__init__.py:900-922</code>).</li>
+<li><strong>Forgotten means hidden, not gone.</strong> The journal is
+permanent and synced, the FTS index keeps the row, <code>/v1/feed</code>
+serves the entry, and <code>hv search --min-confidence -1</code> returns
+it with confidence -1.00.</li>
+<li><strong>A cross-device correction waits on a queue nothing
+drains.</strong> A <code>supersedes</code> or <code>resolves</code> link
+from a device that neither holds the owner key nor wrote the target is
+downgraded to evidence. <code>hv doctor</code> lists it, and the owner's
+only remedy writes a new link, so the original stays listed.</li>
+</ul>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a <strong>journal entry</strong>. Its kind is one of
+<code>fact</code>, <code>decision</code>, <code>idea</code>,
+<code>entity</code>, <code>retract</code>, <code>link</code> or
+<code>governance</code>. Facts are identified by their text: two entries
+with the same <code>content</code> string are one belief with two pieces
+of evidence. Ideas are identified by their entry, so two agents
+proposing the same hypothesis make two ideas. Decisions carry no
+confidence at all and are retired by a <code>supersedes</code> link.</p>
+<p>A fact's belief state is never written; it is a pure function of the
+journal and the governance state. <code>_content_evidence</code> builds,
+per content string, a map of positive and negative weights keyed by
+identity, <code>(device, app, instance)</code>
+(<code>hivemind/parts/04_projection.py:1103-1258</code>). A peer
+<code>retract</code>, a <code>contradicts</code> link and a
+<code>resolves</code> link add negative weight; a <code>supports</code>
+link adds positive weight. <code>_governed_side</code> then drops
+devices the owner has not admitted, counts a device's strongest identity
+in full and its others at 0.5, and <code>_content_confidence</code> maps
+the net to <code>0.90 × (1 − 0.5^|net|)</code> with its sign
+(<code>:1261-1297</code>). When every supporting device belongs to one
+principal the value is capped at 0.70.</p>
+<p>Two inputs never become evidence. An assertion or link on the
+<code>introspect</code> channel weighs
+<code>introspect_support_weight</code>, default zero, and a channel
+outside the vocabulary counts as <code>introspect</code>
+(<code>:157-163</code>). An idea's author cannot support it. The owner's
+forget is not evidence either: it is a governance act that overrides the
+arithmetic.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a fact's confidence is recomputed from the identities behind its exact text, and an owner forget pins that text below every read filter, so a restatement lands on the forgotten row</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a fact&#39;s confidence is recomputed from the identities behind its exact text, and an owner forget pins that text below every read filter, so a restatement lands on the forgotten row
+flowchart TD
+  W[&quot;hv remember: a fact entry, device-signed, appended to the journal&quot;] --&gt; Q{&quot;same content string as an existing row?&quot;}
+  Q -- &quot;yes&quot; --&gt; C[&quot;entry mapped onto that row: corroboration&quot;]
+  Q -- &quot;no&quot; --&gt; N[&quot;new row at confidence 0&quot;]
+  C --&gt; E[&quot;_content_evidence, keyed on the exact text&quot;]
+  N --&gt; E
+  P[&quot;peer retract, contradicts or resolves link&quot;] --&gt;|&quot;negative weight per identity&quot;| E
+  S[&quot;supports link&quot;] --&gt;|&quot;positive weight per identity&quot;| E
+  E --&gt; G[&quot;governed net: admitted devices only, same-device lambda 0.5, cap_self 0.70, introspect weight 0&quot;]
+  G --&gt; V[&quot;confidence = 0.90 x (1 - 0.5^net), signed&quot;]
+  O[&quot;hive-mind retract --owner, owner-signed&quot;] --&gt; F[&quot;forget flag on the content; latest owner act wins&quot;]
+  U[&quot;hive-mind unforget, owner-signed&quot;] --&gt; F
+  F --&gt; X[&quot;confidence = FORGET_FLOOR, -1.0, never decays&quot;]
+  V --&gt; D[&quot;query time: decay from last evidence, half-life 180 days, 14 if volatile&quot;]
+  D --&gt; R{&quot;effective confidence at least the minimum, 0.0 by default?&quot;}
+  X --&gt; R
+  R -- &quot;yes&quot; --&gt; Y[&quot;returned by hv search, MCP and Hermes; the digest needs above 0&quot;]
+  R -- &quot;no&quot; --&gt; Z[&quot;withheld from search, kept in the journal, the FTS index and the feed&quot;]</code></pre></details></figure>
+<p>How a fact stops being believed, in order of force:</p>
+<ul>
+<li><strong>Decay.</strong> Effective confidence halves every 180 days
+from the last evidence, every 14 days for a fact tagged
+<code>volatile</code>
+(<code>hivemind/parts/05_trust_validation.py:372-385</code>). A decayed
+fact passes the default filter while its value stays positive.</li>
+<li><strong>Contradiction.</strong> Negative weight equal to the
+positive gives 0.0, which <code>hv search</code> returns, flagged
+<code>CONTESTED</code>, and the session digest drops. More negative than
+positive goes below zero and leaves default search.</li>
+<li><strong>Owner forget.</strong> The content is pinned to -1.0, below
+every default floor, until the owner signs an unforget.</li>
+</ul>
+<p>The <strong>idea</strong> is a separate type for hypotheses.
+<code>hv propose</code> stamps it <code>introspect</code> and it starts
+at 0.0 (<code>hivemind/parts/07_data_commands.py:653-662</code>). It
+earns confidence only from <code>sense</code>-channel
+<code>supports</code> links by another principal, and
+<code>hv search --kind all</code> hides it until that happens
+(<code>:547-549</code>). It never becomes a fact. The type is chosen at
+write time, so it is a genre rather than an epistemic state the store
+moves a memory through, and <code>trust_state</code> is withheld. So is
+it for <code>contested</code>, a flag every read displays and none
+filters, and for the forget sentinel, a governance act stored as a value
+in the confidence column.</p>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Two commands share one library. <code>hv</code> is the agent's data
+plane: an executable Python file whose body is 16 part files under
+<code>hivemind/parts/</code>, compiled and executed into one namespace
+by a loader that reads the list <code>PARTS</code>
+(<code>docs/HV_ARCHITECTURE.md</code>). <code>hive-mind</code> is the
+owner's control plane: <code>hivemind_ctl.py</code> loads the same
+library and runs <code>hivemind_owner.py</code> into it, replacing each
+owner-step placeholder that <code>hv</code> refuses with exit 2.</p>
+<p>Storage is two layers under <code>HIVE_HOME</code>:</p>
+<ul>
+<li><strong><code>journal/YYYY-MM-DD.jsonl</code></strong>, the source
+of truth. Every local write goes through <code>append_journal</code>,
+which validates the payload, takes a lock, mints the next per-device
+<code>seq</code> with the previous entry's hash, signs with the device
+key and appends one line
+(<code>hivemind/parts/02_store_journal.py:969-1010</code>).</li>
+<li><strong><code>store.db</code></strong>, SQLite in WAL mode with
+<code>facts</code>, <code>decisions</code>, <code>ideas</code>,
+<code>entities</code>, <code>entity_facts</code>, <code>links</code>,
+<code>journal_index</code> and an FTS5 table over fact content and tags
+(<code>:156-312</code>). <code>rebuild_db</code> empties it and replays
+the journal
+(<code>hivemind/parts/09_entity_store_ops.py:415-450</code>).</li>
+</ul>
+<p>The sync daemon, <code>hive_sync_daemon.py</code>, serves
+<code>/sync/*</code> and <code>/hive/info</code> and syncs with peers
+every 300 seconds by default (<code>:1019</code>). Peers compare Merkle
+roots over 100-entry chunks of the journal read as a grow-only set, then
+fetch missing ranges. <code>append_foreign_entries</code> admits a peer
+entry only after its signature, its chain position and, once an owner
+exists, its device's admission check out; content from an unadmitted
+device waits rather than lands
+(<code>hivemind/parts/03_ingest.py:316-345</code>).</p>
+<p>A second loopback listener, <code>hive_module_api.py</code>, serves
+modules: separate processes admitted by the owner as module devices,
+which read through <code>/v1/search</code>, <code>/v1/item</code> and
+<code>/v1/feed</code> and write entries they sign themselves, under
+per-module quotas.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li><strong>What has to run:</strong> nothing for a single machine; the
+sync daemon and Tailscale for more than one. No database server, no
+embedding model, no API key.</li>
+<li><strong>Offline:</strong> fully. Writes queue in the local journal
+and merge on the next sync.</li>
+<li><strong>Install:</strong> a <code>curl | bash</code> installer that
+installs Tailscale and Python dependencies, clones the repository,
+initialises the store, starts the daemon under systemd, launchd or
+runit, and wires Hermes and Claude Code when present.</li>
+<li><strong>Repairable by hand:</strong> the journal is readable JSONL
+and the store is disposable. A hand edit breaks the hash chain and the
+signature, which is the intended result.</li>
+<li><strong>Cost of a command:</strong> every projection reads the whole
+journal. <code>hv search</code> calls
+<code>merkle.read_all_entries</code> and <code>_governance_state</code>
+per query, and <code>remember</code> re-reads the journal and recomputes
+<code>_content_evidence</code> over every content
+(<code>hivemind/parts/07_data_commands.py:229-262</code>,
+<code>:519</code>). <code>docs/INTERNALS.md</code> records 0.3 seconds
+per search on an 860-entry hive, and <code>tests/test_perf.py</code>
+holds the paths within the adapters' timeouts at 1,000 signed
+entries.</li>
+</ul>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write.</strong> <code>remember</code> in
+<code>hivemind/parts/07_data_commands.py:78-300</code>. Tags are split,
+<code>_detect_volatile</code> adds <code>volatile</code> to
+transient-status claims, and the optional <code>--resolves</code>,
+<code>--outcome-of</code>, <code>--supports</code>,
+<code>--contradicts</code> and <code>--extends</code> targets are
+resolved and kind-checked before anything is written.
+<code>append_journal("fact", …)</code> writes the entry, each
+relationship is one more <code>link</code> entry, and then
+<code>persist_fact</code> projects the row
+(<code>hivemind/parts/04_projection.py:45-90</code>). The whole journal
+is re-read, and <code>_apply_content_confidence</code> writes the new
+confidence for the content and any target.</p>
+<p><strong>Retract and forget.</strong> <code>retract</code>
+(<code>hivemind/parts/07_data_commands.py:309-356</code>) appends a
+<code>retract</code> naming the target's journal ref. With
+<code>--owner</code>, available only on <code>hive-mind</code>,
+<code>_owner_forget</code> writes the same entry with source
+<code>owner:owner/owner</code> and an owner signature
+(<code>hivemind_owner.py:343-359</code>). <code>unforget</code> writes
+<code>unretracts_ref</code> instead (<code>:368</code>).</p>
+<p><strong>Projection.</strong> <code>_content_evidence</code>
+(<code>hivemind/parts/04_projection.py:1103-1258</code>) is the one
+function every reader trusts. Its fact loop keys on
+<code>content</code>; its retract loop resolves
+<code>retracts_ref</code> to a content and either records owner acts on
+a timeline or adds negative weight; its link loop folds
+<code>supports</code>, <code>contradicts</code> and
+<code>resolves</code>. One statement writes
+<code>facts.confidence</code>, in <code>_apply_content_confidence</code>
+(<code>:1300-1306</code>), called by the rebuild and inline by the write
+commands.</p>
+<p><strong>Read.</strong> <code>search</code>
+(<code>hivemind/parts/07_data_commands.py:497-650</code>) runs
+<code>_query_facts</code>, an FTS5 <code>MATCH</code> with every term
+quoted, falling back to <code>LIKE</code> (<code>:373-386</code>). It
+computes effective confidence per row, drops rows below
+<code>--min-confidence</code> (<code>:539</code>), ranks and keeps ten.
+<code>api_search</code>
+(<code>hivemind/parts/08_read_api.py:43-160</code>) is the paginated
+twin the module API and the dashboard module use.</p>
+<p><strong>Context injection.</strong> <code>nudge session-start</code>
+(<code>hivemind/parts/10_agent_loop.py:373-385</code>) prints
+<code>_print_digest</code>: up to five facts matching the repository
+name with effective confidence above zero, inside a fenced block
+labelled as data (<code>:127-162</code>). It also prints open ideas,
+pending admissions and the audit summary.</p>
+<p><strong>Correction of decisions.</strong>
+<code>decide --supersedes</code> or <code>--revoke</code> writes a
+<code>supersedes</code> link. <code>_link_authority</code> returns
+<code>hard</code> only for an owner signature valid at that journal
+position or for the target's own author
+(<code>hivemind/parts/06_links_forget.py:19-40</code>), and only a hard
+link sets <code>decisions.superseded_by</code>
+(<code>:43-47</code>).</p>
+<p><strong>Audit.</strong> <code>_compute_audit</code>
+(<code>hivemind/parts/10_agent_loop.py:442-585</code>) reports
+same-identity duplicates, near-duplicate paraphrases by token Jaccard,
+contested, decayed and negative facts, volatile facts past a 24-hour
+freshness window, and corrections that cite a fact nothing has
+retracted. It changes nothing.</p>
+<p><strong>Tests.</strong> <code>tests/test_unforget.py</code>,
+<code>tests/test_forget_oracle.py</code> with
+<code>tests/forget_corpus.py</code>, <code>tests/test_feed.py</code>,
+<code>tests/test_links.py</code>, <code>tests/test_module_api.py</code>
+and <code>tests/test_s2_split.py</code> cover the paths above.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>facts</code> has <code>content</code>, <code>tags</code> as a
+JSON list, <code>importance</code>, <code>source_agent</code>,
+<code>source_session</code>, <code>created_at</code>,
+<code>access_count</code>, <code>last_accessed</code>,
+<code>confidence</code>, <code>contested</code>,
+<code>last_evidence_at</code>, <code>resolves</code>,
+<code>utility</code> and <code>last_link_at</code>. Every column after
+<code>last_accessed</code> is written by a projection.
+<code>decisions</code> adds <code>rationale</code>,
+<code>superseded_by</code>, <code>informed_by</code>,
+<code>outcome_score</code> and <code>last_outcome_at</code>;
+<code>ideas</code> mirrors facts without the asserted importance.</p>
+<p>Identity across nodes is the journal ref, <code>node_id:seq</code>,
+where <code>node_id</code> is <code>k1:</code> plus 16 hex of the device
+key's hash. Local row ids change on every rebuild, so 2.0 refuses them
+as input and every verb takes a ref or a short id, <code>h:</code> plus
+ten hex of the ref's hash
+(<code>hivemind/parts/04_projection.py:20-28</code>).</p>
+<p><strong>Scope.</strong> No column holds a user, project, agent or
+tenant. The boundary is the hive: one journal, shared by every agent on
+every admitted device. The source string records who wrote a fact and
+feeds identity weighting; no read filters on it. Tags are free text the
+caller may filter by. Modules get a name prefix,
+<code>x-&lt;module&gt;:</code>, for link kinds and config keys, and the
+module API's docstring says its per-module config is <em>"not a
+confidentiality boundary"</em>. <code>scope_enforced</code> is
+withheld.</p>
+<p><strong>Time.</strong> <code>timestamp</code> is the writing device's
+clock, clamped to be monotonic per chain and bounded once the owner
+freezes timestamps. <code>created_at</code> on a row is a payload field
+when present and the entry timestamp otherwise, and nothing in the
+product writes the payload field. No field records when a fact held in
+the world, so <code>bitemporal</code> is withheld.</p>
+<p><strong>Provenance.</strong> Every entry carries its signer, and
+every row maps back to its entries through <code>journal_index</code>. A
+decision's <code>informed_by</code> lists the refs it relied on, and
+outcomes link back to decisions, which is what <code>utility</code> is
+computed from.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is lexical. Facts go through FTS5 with each whitespace term
+quoted, so the query is an implicit AND of literal tokens; decisions and
+ideas go through <code>LIKE</code> on content, rationale and tags. There
+is no embedding and no query rewriting.</p>
+<p>Ranking is by effective confidence by default: the stored confidence
+decayed by the class half-life from <code>last_evidence_at</code>,
+computed at query time with an injectable <code>HIVE_NOW</code> so every
+node gets the same value. <code>--sort</code> offers recency, importance
+and utility, both decayed from <code>last_link_at</code>. Importance is
+the author's capped hint plus attention from other principals' links; a
+writer cannot raise its own.</p>
+<p>The filter is the part that decides what an agent sees.
+<code>hv search</code> keeps facts with effective confidence at or above
+<code>--min-confidence</code>, default 0.0
+(<code>hivemind/parts/17_cli.py:107</code>). That excludes
+owner-forgotten facts at -1.0 and facts with more negative than positive
+evidence, and keeps contested facts at 0.0 with a flag. The session
+digest is stricter and needs a value above zero. Decisions are returned
+whether superseded or not, flagged. Under <code>--kind all</code>, an
+idea appears only once it has earned confidence above zero.</p>
+<p>Ten facts are returned per query and the digest injects at most five,
+capped at 1,200 characters. The Hermes <code>prefetch</code> fires on
+error, uncertainty, knowledge or long-word triggers in the user's
+message, takes the top five results, and places both sides of any
+detected conflict in context, with an instruction not to resolve it
+(<code>integrations/hermes/__init__.py:535-634</code>).</p>
+<p>The failure mode to expect is under-recall. A literal-token AND over
+short facts misses paraphrase, and the digest's "project" match is the
+repository name appearing in a fact's text.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is explicit and lands immediately. An agent runs
+<code>hv remember</code>, the MCP server's <code>hive_remember</code>,
+or a Hermes tool, or Hermes mirrors a built-in memory write. There is no
+extraction model; the content is stored as given.</p>
+<p>Two gates sit in front of the store. <code>remember --gate</code>
+applies <code>_is_admissible</code>, which rejects text under 15
+characters, a bare question and a short greeting
+(<code>hivemind/parts/07_data_commands.py:20-31</code>). It is opt-in.
+The Hermes adapter's own gate, <code>_salience_gate</code>, returns
+<code>True</code> and has no caller
+(<code>integrations/hermes/__init__.py:954-973</code>). The working
+filter is the Hermes novelty gate, which skips content recalled this
+session.</p>
+<p><strong>Deduplication is corroboration.</strong>
+<code>persist_fact</code> looks up the exact content and, on a hit, maps
+the new entry onto the existing row and bumps <code>access_count</code>
+(<code>hivemind/parts/04_projection.py:55-67</code>). One identity
+repeating itself adds a journal line and no weight.
+<code>hv audit</code> flags the repetition as redundant.</p>
+<p><strong>Correction is additive.</strong> There is no edit. A
+correcting fact can carry <code>--resolves h:…</code>, which writes a
+<code>resolves</code> link: negative weight on the old fact from the
+corrector's identity, and provenance on the new row when the link is
+hard. If the same identity asserted the old fact, the net is zero and
+the old fact stays visible at 0.0, contested. A second identity's
+agreement is needed to push it below the default floor.</p>
+<p><strong>The channel decides weight, and one adapter omits
+it.</strong> Hermes' <code>on_memory_write</code> derives an epistemic
+tag: <code>observation</code> for a write to the user profile,
+<code>speculation</code> for the agent's own <code>memory</code> target.
+It then runs <code>remember content --tags … --source …</code> with no
+<code>--channel</code>
+(<code>integrations/hermes/__init__.py:900-922</code>). The core reads
+an absent channel as <code>sense</code>, and no core file reads the
+<code>speculation</code> tag. Agent reasoning therefore enters at full
+observation weight, the case the grounding rule exists to exclude.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write is synchronous and model-free. It appends one line,
+projects the row, re-reads the whole journal and recomputes confidence
+for the touched contents and importance for the store. The new fact is
+searchable on the writing device when the command returns, and on peers
+after their next sync round, 300 seconds by default. If the store is
+locked past ten seconds, the command reports the entry as journaled and
+exits 0, and the next command catches the store up.</p>
+<p>No background pass rewrites anything. A rebuild replays the journal
+when its key-set signature does not match
+<code>meta.projected_journal_sig</code>, which is proportional to the
+journal, not to new activity. Per turn, the Claude Code integration
+injects the digest once at session start and a short nudge line when a
+save phrase appears; Hermes injects up to five facts when a trigger
+fires.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<ul>
+<li><strong>CLI.</strong> <code>hv</code> is the contract, versioned
+separately from the release (<code>docs/AGENT_INTEGRATION.md</code>,
+contract 4.2). Any agent that can run a shell command can use it.</li>
+<li><strong>Claude Code.</strong>
+<code>integrations/claude-code/install.sh</code> registers hooks through
+<code>hv wire claude</code>: session start runs the digest, a user
+prompt containing a configured phrase runs a save nudge, and pre-compact
+and session end run an audit nudge. The turn-count nudge is off by
+default. The <code>hive-memory</code> skill carries the write
+discipline. <code>automode.py</code> adds lines to Claude Code's
+auto-mode environment so the operator's watchers are not refused.</li>
+<li><strong>MCP.</strong> <code>integrations/mcp/hive_mcp.py</code> is a
+FastMCP stdio server that shells out to <code>hv</code> with
+<code>--source claude-ai</code> on every write and <code>--</code>
+before every positional. It registers lookup, search, remember, decide,
+propose, retract, entity and read-only status tools. No owner verb is
+reachable from it.</li>
+<li><strong>Hermes.</strong>
+<code>integrations/hermes/__init__.py</code> is a memory provider with a
+prefetch, a system-prompt block, tools, and a mirror of the host's own
+memory writes queued on a single background writer.</li>
+<li><strong>Modules.</strong> The loopback module API takes signed
+requests from devices the owner admitted as modules, refuses
+<code>min_confidence</code> below zero and
+<code>status=forgotten</code>, and serves the full journal through
+<code>/v1/feed</code> with a computed <code>forgotten</code> flag the
+module is told to honour.</li>
+</ul>
+<p>The agent decides what to save, prompted by nudges, and is told to
+search before writing and never to write back what it just read. It
+cannot raise a belief alone, cannot hide another device's fact alone,
+and cannot sign as the owner.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>The owner boundary is enforced by structure.</strong>
+<code>hv</code> never imports <code>ownerkey</code> or the control
+plane, and <code>tests/test_s2_split.py</code> checks the import graph
+directly, transitively and through dynamic imports. The owner key is
+sealed at rest with scrypt and ChaCha20-Poly1305 and unlocked from a
+terminal or <code>HIVE_OWNER_KEY_PASSPHRASE</code>. An optional unlock
+agent signs only <code>admit</code>, <code>revoke</code> and module
+<code>set-config</code> bodies, and refuses forgets and links
+(<code>owner_agent.py:163-210</code>).</p>
+<p><strong>A forget is a projection, not an erasure.</strong> The forget
+is honoured on every node that receives it, by every content-keyed
+reader. The text remains in each copy of the journal, in
+<code>facts_fts</code>, and in <code>/v1/feed</code>. The CLI help
+itself shows <code>--min-confidence -1</code>, which returns forgotten
+facts to the agent. For memory that must be removed for privacy, this
+design cannot do it; <code>docs/INTERNALS.md</code> says the same of its
+escrow tombstones.</p>
+<p><strong>Before an owner exists, anyone can forget.</strong> With no
+<code>owner</code> governance entry, <code>_content_evidence</code>
+honours any <code>retract</code> whose source parses as the owner class
+(<code>hivemind/parts/04_projection.py:1172-1185</code>), and
+<code>hv retract</code> accepts <code>--source</code>. The installer
+makes the first machine the owner, so the window is the bootstrap.</p>
+<p><strong>Admission decides whose evidence counts.</strong> Once an
+owner exists, a peer entry from an unadmitted or revoked device does not
+land on other nodes, and local content from such a device weighs zero. A
+purged device's content stops counting; a retired one keeps its past
+entries.</p>
+<p><strong>Cross-device correction needs the owner.</strong> A
+<code>supersedes</code> or <code>resolves</code> link from a third
+device weighs as evidence but does not supersede or record provenance.
+<code>hv doctor</code> reports it as <code>link-authz</code> and tells
+the owner to re-issue it owner-signed
+(<code>hivemind/parts/06_links_forget.py:408-440</code>). The re-issue
+is a new entry with a new <code>from_ref</code>, and
+<code>_links_unauthorized</code> lists every evidence-only link it
+finds, so the original never leaves the report. This is the nearest
+thing to <code>human_review</code> in the tree, and it is not one: the
+correction waits, but the decision or fact carrying it is live at once,
+and nothing an owner does clears the item.</p>
+<p><strong>Prompt injection.</strong> Hive text injected at session
+start passes through <code>_hive_text</code>, which keeps the first
+line, drops control, format and separator characters, and caps length,
+inside a fence longer than any backtick run in the data
+(<code>hivemind/parts/10_agent_loop.py:105-124</code>).</p>
+<p><strong>Concurrency.</strong> The journal append holds an exclusive
+<code>flock</code> and the sequence is minted inside a separate mint
+lock, so two processes cannot mint one <code>seq</code>. The store waits
+ten seconds for a writer, and a write that cannot reach it is deferred,
+never retried into a duplicate.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is large and adversarial in the places that matter to the
+trust model. <code>tests/test_forget_oracle.py</code> freezes the 2.4
+<code>_content_evidence</code> in <code>tests/oracles/</code> and checks
+the live projection against it on a corpus of eleven forget scenarios.
+It then rebuilds a mutant with the removed grandfather arm restored and
+requires the differential to fail. <code>tests/test_s2_split.py</code>
+and <code>tests/test_hv_parts.py</code> plant violations in a part file
+and show each structural guard failing.</p>
+<p>The <code>negative_eval</code> case is
+<code>tests/test_module_api.py:274-298</code>. One live fact and two
+owner-forgotten facts are projected through the real
+<code>rebuild_db</code>. The search for <code>backup</code> must return
+exactly the live one, and an empty query, which browses everything, must
+not contain the forgotten text while reporting a total of one. Eight
+more query shapes must not contain it, and the forgotten ref must 404 on
+<code>/v1/item</code>. The live fact is asserted present in the same
+test, so an empty result fails.</p>
+<p>What is not covered:</p>
+<ul>
+<li>No committed case writes a fact's text again after an owner forget
+and checks that it stays forgotten. The behaviour follows from
+<code>_content_evidence</code>, and
+<code>tests/test_feed.py:109-122</code> checks the cross-device
+half.</li>
+<li>No case exercises the Hermes mirror's channel, and none asserts that
+agent reasoning written through an adapter weighs zero.</li>
+<li>The <code>hv search</code> CLI has no committed case asserting a
+forgotten fact is absent beside a present one; the module API does.</li>
+<li>No retrieval quality evaluation. There is no paper, benchmark or
+recall measurement in the tree. <code>tests/test_perf.py</code> is a
+timing tripwire.</li>
+</ul>
+<p>The integration tests under <code>tests/integration/</code> run real
+multi-node fleets and are skipped unless <code>-m integration</code> is
+passed; several also need a LAN. I did not run any test.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make confidence a projection over distinct
+identities.</strong> Recompute it from evidence on every read instead of
+storing it, key the evidence on the asserting identity, and repetition
+stops mattering.</li>
+<li><strong>Weight evidence by where it came from.</strong> A device
+discount for agents on one machine and a cap for one principal's devices
+make correlated agreement count for less than independent
+agreement.</li>
+<li><strong>Give reasoning a channel, and give that channel zero weight
+by default.</strong> Map an unknown channel label to the weakest one, so
+a typo cannot earn observation weight.</li>
+<li><strong>Key a forget on the value and let the projection carry
+it.</strong> A restatement then collides with the forgotten content
+instead of reviving it, with no separate tombstone table to keep
+consistent.</li>
+<li><strong>Put the owner's authority outside the agent's
+executable</strong> and test the import graph, not the
+documentation.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A grounding rule enforced only in the core.</strong> Every
+adapter that writes for an agent must set the channel, or the rule is
+advisory. A missing field defaulting to the strongest weight is the
+failure.</li>
+<li><strong>Treating hidden as deleted</strong> when the store is
+replicated and append-only. Say plainly which kind of forget the system
+offers.</li>
+<li><strong>A review signal with no way to close it.</strong> If a
+report lists items until an authority acts, the authority's action has
+to remove the item, or the list only grows.</li>
+<li><strong>Exact-string identity for corroboration and forgetting
+alike.</strong> A trailing period makes a new belief and walks past a
+forget.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits a person running several agents across their own machines
+who wants them to share durable notes and wants agreement between agents
+to mean something. It costs little to operate: no services, a file per
+day, and a store that rebuilds itself. It is the wrong choice for
+anything that must forget for legal or privacy reasons, for a team that
+needs per-project or per-user isolation inside one store, and for recall
+by meaning. The whole-journal read per command is fine at thousands of
+entries and has no answer yet at hundreds of thousands.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>How large a journal does a typical hive reach, and where does the
+per-command full read start to hurt? <code>docs/INTERNALS.md</code>
+names persisted projections as the next step.</li>
+<li>Is the Hermes mirror's missing channel intended, given that the
+adapter's own docstring calls the <code>memory</code> target agent
+reasoning?</li>
+<li>How often do owners act on <code>link-authz</code> warnings in
+practice, and does the list grow unbounded on an active hive?</li>
+<li>Does the owner forget reach modules that cache text from
+<code>/v1/feed</code>? The contract asks them to honour the flag;
+nothing in the core can check it.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Journal and store:</strong>
+<code>hivemind/parts/02_store_journal.py</code>, <code>merkle.py</code>,
+<code>hivemind/parts/09_entity_store_ops.py</code>
+(<code>rebuild_db</code>).</li>
+<li><strong>Ingest and sync:</strong>
+<code>hivemind/parts/03_ingest.py</code>,
+<code>hive_sync_daemon.py</code>, <code>sync_client.py</code>,
+<code>sync_common.py</code>.</li>
+<li><strong>Projection and trust:</strong>
+<code>hivemind/parts/04_projection.py</code>,
+<code>hivemind/parts/05_trust_validation.py</code>,
+<code>hivemind/parts/06_links_forget.py</code>.</li>
+<li><strong>Commands and reads:</strong>
+<code>hivemind/parts/07_data_commands.py</code>,
+<code>hivemind/parts/08_read_api.py</code>,
+<code>hivemind/parts/10_agent_loop.py</code>,
+<code>hivemind/parts/17_cli.py</code>.</li>
+<li><strong>Control plane:</strong> <code>hivemind_ctl.py</code>,
+<code>hivemind_owner.py</code>, <code>ownerkey.py</code>,
+<code>owner_agent.py</code>, <code>approvers.py</code>,
+<code>commandmap.py</code>.</li>
+<li><strong>Integrations:</strong>
+<code>integrations/mcp/hive_mcp.py</code>,
+<code>integrations/hermes/__init__.py</code>,
+<code>integrations/claude-code/</code>,
+<code>hive_module_api.py</code>.</li>
+<li><strong>Tests:</strong> <code>tests/test_module_api.py</code>,
+<code>tests/test_unforget.py</code>,
+<code>tests/test_forget_oracle.py</code>,
+<code>tests/forget_corpus.py</code>, <code>tests/test_feed.py</code>,
+<code>tests/test_links.py</code>, <code>tests/test_s2_split.py</code>,
+<code>tests/test_perf.py</code>,
+<code>tests/integration/test_s4_sync_three_nodes.py</code>.</li>
+<li><strong>Docs:</strong> <code>docs/HV_ARCHITECTURE.md</code>,
+<code>docs/INTERNALS.md</code>, <code>docs/NAMESPACES.md</code>,
+<code>docs/THREAT_MODEL.md</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the tree root at the pinned revision with
+<code>/usr/bin/git grep</code>.</p>
+<ul>
+<li><code>git grep -n -i -E 'valid_(from|to|at|until)|observed_at|event_time|occurred_at' -- '*.py' hv</code>
+— no match; no valid-time field.</li>
+<li><code>git grep -n -i -E '(WHERE|AND)[^"]*\b(project|user_id|tenant|namespace|agent_id|scope)\b' -- hivemind hv hive_module_api.py</code>
+— no match; no scope predicate on any read.</li>
+<li><code>git grep -n -E '_salience_gate\('</code> — the definition at
+<code>integrations/hermes/__init__.py:954</code> and a docstring mention
+at <code>:880</code>; no caller.</li>
+<li><code>git grep -n -E 'speculation' -- hivemind hv</code> — no match;
+the core never reads the tag Hermes writes.</li>
+<li><code>git grep -n -E 'open\(' -- merkle.py hivemind hv</code> — the
+journal is opened only in append mode
+(<code>02_store_journal.py:789</code>); the write-mode opens are key,
+pin, quarantine and nudge-state files.</li>
+<li><code>git grep -n -E '(UPDATE|DELETE FROM) facts' -- hivemind hv</code>
+— projection writers and <code>rebuild_db</code> only;
+<code>access_count</code> at <code>04_projection.py:65</code> is the one
+write a projection does not derive.</li>
+<li><code>git grep -n -E 'ratif' -- '*.py' hv</code> — two comments,
+<code>06_links_forget.py:410</code> and
+<code>13_doctor_status.py:392</code>; no ratify verb.</li>
+<li><code>git grep -n -E 'FORGET_FLOOR' -- hivemind</code> — the readers
+that exclude forgotten rows in <code>08_read_api.py</code>,
+<code>09_entity_store_ops.py</code> and
+<code>10_agent_loop.py:518</code>, and the decay exemption in
+<code>05_trust_validation.py:378</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|citation|doi\.org'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/projectmentor/hive-mind/commit/739b63e97e116b2ea43dd4bcaa6df79addd3fef7"><code class="commit-id" title="739b63e97e116b2ea43dd4bcaa6df79addd3fef7">739b63e9…</code></a>
+— first reading, at the head of <code>main</code>, a manifest re-signing
+commit of 15 October 2026 after the contract 4.3 merge. Three marks:
+<code>tombstone</code>, <code>audit_log</code>,
+<code>negative_eval</code>; <code>trust_state</code>,
+<code>scope_enforced</code>, <code>human_review</code> and
+<code>bitemporal</code> withheld, with the reasons in sections 2, 5 and
+9. Screened before reading from a full clone: no auto-run surface; two
+<code>conftest.py</code> build-time execution points;
+<code>requirements.txt</code> inside the cooldown with one floating
+range, <code>requests&gt;=2.32.4,&lt;3</code>; <code>AGENTS.md</code>
+read as data. No licence rider. Nothing was installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

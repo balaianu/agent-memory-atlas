@@ -126,8 +126,8 @@ belief.</p>
 <blockquote>
 <p><strong>Reported:</strong> a durable record keyed on the rejected
 <em>value</em> rather than on the row, and consulted on the write path,
-recurs across the corpus. 66 systems of
-742 carry the mark, and <a
+recurs across the corpus. 67 systems of
+743 carry the mark, and <a
 href="#sorted-by-what-actually-stops-the-value">the table below</a>
 sorts the holders this page discusses by what actually stops the value.
 The idea's history runs from invention to independent arrival: Verel
@@ -291,8 +291,8 @@ near-miss, and the argument that the expensive half of the pattern is
 not the hard half.</li>
 </ul>
 <h3 id="every-instance">Every instance</h3>
-<p><strong>66 systems of
-742 in the atlas carry the mark.</strong> The
+<p><strong>67 systems of
+743 in the atlas carry the mark.</strong> The
 entries below are the ones whose mechanism this page discusses.</p>
 <p><a href="../../systems/verel/">Verel</a> uses rejected memory records
 as a correctness mechanism and protects rejected states from ordinary
@@ -1213,6 +1213,23 @@ Relations, groundings and memory links use partial unique indexes on
 Worse for memories, the librarian's duplicate search is the same read
 that hides <code>wrong</code> rows, so the rejection is invisible at the
 moment it would be consulted.</p>
+<p><strong><a href="../../systems/hive-mind/">HiveMind
+(projectmentor)</a> gets the collision from content addressing and the
+suppression from a projection.</strong> Facts are identified by their
+exact text: <code>persist_fact</code> maps a new entry whose
+<code>content</code> matches an existing row onto that row, as
+corroboration (<code>hivemind/parts/04_projection.py:55-67</code>). An
+owner-signed <code>retract</code> names one entry, and
+<code>_content_evidence</code> resolves it to that entry's text and sets
+<code>forget</code> on the text, so every row and every later assertion
+of the same string projects to <code>FORGET_FLOOR</code>, -1.0
+(<code>:1158-1201</code>). Every default read keeps rows at or above
+zero. No table holds the rejection: the journal entry is the record and
+the projection is the consultation. Two limits come with that design.
+The key is the literal string, so a trailing period makes a new fact.
+And the journal is replicated and append-only, so the forgotten text
+stays on every device, one <code>--min-confidence -1</code> away from
+the agent.</p>
 <h3 id="the-tombstone-that-must-not-retain-what-it-protects">The
 tombstone that must not retain what it protects</h3>
 <p>A tombstone that stores the value in order to key on it is fine for a
