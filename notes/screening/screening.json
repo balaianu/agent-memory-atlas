@@ -46811,6 +46811,49 @@
       "status": "screened",
       "url": "https://github.com/buiilding/WindieOS"
     },
+    "windvane": {
+      "counts": {
+        "AGENT": 1,
+        "EXEC": 1,
+        "FLOAT": 1,
+        "FRESH": 1,
+        "RUNS": 3
+      },
+      "files_scanned": 8,
+      "findings": [
+        {
+          "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 3 entr(ies): icon.png, marketplace.json, plugin.json",
+          "kind": "RUNS",
+          "path": ".claude-plugin/"
+        },
+        {
+          "detail": "hook scripts a plugin manifest can register — 18 entr(ies): agents.ts, band.tsx, bridge.ts, brief.ts, compact.ts, door.ts, engine.ts, export.ts, hooks.json, import.ts, ledger.ts, pane.tsx, register.ts, remember.ts, ring.ts, setup.ts, strict.ts, tools.ts",
+          "kind": "RUNS",
+          "path": "hooks/"
+        },
+        {
+          "detail": "plugin-root hook registrations (SessionStart / PreCompact / Stop) — mentions PostToolUse, PreToolUse, SessionStart, Stop, UserPromptSubmit, command, hooks",
+          "kind": "RUNS",
+          "path": "hooks/hooks.json"
+        },
+        {
+          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "pyproject.toml"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        }
+      ],
+      "revision": "69dc824fc2cf0d59e093c4e7e4f2a7a4f2d17ad8",
+      "screened_at": "2026-10-15T21:01:42+00:00",
+      "slug": "windvane",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/20alexl/windvane"
+    },
     "wordcell": {
       "counts": {
         "AGENT": 2,

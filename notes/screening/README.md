@@ -17,9 +17,9 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 355 |
-| Repositories with a dependency surface inside the cooldown (`FRESH`) | 392 |
-| Repositories with build-time execution (`EXEC`) | 547 |
+| Repositories with an auto-run surface (`RUNS`) | 356 |
+| Repositories with a dependency surface inside the cooldown (`FRESH`) | 393 |
+| Repositories with build-time execution (`EXEC`) | 548 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
 
@@ -378,6 +378,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`wenlan`](../../content/systems/wenlan.md) | `.claude-plugin/`, `.claude/hooks/`, `.claude/settings.json`, `.githooks/` |
 | [`windie-sandbox`](../../content/systems/windie-sandbox.md) | `.gitmodules` |
 | [`windieos`](../../content/systems/windieos.md) | `.vscode/settings.json` |
+| [`windvane`](../../content/systems/windvane.md) | `.claude-plugin/`, `hooks/`, `hooks/hooks.json` |
 | [`yantrik-mind`](../../content/systems/yantrik-mind.md) | `.codex/config.toml` |
 | [`yantrikdb-mcp`](../../content/systems/yantrikdb-mcp.md) | `.mcp.json`, `mcp.json`, `server.json` |
 | [`yourmemory`](../../content/systems/yourmemory.md) | `server.json` |

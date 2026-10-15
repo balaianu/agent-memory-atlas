@@ -42,8 +42,9 @@ detached runner asks Sonnet what is worth remembering; a once-a-day "sleep"
 decays, archives, compresses and merges what was stored; and every session
 starts with identity documents and a briefing the model wrote for itself.
 Storage is plain JSON under `~/.claude-engram/`, committed to a local git
-repository at each consolidation. It is a different project from the one the
-[Claude Engram](../claude-engram/) report covers, 20alexl/claude-engram.
+repository at each consolidation. It is a different project from
+20alexl/claude-engram, which the [windvane](../windvane/) report covers under
+its later name.
 
 What is notable is how much of the design is about not losing experience. The
 buffer is claimed atomically and restored chunk by chunk when extraction fails,

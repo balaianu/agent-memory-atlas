@@ -6297,15 +6297,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Study when: you want a pending-then-confirmed edge pipeline, a value-keyed rejection fed back into a background tagger, or lifecycle predicates applied consistently across FTS, vector and graph arms.
 - Do not copy when: memory has to stay as written, a correction has to hold against a later digest, or agents and tenants need separate scopes — the store is one graph for every agent, and `from_agents` filters on a string the writer supplies.
 
-### [`claude-engram`](../systems/claude-engram/)
+### [`windvane`](../systems/windvane/)
 
 - Best idea: **an injection gate that returns nothing rather than the best of nothing.** `score_loaded_entries` admits a memory before an edit only on a path-aware file match, refuses bare generic basenames such as `README.md` and `utils.py`, and asks old entries for a full path, so an edit with no relevant memory injects nothing.
-- Biggest risk: **scope is chosen by directory name when the path is unknown.** Both hook readers load the first registered project with the same basename when the current path is unregistered, and `load_project_memory` does so before looking at ancestors, so a fresh checkout named `backend` reads another project's rules and mistakes until its first write.
-- Most reusable component: `claude_engram/mining/decision_gate.py`, one shape test for a decision shared by the prompt hook, the transcript miner and a pruning migration.
-- Second risk: **dismissal does not stick and cleanup deletes.** `acknowledge_mistake` moves the row to the archive, while both writers dedupe against the hot file only, so the same failure is captured again under the same content-hash id. The post-session cleanup removes any entry under 20 characters without an archive copy, rules included.
-- Maturity impression: MIT, 34,944 lines of Python in the package, 305 commits on main by one author under two identities from 20 January 2026 to 27 September 2026. 198 pytest-style functions and 39 bench scripts, the benches printing pass counts without failing a run; no CI configuration and no committed retrieval result.
+- Biggest risk: **a dismissed mistake comes back through the writer that bypasses the store.** `acknowledge_mistake` moves the row to the archive, and `remember_discovery` checks a new mistake against archived rows, but the failed-tool hook appends through `_append_memory_entry`, which compares exact text against `memory.json` alone, so the same failure is captured again under the same content-hash id.
+- Most reusable component: `windvane/capture.py`, one shape test for a decision shared by the prompt hook and the transcript miner.
+- Second risk: **the model names the partition.** Every plugin tool takes a `project_path` argument, so a call can read, write or forget any registered project's store; and a recurring failure's files are patched onto whichever entry is last in `memory.json`.
+- Maturity impression: MIT, 28,103 lines of Python in the package and 3,229 of TypeScript in the hooks modules, 78 commits on main by one author from 4 to 12 October 2026 in a repository that continues the private claude-engram. 442 pytest functions and 79 TypeScript cases; no CI configuration and no committed retrieval result.
 - Study when: you are building capture from an agent's own tool failures and prompts, and want a worked set of gates against noise, each with the incident that produced it.
-- Do not copy when: projects share directory names, a dismissed memory must stay dismissed, or other local processes should not be able to write memory through the loopback daemon.
+- Do not copy when: projects share one store across people, a dismissed memory must stay dismissed, or the agent must not choose which project's memory it reads.
 
 ### [`ctx-open`](../systems/ctx-open/)
 

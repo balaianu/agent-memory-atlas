@@ -28954,8 +28954,8 @@ hold against a later digest, or agents and tenants need separate scopes
 — the store is one graph for every agent, and <code>from_agents</code>
 filters on a string the writer supplies.</li>
 </ul>
-<h3 id="claude-engram"><a
-href="../systems/claude-engram/"><code>claude-engram</code></a></h3>
+<h3 id="windvane"><a
+href="../systems/windvane/"><code>windvane</code></a></h3>
 <ul>
 <li>Best idea: <strong>an injection gate that returns nothing rather
 than the best of nothing.</strong> <code>score_loaded_entries</code>
@@ -28963,33 +28963,33 @@ admits a memory before an edit only on a path-aware file match, refuses
 bare generic basenames such as <code>README.md</code> and
 <code>utils.py</code>, and asks old entries for a full path, so an edit
 with no relevant memory injects nothing.</li>
-<li>Biggest risk: <strong>scope is chosen by directory name when the
-path is unknown.</strong> Both hook readers load the first registered
-project with the same basename when the current path is unregistered,
-and <code>load_project_memory</code> does so before looking at
-ancestors, so a fresh checkout named <code>backend</code> reads another
-project's rules and mistakes until its first write.</li>
-<li>Most reusable component:
-<code>claude_engram/mining/decision_gate.py</code>, one shape test for a
-decision shared by the prompt hook, the transcript miner and a pruning
-migration.</li>
-<li>Second risk: <strong>dismissal does not stick and cleanup
-deletes.</strong> <code>acknowledge_mistake</code> moves the row to the
-archive, while both writers dedupe against the hot file only, so the
-same failure is captured again under the same content-hash id. The
-post-session cleanup removes any entry under 20 characters without an
-archive copy, rules included.</li>
-<li>Maturity impression: MIT, 34,944 lines of Python in the package, 305
-commits on main by one author under two identities from 20 January 2026
-to 27 September 2026. 198 pytest-style functions and 39 bench scripts,
-the benches printing pass counts without failing a run; no CI
-configuration and no committed retrieval result.</li>
+<li>Biggest risk: <strong>a dismissed mistake comes back through the
+writer that bypasses the store.</strong>
+<code>acknowledge_mistake</code> moves the row to the archive, and
+<code>remember_discovery</code> checks a new mistake against archived
+rows, but the failed-tool hook appends through
+<code>_append_memory_entry</code>, which compares exact text against
+<code>memory.json</code> alone, so the same failure is captured again
+under the same content-hash id.</li>
+<li>Most reusable component: <code>windvane/capture.py</code>, one shape
+test for a decision shared by the prompt hook and the transcript
+miner.</li>
+<li>Second risk: <strong>the model names the partition.</strong> Every
+plugin tool takes a <code>project_path</code> argument, so a call can
+read, write or forget any registered project's store; and a recurring
+failure's files are patched onto whichever entry is last in
+<code>memory.json</code>.</li>
+<li>Maturity impression: MIT, 28,103 lines of Python in the package and
+3,229 of TypeScript in the hooks modules, 78 commits on main by one
+author from 4 to 12 October 2026 in a repository that continues the
+private claude-engram. 442 pytest functions and 79 TypeScript cases; no
+CI configuration and no committed retrieval result.</li>
 <li>Study when: you are building capture from an agent's own tool
 failures and prompts, and want a worked set of gates against noise, each
 with the incident that produced it.</li>
-<li>Do not copy when: projects share directory names, a dismissed memory
-must stay dismissed, or other local processes should not be able to
-write memory through the loopback daemon.</li>
+<li>Do not copy when: projects share one store across people, a
+dismissed memory must stay dismissed, or the agent must not choose which
+project's memory it reads.</li>
 </ul>
 <h3 id="ctx-open"><a
 href="../systems/ctx-open/"><code>ctx-open</code></a></h3>

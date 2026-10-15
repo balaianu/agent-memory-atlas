@@ -42,7 +42,7 @@ SQLite file: typed memories, per-branch handoff chains, ADRs and a durable todo
 list, all reached through an MCP server and `engram-cli`. It is not related to
 [Engram](../engram/), [Engram Alpha](../engram-alpha/) (whose own `engram-mcp`
 crate is a different project), [engram (NickCirv)](../engram-nickcirv/) or
-[Claude Engram](../claude-engram/); it wraps no engine of theirs.
+[windvane](../windvane/), formerly Claude Engram; it wraps no engine of theirs.
 
 What is notable is how it retires a memory. A `supersedes` edge makes retrieval
 return the successor at the old memory's rank, annotated with what it replaced.

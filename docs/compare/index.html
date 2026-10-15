@@ -4942,61 +4942,6 @@ inbox write route; the agent holds every correcting verb; no CI</td>
 </tr>
 <tr>
 <td><a
-href="../systems/claude-engram/"><code>claude-engram</code></a></td>
-<td>One MemoryEntry: content, category (rule, mistake, decision,
-discovery, context, lesson, priority, note), relevance 1-10, tags,
-related_files, created_at, last_accessed, access_count, source,
-archived_at and an optional rule detector. No project field and no
-status</td>
-<td>JSON under ~/.claude_engram: projects/HASH/memory.json per
-registered project path, a manifest from path to hash, one archive.json
-at the store root keyed by project path, and per-project embedding
-matrices</td>
-<td>Hooks score hot entries by file match 0.35, tags, recency,
-relevance, access count and a category bonus, and inject the top three
-only with direct file relevance. The MCP memory tool fuses word-overlap
-keyword, the same scorer and optional bge-base vectors by RRF, reranks,
-and drops zero scores</td>
-<td>Hooks store failed-tool output as mistakes and gated user sentences
-as decisions; a detached miner extracts decisions, mistakes and
-preferences from transcripts; MCP remember, add_rule, log_mistake and
-log_decision. Dedupe is exact text on the hook path and 0.85 Jaccard in
-the store, over hot entries only</td>
-<td>modify, delete, batch_delete, promote, archive and restore by id;
-forget removes a project's directory and manifest entry and leaves its
-rows in the root archive.json. Idle entries archive after 14 days;
-cleanup hard-deletes entries it judges broken, rules included. No
-tombstone</td>
-<td>Physical: one memory.json per registered project path. The hook
-readers merge ancestor stores and fall back to any registered project
-with the same directory basename; MCP reads open only the named
-project's file. No key on the row</td>
-<td>Claude Code hooks on SessionStart, UserPromptSubmit, PreToolUse,
-PostToolUse, PostToolUseFailure, PreCompact, PostCompact, Stop,
-StopFailure, Notification and SessionEnd, merged into
-~/.claude/settings.json; a 16-tool MCP server; an /engram skill</td>
-<td>A detached transcript miner at session end, on a project's first
-session and on a debounced live tick; the session-end and first-session
-runs also apply cleanup with decay and archive stale mistakes; optional
-Ollama digests; a loopback daemon serving embeddings and hook events
-that exits after 30 idle minutes</td>
-<td>None as state. Categories are types, archived_at is a storage tier
-that hook reads skip, and decision capture is a write-time shape
-gate</td>
-<td>Path-aware file matching that refuses bare generic basenames; an
-injection gate that stays silent without direct file relevance; one
-decision-shape gate shared by the prompt hook, the miner and a pruning
-migration; archive-not-delete for consolidation and mistake hygiene;
-stale-save merge by entry id</td>
-<td>Both hook readers fall back to another registered project with the
-same basename; acknowledged mistakes are re-captured because dedupe
-reads only the hot tier; forget leaves archived rows behind;
-post-session cleanup deletes a rule under 20 characters as broken; the
-loopback daemon runs hook handlers for any local caller; the benches
-cannot fail a run</td>
-</tr>
-<tr>
-<td><a
 href="../systems/claude-mem-lite/"><code>claude-mem-lite</code></a></td>
 <td>An observation — type (decision, bugfix, feature, refactor,
 discovery, change), title, subtitle, facts, narrative, concepts, lesson
@@ -32544,6 +32489,59 @@ type empties, and there is no episodic-to-semantic delete cascade, so a
 summary outlives the interactions it was derived from</td>
 </tr>
 <tr>
+<td><a href="../systems/windvane/"><code>windvane</code></a></td>
+<td>One MemoryEntry: content, category (rule, mistake, decision,
+discovery, context, lesson, priority, note), relevance 1-10, tags,
+related_files, created_at, last_accessed, access_count, source,
+archived_at, cluster_id and an optional rule detector. No project field
+and no status</td>
+<td>JSON under ~/.windvane: projects/HASH/memory.json per registered
+project path, a manifest from path to hash, one archive.json at the
+store root keyed by project path, per-project embedding files,
+checkpoint rings and a session index</td>
+<td>Hooks score hot entries by file match 0.35, tags, recency,
+relevance, access count and a category bonus, and inject the top three
+only with direct file relevance. The memory tool's search is word-set
+overlap sorted by relevance. Past-session search fuses keyword and
+optional embedding scores over transcript chunks</td>
+<td>The failed-tool hook stores mistakes and the prompt hook gated
+decisions, each deduped by exact text against memory.json only; a
+detached miner adds decisions, mistakes and preferences; the memory and
+log tools and a /remember command. Store writes dedupe at 0.85 Jaccard,
+and a new mistake also against the archive</td>
+<td>modify, delete, promote, archive and restore by id;
+acknowledge_mistake archives; forget removes a project's directory,
+manifest row and archived rows. Idle entries archive after 14 days;
+cleanup deletes short entries outside rules, mistakes and lessons as
+broken. No tombstone</td>
+<td>Physical: one memory.json per registered project path. Hook readers
+merge the path's own store with every registered ancestor's and nothing
+else; tool reads open the file of a project_path the model may supply.
+No key on the row</td>
+<td>A Claude Code plugin: command hooks on twelve events through a thin
+daemon client, a TypeScript hooks module registering six tools, slash
+commands, a pane, a status segment and a subagent-prompt rewrite; a
+second plugin, windvane-keeper, reloads it</td>
+<td>A detached transcript miner at session end, at bootstrap and on a
+live tick; the session-end and bootstrap runs apply cleanup with decay
+and archive stale mistakes across every registered project; a loopback
+daemon serving hooks, tools and embeddings behind an owner-only token,
+exiting after 30 idle minutes</td>
+<td>None as state. Categories are types, archived_at is a storage tier
+that hook reads skip, and decision capture is a write-time shape
+gate</td>
+<td>Path-aware file matching that refuses bare generic basenames; an
+injection gate that stays silent without direct file relevance; one
+decision-shape gate shared by the prompt hook and the miner;
+archive-not-delete for age and mistake hygiene; stale-save merge by
+entry id; a daemon token checked before any handler runs</td>
+<td>The failed-tool hook dedupes against memory.json only, so a mistake
+acknowledged into the archive returns to the banners when the hook logs
+it again; a recurring failure's files are patched onto whichever entry
+is last in the file; cleanup deletes short notes without an archive
+copy; the model may name the project any tool reads; no CI</td>
+</tr>
+<tr>
 <td><a href="../systems/wordcell/"><code>wordcell</code></a></td>
 <td>One Markdown file with YAML frontmatter and a stable document_id;
 the type field (note, concept, plan, session, profile, market-research,
@@ -34577,7 +34575,6 @@ href="../systems/cass-memory-system/"><code>cass-memory-system</code></a>,
 href="../systems/chitta-field/"><code>chitta-field</code></a>, <a
 href="../systems/chump/"><code>chump</code></a>, <a
 href="../systems/citra/"><code>citra</code></a>, <a
-href="../systems/claude-engram/"><code>claude-engram</code></a>, <a
 href="../systems/claude-engram-mlapeter/"><code>claude-engram-mlapeter</code></a>,
 <a href="../systems/claude-mem/"><code>claude-mem</code></a>, <a
 href="../systems/claude-mem-lite/"><code>claude-mem-lite</code></a>, <a
@@ -34987,6 +34984,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/wenlan/"><code>wenlan</code></a>, <a
 href="../systems/widemem-ai/"><code>widemem-ai</code></a>, <a
 href="../systems/windie-sandbox/"><code>windie-sandbox</code></a>, <a
+href="../systems/windvane/"><code>windvane</code></a>, <a
 href="../systems/wordcell/"><code>wordcell</code></a>, <a
 href="../systems/xerj/"><code>xerj</code></a>, <a
 href="../systems/yacmemo/"><code>yacmemo</code></a>, <a

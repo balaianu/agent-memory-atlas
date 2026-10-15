@@ -1287,16 +1287,20 @@ ordinary retrieve role over the provider's whole root, in one session
 per view shared by every consumer. <strong>When a store is shared two
 ways, put the same key on both; a prompt that describes the boundary is
 not one.</strong></p>
-<p><strong><a href="../../systems/claude-engram/">Claude Engram</a>
-partitions by file and then chooses the file by name.</strong> Each
-registered project path has its own <code>memory.json</code> and no row
-carries a project key. When the current path is unregistered, both hook
-readers load the first registered project whose directory basename
-matches, and <code>load_project_memory</code> prefers that match over
-the path's own ancestors, so a new <code>backend</code> checkout is
-injected with another <code>backend</code>'s rules and mistakes.
-<strong>A missed scope lookup should return nothing; a basename is not
-an identity.</strong></p>
+<p><strong><a href="../../systems/windvane/">windvane</a> partitions by
+file and lets the model name the file.</strong> Each registered project
+path has its own <code>memory.json</code> and no row carries a project
+key. The hook readers walk the path and its registered ancestors and
+return nothing for a path with none; at the claude-engram pin both fell
+back to the first registered project whose directory basename matched,
+and <code>load_project_memory</code> preferred that match over the
+path's own ancestors, until commit
+<code class="commit-id" title="0f3d5c5204783f9bc77bc5338b55fc23de3e6faf">0f3d5c52…</code> removed both. The
+tool side keeps the other half of the gap: every plugin tool takes a
+<code>project_path</code> argument, so a call reads, writes or forgets
+whichever registered project it names. <strong>A missed scope lookup
+should return nothing, a basename is not an identity, and the partition
+should come from the session rather than the call.</strong></p>
 <p><strong><a href="../../systems/mcp-context-server/">MCP Context
 Server</a> has the principal key on every row and the predicate on no
 read.</strong> <code>owner_id</code> is stamped from the verified token

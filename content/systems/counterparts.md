@@ -61,8 +61,9 @@ predicate and no CI workflow.
 Three marks: `trust_state`, `audit_log` and `negative_eval`. Section 9 names the
 four withheld and why. No paper or citation block is in the tree. The README
 calls it the third version of a project whose earlier generations were the
-author's claude-engram, engram and bansai. The [Claude Engram](../claude-engram/)
-and [engram](../engram/) reports cover other authors' projects of those names.
+author's claude-engram, engram and bansai. The [windvane](../windvane/)
+report, which covers 20alexl/claude-engram under its later name, and the
+[engram](../engram/) report cover other authors' projects of those names.
 
 ## 2. Mental Model
 

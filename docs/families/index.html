@@ -3979,7 +3979,7 @@ href="../systems/lint-ai/"><code>lint-ai</code></a>, <a
 href="../systems/nano-brain/"><code>nano-brain</code></a>, <a
 href="../systems/global-agent-memory/"><code>global-agent-memory</code></a>,
 <a href="../systems/rightmemory/"><code>rightmemory</code></a>, <a
-href="../systems/claude-engram/"><code>claude-engram</code></a>, <a
+href="../systems/windvane/"><code>windvane</code></a>, <a
 href="../systems/ctx-open/"><code>ctx-open</code></a>, <a
 href="../systems/roampal-core/"><code>roampal-core</code></a>, <a
 href="../systems/opencode-session-recall/"><code>opencode-session-recall</code></a>,
@@ -7789,17 +7789,17 @@ serialises updaters across devices, and a hub shares views under
 view-bound tokens. The weak side is reads: pending evidence is
 retrievable before judgement, pruned memory returns under grace, and
 question views reach the provider's whole root behind a prompt.</p>
-<p><strong><a href="../systems/claude-engram/">Claude Engram</a> turns a
-Claude Code session's own failures and choices into memory, and keeps
-the injection quiet.</strong> Global hooks store failed-tool output as
-mistakes and gated user sentences as decisions, a detached miner adds
+<p><strong><a href="../systems/windvane/">windvane</a> turns a Claude
+Code session's own failures and choices into memory, and keeps the
+injection quiet.</strong> A plugin, formerly
+<code>20alexl/claude-engram</code>, whose hooks store failed-tool output
+as mistakes and gated user sentences as decisions; a detached miner adds
 more from transcripts, and one JSON file per project path holds them.
 Before each edit at most three memories are injected, and only with a
-path-aware file match. The boundary is weaker than the gate: both hook
-readers fall back to any registered project with the same directory
-name, an acknowledged mistake is archived and then re-captured, and
-post-session cleanup deletes a rule under 20 characters. One mark,
-<code>negative_eval</code>.</p>
+path-aware file match. The correction path is weaker than the gate: an
+acknowledged mistake is archived, the failed-tool hook never reads the
+archive and captures it again, and cleanup deletes short notes as
+broken. One mark, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/ctx-open/">CTX Cognitive Version
 Control</a> versions an agent's reasoning rather than its
 facts.</strong> A .NET CLI and MCP server over a <code>.ctx</code>
