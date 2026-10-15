@@ -9907,73 +9907,64 @@ this is a single-tenant store; and <code>quarantined</code> and
 <tr>
 <td><a href="../systems/flair/"><code>flair</code></a></td>
 <td>A memory row with content, an owning agent, a durability class, a
-visibility, an embedding and usage counts — beside an agent identity and
-a "soul" of personality, values and procedures</td>
-<td>Harper, installed and supervised by the CLI, with a BM25 index
-beside the vector index</td>
-<td>Hybrid semantic and lexical, with the displayed percentage
-documented as similarity and explicitly not a probability of being the
-right answer</td>
-<td><code>memory add</code> over the CLI, a client package, or MCP; a
-server-side conservative-duplicate gate computes a signal and never
-suppresses the write</td>
-<td>Standard CRUD; ephemeral rows are guarded against being flipped to
-shared, on both POST and PUT</td>
-<td>One read-scope resolver every cross-agent path imports, binding the
-authenticated agent as the owner key; open-within-org for everything not
-marked private</td>
+visibility, an archived flag, an optional supersedes link and validity
+window, an embedding and usage counts — beside an agent identity and a
+soul of personality, values and procedures</td>
+<td>Harper over its RocksDB binding, installed and supervised by the
+CLI, with a BM25 index beside the HNSW vector index</td>
+<td>Hybrid semantic and lexical, excluding archived, expired and
+superseded rows by default, with the displayed percentage documented as
+similarity and not as a probability of being the right answer</td>
+<td><code>memory_store</code> over MCP, <code>flair memory add</code>,
+the client package or the feed; credential-shaped text is redacted on
+write, and a server-side conservative-duplicate gate computes a signal
+and never suppresses the write</td>
+<td>In-place update by default, or a supersedes-linked successor that
+closes the predecessor's validity; archive and restore as a flag; owner
+delete; operator-only physical purge recording a deletion row for
+durable memories</td>
+<td>One read-scope resolver on every memory read path, binding the
+authenticated agent as the owner key; open within the instance for
+everything not marked private</td>
 <td>A stdio MCP adapter written into each detected client, a built-in
-MCP surface off by default, an HTTP API, and adapter packages for a
-dozen runtimes</td>
-<td>Federation sync, presence, promotion of continuity candidates, and
-reflection over stored memories</td>
-<td>Ed25519 per-agent keypairs for external identity, a server-attested
-provenance status surfaced on recall and deliberately barred from every
-decision, and a recorded justification required before a promoted memory
-is shared</td>
-<td>The comments record what went wrong and what the code now
-guarantees, which makes this one of the most auditable trees in the
-corpus. The read-scope module exists because the rule used to be
-scattered: <code>SemanticSearch</code> had "its OWN inline
-grant-resolution + a <code>visibility === \"office\"</code> global
-OR-clause that leaked ANY authenticated agent's read of ANY other
-agent's memories" — so now there is one helper, composed from a
-record-type registry, with a test that trips on drift. The migration
-invariant is argued rather than asserted:
+OAuth MCP endpoint off by default, an HTTP API, and thirteen packages
+including runtime bridges</td>
+<td>Federation sync, presence, nightly distillation into candidates and
+their promotion, reflection, maintenance archiving of expired rows, and
+an out-of-store watcher for lost durable rows</td>
+<td>Ed25519 per-agent keys for external identity, a server-attested
+provenance status surfaced on recall and barred from every decision, and
+a recorded justification required before an auto-promoted memory is
+shared</td>
+<td>The comments record what went wrong and what the code guarantees.
+The read-scope module exists because the rule used to be scattered:
+<code>SemanticSearch</code> had "its OWN inline grant-resolution + a
+<code>visibility === \"office\"</code> global OR-clause that leaked ANY
+authenticated agent's read of ANY other agent's memories" — so there is
+one helper, composed from a record-type registry, with a test that trips
+on drift. The migration invariant is argued rather than asserted:
 <code>not_equal 'private'</code> is chosen over
-<code>equals 'shared'</code> precisely because the latter would
-"silently retroactively privatize every legacy row". The dedup gate is
-labelled NEVER SUPPRESSES A WRITE and explains the bug that earned the
-label — two topically close but distinct findings, where "the SECOND was
-silently dropped because the old client-side gate returned the existing
-record instead of writing". Promotion defaults to private unless a scope
-tag, a ruling and a rationale all survive re-verification. And the
-README volunteers what most projects bury: that the match percentage "is
-not a probability that the memory answers your question correctly", that
-a root-owned install makes semantic search "silently degrade to
-keyword-only", that the built-in MCP surface is off by default with
-"[n]o documented client setup uses it today", and that the install pulls
-roughly 130 MB of tooling it never uses, with the upstream issue
-linked</td>
-<td>Read the scope model before deploying it, because it is not what an
-identity substrate usually implies: within one instance every verified
-agent reads every other agent's non-private memory, deliberately —
-"there is no per-owner grant gate on READS anymore", grants remain
-inspectable but no longer gate anything, and <code>private</code> is
-"the ONLY owner-only exception". For a personal instance that is the
-intended knowledge-refinement model; for a shared one it means a single
-compromised or careless agent registration reads the lot, and the hard
-boundary is the federation push filter rather than anything between
-agents. The identity is likewise narrower than it sounds: the Ed25519
-key proves an agent to the HTTP surface and, per the docs, "[m]emories
-are not encrypted with it", so losing the key costs the identity and not
-the data — nothing signs a memory's content, and
-<code>attribution</code> on a usage row is explicitly "OPAQUE — never
-parsed, never fed to an LLM" and to be trusted as "nothing more than a
-label". At version 0.54.2 the tree carries a large surface — 250,467
-lines, thirteen adapter packages, an upgrade planner that coordinates
-three published packages — for a substrate whose own quick start is five
-commands</td>
+<code>equals 'shared'</code> because the latter would "silently
+retroactively privatize every legacy row". The dedup gate is labelled
+NEVER SUPPRESSES A WRITE after an earlier gate silently dropped the
+second of two distinct findings. The feed and by-id fixes each ship a
+test that compares the path against the ordinary by-id read rather than
+restating the rule. And the README says the match percentage "is not a
+probability that the memory answers your question correctly"</td>
+<td>Within one instance every verified agent reads every other agent's
+non-private memory, deliberately, and grants gate no read;
+<code>private</code> is the only owner-only exception and the federation
+push filter the only hard boundary. Only the Fabric branch of
+<code>flair init</code> provisions the least-privilege
+<code>flair-agent</code> Harper user, so on a local install a verified
+non-admin agent runs as the Harper super user and the resource-level
+checks are the whole boundary; the memory feed was readable unfiltered
+that way until 30 September 2026. The owning agent can promote its own
+continuity candidate naming itself as reviewer. The Ed25519 key proves
+the caller and signs nothing a memory says, and <code>attribution</code>
+on a usage row is "nothing more than a label". Deletion history covers
+durable memories only and the purge path removes its own rows, and
+in-place update is the default edit</td>
 </tr>
 <tr>
 <td><a href="../systems/flatbread/"><code>flatbread</code></a></td>

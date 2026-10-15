@@ -20464,17 +20464,19 @@ Coherent for a personal instance; on a shared one a single careless
 agent registration reads everything not marked private. The Ed25519 key
 is likewise narrower than "crypto-pinned" suggests — it proves the
 caller to the HTTP surface, memories are not encrypted with it, and
-nothing signs a memory's content.</li>
+nothing signs a memory's content. And on a local install every verified
+agent runs as the Harper super user, because only the Fabric branch of
+<code>flair init</code> provisions the least-privilege one.</li>
 <li>Most reusable component: <code>memory-read-scope.ts</code> entire —
 forty-six lines of header stating the leak, the model and the migration
 invariant, over a resolver composed from a record-type registry with a
 drift tripwire — and beside it the promotion rule that makes a shared
 row "always trace to a recorded justification, never to a default".</li>
-<li>Maturity impression: Apache-2.0, version 0.54.2, 250,467 lines of
-TypeScript with 474 test files across unit, isolated, integration and
-end-to-end suites, thirteen adapter packages, an upgrade planner
-spanning three published packages, and comments that cite issue numbers
-and the bug each invariant fixed.</li>
+<li>Maturity impression: Apache-2.0, version 0.61.0, 458,018 lines of
+TypeScript and JavaScript with 989 test files under <code>test/</code>
+across unit, isolated, integration and end-to-end suites, thirteen
+packages, an upgrade planner spanning three published packages, and
+comments that cite issue numbers and the bug each invariant fixed.</li>
 <li>Study when: you have a scoping rule copied into more than one read
 path, or you want an example of a de-duplication gate that computes a
 signal and never suppresses a write.</li>

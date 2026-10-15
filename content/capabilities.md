@@ -239,13 +239,13 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 | Files on disk | 377 | 329 | | Lexical | 548 | 486 |
 | SQLite | 368 | 314 | | Vector | 482 | 413 |
 | Postgres | 142 | 123 | | Graph | 236 | 207 |
-| Delegated to the adopter | 49 | 36 | | No arm named in the review | 86 | 59 |
+| Delegated to the adopter | 48 | 35 | | No arm named in the review | 86 | 59 |
 | Graph database | 44 | 40 | |  |  |  |
 | Chroma | 35 | 30 | |  |  |  |
 | In-process only | 35 | 28 | |  |  |  |
 | Qdrant | 27 | 20 | |  |  |  |
+| Embedded key-value | 24 | 20 | |  |  |  |
 | LanceDB | 24 | 19 | |  |  |  |
-| Embedded key-value | 23 | 19 | |  |  |  |
 | Redis | 17 | 12 | |  |  |  |
 | Milvus | 10 | 8 | |  |  |  |
 | MongoDB | 8 | 6 | |  |  |  |

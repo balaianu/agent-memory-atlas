@@ -4194,11 +4194,11 @@ dependency file inside the seven-day cooldown. Nothing was installed,
 built or run</li>
 <li><a href="https://github.com/tpsdev-ai/flair">tpsdev-ai/flair</a> at
 <a
-href="https://github.com/tpsdev-ai/flair/commit/6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39"><code class="commit-id" title="6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39">6fadb74f…</code></a>
-— read only, from a shallow clone; thirty-five files scanned, no
-auto-run surfaces, twelve build-time execution points, five unpinned
-surfaces and sixteen dependency files inside the seven-day cooldown.
-Nothing was installed, built or run</li>
+href="https://github.com/tpsdev-ai/flair/commit/0777bda14699614556ef83a996abb0cd3745aedb"><code class="commit-id" title="0777bda14699614556ef83a996abb0cd3745aedb">0777bda1…</code></a>
+— read only, from a full clone; thirty-six files scanned, no auto-run
+surfaces, twelve build-time execution points, five unpinned surfaces and
+twelve dependency files inside the seven-day cooldown. Nothing was
+installed, built or run</li>
 <li><a href="https://github.com/theurian/theurian">theurian/theurian</a>
 at <a
 href="https://github.com/theurian/theurian/commit/6c3c282701bb20bb6c044c539b9dbe4619c34b46"><code class="commit-id" title="6c3c282701bb20bb6c044c539b9dbe4619c34b46">6c3c2827…</code></a>
@@ -17362,6 +17362,38 @@ schema versions where <code>SCHEMA_VERSION</code> was 14, and carried a
 size census from an earlier pin. The first two rested on a field's name
 and a docstring rather than on the digest's constructor and the field's
 writers.</li>
+<li><strong>Four published claims about <a
+href="../systems/flair/">Flair</a> were wrong at <a
+href="https://github.com/tpsdev-ai/flair/commit/6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39"><code class="commit-id" title="6fadb74fe5f7adefb49c3cdc18e34cfd417bcc39">6fadb74f…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code> on a resolver it said every
+cross-agent read path imported, with no caller argument reaching it.
+<code>FeedMemories.connect</code> subscribed to the raw table with no
+<code>allowRead</code> (<code>resources/MemoryFeed.ts:179-189</code>),
+so Harper's default admitted the super user, and only the Fabric branch
+of <code>flair init</code> provisioned the least-privilege user a
+verified agent otherwise falls back from
+(<code>src/commands/init.ts:285</code>, <code>:325</code>,
+<code>resources/auth-middleware.ts:393</code>). On a local instance
+every verified agent therefore received every memory event, private rows
+included. And <code>makeByIdReadGate</code> decided on the value the
+caller's target shaped (<code>resources/record-type-kit.ts:285</code>,
+<code>:297</code>), so a property read of another agent's private row
+returned its content past a middleware check that looked up the raw path
+segment (<code>resources/auth-middleware.ts:629-631</code>). The mark
+holds at the new pin, where both paths apply the rule. It said there was
+no supersession; a successor's <code>supersedes</code> closed the
+predecessor's <code>validTo</code> and default search dropped it
+(<code>resources/Memory.ts:461-465</code>,
+<code>resources/semantic-retrieval-core.ts:228</code>,
+<code>:599</code>). It cited <code>test/data-scoping.test.ts</code> as
+the predicate's test; the file defines its own copy and imports nothing
+from <code>resources/</code>. And its first History entry linked this
+commit, dated 18 September 2026, for a reading made on 16 September at
+<a
+href="https://github.com/tpsdev-ai/flair/commit/02512aae1e859bcfa75d494f34b7a535a8caf0b5"><code class="commit-id" title="02512aae1e859bcfa75d494f34b7a535a8caf0b5">02512aae…</code></a>.
+The scope claim rested on the module header's list of paths rather than
+on every reader of the table.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
