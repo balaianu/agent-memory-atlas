@@ -7654,31 +7654,32 @@ gap is not the issue, the metric is" — explains that R@1 is an upper
 bound on QA accuracy, discloses its own 54.2% on the comparable metric,
 prices the experiment that would settle it at $1.24, and says it is
 blocked on an API key.</li>
-<li>Biggest risk: nothing corrects a stored passage. Verbatim retrieval
-with no status, no supersession and no decay means a note that stopped
-being true has the same standing as one written yesterday, in a system
-whose own timeline promises accumulating project context by day 7.</li>
-<li>Most reusable component: <code>src/fidelis/context.py</code>, a
-regex planner that decides <em>before</em> any search whether to
-retrieve at all — <code>disposition: "abstain"</code> when the utterance
-names no referent and carries no historical-context cue — and otherwise
-routes to one of eight evidence lanes, at no model cost. Beside it, the
-ablation table that publishes the change which made things worse —
-turn-level chunking at 66.8% against a 73.2% BM25 baseline, in the
-table, with an <code>LLM?</code> column so a reader can see which gains
-cost money — beside a Wilson 95% CI on the end-to-end accuracy, which
-appears nowhere else in this corpus.</li>
-<li>Maturity impression: 312 test functions across 35 files including
+<li>Biggest risk: no status ever withholds a record. Superseded, expired
+and not-yet-valid passages are annotated and ordered after current ones,
+never excluded, so a reader that ignores the mark acts on a corrected
+fact; the opt-in Pi prompt-time recall reads a lane that carries no
+temporal status at all, and its injected header says so.</li>
+<li>Most reusable component: <code>temporal_view</code> in
+<code>src/fidelis/temporal_recall.py</code>. Relevance picks the window
+before recency reorders it, a superseded hit pulls its newest superseder
+into view only from the same request's pool, and <code>as_of</code> sees
+the store before a later correction existed, over a
+<code>recorded_at</code> the caller cannot set. Beside it, the ablation
+table that publishes the change which made things worse, a Wilson 95% CI
+on the end-to-end accuracy, and a release methodology that refuses to
+let the redesign inherit the historical headline.</li>
+<li>Maturity impression: 790 test functions in 64 files, including
 <code>test_public_install_truth.py</code>,
 <code>test_telemetry_kill_actually_kills.py</code> and
-<code>test_zero_llm_regression.py</code> — tests of claims, not only of
-code — seven files guarding one write-loss incident recorded in
-<code>degrade.py</code>'s docstring, and a scope filter that no read
-lane forgets.</li>
-<li>Study when: you are about to publish a benchmark number and have not
-decided which metric it is.</li>
-<li>Do not copy when: you need the store to age — the design position is
-that you edit your notes.</li>
+<code>test_user_id_namespace_isolation.py</code> — tests of claims, not
+only of code — seven files guarding one write-loss incident, and a
+deterministic write gate whose secret rule has no off switch. A
+<code>sessions</code> command family is written and never registered,
+and seventeen files cite a specification the tree does not hold.</li>
+<li>Study when: you are about to publish a benchmark number, or want
+corrections that keep their history and an as-of view of the store.</li>
+<li>Do not copy when: a corrected memory must be kept out of the prompt
+rather than marked in it.</li>
 </ul>
 <h3 id="telemem"><a
 href="../systems/telemem/"><code>telemem</code></a></h3>

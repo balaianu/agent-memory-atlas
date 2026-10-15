@@ -12911,26 +12911,25 @@
       "counts": {
         "AGENT": 2,
         "FLOAT": 1,
-        "FRESH": 1,
-        "RUNS": 1
+        "RUNS": 2
       },
-      "files_scanned": 5,
+      "files_scanned": 6,
       "findings": [
         {
-          "detail": "MCP server manifest; declares a start command",
+          "detail": "MCP servers auto-started by a harness — mentions command; launches a package fetched at run time (uvx)",
           "kind": "RUNS",
-          "path": "server.json"
+          "path": "mcp.json"
         },
         {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "pyproject.toml"
+          "detail": "MCP server manifest; declares a start command; launches a package fetched at run time (uvx)",
+          "kind": "RUNS",
+          "path": "server.json"
         }
       ],
-      "revision": "318a5cbbe46286e15fcdc563338e2411f35e104b",
-      "screened_at": "2026-09-16T22:56:53+00:00",
+      "revision": "1b567a69339b75b5081ead1ae1ffdb30519a29ec",
+      "screened_at": "2026-10-15T18:44:26+00:00",
       "slug": "fidelis",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/hermes-labs-ai/fidelis"
     },

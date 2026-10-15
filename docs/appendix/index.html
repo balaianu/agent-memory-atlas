@@ -1777,7 +1777,7 @@ was not read</li>
 <li><a
 href="https://github.com/hermes-labs-ai/fidelis">hermes-labs-ai/fidelis</a>
 at <a
-href="https://github.com/hermes-labs-ai/fidelis/commit/318a5cbbe46286e15fcdc563338e2411f35e104b"><code class="commit-id" title="318a5cbbe46286e15fcdc563338e2411f35e104b">318a5cbb…</code></a>
+href="https://github.com/hermes-labs-ai/fidelis/commit/1b567a69339b75b5081ead1ae1ffdb30519a29ec"><code class="commit-id" title="1b567a69339b75b5081ead1ae1ffdb30519a29ec">1b567a69…</code></a>
 — mid-rename from <code>cogito-ergo</code>; the store path and the
 benchmark writeup still use the old name</li>
 <li><a
@@ -17787,6 +17787,36 @@ with one path making it optional; the injector and
 (<code>gaius/landscape.py:1120-1123</code>), the session hook supplied
 none, and the domain was a topic label that deduplication ignored
 (<code>gaius/facts.py:474-476</code>).</li>
+<li><strong>Six published claims about <a
+href="../systems/fidelis/">Fidelis Memory</a> were wrong at <a
+href="https://github.com/hermes-labs-ai/fidelis/commit/318a5cbbe46286e15fcdc563338e2411f35e104b"><code class="commit-id" title="318a5cbbe46286e15fcdc563338e2411f35e104b">318a5cbb…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The report withheld <code>negative_eval</code>;
+<code>tests/test_user_id_namespace_isolation.py</code> was committed
+there, and asserts that a server bound to one <code>user_id</code> does
+not return another namespace's record from a shared Chroma collection,
+beside an unfiltered control that returns both. It said every store
+reader passed the scope key;
+<code>recall_sessions.query_sessions</code>, a documented public
+function, read session rows with
+<code>where={"mem_type": "session"}</code> and no key, though nothing in
+the tree called it. It said the README placed Mem0, Zep and Supermemory
+figures beside the 73.0%; that paragraph was in the README at
+<code class="commit-id" title="804e521f86e3c0056d3c89b4c7babd1eb086a6a7">804e521f…</code> and gone at the
+pin. It said the README headed its benchmark with 470 questions and left
+the graded-subset caveat to <code>SUMMARY.json</code>; at the pin both
+the headline and the table gave the graded count, 317/434. Its census of
+312 test functions, 31 test files, 39,279 lines and a 368-test README
+badge did not describe the pin, which held 427 test functions in 43
+files, 43,905 lines of Python and no badge. And it cited
+<code>server.py:182</code> and <code>:222</code> for the scope filters
+and README <code>:8</code>, <code>:122-136</code>, <code>:138-150</code>
+and <code>:225-240</code>; at the pin those were
+<code>server.py:390</code> and <code>:435</code> and README
+<code>:7</code>, <code>:276-291</code>, <code>:293-306</code> and
+<code>:446-458</code>. The withheld mark rested on a summary of the
+suite rather than a search of it, and the rest on text carried forward
+from the first reading without being read against the pin.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

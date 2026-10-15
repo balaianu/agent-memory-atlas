@@ -4,26 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A benchmark writeup that refuses a
-favourable comparison, publishes the ablation where its own change hurt,
-and names an 8× cost miss in its flagship mode as a known limitation.">
+    <meta name="description" content="A local verbatim memory whose
+corrections supersede without erasing, whose time-aware recall demotes
+rather than hides, and whose benchmark writeup declines the flattering
+comparison.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Fidelis
 Memory — Agent Memory Atlas">
-    <meta property="og:description" content="A benchmark writeup that
-refuses a favourable comparison, publishes the ablation where its own
-change hurt, and names an 8× cost miss in its flagship mode as a known
-limitation.">
+    <meta property="og:description" content="A local verbatim memory
+whose corrections supersede without erasing, whose time-aware recall
+demotes rather than hides, and whose benchmark writeup declines the
+flattering comparison.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Fidelis
 Memory — Agent Memory Atlas">
-    <meta name="twitter:description" content="A benchmark writeup that
-refuses a favourable comparison, publishes the ablation where its own
-change hurt, and names an 8× cost miss in its flagship mode as a known
-limitation.">
+    <meta name="twitter:description" content="A local verbatim memory
+whose corrections supersede without erasing, whose time-aware recall
+demotes rather than hides, and whose benchmark writeup declines the
+flattering comparison.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Fidelis Memory — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -45,7 +46,7 @@ limitation.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Fidelis Memory",
-      "description": "A benchmark writeup that refuses a favourable comparison, publishes the ablation where its own change hurt, and names an 8\u00d7 cost miss in its flagship mode as a known limitation.",
+      "description": "A local verbatim memory whose corrections supersede without erasing, whose time-aware recall demotes rather than hides, and whose benchmark writeup declines the flattering comparison.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,24 +104,24 @@ limitation.">
           <p class="eyebrow">The gap is not the issue. The metric
 is.</p>
           <h1>Fidelis Memory</h1>
-          <p class="document-deck">A benchmark writeup that refuses a
-favourable comparison, publishes the ablation where its own change hurt,
-and names an 8× cost miss in its flagship mode as a known
-limitation.</p>
+          <p class="document-deck">A local verbatim memory whose
+corrections supersede without erasing, whose time-aware recall demotes
+rather than hides, and whose benchmark writeup declines the flattering
+comparison.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/hermes-labs-ai/fidelis">
               <span>Source</span>
               <strong>hermes-labs-ai/fidelis</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/hermes-labs-ai/fidelis/commit/318a5cbbe46286e15fcdc563338e2411f35e104b" title="318a5cbbe46286e15fcdc563338e2411f35e104b">
+            <a class="meta-pill revision-pill" href="https://github.com/hermes-labs-ai/fidelis/commit/1b567a69339b75b5081ead1ae1ffdb30519a29ec" title="1b567a69339b75b5081ead1ae1ffdb30519a29ec">
               <span>Analyzed revision</span>
-              <code>318a5cbb…</code>
+              <code>1b567a69…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-17</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/hermes-labs-ai--fidelis" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -128,7 +129,18 @@ limitation.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>66,522
+lines of Python in 158 files; the package, src/fidelis, is 22,055 lines
+in 42 modules, and tests are 17,768 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>177
+commits on main by 8 author names, 27 March – 2 October 2026; version
+0.3.0rc1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>790
+test functions in 64 files; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -144,16 +156,17 @@ limitation.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Fidelis Memory is an MIT Python memory layer for Claude Code — local
-Chroma and BM25 under <code>~/.cogito</code>, a nomic embedder on
-Ollama, an MCP install, and a deliberate constraint: <strong>no LLM in
-the default retrieval path</strong>, and the original passage returned
-verbatim rather than paraphrased.</p>
+<p>Fidelis Memory is a local memory service for coding agents that
+stores the passage you wrote and returns it unchanged. A correction is a
+new record that names what it supersedes; the old one stays, is marked,
+and is ordered after the current one. Time is a lookup rather than a
+rewrite: every record carries a system-clock <code>recorded_at</code>, a
+caller may declare when the fact was valid, and a recall can be asked
+<code>as_of</code> an instant.</p>
 <p><strong>The reason this report exists is
-<code>WRITEUP-LONGMEMEVAL-20260423.md</code>, which is the most honest
-benchmark document in this atlas.</strong></p>
-<p>Its central section is titled <em>"Why this is NOT a leaderboard
-submission"</em> and opens:</p>
+<code>WRITEUP-LONGMEMEVAL-20260423.md</code>,</strong> whose central
+section is titled <em>"Why this is NOT a leaderboard submission"</em>
+and opens:</p>
 <blockquote>
 <p>"<strong>The gap is not the issue. The metric is.</strong></p>
 <p>Mastra's published 94.87% is <strong>QA accuracy (Task B)</strong> —
@@ -167,252 +180,346 @@ gpt-4o-mini. Estimated cost: ~$1.24. Blocked on OpenAI API key.</p>
 <p><strong>The path chosen is writeup</strong>, not leaderboard. Honest
 about what we measured."</p>
 </blockquote>
-<p>A project holding a 96.4% number, declining to compare it to a
-competitor's 94.87%, explaining precisely why the comparison would be
-invalid, disclosing its own worse figure on the comparable metric, and
-pricing the experiment that would settle it. No other report in this
-atlas records a paragraph like it.</p>
-<p><strong>It then publishes three findings that are all negative
-results about itself</strong> — section 10.</p>
-<p><strong>The mechanism is deliberately small</strong>: hybrid
-lexical-plus-dense retrieval with RRF fusion, returning stored text
-unchanged. The interesting engineering is in what happens when it breaks
-— section 7.</p>
+<p>A project holding a 96.4% number declines to compare it to a
+competitor's 94.87%, explains why the comparison would be invalid,
+discloses its own worse figure on the comparable metric, and prices the
+experiment that would settle it. It then publishes three findings that
+are all negative results about itself (section 10).</p>
+<p>The 0.3.0rc1 release applies the same standard to its own redesign.
+Its default-retrieval methodology measures the route MCP recall actually
+uses, reports Hit@1 78.94% on whole-session records, and says the
+redesign "should not inherit the historical headline as evidence".</p>
+<p><strong>What the store will not do is withhold anything.</strong>
+Superseded, expired and not-yet-valid records are annotated and demoted;
+the only exclusion is the <code>as_of</code> visibility cut. The agent
+that writes a memory can also supersede any record in its namespace.
+Three marks: <code>bitemporal</code>, <code>scope_enforced</code> and
+<code>negative_eval</code>.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>Notes and sessions go into a local store. A query is answered by BM25
-and dense retrieval fused with reciprocal rank fusion, and the winning
-<strong>original passages</strong> are handed to whatever LLM the agent
-already uses. Fidelis never rewrites them.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a write that cannot reach its backend lands in a dead-letter queue for replay rather than being lost, and the scaffold hands the model an exact refusal string to use when retrieval does not contain the answer</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a write that cannot reach its backend lands in a dead-letter queue for replay rather than being lost, and the scaffold hands the model an exact refusal string to use when retrieval does not contain the answer
+<p>Notes, sessions and agent writes go into one local Chroma collection,
+each record stamped with the process's scope key and a small set of
+temporal fields. A SQLite sidecar indexes content hashes and
+supersession edges so that "is this a duplicate" and "what replaced
+this" are lookups. A query is answered by vector or hybrid retrieval,
+and the hits are then annotated with a status evaluated at now or at
+<code>as_of</code>, reordered current-first, and handed to the agent's
+own model as the original passages.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — every write passes a deterministic gate and is stamped with a system-clock recorded_at and any caller-declared validity window and supersedes list; every read is filtered by the process's user_id, then annotated and reordered by a temporal view that drops nothing except records recorded after an as_of instant</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: every write passes a deterministic gate and is stamped with a system-clock recorded_at and any caller-declared validity window and supersedes list; every read is filtered by the process&#39;s user_id, then annotated and reordered by a temporal view that drops nothing except records recorded after an as_of instant
 flowchart TD
-    N[&quot;~/notes markdown, Claude sessions&quot;] --&gt; W[&quot;fidelis watch — auto-ingest&quot;]
-    W --&gt; WR{&quot;write succeeds?&quot;}
-    WR --&gt;|&quot;Ollama or mem0 unreachable&quot;| DQ[&quot;JSONL dead-letter queue&lt;br/&gt;~/.cogito/queue, MAX_ATTEMPTS = 5&quot;]
-    DQ --&gt; RP[&quot;sync job replays later&quot;]
-    WR --&gt;|yes| ST[&quot;local store: Chroma + BM25&quot;]
-    Q[&quot;query&quot;] --&gt; B[&quot;BM25&quot;]
-    Q --&gt; D[&quot;nomic dense, search_query: prefix&quot;]
-    B --&gt; RRF[&quot;reciprocal rank fusion&quot;]
-    D --&gt; RRF
-    RRF --&gt; P[&quot;original passages, verbatim&quot;]
-    P --&gt; SC[&quot;Fidelis Scaffold:&lt;br/&gt;140–180-token system prompt,&lt;br/&gt;parameterised by qtype and&lt;br/&gt;retrieval-confidence score&quot;]
-    SC --&gt; HEDGE[&quot;calibrated hedge invitation:&lt;br/&gt;&#39;If retrieval doesn&#39;t contain the answer,&lt;br/&gt;respond exactly: I cannot answer this&lt;br/&gt;from the retrieved memory.&#39;&quot;]
-    SC --&gt; LLM[&quot;the agent&#39;s own LLM&quot;]
-    OPT[&quot;optional flagship tier&quot;] -.-&gt;|&quot;escalates ~80% of queries&lt;br/&gt;against an intended ~10%&quot;| RRF</code></pre></details></figure>
+    W[&quot;fidelis_store, fidelis_correct,&lt;br/&gt;watch, seed — POST /store&quot;] --&gt; G{&quot;write_gate.evaluate&quot;}
+    G --&gt;|&quot;secret_like, harness_envelope,&lt;br/&gt;scaffold_prompt, probe_residue,&lt;br/&gt;session_exhaust&quot;| R422[&quot;422 rejected:&lt;br/&gt;nothing written or queued&quot;]
+    G --&gt;|accept| TF[&quot;build_temporal_fields:&lt;br/&gt;recorded_at = system clock,&lt;br/&gt;declared valid_from, valid_to,&lt;br/&gt;event_at, supersedes&quot;]
+    TF --&gt; SX{&quot;supersedes ids exist&lt;br/&gt;for this user_id?&quot;}
+    SX --&gt;|&quot;no&quot;| R400[&quot;400: unknown record id&quot;]
+    SX --&gt;|&quot;yes, or none declared&quot;| DUP{&quot;identical text&lt;br/&gt;already current?&quot;}
+    DUP --&gt;|yes| DR[&quot;status: duplicate&quot;]
+    DUP --&gt;|no| INS[&quot;Chroma insert:&lt;br/&gt;data, user_id, temporal fields&quot;]
+    INS --&gt; SC[&quot;SQLite sidecar:&lt;br/&gt;records and supersedes edges&quot;]
+    INS -.-&gt;|&quot;embedder unreachable&quot;| Q[&quot;JSONL queue, MAX_ATTEMPTS = 5,&lt;br/&gt;re-gated on replay&quot;]
+    Q -.-&gt; INS
+    RQ[&quot;fidelis_recall: /query or /recall_hybrid&lt;br/&gt;CLI recall: /orient&lt;br/&gt;Pi extension: /recall_b&quot;] --&gt; F[&quot;vector store search&lt;br/&gt;filters user_id = process key&quot;]
+    F --&gt; EPH[&quot;filter_ephemera&lt;br/&gt;drops pointer-file patterns&quot;]
+    EPH --&gt; TV{&quot;as_of given?&quot;}
+    TV --&gt;|yes| CUT[&quot;drop records recorded after as_of;&lt;br/&gt;count only superseders recorded by then&quot;]
+    TV --&gt;|no| ANN
+    CUT --&gt; ANN[&quot;temporal_status per hit:&lt;br/&gt;superseded, expired,&lt;br/&gt;not_yet_valid or current&quot;]
+    ANN --&gt; PULL[&quot;pull the newest superseder&lt;br/&gt;into view if the pool holds it&quot;]
+    PULL --&gt; ORD[&quot;current first, the rest after,&lt;br/&gt;relevance order kept in each group&quot;]
+    ORD --&gt; OUT[&quot;original passages with status&lt;br/&gt;to the agent&#39;s own model&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<p><code>src/fidelis/</code> is about twenty modules:
-<code>recall</code>, <code>recall_b</code>, <code>recall_hybrid</code>,
-<code>recall_sessions</code> (the two retrieval paths and their
-variants), <code>ingest_claude_sessions</code>, <code>watch_cmd</code>,
-<code>seed</code>, <code>snapshot</code>, <code>augment</code>,
-<code>calibrate</code>, <code>degrade</code>, <code>telemetry</code>,
-<code>server</code>, <code>mcp_server</code>,
-<code>scaffold_server</code>, <code>cli</code>, <code>init_cmd</code>,
-and a <code>scaffold</code> package with a <code>preflight</code>
-validator.</p>
-<p>Two retrieval paths, explicitly separated by workload — an important
-design decision that section 10 shows was learned the hard way:</p>
+<p><code>src/fidelis/</code> holds 42 modules. The write side is
+<code>degrade.py</code> (<code>safe_add</code>, the queue and replay),
+<code>write_gate.py</code>, <code>temporal.py</code> and
+<code>temporal_index.py</code>. The read side is
+<code>server.py</code>'s HTTP lanes over <code>recall_b.py</code>,
+<code>recall_hybrid.py</code>, <code>cogito_hermeneutics.py</code> and
+<code>inquiry.py</code>, with <code>temporal_recall.py</code> applying
+the time view and <code>browse.py</code> serving <code>/get</code>,
+<code>/recent</code> and <code>/stats</code>. <code>mcp_server.py</code>
+exposes six tools: <code>fidelis_recall</code>,
+<code>fidelis_store</code>, <code>fidelis_correct</code>,
+<code>fidelis_get</code>, <code>fidelis_recent</code> and
+<code>fidelis_health</code>. A Claude plugin, a Gemini extension
+manifest and a Pi extension sit beside it.</p>
+<p>Two retrieval paths are separated by workload, a decision section 10
+shows was learned the hard way:</p>
 <ul>
-<li><strong>Path A (<code>/recall</code>)</strong> — atomic-fact recall
-over 50–200 character facts, "the production path".</li>
-<li><strong>Path B (<code>/recall_hybrid</code>)</strong> — session
-retrieval over 2000+ character sessions, BM25 + dense + RRF with
-turn-level chunking, "tuned for LongMemEval".</li>
+<li><strong>Path A</strong> — atomic-fact recall over short facts, "the
+production path".</li>
+<li><strong>Path B</strong> (<code>/recall_hybrid</code>) — BM25 + dense
++ RRF with turn-level chunking, tuned on LongMemEval.</li>
 </ul>
-<p>31 test files (the README badge counts 368 CI tests), a
-<code>CITATION.cff</code>, a <code>STATUS.md</code>, a
-<code>COMPLIANCE-DRAFT.md</code>, a Homebrew <code>Formula</code>, and
-Docker.</p>
-<p>The repository is mid-rename: the product is
-<strong>fidelis</strong>, the writeup and the store path
-(<code>~/.cogito/</code>) are <strong>cogito-ergo</strong>, and the PyPI
-package is <code>fidelis-memory</code> because <code>fidelis</code>
-belongs to an unrelated project — which the README states outright, with
-a link to the other project. Disambiguating your own package name
-against a stranger's is a small courtesy almost nobody performs.</p>
+<p>The repository is mid-rename. The product is
+<strong>fidelis</strong>, the writeup, the store path
+(<code>~/.cogito/</code>) and most environment variables are
+<strong>cogito-ergo</strong>, and the PyPI package is
+<code>fidelis-memory</code> because a different project holds
+<code>fidelis</code> on PyPI. The licence is Apache-2.0.</p>
+<p>Several modules are written and unreached.
+<code>sessions_cmd.py</code> implements
+<code>fidelis sessions search</code>, <code>list</code>,
+<code>ingest</code>, <code>purge</code> and <code>stats</code>, and
+<code>cli.py</code> defines lazy wrappers for each, but no subparser
+registers a <code>sessions</code> command. <code>mcp_server.py</code>
+keeps <code>_tool_orient</code>, <code>_tool_recall_sessions</code> and
+<code>_tool_recall_both</code> as importable functions; none is in
+<code>TOOL_HANDLERS</code>, and <code>fidelis_orient</code> is listed in
+<code>_REMOVED_TOOLS</code>. A comment beside the table says
+<code>fidelis_route</code> is dispatched dynamically when
+<code>FIDELIS_ORIENT_ROUTE=notion</code>; <code>_handle</code> contains
+no such check. So <code>context.py</code>'s <code>plan_context</code>
+has no reachable caller, and its successor is
+<code>cogito_hermeneutics.plan_retrieval</code>, reached by
+<code>fidelis recall</code> through <code>/orient</code>.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><strong>Retrieve</strong> —
-<code>src/fidelis/recall_hybrid.py</code>, <code>recall.py</code>,
-<code>recall_sessions.py</code>.</p>
-<p><strong>Survive a write failure</strong> —
-<code>src/fidelis/degrade.py</code> (<code>MAX_ATTEMPTS = 5</code>,
-<code>_queue_dir()</code>).</p>
-<p><strong>Constrain the reader</strong> —
-<code>src/fidelis/scaffold/_core.py</code>, <code>preflight.py</code>,
-<code>docs/scaffold.md</code>.</p>
+<p><strong>Write and gate</strong> — <code>src/fidelis/degrade.py</code>
+(<code>_pre_write</code> <code>:125-184</code>, <code>safe_add</code>
+<code>:359-467</code>, <code>replay_queue</code> <code>:470-586</code>),
+<code>write_gate.py</code> (<code>evaluate</code>
+<code>:218-243</code>).</p>
+<p><strong>Time and correction</strong> —
+<code>src/fidelis/temporal.py</code> (<code>build_temporal_fields</code>
+<code>:155-231</code>, <code>SupersessionIndex</code>
+<code>:242-304</code>, <code>temporal_status</code>
+<code>:307-369</code>, <code>apply_temporal</code>
+<code>:399-445</code>), <code>temporal_index.py</code>,
+<code>temporal_recall.py</code> (<code>temporal_view</code>
+<code>:252-373</code>), <code>browse.py</code>.</p>
+<p><strong>Retrieve</strong> — <code>src/fidelis/server.py</code>
+(<code>/query</code> <code>:1209-1251</code>, <code>/orient</code>
+<code>:1321-1347</code>, <code>/get</code> <code>:1553-1568</code>),
+<code>recall_b.py</code> (<code>_pool_search</code>
+<code>:310-360</code>), <code>recall_hybrid.py</code>,
+<code>cogito_hermeneutics.py</code>.</p>
+<p><strong>MCP surface</strong> — <code>src/fidelis/mcp_server.py</code>
+(<code>_REMOVED_TOOLS</code> <code>:242</code>,
+<code>fidelis_recall</code> <code>:1362-1405</code>,
+<code>fidelis_correct</code> <code>:1408-1468</code>,
+<code>TOOL_HANDLERS</code> <code>:1764-1776</code>).</p>
 <p><strong>Report</strong> —
 <code>WRITEUP-LONGMEMEVAL-20260423.md</code>,
 <code>experiments/zeroLLM-FLAGSHIP-evidence/SUMMARY.json</code>,
-<code>bench/RESULTS-SUMMARY.md</code>,
-<code>bench/BENCHMARK_INTEGRITY_AUDIT.md</code>.</p>
+<code>bench/DEFAULT-RETRIEVAL-METHODOLOGY.md</code>,
+<code>STATUS.md</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A stored passage and its embedding. There is no confidence field, no
-status, no supersession pointer, no tombstone and no provenance beyond
-the source file.</p>
-<p>That is a design position rather than an omission, and the README
-states it: memory here is a <strong>retrieval index over text you
-wrote</strong>, not a belief store. "Original stored passages returned,
-not paraphrases." If two notes contradict each other, both are returned
-and the reader is told, via the scaffold, to quote what it used.</p>
-<p>The consequence is worth being plain about: <strong>nothing corrects
-anything.</strong> A note you wrote in March that stopped being true in
-April is retrieved with the same standing as every other passage in the
-store, and there is no mechanism — not a decay curve, not a status flag,
-not a supersession link — by which the store learns it is stale. The
-system's answer is that you edit your notes.</p>
+<p>A record is a Chroma row whose payload holds <code>data</code> (the
+text, verbatim), <code>user_id</code>, and the temporal fields:
+<code>temporal_schema</code>, <code>recorded_at</code>,
+<code>recorded_at_source</code> (<code>write</code>, <code>queue</code>
+or <code>replay</code>), <code>content_sha256</code>, and, only when the
+caller declared them, <code>valid_from</code>, <code>valid_to</code>,
+<code>event_at</code>, <code>source</code> and
+<code>supersedes_json</code>. With relation envelopes switched on, a
+versioned JSON envelope of caller-declared relations rides in the
+payload too.</p>
+<p><code>build_temporal_fields</code> is explicit about who owns which
+clock. Its docstring says <code>recorded_at</code> "comes from the
+system clock (<code>now</code>); callers cannot set it through
+<code>declared</code>", and the code bears it out: the
+<code>recorded_at</code> parameter is passed only by the replay path,
+which keeps the original enqueue time so a write delayed by an outage
+does not look newer than it is. Instants are parsed by an explicit shape
+gate; <code>"last week"</code>, numbers and empty strings raise rather
+than being resolved on the caller's behalf.</p>
+<p><strong>There is no stored status.</strong> Currency is computed at
+read time from the payload and the sidecar: <code>superseded</code> if
+any recorded superseder exists at the reference instant, else
+<code>expired</code> past <code>valid_to</code>, else
+<code>not_yet_valid</code> before <code>valid_from</code>, else
+<code>current</code>. That makes it a derived state rather than a trust
+field, and nothing reads it to exclude a row (section 9).</p>
+<p>The sidecar is a cache and says so. <code>temporal_index.py</code>
+keeps two tables, <code>records</code> and <code>supersedes</code>,
+rebuildable from payloads; <code>reconcile_index</code> compares id sets
+rather than counts, heals additively on any request, and rebuilds only
+at boot, because "a sidecar that was deleted and recreated empty ...
+would report a superseded record as <code>current</code> with
+<code>index: ok</code> — confidently wrong."</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 plus nomic dense with the <code>search_query:</code> /
-<code>search_document:</code> prefixes, fused by RRF, at a reported 216
-ms mean and $0 per query. The zero-LLM claim has its own verification
-recipe in the README — unset every API key, optionally drop the network,
-and run the explicit-tier command — which is the right way to make a
-negative claim checkable.</p>
-<p><strong>The Fidelis Scaffold is the part that shapes the
-answer</strong>, and its first listed element is the one to steal:</p>
+<p><code>fidelis_recall</code> defaults to <code>mode="fast"</code>,
+which posts to <code>/query</code>: one vector search,
+<code>filters={"user_id": user_id}</code>, over-fetched four times so
+that <code>filter_ephemera</code> can drop pointer-file patterns without
+starving the result. <code>mode="thorough"</code> posts to
+<code>/recall_hybrid</code>, BM25 plus nomic dense fused by RRF at the
+<code>zero_llm</code> tier. The optional <code>filter</code> and
+<code>flagship</code> tiers call a model only to select integer
+pointers; the server dereferences them to stored text.</p>
+<p><strong>The temporal view orders and never filters, with one
+exception.</strong> <code>temporal_view</code> takes the first
+<code>limit</code> hits in relevance order, so relevance decides
+eligibility before recency reorders anything. A superseded hit in that
+window then pulls its newest superseder into view, but only from records
+the same request retrieved: the docstring records that a version which
+fetched the missing superseder by id "was removed on review because it
+bypassed the ephemera/user filters already applied to the pool". The
+result is ordered current-first. The only drop is <code>as_of</code>,
+which removes records recorded after the instant;
+<code>historical=true</code> returns pure relevance order,
+annotated.</p>
+<p>A long passage is stored whole and embedded by prefix.
+<code>_embed_bounded</code> tries the full text and then 6000, 4000,
+2000, 1000 and 400 characters until the embedder accepts one, so a note
+past nomic's context is retrievable by the vector of its opening
+only.</p>
+<p><strong>The orient path decides whether to search at all.</strong>
+<code>/orient</code> runs Cogito Hermeneutics V0.4:
+<code>plan_retrieval</code> classifies the utterance and the last four
+turns by regex, and when it finds no memory intent the server returns
+with <code>retrieval_method="not_invoked"</code> before any search. The
+plan carries an entity, a purpose, a time scope and evidence needs, and
+a deterministic refinement can issue one narrower second query.
+<code>fidelis recall</code> on the CLI reaches it; the MCP
+<code>fidelis_recall</code> tool does not.</p>
+<p><strong>The Fidelis Scaffold shapes the answer</strong>, and its
+first listed element is the one to steal:</p>
 <blockquote>
 <p>"<strong>Calibrated hedge invitation:</strong> <em>'If retrieval
 doesn't contain the answer, respond exactly: I cannot answer this from
 the retrieved memory.'</em> Overrides the prior pattern of forcing the
 LLM to guess."</p>
 </blockquote>
-<p>A 140–180 token system prompt, versioned
-(<code>[FIDELIS-SCAFFOLD-v0.1.0]</code>), idempotent
-(<code>wrap(wrap(x)) == wrap(x)</code>), detectable and strippable, with
-an 8-check <code>preflight</code> static validator returning a
-<code>PreflightReport</code> of <code>.passed</code> /
-<code>.failures</code> / <code>.warnings</code> /
-<code>.metrics</code>.</p>
-<p>Treating a prompt as a versioned artifact with markers, an idempotent
-wrapper, a detector, a stripper and a static validator is prompt
-engineering done as software engineering, and it is rare.</p>
-<p><strong>A deterministic planner decides whether to retrieve at all,
-before any search runs.</strong> <code>src/fidelis/context.py</code> is
-a regex classifier over the incoming utterance and the last four turns.
-It resolves a referent — five known project names, or an unknown proper
-noun accepted only when a recall, past-work, comparison, decision,
-historical, current-state or identity cue is present in the same turn —
-and if it finds neither a referent nor a cue it returns
-<code>disposition: "abstain"</code> with
-<code>retrieval_query: None</code> and the reason <em>"no known referent
-or historical-context cue"</em>. Otherwise it picks one of eight
-evidence lanes (<code>comparison</code>, <code>maintenance</code>,
-<code>conceptual</code>, <code>decision</code>, <code>historical</code>,
-<code>current</code>, <code>identity</code>, <code>context</code>) and
-builds the query by appending that lane's fixed vocabulary to the
-subject.</p>
-<p>Two things make it worth copying. The abstain path is the one most
-retrieval layers do not have: a search that should not happen costs
-nothing here, and the decision is a regex rather than a model call. And
-the guard against the obvious failure is written down at the point it
-bites — capitalisation alone does not make a proper noun a project,
-because <em>"sentence starters such as 'Can', 'Please', and 'How'
-otherwise become false project entities"</em>, and
-<code>test_sentence_starters_do_not_become_project_entities</code> holds
-a table of them.</p>
-<p><code>context_packet</code> then binds a plan to the records without
-touching them, stamping
-<code>authority: "derived index; records remain verbatim evidence"</code>
-and an <code>evidence_status</code> of <code>available</code> or
-<code>insufficient</code>. The docstring is the house position restated:
-<em>"never synthesize a summary."</em></p>
-<p><strong>The scope key is <code>user_id</code>, and the deployment
-default gives it one value.</strong> Section 9 has the mechanism; the
-README places "multi-namespace isolation" among the things a team should
-email about, which is consistent — what exists is the predicate, not a
-tenancy model.</p>
+<p>It is a 140–180 token system prompt, versioned
+(<code>[FIDELIS-SCAFFOLD-v0.1.0]</code>), idempotent, detectable and
+strippable, with an 8-check <code>preflight</code> static validator
+returning <code>.passed</code>, <code>.failures</code>,
+<code>.warnings</code> and <code>.metrics</code>.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Markdown is watched and auto-ingested. And <code>degrade.py</code>
-exists because of a specific disaster, written into the module
-docstring:</p>
-<blockquote>
-<p>"When the upstream LLM (Ollama / mem0) is unreachable, we MUST NOT
-lose the write. Instead, queue it locally as JSONL and let a sync job
-replay later.</p>
-<p>This module exists because of the 2026-04-19 incident: Ollama's
-socket layer broke under Python 3.14, every <code>cogito add</code>
-returned HTTP 500, and <strong>a full session of memory was silently
-lost.</strong>"</p>
-</blockquote>
-<p>The test suite treats that incident as a permanent obligation:
-<code>test_graceful_degrade.py</code>,
-<code>test_graceful_degrade_corruption.py</code>,
-<code>test_dead_letter.py</code>,
-<code>test_write_fallback_contract.py</code>,
-<code>test_broken_pipe_recovery.py</code>,
-<code>test_watch_backpressure.py</code>,
-<code>test_graceful_shutdown.py</code>. Seven files around one failure
-mode.</p>
+<p>Every write goes through <code>safe_add</code>, and
+<code>_pre_write</code> runs before any dependency call, outside the
+<code>try</code> that queues failures, so that "a rejected write must
+never be queued, and an invalid temporal declaration must surface as
+ValueError (HTTP 400)".</p>
+<p><strong>The gate refuses by shape, not vocabulary.</strong>
+<code>write_gate.evaluate</code> is pure and deterministic and returns
+one of five stable codes. Harness tags count only at the start of a
+turn; probe ids need an id body; secrets need a realistic key body.
+<code>secret_like</code> runs first and survives
+<code>write_gate: false</code>, and the docstring records why: "a prior,
+unrequested opt-out was removed for exactly this reason". The rejection
+detail names the rule, offset and length and never echoes the matched
+secret. The module opens with the reason it exists: an audit found "the
+live store 60-70% machine exhaust".</p>
+<p><strong>A correction is checked before it lands.</strong> A declared
+<code>supersedes</code> id must exist for the same <code>user_id</code>,
+or the write is a 400; a record belonging to another user is reported as
+unknown "rather than leaking cross-user existence". If the store cannot
+be reached for that check, the ids ride on the queued record and replay
+re-verifies them, dead-lettering with a stated reason if they are
+missing. An identical text is reported as a duplicate only while some
+copy of it is current, so re-asserting a value that was superseded
+stores it again (A, then B, then back to A).</p>
+<p><strong>Writes are never silently lost.</strong>
+<code>degrade.py</code> was written after a specific incident, recorded
+in its docstring: Ollama's socket layer broke, "every
+<code>cogito add</code> returned HTTP 500, and a full session of memory
+was silently lost." A failed write is queued as JSONL, replayed later,
+re-gated on replay and dead-lettered after
+<code>MAX_ATTEMPTS = 5</code>. Mem0's extraction path swallowing an LLM
+failure and returning nothing is caught and degraded to the verbatim
+insert. Seven test files guard that one failure mode.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Four commands to a working install — <code>pip install</code>,
-<code>fidelis init</code> (a launchd or systemd service),
-<code>fidelis watch ~/notes</code>, <code>fidelis mcp install</code>.
-Plus Docker, a Homebrew formula, and an <code>llms.txt</code>.</p>
-<p><code>fidelis init</code> also disables mem0 and Chroma telemetry,
-and the README is careful about how much that buys: "That can reduce
-third-party data exposure, but deployments still own their security and
-compliance assessment." A privacy claim with its own limits
-attached.</p>
+<p><code>fidelis init</code> installs a per-user launchd or systemd
+service, and <code>fidelis mcp install</code> registers the server with
+Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI or OpenClaw, reading
+the client's configuration back after each write and refusing to
+overwrite an entry that is not its own without <code>--force</code>. The
+agent receives six tools; <code>fidelis_store</code> and
+<code>fidelis_correct</code> accept <code>supersedes</code>,
+<code>valid_from</code>, <code>valid_to</code> and
+<code>event_at</code>, and <code>fidelis_recall</code> accepts
+<code>as_of</code> and <code>historical</code>.</p>
+<p><code>fidelis_correct</code> folds recall-copy-store into one call.
+It fetches the old id through <code>/get</code>, refuses to supersede a
+record that is itself superseded and names the current replacement
+instead, unless <code>force=true</code>, and reports a queued correction
+as "NOT yet stored". Removed tool names answer with the name that
+replaced them.</p>
+<p><strong>The prompt-time assembler is honest about what it
+skipped.</strong> The opt-in Pi extension posts each user prompt to
+<code>/recall_b</code> with a one-second timeout and injects at most
+three passages. <code>/recall_b</code> runs no temporal view, and the
+header the extension writes says so: "untrusted recorded context, not
+verified truth; temporal status was not checked; no memory was written".
+It also strips its own injections before compaction, because "recall is
+a transient search result, so it must not become durable summary."</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>One mark, and the rest of the absence is structural rather
-than a shortfall:</strong> this is a faithful retrieval index, not a
-belief store. No trust state, no tombstone, no bitemporality, no audit
-log, no review surface, and no committed case asserting that particular
-material must not be retrieved.</p>
-<p><strong><code>scope_enforced</code> is earned, uniformly and
-unglamorously.</strong> <code>safe_add</code> writes
-<code>payloads=[{"data": text, "user_id": user_id}]</code>, and every
-reader passes the key back as a filter: both vector lanes in
-<code>server.py:182</code> and <code>:222</code>, the sub-query fan-out
-in <code>recall_b.py:317</code>, the hybrid path in
-<code>recall_hybrid.py:239</code>, and the two bulk readers in
-<code>calibrate.py:53</code> and <code>snapshot.py:53</code>. There is
-no lane that forgets it, which is the failure this corpus finds most
-often. The limit is that <code>config.py:46</code> defaults
-<code>user_id</code> to the literal string <code>agent</code> and
-<code>COGITO_USER_ID</code> is the only way to change it, so a default
-install has exactly one value for a key that is checked everywhere. The
-mark certifies that the key reaches the query, not that a deployment
-uses more than one — but a reader should know which of those they are
-getting.</p>
-<p><strong>What it has instead is calibration.</strong> The scaffold
-takes a retrieval-confidence score and a question type and adjusts the
-instruction, with a literal hedge string for the not-in-memory case.
-That is the right lever for a system whose position is "return what you
-wrote and let the reader decide".</p>
-<p><strong>The known-limitations section is where the risks are, and the
-project wrote it.</strong> Verbatim:</p>
-<ul>
-<li>"<strong>Pre-release.</strong> Python function names and CLI
-commands may change."</li>
-<li>"<strong>Temporal-reasoning and preference questions are the weakest
-qtypes</strong> in the QA scaffold (TR ~58%, Pref ~37% on the full
-eval)."</li>
-<li>"<strong>The optional LLM tier ('flagship' mode) currently escalates
-~80% of queries instead of the intended ~10%</strong> — an 8× cost miss
-we're transparent about."</li>
-<li>"<strong>qwen3.5:9b in thinking mode does not reliably follow the
-literal hedge instruction</strong>… Use Claude, an OpenAI-format API, or
-non-thinking-mode local models for reliable hedging."</li>
-</ul>
-<p>Naming a model that defeats your safety instruction, in your own
-README, is the single most user-respecting line in this batch.</p>
-<p><strong>The risk this report adds</strong> is the one section 5
-names: a memory system with no correction path, marketed for context
-that accumulates over months. Day 7 in the README's own timeline is
-"your agent starts carrying project context across sessions" — and by
-day 90 some of that context is wrong, with nothing in the system able to
-say so.</p>
+<p><strong><code>bitemporal</code> is earned on the record
+payload.</strong> Valid time is declared by the caller and stored apart
+from <code>recorded_at</code>, which only the system clock writes. An
+<code>as_of</code> read applies the record-time cut and evaluates the
+validity window at the same instant, and
+<code>test_status_as_of_ignores_later_superseder</code> pins the
+distinction: a record superseded in June is <code>current</code> as of
+March. One reference instant drives both axes, so "what did the store
+hold in May about March" is not expressible. And <code>/recall_b</code>
+and <code>/inquire</code> apply no temporal view at all.</p>
+<p><strong><code>scope_enforced</code> is earned on every reachable
+read.</strong> The server binds <code>user_id</code> from config and no
+request field can change it. <code>/query</code>, the
+<code>/recall</code> fallback and <code>_pool_search</code> filter on
+it; <code>/get</code>, <code>/recent</code> and the hybrid path's
+linked-record fetch read by id and refuse another user's payload; no MCP
+tool takes a scope argument. The comment at <code>config.py:46-49</code>
+states the limit plainly: "it is not an access control boundary and does
+not make fidelis multi-user", and the default value is the literal
+<code>agent</code>. Outside retrieval, <code>reconcile_index</code>
+scans every user's temporal rows, <code>/stats</code> counts the whole
+sidecar, and <code>/orient</code> can reach the Codex task history under
+<code>~/.codex</code>, which carries no scope key. Session rows are
+written with a hard-coded <code>USER_ID = "agent"</code> whatever the
+config says, and <code>query_sessions</code> reads them with no key at
+all. No entry point reaches it.</p>
+<p><strong><code>negative_eval</code> is earned on that
+boundary.</strong> <code>test_user_id_namespace_isolation.py</code> puts
+two records with identical vectors under two namespaces in one real
+Chroma collection. It proves with an unfiltered search that both are
+present, then asserts each server sees only its own. Its docstring
+states what it pins: "Drop that filter from <code>server.py</code> and
+this test fails."</p>
+<p><strong><code>trust_state</code> is withheld, and the reason is the
+design's own rule.</strong> The module docstrings state it twice: the
+only exclusion is <code>as_of</code> visibility, "everything else is
+annotate-and-demote", and supersession hits "are never dropped on pull
+paths". <code>test_superseded_not_dropped.py</code> holds the system to
+it. The status is a real four-valued field, and no read uses it to
+withhold a row, so a reader that ignores the mark acts on a superseded
+passage.</p>
+<p><strong><code>tombstone</code> is withheld.</strong> Supersession is
+keyed on record ids, and a re-assertion of a superseded text is stored
+as a new current record by design. The pointers file is the nearest
+thing: an operator-authored list of regexes with a
+<code>RETRACTED</code>, <code>SUPERSEDED</code> or <code>CAVEATED</code>
+status, matched against hit text at read time. It is value-keyed, but no
+write consults it, nothing in the tree writes it, and it annotates
+rather than refuses.</p>
+<p><strong><code>audit_log</code> and <code>human_review</code> are
+withheld.</strong> The fact store has no update or delete, and
+corrections are new rows that name their predecessor, but there is no
+named record of mutations, and the sidecar that holds the edges is a
+cache with a <code>DELETE FROM</code> rebuild. The extraction path
+<code>/add</code> (CLI <code>fidelis add --extract</code>) hands text to
+mem0's own <code>Memory.add</code>, whose update phase is outside this
+reading. No write waits on anyone: the agent that stores a record holds
+<code>fidelis_correct</code> and can supersede any record in its
+namespace.</p>
+<p><strong>The project names its own risks.</strong>
+<code>STATUS.md</code> lists the verify-guard that never activated, the
+workload divergence and an "Escalation rate: 80.2% actual vs 10%
+intended", the optional flagship tier's cost miss. The user-fit guide
+says <code>user_id</code> "is a namespace, not an identity or
+authorization boundary".</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>This section is the report.</strong> The evidence is
-committed: <code>experiments/zeroLLM-FLAGSHIP-evidence/</code> holds
+<p><strong>This section is why the report exists.</strong> The evidence
+is committed: <code>experiments/zeroLLM-FLAGSHIP-evidence/</code> holds
 four raw result files and a <code>SUMMARY.json</code>;
 <code>bench/runs/runP-v35/aggregate.json</code> holds the retrieval
 aggregate; <code>bench/BENCHMARK_INTEGRITY_AUDIT.md</code> and
 <code>bench/RESULTS-SUMMARY.md</code> sit beside them.</p>
-<p><strong>The headline numbers</strong>, from
+<p><strong>The historical numbers</strong>, from
 <code>SUMMARY.json</code>:</p>
 <div class="table-wrap"><table>
 <thead>
@@ -440,207 +547,208 @@ aggregate; <code>bench/BENCHMARK_INTEGRITY_AUDIT.md</code> and
 </tr>
 </tbody>
 </table></div>
-<p><strong>A Wilson confidence interval on a benchmark accuracy appears
-nowhere else in this atlas.</strong> It is the difference between "we
-scored 73%" and "we ran 434 questions and the true rate is probably
-between 69% and 77%."</p>
+<p>A Wilson interval turns "we scored 73%" into "we graded 434 questions
+and the true rate is probably between 69% and 77%".
+<code>SUMMARY.json</code>'s <code>_note</code> records that 36 questions
+went ungraded and that the reader and grader were the same model, Claude
+Opus 4.7.</p>
 <p><strong>The ablation table publishes a change that made things
 worse.</strong> Dense-only 56.0% → nomic prefixes 60.9% → BM25 hybrid
 73.2% → <strong>turn-level chunks 66.8%</strong> → all three combined
-83.2%. Turn-level chunking alone <em>lost</em> 6.4 points against the
-BM25 hybrid and the row is in the table anyway, with an
-<code>LLM?</code> column so a reader can see which gains cost money.</p>
-<p><strong>And the three "novel findings" are all negative results about
+83.2%. Turn-level chunking alone lost 6.4 points against the BM25 hybrid
+and the row is in the table anyway, with an <code>LLM?</code> column so
+a reader can see which gains cost money.</p>
+<p><strong>The three "novel findings" are all negative results about
 itself:</strong></p>
 <ol type="1">
 <li><strong>The demotion problem</strong> — "LLM reranker filters can
 demote gold sessions that retrieval already ranked #1… 15+ questions had
-gold at S1 position 1 but were demoted to position 2+ by the LLM filter.
-Standard RAG + LLM-reranker architectures have this failure mode; it is
-underreported." And on the attempted fix: "the guard activation code did
-not fire in runC — <strong>a bug, not a negative result</strong>."
-Distinguishing an experiment that failed to run from an experiment that
-produced a null is a distinction most papers blur.</li>
+gold at S1 position 1 but were demoted to position 2+ by the LLM
+filter." And on the attempted fix: "the guard activation code did not
+fire in runC — <strong>a bug, not a negative result</strong>."</li>
 <li><strong>Workload divergence kills transfer</strong> — the
 configuration scoring 96.4% on LongMemEval scores "<strong>54% on
-cogito's own 31-case atomic-fact eval</strong>, vs 75% for Path A."
-Publishing that your flagship benchmark configuration is worse than your
-production path on your production workload is close to unheard of.</li>
+cogito's own 31-case atomic-fact eval</strong>, vs 75% for Path A."</li>
 <li><strong>The escalation rate problem</strong> — intended ~10%, actual
-377/470 = 80%, diagnosed to a calibration sample that "had a different
-confidence score distribution than preference questions, so the
-<code>top1&lt;0.8 or gap&lt;0.07</code> threshold overfit", with the
-remedy named: stratified sampling across all six question types.</li>
+377/470 = 80%, diagnosed to a calibration sample whose confidence
+distribution differed from preference questions, with stratified
+sampling named as the remedy.</li>
 </ol>
-<p><strong>The test names deserve their own mention.</strong>
-<code>test_public_install_truth.py</code> — a test that the published
-install instructions are true.
-<code>test_telemetry_kill_actually_kills.py</code> — a test that the
-telemetry-disable actually disables, rather than trusting the flag.
-<code>test_zero_llm_regression.py</code> — a guard on the headline
-claim. <code>test_p0_score_bypass.py</code>,
-<code>test_verify_guard.py</code>. These are tests of <em>claims</em>,
-not only of code.</p>
-<p><strong>Two things this report adds, in the project's own
-spirit.</strong></p>
-<p>The QA evidence covers <code>n = 434</code> questions against a
-README heading that says 470; <code>SUMMARY.json</code>'s
-<code>_note</code> discloses it — "434 graded; remaining 36 from KU/TR
-partial" — but the README table does not carry the caveat.</p>
-<p>And the reader and grader for that 73.0% are "Claude Opus 4.7 via
-Anthropic subscription", while the published Mem0, Zep and Supermemory
-figures the README places beside it use gpt-4o-mini as reader and judge.
-That is precisely the comparability objection the writeup itself raises
-against comparing its R@1 to Mastra's QA accuracy — applied to the
-README's own context paragraph. The project has already articulated the
-standard; the paragraph does not quite meet it.</p>
+<p><strong>The release benchmark refuses its own predecessor's
+headline.</strong> <code>bench/DEFAULT-RETRIEVAL-METHODOLOGY.md</code>
+measures the route the MCP tool uses by default,
+<code>POST /query</code> at <code>limit=5</code>, over whole-session
+records with each question isolated by the server's <code>user_id</code>
+filter. It reports Hit@1 78.94% (371/470), Hit@5 94.68%, macro session
+recall@5 89.07% and all-answer-sessions@5 81.91%, keeps failures in the
+denominator as zero-credit rows, and binds the result to source hashes,
+the embedder's digest and dependency versions. It then states the limit:
+"The historical 83.2% result came from a different benchmark pipeline…
+The redesign should not inherit the historical headline as
+evidence."</p>
+<p><strong>The test names are claims.</strong>
+<code>test_public_install_truth.py</code>,
+<code>test_telemetry_kill_actually_kills.py</code>,
+<code>test_zero_llm_regression.py</code>,
+<code>test_superseded_not_dropped.py</code>,
+<code>test_write_truthfulness.py</code> and
+<code>test_user_id_namespace_isolation.py</code> each assert a sentence
+the project publishes, not only a function's output.</p>
 <p><strong>I ran nothing.</strong> Every figure above is read from the
 repository's committed evidence files.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
 <li><strong>Say which metric you measured, especially when the other
-reading flatters you.</strong> "The gap is not the issue. The metric
-is." Then explain the difference, give your own number on the comparable
-metric, and price the experiment that would settle it.</li>
-<li><strong>Publish the ablation row where your change hurt.</strong>
-Turn-level chunking at 66.8% against a 73.2% baseline, in the table,
-with the combined result underneath. A monotonic ablation table is a
-table with rows missing.</li>
-<li><strong>Report a confidence interval.</strong> Wilson on a
-proportion is three lines of code and it turns a score into a
-measurement.</li>
+reading flatters you.</strong> Then give your own number on the
+comparable metric and price the experiment that would settle it.</li>
+<li><strong>Do not let a redesign inherit the old headline.</strong>
+Measure the path users actually reach, bind the run to source hashes,
+and say in writing that the previous number came from a different
+pipeline.</li>
+<li><strong>Publish the ablation row where your change hurt</strong>,
+and report a confidence interval on every accuracy.</li>
 <li><strong>Distinguish "the experiment didn't run" from "the experiment
-found nothing."</strong> "A bug, not a negative result" is the sentence
-that keeps an ablation table honest.</li>
-<li><strong>Check whether your benchmark configuration is your
-production configuration.</strong> Path B wins LongMemEval and loses to
-Path A on the workload the product actually serves — an argument, as the
-writeup says, "for per-workload indexes rather than one unified
-retrieval architecture".</li>
-<li><strong>Give the reader an explicit hedge string.</strong> "Respond
-exactly: 'I cannot answer this from the retrieved memory'" beats hoping
-the model declines.</li>
-<li><strong>Treat the system prompt as a versioned artifact.</strong>
-Open and close markers, an idempotent wrapper, a detector, a stripper,
-and a static preflight validator returning failures, warnings and
-metrics.</li>
-<li><strong>Never lose a write when the embedder is down.</strong> A
-local JSONL dead-letter queue with a replay job, bounded retries, and
-seven tests — written after a session of memory was silently lost.</li>
-<li><strong>Test your README.</strong>
-<code>test_public_install_truth.py</code>.</li>
-<li><strong>Test that your privacy switch works, not that it is
-set.</strong> <code>test_telemetry_kill_actually_kills.py</code>.</li>
-<li><strong>Name the model that defeats your safety
-instruction.</strong></li>
-<li><strong>Disambiguate your package name from a stranger's</strong>,
-with a link.</li>
+found nothing."</strong></li>
+<li><strong>Keep the record clock out of the caller's hands.</strong>
+Take <code>recorded_at</code> from the system clock, let the caller
+declare validity, and make the replay path preserve the enqueue
+time.</li>
+<li><strong>Pull the replacement into view from the same pool.</strong>
+When a superseded hit is in the window, surface its newest superseder
+only if this request already retrieved it, so the pull cannot bypass the
+filters the pool passed.</li>
+<li><strong>Gate writes by shape, and make the secret rule
+unconditional.</strong> Return a stable reason code and never echo the
+matched secret.</li>
+<li><strong>Verify a correction's target against the same scope</strong>
+and report another user's record as unknown.</li>
+<li><strong>Write the skipped check into the injected header</strong>,
+as the Pi extension does with "temporal status was not checked".</li>
+<li><strong>Give the reader an explicit hedge string</strong>, and treat
+the system prompt as a versioned, idempotent artifact with a static
+validator.</li>
+<li><strong>Never lose a write when the embedder is down</strong>, and
+re-gate what you replay.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Do not carry a caveat in the evidence file and not in the
-table.</strong> The graded subset is disclosed in
-<code>SUMMARY.json</code>'s <code>_note</code>; the README's benchmark
-heading names the full question count without it.</li>
-<li><strong>Do not place your number beside published numbers measured
-with a different reader and judge.</strong> The writeup makes this exact
-argument; the comparison paragraph does not apply it to itself.</li>
-<li><strong>Do not ship a memory that accumulates for months with no
-correction path.</strong> Verbatim retrieval is a virtue and staleness
-is still a fact; something has to be able to say a passage stopped being
-true.</li>
-<li><strong>Do not grade with the same model family that
-answered</strong> without saying what that buys and costs.</li>
+<li><strong>Do not let every status be advisory.</strong> A superseded
+or expired passage that is only demoted reaches any reader that ignores
+the mark, including the project's own prompt-time assembler.</li>
+<li><strong>Do not give the producing agent an unconditional correct
+verb.</strong> <code>fidelis_correct</code> with <code>force=true</code>
+supersedes even an existing correction.</li>
+<li><strong>Do not cite a specification you have not committed.</strong>
+Seventeen files in the tree point at
+<code>docs/TIME-AWARE-SPEC.md</code>, which is not there.</li>
+<li><strong>Do not leave a command written and unregistered.</strong>
+<code>fidelis sessions purge</code> is the only delete in the tree and
+no CLI path reaches it.</li>
+<li><strong>Do not grade with the same model that answered</strong>
+without saying what that buys and costs.</li>
 </ul>
 <h3 id="fit">Fit</h3>
 <p>The right choice if you want your own notes retrievable by your
-agent, locally, with the exact text you wrote and no second model
-between you and it — and you are willing to keep the notes correct
-yourself.</p>
-<p>The wrong choice if the store is meant to accumulate an agent's own
-conclusions over time, because nothing in it can be superseded,
-retracted or aged out.</p>
+agent, locally, with the exact text you wrote, corrections that keep
+their history, and the ability to ask what the store held at a past
+instant.</p>
+<p>The wrong choice if a corrected or expired memory must be kept out of
+the prompt rather than marked in it, or if the store needs more than one
+trust boundary on one machine.</p>
 <p><code>WRITEUP-LONGMEMEVAL-20260423.md</code> is worth reading
-regardless of what you build. It is the standard this atlas would like
-every benchmark claim held to, written by a project that had a 96.4%
-number and declined to spend it.</p>
+regardless of what you build.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li><strong>What are the 36 ungraded questions?</strong>
-<code>SUMMARY.json</code> attributes them to "KU/TR partial"; whether
-grading them would move 73.0% up or down is unknown.</li>
+<li><strong>Where is <code>docs/TIME-AWARE-SPEC.md</code>?</strong> The
+temporal modules cite its invariants by number, and no commit in the
+history adds it.</li>
+<li><strong>Is the <code>sessions</code> command meant to ship?</strong>
+Its module, its purge contract and its CLI wrappers exist; the subparser
+does not.</li>
 <li><strong>Has <code>evaluate_qa.py</code> been run with
 gpt-4o-mini?</strong> The writeup prices it at $1.24 and reports it
 blocked on an API key.</li>
-<li><strong>Is the 80% escalation fixed?</strong> It appears in the
-writeup and in the README's known limitations at this commit.</li>
-<li><strong>Does the verify-guard fire now?</strong> It was a bug in
-runC; whether it has been re-run was not established.</li>
+<li><strong>Is the 80% escalation fixed?</strong> <code>STATUS.md</code>
+and <code>docs/RELEASE-SCOPE.md</code> record it as documented and not
+fixed.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <p><strong>The writeup</strong> —
-<code>WRITEUP-LONGMEMEVAL-20260423.md</code> (the two paths
-<code>:11-17</code>, the ablation history <code>:21-34</code>, the
-reproduce commands <code>:36-50</code>, "Why this is NOT a leaderboard
-submission" <code>:54-68</code>, per-category R@1 <code>:70-84</code>,
-the three findings <code>:85-99</code>, the compute and cost notes
-<code>:145-150</code>)</p>
+<code>WRITEUP-LONGMEMEVAL-20260423.md</code> (what it is
+<code>:9-18</code>, the ablation history <code>:20-52</code>, "Why this
+is NOT a leaderboard submission" <code>:54-68</code>, per-category R@1
+<code>:70-84</code>, the three findings <code>:85-99</code>, compute
+notes <code>:145-150</code>)</p>
 <p><strong>Evidence</strong> —
 <code>experiments/zeroLLM-FLAGSHIP-evidence/SUMMARY.json</code> (the
-four runs with Wilson intervals, the <code>_note</code> on the graded
-subset and the reader/grader <code>:148</code>),
-<code>F2-FULL-scaffold.json</code> (434 per-question records with
-<code>qa_correct</code>, <code>retrieval_hit_at_1</code>,
-<code>retrieval_hit_at_5</code>, <code>k_used</code>,
-<code>reader_model</code>, <code>incremental_cost_usd</code>),
-<code>F1-smoke-scaffold.json</code>,
-<code>F1B-smoke-baseline-partial.json</code>,
-<code>F1B-smoke-baseline-TR-only.json</code>,
-<code>bench/BENCHMARK_INTEGRITY_AUDIT.md</code>,
-<code>bench/RESULTS-SUMMARY.md</code></p>
-<p><strong>Durability</strong> — <code>src/fidelis/degrade.py</code>
+graded subset and the reader and grader <code>:148</code>),
+<code>F2-FULL-scaffold.json</code>,
+<code>bench/DEFAULT-RETRIEVAL-METHODOLOGY.md</code>,
+<code>bench/results-default-0.3.0rc1.json</code>, <code>STATUS.md</code>
+(the known findings <code>:60-75</code>)</p>
+<p><strong>Write path</strong> — <code>src/fidelis/degrade.py</code>
 (the incident <code>:1-9</code>, <code>MAX_ATTEMPTS</code>
-<code>:21</code>, <code>_queue_dir</code> <code>:24-33</code>, the scope
-key written into the payload <code>:125</code>),
-<code>tests/test_graceful_degrade.py</code>,
-<code>test_graceful_degrade_corruption.py</code>,
-<code>test_dead_letter.py</code>,
-<code>test_write_fallback_contract.py</code>,
-<code>test_broken_pipe_recovery.py</code>,
-<code>test_watch_backpressure.py</code>,
-<code>test_graceful_shutdown.py</code></p>
+<code>:29</code>, <code>_supersedes_targets_exist</code>
+<code>:91-122</code>, <code>_pre_write</code> <code>:125-184</code>,
+<code>_find_duplicate</code> <code>:187-217</code>, the scope key in the
+payload <code>:405</code>, <code>:442</code>, <code>:642</code>,
+<code>replay_queue</code> <code>:470-586</code>),
+<code>src/fidelis/write_gate.py</code></p>
+<p><strong>Time</strong> — <code>src/fidelis/temporal.py</code>
+(<code>build_temporal_fields</code> <code>:155-231</code>,
+<code>temporal_status</code> <code>:307-369</code>,
+<code>visible_as_of</code> <code>:372-382</code>,
+<code>apply_temporal</code> <code>:399-445</code>),
+<code>src/fidelis/temporal_index.py</code>,
+<code>src/fidelis/temporal_recall.py</code>
+(<code>reconcile_index</code> <code>:53-114</code>,
+<code>_replacements_from_pool</code> <code>:205-249</code>,
+<code>temporal_view</code> <code>:252-373</code>),
+<code>src/fidelis/browse.py</code> (<code>_payload_for_user</code>
+<code>:31-38</code>)</p>
+<p><strong>Retrieval and scope</strong> —
+<code>src/fidelis/config.py</code> (<code>:46-50</code>),
+<code>src/fidelis/server.py</code> (<code>/query</code>
+<code>:1209-1251</code>, the fallback filter <code>:1281-1284</code>,
+<code>/orient</code> <code>:1321-1347</code>, <code>/store</code>
+<code>:1454-1518</code>, <code>/get</code> <code>:1553-1568</code>),
+<code>src/fidelis/recall_b.py</code> (<code>_pool_search</code>
+<code>:310-360</code>), <code>src/fidelis/recall_hybrid.py</code>
+(<code>:258-262</code>, <code>:383</code>),
+<code>src/fidelis/supersession.py</code>,
+<code>src/fidelis/recall_sessions.py</code> (the unscoped session read
+<code>:226-276</code>),
+<code>src/fidelis/ingest_claude_sessions.py</code> (<code>USER_ID</code>
+<code>:34</code>)</p>
+<p><strong>Agent surface</strong> —
+<code>src/fidelis/mcp_server.py</code> (<code>_REMOVED_TOOLS</code>
+<code>:242-254</code>, <code>fidelis_correct</code>
+<code>:1408-1468</code>, <code>TOOL_HANDLERS</code>
+<code>:1764-1776</code>), <code>src/fidelis/cli.py</code> (the
+unregistered session wrappers <code>:768-790</code>),
+<code>extensions/fidelis-recall.ts</code></p>
 <p><strong>Scaffold</strong> —
 <code>src/fidelis/scaffold/_core.py</code>, <code>preflight.py</code>,
-<code>docs/scaffold.md</code> (the module surface, the calibrated hedge
-invitation <code>:35</code>)</p>
-<p><strong>Retrieval</strong> — <code>src/fidelis/recall.py</code>,
-<code>recall_hybrid.py</code> (the scope filter <code>:239</code>),
-<code>recall_b.py</code> (<code>:317</code>),
-<code>recall_sessions.py</code>, <code>src/fidelis/calibrate.py</code>
-(<code>:53</code>), <code>src/fidelis/snapshot.py</code>
-(<code>:53</code>)</p>
-<p><strong>Context planning</strong> —
-<code>src/fidelis/context.py</code> (the cue patterns
-<code>:17-58</code>, the <code>ContextPlan</code> dataclass
-<code>:62-75</code>, referent resolution and the capitalisation guard
-<code>:78-135</code>, the lane vocabulary <code>:140-152</code>,
-<code>plan_context</code> <code>:155-202</code>,
-<code>context_packet</code> <code>:205-227</code>),
-<code>tests/test_context.py</code>,
-<code>src/fidelis/mcp_server.py</code> (<code>:159-177</code>)</p>
-<p><strong>Claim tests</strong> —
-<code>tests/test_public_install_truth.py</code>,
+<code>docs/scaffold.md</code> (the calibrated hedge invitation
+<code>:35</code>)</p>
+<p><strong>Tests</strong> —
+<code>tests/test_user_id_namespace_isolation.py</code>,
+<code>tests/test_browse.py</code> (<code>:231-239</code>),
+<code>tests/test_temporal.py</code>,
+<code>tests/test_temporal_recall.py</code>,
+<code>tests/test_superseded_not_dropped.py</code>,
+<code>tests/test_write_gate.py</code>,
+<code>tests/test_graceful_degrade.py</code>,
+<code>test_dead_letter.py</code>,
+<code>test_write_fallback_contract.py</code>,
+<code>test_public_install_truth.py</code>,
 <code>test_telemetry_kill_actually_kills.py</code>,
-<code>test_zero_llm_regression.py</code>,
-<code>test_p0_score_bypass.py</code>,
-<code>test_verify_guard.py</code></p>
-<p><strong>Claims</strong> — <code>README.md</code> (the headline
-<code>:8</code>, the benchmark table <code>:122-136</code>, the zero-LLM
-verification recipe <code>:138-150</code>, known limitations
-<code>:225-240</code>)</p>
-<h2 id="appendix-recorded-searches">Appendix: Recorded Searches</h2>
-<p>Run from the root of the checkout at the pinned commit.</p>
+<code>test_zero_llm_regression.py</code></p>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the root of the checkout at the pinned commit with
+<code>git grep</code>, which does not honour
+<code>.gitignore</code>.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -651,43 +759,85 @@ verification recipe <code>:138-150</code>, known limitations
 </thead>
 <tbody>
 <tr>
-<td>Every read path filters on the scope key</td>
-<td><code>grep -rn "\.search(|get_all(" --include="*.py" src</code></td>
-<td>Six store reads, all passing
-<code>filters={"user_id": user_id}</code></td>
+<td>Every scoped vector read uses one filter shape</td>
+<td><code>git grep -n -E 'filters=\{"user_id": user_id\}' -- src</code></td>
+<td>Six sites: <code>calibrate.py:53</code>,
+<code>recall_b.py:345</code>, <code>server.py:940</code>,
+<code>:1231</code>, <code>:1283</code>, <code>snapshot.py:53</code></td>
 </tr>
 <tr>
-<td>The key is written onto the record</td>
-<td><code>grep -n "payloads=" src/fidelis/degrade.py</code></td>
-<td><code>:125</code> and <code>:246</code>, both
-<code>{"data": text, "user_id": user_id}</code></td>
+<td>Every store read, scoped or not</td>
+<td><code>git grep -n -E 'vector_store\.(get|search)\(|collection\.get\(|get_all\(|col\.get\(' -- src</code></td>
+<td>The scoped sites above, six id-addressed
+<code>vector_store.get</code> calls, each followed by a
+<code>user_id</code> comparison except the replay idempotency check and
+the temporal-field lookup, <code>reconcile_index</code>'s all-user scan,
+and the session reads in <code>recall_sessions.py</code> and
+<code>sessions_cmd.py</code></td>
 </tr>
 <tr>
-<td>Nothing corrects a stored passage</td>
-<td><code>grep -rniE "supersede|retract|def delete|def forget|correct" --include="*.py" src</code></td>
-<td>One hit, a prompt string in <code>scaffold/_core.py:85</code>
-telling the reader to prefer the most recent quote</td>
+<td>The session reader has no reachable caller</td>
+<td><code>git grep -n -E 'query_sessions|_cmd_sessions_|_tool_recall_sessions' -- src extensions claude-plugin</code>;
+<code>git grep -n 'add_parser("sessions"' -- src</code></td>
+<td>Callers only in <code>mcp_server.py</code> functions absent from
+<code>TOOL_HANDLERS</code>, <code>sessions_cmd.py</code> and
+<code>recall_recent.py</code>; no <code>sessions</code> subparser</td>
 </tr>
 <tr>
-<td>No audit or review surface</td>
-<td><code>grep -rniE "audit|approve|review" --include="*.py" src</code></td>
-<td>The telemetry escalation log, a config prompt string, and a lane
-label; no mutation log and no approval path</td>
+<td>No read excludes on status</td>
+<td><code>git grep -n -E '"superseded"|!= "current"|== "current"' -- src</code></td>
+<td>Rendering in <code>cli.py</code> and <code>mcp_server.py</code>, the
+correct tool's refusal, the replacement pull at
+<code>temporal_recall.py:240</code>, the demotion rank at
+<code>temporal.py:439</code> and cue vocabularies; no filter</td>
 </tr>
 <tr>
-<td>The planner is wired</td>
-<td><code>grep -rn "plan_context|context_packet" --include="*.py" src</code></td>
-<td>Four call sites in <code>mcp_server.py:159-177</code></td>
+<td>No value-keyed rejection that writes consult</td>
+<td><code>git grep -n -i -E 'tombstone|retracted|deny.?list' -- src</code></td>
+<td>The read-time pointers file in <code>supersession.py</code> and a
+project-name deny-list for session ingestion</td>
 </tr>
 <tr>
-<td>Tree and suite size</td>
-<td><code>find . -name "*.py" | xargs wc -l | tail -1</code>;
-<code>grep -rc "def test_" tests/*.py tests/*/*.py</code> summed</td>
-<td>39,279 lines; 312 test functions</td>
+<td>No delete on the fact store</td>
+<td><code>git grep -n -E '\.delete\(|vector_store\.update|DELETE FROM' -- src</code></td>
+<td><code>sessions_cmd.py:176</code> (unreachable) and the sidecar
+rebuild in <code>temporal_index.py:253-254</code></td>
+</tr>
+<tr>
+<td>The cited specification is absent</td>
+<td><code>git log --all --oneline -- docs/TIME-AWARE-SPEC.md</code>;
+<code>git grep -l TIME-AWARE-SPEC -- src tests</code></td>
+<td>No commit; cited in 17 files</td>
+</tr>
+<tr>
+<td>Census</td>
+<td><code>git ls-files src | grep '\.py$' | xargs cat | wc -l</code>;
+<code>git grep -c -E '^[[:space:]]*(async )?def test_' -- tests</code>
+summed</td>
+<td>22,055 package lines; 790 test functions in 64 files</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/hermes-labs-ai/fidelis/commit/1b567a69339b75b5081ead1ae1ffdb30519a29ec"><code class="commit-id" title="1b567a69339b75b5081ead1ae1ffdb30519a29ec">1b567a69…</code></a>
+— 65 commits on, version 0.3.0rc1, licence MIT to Apache-2.0.
+<code>bitemporal</code> gained upstream on caller-declared validity
+beside a system-clock <code>recorded_at</code> (<a
+href="#9-reliability-safety-and-trust">section 9</a>), with read-time
+supersession, a write gate and <code>fidelis_correct</code>.
+<code>negative_eval</code> gained, wrong at 318a5cb:
+<code>test_user_id_namespace_isolation.py</code> was committed there.
+<code>scope_enforced</code> holds on every reachable read; the session
+reader ignores the key and nothing reaches it. Also wrong then: the
+README comparison with Mem0, Zep and Supermemory, the uncaveated 470,
+the census and line numbers (<a
+href="../../appendix/#known-limitations">appendix</a>).
+<code>context.py</code>'s planner lost its MCP caller. Screened from a
+full clone: two MCP manifests launching the pinned package through
+<code>uvx</code>, one unpinned <code>pyproject.toml</code>, nothing
+inside the cooldown; Apache-2.0, no rider. Nothing was installed, built
+or run.</p>
 <p><strong>2026-09-17</strong> — <a
 href="https://github.com/hermes-labs-ai/fidelis/commit/318a5cbbe46286e15fcdc563338e2411f35e104b"><code class="commit-id" title="318a5cbbe46286e15fcdc563338e2411f35e104b">318a5cbb…</code></a>
 — re-read after 29 commits. <code>degrade.py</code> is byte-identical;
@@ -734,7 +884,7 @@ as data; nothing was installed or run.</p>
 href="https://github.com/hermes-labs-ai/fidelis/commit/804e521f86e3c0056d3c89b4c7babd1eb086a6a7"><code class="commit-id" title="804e521f86e3c0056d3c89b4c7babd1eb086a6a7">804e521f…</code></a>
 — first reading. Screened before reading; the tree was read, never
 installed, and no benchmark was run. The figures in section 10 are read
-from the repository's own committed evidence files.</p>
+from the repository's committed evidence files.</p>
         </article>
       </div>
     </main>

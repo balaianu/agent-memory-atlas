@@ -18,7 +18,7 @@ Neither counts as screened.
 | Result | Count |
 | --- | ---: |
 | Repositories with an auto-run surface (`RUNS`) | 355 |
-| Repositories with a dependency surface inside the cooldown (`FRESH`) | 395 |
+| Repositories with a dependency surface inside the cooldown (`FRESH`) | 394 |
 | Repositories with build-time execution (`EXEC`) | 546 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
@@ -141,7 +141,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`farm`](../../content/systems/farm.md) | `.gitmodules` |
 | [`fava-trails`](../../content/systems/fava-trails.md) | `.vscode/settings.json` |
 | [`fernme`](../../content/systems/fernme.md) | `.claude-plugin/` |
-| [`fidelis`](../../content/systems/fidelis.md) | `server.json` |
+| [`fidelis`](../../content/systems/fidelis.md) | `mcp.json`, `server.json` |
 | [`fireweed-mcp`](../../content/systems/fireweed-mcp.md) | `server.json` |
 | [`flatbread`](../../content/systems/flatbread.md) | `.cursor/rules/`, `.vscode/settings.json` |
 | [`fluctlightdb`](../../content/systems/fluctlightdb.md) | `.claude/settings.json`, `.githooks/` |

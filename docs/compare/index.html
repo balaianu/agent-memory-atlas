@@ -9828,31 +9828,53 @@ tag sanitizer drops any tag containing prompt or override</td>
 </tr>
 <tr>
 <td><a href="../systems/fidelis/"><code>fidelis</code></a></td>
-<td>An original passage — an atomic fact on one path, a multi-turn
-session on the other</td>
-<td>Local Chroma plus BM25 under ~/.cogito, with a JSONL dead-letter
-queue for failed writes</td>
-<td>BM25 + nomic dense + RRF fusion, no LLM in the default path, an
-optional filter tier, and a deterministic planner that decides before
-any search whether to retrieve at all and which of eight evidence lanes
-to use</td>
-<td>Markdown watched and auto-ingested; a failed write is queued locally
-rather than lost</td>
-<td>None — passages are returned verbatim and never rephrased,
-superseded or retracted</td>
-<td><code>user_id</code> written into the record payload and applied as
-a filter by all six read paths — uniformly, with no lane exempt — over a
-config default of the literal <code>agent</code>, so the key is enforced
-and the deployment has one value for it</td>
-<td>MCP for Claude Code, a CLI, a launchd/systemd service, Docker</td>
-<td>A watcher over a notes directory and a sync job replaying the
-dead-letter queue</td>
-<td>A retrieval-confidence score parameterises the QA scaffold's hedge
-instruction</td>
-<td>Benchmark reporting that states which metric it measured and
-declines the flattering read</td>
-<td>Nothing corrects a stored passage; the eval's reader and grader are
-the same model family</td>
+<td>An original passage stored verbatim, with a payload carrying the
+scope key, a system-clock recorded_at, a content hash and, when
+declared, valid_from, valid_to, event_at, source and the ids it
+supersedes</td>
+<td>Local Chroma under ~/.cogito, a rebuildable SQLite sidecar indexing
+content hashes and supersession edges, and a JSONL queue with a
+dead-letter directory for writes that could not reach the embedder</td>
+<td>Vector search by default over MCP; BM25 plus nomic dense with RRF
+fusion on the hybrid path; a deterministic planner on the orient path
+that can decline to search; every lane with a temporal view annotates
+status, puts current records first and pulls a superseding record into
+view when the pool holds it</td>
+<td>Verbatim store behind a deterministic write gate that refuses
+harness exhaust, probe residue and secret-shaped text; exact duplicates
+of a current record are reported rather than stored; a failed write is
+queued and re-gated on replay</td>
+<td>Correction by a new record declaring which ids it supersedes,
+checked to exist for the same user; the superseded record stays and is
+demoted, never removed. No delete exists on the fact store; a session
+purge is written and no entry point reaches it</td>
+<td>One user_id per server process, read from config, stamped on every
+write and applied on every reachable read, including both id-addressed
+fetches; session rows are stamped with a constant and read by an
+unreachable function that ignores the key</td>
+<td>MCP for Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI and
+OpenClaw with six tools, a Claude plugin, an opt-in Pi prompt-time
+recall extension, a CLI, a launchd or systemd service, Docker</td>
+<td>A watcher over a notes directory, a replay job over the write queue,
+and a sidecar reconcile at boot</td>
+<td>A read-time status of current, superseded, expired or not_yet_valid,
+used to order results and never to exclude them; an operator-authored
+pointers file that annotates retracted claims; a calibrated hedge string
+in the QA scaffold</td>
+<td>Corrections that keep their history: the superseded record is
+returned marked, the replacement is pulled into view from the same
+relevance pool, and an as-of query sees the store before a later
+correction existed. Benchmark reporting that states which metric it
+measured, declines the flattering comparison, and tells a reader the
+redesigned default path does not inherit the historical headline</td>
+<td>No status ever withholds a record, so a superseded or expired
+passage reaches the reader whenever the caller ignores the mark; the Pi
+prompt-time assembler reads /recall_b, which carries no temporal status,
+and says so in the header it injects; the agent holding fidelis_correct
+can supersede any record of its namespace, with force=true past an
+existing correction; the specification seventeen files cite is not in
+the tree; the end-to-end QA figure is read and graded by the same
+model</td>
 </tr>
 <tr>
 <td><a
@@ -33520,7 +33542,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>126 of 749:</em> <a
+<p><em>127 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33555,6 +33577,7 @@ href="../systems/engram-alpha/"><code>engram-alpha</code></a>, <a
 href="../systems/engram-provable/"><code>engram-provable</code></a>, <a
 href="../systems/engraphis/"><code>engraphis</code></a>, <a
 href="../systems/feltstate/"><code>feltstate</code></a>, <a
+href="../systems/fidelis/"><code>fidelis</code></a>, <a
 href="../systems/fireweed-mcp/"><code>fireweed-mcp</code></a>, <a
 href="../systems/flowly/"><code>flowly</code></a>, <a
 href="../systems/gbrain/"><code>gbrain</code></a>, <a
@@ -34357,7 +34380,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>473 of 749:</em> <a
+<p><em>474 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34495,6 +34518,7 @@ href="../systems/exomem/"><code>exomem</code></a>, <a
 href="../systems/fava-trails/"><code>fava-trails</code></a>, <a
 href="../systems/feltstate/"><code>feltstate</code></a>, <a
 href="../systems/fernme/"><code>fernme</code></a>, <a
+href="../systems/fidelis/"><code>fidelis</code></a>, <a
 href="../systems/fireweed-mcp/"><code>fireweed-mcp</code></a>, <a
 href="../systems/flair/"><code>flair</code></a>, <a
 href="../systems/flatbread/"><code>flatbread</code></a>, <a
@@ -34864,7 +34888,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-473 repositories of
+474 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
