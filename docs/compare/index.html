@@ -11906,28 +11906,36 @@ reach a Qdrant Cloud URL; tests never exercise a filter</td>
 <code>confidence</code>, <code>source</code>, <code>last_seen</code>,
 <code>links</code>, <code>pinned</code>, plus free text</td>
 <td>A directory of markdown under <code>HESTIA_MEMORY_DIR</code> with an
-auto-generated <code>INDEX.md</code>; records are gitignored as runtime
+auto-generated <code>INDEX.md</code>; proposals in an
+<code>inbox/</code> subdirectory; records are gitignored as runtime
 data</td>
-<td>BM25 over every record with a stop-word list, length normalization
-and corpus rarity; <code>pinned</code> breaks ties only, and the result
-is capped at twenty</td>
+<td>BM25 over every live record with a 34-word stop list, length
+normalization and corpus rarity; <code>pinned</code> breaks ties only,
+and the result is capped at twenty</td>
 <td>A two-op <code>memory</code> tool the model calls, plus a background
-note-taker that proposes rather than writes</td>
-<td>Files a person can edit or delete; no supersession, no
-rejected-value record, no delete op on the tool</td>
+note-taker that proposes into an inbox rather than writing</td>
+<td>Files a person can edit or delete; promote and discard on the inbox;
+discard unlinks the proposal and keeps no record; no supersession and no
+delete op on the tool</td>
 <td>One household store; no scope key</td>
-<td>An OpenAI-compatible local endpoint with ten scoped tools, spoken by
-phone, terminal, kitchen mic and Home Assistant</td>
-<td>A note-taker extracting durable facts into a review inbox,
-deduplicated against live memory and the queue</td>
-<td>A <code>confidence</code> float written and shown in the context
-block but read by no ranking, and a <code>pinned</code> flag that only
-breaks ties; no discrete state and nothing that withholds</td>
-<td>The review inbox is the default path, the write whitelist errors
-loudly, and the deterministic work is deliberately kept away from the
-model</td>
-<td>Recall is lexical over the whole store with no semantic arm, and a
-promoted fact has no way to be marked wrong later</td>
+<td>An OpenAI-compatible local endpoint with eleven tools, reached by
+phone, terminal, kitchen mic and Home Assistant, plus an operator MCP
+server over stdio that is read-only unless switched</td>
+<td>A note-taker extracting durable facts after each answer into a
+review inbox, deduplicated against live memory and the queue</td>
+<td>A <code>confidence</code> float shown in <code>INDEX.md</code> and
+the review list and read by no ranking; a <code>pinned</code> flag that
+only breaks ties; an inbox <code>status: proposed</code> that nothing
+reads, since the exclusion is the directory</td>
+<td>The review inbox is the only path for passive extraction, both
+review surfaces are a person's, the write whitelist errors loudly, and
+recalled memory reaches the prompt in a JSON envelope labelled
+data-only</td>
+<td>Recall is lexical with no semantic arm; a promoted fact has no way
+to be marked wrong; a discarded or deleted fact can be proposed again;
+<code>HESTIA_INBOX_DIR</code> pointed at the memory directory would make
+proposals live; the nightly backup copies a fixed path and ignores
+<code>HESTIA_MEMORY_DIR</code></td>
 </tr>
 <tr>
 <td><a href="../systems/hexis/"><code>hexis</code></a></td>

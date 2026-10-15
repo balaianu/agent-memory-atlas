@@ -163,11 +163,12 @@ every other caller; Hestia routes it somewhere else. `brain/note_taker.py`
 extracts durable facts from conversation and they *"land in a review inbox
 (`memory/inbox/*.md`), NOT straight into the live memory store"* — the queue is
 deduplicated against both live memory and its own pending entries, and
-`review_notes.py` is where a person promotes, edits or drops each one. No
-environment variable opens a way around it: the module states that *"deployment
-environment variables cannot bypass this gate"*, and a test sets the legacy
-`HESTIA_NOTETAKER_AUTOWRITE=1` and asserts the fact reaches the inbox and not the
-store. The direct write path still goes through one governed function with a `type`
+a person promotes or drops each one with `review_notes.py` or a tap on an
+e-ink board. The module states that *"deployment environment variables cannot
+bypass this gate"*, and a test sets the legacy `HESTIA_NOTETAKER_AUTOWRITE=1`
+and asserts the fact reaches the inbox, not the store. The gate rests on
+recall not reading the inbox directory, so `HESTIA_INBOX_DIR` pointed at the
+memory directory undoes it. The direct write path still goes through one governed function with a `type`
 whitelist that raises rather than coercing, and returns the error text to the
 model so it can retry. So this is not a system without a gateway; it is one that
 decided the *least* trustworthy adapter should not have a machine-decided verdict

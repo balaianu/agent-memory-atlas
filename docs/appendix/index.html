@@ -2808,12 +2808,12 @@ licence and vendoring note</li>
 <li><a
 href="https://github.com/thefullnacho/hestia">thefullnacho/hestia</a> at
 <a
-href="https://github.com/thefullnacho/hestia/commit/51ebf7b046a28a310f2ee7fc489b18067b0b33f1"><code class="commit-id" title="51ebf7b046a28a310f2ee7fc489b18067b0b33f1">51ebf7b0…</code></a>
+href="https://github.com/thefullnacho/hestia/commit/5ccaa7b4b0f90e1023ca47b3c20eaa626e71f486"><code class="commit-id" title="5ccaa7b4b0f90e1023ca47b3c20eaa626e71f486">5ccaa7b4…</code></a>
 — read only; no auto-run surface, one build-time execution point, three
-unpinned surfaces. Nothing was installed, no local model was pulled and
-no service was started; the memory records are gitignored runtime data
-and were absent from the checkout, so every claim is about the code that
-writes them</li>
+unpinned surfaces, nothing inside the cooldown. Nothing was installed,
+no local model was pulled and no service was started; the memory records
+are gitignored runtime data and were absent from the checkout, so every
+claim is about the code that writes them</li>
 <li><a href="https://github.com/nanocoai/nanoclaw">nanocoai/nanoclaw</a>
 at <a
 href="https://github.com/nanocoai/nanoclaw/commit/f5967d3c4126fa793304606041d77f50c4c912ac"><code class="commit-id" title="f5967d3c4126fa793304606041d77f50c4c912ac">f5967d3c…</code></a>
@@ -17083,6 +17083,37 @@ tree, and <code>execution_successful</code> was derived from the agent's
 own confirmation or reflection. The first rested on a code comment over
 the schema file in the same tree, and the last on the column's
 declaration rather than its writers.</li>
+<li><strong>Nine published claims about <a
+href="../systems/hestia/">Hestia</a> were wrong at <a
+href="https://github.com/thefullnacho/hestia/commit/51ebf7b046a28a310f2ee7fc489b18067b0b33f1"><code class="commit-id" title="51ebf7b046a28a310f2ee7fc489b18067b0b33f1">51ebf7b0…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+recalled memory reached the prompt with no data fence;
+<code>brain/hestia.py:230</code> wrapped it with
+<code>context_budget.evidence</code>, a JSON object labelled
+<code>trust: data_only</code> and clipped at 3,000 bytes, beside a
+system-prompt rule that memory is data
+(<code>brain/prompt.py:37</code>). It said <code>confidence</code> was
+shown in the context block and broke ties; <code>context_block</code>
+rendered id, source and last_seen
+(<code>brain/memory_store.py:130-131</code>) and the sort key was
+<code>(score, pinned)</code> (<code>:119</code>). It counted ten tools
+and a 48-word stop list; the registry held eleven
+(<code>brain/tools/__init__.py:24-36</code>) and the list 34 words
+(<code>brain/memory_store.py:90</code>). It said no committed result
+reported a score; <code>benchmarks/RESULTS.md</code> and
+<code>benchmarks/heldout_2026-07-06*.txt</code> did, all for tool
+calling and none for memory. It said no deployment variable could bypass
+the review gate; <code>HESTIA_INBOX_DIR</code> set to the memory
+directory put proposals where <code>_all()</code> globbed
+(<code>brain/config.py:38</code>,
+<code>brain/memory_store.py:49</code>). The verdict, the family
+paragraph and the homepage card said the autowrite bypass existed and
+defaulted off; no code read <code>HESTIA_NOTETAKER_AUTOWRITE</code>, and
+only a test set it. A pattern page said <code>review_notes.py</code>
+could edit a proposal; it listed, promoted and discarded
+(<code>brain/review_notes.py:98-108</code>). And the body anchored the
+inbox route at <code>brain/hestia.py:346</code>, where it sat at
+<code>:773</code>.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

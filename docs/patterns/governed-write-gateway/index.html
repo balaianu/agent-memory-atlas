@@ -288,16 +288,18 @@ somewhere else. <code>brain/note_taker.py</code> extracts durable facts
 from conversation and they <em>"land in a review inbox
 (<code>memory/inbox/*.md</code>), NOT straight into the live memory
 store"</em> — the queue is deduplicated against both live memory and its
-own pending entries, and <code>review_notes.py</code> is where a person
-promotes, edits or drops each one. No environment variable opens a way
-around it: the module states that <em>"deployment environment variables
-cannot bypass this gate"</em>, and a test sets the legacy
+own pending entries, and a person promotes or drops each one with
+<code>review_notes.py</code> or a tap on an e-ink board. The module
+states that <em>"deployment environment variables cannot bypass this
+gate"</em>, and a test sets the legacy
 <code>HESTIA_NOTETAKER_AUTOWRITE=1</code> and asserts the fact reaches
-the inbox and not the store. The direct write path still goes through
-one governed function with a <code>type</code> whitelist that raises
-rather than coercing, and returns the error text to the model so it can
-retry. So this is not a system without a gateway; it is one that decided
-the <em>least</em> trustworthy adapter should not have a machine-decided
+the inbox, not the store. The gate rests on recall not reading the inbox
+directory, so <code>HESTIA_INBOX_DIR</code> pointed at the memory
+directory undoes it. The direct write path still goes through one
+governed function with a <code>type</code> whitelist that raises rather
+than coercing, and returns the error text to the model so it can retry.
+So this is not a system without a gateway; it is one that decided the
+<em>least</em> trustworthy adapter should not have a machine-decided
 verdict at all. Worth weighing against the cost: the queue defers the
 judgement rather than deciding it, and nothing downstream can mark a
 promoted fact wrong.</p>

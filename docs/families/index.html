@@ -2095,19 +2095,20 @@ href="../systems/muninn/">Muninn</a>.</p>
 extraction cannot write.</strong> Every other runtime here that extracts
 in the background writes to the store and offers a viewer afterwards;
 Hestia's <code>note_taker.py</code> puts its proposals in
-<code>memory/inbox/*.md</code> and a person promotes them with
-<code>review_notes.py</code> — <em>"nothing becomes part of the brain's
-live memory until you promote it here, so the brain learns in the open
-and you stay in control (determinism over intelligence)"</em> — with the
-autowrite bypass shipped off. The direct tool path is narrow in the same
-spirit: an out-of-whitelist record <code>type</code> raises, the error
-goes back to the model to fix, and the test asserts both the exception
-and that the content is absent afterwards. The cost is that all the
-judgement sits before the write and none after — no supersession, no
-rejected-value record, and the novelty check runs against live memory
-and the queue, so a fact a person deliberately deleted looks new again
-the next time it is mentioned. See <a
-href="../systems/hestia/">Hestia</a>.</p>
+<code>memory/inbox/*.md</code>, a directory recall does not read, and a
+person promotes them with <code>review_notes.py</code> or a tap on an
+e-ink board. <em>"Nothing becomes part of the brain's live memory until
+you promote it here, so the brain learns in the open and you stay in
+control (determinism over intelligence)"</em>, says the CLI, and a test
+sets the legacy autowrite flag and asserts the fact stays out of recall.
+The direct tool path is narrow in the same spirit: an out-of-whitelist
+record <code>type</code> raises, the error goes back to the model to
+fix, and the test asserts both the exception and that the content is
+absent afterwards. The cost is that all the judgement sits before the
+write and none after — no supersession, no rejected-value record, and
+the novelty check runs against live memory and the queue, so a fact a
+person discarded or deleted looks new again the next time it is
+mentioned. See <a href="../systems/hestia/">Hestia</a>.</p>
 <p><strong>Animus is the family's clearest case of an epistemic state
 spent on filtering rather than on discounting.</strong> An observation
 carries <code>MemoryState { New, Current, Deprecated }</code> beside a

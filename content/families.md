@@ -915,16 +915,18 @@ queries written so the lexical arm can match them. See
 **Hestia is the family's only system where background extraction cannot write.**
 Every other runtime here that extracts in the background writes to the store and
 offers a viewer afterwards; Hestia's `note_taker.py` puts its proposals in
-`memory/inbox/*.md` and a person promotes them with `review_notes.py` —
-*"nothing becomes part of the brain's live memory until you promote it here, so
-the brain learns in the open and you stay in control (determinism over
-intelligence)"* — with the autowrite bypass shipped off. The direct tool path is
+`memory/inbox/*.md`, a directory recall does not read, and a person promotes
+them with `review_notes.py` or a tap on an e-ink board. *"Nothing becomes part
+of the brain's live memory until you promote it here, so the brain learns in the
+open and you stay in control (determinism over intelligence)"*, says the CLI,
+and a test sets the legacy autowrite flag and asserts the fact stays out of
+recall. The direct tool path is
 narrow in the same spirit: an out-of-whitelist record `type` raises, the error
 goes back to the model to fix, and the test asserts both the exception and that
 the content is absent afterwards. The cost is that all the judgement sits before
 the write and none after — no supersession, no rejected-value record, and the
 novelty check runs against live memory and the queue, so a fact a person
-deliberately deleted looks new again the next time it is mentioned. See
+discarded or deleted looks new again the next time it is mentioned. See
 [Hestia](../systems/hestia/).
 
 **Animus is the family's clearest case of an epistemic state spent on filtering
