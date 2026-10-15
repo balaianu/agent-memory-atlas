@@ -12695,68 +12695,58 @@ rests on callers being distinguishable</td>
 </tr>
 <tr>
 <td><a href="../systems/huqan/"><code>huqan</code></a></td>
-<td>A proposed memory entry with its evidence, provenance and workspace
-scope, carried through admission as a review case and landing only as an
-approved node in the graph</td>
-<td>A local graph whose node keys carry the workspace scope, with a
-mutation journal, a Trust Evidence Ledger and exportable Trust Receipts;
-no cloud and no API key</td>
-<td>Verification, contradiction and risk checks over evidence rather
-than ranked recall; the product is the decision, and retrieval serves
-it</td>
-<td>Nothing lands directly — a write is proposed, gated, and either
-allowed, held for review, quarantined or rejected</td>
-<td>Decisions are <code>approve</code>, <code>reject</code>,
-<code>expire</code>, <code>cancel</code>, <code>escalate</code> and
-<code>override</code>, each an immutable transition snapshot committed
-to the journal</td>
-<td>Workspace scope is part of the node storage key, checked on
-admission, and a separate pure gate decides whether an actor in one
-workspace may reach into another</td>
-<td>Three binaries — a CLI, an MCP server over stdio, and a
-pre-execution guard for external agents — plus optional PDF ingest and
-receipt export</td>
-<td>None over memory; the gate runs synchronously in front of the write
-it governs</td>
-<td>A frozen decision vocabulary with a severity order,
-resolved-identity approvals with separation of duties, a firewall whose
-block cannot be approved away, and receipts as the durable record</td>
-<td>One sentence in <code>lib/human-oversight-approval-runtime.js</code>
-closes the hole this atlas most often finds under a review claim: "The
-runtime never accepts an approver identity from the decision body."
-<code>decide()</code> takes an authenticated
-<code>approverContext</code>, an injected <code>resolveIdentity</code>
-is required for the runtime to exist at all, and the resolved identity
-is what separation of duties is checked against — the approver is
-compared to the requester on both <code>identityRef</code> and
-<code>identityHash</code> and refused with
-<code>SELF_APPROVAL_REJECTED</code> unless a policy explicitly permits
-it, and above a critical risk score prior approvers are gathered from
-the mutation journal into a set so one person cannot satisfy a
-two-approver rule twice. Around that sit the same instincts: an
-<code>override</code> is authorised only when the policy allows it
-<em>and</em> the firewall actually returned block, an
-<code>approve</code> against a firewall block simply fails, and
-"[m]issing or ambiguous identity, stale state, scope drift, unavailable
-durability, and firewall disagreement all fail closed." The module also
-refuses to grow — "[i]t does not implement a workflow suite, IAM
-provider, connector authorization system, or a second storage authority"
-— and commits its transitions through the journal that already
-exists</td>
-<td>The scope question is what this is and what it therefore is not.
-HUQAN is an admission gate; retrieval quality, ranking and consolidation
-are not its subject, so a reader looking for how memory is recalled will
-not find much, and the graph behind the gate is thinner than the gate in
-front of it. The oversight machinery only pays for itself where there
-are two people: escalation "requires a second approver, so it is simply
-absent in a single-user install", and the distinct-approver rule above
-critical risk degenerates in the same setting — a solo operator gets the
-receipts and the refusals, not the separation of duties.
-<code>allowSelfApproval</code> and <code>allowOverride</code> are policy
-flags, so the guarantee is only as strong as the policy an installation
-ships. And the surface is very large for a gate: 287,058 lines across
-1,563 JavaScript files at this pin, three binaries, optional PDF paths,
-and dependency files inside the seven-day cooldown</td>
+<td>Two units. A graph fact: a subject node and an edge with weight,
+confidence and provenance, parsed from text by a rule-based extractor. A
+memory record: content, status, provenance and metadata, used for
+error-prevention rules and searched by memory_query</td>
+<td>SQLite through better-sqlite3 with a JSON-file fallback; graph
+nodes, edges, an append-only audit_log, candidate claims, a mutation
+journal and hash-chained mutation receipts, a separate memories table
+with an event log, and a tool_approvals queue. No cloud and no API
+key</td>
+<td>Graph lookup for ask and reason in one workspace; BM25 by default
+for memory_query, with substring and recency modes, followed by a recall
+gate that withholds inactive, unprovenanced or other-workspace records
+and marks stale ones</td>
+<td>A mutating MCP call is classified review and queued as a pending
+approval; once approved, learn runs the memory admission gate and writes
+only on allow, logging REVIEW or REJECT otherwise</td>
+<td>Graph edges are reinforced by weight and pruned below a threshold;
+decayed isolated nodes are deleted with an audit event. Memory records
+are superseded, tombstoned or archived in place and kept</td>
+<td>A workspace key in every graph and memory-record primary key and on
+every read; on the stdio MCP server the workspace is a model-supplied
+argument and no caller workspace is bound</td>
+<td>Seven binaries — CLI, stdio MCP server, a pre-execution hook for six
+coding agents, a Windows approval-authority service and three experiment
+labs — plus an HTTP server and a library export</td>
+<td>None by default. An opt-in auto-think timer runs dream, whose
+candidate edges go through admission; optimize decays and prunes when
+invoked</td>
+<td>A review queue whose approve verb is hidden from the model and needs
+an HMAC capability from the server's environment, an
+interactive-terminal check on the CLI approve, an admission gate with
+four outcomes, a read-time recall gate, and an optional
+identity-resolving oversight runtime an embedder injects</td>
+<td>The model and the approver are separated by a secret rather than by
+a label. Every mutating MCP tool classifies as review, the approve verb
+is filtered out of tools/list, and calling it needs a capability
+HMAC-signed with HUQAN_MCP_OPERATOR_TOKEN from the server's own
+environment and bound to the approval id and argument hash. A committed
+contract test asserts both halves: approve absent from discovery, and a
+wrong secret leaving the row pending. The CLI approve refuses unless
+stdin is a terminal and the id is typed back. Writes that admission
+refuses leave an append-only audit event carrying the text and a receipt
+id</td>
+<td>What HUQAN calls quarantine is a refusal: a quarantined write is not
+held anywhere a person can release it, only described in an audit event.
+On the stdio MCP server the workspace is whatever the model names, and
+the cross-workspace gate runs only for an embedding host. The
+identity-resolving oversight runtime with separation of duties ships as
+a library export no binary constructs, so a default approval records no
+resolved identity. HUQAN_HUMAN_APPROVAL_DISABLED auto-approves every
+review. Edge pruning deletes without an audit event. The surface is very
+large for a gate, with seven binaries and an HTTP server</td>
 </tr>
 <tr>
 <td><a href="../systems/hypha/"><code>hypha</code></a></td>
@@ -34380,7 +34370,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>475 of 749:</em> <a
+<p><em>476 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34563,6 +34553,7 @@ href="../systems/hivemind-activeloop/"><code>hivemind-activeloop</code></a>,
 href="../systems/holomem/"><code>holomem</code></a>, <a
 href="../systems/honcho/"><code>honcho</code></a>, <a
 href="../systems/humans/"><code>humans</code></a>, <a
+href="../systems/huqan/"><code>huqan</code></a>, <a
 href="../systems/hypha/"><code>hypha</code></a>, <a
 href="../systems/iai-pme/"><code>iai-pme</code></a>, <a
 href="../systems/icarus/"><code>icarus</code></a>, <a
@@ -34889,7 +34880,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-475 repositories of
+476 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

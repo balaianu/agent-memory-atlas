@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A local admission gate in front of
-agent memory and tool calls, where a write is held until an
-authenticated person decides, self-approval is refused on resolved
-identity, and every decision leaves a receipt.">
+    <meta name="description" content="A local JavaScript admission gate
+for agent writes, memory included: mutating calls wait in a durable
+approval queue the model can neither list nor sign.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="HUQAN — Agent Memory Atlas">
-    <meta property="og:description" content="A local admission gate in
-front of agent memory and tool calls, where a write is held until an
-authenticated person decides, self-approval is refused on resolved
-identity, and every decision leaves a receipt.">
+    <meta property="og:description" content="A local JavaScript
+admission gate for agent writes, memory included: mutating calls wait in
+a durable approval queue the model can neither list nor sign.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="HUQAN — Agent Memory Atlas">
-    <meta name="twitter:description" content="A local admission gate in
-front of agent memory and tool calls, where a write is held until an
-authenticated person decides, self-approval is refused on resolved
-identity, and every decision leaves a receipt.">
+    <meta name="twitter:description" content="A local JavaScript
+admission gate for agent writes, memory included: mutating calls wait in
+a durable approval queue the model can neither list nor sign.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>HUQAN — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ identity, and every decision leaves a receipt.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "HUQAN",
-      "description": "A local admission gate in front of agent memory and tool calls, where a write is held until an authenticated person decides, self-approval is refused on resolved identity, and every decision leaves a receipt.",
+      "description": "A local JavaScript admission gate for agent writes, memory included: mutating calls wait in a durable approval queue the model can neither list nor sign.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -99,27 +96,26 @@ identity, and every decision leaves a receipt.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">The approver identity never comes from the
-request that asks for approval</p>
+          <p class="eyebrow">The model cannot list the approve verb or
+sign for it</p>
           <h1>HUQAN</h1>
-          <p class="document-deck">A local admission gate in front of
-agent memory and tool calls, where a write is held until an
-authenticated person decides, self-approval is refused on resolved
-identity, and every decision leaves a receipt.</p>
+          <p class="document-deck">A local JavaScript admission gate for
+agent writes, memory included: mutating calls wait in a durable approval
+queue the model can neither list nor sign.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/ali-ulu/huqan">
               <span>Source</span>
               <strong>ali-ulu/huqan</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/ali-ulu/huqan/commit/844be5964f3fb5467c7df19beca82431e39e8d8d" title="844be5964f3fb5467c7df19beca82431e39e8d8d">
+            <a class="meta-pill revision-pill" href="https://github.com/ali-ulu/huqan/commit/26cf8e66332fbac982886216207de2d21692d208" title="26cf8e66332fbac982886216207de2d21692d208">
               <span>Analyzed revision</span>
-              <code>844be596…</code>
+              <code>26cf8e66…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/ali-ulu--huqan" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,22 @@ identity, and every decision leaves a receipt.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0-only;
+the README also offers a commercial licence and says the repository
+grants no commercial rights until one is signed</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>451,090
+lines of JavaScript in 2,835 files, 238,604 of them in 1,353 test files;
+lib/ outside tests is 163,472 lines in 1,152 files; a 1,857-line Rust
+core</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>4,845
+commits by 26 author names, 23 May – 15 October 2026; version
+1.0.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,353
+node:test files, run by <code>node --test</code> through
+scripts/run-tests.js; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,93 +154,101 @@ identity, and every decision leaves a receipt.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>HUQAN is a decision gate rather than a memory: "An agent proposes
-something. HUQAN decides whether it lands." AGPL-3.0, JavaScript,
-287,058 lines across 1,563 files, Node 22.13 or newer, three binaries —
-a CLI, an MCP server, and a pre-execution guard for external agents. "No
-model, no cloud, no API key."</p>
-<p>It is in this atlas because one of the things it gates is a memory
-write, and because the outcomes it can return for a write are not the
-ones it returns for a tool call:</p>
-<blockquote>
-<p>"A memory write adds <code>quarantine</code> and <code>reject</code>,
-because a write can be set aside for inspection rather than refused
-outright."</p>
-</blockquote>
-<p>The README reads its own quickstart transcript back to make the
-point: "the write <strong>did not happen</strong>. It was held. It
-happened at line 3, after something approved it, and line 4 is the
-durable record of why. That gap is the entire product."</p>
-<p><strong>The mechanism to take away is one sentence, and it closes a
-hole this atlas finds repeatedly.</strong> Across the corpus, systems
-that claim human review usually record an <code>actor</code> or an
-<code>approved_by</code> string that the calling code fills in — so what
-is stored is who the request <em>said</em> approved it. HUQAN refuses
-that construction:</p>
-<blockquote>
-<p>"The runtime never accepts an approver identity from the decision
-body. The receiver/operator supplies an authenticated context and the
-injected identity resolver turns that context into a receiver-owned
-identity result. Missing or ambiguous identity, stale state, scope
-drift, unavailable durability, and firewall disagreement all fail
-closed."</p>
-</blockquote>
-<p><code>decide()</code> takes an <code>approverContext</code>.
-<code>resolveIdentity</code> is a required injected function and the
-runtime will not construct without it. Separation of duties is then
-checked on the resolved identity rather than on a label: the approver is
-compared to the requester on both <code>identityRef</code> and
-<code>identityHash</code> and rejected with
-<code>SELF_APPROVAL_REJECTED</code> unless the policy explicitly allows
-it, and above the policy's critical risk score the runtime pulls prior
-decisions out of the mutation journal and keys them into a set, so the
-same person cannot count twice toward a two-approver requirement.</p>
-<p><strong>The refusals compose the way they should.</strong> An
-<code>override</code> is authorised only when the policy allows it
-<em>and</em> the firewall actually returned block. An
-<code>approve</code> against a firewall block fails outright. A decision
-on a case whose status is no longer <code>pending</code>,
-<code>escalated</code> or <code>blocked</code> is refused as duplicate
-or ambiguous.</p>
-<p><strong>And the module declines to become a platform.</strong> "This
-module is deliberately bounded. It does not implement a workflow suite,
-IAM provider, connector authorization system, or a second storage
-authority. Review cases and immutable transition snapshots are committed
-through the existing Graph mutation journal and Trust Evidence
-Ledger."</p>
+<p>HUQAN is a local gate between what an agent proposes and the state it
+would change, and a memory write is one of the things it gates. The
+mechanism that matters is that the model cannot clear its own proposal:
+the approve verb is missing from the model's tool list and needs a
+capability signed with a secret the model never sees. Its weaker side is
+naming and wiring. What it calls quarantine is a refusal rather than a
+hold, the workspace is a model-chosen argument on the shipped MCP
+server, and the identity-resolving review runtime is a library component
+no binary constructs.</p>
+<p>The licence file is AGPL-3.0-only with no rider. The README adds that
+a commercial licence is "[r]equired for" production use inside companies
+and that "this repository grants <strong>no commercial rights</strong>"
+until one is signed, which is a statement of the project's position
+rather than a term in <code>LICENSE</code>.</p>
+<p><strong>There are two memories behind the gate.</strong> The graph is
+what <code>huqan.learn</code> writes: a rule-based extractor turns a
+sentence into subject nodes and weighted edges, keyed by workspace
+(<code>lib/learn-use-case.js:92</code>). The memory-record store is a
+separate table of records with a lifecycle status, written by the
+error-prevention engine and the CLI's lifecycle commands, and searched
+by <code>huqan.memory_query</code> with BM25 and a read-time recall gate
+(<code>lib/memory-query-read.js:118-159</code>).</p>
+<p><strong>The approval is a credential, not a name.</strong>
+<code>huqan.learn</code> is classified <code>mutating</code> with
+<code>alphaDecision: 'review'</code>, so the call is persisted as a
+pending row in <code>tool_approvals</code> and returns without writing
+(<code>lib/mcp-gate-adapter-contract.js:76</code>).
+<code>huqan.approve</code> is one of five operator tools filtered out of
+<code>tools/list</code>, and calling it needs an
+<code>operatorCapability</code> HMAC-signed with
+<code>HUQAN_MCP_OPERATOR_TOKEN</code> from the server's environment and
+bound to the approval id and argument hash
+(<code>lib/mcp/tool-surface.js:13</code>,
+<code>lib/mcp/operator-authorization.js:24-43</code>). On the CLI,
+<code>onayla</code> refuses unless stdin is a terminal and the approval
+id is typed back (<code>lib/cli-operator-presence.js:52-55</code>).</p>
+<p><strong>Admission has four outcomes and one of them writes.</strong>
+<code>MEMORY_ADMISSION_DECISIONS</code> is frozen to <code>allow</code>,
+<code>review</code>, <code>quarantine</code> and <code>reject</code>
+with a severity order, and only <code>allow</code> reaches the graph.
+The other three append a <code>REVIEW</code> or <code>REJECT</code>
+audit event carrying the text and a receipt id, and return
+<code>learned: 0</code> (<code>lib/learn-use-case.js:50-75</code>).</p>
+<p><strong>The oversight runtime is an option, not the default.</strong>
+<code>lib/human-oversight-approval-runtime.js</code> states that "[t]he
+runtime never accepts an approver identity from the decision body",
+requires an injected <code>resolveIdentity</code>, and refuses
+self-approval on the resolved identity. The shipped MCP server passes
+<code>options.humanOversightApprovalRuntime || null</code>, and
+<code>runStdio</code> calls <code>createServer()</code> with no options,
+so the runtime is engaged only by a host that constructs it
+(<code>mcpServer.js:95</code>, <code>:124</code>).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>proposal</strong> is not a write; the write is what happens
-after someone decides.</p>
-<p>An <strong>approver</strong> is a resolved identity, never a name in
-the request.</p>
-<p>A <strong>quarantine</strong> is a hold with a receipt, not a
-refusal.</p>
-<p>An <strong>escalation</strong> is a person declining to decide, and
-it stops everything.</p>
-<p>A <strong>receipt</strong> is the durable answer to why.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a proposed memory write passes evidence, verification and policy before an approval runtime that resolves the approver from an authenticated context rather than from the request, refuses self-approval on resolved identity, and commits every transition to the existing journal</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a proposed memory write passes evidence, verification and policy before an approval runtime that resolves the approver from an authenticated context rather than from the request, refuses self-approval on resolved identity, and commits every transition to the existing journal
+<p>A <strong>proposal</strong> is a pending approval row holding the
+call's arguments. Nothing is in the graph until an operator approves it
+and the approved call runs.</p>
+<p><strong>Admission</strong> decides whether an approved learn may
+write. It returns one of four outcomes; <code>allow</code> writes, and
+the other three write only an audit event. A <code>quarantine</code>
+outcome is a severity, not a place: nothing is held for release.</p>
+<p>A <strong>graph fact</strong> has a weight and a confidence, both
+floats, and no status. It is reinforced by later writes and dies by
+decay and pruning, or never.</p>
+<p>A <strong>memory record</strong> has a status. <code>active</code> is
+the only value the default reads return; <code>superseded</code> marks a
+corrected record, <code>deleted</code> a tombstoned one and
+<code>archived</code> a reversible hide. The record and its events are
+kept in every case.</p>
+<p>A <strong>recall verdict</strong> — <code>admit</code>,
+<code>degrade</code> or <code>withhold</code> — is computed on each read
+from the record's status, workspace, provenance, expiry and policy
+version, and stored nowhere.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — A model's write waits as a pending approval the model cannot list or sign; once an operator approves, admission writes only on allow, and every other outcome leaves an append-only audit event and nothing held</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: A model&#39;s write waits as a pending approval the model cannot list or sign; once an operator approves, admission writes only on allow, and every other outcome leaves an append-only audit event and nothing held
 flowchart TB
-    AGENT[&quot;an agent proposes a memory write&quot;] --&gt; PIPE[&quot;evidence + provenance + workspace scope&lt;br/&gt;→ verification, contradiction, risk&lt;br/&gt;→ policy and approval boundary&quot;]
-    PIPE --&gt; DEC{&quot;MEMORY_ADMISSION_DECISIONS&lt;br/&gt;frozen: allow · review · quarantine · reject&lt;br/&gt;severity 0 · 1 · 2 · 3&quot;}
-    DEC --&gt;|&quot;allow&quot;| LAND[(&quot;the graph — nodes keyed under&lt;br/&gt;a workspace scope (nodeStorageKey)&quot;)]
-    DEC --&gt;|&quot;quarantine&quot;| HOLD[&quot;set aside for inspection,&lt;br/&gt;with a memory_quarantine_receipt&quot;]
-    DEC --&gt;|&quot;reject&quot;| NO[&quot;refused outright&quot;]
-    DEC --&gt;|&quot;review&quot;| CASE[&quot;a review case, pending&quot;]
-    CASE --&gt; D{&quot;decide: caseId, decisionType, approverContext&quot;}
-    CTX[&quot;an authenticated context&quot;] --&gt; RES[&quot;the injected resolveIdentity turns it into&lt;br/&gt;a receiver-owned identity result&quot;]
-    RES --&gt; D
-    D -.-&gt;|&quot;&#39;the runtime never accepts an approver identity&lt;br/&gt;from the decision body&#39; — and resolveIdentity is&lt;br/&gt;required for the runtime to construct at all&quot;| KEY[&quot;who approved is resolved, not asserted&quot;]
-    D --&gt;|&quot;approver identityRef or identityHash&lt;br/&gt;matches the requester&quot;| SELF[&quot;SELF_APPROVAL_REJECTED&lt;br/&gt;unless policy.allowSelfApproval&quot;]
-    D --&gt;|&quot;override without policy.allowOverride,&lt;br/&gt;or without an actual firewall block&quot;| OVR[&quot;OVERRIDE_NOT_AUTHORIZED&quot;]
-    D --&gt;|&quot;approve while the firewall says block&quot;| FW[&quot;BLOCKED_BY_FIREWALL&quot;]
-    D --&gt;|&quot;status is not pending, escalated or blocked&quot;| DUP[&quot;DUPLICATE_OR_AMBIGUOUS_DECISION&quot;]
-    D --&gt;|&quot;risk at or above policy.criticalRiskScore&quot;| MULTI[&quot;prior approvers pulled from the journal,&lt;br/&gt;filtered to this workspaceId, keyed into a set —&lt;br/&gt;one person cannot count twice&quot;]
-    D --&gt;|&quot;reviewer escalates instead of deciding&quot;| ESC[&quot;nothing executes until the authority&lt;br/&gt;it was raised to answers&quot;]
-    MULTI &amp; SELF &amp; OVR &amp; FW &amp; DUP --&gt; FAIL[&quot;missing or ambiguous identity, stale state,&lt;br/&gt;scope drift, unavailable durability and firewall&lt;br/&gt;disagreement ALL fail closed&quot;]
-    D --&gt;|&quot;approved&quot;| LAND
-    LAND --&gt; JOURNAL[(&quot;graph mutation journal +&lt;br/&gt;Trust Evidence Ledger — the runtime&lt;br/&gt;commits through these, never beside them&quot;)]
-    JOURNAL --&gt; RECEIPT[&quot;Trust Receipt: what the evidence was,&lt;br/&gt;which policy applied, who approved it&quot;]
-    XW[&quot;cross-workspace access gate — a pure function&lt;br/&gt;over two workspace ids, an operation and an&lt;br/&gt;explicit grant list; reads and writes nothing&quot;] -.-&gt;|&quot;answers the question the storage key and the&lt;br/&gt;admission check do not: may an actor in A&lt;br/&gt;reach into B at all?&quot;| LAND</code></pre></details></figure>
+    M[&quot;model calls huqan.learn&lt;br/&gt;(workspaceId is its own argument)&quot;] --&gt; G{&quot;MCP gate: learn is mutating,&lt;br/&gt;alphaDecision review&quot;}
+    G --&gt;|&quot;review&quot;| Q[(&quot;tool_approvals row,&lt;br/&gt;status pending&quot;)]
+    TOG[&quot;HUQAN_HUMAN_APPROVAL_DISABLED=true&quot;] -.-&gt;|&quot;turns review into allow&quot;| G
+    G --&gt;|&quot;block&quot;| B[&quot;refused, with a receipt&quot;]
+    Q --&gt; HID[&quot;huqan.approve is filtered out of tools/list&quot;]
+    HID --&gt; CAP{&quot;operatorCapability: HMAC over tool,&lt;br/&gt;workspace, approval id, argument hash,&lt;br/&gt;keyed by HUQAN_MCP_OPERATOR_TOKEN&quot;}
+    CAP --&gt;|&quot;missing or wrong&quot;| DENY[&quot;OPERATOR_AUTH_REQUIRED,&lt;br/&gt;row stays pending&quot;]
+    TTY[&quot;CLI onayla: stdin must be a TTY&lt;br/&gt;and the approval id typed back&quot;] --&gt; CAP
+    CAP --&gt;|&quot;valid, nonce unspent&quot;| CLAIM[&quot;claim the row, run kernel.learn&lt;br/&gt;with approvalStatus approved&quot;]
+    CLAIM --&gt; ADM{&quot;memory admission:&lt;br/&gt;allow, review, quarantine, reject&quot;}
+    ADM --&gt;|&quot;allow&quot;| GRAPH[(&quot;graph nodes and edges,&lt;br/&gt;PRIMARY KEY workspace_id, id&quot;)]
+    ADM --&gt;|&quot;review, quarantine&quot;| REV[&quot;REVIEW audit event with text&lt;br/&gt;and receipt id; nothing written&quot;]
+    ADM --&gt;|&quot;reject&quot;| REJ[&quot;REJECT audit event; nothing written&quot;]
+    GRAPH --&gt; AUD[(&quot;audit_log: LEARN&lt;br/&gt;triggers refuse UPDATE and DELETE&quot;)]
+    REV --&gt; AUD
+    REJ --&gt; AUD
+    OPT[&quot;optimize: prune edges below weight,&lt;br/&gt;delete decayed isolated nodes&quot;] --&gt;|&quot;node removal&quot;| AUD
+    OPT -.-&gt;|&quot;edge prune: no audit event&quot;| GRAPH
+    REC[(&quot;memory records:&lt;br/&gt;active, superseded, deleted, archived&quot;)] --&gt; READ{&quot;list, query, memory_query&quot;}
+    READ --&gt;|&quot;status active&quot;| OUT[&quot;returned, with a recall verdict&quot;]
+    READ --&gt;|&quot;any other status&quot;| HIDE[&quot;withheld&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -240,105 +259,298 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>lib/human-oversight-approval-runtime.js</code></td>
-<td>Review cases, resolved identities, and every refusal</td>
+<td><code>mcpServer.js</code>, <code>lib/mcp/</code></td>
+<td>The stdio MCP server: tool surface, operator authorisation,
+dispatch, gate refusals</td>
 </tr>
 <tr>
-<td><code>lib/memory-admission-gate.js</code></td>
-<td>The frozen decision vocabulary and its receipt kinds</td>
+<td><code>lib/mcp-gate-adapter*.js</code></td>
+<td>Tool classification and the AB gates that decide allow, review,
+dry-run or block</td>
+</tr>
+<tr>
+<td><code>lib/mcp-approval-*.js</code>,
+<code>lib/storage/schema.js</code></td>
+<td>The <code>tool_approvals</code> queue, claim, execution and
+finalisation</td>
+</tr>
+<tr>
+<td><code>kernel.js</code>, <code>lib/learn-use-case.js</code>,
+<code>lib/kernel-learn-admission.js</code></td>
+<td>Learn: provenance, admission, extraction, graph write</td>
+</tr>
+<tr>
+<td><code>lib/memory-admission-gate*.js</code></td>
+<td>The four-outcome admission decision and its receipt</td>
+</tr>
+<tr>
+<td><code>graph.js</code>, <code>lib/graph-*.js</code></td>
+<td>Nodes, edges, audit log, candidate claims, mutation journal and
+receipts</td>
+</tr>
+<tr>
+<td><code>lib/memory-store*.js</code>, <code>lib/memory-*.js</code></td>
+<td>The memory-record store, its lifecycle, BM25 query and recall
+gate</td>
+</tr>
+<tr>
+<td><code>lib/human-oversight-approval-runtime*.js</code></td>
+<td>The optional identity-resolving review runtime</td>
+</tr>
+<tr>
+<td><code>lib/authority/</code>,
+<code>bin/huqan-authority.js</code></td>
+<td>The Windows approval-authority service (ADR-016)</td>
 </tr>
 <tr>
 <td><code>lib/cross-workspace-access-gate.js</code></td>
-<td>A pure isolation decision over two workspaces</td>
-</tr>
-<tr>
-<td><code>lib/graph-mutation-receipt-*.js</code></td>
-<td>The journal's schema, writer, reader and rollback</td>
-</tr>
-<tr>
-<td><code>lib/cli-trust-receipt.js</code></td>
-<td>The receipt a person reads</td>
-</tr>
-<tr>
-<td><code>THREAT_MODEL.md</code></td>
-<td>What the gate is defending against, stated separately</td>
+<td>A pure decision over an actor workspace, a target workspace and
+grants</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Node 22.13 or newer. Storage is SQLite through
+<code>better-sqlite3</code> when it loads, and JSON files otherwise; no
+service, no model and no API key are needed for the gate. The package
+ships seven binaries — <code>huqan</code>, <code>huqan-mcp</code>,
+<code>huqan-gate</code>, <code>huqan-authority</code> and three
+experiment labs — plus <code>server.js</code> for HTTP.</p>
+<p>The MCP server approves nothing unless
+<code>HUQAN_MCP_OPERATOR_TOKEN</code> is set in its environment. The CLI
+approves through an in-process call with a fresh random secret per
+process (<code>cli.js:77</code>). The approval authority is a Windows
+service with TOTP; elsewhere the approval boundary is the OS user, which
+the README states.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>lib/human-oversight-approval-runtime.js:10-15</code> — the
-sentence that decides whether a review claim means anything.</p>
-<p><code>:78</code> — the runtime refusing to exist without an identity
-resolver.</p>
-<p><code>:348-354</code> — self-approval checked on resolved identity,
-not on a name.</p>
-<p><code>:368-389</code> — distinct prior approvers, gathered from the
-journal and scoped to one workspace.</p>
-<p><code>lib/memory-admission-gate.js:5-21</code> — four outcomes,
-frozen, with an ordering.</p>
-<p><code>lib/cross-workspace-access-gate.js:3-14</code> — the tenant
-question the storage key does not answer.</p>
+<p><strong>Proposal.</strong> <code>dispatchMcpTool</code> refuses a
+non-JSON <code>arguments</code> string, binds the call to its arguments,
+and runs <code>evaluateMcpGate</code> with metadata the host supplies,
+never the request (<code>lib/mcp/tool-dispatch.js:225-305</code>). A
+<code>review</code> verdict is persisted by
+<code>respondToGateRefusal</code> as a pending approval.</p>
+<p><strong>Approval.</strong> <code>dispatchOperatorTool</code> checks
+the capability before anything else and routes
+<code>huqan.approve</code> to <code>handleMcpApprovalDecision</code>
+(<code>lib/mcp/tool-dispatch.js:141-187</code>). That handler requires
+the installed authority's signed decision when one exists, refuses an
+expired row and a row whose stored arguments no longer match the
+reviewed binding, then claims the row and executes
+(<code>lib/mcp-approval-decision-handler.js:77-86</code>,
+<code>:92-117</code>,
+<code>lib/mcp-approval-learn-execution.js:144</code>).</p>
+<p><strong>Admission and write.</strong>
+<code>buildLearnAdmissionRequest</code> takes
+<code>approvalStatus</code> and <code>approvalRequired</code> from the
+kernel call's options. The MCP handler never fills those from the
+model's arguments: <code>learnContextArgs</code> forwards only
+<code>workspaceId</code> and <code>provenance</code>
+(<code>lib/learn-admission-request.js:21-100</code>,
+<code>lib/mcp/tool-handlers.js:30-38</code>).
+<code>evaluateMemoryAdmission</code> takes the strictest signal
+(<code>lib/memory-admission-gate.js:9-119</code>).</p>
+<p><strong>Graph read.</strong> <code>ask</code> resolves a subject in
+one workspace and reads its edges
+(<code>lib/kernel-read-use-cases-ask.js:7</code>); <code>getNodes</code>
+and <code>getNode</code> take a workspace
+(<code>lib/graph-read-methods.js:33-39</code>).</p>
+<p><strong>Memory-record read.</strong>
+<code>buildMemoryQueryRead</code> validates the request, calls
+<code>MemoryStore.query</code> with <code>recall: true</code>, and
+shapes each item with its recall verdict
+(<code>lib/memory-query-read.js:118-159</code>).</p>
+<p><strong>Maintenance.</strong> <code>optimize</code> prunes edges
+below the threshold and deletes decayed isolated nodes
+(<code>lib/graph-optimize.js:7-44</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>What HUQAN durably holds is a decision record: review cases,
-immutable transition snapshots, mutation receipts and Trust Receipts,
-alongside the graph nodes that were allowed to land, keyed under their
-workspace. The memory entry itself is ordinary; what is unusual is that
-it does not exist until something decided it should.</p>
+<p>The graph's SQLite schema holds <code>nodes</code> keyed
+<code>(workspace_id, id)</code> with weight, timestamps, a term vector
+and provenance; <code>edges</code> unique on
+<code>(workspace_id, from_id, to_id, relation)</code> with weight,
+confidence, a confidence history, evidence and source;
+<code>audit_log</code>; <code>candidate_claims</code> with a
+<code>pending</code> default status and reviewer fields;
+<code>mutation_journal</code>; and <code>mutation_receipts</code> with a
+hash chain (<code>lib/graph-sqlite-schema.js:16-109</code>).</p>
+<p>The memory-record store has <code>memories</code>,
+<code>memory_events</code> and <code>memory_links</code>
+(<code>lib/memory-store-sqlite-schema.js:21-68</code>). A record carries
+content, a content hash, <code>status</code>, metadata, provenance, a
+trust policy version, <code>created_at</code>, <code>updated_at</code>,
+<code>deleted_at</code>, <code>archived_at</code> and supersession
+pointers. Statuses are <code>active</code>, <code>superseded</code>,
+<code>deleted</code>, <code>archived</code> and <code>unknown</code>
+(<code>lib/memory-schema-types.js:38-44</code>).</p>
+<p>Time is the write clock throughout. The temporal query accepts
+<code>createdAt</code>, <code>updatedAt</code>, <code>deletedAt</code>
+and <code>accessedAt</code> (<code>lib/memory-temporal.js:33-36</code>).
+An <code>expiresAt</code> in metadata is a shelf life the recall gate
+reads, not a validity interval.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Retrieval here serves adjudication rather than recall: evidence
-gathering, verification, contradiction detection and risk scoring feed
-the policy boundary. A reader looking for ranking, fusion or
-consolidation will not find them, and that is the design rather than an
-omission.</p>
+<p><code>huqan.ask</code>, <code>reason</code> and <code>compare</code>
+take a workspace that defaults to <code>default</code>. The MCP
+<code>ask</code> handler passes none, so it reads the default workspace
+only (<code>lib/mcp/tool-handlers.js:53</code>). Subject detection
+strips Turkish and English interrogatives and resolves the remaining
+words against node labels.</p>
+<p><code>huqan.memory_query</code> requires <code>workspaceId</code>,
+defaults to BM25, and offers substring and recency modes
+(<code>lib/memory-query-read.js:20</code>, <code>:63-64</code>). Its
+header reports BM25 reaching 0.842 recall@10 against 0.037 for
+whole-query substring, measured on 409 issue-title queries; that is a
+figure in a code comment, and this reading did not reproduce it. The
+recall gate withholds records that are inactive, unprovenanced, from
+another workspace or malformed, and degrades stale ones
+(<code>lib/memory-recall-gate.js:122-157</code>).</p>
+<p>The default list and query reads return <code>active</code> records
+only. <code>findById</code>, the temporal reads and export hide
+<code>deleted</code> and <code>archived</code> but return a
+<code>superseded</code> record, and the module states the split as
+deliberate (<code>lib/memory-record-visibility.js:1-22</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>A proposal carries evidence, provenance and a workspace. The gate
-returns one of four outcomes for a write. <code>review</code> opens a
-case that only an authenticated decision closes, and the transition is
-committed through the journal that already exists rather than into a
-store of the runtime's own.</p>
+<p>Writes are synchronous and model-free. An approved learn runs the
+extractor over the text, checks conflicts and alternatives, and adds
+edges with provenance; no LLM is called on the write path. A background
+edge from <code>dream</code> goes through the same admission, so under
+the default <code>approvalRequired</code> it is logged as
+<code>REVIEW</code> and not written (<code>kernel.js:253-275</code>,
+<code>lib/kernel-dream.js:41-60</code>).</p>
+<p>Memory records are written by the error-prevention engine, which
+stores failure records and prevention rules and supersedes a rule when
+it changes (<code>lib/error-prevention/store.js:14-57</code>). The CLI's
+<code>memory tombstone</code>, <code>supersede</code>,
+<code>archive</code> and <code>restore</code> write them too
+(<code>lib/cli-memory-lifecycle.js:47-98</code>).
+<code>gate-signal-provider</code> consults that store on live gate
+decisions (<code>lib/gate-signal-provider.js:228</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Nothing blocks on a model. The cost is the gate itself: every MCP
+call runs the classification and its listed AB gates, and an approved
+write runs admission and the blast-radius measurement before the
+extractor. <code>optimize</code> walks one workspace's nodes when
+invoked; no default timer runs it.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p><code>huqan</code> for people, <code>huqan-mcp</code> for agents over
-stdio, and <code>huqan-gate</code> as a pre-execution guard for agents
-that are not otherwise wired in. The quickstart runs against a throwaway
-store in a temporary directory and "does not touch your own memory and
-does not relax a gate."</p>
+<p>The model sees the tools <code>MODEL_VISIBLE_TOOL_SCHEMAS</code>
+lists, including <code>learn</code>, <code>ask</code>,
+<code>verify</code>, <code>memory_query</code>, <code>search</code>,
+<code>dream</code>, <code>self-evolve</code> and
+<code>ingest_execute</code>; every mutating one classifies as
+<code>review</code>. The five operator tools are never listed to the
+model. <code>huqan-gate install</code> writes pre-execution hooks for
+Claude Code, Codex, OpenHands, opencode, pi and Hermes, and the README
+says "[t]he gate enforces only when the client calls it before
+executing."</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Fail-closed is the stated default across identity, staleness, scope,
-durability and firewall disagreement, and the escape hatches are policy
-flags rather than code paths — which is both the strength and the limit,
-since a policy that sets <code>allowSelfApproval</code> gets exactly
-what it asked for.</p>
+<p><strong>Quarantine holds nothing.</strong> A <code>quarantine</code>
+admission produces a <code>memory_quarantine_receipt</code> kind and the
+same <code>REVIEW</code> audit event a <code>review</code> does, with
+the text in its details. No row, file or queue holds the content for
+release (<code>lib/learn-use-case.js:50-75</code>,
+<code>lib/memory-admission-gate-contract.js:20</code>). The distinction
+between held and refused is in the receipt kind, not in what
+survives.</p>
+<p><strong>The workspace is chosen by the caller.</strong> Every read
+applies a workspace key, but on the stdio server that key is the model's
+argument and no caller workspace is bound. <code>buildAb11Input</code>
+returns <code>null</code> unless the host's <code>gateMetadata</code>
+declares one, so the cross-workspace gate does not run for the shipped
+binary (<code>lib/mcp-gate-adapter-inputs.js:142-157</code>,
+<code>mcpServer.js:89</code>). The dispatch comment says so:
+"args.workspaceId is the target workspace, not evidence of the caller's
+workspace or grants"
+(<code>lib/mcp/tool-dispatch.js:276-278</code>).</p>
+<p><strong>The default approval records no resolved identity.</strong>
+Separation of duties, self-approval refusal and the distinct-approver
+count live in the oversight runtime, which only an embedder constructs.
+A default approval proves that the caller held the operator secret or
+sat at a terminal; it does not record who.</p>
+<p><strong>Two switches weaken the queue.</strong>
+<code>HUQAN_HUMAN_APPROVAL_DISABLED=true</code> turns every
+<code>review</code> into <code>allow</code> and sets the kernel's
+default <code>approvalRequired</code> to false. It leaves
+<code>block</code> alone and records <code>autoApproved</code> on the
+gate metadata (<code>lib/human-approval-toggle.js:28-30</code>,
+<code>:89-117</code>). The operator secret lives in the MCP server's
+environment, readable by anything running as the same user, a limit
+<code>lib/cli-operator-presence.js:15-17</code> states for the terminal
+check too.</p>
+<p><strong>Edge pruning is unaudited.</strong> <code>prune</code>
+rewrites the edge list and runs
+<code>DELETE FROM edges WHERE weight &lt; ?</code> with no audit event,
+while node removal in the same pass appends <code>DELETE</code>
+(<code>lib/graph-prune.js:5-16</code>,
+<code>lib/graph-store-adapters.js:253-261</code>).</p>
+<p><strong><code>dream</code> is classified as a read.</strong> It
+attempts edge writes that admission holds by default; with approval
+disabled they land without a queue entry
+(<code>lib/mcp-gate-adapter-contract.js:57</code>).</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>Tests sit beside their modules throughout the tree, including for the
-approval runtime, the admission gate and the cross-workspace gate — the
-last of which is written as a pure function specifically so its decision
-can be tested without a store.</p>
+<p>The suite is <code>node --test</code> over 1,353 test files, run
+through a wrapper that sandboxes gate state
+(<code>scripts/run-tests.js:25-30</code>). I ran none of it.</p>
+<p>The negative retrieval case is
+<code>test/memory-tombstone-supersede-downstream-exclusion.test.js</code>.
+It stores a surviving record beside the one it tombstones and asserts
+that <code>list</code>, <code>query</code>, <code>findById</code>,
+<code>findByContentHash</code> and export miss the tombstoned one while
+returning the survivor; <code>includeTombstoned</code> brings the count
+to two (<code>:59-87</code>). The superseded case asserts
+<code>list</code> returns only <code>v2</code> (<code>:173-198</code>).
+<code>test/memory-store-workspace-isolation.test.js</code> stores four
+records in each of three workspaces and asserts every read returns its
+own four.</p>
+<p><code>lib/audit-log.test.js:110-142</code> asserts that an
+<code>UPDATE</code> and a <code>DELETE</code> on <code>audit_log</code>
+both throw, and skips when <code>better-sqlite3</code> is
+unavailable.</p>
+<p><code>test/faz2-mcp-approval-persistence.contract.test.js:142-170</code>
+asserts that <code>huqan.approve</code> is absent from
+<code>tools/list</code>, that <code>learn</code> queues a pending row,
+and that a wrong secret is refused with the row left pending.</p>
+<p>The README states scale "measured up to 10k graph nodes on one
+machine"; the <code>benchmarks/</code> directory holds the scripts, and
+no result was checked here.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Never take the approver from the thing asking for approval. If your
-schema has an <code>approved_by</code> field the caller fills in, what
-you have recorded is a claim about a person, not a person.</p>
-<p>Require the identity resolver at construction. A runtime that can be
-built without one will eventually be built without one.</p>
-<p>Check separation of duties on the resolved identity, and key your
-approver set on it, so a second approval from the same principal does
-not satisfy a two-approver rule.</p>
-<p>Make "held" a distinct outcome from "refused". A write set aside for
-inspection and a write rejected are different facts about the same
-content, and only one of them is recoverable.</p>
+<h3 id="steal">Steal</h3>
+<p>Put the approve verb behind a credential the model's process never
+receives. A hidden tool name is discovery hygiene; the HMAC capability
+bound to the approval id and argument hash is what makes it a
+boundary.</p>
+<p>Bind the approved call to the arguments the reviewer saw. Refuse
+execution when the stored call drifts from the reviewed binding, and
+expire pending rows so an old risk assessment cannot be approved
+later.</p>
+<p>Make the CLI approve demand a terminal and an echo of the subject. It
+costs one prompt and closes the pipe and heredoc paths an agent's shell
+would use.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Naming a refusal "quarantine". If nothing holds the content for
+release, the word promises a recovery path the store does not have.</p>
+<p>Letting the read scope be the caller's argument with the isolation
+gate wired only for embedders. A pure, testable cross-workspace function
+does nothing on the binary that never feeds it.</p>
+<p>Shipping the strongest review mechanism as an option. Separation of
+duties that only an embedder can turn on is absent from every default
+install.</p>
+<h3 id="fit">Fit</h3>
+<p>HUQAN suits a single developer or small team that wants an agent's
+writes, memory included, to wait for a person, and accepts a large Node
+surface to get that. The memory behind the gate is a rule-based graph
+and a rules store, not a recall system. Anyone choosing agent memory for
+retrieval quality should choose elsewhere and put a gate like this in
+front of it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the oversight guarantees mean much in a single-user install.
-Escalation is absent there by the project's own account, and the
-distinct-approver rule degenerates, so what a solo operator gets is
-receipts and refusals rather than separation of duties — which is
-honest, and worth knowing before the gate is credited with more than it
-provides.</p>
-<p>Whether the graph behind the gate is meant to grow into a memory in
-its own right. The admission machinery is far more developed than the
-store it admits into, and a reader evaluating HUQAN as agent memory
-rather than as a gate should size that gap first.</p>
+<p>Whether a pending learn approval that is never decided is surfaced to
+a person outside <code>huqan approvals</code>, or expires unseen at its
+TTL.</p>
+<p>Whether the commercial-licence statement in the README is meant to
+qualify the AGPL grant, which only the maintainer can answer.</p>
+<p>How the approval authority's ledger and the local
+<code>tool_approvals</code> row reconcile when the Windows service is
+installed after rows were queued.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -349,28 +561,114 @@ rather than as a gate should size that gap first.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>lib/human-oversight-approval-runtime.js:10-15</code></td>
-<td>The rule that makes an approval mean something</td>
+<td><code>lib/mcp/tool-surface.js:13-32</code></td>
+<td>The operator tools and the model-visible split</td>
 </tr>
 <tr>
-<td><code>lib/human-oversight-approval-runtime.js:348-354</code></td>
-<td>Self-approval refused on resolved identity</td>
+<td><code>lib/mcp/operator-authorization.js:24-43</code></td>
+<td>The capability check</td>
 </tr>
 <tr>
-<td><code>lib/human-oversight-approval-runtime.js:368-389</code></td>
-<td>One person cannot be two approvers</td>
+<td><code>lib/mcp-operator-capability.js:7-63</code></td>
+<td>HMAC, TTL and nonce</td>
 </tr>
 <tr>
-<td><code>lib/memory-admission-gate.js:5-21</code></td>
-<td>Held and refused as different outcomes</td>
+<td><code>lib/mcp-gate-adapter-contract.js:41-86</code></td>
+<td>Tool classification: every mutating tool is <code>review</code></td>
 </tr>
 <tr>
-<td><code>lib/cross-workspace-access-gate.js:3-14</code></td>
-<td>The isolation question a storage key does not answer</td>
+<td><code>lib/mcp-approval-decision-handler.js:33-277</code></td>
+<td>Authority, expiry, binding, claim, execution</td>
+</tr>
+<tr>
+<td><code>lib/cli-operator-presence.js:47-75</code></td>
+<td>The terminal check on the CLI approve</td>
+</tr>
+<tr>
+<td><code>lib/learn-use-case.js:46-75</code></td>
+<td>Admission outcomes other than <code>allow</code> write only an audit
+event</td>
+</tr>
+<tr>
+<td><code>lib/memory-admission-gate.js:9-119</code></td>
+<td>The four outcomes and their signals</td>
+</tr>
+<tr>
+<td><code>lib/graph-sqlite-schema.js:16-109</code></td>
+<td>Graph tables, the audit triggers, the receipt chain</td>
+</tr>
+<tr>
+<td><code>lib/memory-record-visibility.js:24-60</code></td>
+<td>The two default-read predicates</td>
+</tr>
+<tr>
+<td><code>lib/memory-recall-gate.js:122-157</code></td>
+<td>Read-time verdicts</td>
+</tr>
+<tr>
+<td><code>lib/graph-prune.js:5-16</code></td>
+<td>Edge pruning with no audit event</td>
+</tr>
+<tr>
+<td><code>lib/human-oversight-approval-runtime.js:1-60</code></td>
+<td>The optional identity-resolving runtime</td>
+</tr>
+<tr>
+<td><code>test/memory-tombstone-supersede-downstream-exclusion.test.js</code></td>
+<td>The must-not-retrieve cases</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'createHumanOversightApprovalRuntime\(' -- ':!*.test.js'</code>
+— the definition and
+<code>test/helpers/mcp-identity-approval-fixture.js:106</code>; no
+binary constructs it.</li>
+<li><code>git grep -n -w -E 'validFrom|valid_from|validUntil|valid_until|effectiveFrom|effective_from|occurredAt|occurred_at' -- '*.js' ':!*.test.js' ':!test/'</code>
+— no hit on a graph or memory-record field; no valid time.</li>
+<li><code>git grep -n -i -E 'rejected(Hash|Value|Claim|Fact)s?|denylist' -- lib kernel.js graph.js ':!*.test.js'</code>
+— command-execution denylists only; no record keyed on a rejected
+value.</li>
+<li><code>git grep -n -E "eventType: '(PRUNE|DECAY|REMOVE|DELETE)" -- lib graph.js</code>
+— one hit, node removal at <code>lib/graph-store-adapters.js:254</code>;
+edge pruning appends nothing.</li>
+<li><code>git grep -n -E 'DELETE FROM (audit_log|memory_events|mutation_receipts)|UPDATE (audit_log|memory_events)' -- '*.js' ':!*.test.js'</code>
+— no match.</li>
+<li><code>git grep -n -E 'gateMetadata' -- mcpServer.js bin</code> — the
+option pass-through at <code>mcpServer.js:89</code>; nothing sets it for
+<code>runStdio</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|doi\.org' -- README.md CITATION.cff</code>
+— no match; <code>CITATION.cff</code> cites the repository.</li>
+<li><code>git grep -n -i -E 'anthropic' -- LICENSE NOTICE</code> — no
+match; no rider.</li>
+<li><code>git grep -n -i 'quarantin' -- lib/learn-use-case.js kernel.js lib/kernel-learn-admission.js graph.js 'lib/graph-*.js' lib/storage</code>
+— no match; nothing on the learn path or in the graph or approval schema
+stores a quarantined write.</li>
+<li><code>git grep -n -E 'approvalStatus|approvalRequired' -- lib/mcp-input-sanitizers.js lib/mcp/tool-handlers.js</code>
+— no match; the model's arguments cannot set either.</li>
+<li><code>git grep -n -i -E 'llm|openai|anthropic|chat/completions' -- lib/learn-use-case.js lib/kernel-learn-admission.js lib/learn-admission-request.js lib/memory-admission-gate.js lib/mcp-approval-learn-execution.js</code>
+— no match; no model call on the write path.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/ali-ulu/huqan/commit/26cf8e66332fbac982886216207de2d21692d208"><code class="commit-id" title="26cf8e66332fbac982886216207de2d21692d208">26cf8e66…</code></a>
+— 739 commits on, version 1.0.1. <code>negative_eval</code> gained,
+earned at the previous pin by a test file unchanged since (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Three records
+were wrong there: <code>human_review</code> and <code>audit_log</code>
+rested on the oversight runtime, which no binary constructs, and
+<code>trust_state</code> on admission outcomes, which are returned, not
+stored; the marks hold on the approval queue, the audit triggers and the
+record status (<a href="#9-reliability-safety-and-trust">section 9</a>).
+Overtaken: seven binaries, the CLI terminal check, BM25 and the memory
+lifecycle CLI. Screened from a full clone: two auto-run surfaces (a
+devcontainer <code>npm ci</code>, Copilot instructions), one build-time
+execution point, one unpinned surface, two dependency files inside the
+cooldown; <code>AGENTS.md</code> read as data. Nothing was installed,
+built or run.</p>
 <p><strong>2026-09-19</strong> — re-pinned to <a
 href="https://github.com/ali-ulu/huqan/commit/844be5964f3fb5467c7df19beca82431e39e8d8d"><code class="commit-id" title="844be5964f3fb5467c7df19beca82431e39e8d8d">844be596…</code></a>,
 136 commits on, and every anchor behind all four marks still resolves to

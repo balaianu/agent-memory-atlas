@@ -9992,31 +9992,22 @@ href="../systems/verimem/">Verimem</a> answers from the opposite side by
 keeping content out of its chain entirely. What anatid has no axis for
 is judgement: a memory is current or superseded, and nothing records
 whether anyone checked it.</p>
-<p><strong><a href="../systems/huqan/">HUQAN</a> refuses to take the
-approver's identity from the request that asks for approval, which is
-the hole this page keeps finding under a review claim.</strong> An
-AGPL-3.0 JavaScript admission gate — 287,058 lines over 1,563 files,
-three binaries, no model and no API key — sitting between what an agent
-proposes and the state that would change, including a memory write.
-Across this corpus a system that claims human review usually stores an
-<code>actor</code> or <code>approved_by</code> string the calling code
-supplied, so what it has recorded is who the request <em>said</em>
-approved it. HUQAN's oversight runtime states the opposite rule and
-builds to it: "The runtime never accepts an approver identity from the
-decision body. The receiver/operator supplies an authenticated context
-and the injected identity resolver turns that context into a
-receiver-owned identity result." The resolver is required for the
-runtime to construct at all, separation of duties is checked on the
-resolved identity by both reference and hash, an <code>override</code>
-is authorised only when the policy allows it <em>and</em> the firewall
-actually returned block, and above a critical risk score prior approvers
-are pulled from the mutation journal into a set so one person cannot
-satisfy a two-approver rule twice. "Missing or ambiguous identity, stale
-state, scope drift, unavailable durability, and firewall disagreement
-all fail closed." Its own limits are stated as plainly: escalation
-"requires a second approver, so it is simply absent in a single-user
-install", the self-approval and override rules are policy flags, and the
-graph behind the gate is far thinner than the gate in front of it.</p>
+<p><strong><a href="../systems/huqan/">HUQAN</a> keeps the approve verb
+out of the model's reach rather than checking who used it.</strong> An
+AGPL-3.0 JavaScript admission gate with no model and no API key, sitting
+between what an agent proposes and the state that would change,
+including a memory write. Every mutating MCP tool classifies as review,
+so a learn becomes a pending row in a durable approval queue.
+<code>huqan.approve</code> is filtered out of <code>tools/list</code>,
+and calling it needs a capability HMAC-signed with a secret from the
+server's own environment and bound to the approval id and argument hash;
+the CLI approve demands an interactive terminal and the id typed back.
+The limits are in the defaults. What it calls quarantine is a refusal
+that leaves an audit event and holds nothing, and on the shipped MCP
+server the workspace is the model's own argument. The identity-resolving
+runtime that refuses self-approval ships as a library option no binary
+constructs. Five marks: trust state on the memory-record status, scope
+enforced, mutation audit, review, negative evals.</p>
 <p><strong><a href="../systems/yantrik-mind/">yantrik-mind</a> orders
 its read walls so the second can never widen the first, and leaves one
 background read outside both.</strong> A Rust companion with no licence

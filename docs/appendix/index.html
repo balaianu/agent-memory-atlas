@@ -4473,10 +4473,12 @@ seven-day cooldown, with <code>package-lock.json</code> present. Nothing
 was installed, built or run, and no PostgreSQL, Redis or Neo4j was
 started. AGPL-3.0</li>
 <li><a href="https://github.com/ali-ulu/huqan">ali-ulu/huqan</a> at <a
-href="https://github.com/ali-ulu/huqan/commit/844be5964f3fb5467c7df19beca82431e39e8d8d"><code class="commit-id" title="844be5964f3fb5467c7df19beca82431e39e8d8d">844be596…</code></a>
-— read only; no auto-run surfaces, one build-time execution point, one
-unpinned dependency surface and six dependency files inside the
-seven-day cooldown. <code>AGENTS.md</code> is addressed to a reading
+href="https://github.com/ali-ulu/huqan/commit/26cf8e66332fbac982886216207de2d21692d208"><code class="commit-id" title="26cf8e66332fbac982886216207de2d21692d208">26cf8e66…</code></a>
+— read only; two auto-run surfaces (a devcontainer
+<code>postCreateCommand</code> running <code>npm ci</code>, and
+<code>.github/copilot-instructions.md</code>), one build-time execution
+point, one unpinned dependency surface and two dependency files inside
+the seven-day cooldown. <code>AGENTS.md</code> is addressed to a reading
 agent and was recorded as data. Nothing was installed, built or run and
 the quickstart was not executed. AGPL-3.0</li>
 <li><a
@@ -17891,6 +17893,30 @@ audit grains append-only; <code>forget</code> refused only Tier-2 authz
 records. And its store line anchors were from an earlier pin. The first
 rested on the MCP handler's literal actor rather than on who records the
 trigger.</li>
+<li><strong>Five published claims about <a
+href="../systems/huqan/">HUQAN</a> were wrong at <a
+href="https://github.com/ali-ulu/huqan/commit/844be5964f3fb5467c7df19beca82431e39e8d8d"><code class="commit-id" title="844be5964f3fb5467c7df19beca82431e39e8d8d">844be596…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The <code>human_review</code> and <code>audit_log</code> records rested
+on <code>createHumanOversightApprovalRuntime</code>, which only tests
+constructed; the MCP server passed
+<code>options.humanOversightApprovalRuntime || null</code> and
+<code>runStdio</code> called <code>createServer()</code> with no options
+(<code>mcpServer.js:81</code>, <code>:108</code>). Both marks stood on
+other code: the approve verb filtered out of <code>tools/list</code>
+behind an operator capability (<code>lib/mcp/tool-surface.js:11</code>),
+and <code>audit_log</code> triggers refusing update and delete
+(<code>graph.js:245-254</code>). The report said a quarantined write was
+held with its own receipt. The learn path wrote nothing on any outcome
+but <code>allow</code> and recorded a <code>REVIEW</code> audit event
+(<code>lib/learn-use-case.js:79-95</code>), so the
+<code>trust_state</code> record cited a returned outcome rather than a
+stored status. It withheld <code>negative_eval</code>, though
+<code>test/memory-tombstone-supersede-downstream-exclusion.test.js</code>
+asserted that list and query reads excluded a tombstoned record beside a
+surviving one. And its census, 287,058 lines over 1,563 files, was the
+first pin's; that tree held 299,410 lines in 1,652 JavaScript
+files.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
