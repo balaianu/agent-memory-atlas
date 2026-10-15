@@ -25171,18 +25171,20 @@ level</td>
 <td>Per-agent LanceDB tables, per-agent JSONL neo store,
 <code>node:sqlite</code> caches, and an optional Obsidian vault
 mirror</td>
-<td>Vector plus lexical over LanceDB, graph hydration of neighbours, a
-decision trace per recall, and additive lens and reactivation
-passes</td>
+<td>Vector plus lexical over LanceDB, graph hydration of neighbours,
+reranking before the final cap, at most two rows of one split message, a
+decision trace per recall, and additive lens and reactivation passes,
+all under one aggregate character budget</td>
 <td>Deferred to the <code>agent_end</code> hook through a per-agent
-scheduler; nothing blocks the reply</td>
+scheduler; a long message with several independent statements is stored
+as several rows linked by a group id; nothing blocks the reply</td>
 <td><code>safeUpdate</code> writes a new version, then supersedes the
 old row; the <code>/forget</code> chat command archives behind a
 confirmation token, while the model-facing <code>memory_forget</code>
 tool tombstones with no token at all and is on by default; either path
-writes a durable content-fingerprint tombstone that blocks re-capture of
-the forgotten value; a claim carries a real-world validity window
-separate from its record time</td>
+writes a durable content-fingerprint tombstone that every card writer
+consults before adding new text; a claim carries a real-world validity
+window separate from its record time</td>
 <td><code>checkAccess</code> fails closed on agent-private, workspace
 and user scopes, applied as a read filter in the adapter and the recall
 pipeline; derived records stamp a <code>visibility</code>, filtered only
@@ -25190,22 +25192,27 @@ when a caller passes a requester, which the REM-dream reader does and
 most others do not</td>
 <td>OpenClaw plugin — chat commands, an <code>agent_end</code> capture
 hook, background crons registered through the host's public plugin
-capabilities, an operator dashboard with opt-in write actions, and an
-Obsidian review vault behind per-agent confirmation receipts</td>
-<td>Daily consolidation, garbage collection, skill mining, critical-push
-classification, and two dream passes</td>
+capabilities, Telegram accept and reject buttons on critical pushes, an
+operator dashboard with opt-in write actions, and an Obsidian review
+vault behind per-agent confirmation receipts</td>
+<td>Daily consolidation, which also caps and rewrites the neo JSONL
+files; garbage collection; skill mining; critical-push classification
+with a daily lapse of unconfirmed cards to plain notes; and two dream
+passes</td>
 <td>Seven-state record status and a six-level trust ladder scored off
 the newest revision, with <code>demoted</code> and
 <code>invalidated</code> both withholding a record from recall outright
 and <code>conflict</code> deliberately left as a penalty, plus an
-append-only reconsolidation event log</td>
+append-only destructive-operation log</td>
 <td>A correction path that demands evidence, records the event, and
 orders its writes so a crash cannot lose the memory</td>
-<td>Fifty config groups over one careful core; <code>conflict</code>
-remains a ranking penalty rather than a filter, and the code says why —
-the detector is an unvalidated LLM and a live probe found 4,017
-newest-revision records carrying it; and the drift gate is skipped on
-the one human caller and fires only on the automated one</td>
+<td>Fifty-five config groups over one careful core;
+<code>conflict</code> is a ranking penalty rather than a filter, and the
+code says why — the detector is an unvalidated LLM and a live probe
+found 4,017 newest-revision records carrying it; the drift gate is
+skipped on the one human caller and fires only on the automated one; and
+the reconsolidation log that holds every correction's evidence is capped
+at its newest 5,000 lines</td>
 </tr>
 <tr>
 <td><a href="../systems/pluribus/"><code>pluribus</code></a></td>

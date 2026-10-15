@@ -1175,8 +1175,8 @@ prefix for every message after it.
 
 **PLUR1BUS is what a plugin looks like when the contract's freedom is taken all
 the way**, and it is the family's clearest statement of the cost. It is an
-OpenClaw memory extension of about 91,500 lines with a further 106,000 in tests,
-declaring forty-seven configuration groups and shipping dreaming, emotional
+OpenClaw memory extension of about 95,300 lines with a further 112,000 in tests,
+declaring fifty-five configuration groups and shipping dreaming, emotional
 state, persona voice, an Obsidian vault mirror, skill mining and fifteen
 background jobs alongside its LanceDB store. Inside that surface is one of the
 better correction paths here: `lib/safe-update.js` refuses a content change

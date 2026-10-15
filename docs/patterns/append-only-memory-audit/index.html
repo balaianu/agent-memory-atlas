@@ -587,11 +587,16 @@ pass through the function you instrumented.</p>
 the action, the update source, the quoted evidence, the caller's
 confidence and the measured semantic drift between the old and new
 embedding, so the log answers not only what changed but how far it moved
-and on whose word. The mechanism worth stealing is beside it. The store
-is append-only JSONL with an id index, and a status transition returns
-the record with the <em>same id</em>, so an id-keyed dedupe would have
-silently swallowed every promotion — the append key is therefore
-computed as
+and on whose word. It answers for a bounded window: the event file
+shares the neo store's JSONL append, which keeps the newest 5,000 lines,
+and the daily consolidation rewrites it. The uncapped record is a
+separate file, <code>destructive-ops.jsonl</code>, appended for
+deletions, trust transitions and curation decisions, and it carries no
+evidence quote and no drift. The mechanism worth stealing is beside it.
+The store is append-only JSONL with an id index, and a status transition
+returns the record with the <em>same id</em>, so an id-keyed dedupe
+would have silently swallowed every promotion — the append key is
+therefore computed as
 <code>status:&lt;id&gt;:&lt;status&gt;:&lt;updatedAt&gt;</code> for a
 transition, and the bare id is the key only for a record that was never
 mutated. Making a log append-only is the easy half; choosing a key under

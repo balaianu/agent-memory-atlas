@@ -107,14 +107,14 @@ append-only store whose scorers must choose which copy to read.</p>
               <strong>Cyb3rb1ade/openclaw-plur1bus-memory</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/c381fd57fd80df193bc615f405704132dd89884e" title="c381fd57fd80df193bc615f405704132dd89884e">
+            <a class="meta-pill revision-pill" href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6" title="cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6">
               <span>Analyzed revision</span>
-              <code>c381fd57…</code>
+              <code>cf4bc88e…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-10-01</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Cyb3rb1ade--openclaw-plur1bus-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -124,15 +124,17 @@ append-only store whose scorers must choose which copy to read.</p>
                       </div>
                               <div class="document-meta document-facts">
             <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
-            <div class="meta-pill fact-pill"><span>Size</span><strong>91,523
-lines of JavaScript in index.js and 263 files under lib/, 6,495 more in
-scripts/, and 106,035 in 482 files under tests/ and test/, 472 of them
-test files; docs/ excluded, which carries a vendored node_modules
+            <div class="meta-pill fact-pill"><span>Size</span><strong>95,315
+lines of JavaScript in index.js and 275 files under lib/, 7,702 more in
+scripts/ and 1,014 in bench/, and 111,937 in 520 files under tests/ and
+test/; docs/ excluded, which carries a vendored node_modules
 copy</strong></div>
-            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,215
-commits on main by 7 author identities, 28 May – 17 September
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,354
+commits to the v7.16.10 tag by 7 author names, 28 May – 26 September
 2026</strong></div>
-            
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>509
+test files under tests/ and test/, run by <code>node --test</code> with
+no framework; none run for this reading</strong></div>
           </div>
                                         <div class="capability-strip"><p class="cap-legend">Carries <b>6</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
@@ -150,60 +152,62 @@ commits on main by 7 author identities, 28 May – 17 September
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>PLUR1BUS is a memory plugin for OpenClaw, at release 7.12.61, and the
+<p>PLUR1BUS is a memory plugin for OpenClaw, at release 7.16.10, and the
 first unusual thing about it is that its test suite is larger than the
 implementation it covers.</p>
 <p>The second unusual thing is the ratio of care to surface.
-<code>openclaw.plugin.json</code> declares fifty top-level configuration
-groups, covering dreaming, emotional state, persona voice, an Obsidian
-vault bridge, skill mining, reminders, a semantic lens, conversation
-reactivation, and a proactive governor. Underneath that is a correction
-path — <code>lib/safe-update.js</code>, 480 lines — that is more
-disciplined than most of the dedicated memory systems in this atlas: a
-content change is refused unless the caller supplies both an update
-source and a quoted piece of evidence, the replacement row is written
-and made durable <em>before</em> the old row is marked superseded, and
-the whole transition is appended to a reconsolidation event log keyed by
-an idempotency hash.</p>
+<code>openclaw.plugin.json</code> declares fifty-five top-level
+configuration groups, covering dreaming, emotional state, persona voice,
+an Obsidian vault bridge, skill mining, reminders, a semantic lens,
+conversation reactivation, and a proactive governor. Underneath that is
+a correction path — <code>lib/safe-update.js</code>, 509 lines — that is
+more disciplined than most of the dedicated memory systems in this
+atlas. A content change is refused unless the caller supplies both an
+update source and a quoted piece of evidence, the replacement row is
+written and made durable <em>before</em> the old row is marked
+superseded, and the whole transition is appended to a reconsolidation
+event log keyed by an idempotency hash.</p>
 <p>The most interesting single line in the repository is
-<code>safe-update.js:398</code>. Before a content change is accepted,
+<code>safe-update.js:440</code>. Before a content change is accepted,
 the new embedding is compared against the old one and the update is
 rejected if the cosine distance exceeds 0.45 — a machine refusing to let
 a "correction" quietly replace a memory with something that means
-something else. It is a genuinely novel gate, and the one caller outside
-the automated conflict apply, the user-facing <code>/correct</code>
-command at <code>index.js:9642</code>, passes
+something else. It is a genuinely novel gate.</p>
+<p>The one caller outside the automated conflict apply, the user-facing
+<code>/correct</code> command at <code>index.js:9881</code>, passes
 <code>skipDriftGate: true</code> — deliberately, with the reasoning
-written at the call site: the gate throws rather than degrades, a large
+written at the call site. The gate throws rather than degrades, a large
 correction is exactly what a user typing <code>/correct</code> intends,
 and the confirmation dialog shows the old and new text in full before
-anything is written. The measured drift is still recorded on the
-reconsolidation event. A gate that is off by argument is a different
-thing from a gate that is off by accident, and this is the first.</p>
+anything is written. The measured drift is recorded on the
+reconsolidation event either way. A gate that is off by argument is a
+different thing from a gate that is off by accident, and this is the
+first.</p>
 <p>Where it is strongest: scope. <code>checkAccess</code>
 (<code>lib/acl-middleware.js:103</code>) denies by default, denies on a
 missing owner, denies on a conflicting ownership tuple, and is applied
 as a filter on the read path in three places. The tests assert the
 denials rather than the permissions.</p>
-<p>Where doubt acts, it now acts in two places and is held back in a
-third <strong>on a measurement rather than an omission</strong>.
+<p>Doubt acts in two places and is held back in a third <strong>on a
+measurement rather than an omission</strong>.
 <code>scoreNeoRecallItem</code> returns <code>-Infinity</code> for
 <code>demoted</code> alongside the deletion states, so a record a person
 has demoted cannot reach the prompt at all; the claim-level epistemic
 status does the same for <code>invalidated</code> at all three read
 layers (<code>recall-pipeline.js:180</code>,
 <code>neo-arch.js:1484</code>, and the SQL clause at
-<code>db-adapter.js:562</code>). <code>conflict</code> is still a
-ranking penalty, and the comment that keeps it one is the interesting
-part — the detector is <em>"an unvalidated LLM"</em>, a live probe on 16
-August 2026 found 4,017 newest-revision records carrying
-<code>conflict</code> (2,505 on a single agent) <em>"with no resolve
-path that clears the status"</em>, and a twenty-row sample was not
-pairwise contradiction. Hard-filtering on that signal would have
-withheld thousands of records on a flag the system cannot yet clear. The
-distinction the code draws — withhold on a state a person set, rank on a
-state a model guessed — is the right one, and it is drawn with the
-numbers in the source.</p>
+<code>db-adapter.js:601</code>). <code>conflict</code> is a ranking
+penalty, and the comment that keeps it one is the interesting part — the
+detector is <em>"an unvalidated LLM"</em>, a live probe on 16 August
+2026 found 4,017 newest-revision records carrying <code>conflict</code>
+(2,505 on a single agent) <em>"with no resolve path that clears the
+status"</em>, and a twenty-row sample was not pairwise
+contradiction.</p>
+<p>Hard-filtering on that signal would have withheld thousands of
+records on a flag the system cannot yet clear. The distinction the code
+draws — withhold on a state a person set, rank on a state a model
+guessed — is the right one, and it is drawn with the numbers in the
+source.</p>
 <p>Two mechanisms this atlas looks for are present and unusually
 well-tested. A claim carries a <strong>real-world validity
 window</strong> — <code>validFrom</code>/<code>validUntil</code> on the
@@ -213,8 +217,16 @@ through a <code>validAt</code> recall parameter, so "where did he work
 in 2025" is a different query from "what did we record in 2025". And a
 <strong>value-keyed tombstone</strong> survives a <code>/forget</code>:
 a content fingerprint is written to a durable append-only registry and
-checked as step zero of every capture, so the forgotten sentence cannot
-be silently re-stored.</p>
+checked before every card write that adds new text, so the forgotten
+sentence cannot be silently re-stored.</p>
+<p>The weak joint is the log that explains corrections. Each
+reconsolidation event carries the source, the quoted evidence and the
+measured drift, and it is written through the same JSONL append as the
+turn journal, which caps every file at its newest 5,000 lines
+(<code>lib/neo-arch.js:2265-2285</code>); the daily consolidation
+rewrites it again. The append-only record of mutations is a different
+file, <code>destructive-ops.jsonl</code>, which logs deletions, trust
+transitions and curation decisions and is never rewritten.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>There are two stores and they hold different kinds of thing.</p>
 <p><strong>LanceDB cards</strong> are the memories proper — one table
@@ -234,17 +246,16 @@ from <code>NEO_STATUSES</code> (<code>lib/neo-arch.js:65</code>):</p>
 <code>untrusted → user_asserted → assistant_asserted → tool_observed → validated → curated</code>.</p>
 <p>What moves a record between states is a person.
 <code>/plur1bus memory promote|demote|prune|tombstone &lt;id&gt;</code>
-(<code>index.js:8248</code>) requires authorization, calls
+(<code>index.js:9026-9036</code>) requires authorization, calls
 <code>transitionRecordStatus</code>, and appends the transitioned record
 back to the JSONL. There is no automatic promoter; a candidate becomes
 promoted because someone typed the command.</p>
-<p>The consequence of each state is where the design divides, and the
-line has moved. <code>scoreNeoRecallItem</code> returns
-<code>-Infinity</code> for <code>pruned</code>, <code>tombstoned</code>
-and <code>demoted</code> — three states genuinely withheld, and the
-third is there because a person set it. <code>conflict</code> stays in
-the arithmetic below on the reasoning quoted in section 1. Everything
-between is arithmetic:</p>
+<p>The consequence of each state is where the design divides.
+<code>scoreNeoRecallItem</code> returns <code>-Infinity</code> for
+<code>pruned</code>, <code>tombstoned</code> and <code>demoted</code> —
+three states genuinely withheld, and the third is there because a person
+set it. <code>conflict</code> stays in the arithmetic below on the
+reasoning quoted in section 1. Everything between is arithmetic:</p>
 <pre class="js"><code>const trustBoost = ({ curated: 0.3, validated: 0.25, user_asserted: 0.18,
   tool_observed: 0.18, assistant_asserted: -0.2, untrusted: -0.3 })[item.origin?.trustLevel] ?? 0;
 …
@@ -256,14 +267,14 @@ const penalties = (item.origin?.role === &quot;assistant&quot; ? 0.2 : 0)
 narrow, which is the right shape for a status a model assigns.</strong>
 Two subcommands sit behind the same authorization check as
 <code>promote</code>/<code>demote</code>/<code>prune</code>/<code>tombstone</code>
-(<code>index.js:6853</code>).
+(<code>isDestructiveAction</code>, <code>index.js:7271-7285</code>).
 <code>/plur1bus curation resolve &lt;id&gt; keep|drop</code>
 (<code>lib/curation-resolve.js</code>, dispatched at
-<code>index.js:8065</code>) moves one record and appends a
+<code>index.js:8847</code>) moves one record and appends a
 <code>curation.resolve</code> event.
 <code>/plur1bus curation drop-injected</code>
 (<code>lib/drop-injected-conflicts.js</code>,
-<code>index.js:8082</code>) is the bulk form, and it is bounded twice
+<code>index.js:8865</code>) is the bulk form, and it is bounded twice
 rather than trusted: <code>previewDropInjected</code> shows the set
 before <code>applyDropInjected</code> touches it, and the apply path
 refuses any record whose <code>status !== "conflict"</code> or whose
@@ -273,14 +284,14 @@ predicate does not already describe. Neither auto-resolves: a
 <code>conflict</code> a person never looks at stays a penalty forever,
 which is the honest cost of leaving an unvalidated detector's output in
 the ranking rather than in a filter.</p>
-<p>So the neo statuses now split three ways rather than two: the
-deletion states and <code>demoted</code> withhold, <code>conflict</code>
-and the trust ladder rank, and the split tracks who or what set the
-flag. A record a person demoted is gone from the read path; a record an
-LLM detector flagged as contradicting another is ranked down and can
-still reach the prompt, carrying its status in the rendered line, which
-is the difference between a model that can weigh the flag and one that
-cannot see it.</p>
+<p>So the neo statuses split three ways: the deletion states and
+<code>demoted</code> withhold, <code>conflict</code> and the trust
+ladder rank, and the split tracks who or what set the flag. A record a
+person demoted is gone from the read path; a record an LLM detector
+flagged as contradicting another is ranked down and can reach the
+prompt, carrying its status in the rendered line, which is the
+difference between a model that can weigh the flag and one that cannot
+see it.</p>
 <p>The exception lives on a different axis. Alongside the neo status is
 a claim-level <strong>epistemic status</strong>
 (<code>lib/epistemic-status.js</code>) —
@@ -292,9 +303,9 @@ explicitly orthogonal to <em>who</em> asserted a memory
 <code>invalidated</code> is a hard filter, dropped on the read path at
 <code>recall-pipeline.js:180</code>, given <code>-Infinity</code> at
 <code>neo-arch.js:1484</code>, and excluded in SQL at
-<code>db-adapter.js:562</code>
+<code>db-adapter.js:601</code>
 (<code>epistemicStatus != 'invalidated'</code>). It withholds rather
-than ranks, as <code>demoted</code> now does on the neo axis, and the
+than ranks, as <code>demoted</code> does on the neo axis, and the
 transitions into <code>trusted</code> and <code>invalidated</code>
 require an authorized actor, so a memory cannot promote or condemn
 itself. A conservative merge rule
@@ -311,9 +322,10 @@ id rather than replacing the old one, so a record that has moved to
 deduplicates by id and keeps the <strong>newest revision</strong>,
 ordered by <code>updatedAt</code> — the field a transition sets — while
 preserving first-appearance order so the <code>itemIndex</code> tiebreak
-below stays stable. The helper that dates a revision,
-<code>neoRevisionTimeMs</code> (<code>:1523</code>), carries a note on
-why the existing <code>recordTimeMs</code> will not serve: it reads
+below stays stable.</p>
+<p>The helper that dates a revision, <code>neoRevisionTimeMs</code>
+(<code>:1523</code>), carries a note on why the existing
+<code>recordTimeMs</code> will not serve: it reads
 <code>startTime</code>/<code>createdAt</code>, which are identical
 across every revision of one record, so it cannot tell two revisions
 apart. An undated record sorts to <code>-Infinity</code> so any dated
@@ -346,7 +358,7 @@ candidate (<code>isInjectedContextText</code>,
 <code>neo-arch.js:1229</code> and <code>:1276</code>). Without it,
 recall output becomes next turn's memory, which the comment above the
 marker list dates to a performance analysis on 29 May 2026.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — supersession is dropped at one line of the recall pipeline, demotion, pruning and tombstoning score -Infinity in the neo scorer, and only conflict is ranked down and still injected, so the state a model sets is the one state that ranks rather than withholds</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: supersession is dropped at one line of the recall pipeline, demotion, pruning and tombstoning score -Infinity in the neo scorer, and only conflict is ranked down and still injected, so the state a model sets is the one state that ranks rather than withholds
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — supersession is dropped at one line of the recall pipeline, demotion, pruning and tombstoning score -Infinity in the neo scorer, and only conflict is ranked down and injected, so the state a model sets is the one state that ranks rather than withholds</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: supersession is dropped at one line of the recall pipeline, demotion, pruning and tombstoning score -Infinity in the neo scorer, and only conflict is ranked down and injected, so the state a model sets is the one state that ranks rather than withholds
 stateDiagram-v2
   [*] --&gt; candidate: agent_end capture
   candidate --&gt; active: written to LanceDB
@@ -359,22 +371,23 @@ stateDiagram-v2
   demoted --&gt; tombstoned: person runs tombstone
   pruned --&gt; [*]: score -Infinity
   tombstoned --&gt; [*]: score -Infinity
-  conflict --&gt; conflict: ranked down 0.3, still injected
+  conflict --&gt; conflict: ranked down 0.3, injected
   demoted --&gt; [*]: score -Infinity</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<p>An OpenClaw v6 plugin, loaded from <code>index.js</code>, requiring
-Node ≥ 22.5 and a running OpenClaw gateway. Nothing else has to be stood
-up: LanceDB is embedded, the neo store is JSONL on disk, and the caches
-use the <code>node:sqlite</code> module built into Node rather than a
+<p>An OpenClaw plugin, loaded from <code>index.js</code>, requiring Node
+24.16 or later (<code>package.json</code> <code>engines</code>) and a
+running OpenClaw gateway. Nothing else has to be stood up: LanceDB is
+embedded, the neo store is JSONL on disk, and the caches use the
+<code>node:sqlite</code> module built into Node rather than a
 dependency.</p>
 <ul>
-<li><strong><code>index.js</code></strong> (13,306 lines) — plugin
+<li><strong><code>index.js</code></strong> (13,646 lines) — plugin
 entry, hook registration, chat commands, and the wiring between every
 subsystem below.</li>
-<li><strong><code>lib/</code></strong> (263 files, 78,217 lines) —
+<li><strong><code>lib/</code></strong> (275 files, 81,669 lines) —
 <code>obsidian-control-room.js</code> (3,954), <code>neo-arch.js</code>
 (3,500), <code>obsidian-bridge.js</code> (2,360) and
-<code>recall-pipeline.js</code> (2,094) dominate;
+<code>recall-pipeline.js</code> (2,158) dominate;
 <code>safe-update.js</code>, <code>acl-middleware.js</code>,
 <code>memory-history.js</code> and
 <code>contradiction-detector.js</code> carry the correction path.</li>
@@ -390,17 +403,27 @@ reflection.</li>
 registration through the host's public plugin API; see below.</li>
 <li><strong><code>lib/providers/local-model-artifacts.js</code></strong>
 — the pinned local model artifacts.</li>
+<li><strong><code>bench/</code></strong> — a LOCOMO and LongMemEval
+harness over <code>lib/recall-pipeline.js</code> with committed results;
+see section 10.</li>
 </ul>
 <p><strong>Storage.</strong> LanceDB tables per agent under
 <code>{baseDbPath}/{agentId}/</code> (<code>lib/db-adapter.js</code>),
 so agent isolation is a directory boundary before it is a query filter.
 Alongside: eleven JSONL files and four JSON files per workspace in the
 neo store, an optional SQLite embedding cache and LLM result cache, and
-an optional Obsidian vault the bridge keeps in sync as Markdown.</p>
+an optional Obsidian vault the bridge keeps in sync as Markdown. Every
+neo JSONL file goes through one append, <code>appendJsonl</code>
+(<code>lib/neo-arch.js:2265</code>), which caps the file at the newest
+<code>NEO_MAX_RECORDS</code> lines — default 5,000, never below 500
+(<code>:2159</code>) — once it passes 2 MB, and the daily
+consolidation's <code>pruneAll</code> (<code>:1934</code>, called from
+<code>lib/jobs/daily-consolidation.js:448</code>) rewrites each file
+again, dropping injected-context lines and capping.</p>
 <p><strong>Retrieval stack.</strong> Vector search over LanceDB with a
 lexical fallback when the embedder is not ready, graph hydration of
 neighbouring cards (<code>hydrateGraphResults</code>,
-<code>recall-pipeline.js:965</code>), and two additive passes — a
+<code>recall-pipeline.js:998</code>), and two additive passes — a
 precomputed semantic lens and conversation reactivation — that append to
 a recall result and, per <code>AGENTS.md</code>, must never replace it.
 Both are off by default and both carry a 50 ms hard timeout.</p>
@@ -409,70 +432,66 @@ Both are off by default and both carry a 50 ms hard timeout.</p>
 memory: the adapter falls back to text search when embedding fails.
 Every text handed to a local Jina model is cut at
 <code>embedding.local.maxTokens</code>, default 512 and bounded to
-32–8,192
-(<code>lib/providers/embedding-local-transformers.js:17,:426-430</code>,
-pinned by
-<code>tests/jina-v5-nano-embedding.test.js:178,:210-211</code>), and the
-cap is part of the shared model pool's identity. The reason is in the
-comment above the check and in the changelog for 7.11.1: both pinned
-Jina models accept 8,192 tokens, the ONNX runtime holds the attention
-working set of a batch's longest text times the batch size and never
-returns it, and in the 7.11.0 lab run one 15,000-character card drove
-the v3 process to 41 GB and the kernel's OOM killer at card 808 of
-1,031, while a single batch of the eight longest cards took the nano
-model to +30 GB and 117 s; at 512 tokens the same batch costs +0.6 GB
-and 5 s on nano, +1.1 GB and 22 s on v3. Until 7.11.1 on 5 September
-2026 no cap existed, so an installation with long cards and a local Jina
-embedder could be killed by its own embedding cron.</p>
+32–8,192 (<code>lib/providers/embedding-local-transformers.js:17</code>,
+<code>:426-430</code>, pinned by
+<code>tests/jina-v5-nano-embedding.test.js:179</code>,
+<code>:205-211</code>), and the cap is part of the shared model pool's
+identity.</p>
+<p>The reason is in the comment above the check and in the changelog for
+7.11.1. Both pinned Jina models accept 8,192 tokens, and the ONNX
+runtime holds the attention working set of a batch's longest text times
+the batch size and never returns it. In the 7.11.0 lab run one
+15,000-character card drove the v3 process to 41 GB and the kernel's OOM
+killer at card 808 in a run of 1,031 cards, and a single batch of the
+eight longest cards took the nano model to +30 GB and 117 s. At 512
+tokens the same batch costs +0.6 GB and 5 s on nano, +1.1 GB and 22 s on
+v3. Until 7.11.1 on 5 September 2026 no cap existed, so an installation
+with long cards and a local Jina embedder could be killed by its own
+embedding cron.</p>
 <h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
 <p>Install is <code>npm install</code> into an OpenClaw installation,
 and this is where an operator should look before anything else.
 <code>package.json</code> declares:</p>
 <pre class="json"><code>&quot;postinstall&quot;: &quot;node scripts/setup-feature-crons.mjs || true&quot;</code></pre>
 <p>That script registers the plugin's feature crons and nothing else in
-the host. Since release 7.5.0 on 3 September 2026 it probes OpenClaw's
-public plugin capabilities — <code>registerGatewayMethod</code>,
-<code>registerCli</code> and
+the host. It probes OpenClaw's public plugin capabilities —
+<code>registerGatewayMethod</code>, <code>registerCli</code> and
 <code>openclaw/plugin-sdk/gateway-runtime</code> — and builds native
 <code>cron add</code> invocations against the host's own dispatcher
 (<code>lib/setup/feature-cron-plan.js</code>); a capability that is
 missing leaves the job unregistered rather than patched in, and the
-header still states the install contract — it <em>"must NEVER fail an
+header states the install contract — it <em>"must NEVER fail an
 install"</em> and exits 0 whatever happens. Three committed tests pin
-the retreat:
+the absence of a host patch:
 <code>tests/cron-plugin-direct-dispatch-wiring.test.js</code> asserts
-the source no longer names the dispatch patch or
-<code>PLUR1BUS_SKIP_HOST_PATCH</code>,
-<code>tests/host-patch-skip.test.js</code> asserts the flag is gone, and
+the source does not name the dispatch patch or
+<code>PLUR1BUS_SKIP_HOST_PATCH</code> and that neither
+<code>patches/apply-memory-patches.sh</code> nor <code>patches/</code>
+exists (<code>:13-14</code>), <code>tests/host-patch-skip.test.js</code>
+asserts the flag is gone, and
 <code>tests/release-750-compat.test.js</code> asserts
 <code>package.json</code>'s <code>files</code> excludes
-<code>patches/</code> and that the patch file does not exist.
-<code>patches/apply-memory-patches.sh</code>, a set of gateway hotfixes
-applied from a systemd <code>ExecStartPre</code> in one deployment,
-shipped in no package and referenced by no installer, stayed in the tree
-until 5 September 2026, when <code>6025dbb2</code> deleted it with its
-directory; the wiring test asserts that neither the file nor
-<code>patches/</code> exists
-(<code>tests/cron-plugin-direct-dispatch-wiring.test.js:13-14</code>).</p>
+<code>patches/</code>. The patch itself was removed in release 7.5.0 on
+3 September 2026 and its directory deleted two days later.</p>
 <p>Local inference is pinned rather than resolved.
 <code>lib/providers/local-model-artifacts.js</code> freezes each model —
-E5, Jina v3, the Jina and BGE rerankers, and from 7.11.0 Jina v5 Text
-Nano — at an immutable Hugging Face revision with every artifact's path,
-size and SHA-256, checked before Transformers.js sees a file; the two
-Jina profiles carry <code>license: "CC-BY-NC-4.0"</code> and
+E5, Jina v3, the Jina and BGE rerankers, and Jina v5 Text Nano — at an
+immutable Hugging Face revision with every artifact's path, size and
+SHA-256, checked before Transformers.js sees a file; the two Jina
+profiles carry <code>license: "CC-BY-NC-4.0"</code> and
 <code>assertPinnedModelLicenseAccepted</code> refuses to load them
-without an explicit operator acceptance. BGE is the wizard's recommended
-reranker since 7.10.0, and Jina v5 Text Nano is the embedding the wizard
-and the shell installer propose first for new installs since 7.12.0,
-each with the lab test's reasoning written into the README; a
+without an explicit operator acceptance.</p>
+<p>BGE is the wizard's recommended reranker, and Jina v5 Text Nano is
+the embedding the wizard and the shell installer propose first for new
+installs, each with the lab test's reasoning written into the README. A
 non-interactive or dry run that cannot confirm the CC BY-NC licence
 falls back to E5 rather than aborting or accepting it silently
 (<code>scripts/install-memory-system.sh:772-774</code>,
-<code>PLUR1BUS_ACCEPT_NONCOMMERCIAL_LICENSE=1</code> to accept), Jina v3
+<code>PLUR1BUS_ACCEPT_NONCOMMERCIAL_LICENSE=1</code> to accept). Jina v3
 stays selectable for existing installs, and the dashboard's dimension
 planner shows a migration notice to any install whose current model is
 not the recommended one
-(<code>lib/setup/control-ui-plugin-runtime.js:453-459</code>).</p>
+(<code>lib/setup/control-ui-plugin-runtime.js:863-864</code>).</p>
 <p>The store is human-readable and repairable by hand: JSONL and
 Markdown for everything except the LanceDB tables, which is a real
 operational advantage when a background job has done something
@@ -480,15 +499,31 @@ unexpected. <code>scripts/repair-installed-plugin.mjs</code> and
 <code>lib/memory-doctor.js</code> exist for when it has.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<h3 id="capture--indexjs9537">Capture — <code>index.js:9537</code></h3>
+<h3 id="capture--indexjs10495">Capture —
+<code>index.js:10495</code></h3>
 <p><code>api.on("agent_end", …)</code> hands the turn to
-<code>runtimeScheduler.enqueueCapture(agentId, …)</code> with an abort
-signal. Capture is per-agent queued and runs after the turn ends, so the
-model's reply is never waiting on it. Background turns are flagged and
-treated differently, which is what stops a cron-triggered agent run from
-writing memories about itself.</p>
-<h3 id="correction--libsafe-updatejs287">Correction —
-<code>lib/safe-update.js:287</code></h3>
+<code>runtimeScheduler.enqueueCapture(agentId, …)</code>
+(<code>index.js:10553</code>) with an abort signal. Capture is per-agent
+queued and runs after the turn ends, so the model's reply is never
+waiting on it. Background turns are flagged and treated differently,
+which is what stops a cron-triggered agent run from writing memories
+about itself.</p>
+<p>A capture with four or more sentences can be split before it is
+stored (<code>lib/memory-chunking.js</code>): structured text by rule,
+eight or more unstructured sentences sentence by sentence with no model
+call (<code>planChunks</code>,
+<code>lib/memory-chunking.js:190-204</code>), four to seven unstructured
+sentences left whole on the reasoning in the file header that cutting
+five sentences about one topic is worse than keeping them. Splitting is
+on unless <code>captureChunking</code> is <code>false</code>, and by
+default the whole original row is kept beside its parts
+(<code>index.js:10817-10821</code>). The parts are separate rows linked
+by <code>chunkGroupId</code>, and recall admits at most two rows of one
+group into a result (<code>DEFAULT_MAX_PER_GROUP</code>,
+<code>lib/recall-pipeline.js</code>), so a single long message cannot
+occupy the result list.</p>
+<h3 id="correction--libsafe-updatejs320">Correction —
+<code>lib/safe-update.js:320</code></h3>
 <p>The most carefully built path in the repository, in order:</p>
 <ol type="1">
 <li><strong>Refuse non-active rows.</strong> A superseded memory cannot
@@ -508,20 +543,26 @@ version.</li>
 new content."</em> This closes the failure where a corrected memory
 keeps ranking under the old text's query.</li>
 <li><strong>Gate on semantic drift</strong>
-(<code>safe-update.js:395</code>) — cosine distance over 0.45 is
+(<code>safe-update.js:438-440</code>) — cosine distance over 0.45 is
 rejected outright.</li>
 <li><strong>Store the new version first, supersede second</strong>
-(<code>:414</code>, <code>:418</code>). The comment is worth reading in
-full: storing first means a crash leaves both versions active — "a
-recoverable fork, never a loss" — whereas superseding first would point
-the old row at an id that was never written.</li>
+(<code>:456</code>, then <code>db.update</code> with the supersede
+patch). The comment at <code>:451-455</code> is worth reading in full:
+storing first means a crash leaves both versions active — "a recoverable
+fork, never a loss" — whereas superseding first would point the old row
+at an id that was never written.</li>
 <li><strong>Rewrite graph edges</strong> onto the new id, then
 <strong>append the event</strong> with the action, the source, the
 evidence, the confidence and the measured drift.</li>
 </ol>
+<p>The idempotency lookup in step 4 reads the newest 1,000 events of
+that file (<code>isIdempotent</code>,
+<code>lib/safe-update.js:281-287</code>), so a retry of a correction
+older than that window is written as a second version; the file's own
+cap (section 3) sits above that window and does not narrow it.</p>
 <h3
-id="the-drift-gates-two-callers--indexjs8995-and-libjobsapply-conflict-resolutionjs">The
-drift gate's two callers — <code>index.js:8995</code> and
+id="the-drift-gates-two-callers--indexjs9881-and-libjobsapply-conflict-resolutionjs">The
+drift gate's two callers — <code>index.js:9881</code> and
 <code>lib/jobs/apply-conflict-resolution.js</code></h3>
 <p><code>/correct &lt;old&gt; to &lt;new&gt;</code> runs a confirmation
 token exchange, then calls <code>safeUpdate</code> with
@@ -533,23 +574,23 @@ test where the flag is set.</p>
 dialog shows old and new text in the clear, so high semantic drift there
 is intended and consented to, and the gate would block a legitimate
 large correction with an exception rather than a warning. The drift is
-still computed and written onto the reconsolidation event as
-<code>semanticDrift</code>, so switching the gate off costs the
-measurement nothing.</p>
+computed and written onto the reconsolidation event as
+<code>semanticDrift</code> either way, so switching the gate off costs
+the measurement nothing.</p>
 <p>The gate does fire on the other caller, which is the automated path
 it was written for. <code>applyConflictViaSafeUpdate</code>
-(<code>lib/jobs/apply-conflict-resolution.js</code>) refuses outright
+(<code>lib/jobs/apply-conflict-resolution.js:17</code>) refuses outright
 unless <code>opts.confirm === true</code>, then calls
 <code>safeUpdate</code> <strong>without</strong> the skip flag; when the
 gate throws <em>"Semantic drift too high"</em> the apply catches it and
 returns <code>{ok: false, reason: "review_only"}</code> rather than
-writing. So a conflict resolution the detector rated high-confidence
-still cannot rewrite a card that has drifted too far from what it
-replaces — it is downgraded to something a person must look at. That is
-the shape a drift threshold wants: skipped where a human has confirmed
-the exact text, enforced where a job proposes one. Consolidation and
-dreaming still do not call <code>safeUpdate</code> at all, so the gate
-guards the conflict path and not those.</p>
+writing (<code>:35</code>). So a conflict resolution the detector rated
+high-confidence cannot rewrite a card that has drifted too far from what
+it replaces — it is downgraded to something a person must look at. That
+is the shape a drift threshold wants: skipped where a human has
+confirmed the exact text, enforced where a job proposes one.
+Consolidation and dreaming do not call <code>safeUpdate</code> at all,
+so the gate guards the conflict path and not those.</p>
 <p>The confirmation dialog is the part worth copying. Target resolution
 is fuzzy — candidates are resolved without a minimum score, and
 "unambiguous" means only that the top match beats the second by more
@@ -569,13 +610,18 @@ id, an invalid or conflicting ownership tuple, a private row with no
 owner, a workspace row with no workspace, and a user row whose principal
 is not a <code>user:v1:&lt;sha256&gt;</code> string. Every path that is
 not an explicit match is a denial.</p>
-<p>It is applied on the read path at <code>lib/db-adapter.js:526</code>,
-<code>:626</code> and <code>:646</code> (query, search, get), at
-<code>lib/recall-pipeline.js:263</code>, in the shared-memory pool, the
-wiki command, both dream passes, and the Telegram query and edit
-commands. <code>filterMemoriesByAcl</code> (<code>:226</code>) is the
-batch form, with optional violation logging to
-<code>acl-audit.jsonl</code>.</p>
+<p>It is applied on the read path at <code>lib/db-adapter.js:565</code>,
+<code>:665</code> and <code>:685</code> (query, search, get), at
+<code>lib/recall-pipeline.js:263</code> — where a call with no context
+gets <code>DENY_ALL_RECALL_ACL_CONTEXT</code> (<code>:261</code>) rather
+than everything — in the shared-memory pool, the wiki command, both
+dream passes, and the Telegram query and edit commands.
+<code>filterMemoriesByAcl</code> (<code>acl-middleware.js:226</code>) is
+the batch form, with optional violation logging to
+<code>acl-audit.jsonl</code>. The model's <code>memory_recall</code>
+tool takes a query, a limit, a full-text flag and a <code>validAt</code>
+instant (<code>index.js:11486-11497</code>); no argument names a scope,
+an agent or a workspace.</p>
 <p>Note that two scope vocabularies coexist: the ACL's
 <code>agent-private | workspace | user</code> and the neo store's
 <code>agent_private | workspace_shared | global_user</code>, reconciled
@@ -586,16 +632,20 @@ rather than by <code>checkAccess</code>.</p>
 a scope on the row and are mostly read without one. Each append stamps a
 <code>visibility</code> from the writer's binding or the record's own
 agent and workspace fields (<code>stampDerivedVisibility</code>,
-<code>lib/neo-arch.js:1420</code>, wired at <code>:1849-1878</code>),
-and each of the four readers takes an optional requester filtered
-through <code>isDerivedRecordAccessible</code> (<code>:1452</code>),
-which shows an unstamped legacy row only to its owning agent. The filter
-runs only when a requester is passed. The REM-dream pattern read passes
-one (<code>lib/dreaming/rem-dream.js:1221</code>); the graph-edge and
+<code>lib/neo-arch.js:1420</code>, wired at <code>:1849-1878</code>);
+the light dream builds one directly at
+<code>lib/dreaming/light-dream.js:474</code>, the REM-dream pattern
+writer at <code>lib/dreaming/rem-dream.js:1204</code>. Each of the four
+readers takes an optional requester filtered through
+<code>isDerivedRecordAccessible</code> (<code>:1452</code>), which shows
+an unstamped legacy row only to its owning agent and denies a foreign
+one (<code>tests/derived-record-scope.test.js</code>). The filter runs
+only when a requester is passed. The REM-dream pattern read passes one
+(<code>lib/dreaming/rem-dream.js:1221</code>); the graph-edge and
 episode reads in <code>index.js</code>, the edge rewrite in
-<code>lib/safe-update.js:227</code>, reactivation
+<code>lib/safe-update.js:247</code>, reactivation
 (<code>lib/conversation-reactivation-recall.js:923</code>) and the
-pattern match on the recall path (<code>index.js:12551</code>) pass none
+pattern match on the recall path (<code>index.js:12887</code>) pass none
 and read the workspace's whole file.</p>
 <p>The dream reader shows the failure direction of a fail-closed ACL,
 and it is worth recording because it is the opposite of a leak. The
@@ -607,14 +657,12 @@ were all agent-private (measured at 70/70 and 49/49 on two live agents),
 the job permanently reported <code>too_few_memories</code> and did
 nothing: a correct filter handed the wrong partition produces zero
 output rather than an exposure. <code>buildRemPartitions</code>
-(<code>lib/dreaming/rem-dream.js</code>) now runs every sensible
-partition, <code>agent-private</code> first, with per-partition dedup
-and vault files; a committed test asserts the old workspace-only
-partition returns null candidates against the same LanceDB table. The
-per-card ACL was also extended to the <code>/critical</code> review
-surface (<code>lib/critical-review.js</code>), which previously gated
-only on a destructive-channel check while returning every critical card
-of the agent.</p>
+(<code>lib/dreaming/rem-dream.js</code>) runs every sensible partition,
+<code>agent-private</code> first, with per-partition dedup and vault
+files; <code>tests/rem-dream-acl-partition.test.js</code> asserts the
+workspace-only partition returns null candidates against the same
+LanceDB table. The per-card ACL also covers the <code>/critical</code>
+review surface (<code>lib/critical-review.js</code>).</p>
 <h3
 id="status-transitions-and-a-dedupe-key-that-had-to-be-designed">Status
 transitions, and a dedupe key that had to be designed</h3>
@@ -654,8 +702,8 @@ key and always appends, so a transitioned behaviour card is never
 swallowed. The candidates file passes
 <code>appendCandidateContentDedupeKey</code> (<code>:1828</code>), and
 that is where the promote, demote, prune and tombstone commands write
-(<code>index.js:8825-8826</code>). A transition there is keyed on id,
-new status and <code>updatedAt</code>; a record still in
+(<code>index.js:9035-9036</code>). A transition there is keyed on id,
+new status and <code>updatedAt</code>; a record in
 <code>candidate</code> is keyed on a hash of its normalized statement
 (<code>recordDedupKey</code>, <code>:1655</code>), so a second capture
 of the same sentence is dropped while a transition is never mistaken for
@@ -663,10 +711,18 @@ one. The residual gap is millisecond-wide: two transitions to the same
 status within the same <code>updatedAt</code> collapse into one.</p>
 <h3 id="recall">Recall</h3>
 <p><code>lib/recall-pipeline.js</code> runs lifecycle filtering, ACL
-filtering, namespace merge with canonical-content dedupe, importance
-boost, Jaccard dedupe at 0.78, and graph hydration, emitting a decision
-trace throughout (<code>lib/recall-decision-trace.js</code>) and a
-retrieval ledger entry per query.
+filtering, namespace merge with canonical-content dedupe, Jaccard dedupe
+at 0.78 with the per-message group cap, graph hydration and reranking,
+emitting a decision trace throughout
+(<code>lib/recall-decision-trace.js</code>) and a retrieval ledger entry
+per query. The final cap to <code>topN</code> runs after the reranker
+rather than before it, so the reranker can promote a row from below the
+cut; the comment at the cap records the measurement behind the move — on
+80 benchmark questions whose evidence had been missed, capping after the
+rerank found 65 and capping before found 11. Importance is not a ranking
+term: <code>applyImportance</code> is fixed to <code>false</code> and
+importance reaches the score only through the half-life it sets on
+<code>memoryStrength</code>.
 <code>/memory &lt;query&gt; --explain</code> renders the trace back to
 the user, so "why was this memory shown" is answerable without reading
 logs.</p>
@@ -680,13 +736,13 @@ status filter, so a corrected memory could resurface as current
 evidence.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>A LanceDB card, from <code>buildUpdateEntry</code>
-(<code>lib/safe-update.js:80</code>), carries roughly fifty fields. The
+(<code>lib/safe-update.js:91</code>), carries roughly fifty fields. The
 ones that matter:</p>
 <ul>
 <li><strong>Identity and lineage</strong> — <code>id</code>,
 <code>versionNumber</code>, <code>previousVersion</code>,
 <code>supersededBy</code>, <code>status</code>,
-<code>versionCreatedAt</code>.</li>
+<code>versionCreatedAt</code>, <code>chunkGroupId</code>.</li>
 <li><strong>Provenance</strong> — <code>sourceTurnId</code>,
 <code>sourceMessageRole</code>, <code>sourceTimestamp</code>,
 <code>sourceUrl</code>, <code>evidenceQuote</code>,
@@ -699,59 +755,68 @@ atlas skip.</li>
 <code>workspaceKey</code>, <code>scope</code>,
 <code>ownerUserId</code>.</li>
 <li><strong>Dynamics</strong> — <code>importance</code>,
-<code>memoryStrength</code>, <code>halfLifeDays</code>,
-<code>lastStrengthenedAt</code>, <code>retrievalCount</code>,
-<code>lastRetrievedAt</code>, <code>replayCount</code>,
-<code>memoryClass</code>, <code>neverForget</code>,
-<code>coreMemoryScore</code>.</li>
+<code>importanceStatus</code>, <code>memoryStrength</code>,
+<code>halfLifeDays</code>, <code>lastStrengthenedAt</code>,
+<code>retrievalCount</code>, <code>lastRetrievedAt</code>,
+<code>replayCount</code>, <code>memoryClass</code>,
+<code>neverForget</code>, <code>coreMemoryScore</code>.</li>
 <li><strong>Affect</strong> — <code>emotionalValence</code>,
 <code>emotionalIntensity</code>, <code>emotionalDominant</code>,
 <code>moodContextAtCapture</code>.</li>
 </ul>
 <p><code>neverForget</code> and <code>memoryClass: "core"</code> are
 honoured by the garbage collector
-(<code>lib/garbage-collector.js:87</code>), which is a small thing that
-many decay implementations forget: a decay curve with no pin will
+(<code>lib/garbage-collector.js:86-88</code>), which is a small thing
+that many decay implementations forget: a decay curve with no pin will
 eventually reach the memories the user cared most about.</p>
-<p>Two fields the data model previously lacked are now first-class, and
-both are the value-keyed kind the atlas keeps asking for:</p>
-<ul>
-<li><strong>A validity window.</strong> <code>validFrom</code> and
-<code>validUntil</code> (<code>lib/db-adapter.js:447</code>) record when
+<p>Two fields are value-keyed in the way the atlas asks for.</p>
+<p><strong>A validity window.</strong> <code>validFrom</code> and
+<code>validUntil</code> (<code>lib/db-adapter.js:485</code>) record when
 a claim was true in the world, <code>0</code> meaning "no known bound"
 rather than the epoch. They are separate from
 <code>createdAt</code>/<code>updatedAt</code>, and the file header
 states the separation outright: they are <em>"the REAL-WORLD validity
 window of a claim … independent of and orthogonal to … System
-Time."</em> Recall threads an optional <code>validAt</code> instant
-through every chokepoint — <code>isEntryValidAt</code> does a
+Time."</em></p>
+<p>Recall threads an optional <code>validAt</code> instant through every
+chokepoint — <code>isEntryValidAt</code> does a
 left-inclusive/right-exclusive
 <code>validFrom &lt;= validAt &lt; validUntil</code>, pushed down to the
 vector store as SQL — and the <code>memory_recall</code> tool exposes it
 directly (<em>"restrict recall to facts valid at this specific point in
-time … 'where did he work in 2025'"</em>). Historical facts are sibling
-rows with disjoint windows, not edits to a version chain, so validity
-time and record time are finally two different questions. Validity is
-caller-supplied only, never guessed from text: a vague phrase resolves
-to <code>0</code>/unknown rather than a fabricated date.</li>
-<li><strong>A rejected-value tombstone.</strong> <code>/forget</code>
+time"</em>). The writer is the model's <code>memory_store</code> tool,
+whose <code>validFrom</code> and <code>validUntil</code> arguments are
+described as dates the user stated or clearly implied
+(<code>index.js:11663</code>). Historical facts are sibling rows with
+disjoint windows, not edits to a version chain, so validity time and
+record time are two different questions. Validity is caller-supplied
+only, never guessed from text: a vague phrase resolves to
+<code>0</code>/unknown rather than a fabricated date.</p>
+<p><strong>A rejected-value tombstone.</strong> <code>/forget</code>
 soft-deletes the row (<code>tombstoneCard</code>,
-<code>db-adapter.js:702</code> — <code>status="deleted"</code>,
+<code>db-adapter.js:741</code> — <code>status="deleted"</code>,
 <code>epistemicStatus="invalidated"</code>) and writes a durable
 tombstone keyed on a <strong>content fingerprint</strong>, a SHA-256 of
 the NFKC-normalized text and never the plaintext
-(<code>lib/tombstone.js:69</code>), to an append-only registry that
-survives restore, migration and re-embedding.
-<code>findBlockingTombstoneForCapture</code> runs as step zero of both
-capture callsites (<code>index.js:6411</code>, <code>:10667</code>) and
-refuses a re-store of the forgotten value; corrupt or unreadable
-registry lines fail closed. This is the value-keyed mechanism the <a
+(<code>contentFingerprint</code>, <code>lib/tombstone.js:69</code>), to
+an append-only registry that survives restore, migration and
+re-embedding.</p>
+<p><code>findBlockingTombstoneForCapture</code> runs as step zero of
+both capture paths (<code>index.js:6827</code>, <code>:11732</code>),
+and <code>assertCardWriteAllowed</code>
+(<code>lib/tombstone-write-guard.js</code>) runs the same check in
+<code>MemoryDB.store</code> and <code>MemoryDB.update</code>
+(<code>index.js:1844</code>, <code>:2190</code>), the adapter's
+<code>updateCard</code> (<code>db-adapter.js:790</code>), the compaction
+merge (<code>lib/jobs/memory-compaction.js:909</code>), the light-dream
+rewrite (<code>lib/dreaming/light-dream.js:159</code>) and the
+auto-capture script; corrupt or unreadable registry lines fail closed.
+This is the value-keyed mechanism the <a
 href="../../patterns/rejected-value-tombstone/">rejected-value
 tombstone</a> pattern describes, and it supersedes the record-keyed
 <code>tombstoned</code> neo status as the thing that keeps a forgotten
-value gone.</li>
-</ul>
-<p>What remains absent:</p>
+value gone.</p>
+<p>What is absent:</p>
 <ul>
 <li><strong>A requester on the derived-record reads.</strong> Dreams,
 episodes, graph edges and patterns carry a stamped
@@ -762,12 +827,14 @@ requester to the filter; the others read the workspace's whole file
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p>Automatic injection on the turn, plus explicit <code>/memory</code>
 and <code>plur1bus_recall</code> tool access.</p>
-<p>Ranking blends vector similarity, lexical overlap, the importance
-boost, category lane matching, and the trust and status arithmetic
-quoted in section 2. Results are deduplicated twice — by canonical
-content key across namespaces, then by Jaccard similarity at 0.78 —
-which matters in a system that keeps every version of a memory, because
-a v3 and a v4 of the same fact are near-identical text.</p>
+<p>Ranking blends vector similarity, lexical overlap, memory strength,
+emotional and epistemic terms, category lane matching, and the trust and
+status arithmetic quoted in section 2, followed by a reranker. Results
+are deduplicated twice — by canonical content key across namespaces,
+then by Jaccard similarity at 0.78 with at most two rows from one split
+message — which matters in a system that keeps every version of a
+memory, because a v3 and a v4 of the same fact are near-identical
+text.</p>
 <p>Two additive passes sit after primary recall and are architecturally
 constrained rather than merely documented: the semantic lens reads a
 precomputed index and appends community, bridge and faded memories;
@@ -779,8 +846,26 @@ recall, and neither writes anything.</p>
 <p>The failure mode to watch is over-recall by construction. Base
 recall, plus graph hydration of neighbours, plus lens, plus
 reactivation, plus temporal context, plus emotional state, plus persona
-voice all target the same prompt. The caps are per-feature and there is
-no global token budget across them.</p>
+voice all target the same prompt, and they share one aggregate cap.</p>
+<p>The auto-recall hook hands its blocks to
+<code>applyGlobalInjectBudget</code>
+(<code>lib/inject-budget.js:201</code>, called at
+<code>index.js:13465</code>) with
+<code>recall.globalInjectMaxChars</code>, default 17,000 characters.
+Persona voice, mood, reactions, dream echo, open threads, contradiction
+disclosure, memories and reactivation travel as one droppable block,
+trimmed first and at a <code>&lt;/memory-record&gt;</code> boundary so
+no record is cut mid-element; the start notice and the neo lanes are
+trimmed after it. The time, temporal-continuity and reminder blocks are
+marked not droppable and pass whatever their size. The memories text
+also carries its own cap, <code>recall.memoriesMaxChars</code>, default
+12,000 (<code>index.js:13205</code>). Three other returns bypass the
+aggregate cap: a prompt under five characters or a dream-pass prompt
+returns the neo lanes alone (<code>index.js:12562</code>,
+<code>:12570</code>), the recall error path returns the neo lanes and
+the start notice (<code>:13480</code>), and the hook used when
+auto-recall is off joins its nudges unbudgeted
+(<code>:13593</code>).</p>
 <p><code>lib/temporal-provenance.js</code> is the interesting
 counterweight and is unusual enough to name. It classifies a recalled
 memory by age and by whether its content is <em>operational</em> — cron,
@@ -788,9 +873,7 @@ systemctl, deploy, gateway, migration — and by destructive keywords,
 then decides whether the agent must verify live before acting on it. A
 memory that a cron job is disabled is treated as a fact about the past
 rather than the present after fifteen minutes. That is the right shape
-for the class of memory that gets an agent into trouble, and no other
-system in this atlas conditions action on the age of the specific memory
-being acted upon.</p>
+for the class of memory that gets an agent into trouble.</p>
 <p>The guard is only as good as the timestamp reaching it, and the
 timestamp is produced by the mapping layer rather than by the store.
 Canonical hits from <code>KNOWLEDGE.md</code> carry no
@@ -830,6 +913,21 @@ injected-context marker list discussed in section 2 closes the
 self-capture loop. <code>lib/relevant-memory-context.js</code> prepends
 a recall safety preamble telling the model that memory content is
 data.</p>
+<p><strong>What gets logged where.</strong> A correction through
+<code>safeUpdate</code> appends to
+<code>reconsolidation-events.jsonl</code> in the neo store, which is
+capped and rewritten (section 3). Deletions, trust transitions
+(<code>index.js:2446</code>), validity closes (<code>:2488</code>),
+curation resolutions (<code>:8854</code>), injected-conflict drops
+(<code>:8925</code>), conflict applies and overlay changes append to
+<code>.adaptive-learning/destructive-ops.jsonl</code> through
+<code>appendDestructiveOpLog</code>
+(<code>lib/sql-safety.js:192</code>), an <code>appendFileSync</code>
+that nothing in <code>lib/</code>, <code>index.js</code> or
+<code>scripts/</code> rewrites;
+<code>scripts/repair-tombstones.mjs</code> reads it to reconstruct
+tombstones. A <code>/forget</code> fails if its line in that file cannot
+be written.</p>
 <h3 id="operational-cost">Operational cost</h3>
 <ul>
 <li><strong>The write path is deferred.</strong> Capture runs after
@@ -848,23 +946,25 @@ each read and write in bulk, and their token bill scales with the corpus
 rather than with the day's traffic. Most default off;
 <code>scripts/setup-feature-crons.mjs</code> registers only those
 explicitly enabled.</li>
-<li><strong>Read-path injection is bounded per feature and not in
-aggregate.</strong> Recall blocks, temporal context, reactivation and
-emotional state each carry their own cap. All of them are injected as a
-per-turn prefix, which will invalidate a provider's prompt-prefix cache
-on every turn in which any of them changes.</li>
+<li><strong>Read-path injection is bounded in aggregate on the main
+return.</strong> The 17,000-character budget covers every droppable
+block, and three blocks and three early returns sit outside it (section
+6). All of it is injected as a per-turn prefix, which will invalidate a
+provider's prompt-prefix cache on every turn in which any of it
+changes.</li>
 </ul>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
 <p>The plugin registers commands (<code>/memory</code>,
 <code>/forget</code>, <code>/correct</code>, <code>/state</code>,
 <code>/enable</code>, <code>/disable</code>, and a
 <code>/plur1bus</code> namespace covering curation, memory, behaviour,
-dreaming, skills and reminders), an <code>agent_end</code> hook, gateway
-start/stop lifecycle hooks, and MCP-style tools for explicit recall.</p>
+dreaming, skills, reminders and critical review), an
+<code>agent_end</code> hook, gateway start/stop lifecycle hooks, and
+tools for explicit recall.</p>
 <p>The model has more agency than the command list suggests, and this is
-where the 2026-09-19 re-read withdrew <code>human_review</code>.
-Promotion, demotion and pruning <em>are</em> authorized human commands:
-<code>isDestructiveAction</code> (<code>index.js:7123</code>) routes
+why the report carries no <code>human_review</code> mark. Promotion,
+demotion and pruning <em>are</em> authorized human commands:
+<code>isDestructiveAction</code> (<code>index.js:7271</code>) routes
 them through <code>checkAuth(..., { destructive: true })</code>, which
 under <code>isAuthorized</code> (<code>lib/security.js:89</code>)
 demands a <code>userId</code> on the allowlist, or — with no allowlist
@@ -872,65 +972,87 @@ configured — a private 1:1 chat, refusing groups and unknown chat kinds.
 That is a real actor check on the channel, and none of those verbs
 appears on the model's tool surface.</p>
 <p>Tombstoning does. <code>api.registerTool</code>
-(<code>index.js:11136</code>) declares four tools, and one of them is
-<code>memory_forget</code> (<code>index.js:11574</code>), which resolves
-a card by id or query and calls <code>tombstoneMemoryWithAudit</code> —
-no confirmation token, no nonce, no chat. It is scope-checked
-(<code>checkAccess</code> on every hit, with a deliberately identical
-<em>"No matching memory found"</em> for a denial so the error is not an
-existence oracle) but not actor-checked. The only gate is
-<code>security.allowModelDestructiveMemoryOps</code>, read as
-<code>!== false</code> (<code>index.js:11139</code>) and so <strong>on
-unless explicitly disabled</strong>;
-<code>tests/config-audit.test.js:424</code> pins that default. The
+(<code>index.js:11474</code>) declares the model's tools, and one of
+them is <code>memory_forget</code> (<code>index.js:11911</code>), which
+resolves a card by id or query and calls
+<code>tombstoneMemoryWithAudit</code> — no confirmation token, no nonce,
+no chat. It is scope-checked (<code>checkAccess</code> on every hit,
+with a deliberately identical <em>"No matching memory found"</em> for a
+denial so the error is not an existence oracle) but not actor-checked.
+The only gate is <code>security.allowModelDestructiveMemoryOps</code>,
+read as <code>!== false</code> (<code>index.js:11477</code>) and so
+<strong>on unless explicitly disabled</strong>;
+<code>tests/config-audit.test.js:440</code> pins that default. The
 refusal text the flag unlocks states the problem exactly:
 <em>"model-facing tool calls do not carry a user-bound authorization
 context."</em> The repository's own July security scan reached the same
-finding, and it is still open at this pin.</p>
+finding, and it is open at this pin.</p>
 <p>The second tool, <code>knowledge_update</code>
-(<code>index.js:11717</code>), drains the knowledge-promotion queue the
+(<code>index.js:12054</code>), drains the knowledge-promotion queue the
 capture path fills. <code>trackKnowledgePending</code>
-(<code>index.js:4005</code>) queues a memory for curation into
+(<code>index.js:4039</code>) queues a memory for curation into
 <code>KNOWLEDGE.md</code>; once three are waiting,
 <code>&lt;knowledge-update-reminder&gt;</code> is injected into the
-model's own prompt (<code>index.js:3242-3252</code>) telling it to call
+model's own prompt (<code>index.js:3276-3285</code>) telling it to call
 the tool. A queue whose only drain is the producer, prompted by the
 producer's own context, is not a review.</p>
-<p>The critical-review surface grew a bulk form and a claim on the
-host's dispatch. <code>/plur1bus critical accept all</code>,
-<code>reject all</code> and several references in one command work every
-pending review in the authorised scope; a quoted reply to a push —
-<em>"accept all"</em>, <em>"alle ablehnen"</em> — is answered on the
-host's <code>before_dispatch</code> and <code>before_agent_reply</code>
-hooks before the agent sees it (<code>index.js:9901-9960</code>), with
-the references taken from the quoted push's fixed header, the decision
-from the reply, and the same destructive authorisation as the command;
-groups are refused and anything ambiguous falls through to the agent. A
-reject never deletes: <code>markCriticalRejected</code>
-(<code>lib/db-adapter.js:1112</code>) sets
-<code>confirmed = 1, type = "note"</code>. <strong>What the review does
-not do is hold anything back.</strong> <code>confirmed</code> is written
-by three functions — <code>markConfirmed</code>,
-<code>markCriticalAccepted</code>, <code>markCriticalRejected</code>
-(<code>lib/db-adapter.js:1070</code>, <code>:1089</code>,
-<code>:1112</code>) — and read by exactly one,
-<code>findUnconfirmedCritical</code> (<code>:971</code>), which builds
-the pending list. No recall, injection, scoring or dream path consults
-it; <code>lib/recall-pipeline.js:150</code> carries the column through
-and nothing downstream branches on it. An unconfirmed critical card is
-recalled like any other. And the queue drains itself:
-<code>autoAcceptStale</code>
-(<code>lib/jobs/auto-accept-stale-criticals.js:14</code>) marks every
-card unconfirmed for more than 24 hours as confirmed, and the shipped
-cron plan registers it daily at 04:50 Europe/Berlin under the same
-<code>criticalPush</code> switch that creates the cards
+<p>The critical-review surface is a notification with an acknowledgement
+ledger, and it has three doors for a person.
+<code>/plur1bus critical accept all</code>, <code>reject all</code> and
+several references in one command work every pending review in the
+authorised scope. A quoted reply to a push — <em>"accept all"</em>,
+<em>"alle ablehnen"</em> — is answered on the host's
+<code>before_dispatch</code> and <code>before_agent_reply</code> hooks
+before the agent sees it (<code>answerQuotedCriticalReply</code>,
+<code>index.js:10145</code>, registered at <code>:10246</code>), with
+the references taken from the quoted push's fixed header and the same
+destructive authorisation as the command.</p>
+<p>Each card can also arrive as its own Telegram message with Accept and
+Reject buttons (<code>lib/critical-buttons.js</code>, on unless
+<code>criticalPush.buttons</code> is <code>false</code>). The handler
+(<code>index.js:10187-10234</code>) refuses a group, a sender the host
+has not authorised, a click outside the direct chat with that sender,
+and a click arriving through a bot other than the one bound to the
+card's agent, then runs the same authorised command. A reject never
+deletes: <code>markCriticalRejected</code>
+(<code>lib/db-adapter.js:1159</code>) sets
+<code>confirmed = 1, type = "note"</code>. Dream narratives are never
+classified or pushed: the classifier query excludes <code>origin</code>
+or <code>memoryClass</code> <code>dream</code> in SQL and again in code
+(<code>db-adapter.js:952-958</code>, <code>:986</code>), counting them
+as <code>skippedDreams</code>
+(<code>lib/jobs/critical-classifier.js:150</code>), after a light dream
+about a person reached that person's critical push as a relationship
+fact.</p>
+<p><strong>What the review does not do is hold anything back.</strong>
+<code>confirmed</code> is written by <code>markConfirmed</code>,
+<code>markCriticalAccepted</code> and <code>markCriticalRejected</code>
+(<code>lib/db-adapter.js:1117</code>, <code>:1136</code>,
+<code>:1159</code>) and read by two functions,
+<code>findUnconfirmedCritical</code> and
+<code>findPendingCriticalReviews</code> (<code>:1049</code>,
+<code>:1192</code>), both of which build a pending list. No recall,
+injection, scoring or dream path consults it;
+<code>lib/recall-pipeline.js:150</code> carries the column through and
+nothing downstream branches on it. An unconfirmed critical card is
+recalled like any other.</p>
+<p>And the queue drains itself: the daily job the cron plan registers as
+<code>auto-accept-stale</code> under the same <code>criticalPush</code>
+switch that creates the cards
 (<code>lib/setup/feature-cron-plan.js:63-77</code>,
-<code>:331-335</code>). The push is a notification with an
-acknowledgement ledger — useful, and not a gate. The operator dashboard
-is read-only unless <code>controlUi.writeActions</code> is set —
-<code>off</code> by default, <code>reranker</code> for a runtime switch,
-<code>all</code> for the embedding target and the re-embedding migration
-— with a single-use form token per page load and a nonce-bound CSP
+<code>:331-336</code>) calls <code>expireStaleCriticals</code>
+(<code>lib/jobs/auto-accept-stale-criticals.js:73</code>, dispatched at
+<code>index.js:7755-7761</code>), which passes every card unconfirmed
+for 24 hours to <code>markCriticalRejected</code>. A label nobody
+confirmed lapses to a plain note rather than being accepted, which is
+the safer default; it is a decision made by a clock, and the card was
+recallable throughout. The older <code>autoAcceptStale</code> is kept,
+marked deprecated, and has no caller.</p>
+<p>The operator dashboard is read-only unless
+<code>controlUi.writeActions</code> is set — <code>off</code> by
+default, <code>reranker</code> for a runtime switch, <code>all</code>
+for the embedding target and the re-embedding migration — with a
+single-use form token per page load and a nonce-bound CSP
 (<code>lib/setup/control-ui-write.js</code>). Light and REM dream
 narratives are written into the workspace <code>DREAMS.md</code> inside
 the host's managed block and announced as a
@@ -945,14 +1067,16 @@ vault text is untrusted input, and apply never mutates memory without
 explicit approval plus immediate revalidation. Deleting a vault file
 does not delete a memory; it raises an
 <code>approval_required_tombstone</code> action
-(<code>lib/obsidian-bridge.js:1553</code>).</p>
+(<code>lib/obsidian-bridge.js:1553</code>). The vault carries human
+edits <em>into</em> memory, which is the opposite direction from a gate
+on what the machine writes.</p>
 <p>A write into a vault needs more than the bridge's approval flow:
 <code>lib/obsidian-vault-authority.js</code> binds a confirmation
 receipt to the agent, the workspace pool and a SHA-256 of the vault's
 real path under
 <code>&lt;baseDbPath&gt;/.plur1bus-authority/obsidian-vaults/…</code>,
 and <code>obsidianServiceMutationPolicy</code>
-(<code>index.js:6854</code>) requires that receipt plus an action
+(<code>index.js:7002</code>) requires that receipt plus an action
 confirmation, with scheduled discovery carrying an explicit plan.</p>
 <p>Adapting this to another agent host would be substantial work. The
 plugin is written against OpenClaw's plugin API, its cron dispatch, its
@@ -967,11 +1091,13 @@ Trust</h2>
 the crash window named in a comment and resolved in favour of a
 recoverable fork.</li>
 <li><strong>Idempotent corrections</strong> via a hash checked against
-the event log.</li>
-<li><strong>An append-only reconsolidation event log</strong> carrying
-action, source, evidence, confidence and measured drift.</li>
+the newest 1,000 events of the log.</li>
+<li><strong>An append-only destructive-operation log</strong> for
+deletions, trust transitions, validity closes and curation decisions,
+which a <code>/forget</code> refuses to proceed without.</li>
 <li><strong>A fail-closed ACL</strong> on the read path, whose tests
-assert denials.</li>
+assert denials, and a recall pipeline that denies everything when it is
+handed no context.</li>
 <li><strong>Recall output cannot become capture input</strong>, closing
 a feedback loop the project traces to a dated performance analysis.</li>
 <li><strong>Prompt-injection suspicion excludes a turn from
@@ -991,18 +1117,21 @@ target resolved by fuzzy match.</li>
 <li><strong>A validity window</strong> separate from record time,
 queryable as-of, so a corrected fact preserves the period the old value
 was in force rather than erasing it.</li>
-<li><strong>A value-keyed tombstone</strong> that blocks re-capture of a
-forgotten sentence, keyed on a content fingerprint and never the
-plaintext, and gated on a binding audit — <code>/forget</code> fails if
-the audit record cannot be written.</li>
+<li><strong>A value-keyed tombstone</strong> that blocks re-storing a
+forgotten sentence at every card writer that adds new text, keyed on a
+content fingerprint and never the plaintext, and gated on a binding
+audit — <code>/forget</code> fails if the audit record cannot be
+written.</li>
 <li><strong>One doubt state that withholds.</strong> The epistemic
 <code>invalidated</code> status is a hard filter at all three read
 layers, and transitions into
 <code>trusted</code>/<code>invalidated</code> require an authorized
 actor, so a memory cannot condemn or promote itself.</li>
+<li><strong>One aggregate injection budget</strong>, trimmed at record
+boundaries so a cut never leaves half an element in the prompt.</li>
 <li><strong>A direct chat resolves to an identity-bound
 context.</strong> <code>resolveSessionOwnerMemoryContext</code>
-(<code>lib/memory-request-context.js:730</code>) turns a direct-chat
+(<code>lib/memory-request-context.js:744</code>) turns a direct-chat
 session key into the user, channel, account and conversation principal
 the chat commands see, while main, heartbeat, cron and group sessions
 keep the agent-and-workspace context; shared workspace and user pools
@@ -1014,12 +1143,19 @@ per file, and a licence acceptance gate on the CC BY-NC models.</li>
 <p>Gaps:</p>
 <ul>
 <li><strong>Contradiction does not withhold.</strong>
-<code>conflict</code> and the trust ladder remain ranking arithmetic —
+<code>conflict</code> and the trust ladder are ranking arithmetic —
 <code>conflict</code> a 0.3 penalty at <code>lib/neo-arch.js:1503</code>
-— so a memory the system records as contradicted can still reach the
-prompt labelled with its status, moving the decision to the model.
+— so a memory the system records as contradicted can reach the prompt
+labelled with its status, moving the decision to the model.
 <code>demoted</code> and the epistemic <code>invalidated</code> state
 withhold; the status that flags <em>contradiction</em> does not.</li>
+<li><strong>The correction evidence is capped.</strong>
+<code>reconsolidation-events.jsonl</code> holds the source, quote,
+confidence and drift of every correction, and <code>appendJsonl</code>
+keeps its newest 5,000 lines while the daily consolidation rewrites it;
+the ledger that answers "why does the system believe this" for a
+corrected card forgets its oldest answers. The uncapped
+<code>destructive-ops.jsonl</code> does not record corrections.</li>
 <li><strong>The drift gate is skipped on the confirmed human correction
 and enforced on the automated conflict apply</strong>, where exceeding
 it downgrades the write to a review rather than blocking with an
@@ -1028,51 +1164,51 @@ exception.</li>
 Dreams, episodes, graph edges and patterns carry a
 <code>visibility</code> and their readers accept a requester, but only
 the REM-dream pattern read passes one; the pattern match on the recall
-path (<code>index.js:12551</code>) reads the workspace's whole
+path (<code>index.js:12887</code>) reads the workspace's whole
 file.</li>
 <li><strong>A tombstoned card reached a push.</strong> Until release
 7.9.2 on 5 September 2026 the classify-recent cron treated rows removed
-by <code>memory_forget</code> — <code>type</code> still
-<code>memory</code>, <code>status</code> <code>deleted</code> — as fresh
-candidates, typed them and named them in a critical push, while the
-review path read only active rows and could not resolve the references;
-<code>findRecentUnclassified</code> (<code>lib/db-adapter.js:894</code>)
+by <code>memory_forget</code> — <code>type</code> <code>memory</code>,
+<code>status</code> <code>deleted</code> — as fresh candidates, typed
+them and named them in a critical push, while the review path read only
+active rows and could not resolve the references.
+<code>findRecentUnclassified</code> (<code>lib/db-adapter.js:933</code>)
 pushes an active-status clause into the LanceDB query and
 <code>runClassifier</code> reports what it skipped as
 <code>skippedInactive</code>
-(<code>lib/jobs/critical-classifier.js:111-138</code>), with
+(<code>lib/jobs/critical-classifier.js:116-144</code>), with
 <code>tests/critical-classifier-double-push.test.js</code> covering it.
 The tombstone held at the capture chokepoints and leaked at a read path
 nobody had listed, which is the shape a value-keyed tombstone's
 remaining risk takes.</li>
-<li><strong>Merging is proposal-only, and nothing reads the
+<li><strong>Merging is proposal-only, and nothing acts on the
 proposals.</strong> With <code>merging.autoApply</code> at its default
 <code>false</code>, <code>executeActions</code>
 (<code>lib/jobs/memory-compaction.js:1104</code>) executes nothing and
-calls <code>persistProposals</code>, which appends one
-<code>{proposedAt, actions, aclBindings, status: "pending"}</code> line
-per run to <code>.adaptive-learning/merge-proposals.jsonl</code>
+calls <code>persistProposals</code> (<code>:994</code>), which appends
+one <code>{proposedAt, actions, aclBindings, status: "pending"}</code>
+line per run to <code>.adaptive-learning/merge-proposals.jsonl</code>
 (<code>:1002</code>). Searching the tree for that filename finds the
-writer, three tests that assert the file was written, and two README
-lines — no reader, no command, no job. The documented intent, <em>"never
-auto-applies"</em>, is met; the unstated half is that the duplicates the
-daily job detects are never merged by anything, and the ledger
-grows.</li>
+writer, the backup and restore scripts that copy it, three tests that
+assert the file was written, the README, a migration note and an audit
+artifact — no reader that applies or reviews a proposal. The documented
+intent, <em>"never auto-applies"</em>, is met; the unstated half is that
+the duplicates the daily job detects are never merged by anything, and
+the ledger grows.</li>
 <li><strong>The model can tombstone without a person.</strong>
 <code>memory_forget</code> is a declared tool with no confirmation
 exchange, enabled unless
 <code>security.allowModelDestructiveMemoryOps</code> is set to exactly
 <code>false</code>, and the refusal text behind that flag names the
 reason it should not be: model-facing tool calls carry no user-bound
-authorization context. This is the finding that withdrew
-<code>human_review</code>; the detail is in section 8.</li>
-<li><strong><code>postinstall</code> still cannot fail by
-contract</strong>, though what it does is now bounded to the host's
+authorization context. The detail is in section 8.</li>
+<li><strong><code>postinstall</code> cannot fail by contract</strong>,
+and what it does is bounded to registering crons through the host's
 public API.</li>
 <li><strong>A prompt-facing value can be produced by four different
 mapping paths</strong>, and correctness has to be established at each
 one rather than at the store.</li>
-<li><strong>The feature surface is the risk.</strong> Fifty config
+<li><strong>The feature surface is the risk.</strong> Fifty-five config
 groups, fifteen background jobs and two dream passes over one memory
 store means the number of paths that can write to a card is large, and
 only one of them goes through <code>safeUpdate</code>.</li>
@@ -1084,43 +1220,48 @@ Benchmarks</h2>
 <code>node --test</code> over <code>tests/</code> and
 <code>test/</code>, and the regression files import only node builtins
 and in-tree modules, so they run without the
-<code>@lancedb/lancedb</code> install the screen refuses. At the
-previous pin three such files were executed (27 passing across 7 suites)
-with a negative control — restoring <code>lib/neo-arch.js</code> from
-the older pin failed 5 of 7 in the dedup file, confirming the tests
-discriminate rather than merely pass. At this pin the dependency surface
-was again inside the seven-day cooldown, so nothing was installed or
-run; the new behaviour was read from the source and its committed
-tests.</p>
-<p>472 test files under <code>tests/</code> and <code>test/</code> —
-larger than the implementation, and the twelve largest additions since
-the previous pin are the new subsystems: <code>valid-time.test.js</code>
-(1,721 lines), <code>epistemic-status.test.js</code> (974),
+<code>@lancedb/lancedb</code> install. For this reading nothing was
+installed or run; the behaviour was read from the source and its
+committed tests. The last executed run, three such files with a negative
+control on a scratch copy, is recorded in the History entry of 11 August
+2026.</p>
+<p>509 test files under <code>tests/</code> and <code>test/</code> —
+larger than the implementation, and the largest are the subsystems the
+marks rest on: <code>valid-time.test.js</code> (1,721 lines),
+<code>epistemic-status.test.js</code> (974),
 <code>tombstone.test.js</code> (509), and a family of
 <code>tombstone-*</code> files covering torn writes, the registry cache,
-scope, query recovery and the forget scripts.</p>
+scope, query recovery, bulk writers and the forget scripts.</p>
 <p>What is covered, by name: ACL call-site adapters and ownership
 binding, shared-memory recall and the share store, sensitive-read
 authorization, <code>safe-update</code> data loss, the DB adapter's
 <code>updateCard</code> data loss, dedupe and status-filter regressions,
-contradiction detection across four files, the embedding cache, the LLM
-result cache, cron bootstrap and the direct-dispatch patch, GC's
-<code>neverForget</code> guard, Obsidian command gating, vault
-confirmation, review authority, and zero-mutation guarantees.</p>
-<p>The negative assertions are real and specific, and the new subsystems
-widen them. <code>tests/crr-status-filter.test.js</code> asserts a
-superseded memory must not reach the reactivation block;
+contradiction detection across four files. Beside those: the embedding
+cache, the LLM result cache, cron bootstrap and direct dispatch, GC's
+<code>neverForget</code> guard, the injection budget
+(<code>tests/inject-budget.test.js</code>), the neo cap's rewrite
+behaviour (<code>tests/neo-cap-rewrite-thrash.test.js</code>), Obsidian
+command gating, vault confirmation, review authority, and zero-mutation
+guarantees.</p>
+<p>The negative assertions are real and specific.
+<code>tests/crr-status-filter.test.js</code> asserts a superseded memory
+must not reach the reactivation block;
 <code>semantic-lens-status-filter.test.js</code> asserts an
 <code>invalidated</code> memory is not surfaced by the lens while a
-trusted one still is, so it proves discrimination rather than blanket
+trusted one is, so it proves discrimination rather than blanket
 suppression. <code>tombstone-e2e.test.js</code> asserts a re-store after
 <code>/forget</code> returns <code>tombstone_blocked</code> and that
 <code>/forget</code> <em>fails</em> if its binding audit cannot be
 written; <code>correct-tombstone-guard.test.js</code> asserts a
 tombstoned card is not revived by a correction (<code>updateCard</code>
-call count 0). <code>tombstone.test.js</code> asserts no plaintext lands
-in the tombstone and that only a <em>committed</em> tombstone blocks — a
-failed or merely attempted one does not.
+call count 0). <code>tombstone-bulk-writers.test.js</code> runs eight
+cases against the compaction merge, the auto-capture script,
+<code>MemoryDB.store</code> and the light-dream rewrite, each asserting
+that forgotten text produces no <code>table.add</code> while a same-text
+light-dream replay does.</p>
+<p><code>tombstone.test.js</code> asserts no plaintext lands in the
+tombstone and that only a <em>committed</em> tombstone blocks — a failed
+or merely attempted one does not.
 <code>tests/b13-acl-callsite-adapters.test.js</code> asserts an unbound
 private row, a conflicting ownership tuple, and a raw user id in place
 of a canonical principal all fail closed;
@@ -1130,15 +1271,40 @@ are not archived. On the bitemporal side,
 BigInt-zero open-window sentinel, and that
 <code>createdAt</code>/<code>updatedAt</code> are never read as validity
 bounds.</p>
-<p>What is missing is quality measurement. There is no retrieval-quality
-eval, no benchmark harness, and no committed result for any of it —
-which for a system whose ranking function sums seven weighted terms
-means the weights in <code>scoreNeoRecallItem</code> are unvalidated by
-anything in the repository. <strong>No paper, arXiv reference or
-citation file exists in this tree</strong>; the documentation is a 51 KB
-README, an 87 KB changelog, and a 97 KB
+<p>Retrieval quality has a harness and committed numbers.
+<code>bench/</code> (1,014 lines) drives
+<code>lib/recall-pipeline.js</code> directly against its own LanceDB
+stores built from LOCOMO and LongMemEval, never through the gateway and
+never against a production store. The datasets and stores are not
+committed (<code>bench/.gitignore</code>), the answer and judge models
+need an API key, and the harness sits outside <code>npm test</code>.
+Five result files are committed: four LOCOMO runs of 1,986 questions
+each and one LongMemEval run of 500.</p>
+<p>The README scores categories 1–4 only and reports, besides answer
+accuracy, an evidence rate — whether recall returned the right memory —
+which is independent of the answer model. Recounting the lines of
+<code>bench/results/locomo-topn15-prod.jsonl</code> gives 61.4% judged
+accuracy and a 91.1% evidence rate over categories 1–4, within a point
+of the README's 60.9% and 91.3%; 36 category 1–4 lines carry no
+yes-or-no verdict, which is where the counting rules can differ. The
+README states its own comparability limit: a retrieval budget of 15
+against the top-k 200 other vendors report.
+<code>bench/findings/2026-09-20-harness-defer-final-cap.md</code>
+records the defect the harness found in itself, a cap applied before the
+reranker that understated every run before 20 September 2026.</p>
+<p>The harness never touches the neo lane:
+<code>scoreNeoRecallItem</code>, <code>routeNeoRecall</code> and
+<code>neo-arch</code> appear nowhere under <code>bench/</code>. The
+seven weights in the neo scorer are validated by nothing in the
+repository; the LanceDB pipeline's ranking is measured end to end.
+<code>tests/recall-golden-set-*.test.js</code> are deterministic
+regressions over mocked distances that pin the pipeline's arithmetic,
+not its quality. No paper about the system and no citation file exists
+in the tree; the README's one arXiv link (<code>README.md:1400</code>)
+is to the jina-reranker-v3 paper, cited for a reranker table. The
+documentation is a 108 KB README, a 318 KB changelog, and a 97 KB
 <code>how-to-memory-perfect.md</code>.</p>
-<p>Three tests pin the removal of the host patch and one pins the
+<p>Three tests pin the absence of the host patch and one pins the
 classifier's tombstone respect, and they are the right shape — each
 asserts an absence against the source or the package manifest with a
 positive control beside it:
@@ -1152,15 +1318,10 @@ numbers — <code>active=0.371</code> against <code>demoted=-0.116</code>
 at a live <code>minScore</code> of <code>0.08</code> — so the assertion
 is about which side of the admission threshold each copy falls on, not
 about an ordering that a weight change would silently invert.</p>
-<p>The test I would want before trusting this in production is now
-partly present: <code>tombstone-e2e.test.js</code> asserts a
-store→forget→re-store is blocked and
-<code>correct-tombstone-guard.test.js</code> blocks correcting a
-tombstoned card. What is still not asserted end to end is that
-<em>every</em> internal compaction and dream write routes through
-<code>findBlockingTombstoneForCapture</code> — the guard runs at the
-capture and correct chokepoints, and whether the bulk background passes
-all pass through it is untested.</p>
+<p>What is not asserted: that the reconsolidation log survives its own
+cap. <code>tests/neo-cap-rewrite-thrash.test.js</code> tests the cap's
+I/O behaviour on a generic file, and no test names
+<code>reconsolidation-events.jsonl</code> beside the cap.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
@@ -1173,7 +1334,7 @@ memory that keeps its old vector ranks under the old query forever, and
 nothing about it looks wrong.</li>
 <li><strong>Store the replacement before superseding the
 original</strong>, and write down why. The crash window is real, the
-comment at <code>safe-update.js:411</code> is the artifact, and the
+comment at <code>safe-update.js:451-455</code> is the artifact, and the
 resulting failure — both versions active — is one a person can fix.</li>
 <li><strong>Key an idempotency hash on the correction, not the
 record</strong>, so a retried correction cannot fork a version
@@ -1187,6 +1348,10 @@ and recent" is a different authorization than "recalled".</li>
 <li><strong>Design the append-key before making a log
 append-only.</strong> A status change carries the same id as the record
 it changes; an id-keyed dedupe would eat it silently.</li>
+<li><strong>Put the tombstone check in the writer, not the
+caller.</strong> A guard inside <code>store</code> and
+<code>update</code> covers a background pass nobody has written yet; a
+guard at two capture call sites covers two call sites.</li>
 <li><strong>Pin memories out of decay.</strong> A
 <code>neverForget</code> flag the GC honours costs one condition and
 saves the memories a decay curve is worst at keeping.</li>
@@ -1198,6 +1363,10 @@ saves the memories a decay curve is worst at keeping.</li>
 on a contradiction — it can only be slightly less enthusiastic. Decide
 which states filter and which rank, and make the filtering ones
 filter.</li>
+<li><strong>One append helper for journals and ledgers.</strong> A
+bounded-growth rule written so the turn journal cannot fill a disk also
+caps the file that holds every correction's evidence. Give an audit log
+its own writer, one with no cap.</li>
 <li><strong>A safety gate with no live caller.</strong> A threshold
 every caller disables is one nobody is maintaining, and it reads as
 protection in the schema. The resolution worth copying is the one here:
@@ -1215,15 +1384,10 @@ omits.</strong> A prompt supplement that says <em>prefer active over
 conflicting</em> needs the status in the payload; otherwise it is an
 instruction the model has no way to follow and no way to report it
 cannot.</li>
-<li><strong>Patching your host at <code>postinstall</code>.</strong>
-However well-tested and however necessary, an install step that rewrites
-another package's shipped code — and cannot fail by contract — is a
-support burden and a supply-chain surface. The way out here is worth
-copying too: probe the host's public capabilities, use its own
-dispatcher, and let a missing capability leave the feature unregistered
-rather than patched in.</li>
-<li><strong>Per-feature injection caps with no global budget.</strong>
-Seven bounded features can still fill a context window.</li>
+<li><strong>A review queue nothing reads.</strong> A
+<code>confirmed</code> flag that no recall path consults, drained by a
+daily job, records acknowledgement and withholds nothing. If unconfirmed
+should mean unused, the read path has to say so.</li>
 </ul>
 <h3 id="fit">Fit</h3>
 <p>This suits one specific reader: someone running OpenClaw for
@@ -1237,10 +1401,12 @@ elaborate machinery ships off.</p>
 <p>Walk away if you need multi-tenant guarantees. The read-path ACL is
 good, but most readers of derived records pass no requester, background
 jobs write across the store, and the failure mode of a scope gap is
-unrecoverable. Walk away if you cannot accept a <code>postinstall</code>
-that registers crons in your host and cannot fail by contract.</p>
+unrecoverable. Walk away if you need a complete correction history: the
+evidence for each correction lives in a capped file. Walk away if you
+cannot accept a <code>postinstall</code> that registers crons in your
+host and cannot fail by contract.</p>
 <p>The part worth taking whatever you are building is
-<code>lib/safe-update.js</code>. It is 480 lines, has one dependency on
+<code>lib/safe-update.js</code>. It is 509 lines, has one dependency on
 the rest of the system, and is the most complete answer in this atlas to
 "what does it take to change a memory without losing the old one".</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
@@ -1248,14 +1414,16 @@ the rest of the system, and is the most complete answer in this atlas to
 <li>What is the lag between capture and vector-retrievability under a
 real embedding cron? Nothing in the tree measures it.</li>
 <li>Do the seven weights in <code>scoreNeoRecallItem</code> come from
-measurement or from judgement?</li>
-<li>Does a consolidation or dream pass resurrect the text of a corrected
-memory into a new card? The capture and correct chokepoints now consult
-the content-fingerprint tombstone registry, but whether every bulk
-background write routes through that check is not asserted.</li>
-<li>How much does the full feature set inject per turn in aggregate, and
-at what point do the per-feature caps collectively exceed a sensible
+measurement or from judgement? The benchmark harness does not reach
+them.</li>
+<li>How large do the non-droppable time, temporal-continuity and
+reminder blocks grow, and does anything bound them outside the aggregate
 budget?</li>
+<li>Do the row copiers — the re-embedding backend
+(<code>lib/reembedding/lance-backend.js:474</code>) and
+<code>scripts/dedupe-memory-ids.mjs</code> — ever copy a row whose text
+a later <code>/forget</code> fingerprinted? Both add rows without
+consulting the tombstone guard.</li>
 <li>Which other read paths besides classify-recent touch cards without
 the active-status clause? The 7.9.2 fix listed one; nothing in the tree
 enumerates the rest.</li>
@@ -1270,21 +1438,29 @@ mapping path, and is there a check that all of them agree?</li>
 <li>Scope and access: <code>lib/acl-middleware.js</code>,
 <code>lib/memory-request-context.js</code>,
 <code>lib/security.js</code>, <code>lib/sql-safety.js</code>.</li>
-<li>Epistemic states, neo store, injection guards:
+<li>Epistemic states, neo store, injection guards, the JSONL cap:
 <code>lib/neo-arch.js</code>, <code>lib/epistemic-status.js</code>.</li>
 <li>Validity time (bitemporal): <code>lib/valid-time.js</code>,
 <code>validFrom</code>/<code>validUntil</code> columns in
 <code>lib/db-adapter.js</code>, <code>validAt</code> recall parameter in
 <code>index.js</code>.</li>
 <li>Rejected-value tombstone: <code>lib/tombstone.js</code>,
+<code>lib/tombstone-write-guard.js</code>,
 <code>lib/registry-lock.js</code>,
 <code>scripts/reapply-tombstones.mjs</code>,
 <code>scripts/repair-tombstones.mjs</code>.</li>
+<li>Audit logs: <code>lib/sql-safety.js</code>
+(<code>destructive-ops.jsonl</code>), <code>lib/safe-update.js</code>
+and <code>lib/neo-arch.js</code>
+(<code>reconsolidation-events.jsonl</code>),
+<code>lib/jobs/daily-consolidation.js</code> (the prune).</li>
 <li>Retrieval: <code>lib/recall-pipeline.js</code>,
 <code>lib/recall-decision-trace.js</code>,
 <code>lib/semantic-lens-index.js</code>,
 <code>lib/conversation-reactivation-recall.js</code>,
-<code>lib/relevant-memory-context.js</code>.</li>
+<code>lib/relevant-memory-context.js</code>,
+<code>lib/inject-budget.js</code>,
+<code>lib/memory-chunking.js</code>.</li>
 <li>Storage adapter: <code>lib/db-adapter.js</code>,
 <code>lib/multi-namespace-pool.js</code>,
 <code>lib/shared-memory.js</code>.</li>
@@ -1301,6 +1477,7 @@ mapping path, and is there a check that all of them agree?</li>
 <code>lib/obsidian-mutation-policy.js</code>,
 <code>lib/obsidian-review-authority.js</code>,
 <code>lib/critical-review.js</code>,
+<code>lib/critical-buttons.js</code>,
 <code>lib/telegram-commands/</code>.</li>
 <li>Background work: <code>lib/jobs/</code>, <code>lib/dreaming/</code>,
 <code>lib/runtime-scheduler.js</code>.</li>
@@ -1312,7 +1489,12 @@ directory exists, and
 it.</li>
 <li>Critical review: <code>lib/critical-review.js</code>,
 <code>lib/critical-reply-intent.js</code>,
-<code>lib/jobs/critical-classifier.js</code>.</li>
+<code>lib/critical-buttons.js</code>,
+<code>lib/jobs/critical-classifier.js</code>,
+<code>lib/jobs/auto-accept-stale-criticals.js</code>.</li>
+<li>Benchmark: <code>bench/run.mjs</code>,
+<code>bench/lib/common.mjs</code>, <code>bench/README.md</code>,
+<code>bench/results/</code>.</li>
 <li>Local model pinning:
 <code>lib/providers/local-model-artifacts.js</code>. Dashboard writes:
 <code>lib/setup/control-ui-write.js</code>. Vault authority:
@@ -1324,15 +1506,101 @@ it.</li>
 <code>tests/safe-update-dataloss.test.js</code>,
 <code>tests/valid-time.test.js</code>,
 <code>tests/tombstone-e2e.test.js</code>,
+<code>tests/tombstone-bulk-writers.test.js</code>,
 <code>tests/correct-tombstone-guard.test.js</code>,
 <code>tests/semantic-lens-status-filter.test.js</code>,
+<code>tests/derived-record-scope.test.js</code>,
 <code>tests/rem-dream-acl-partition.test.js</code>,
+<code>tests/epistemic-status.test.js</code>,
+<code>tests/inject-budget.test.js</code>,
+<code>tests/neo-cap-rewrite-thrash.test.js</code>,
 <code>tests/cron-plugin-direct-dispatch-wiring.test.js</code>,
 <code>tests/host-patch-skip.test.js</code>,
 <code>tests/release-750-compat.test.js</code>,
 <code>tests/critical-classifier-double-push.test.js</code>.</li>
 </ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -nE 'globalInjectMaxChars' -- index.js openclaw.plugin.json</code>
+— <code>index.js:13474</code>, the budget's one reader, and the schema
+entry at <code>openclaw.plugin.json:1334</code>.</li>
+<li><code>git grep -nE 'prependContext' -- index.js lib</code> — six
+hits; one return goes through <code>applyGlobalInjectBudget</code>
+(<code>index.js:13465</code>), and the early, error and auto-recall-off
+returns at <code>:12562</code>, <code>:12570</code>, <code>:13480</code>
+and <code>:13593</code> do not.</li>
+<li><code>git grep -nE 'reconsolidation-events|reconsolidationEvents' -- lib index.js scripts</code>
+— the path, the <code>appendJsonl</code> writer at
+<code>lib/neo-arch.js:1880</code>, a tail reader at <code>:1913</code>,
+and the <code>pruneAll</code> target at <code>:1946</code>; no uncapped
+writer.</li>
+<li><code>git grep -nE 'pruneAll\(' -- index.js lib scripts</code> —
+<code>lib/jobs/daily-consolidation.js:448</code> only.</li>
+<li><code>git grep -n 'destructive-ops' -- lib index.js scripts</code> —
+the <code>appendFileSync</code> writer at
+<code>lib/sql-safety.js:197</code>, a writability probe in
+<code>lib/wiki-command.js</code>, and the reader
+<code>scripts/repair-tombstones.mjs</code>; nothing rewrites, truncates
+or renames it.</li>
+<li><code>git grep -nE '[.?]confirmed([^A-Za-z_]|$)' -- lib index.js</code>
+— the two pending-list builders at <code>lib/db-adapter.js:1049</code>
+and <code>:1192</code>; every other hit copies or normalises the
+value.</li>
+<li><code>git grep -nE 'autoAcceptStale|expireStaleCriticals' -- index.js lib scripts</code>
+— <code>autoAcceptStale</code> has its definition and no caller;
+<code>expireStaleCriticals</code> is imported at
+<code>index.js:208</code>.</li>
+<li><code>git grep -nE 'read(Dreams|Episodes|GraphEdges|Patterns)\(' -- index.js lib scripts</code>
+— twelve calls; only <code>lib/dreaming/rem-dream.js:1221</code> passes
+a requester.</li>
+<li><code>git grep -nE 'assertCardWriteAllowed' -- lib index.js scripts</code>
+— <code>index.js:1844</code>, <code>:2190</code>,
+<code>lib/db-adapter.js:790</code>,
+<code>lib/jobs/memory-compaction.js:909</code>,
+<code>lib/dreaming/light-dream.js:159</code>,
+<code>scripts/auto-capture-lancedb.mjs:690</code>.</li>
+<li><code>git grep -nE '(table|tbl|Table)\??\.add\(' -- lib index.js scripts</code>
+— every add of new text sits behind the guard;
+<code>lib/reembedding/lance-backend.js:474</code> and
+<code>scripts/dedupe-memory-ids.mjs:326</code> copy existing rows
+without it.</li>
+<li><code>git grep -nE 'scoreNeoRecallItem|routeNeoRecall|neo-arch' -- bench</code>
+— no match; the harness drives the LanceDB pipeline only.</li>
+<li><code>git grep -nE 'skipDriftGate' -- index.js lib</code> — the
+setter at <code>index.js:9881</code> and the definition in
+<code>lib/safe-update.js</code>.</li>
+<li><code>git grep -nE 'allowModelDestructiveMemoryOps' -- index.js</code>
+— <code>index.js:11477</code>, read as <code>!== false</code>.</li>
+<li><code>git grep -n 'merge-proposals' -- .</code> — the writer, two
+snapshot scripts, the README, a migration note, three tests and an audit
+artifact; no reader that applies a proposal.</li>
+<li><code>git grep -niE 'arxiv|bibtex|@article|@misc|doi\.org' -- . ':!docs/**/node_modules/**' ':!package-lock.json'</code>
+— <code>README.md:1400</code>, the jina-reranker-v3 paper; no paper
+about the system and no <code>CITATION</code> file.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6"><code class="commit-id" title="cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6">cf4bc88e…</code></a>
+— re-pinned at tag v7.16.10, 139 commits on. <code>main</code> is 492
+commits past the tag, and releases after 7.18.4 are cut on a side
+branch, so the released tag is the pin. Screened first: no auto-run
+surface, one build-time execution point, one unpinned surface, nothing
+inside the cooldown; nothing installed or run. Changed upstream: a
+LOCOMO and LongMemEval harness with committed results (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>); unconfirmed
+critical cards lapse to notes instead of being accepted, with Telegram
+buttons and dreams excluded (<a href="#8-agent-integration">section
+8</a>); importance left the ranking; long messages are split. Six marks
+stand; <code>audit_log</code> rests on
+<code>destructive-ops.jsonl</code>, because the reconsolidation log it
+cited is capped. Six claims wrong at the old pin are corrected and
+listed under known limitations, and stale anchors in
+<code>index.js</code> and <code>lib/safe-update.js</code> are
+re-mapped.</p>
 <p><strong>2026-10-01</strong> — <a
 href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/c381fd57fd80df193bc615f405704132dd89884e"><code class="commit-id" title="c381fd57fd80df193bc615f405704132dd89884e">c381fd57…</code></a>
 — audited at the same commit; six marks stand. The dedupe section said a

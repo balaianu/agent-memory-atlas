@@ -2504,9 +2504,9 @@ them</li>
 <li><a
 href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory">Cyb3rb1ade/openclaw-plur1bus-memory</a>
 at <a
-href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/c381fd57fd80df193bc615f405704132dd89884e"><code class="commit-id" title="c381fd57fd80df193bc615f405704132dd89884e">c381fd57…</code></a>
-— read only; no auto-run surface, two manifests inside the seven-day
-cooldown, nothing installed or run</li>
+href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6"><code class="commit-id" title="cf4bc88e2ff7b01d5ff61112230dfbc123a7cda6">cf4bc88e…</code></a>
+— read only, at tag v7.16.10; no auto-run surface, no manifest inside
+the seven-day cooldown, nothing installed or run</li>
 <li><a
 href="https://github.com/OmniNode-ai/omniintelligence">OmniNode-ai/omniintelligence</a>
 at <a
@@ -18112,6 +18112,30 @@ deleting them; on the <code>observations.jsonl</code> path
 (<code>mcp/servers/egc-memory/src/compress.ts:311-329</code> at that
 pin). The first rested on searching decisions and lessons for a
 cross-project case and not the third memory tier.</li>
+<li><strong>Six published claims about <a
+href="../systems/plur1bus/">PLUR1BUS</a> were wrong at <a
+href="https://github.com/Cyb3rb1ade/openclaw-plur1bus-memory/commit/c381fd57fd80df193bc615f405704132dd89884e"><code class="commit-id" title="c381fd57fd80df193bc615f405704132dd89884e">c381fd57…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The report said injection was capped per feature with no global budget;
+<code>applyGlobalInjectBudget</code> trimmed the auto-recall prompt to
+<code>recall.globalInjectMaxChars</code>, default 17,000 characters
+(<code>index.js:13134</code>). The <code>audit_log</code> record called
+<code>reconsolidation-events.jsonl</code> append-only by construction;
+<code>appendJsonl</code> capped it at its newest 5,000 lines
+(<code>lib/neo-arch.js:2265-2285</code>) and the daily consolidation
+rewrote it through <code>pruneAll</code>, and the mark rests on
+<code>destructive-ops.jsonl</code> instead. It said no test asserted
+that bulk background writers consult the tombstone;
+<code>tests/tombstone-bulk-writers.test.js</code> asserted it for four
+writers through <code>assertCardWriteAllowed</code>. The verdict said
+the code records that derived records carry no scope field; that comment
+was gone and the records were stamped with a <code>visibility</code>. An
+Avoid entry warned against patching the host at
+<code>postinstall</code>, a patch removed in 7.5.0. It said the tree
+held no arXiv reference; <code>README.md:1126</code> cites the
+jina-reranker-v3 paper. Two enumerations were short:
+<code>confirmed</code> had two readers, both pending-list builders, and
+two snapshot scripts also named <code>merge-proposals.jsonl</code>.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

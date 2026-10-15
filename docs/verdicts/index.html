@@ -9252,7 +9252,7 @@ change rather than the row, and writes the replacement to durable
 storage <em>before</em> superseding the original, with the crash window
 named in a comment and resolved in favour of a recoverable fork over a
 possible loss.</li>
-<li>Biggest risk: the doubt that flags a <em>contradiction</em> is still
+<li>Biggest risk: the doubt that flags a <em>contradiction</em> is
 arithmetic. The neo status <code>conflict</code> enters recall as a 0.3
 penalty rather than a filter, so a memory recorded as contradicting
 another ranks lower and reaches the prompt anyway; <code>demoted</code>
@@ -9269,28 +9269,32 @@ append dedupe key is computed so a status transition is never mistaken
 for a content duplicate, and the recall path deduplicates by <em>newest
 revision</em> rather than first appearance, because in an append-only
 log the first copy of a record is the one from before the decision.</li>
-<li>Maturity impression: MIT, release 7.12.61, 13,306 lines in
-<code>index.js</code> and 78,217 across <code>lib/</code> under 472 test
+<li>Maturity impression: MIT, release 7.16.10, 13,646 lines in
+<code>index.js</code> and 81,669 across <code>lib/</code> under 509 test
 files — a suite larger than the implementation whose assertions are
-denials, absences and removals rather than permissions. Six of seven
-capability marks. <code>human_review</code> was withdrawn on the
-2026-09-19 re-read: the chat commands are properly actor-checked, but
-the model's own <code>memory_forget</code> tool tombstones with no
-confirmation and is on by default, the critical-review state withholds
-nothing and a daily cron confirms whatever sat 24 hours, and the
-Obsidian vault carries human edits into memory rather than gating what
-the machine writes. The install-time host patch is gone since 7.5.0,
-local models are pinned by revision, size and SHA-256, and an earlier
-atlas pin was rewritten out of the branch's history.</li>
+denials, absences and removals rather than permissions — and a LOCOMO
+and LongMemEval harness with committed results that measures the LanceDB
+recall pipeline and never reaches the neo scorer. Six capability marks.
+<code>human_review</code> is withheld: the chat commands are properly
+actor-checked, but the model's own <code>memory_forget</code> tool
+tombstones with no confirmation and is on by default, the
+critical-review state withholds nothing and a daily cron lapses whatever
+sat 24 hours to a plain note, and the Obsidian vault carries human edits
+into memory rather than gating what the machine writes.
+<code>audit_log</code> rests on the destructive-operation log; the
+reconsolidation log that carries each correction's evidence is capped at
+its newest 5,000 lines. No install-time host patch exists, local models
+are pinned by revision, size and SHA-256, and an earlier atlas pin was
+rewritten out of the branch's history.</li>
 <li>Study when: you are designing a correction path and want the most
 complete worked answer in this atlas to "change a memory without losing
 the old one" — or you are putting state transitions into an append-only
 log and want to see which reads that choice quietly breaks.</li>
 <li>Do not copy when: you need multi-tenant guarantees. The read-path
-ACL is genuinely good and fails closed, but the code itself records that
-dreams, episodes, graph edges and patterns carry no scope field, so
-their reader was left unfiltered rather than filtering everything to
-nothing.</li>
+ACL is good and fails closed, but derived records — dreams, episodes,
+graph edges and patterns — carry a stamped scope that only the REM-dream
+reader passes a requester to, so the other readers, the pattern match on
+the recall path among them, read the workspace's whole file.</li>
 </ul>
 <h3 id="omniintelligence"><a
 href="../systems/omniintelligence/"><code>omniintelligence</code></a></h3>

@@ -438,7 +438,12 @@ function you instrumented.
 A reconsolidation event carries the action, the update source, the quoted
 evidence, the caller's confidence and the measured semantic drift between the old
 and new embedding, so the log answers not only what changed but how far it moved
-and on whose word. The mechanism worth stealing is beside it. The store is
+and on whose word. It answers for a bounded window: the event file shares the
+neo store's JSONL append, which keeps the newest 5,000 lines, and the daily
+consolidation rewrites it. The uncapped record is a separate file,
+`destructive-ops.jsonl`, appended for deletions, trust transitions and curation
+decisions, and it carries no evidence quote and no drift. The mechanism worth
+stealing is beside it. The store is
 append-only JSONL with an id index, and a status transition returns the record
 with the *same id*, so an id-keyed dedupe would have silently swallowed every
 promotion — the append key is therefore computed as `status:<id>:<status>:<updatedAt>`
