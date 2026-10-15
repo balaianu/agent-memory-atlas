@@ -14206,6 +14206,124 @@ reading: <code>jaz</code> has one unpinned surface and nothing else;
 <code>jaz-evals</code> has one auto-run surface,
 <code>.gitmodules</code> naming the two benchmark forks; nothing was
 installed or run.</li>
+<li><strong><code>bhensley5/overgraph</code> was examined and has no
+report: it is an embedded graph database with vector search that names
+agent memory as a use case, and the memory semantics belong to the
+caller.</strong> MIT or Apache-2.0 at the user's option, read at <a
+href="https://github.com/bhensley5/overgraph/commit/13ad827d2a6976635b59e5aa13989429e5953ec5"><code class="commit-id" title="13ad827d2a6976635b59e5aa13989429e5953ec5">13ad827d…</code></a>,
+the head of <code>main</code> on 10 October 2026 (release v0.17.1). It
+has 24 commits since 5 March 2026, about 210,000 lines of Rust under
+<code>src/</code> outside <code>src/engine/tests/</code>, and 2,926 Rust
+test attributes, none run. It is an LSM tree of mmap'd segments with a
+WAL, dense HNSW and sparse inverted vector indexes, GQL, and native
+Node.js and Python bindings. Nothing in it defines a memory unit,
+extracts, embeds or exposes a tool to a model: embeddings arrive from
+the caller's model, and
+<code>git grep -n -i -E '\bmcp\b|remember|recall\(|\bllm\b|openai|anthropic' -- . ':!docs/04-quality' ':!Cargo.lock'</code>
+matches only a query-planner helper named
+<code>remember_candidate_probe_warning</code>
+(<code>src/engine/query_plan.rs:10294</code>). The README's agent-memory
+line (<code>README.md:29</code>) and the roadmap's "memory that can
+change and forget" section (<code>ROADMAP.md:97-108</code>), which says
+the application should decide what deserves to stay, are where the use
+case lives. Three engine properties reach a memory built on it. Every
+edge carries a validity window that the caller may set, defaulting to
+the creation clock and an open end
+(<code>src/engine/write.rs:1223-1224</code>); reads filter on it at a
+reference time (<code>src/engine/mod.rs:3253-3255</code>), and
+<code>invalidate_edge</code> closes a window without deleting the edge
+(<code>src/engine/mod.rs:6448</code>). A per-query
+<code>decay_lambda</code> multiplies edge weight by
+<code>exp(-lambda * age_hours)</code>, with age measured from
+<code>valid_from</code>, so a back-dated fact ranks as old
+(<code>src/engine/graph_ops.rs:5064-5071</code>). Named prune policies
+on label, age since <code>updated_at</code> and maximum weight are
+stored in the manifest, hide matching nodes at read time and are
+physically removed with their incident edges at compaction
+(<code>src/engine/mod.rs:3262-3287</code>;
+<code>docs/architecture-overview.md:62</code>, <code>:169</code>,
+<code>:175-182</code>). Tenancy is not modelled:
+<code>git grep -n -i -E '\b(tenant_id|user_id|agent_id|session_id)\b' -- src ':!src/engine/tests'</code>
+returns nothing, so a scope is one database directory or a caller
+convention on labels and properties. Screened before reading, from a
+full clone: no auto-run surface, two build-time execution points
+(<code>overgraph-node/build.rs</code>,
+<code>overgraph-python/tests/conftest.py</code>), seven dependency files
+inside the cooldown from the release commit, and two unpinned surfaces
+(three caret ranges in <code>overgraph-node/package.json</code> behind a
+lockfile, and <code>overgraph-python/pyproject.toml</code> with no
+lockfile); there is no <code>.gitmodules</code>, <code>AGENTS.md</code>
+or <code>CLAUDE.md</code>. Nothing was installed, built or run.</li>
+<li><strong><code>supermemoryai/smfs</code> was examined and has no
+report: it is a filesystem client for the hosted Supermemory engine, and
+extraction, the profile and semantic search all run
+server-side.</strong> MIT, read at <a
+href="https://github.com/supermemoryai/smfs/commit/f4a0f5034431638d66f8c350408f34bb5b8cbce5"><code class="commit-id" title="f4a0f5034431638d66f8c350408f34bb5b8cbce5">f4a0f503…</code></a>,
+the head of <code>main</code> on 12 June 2026, from 133 commits since 10
+April 2026; it was called <code>supermemoryfs</code> until commit
+<code>54dc3cd</code>. It is the same vendor's companion to the <a
+href="../systems/supermemory/"><code>supermemory</code></a> monorepo,
+whose report covers the open surface of that engine. The Rust daemon
+mounts one container tag over FUSE or NFS as a SQLite inode cache
+(<code>crates/smfs-core/src/cache/schema.sql</code>) and syncs it to
+<code>/v3/documents</code>. A TypeScript and a Python package expose the
+same container as a virtual bash tool with an <code>sgrep</code>
+command. What is stored locally is file bytes and sync state, not
+memories. The search, profile and memory-generation paths are
+<code>POST /v4/search</code>, <code>POST /v4/profile</code> and a
+<code>PATCH /v3/container-tags/&lt;tag&gt;</code> carrying
+<code>memoryFilesystemPaths</code>
+(<code>crates/smfs-core/src/api/mod.rs:359-373</code>,
+<code>:407-434</code>). The step that turns a file into memory is a
+server stage this repository does not contain, so the bar's
+"closed-source behind an open wrapper" exclusion applies.
+<strong>Recorded for what a reader can take.</strong>
+<code>profile.md</code> is a reserved virtual file rendering the
+server's static and dynamic memories, and any write or truncate returns
+<code>PermissionDenied</code>
+(<code>crates/smfs-core/src/cache/profile.rs:14</code>,
+<code>:82</code>, <code>:86</code>). Correction therefore goes through
+the source files, which is the <a
+href="../patterns/memory-as-an-editing-surface/">memory-as-an-editing-surface</a>
+shape with a read-only derived view. The profile is fetched once, at
+daemon start
+(<code>crates/smfs/src/cmd/daemon_runtime.rs:166-167</code>), and not on
+the 30-second pull. Pull reconciliation lets a local write win when its
+<code>dirty_since</code> is newer than the remote <code>updatedAt</code>
+(<code>crates/smfs-core/src/cache/fs.rs:239-272</code>). And
+<code>push.rs:54-60</code> records a server behaviour worth knowing: a
+second <code>PATCH</code> sent while a document is still processing
+<em>"silently drops the new content"</em>, so the client polls for
+<code>status=done</code> first. <strong>Two things sit against
+it.</strong> Mounting edits files outside the mount. On first mount the
+daemon appends a shell function to <code>~/.zshrc</code> that redefines
+flagless <code>grep</code> as semantic search inside a mount
+(<code>crates/smfs/src/cmd/daemon_runtime.rs:252-253</code>, body in
+<code>crates/smfs/src/cmd/init.rs</code>), although the README presents
+that wrapper as opt-in through <code>smfs init</code>. Every mount also
+writes a delimited block into <code>~/.claude/CLAUDE.md</code>,
+<code>~/.codex/AGENTS.md</code> and <code>~/.gemini/GEMINI.md</code>
+steering the agent to <code>smfs grep</code>
+(<code>crates/smfs-core/src/agent_hint.rs</code>, called from
+<code>crates/smfs/src/cmd/mount.rs:294</code>); unmount removes it. Its
+only opt-out, <code>--no-inject-hint</code>, is hidden and documented as
+<em>"not part of the supported user surface"</em>
+(<code>mount.rs:87-90</code>). Scope is the container tag sent on every
+request, and nothing checks it on the way back: documents are reconciled
+without reading their <code>container_tags</code>, and
+<code>SearchResult</code> carries no tag field
+(<code>crates/smfs-core/src/api/dto.rs:175-181</code>). That is the
+opposite choice from the exact-match predicate the
+<code>supermemory</code> report credits in
+<code>packages/tools/src/claude-memory.ts</code>, and isolation rests
+entirely on the API. Screened before reading, from a full clone: one
+auto-run surface (<code>.devcontainer/devcontainer.json</code>, which
+builds the root <code>Dockerfile</code> with <code>cargo build</code>),
+one build-time execution point (an npm <code>prepublishOnly</code> in
+<code>bash/package.json</code>), one unpinned surface (13 caret ranges
+behind <code>bash/bun.lock</code>) and no file inside the cooldown.
+There is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
+<code>CLAUDE.md</code>. Nothing was installed, built or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
