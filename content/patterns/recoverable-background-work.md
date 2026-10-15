@@ -207,6 +207,8 @@ columns does this pass have no input for, and what happens to them.
 
 **[Remembra](../../systems/remembra/) runs a background pass that fails on every item and reports nothing done.** The sleep-time worker is on by default every six hours, and its dedup pass calls `self.qdrant.search(embedding=..., threshold=...)` against a method whose parameters are `query_vector` and `score_threshold` (`src/remembra/services/sleep_time.py:345-350`, `src/remembra/storage/qdrant.py:454-466`). Each `TypeError` is caught per memory and logged at debug, so the report says zero duplicates merged. The tests use a fake whose `search(self, **_)` accepts anything, and a real-store test asserts every point survives the default run, which holds because the search raises. **A per-item except needs a failure count in the run report, or a dead pass reads as an idle one.**
 
+**[Elephantasm](../../systems/elephantasm-core/) derives its synthesis cursor from the output table.** Collection keeps events whose client-supplied `occurred_at` is later than the newest memory's `created_at` (`app/workflows/memory_synthesis/nodes/event_collection.py:37-38`, `app/domain/event_operations.py:248-285`). The Dreamer's merges and splits and a manual `POST /memories` also insert memories stamped now. Each one moves the cursor past events that were pending, and nothing links or collects them afterwards. The pack's pending-events layer filters on the same memory time (`app/domain/memory_retrieval.py:241-261`), so they leave the prompt too. **A cursor is a watermark the consumer owns; any other writer of the output table must not be able to move it.**
+
 ## Tests to require
 
 - Crash before, during, and after each state mutation.

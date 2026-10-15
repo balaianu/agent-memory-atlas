@@ -427,6 +427,19 @@ report says zero duplicates merged. The tests use a fake whose
 asserts every point survives the default run, which holds because the
 search raises. <strong>A per-item except needs a failure count in the
 run report, or a dead pass reads as an idle one.</strong></p>
+<p><strong><a href="../../systems/elephantasm-core/">Elephantasm</a>
+derives its synthesis cursor from the output table.</strong> Collection
+keeps events whose client-supplied <code>occurred_at</code> is later
+than the newest memory's <code>created_at</code>
+(<code>app/workflows/memory_synthesis/nodes/event_collection.py:37-38</code>,
+<code>app/domain/event_operations.py:248-285</code>). The Dreamer's
+merges and splits and a manual <code>POST /memories</code> also insert
+memories stamped now. Each one moves the cursor past events that were
+pending, and nothing links or collects them afterwards. The pack's
+pending-events layer filters on the same memory time
+(<code>app/domain/memory_retrieval.py:241-261</code>), so they leave the
+prompt too. <strong>A cursor is a watermark the consumer owns; any other
+writer of the output table must not be able to move it.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Crash before, during, and after each state mutation.</li>

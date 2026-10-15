@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 748 reports.**
+**This page covers all 749 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6796,3 +6796,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MPL-2.0, 527,318 lines of Rust in eight crates and 3,064 commits by one author between 2 July and 14 October 2026, version 0.26.0. Five marks, `trust_state`, `bitemporal`, `scope_enforced`, `human_review` and `negative_eval`. 6,741 Rust test functions, with must-not cases paired with must-have controls on a populated index; no retrieval benchmark and no committed eval runs.
 - Study when: you want an agent's memory to be markdown in your own repositories, with a person accepting changes on GitHub and private domains for accounts on one server.
 - Do not copy when: a superseded fact must stop appearing in answers, the server will be reachable by other local users without `auth.mcp`, or one developer wants a few facts remembered without running a multi-user daemon.
+
+### [`elephantasm-core`](../systems/elephantasm-core/)
+
+- Best idea: **journal every curator mutation with both snapshots and the reason.** `DreamerOperations` snapshots the rows before each merge, split, update, archive or delete, applies it, and appends a `DreamAction` with source and result ids, the after snapshot and the model's reasoning in the same session; knowledge carries a matching `knowledge_audit_log` from its routes, synthesis and the Meditator.
+- Biggest risk: **the synthesis cursor is the newest memory's creation time.** `collect_pending_events` keeps events whose client-supplied `occurred_at` is later than it, so a Dreamer merge or split, a `POST /memories`, or a late event leaves pending events that are never synthesised, and the first two also drop them from the pack's pending layer.
+- Most reusable component: `app/domain/dreamer_operations.py` — `_record_action` and the five mutation methods — with `app/services/dreamer/light_sleep.py` as the free algorithmic pass that picks the model's candidates.
+- Second risk: **the published tree does not import.** `main.py` loads the billing scheduler, which imports `app.config.overages`, `usage_operations` and six other modules absent from the tree, and `EventOperations.create` imports `usage_operations` on every event.
+- Maturity impression: Apache-2.0, 24,295 lines of Python under `app/`, five commits on master between 16 March and 7 September 2026, the first a monorepo sync. 387 test functions needing Postgres and a seeded user, no CI. Two marks: `scope_enforced` and `audit_log`. `negative_eval` is withheld: the one must-not-retrieve case cannot run at the pin, because its fixture reaches the missing import, and it puts both animas under one user, so it tests the anima predicate rather than the RLS it names. `trust_state`, `bitemporal`, `human_review` and `tombstone` are withheld.
+- Study when: you want a curation pass whose every rewrite is inspectable, provenance from memory to events and from knowledge to memory, or tenant isolation done in Postgres row-level security.
+- Do not copy when: you need to self-host from this repository as published, deletion must reach derived knowledge and cached packs, late or back-dated events must still become memories, or tenants who do not trust each other share a deployment, since the manual workflow trigger runs the Dreamer for any anima id.

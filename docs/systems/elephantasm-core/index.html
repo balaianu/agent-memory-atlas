@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A FastAPI and Postgres memory
+service: events are synthesised into scored memories and typed
+knowledge, curated twice daily by an LLM with every mutation
+journalled.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Elephantasm — Agent Memory Atlas">
+    <meta property="og:description" content="A FastAPI and Postgres
+memory service: events are synthesised into scored memories and typed
+knowledge, curated twice daily by an LLM with every mutation
+journalled.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Elephantasm — Agent Memory Atlas">
+    <meta name="twitter:description" content="A FastAPI and Postgres
+memory service: events are synthesised into scored memories and typed
+knowledge, curated twice daily by an LLM with every mutation
+journalled.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Elephantasm — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Elephantasm",
+      "description": "A FastAPI and Postgres memory service: events are synthesised into scored memories and typed knowledge, curated twice daily by an LLM with every mutation journalled.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A Postgres memory server that turns agent
+events into memories, knowledge and an audited curation log</p>
+          <h1>Elephantasm</h1>
+          <p class="document-deck">A FastAPI and Postgres memory
+service: events are synthesised into scored memories and typed
+knowledge, curated twice daily by an LLM with every mutation
+journalled.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/kaminocorp/elephantasm-core">
+              <span>Source</span>
+              <strong>kaminocorp/elephantasm-core</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/kaminocorp/elephantasm-core/commit/3dc935e52b1b98e40f386194a5f2b39489e42b85" title="3dc935e52b1b98e40f386194a5f2b39489e42b85">
+              <span>Analyzed revision</span>
+              <code>3dc935e5…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/kaminocorp--elephantasm-core" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>kaminocorp--elephantasm-core</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>24,295
+lines of Python under app/, plus 5,019 lines of Alembic migrations; the
+tree is an export of a private monorepo with its billing and
+organisation modules removed</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>5
+commits on master under three author names, 16 March – 7 September 2026;
+the first is a sync from a private monorepo</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>387
+test functions in 33 pytest files, 8,244 lines including fixtures; most
+need a live Postgres with a seeded test user; no CI configuration in the
+tree</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Elephantasm is a hosted memory service for agents, published as an
+Apache-2.0 open-core server. An agent posts events; a threshold-gated
+LLM pass turns a batch of them into one memory with provenance links; a
+second pass extracts typed knowledge from each memory; and a curator
+called the Dreamer merges, splits, rewrites and retires memories every
+12 hours. What is notable is the curation journal: every Dreamer and
+Meditator mutation stores before and after snapshots and the model's
+reasoning. What is weak is the tree itself, which imports modules it
+does not ship, and a synthesis cursor that any other memory write moves
+forward.</p>
+<p>A pack compiler assembles identity, recent memories, unsynthesised
+events, knowledge and long-term memories into a markdown block for the
+system prompt. The repository is an export. Its first commit is titled
+<em>"Sync from private monorepo"</em>, and <code>app/api/deps.py</code>
+replaces the subscription checks with pass-through stubs labelled
+<em>"OSS version"</em>. The stubbing stops there. Three findings shape
+the rest of this report.</p>
+<ul>
+<li><strong>The server does not import from this tree.</strong>
+<code>main.py:20</code> imports <code>get_billing_scheduler</code> from
+<code>app/services/scheduler</code>, whose package init loads
+<code>billing_scheduler.py</code>, which imports
+<code>app.config.overages</code>,
+<code>app.domain.usage_operations</code> and six other modules absent
+from the tree (<code>app/domain/billing_job_operations.py:16-24</code>).
+Event ingestion would fail separately:
+<code>EventOperations.create</code> calls
+<code>_track_event_usage</code>, which imports
+<code>app.domain.usage_operations</code> on every event
+(<code>app/domain/event_operations.py:80-89</code>).</li>
+<li><strong>A memory written by anything but synthesis strands pending
+events.</strong> Synthesis collects events whose client-supplied
+<code>occurred_at</code> is later than the newest memory's
+<code>created_at</code> (<code>event_collection.py:37-38</code>,
+<code>event_operations.py:270</code>). A Dreamer merge or split, or a
+<code>POST /memories</code>, creates a memory stamped now. Events that
+arrived before it and were not yet synthesised are never collected, and
+they leave the pack's pending layer by the same cursor
+(<code>memory_retrieval.py:241-261</code>).</li>
+<li><strong>The lifecycle has one reachable transition.</strong> The
+Dreamer gathers only <code>ACTIVE</code> memories
+(<code>app/services/dreamer/gather.py:101</code>), so the
+<code>DECAYING → ARCHIVED</code> branch in Light Sleep
+(<code>light_sleep.py:188-191</code>) never sees a candidate. Packs read
+<code>ACTIVE</code> by default, so <code>DECAYING</code> is the
+effective end of retrieval.</li>
+</ul>
+<p>Two marks: <code>scope_enforced</code> and <code>audit_log</code>.
+The scope predicate is applied by every read the context assembler
+makes, beneath Postgres row-level security. <code>negative_eval</code>
+is withheld. The one must-not-retrieve case cannot run from this
+checkout, for the import reason above, and it puts both animas under one
+user, so it tests the anima predicate rather than the RLS it names.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory here is an interpretation, not a record. Events are the
+record: messages and tool calls posted by the agent, kept verbatim and
+soft-deleted only. A memory is an LLM's one-to-two-sentence summary of a
+batch of events, with an importance and a confidence the same LLM
+assigns
+(<code>app/workflows/memory_synthesis/prompts/synthesis.py</code>).
+Knowledge is a third layer: atomic statements extracted from one memory,
+each typed as <code>FACT</code>, <code>CONCEPT</code>,
+<code>METHOD</code>, <code>PRINCIPLE</code> or <code>EXPERIENCE</code>
+with its own confidence. Identity is a fourth, a personality type and
+communication style that only the <code>/identities</code> routes
+write.</p>
+<p>A thing becomes a memory when the accumulation score crosses a
+threshold. The score is hours since the last synthesis or memory, plus
+half a point per new event, plus 0.0003 per token, against a default of
+10. No event means no synthesis, however much time passes. Until then
+the raw events are injected into every pack as <em>"Recent Activity
+(Pending Synthesis)"</em>.</p>
+<p>A memory stops being believed in four ways, and none of them is a
+contradiction. Light Sleep moves an <code>ACTIVE</code> memory to
+<code>DECAYING</code> when its decay score passes 0.7 and its importance
+is below 0.3, which at the 30-day half-life is about 52 days after
+creation. Deep Sleep may merge it into a new memory, split it into
+several, rewrite its summary or soft-delete it as noise. A person may
+PATCH or DELETE it through the API. Nothing compares a new memory with
+an old one for conflict, and knowledge extracted from a memory outlives
+the memory.</p>
+<p>The state field is an attention lifecycle, not an epistemic one.
+<code>ACTIVE</code>, <code>DECAYING</code> and <code>ARCHIVED</code> say
+how much a memory should be recalled, and the decay that drives them
+reads creation time only: <code>access_count=0</code> carries a
+<code>TODO: add access tracking</code> at both call sites
+(<code>light_sleep.py:137</code>,
+<code>memory_pack_compiler.py:443</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how events become memories and knowledge, how the Dreamer retires them, and where a non-synthesis write strands pending events</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how events become memories and knowledge, how the Dreamer retires them, and where a non-synthesis write strands pending events
+flowchart TD
+    E[&quot;POST /events: event row, occurred_at from the client or now&quot;] --&gt; P[&quot;pending: no memories_events link&quot;]
+    P --&gt;|&quot;injected raw into every pack, up to 20&quot;| PACK[&quot;memory pack&quot;]
+    P --&gt; S{&quot;accumulation score at least 10, with one event or more?&quot;}
+    S --&gt;|&quot;no&quot;| P
+    S --&gt;|&quot;yes: collect events with occurred_at after the newest memory&#39;s created_at&quot;| L[&quot;LLM synthesis: summary, importance, confidence&quot;]
+    L --&gt; M[&quot;memory ACTIVE, embedding, provenance links to events&quot;]
+    M --&gt; K[&quot;knowledge extraction: typed items, audit row CREATE&quot;]
+    M --&gt;|&quot;recent, knowledge, long-term layers&quot;| PACK
+    K --&gt; PACK
+    D[&quot;Dreamer every 12 h: gathers ACTIVE only&quot;] --&gt;|&quot;decay over 0.7 and importance under 0.3&quot;| DEC[&quot;DECAYING: out of default packs&quot;]
+    DEC -.-&gt;|&quot;DECAYING to ARCHIVED: never gathered&quot;| ARC[&quot;ARCHIVED&quot;]
+    D --&gt;|&quot;merge, split: new memory created now&quot;| NEW[&quot;new memory ACTIVE&quot;]
+    NEW --&gt;|&quot;moves the synthesis cursor past unsynthesised events&quot;| LOST[&quot;stranded events: never collected, out of the pending layer&quot;]
+    D --&gt;|&quot;delete as noise: soft&quot;| DEL[&quot;is_deleted; its knowledge stays&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>A single FastAPI process (<code>main.py</code>) serves 97 route
+handlers across 15 routers and runs APScheduler jobs in the same process
+when <code>ENABLE_BACKGROUND_JOBS</code> is on. All state is in
+PostgreSQL with pgvector. LangGraph-style workflows under
+<code>app/workflows/</code> run memory synthesis and knowledge synthesis
+as plain function pipelines; migration <code>3905e5ae481a</code> dropped
+the LangGraph checkpoint schema. Embeddings come from OpenAI
+<code>text-embedding-3-small</code> at 1,536 dimensions. Synthesis uses
+Anthropic Haiku 4.5 by default. The Dreamer uses
+<code>gpt-4o-mini</code> for pairwise merges, Sonnet 4.6 for cluster
+consolidation and Opus 4.6 for review
+(<code>app/services/dreamer/config.py:67-85</code>).</p>
+<p>Tenancy is enforced in the database. Every route but health takes
+<code>get_db_with_rls</code>, which sets <code>app.current_user</code>
+with <code>SET LOCAL</code> per transaction
+(<code>app/core/database.py:248-284</code>). The
+<code>animas_org_access</code> policy admits an anima whose organisation
+the caller belongs to, and every child table's policy cascades through
+<code>animas</code>. Scheduled jobs run on a separate engine under a
+<code>BYPASSRLS</code> role when <code>CRON_DATABASE_URL</code> is set.
+They resolve an anima's owner through a <code>SECURITY DEFINER</code>
+function before opening an RLS session for writes
+(<code>app/core/rls_dependencies.py:36-87</code>).</p>
+<p>A middleware restricts the public SDK host,
+<code>api.elephantasm.com</code>, to ingest, anima, latest-pack,
+semantic-search, identity and query paths
+(<code>app/middleware/host_restriction.py:18-32</code>). It applies by
+<code>Host</code> header, so a self-hosted deployment on any other name
+exposes every route to any API key. <code>/api/query</code> is on that
+allowlist and its router is not registered in
+<code>app/api/router.py</code>.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Running this needs Postgres with pgvector, an Anthropic key and an
+OpenAI key. A memory is stored without an embedding when the embedding
+call fails, and nothing is synthesised without the LLM. Authentication
+is a Supabase JWKS for the dashboard or a bcrypt-hashed
+<code>sk_live_</code> key for SDKs. The README's
+<code>docker compose up -d</code> names a compose file the tree does not
+contain; the <code>Dockerfile</code> and <code>fly.toml</code> target
+Fly.io. The import failure in section 1 means the documented
+<code>python main.py</code> path needs the missing modules written or
+stubbed first. The store is relational and inspectable with
+<code>psql</code>, and every curation step is readable as rows with
+before and after JSON.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>POST /api/events</code>
+(<code>app/api/routes/events.py:27-68</code>) calls
+<code>EventOperations.create</code>, which validates the anima, defaults
+<code>occurred_at</code> to now, derives a <code>dedupe_key</code> from
+<code>source_uri</code> when given, and inserts. It then queues
+<code>check_and_enqueue_if_needed</code> as a FastAPI background
+task.</p>
+<p><strong>Synthesis.</strong> <code>run_memory_synthesis</code>
+(<code>app/workflows/memory_synthesis/pipeline.py</code>) runs five
+nodes: <code>calculate_accumulation_score</code>
+(<code>app/domain/synthesis_metrics.py:20-110</code>),
+<code>check_synthesis_threshold</code>
+(<code>nodes/threshold_gate.py</code>),
+<code>collect_pending_events</code>
+(<code>nodes/event_collection.py:37-38</code>),
+<code>synthesize_memory</code>, and <code>persist_memory</code>
+(<code>nodes/memory_persistence.py</code>). The last creates the memory,
+one <code>memories_events</code> row per collected event, and an
+embedding, in one RLS transaction. The scheduler then fires
+<code>trigger_auto_knowledge_synthesis</code>
+(<code>app/services/scheduler/workflows/memory_synthesis_scheduler.py:116</code>).</p>
+<p><strong>Knowledge extraction.</strong> The knowledge pipeline prompts
+with the memory's summary and content and persists each item with an
+audit row of action <code>CREATE</code> and <code>source_id</code> set
+to the memory
+(<code>app/workflows/knowledge_synthesis/nodes/knowledge_persistence.py:180-218</code>).
+Re-running it for the same memory soft-deletes the earlier items first
+(<code>:125-150</code>). After each run
+<code>trigger_auto_meditation_check</code> increments a per-anima
+counter and starts the Meditator at its threshold
+(<code>app/services/hooks/auto_meditation.py</code>).</p>
+<p><strong>Context assembly.</strong>
+<code>MemoryPackCompiler.compile</code>
+(<code>app/services/memory_pack_compiler.py:192-280</code>) embeds the
+query once, then reads identity (<code>:286</code>), session memories
+created in the last 24 hours (<code>:317</code>), temporal context when
+that is empty (<code>:237</code>), pending events (<code>:488</code>),
+knowledge by pgvector cosine (<code>:365</code>) and long-term
+candidates (<code>:410</code>). It trims each layer to a fixed share of
+the token budget and renders markdown in
+<code>to_prompt_context</code>.</p>
+<p><strong>Curation.</strong> <code>DreamerScheduler</code> runs every
+12 hours per anima under an advisory lock.
+<code>gather_dream_context</code> loads all <code>ACTIVE</code>
+memories, identity and knowledge
+(<code>app/services/dreamer/gather.py:57-138</code>).
+<code>run_light_sleep</code> updates decay, transitions state, builds
+similarity clusters with a pgvector self-join and union-find, and flags
+review candidates (<code>light_sleep.py:48-109</code>).
+<code>run_deep_sleep</code> merges pairs, consolidates larger clusters
+and reviews flagged memories (<code>deep_sleep.py:81-232</code>). Every
+mutation goes through <code>DreamerOperations</code>
+(<code>app/domain/dreamer_operations.py:312-660</code>).</p>
+<p><strong>Correction.</strong> <code>PATCH /api/memories/{id}</code>
+applies a partial update with no audit row and no re-embedding
+(<code>app/api/routes/memories.py:203-212</code>,
+<code>app/domain/memory_operations.py:117-138</code>). Knowledge PATCH,
+DELETE and restore each write an audit row
+(<code>app/api/routes/knowledge.py:167-272</code>).</p>
+<p><strong>Tests.</strong>
+<code>tests/workflows/memory_synthesis/</code> covers threshold,
+collection and persistence under RLS;
+<code>tests/services/test_cluster_consolidation.py</code> covers the
+consolidation prompts and parser; <code>tests/integration/</code> drives
+the routes through a <code>TestClient</code>.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>memories</code> (<code>app/models/database/memories.py</code>)
+holds <code>anima_id</code>, <code>content</code>, <code>summary</code>,
+<code>importance</code>, <code>confidence</code>, <code>state</code>,
+cached <code>recency_score</code> and <code>decay_score</code>,
+<code>time_start</code> and <code>time_end</code> from the source
+events' <code>occurred_at</code>, <code>meta</code> JSONB,
+<code>is_deleted</code>, a 1,536-dimension <code>embedding</code>, and
+UMAP map coordinates for a dashboard view. <code>events</code> holds the
+event type, role, author, content, <code>occurred_at</code>,
+<code>session_id</code>, <code>source_uri</code>,
+<code>dedupe_key</code> and <code>importance_score</code>.
+<code>memories_events</code> links the two with a
+<code>link_strength</code> that synthesis always sets to 1.0.</p>
+<p><code>knowledge</code>
+(<code>app/models/database/knowledge.py</code>) has
+<code>knowledge_type</code>, an LLM-chosen <code>topic</code>,
+<code>content</code>, <code>summary</code>, <code>confidence</code>,
+<code>source_type</code> (<code>INTERNAL</code> or
+<code>EXTERNAL</code>), <code>is_deleted</code> and an embedding. It has
+no column naming its source memory. That link lives only in the
+<code>CREATE</code> audit row's <code>source_id</code>, which is how the
+replace strategy finds prior items.</p>
+<p>Provenance after curation is in JSON. A merge writes
+<code>meta.merged_from</code> with the source ids and soft-deletes the
+sources, and a split writes <code>meta.split_from</code>
+(<code>dreamer_operations.py:386-395</code>, <code>:467-478</code>). The
+new memory gets no <code>memories_events</code> rows, so
+<code>GET /memories/{id}/events</code> returns nothing for it, and the
+trail runs through the soft-deleted originals.</p>
+<p>Time is one axis with a label. <code>time_start</code> and
+<code>time_end</code> are the span of source event times and label
+long-term lines in the pack. Nothing records when a memory stopped being
+true, and nothing queries by either field except ordering.
+<code>bitemporal</code> is withheld on that reading: event time
+defaulting to the write clock, with no validity interval on knowledge
+and no as-of read.</p>
+<p>Scope is <code>anima_id</code> on every table, plus
+<code>user_id</code> and <code>organization_id</code> on
+<code>animas</code>. The models for <code>organizations</code>,
+<code>subscriptions</code> and usage are absent from
+<code>app/models/database/</code>, while the migrations that create
+those tables are present
+(<code>b2c3d4e5f6a7_add_pricing_infrastructure_phase_1.py</code>).</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>The pack is deterministic given the store, the query and the clock.
+The conversational preset asks for 5 session memories, 3 knowledge items
+and 3 long-term memories within 2,000 tokens. The self-determined preset
+asks Haiku to choose types, limits, weights and a similarity threshold,
+clamped to ranges, before compiling
+(<code>app/services/pack_presets.py:66-165</code>).</p>
+<p><strong>Session memories</strong> are <code>ACTIVE</code> memories
+created in the window, scored by recency with a one-day half-life.
+Because recency reads <code>created_at</code>, a memory the Dreamer
+merged or split this morning sits in "Current Session" however old its
+events are.</p>
+<p><strong>Long-term memories</strong> are not a vector search.
+<code>get_with_embeddings</code> selects the newest
+<code>3 × max_long_term_memories</code> embedded <code>ACTIVE</code>
+rows older than the window, ordered by <code>created_at DESC</code> and
+capped at 200 (<code>memory_retrieval.py:165-212</code>). The compiler
+then computes cosine similarity in Python, drops rows below the
+threshold, and scores the rest as a weighted sum of importance,
+confidence, recency, inverted decay and similarity
+(<code>memory_pack_compiler.py:389-473</code>). With the conversational
+preset, only the 9 newest older memories are considered at all.</p>
+<p><strong>Decay at read time reads <code>updated_at</code> as last
+access</strong> (<code>memory_pack_compiler.py:436</code>). Light Sleep
+writes <code>decay_score</code> through the ORM on most dreams, and
+<code>TimestampMixin</code> refreshes <code>updated_at</code> on every
+update, so the read-time decay measures time since the curator last
+touched the row.</p>
+<p><strong>Knowledge</strong> uses pgvector cosine in SQL with the
+anima, deletion, embedding and threshold predicates
+(<code>app/domain/knowledge_retrieval.py:27-85</code>).
+<code>RetrievalConfig.min_confidence</code> is declared and validated
+(<code>app/models/dto/retrieval.py:78-83</code>) and no compiler call
+passes it.</p>
+<p><strong>Budget.</strong> Identity is charged a flat 150 tokens; the
+remainder splits 20% session, 15% pending, 30% knowledge and 35%
+long-term, estimated at four characters per token
+(<code>memory_pack_compiler.py:496-528</code>). The README states 25%,
+35% and 40% across three layers.</p>
+<p><strong>The no-query read is a cache.</strong>
+<code>GET /animas/{id}/memory-packs/latest</code> compiles fresh only
+when a <code>query</code> is given; without one it returns the newest
+stored pack, with no comparison against later writes
+(<code>app/api/routes/memory_packs.py:66-90</code>). A memory deleted
+after that pack was stored is served until something compiles a new one.
+The README's integration example calls <code>inject(anima_id=...)</code>
+with no query.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Synthesis is background and threshold-gated; the agent never blocks
+on an LLM to write. The synthesis prompt formats each event as its
+summary or, failing that, the first 200 characters of its content
+(<code>prompts/synthesis.py:44</code>), so long tool results reach the
+synthesiser truncated. The LLM returns one memory per batch, however
+many events the batch holds.</p>
+<p><strong>The cursor is composed differently on each side.</strong> Any
+memory insert moves it; the reader compares it with event source time.
+<code>get_last_memory_time</code> returns the newest memory's
+<code>created_at</code> (<code>memory_operations.py:268-293</code>), and
+<code>get_since</code> keeps events with
+<code>occurred_at &gt; since</code>
+(<code>event_operations.py:248-285</code>). Three things break it: a
+Dreamer merge or split, a manual <code>POST /memories</code>, and an
+event posted with an <code>occurred_at</code> older than the newest
+memory. Each leaves events with no <code>memories_events</code> link
+that synthesis will not collect. The pending layer filters
+<code>Event.created_at &gt;= baseline</code> against the same memory
+time (<code>memory_retrieval.py:241-261</code>), so in the first two
+cases those events also leave the pack. The Dreamer runs every 12 hours
+for every anima, so on an active agent a dream routinely lands while
+events are pending.</p>
+<p><strong>Knowledge is never deduplicated across memories.</strong> Two
+memories that state the same fact produce two rows; only the Meditator,
+at its counter threshold, may merge them. Deleting a memory touches no
+knowledge: <code>app/domain/memory_operations.py</code> and
+<code>app/domain/dreamer_operations.py</code> never reference the
+knowledge table.</p>
+<p><strong>Conflicts are not modelled.</strong> No path compares a new
+memory or knowledge item with an existing one for disagreement. The
+Meditator's prompt lists <em>"contradictions"</em> as grounds for
+deletion (<code>app/services/meditator/prompts.py:241</code>), which
+leaves it to the model.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Ingest is one insert plus a background score check. A new memory is
+retrievable after the threshold: at default weights, 20 events, or 10
+hours with at least one event, then one synthesis call and one
+embedding. Until then the raw events are in the pack.</p>
+<p>The Dreamer re-reads every <code>ACTIVE</code> memory of every anima
+every 12 hours and runs an all-pairs pgvector self-join over them
+(<code>light_sleep.py:345-379</code>). Deep Sleep calls a model once per
+cluster and in batches of 10 for review. Two things recur at full cost.
+A pair the model declined to merge is re-proposed at the next dream,
+because a refusal is only logged (<code>deep_sleep.py:293-295</code>).
+Every memory with confidence below 0.4 is re-reviewed by Opus each dream
+until its confidence changes, because <code>KEEP</code> records nothing
+(<code>deep_sleep.py:571-573</code>).</p>
+<p>Injection is a full pack each call, placed in the system prompt by
+the caller, with a fixed identity block first and pending events whose
+content changes every turn.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The agent's surface is two SDK calls. <code>ingest</code> posts an
+event; <code>inject</code> fetches the latest pack and renders it as a
+prompt. The SDKs are published to PyPI and npm from repositories outside
+this tree, so what <code>inject</code> sends by default is not checkable
+here. The endpoint's docstring says both SDKs send <code>query</code>
+and <code>preset</code>.</p>
+<p>The agent has no memory verbs. It cannot save, correct or delete a
+memory on the SDK host, because those routes are off the allowlist; it
+shapes memory only through what it posts as events. Correction is a
+dashboard and API concern, under the same user's credentials. On a
+self-hosted deployment the allowlist does not apply, and the same API
+key reaches every route.</p>
+<p>Adapting this for another agent means posting messages and tool calls
+as events and putting the pack in the system prompt. The work is in
+deployment, not integration.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance is real and partial.</strong> A synthesised memory
+links to its events and a knowledge item to its memory, both written in
+the same transaction as the row. A curated memory links to its
+predecessors through JSON only, and <code>memories_events</code> rows
+can be hard-deleted through the <code>/memories-events</code> routes
+with no record
+(<code>app/domain/memory_event_operations.py:288-328</code>).</p>
+<p><strong>The curation journal is the strongest mechanism.</strong>
+<code>DreamAction</code> rows hold source and result ids, snapshots
+before and after, the phase and the model's reasoning, with no
+<code>updated_at</code> (<code>app/models/database/dreams.py</code>).
+The model docstring promises <em>"potential rollback"</em>; no route or
+function in the tree restores from a snapshot.</p>
+<p><strong>Prompt injection reaches memory unfiltered.</strong> Event
+content goes to the synthesis LLM as data, and nothing screens it. A
+tool result that tells the model to remember something false becomes a
+memory with whatever confidence the model assigns, and then
+knowledge.</p>
+<p><strong>Uncertainty is a number.</strong> Importance and confidence
+are LLM-assigned floats used for ranking and review selection. No state
+withholds a memory from being treated as true; <code>trust_state</code>
+is withheld. <code>human_review</code> is withheld: no memory waits in
+any state for anyone. <code>negative_eval</code> is withheld for the two
+reasons in section 10.</p>
+<p><strong>Tenancy is strong on reads and absent on one
+trigger.</strong> RLS on every child table and the anima predicate on
+every assembler read make a cross-tenant read unlikely through the API.
+Within an organisation, every member reaches every anima.
+<code>POST /api/scheduler/workflows/{name}/trigger</code> checks only
+that the caller is authenticated, then runs synthesis or the Dreamer for
+the <code>anima_id</code> in the body, or for every anima when it is
+null (<code>app/api/routes/scheduler.py:51-81</code>). The run resolves
+the owner and executes under the owner's context, so any API key can
+spend another tenant's model budget and set off rewrites of their
+memories.</p>
+<p><strong>Deletion is soft everywhere.</strong> <code>is_deleted</code>
+keeps the row and its embedding. Hard deletion happens only through
+cascades from a deleted anima or user
+(<code>migrations/versions/c4a8d2e1f3b7_auth_user_cascade_delete.py</code>).
+No value-keyed rejection exists, so a deleted fact returns at the next
+synthesis of an event that states it; <code>tombstone</code> is
+withheld.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is broad and integration-heavy: 387 test functions across
+routes, workflows, prompts, the advisory lock and the consolidation
+parser. Most need a reachable Postgres and a user named
+<code>test-integration-a@elephantasm.test</code>; without that user,
+<code>tests/conftest.py:88-92</code> skips. Integration tests build the
+app from <code>app.api.router</code>, whose events route imports
+<code>app.services.scheduler</code> and therefore the missing billing
+modules. <code>tests/integration/test_org_subscription_flow.py</code>
+imports absent modules at its top. Nothing was run for this report.</p>
+<p>The scope-boundary case in
+<code>test_rls_workflow_isolation.py:193-206</code> is the near-miss for
+<code>negative_eval</code>, which is withheld. It asserts that
+collection for one anima returns that anima's event and not another's,
+on a store holding both, so an empty result fails. Two things keep it
+from the mark. Its event fixture calls
+<code>EventOperations.create</code>, which imports
+<code>app.domain.usage_operations</code>, absent from this tree, so the
+case cannot run at the pin. And its fixture returns
+<code>user, user</code> (<code>:42</code>), so both animas belong to one
+user and the case tests the anima predicate in <code>get_since</code>,
+not the RLS its comment names.</p>
+<p>Several assertions cannot fail.</p>
+<ul>
+<li><code>test_compile_pack_with_limit</code> asserts inside
+<code>if "memories" in data:</code>
+(<code>tests/integration/test_pack_flow.py:103-104</code>); the pack
+response has no <code>memories</code> key.</li>
+<li><code>test_list_memories_by_state</code> seeds one active memory and
+asserts <code>all(m["state"] == "active" ...)</code>
+(<code>test_memory_flow.py:112-130</code>), which holds on an empty
+list.</li>
+<li><code>test_delete_memory_success</code> asserts the status code and
+never that the memory left a list or a pack.</li>
+</ul>
+<p>No test covers the Light Sleep transitions against gathered input,
+the synthesis cursor after a merge, the no-query pack cache, or
+knowledge surviving a memory's deletion. No paper, benchmark harness or
+result file is committed, and the README cites none.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Journal every curator mutation with both snapshots and the
+reason.</strong> A background rewrite that stores the rows before and
+after, the ids on both sides and the model's argument makes "why does it
+believe this" a query.</li>
+<li><strong>Split curation into a free pass and a paid pass.</strong>
+Decay, transitions and clustering in SQL and arithmetic decide what the
+model sees, so the model is called on candidates, not on the store.</li>
+<li><strong>Inject what has not been consolidated yet.</strong> Pending
+raw events in the pack close the gap between ingest and synthesis
+without making synthesis synchronous.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A cursor derived from the output table.</strong> "Newest
+memory time" is moved by every writer of memories, not just the consumer
+of events. Keep a per-stream watermark advanced only by the step that
+consumed the input, and mark consumed rows explicitly.</li>
+<li><strong>Comparing a record clock with a source clock.</strong> A
+client-supplied event time against a server insert time loses any event
+that arrives late.</li>
+<li><strong>A no-query read served from the last stored result.</strong>
+If deletion does not invalidate the cache, deletion is not visible to
+the agent.</li>
+<li><strong>Derived rows that do not follow their source.</strong>
+Knowledge extracted from a memory needs a source key and a delete path,
+or forgetting is partial.</li>
+<li><strong>A filter on states the gatherer never returns.</strong> A
+transition from a state the input query never returns is dead code that
+reads as policy.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits a team that wants a managed memory API and will run it as
+a service, with Postgres, two model vendors and a scheduler, and that
+values an inspectable curation record over correction semantics.
+Self-hosting from this repository is not a supported path at this
+commit: the missing modules must be written or stubbed before the server
+imports or an event can be stored. It does not suit memory that must be
+correctable and defensible: there is no review state, no rejection that
+survives re-extraction, and a deleted memory's knowledge stays in the
+pack.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether the private monorepo carries a different synthesis cursor,
+or a re-link pass, that the export dropped.</li>
+<li>What the published SDKs send as <code>query</code> on
+<code>inject</code>, and therefore how often the cached pack is what an
+agent sees.</li>
+<li>Whether the hosted service sets <code>CRON_DATABASE_URL</code>, or
+runs scheduled jobs on the RLS role.</li>
+<li>How the Meditator's knowledge merges interact with the replace
+strategy's lookup by <code>CREATE</code> audit rows when a merged item
+has no <code>source_id</code>.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li>Storage and schema: <code>app/models/database/</code>
+(<code>memories.py</code>, <code>events.py</code>,
+<code>knowledge.py</code>, <code>knowledge_audit_log.py</code>,
+<code>dreams.py</code>, <code>animas.py</code>),
+<code>migrations/versions/</code>.</li>
+<li>Write path: <code>app/api/routes/events.py</code>,
+<code>app/domain/event_operations.py</code>,
+<code>app/workflows/memory_synthesis/</code>,
+<code>app/workflows/knowledge_synthesis/</code>,
+<code>app/domain/synthesis_metrics.py</code>.</li>
+<li>Retrieval: <code>app/domain/memory_retrieval.py</code>,
+<code>app/domain/knowledge_retrieval.py</code>,
+<code>app/domain/memory_operations.py</code>.</li>
+<li>Context assembly: <code>app/services/memory_pack_compiler.py</code>,
+<code>app/services/pack_presets.py</code>,
+<code>app/api/routes/memory_packs.py</code>,
+<code>app/api/routes/packs.py</code>.</li>
+<li>Background: <code>app/services/dreamer/</code>,
+<code>app/services/meditator/</code>,
+<code>app/services/scheduler/</code>, <code>app/services/hooks/</code>,
+<code>app/domain/dreamer_operations.py</code>,
+<code>app/domain/meditator_operations.py</code>.</li>
+<li>API and auth: <code>app/api/router.py</code>,
+<code>app/api/deps.py</code>, <code>app/core/rls_dependencies.py</code>,
+<code>app/core/database.py</code>,
+<code>app/middleware/host_restriction.py</code>.</li>
+<li>Tests:
+<code>tests/workflows/memory_synthesis/test_rls_workflow_isolation.py</code>,
+<code>tests/integration/</code>,
+<code>tests/services/test_cluster_consolidation.py</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -hoE 'from app\.[a-zA-Z_.]+' -- app main.py tests | sort -u</code>,
+each module checked for a file or package — missing:
+<code>app.config.overages</code>,
+<code>app.domain.{billing_event,limit,organization,subscription,usage,user}_operations</code>,
+<code>app.models.database.{billing,organization,subscription,usage}</code>.</li>
+<li><code>git grep -n -E 'archive_memory|MemoryState\.ARCHIVED|MemoryState\.DECAYING' -- app tests</code>
+— the one <code>archive_memory</code> call in
+<code>light_sleep.py</code>, the branch at <code>:188-190</code>, and
+counts in <code>memories.py</code>; no test.</li>
+<li><code>git grep -n -E 'min_confidence' -- app</code> — the DTO field
+and the <code>get_by_time_window</code> parameter; no compiler
+reference.</li>
+<li><code>git grep -n -i 'knowledge' -- app/domain/memory_operations.py app/domain/dreamer_operations.py</code>
+— no match.</li>
+<li><code>git grep -n -E 'MemoryPackOperations\.create|persist_pack_async\(|_persist_pack\(' -- app</code>
+— writers in <code>memory_packs.py</code>,
+<code>pack_persistence.py</code> and the compiler; none on a delete
+path.</li>
+<li><code>git grep -n -E 'IdentityOperations\.(update|create)' -- app</code>
+— the <code>/identities</code> routes only.</li>
+<li><code>git grep -n -E 'KnowledgeAuditLog\(|KnowledgeAuditOperations\.|DreamAction\(' -- app</code>
+— the routes, synthesis persistence, the Meditator and
+<code>_record_action</code>; no update or delete of an audit row.</li>
+<li><code>git grep -n -E 'session\.delete\(|delete\((Memory|Knowledge|Anima|Event|KnowledgeAuditLog|DreamAction|MemoryPack)\)' -- app</code>
+— packs, links, configs and API keys; no memory, knowledge or audit
+row.</li>
+<li><code>git grep -n -i -E 'rollback|undo|revert' -- app | grep -v '\.rollback()'</code>
+— docstrings only; no restore from a snapshot.</li>
+<li><code>git grep -n -i -E 'tombstone|blocklist|denylist|rejected' -- app</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_until|invalid_at|expired_at' -- app migrations</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'pending_review|approve|approval|needs_review|quarantine' -- app</code>
+— no match.</li>
+<li><code>git grep -n 'access_count' -- app</code> — the decay function
+and two <code>access_count=0</code> calls marked TODO.</li>
+<li><code>git grep -n -E 'query\.router|routes import' -- app/api/router.py</code>
+— the import list names no <code>query</code> module.</li>
+<li><code>git grep -n -E 'Depends|get_db_with_rls|AnimaOperations' -- app/api/routes/scheduler.py</code>
+— <code>require_current_user_id</code> on both routes; no RLS session
+and no anima lookup before <code>trigger_manual</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|citation|doi\.org'</code>
+— no match.</li>
+<li><code>git ls-files | grep -i -E 'compose|\.github'</code> — no
+match.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/kaminocorp/elephantasm-core/commit/3dc935e52b1b98e40f386194a5f2b39489e42b85"><code class="commit-id" title="3dc935e52b1b98e40f386194a5f2b39489e42b85">3dc935e5…</code></a>
+— first reading, at the head of <code>master</code>, a commit of 7
+September 2026. Two marks: <code>scope_enforced</code>,
+<code>audit_log</code>; <code>negative_eval</code> withheld in section
+10, and <code>trust_state</code>, <code>bitemporal</code>,
+<code>human_review</code> and <code>tombstone</code> in sections 5 and
+9. Apache-2.0 with no rider. Screened before reading from a full clone:
+no auto-run surface, nothing inside the cooldown, no unpinned surface,
+and two build-time execution points (<code>tests/conftest.py</code>,
+<code>tests/integration/conftest.py</code>). Nothing was installed,
+built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

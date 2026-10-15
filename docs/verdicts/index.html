@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 748 reports.</strong></p>
+<p><strong>This page covers all 749 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31074,6 +31074,53 @@ domains for accounts on one server.</li>
 the server will be reachable by other local users without
 <code>auth.mcp</code>, or one developer wants a few facts remembered
 without running a multi-user daemon.</li>
+</ul>
+<h3 id="elephantasm-core"><a
+href="../systems/elephantasm-core/"><code>elephantasm-core</code></a></h3>
+<ul>
+<li>Best idea: <strong>journal every curator mutation with both
+snapshots and the reason.</strong> <code>DreamerOperations</code>
+snapshots the rows before each merge, split, update, archive or delete,
+applies it, and appends a <code>DreamAction</code> with source and
+result ids, the after snapshot and the model's reasoning in the same
+session; knowledge carries a matching <code>knowledge_audit_log</code>
+from its routes, synthesis and the Meditator.</li>
+<li>Biggest risk: <strong>the synthesis cursor is the newest memory's
+creation time.</strong> <code>collect_pending_events</code> keeps events
+whose client-supplied <code>occurred_at</code> is later than it, so a
+Dreamer merge or split, a <code>POST /memories</code>, or a late event
+leaves pending events that are never synthesised, and the first two also
+drop them from the pack's pending layer.</li>
+<li>Most reusable component:
+<code>app/domain/dreamer_operations.py</code> —
+<code>_record_action</code> and the five mutation methods — with
+<code>app/services/dreamer/light_sleep.py</code> as the free algorithmic
+pass that picks the model's candidates.</li>
+<li>Second risk: <strong>the published tree does not import.</strong>
+<code>main.py</code> loads the billing scheduler, which imports
+<code>app.config.overages</code>, <code>usage_operations</code> and six
+other modules absent from the tree, and
+<code>EventOperations.create</code> imports
+<code>usage_operations</code> on every event.</li>
+<li>Maturity impression: Apache-2.0, 24,295 lines of Python under
+<code>app/</code>, five commits on master between 16 March and 7
+September 2026, the first a monorepo sync. 387 test functions needing
+Postgres and a seeded user, no CI. Two marks:
+<code>scope_enforced</code> and <code>audit_log</code>.
+<code>negative_eval</code> is withheld: the one must-not-retrieve case
+cannot run at the pin, because its fixture reaches the missing import,
+and it puts both animas under one user, so it tests the anima predicate
+rather than the RLS it names. <code>trust_state</code>,
+<code>bitemporal</code>, <code>human_review</code> and
+<code>tombstone</code> are withheld.</li>
+<li>Study when: you want a curation pass whose every rewrite is
+inspectable, provenance from memory to events and from knowledge to
+memory, or tenant isolation done in Postgres row-level security.</li>
+<li>Do not copy when: you need to self-host from this repository as
+published, deletion must reach derived knowledge and cached packs, late
+or back-dated events must still become memories, or tenants who do not
+trust each other share a deployment, since the manual workflow trigger
+runs the Dreamer for any anima id.</li>
 </ul>
         </article>
       </div>

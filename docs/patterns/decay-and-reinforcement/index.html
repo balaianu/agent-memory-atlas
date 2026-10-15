@@ -655,6 +655,21 @@ caller outside a test, and retrieval writes nothing back. A default
 episode therefore leaves recall about 478 hours after ingest, however
 often it was returned. <strong>Reinforcement needs a writer on the read
 path, or decay is a retention timer.</strong></p>
+<p><strong><a href="../../systems/elephantasm-core/">Elephantasm</a> has
+two decays that read different clocks.</strong> The Dreamer's stored
+<code>decay_score</code> reads creation time, with
+<code>access_count=0</code> marked TODO, and moves a memory to
+<code>DECAYING</code> above 0.7 at importance below 0.3, about 52 days
+at the 30-day half-life
+(<code>app/services/dreamer/light_sleep.py:112-207</code>). The pack
+compiler recomputes decay from <code>updated_at</code> as last access
+(<code>app/services/memory_pack_compiler.py:436</code>), and the
+Dreamer's own decay writes refresh <code>updated_at</code> through the
+ORM's <code>onupdate</code>. The curator touching a row therefore reads
+as use at retrieval. Its <code>DECAYING</code> to <code>ARCHIVED</code>
+branch never fires, because the gatherer loads <code>ACTIVE</code> rows
+only (<code>app/services/dreamer/gather.py:101</code>). <strong>Use one
+clock for decay, and let only a read move it.</strong></p>
 <p><strong><a href="../../systems/hermes-fleet-memory/">Hermes Fleet
 Memory</a> lets a near-duplicate write decide another card's
 lifetime.</strong> Episodic cards expire 90 days after their last write
