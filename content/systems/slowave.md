@@ -29,11 +29,11 @@ matrix:
   write: "The agent decides what is durable and calls slowave_remember, which appends a raw event and writes a schema directly; slowave_activate opens a session, slowave_recall asks for context, slowave_feedback reports whether what came back helped, and slowave_commit closes the session. Every turn lands in raw_events, and the consolidated layer is built by replay and consolidation, both zero-LLM and geometric"
   update_delete: "Feedback drives the lifecycle: a schema can be reinforced or marked stale with a reason and a named replacement, and salience and confidence are recomputed from the feedback ledger. Consolidation reinforces an existing engram in place, keyed on the primary prototype, and dedup_exact archives exact normalised duplicates into a canonical row. Removal is a hard delete from the dashboard: the schema row goes, and the recall items, feedback events and JSON references naming it are scrubbed in the same transaction. A procedure is deleted by stripping it from its raw_events payload; its row in the procedure-search projection and its FTS entry are left in place"
   scoping: "scope_id and scope_kind on every schema, a scope_registry, and SQL filtering on the candidate queries when a scope is set. Cross-scope reach is earned rather than granted: a generalization stage from 0 (scoped, hard-blocked) through 1 (portable within the same scope kind, above a score floor) and 2 (contextual, admitted with a 0.70 score multiplier and the floor re-checked on recall) to 3 (global). The MCP tools fix the mode to strict_scope"
-  integration: "An MCP server with five tools, published on PyPI with a Homebrew formula, with a setup command that configures every detected client — Claude Code, Copilot CLI, Codex, Cursor, Cline, Windsurf and Devin Desktop, OpenCode, and Claude Desktop — and installs daemon, worker and backup user services, plus a local web dashboard with a Cytoscape graph view. No LLM API key is required for any memory operation"
-  background: "A replay engine rebuilds derived memory from raw_events when the configured logic version differs from the store's, under an optimistic-lease claim so exactly one process rebuilds. Consolidation forms and reinforces schemas geometrically; salience decays; co-activation edges are rebuilt from the recall and feedback ledgers and decay on a seven-day half-life; a generalization sweep advances or corrects stages; graph-health snapshots and worker runs are recorded"
+  integration: "An MCP server with five tools, published on PyPI with a Homebrew formula, with a setup command that configures every detected client — Claude Code, Copilot CLI, Codex, Cursor, Cline, Windsurf and Devin Desktop, OpenCode, and Claude Desktop — and installs daemon, worker and backup user services when run, or from the Homebrew formula's post_install, plus a local web dashboard with a Cytoscape graph view. No LLM API key is required for any memory operation"
+  background: "A replay engine rebuilds derived memory from raw_events when the configured logic version differs from the store's, under an optimistic-lease claim so exactly one process rebuilds. Consolidation forms and reinforces schemas geometrically; unrecalled schemas older than 30 days lose salience each pass, remembered ones excepted; a daily timer snapshots the database with seven kept; co-activation edges are rebuilt from the recall and feedback ledgers and decay on a seven-day half-life; a generalization sweep advances or corrects stages; graph-health snapshots and worker runs are recorded"
   trust: "Four lifecycle statuses, two of which withhold a schema from every shipped read path, with a stale reason drawn from contradicted, superseded, outdated, unsupported or withdrawn. Confidence and salience are separate numbers recomputed from accepted feedback, with a shared salience ceiling. is_labile marks a reactivated trace as temporarily uncertain, kept explicitly distinct from needs_review. Contradiction and supersession are described in the source as client-owned history that the store and consolidation never infer"
   strengths: "A cross-scope rule stated in the SQL rather than assembled by callers, with one gate function serving recall's direct and graph-expansion paths; an event store with a logic-version stamp so an algorithm change replays instead of migrating; a retrieval-gold contract with required, forbidden and history-only content in the same case, run over the real MCP boundary, with mutation tests that require the negative cases to fail when their guard is removed; a delete preview that counts the evidence links, relations and co-activations a removal will take with it; a schema file that argues for its own decisions; and a memory core with no LLM call and no API key anywhere in ingest, consolidation or recall"
-  risks: "The automatic rebuild that runs when an upgrade changes the logic version deletes every schema and re-consolidates from raw events, and consolidation skips any prototype whose episodes hold only remember events, so a memory the agent stored with slowave_remember is not re-formed, a stale or archived status is lost on the schemas that are, and a schema a person deleted at the dashboard can return because its raw events were kept and nothing records the deletion. A status the store does not recognise is coerced to active rather than refused. Event time exists but validity time does not: nothing records when a claim stopped being true and no read filters as of a past state. The dashboard's two delete routes accept a bare localhost POST with no token or Origin check. The published benchmark numbers are LLM-judged evidence containment with the run records behind them kept out of the repository, and the LongMemEval run is an oracle configuration. It is AGPL-3.0-or-later with a separate commercial licence offered. Deleting a procedure leaves its summary, step text and originating query in the procedure-search projection, which the Home activity chart counts. And the surface is wide: 33 tables, a dashboard of over 4,000 lines, and a client-setup module that executes at install time and installs user services"
+  risks: "The automatic rebuild that runs when an upgrade changes the logic version deletes every schema and re-consolidates from raw events, and consolidation skips any prototype whose episodes hold only remember events, so a memory the agent stored with slowave_remember is not re-formed, a stale or archived status is lost on the schemas that are, and a schema a person deleted at the dashboard can return because its raw events were kept and nothing records the deletion. A status the store does not recognise is coerced to active rather than refused. Event time exists but validity time does not: nothing records when a claim stopped being true and no read filters as of a past state. The dashboard's two delete routes accept a bare localhost POST with no token or Origin check. The published benchmark numbers are LLM-judged evidence containment with the run records behind them kept out of the repository, and the LongMemEval run is an oracle configuration. It is AGPL-3.0-or-later with a separate commercial licence offered. Deleting a procedure leaves its summary, step text and originating query in the procedure-search projection, which the Home activity chart counts. And the surface is wide: 33 tables, a dashboard of over 4,000 lines, and a client-setup module that writes into every detected client and installs user services, which the Homebrew formula runs on install"
 ---
 
 ## 1. Executive Summary
@@ -48,11 +48,11 @@ memory.
 It is AGPL-3.0-or-later, with a separate commercial licence offered in
 `COMMERCIAL.md` and contributions taken under a CLA. The screen found one
 auto-run surface (`server.json`, which declares version 0.20.3 against a
-package at 0.22.2), five build-time execution paths — the `Makefile`, an
-install-time client-setup module and three pytest `conftest.py` files — one
-unpinned dependency surface with a lockfile beside it, and `pyproject.toml`
-changed on 13 October 2026, inside the seven-day cooldown, so nothing was
-installed, built or run.
+package at 0.22.2) and five build-time execution paths: the `Makefile`, the
+client-setup module, flagged by its filename, and three pytest `conftest.py`
+files. It found one unpinned dependency surface with a lockfile beside it, and
+`pyproject.toml` changed on 13 October 2026, inside the seven-day cooldown, so
+nothing was installed, built or run.
 
 **Cross-scope reach is earned, not granted.** Every schema carries a scope, the
 store's candidate queries filter on it in SQL, and the widening rule lives in
@@ -245,10 +245,15 @@ diagnostics and replay inspection; they do not determine semantic truth"*.
 
 The surface is wide for work dated 8 June to 14 October 2026: 33 tables, a
 dashboard of over 4,000 lines, a CLI of over 2,000, and a client-setup module of
-2,366 lines that runs at install time, writes configuration for eight client
-keys and installs daemon, worker and backup user services. The multilingual
-encoder is fetched from Hugging Face at a pinned revision on a cache miss
-(`symbolic/retrieval_encoder.py`). Read the setup module before installing,
+2,366 lines. `slowave setup` writes configuration for eight client keys and
+installs daemon, worker and backup user services. It runs when invoked: the
+build backend is plain setuptools with no install hook, so a pip or pipx
+install executes nothing. The Homebrew formula in the tree is the exception,
+calling `slowave setup` from its `post_install` (`Formula/slowave.rb:21-25`);
+the tap the install guide names is a different repository, `mrsalty/slowave`,
+which this reading did not open. The multilingual encoder is fetched from
+Hugging Face at a pinned revision on a cache miss
+(`symbolic/retrieval_encoder.py`). Read the setup module before running it,
 because it edits files outside the project.
 
 ## 4. Essential Implementation Paths
@@ -263,8 +268,8 @@ because it edits files outside the project.
   `salience=1.4` (`core/engine.py:650-760`).
 - **Consolidate.** `core/consolidation.py:180` skips a prototype whose sampled
   episodes are all remember events → `:282` looks up
-  `find_by_primary_prototype` and reinforces any match in place, the status
-  not consulted → otherwise `:300` checks the nearest active neighbour against
+  `find_by_primary_prototype` and reinforces any match in place, its status
+  neither read nor changed → otherwise `:300` checks the nearest active neighbour against
   the 0.92 near-duplicate cosine → only then is a new schema written.
 - **Activate and recall over MCP.** Both tools call `ops` with
   `mode="strict_scope"` and `relevant_set=True` (`mcp/tools.py:1700-1713`,
@@ -392,6 +397,16 @@ A procedure is admitted when its applicability cosine reaches 0.60 or the FTS
 match is specific, and a context facet that disagrees with the caller's rejects
 it (`symbolic/procedural_memory.py:423-520`).
 
+Admission decides whether a procedure can appear; its record orders the ones
+admitted. Each helped report adds 0.03, up to 0.09, and each harmed report
+subtracts 0.06, up to 0.18, so one harm outweighs one help at a tie. A verified
+success adds 0.015, a partially verified one half that, and a failed source
+subtracts 0.03 (`symbolic/procedural_memory.py:20-26`, `:520-546`). The
+docstring states the order of operations: reuse evidence applies only after
+admission, so it cannot surface an irrelevant procedure. A failed procedure is
+kept and returned with a caveat calling it *"cautionary evidence, not
+recommended guidance"* (`:326`).
+
 ## 7. Write Mechanics
 
 The agent writes; the store maintains. `slowave_remember` is the explicit path:
@@ -403,11 +418,15 @@ The remembered layer cannot, as section 1 sets out.
 
 Consolidation has to decide whether the thing it is forming already exists. It
 asks two questions in order. The same primary prototype means the same engram,
-so the schema is reinforced in place — *"one schema per primary prototype"* —
-and the status is not consulted, so a schema in any lifecycle state is
-reactivated by a match rather than duplicated. Failing that, a nearest active
-neighbour at or above 0.92 cosine is strengthened instead of copied. Otherwise a
-new schema is formed, classified and related.
+so the schema is reinforced in place — *"one schema per primary prototype"*.
+Reinforcement raises salience, capped at 20, replaces confidence and merges the
+supporting episodes and evidence; it neither reads nor writes the status
+(`symbolic/schema_store.py:607-666`). A `stale` or `archived` schema that
+matches therefore absorbs the re-derived claim and stays withheld, neither
+duplicated nor revived. The comment above the call says a match *"reactivates"*
+the engram (`core/consolidation.py:278-281`); the update does not. Failing
+that, a nearest active neighbour at or above 0.92 cosine is strengthened
+instead of copied. Otherwise a new schema is formed, classified and related.
 
 `dedup_exact` handles the other duplicate case: exact normalised duplicates are
 marked `archived` with their salience dropped to 0.05 and related to the
@@ -420,13 +439,24 @@ recomputes a schema's learning effect from the feedback ledger and applies it
 as an absolute value, so a refined feedback row replaces its contribution
 instead of stacking on it.
 
+**Unused memory fades.** Every consolidation pass ends with `decay_unused`
+(`symbolic/schema_store.py:1891-1960`, called from
+`core/services/consolidation.py:112`). An `active` schema formed more than 30
+days ago and never recalled, its recurrence count still zero, loses 0.15
+salience per pass, floored at 0.01, and is flagged labile once it falls below
+0.30. Schemas written by `slowave_remember` carry the `source_kind`
+`explicit_remember` (`core/engine.py:718-719`) and are skipped. Decay lowers
+rank and changes no status, so it withholds nothing.
+
 ## 8. Agent Integration
 
 Five MCP tools — `slowave_activate`, `slowave_recall`, `slowave_remember`,
 `slowave_feedback`, `slowave_commit` — and a `slowave setup` that detects and
 configures Claude Code, Copilot CLI, Codex, Cursor, Cline, Windsurf and Devin
 Desktop, OpenCode and Claude Desktop, with a `--dry-run` first. Published on
-PyPI with a Homebrew formula; no API key required for anything.
+PyPI with a Homebrew formula; no API key required for anything. A pip install
+leaves configuration to that command; the in-tree formula runs it from
+`post_install`.
 
 The tool set encodes the intended rhythm rather than exposing the store. There
 is no MCP verb for deleting, none for editing a schema's status directly, and
@@ -444,6 +474,17 @@ localhost. Anything that can reach the port while it runs can issue a delete: a
 shell the agent holds, or a page in the user's browser where the browser's
 own private-network rules allow it.
 
+The dashboard also measures memory through its own ledgers. Per memory it
+shows exposures, uses, the use rate, and reports of irrelevant, stale and wrong
+(`dashboard/app.py:1180-1192`). Per retrieval kind it counts what was exposed,
+assessed, used and left unassessed, and how many items were delivered in two or
+more tasks (`dashboard/metrics.py:178-186`). Per session it shows whether
+feedback came back (`dashboard/app.py:3215`), and per tool response an
+estimated token overhead, characters divided by four where no estimate was
+stored (`dashboard/metrics.py:236-244`). Each figure is a delivery count or the
+agent's own report, so it shows whether memory was used, not whether a task
+went better.
+
 ## 9. Reliability, Safety, and Trust
 
 **Tombstone — withheld, on a deliberate design choice.** Removal is a hard
@@ -452,24 +493,22 @@ write: the row is gone, the rows naming it are scrubbed, and consolidation's
 identity key is the primary prototype of whatever it is forming now. The same
 proposition re-derived from a later session, or re-formed from the retained
 `raw_events` by the rebuild that follows a logic-version change, is a new
-schema with nothing in the store positioned to intercept it. The trade runs the
-other way too: a store that keeps no record of what it deleted has nothing to
-leak.
+schema with nothing in the store positioned to intercept it ([section
+1](#1-executive-summary) sets out both directions of the rebuild). The trade
+runs the other way too: a store that keeps no record of what it deleted has
+nothing to leak. The procedure-search rows a procedure delete leaves behind are
+not a tombstone either: they are keyed on `proc_<session_id>`, and no write
+path consults them.
 
-**The rebuild is a correctness risk in both directions.** It re-forms what a
-person deleted, and it does not re-form what the agent remembered, since the
-only schema writer it runs skips remember-only episodes. Every status is reset
-with the rows. `test_rebuild.py` seeds sessions of `user_message` events and
-asserts counts and determinism; no test remembers a fact, rebuilds, and recalls
-it.
-
-**Procedure deletion misses the projection.** The procedure delete leaves the
-`procedure_search_documents` row and the `procedure_search_fts` entry holding
-its summary, steps and the query that preceded it. The residue is not a
-tombstone: it is keyed on `proc_<session_id>`, and no write path consults it.
-`test_procedure_hard_delete_removes_embedded_definition_and_references` asserts
-on the raw event, the recall items and the snapshot JSON, and on neither
-projection table (`tests/unit/test_dashboard_delete.py:141-188`).
+**Recovery is a snapshot.** `slowave backup` takes an online SQLite `.backup()`
+copy, gzips it and keeps the last seven, or `SLOWAVE_BACKUP_KEEP`
+(`cli/backup.py:29-31`, `:71`, `:97-130`), and setup installs a daily launchd or
+systemd timer that runs it (`cli/setup.py:2195`, `:2208-2221`). `slowave
+restore` takes one such file, asks for confirmation, stops the registered
+services, keeps the current database as `slowave.db.bak`, clears the WAL
+sidecars and swaps the file (`cli/backup.py:237-312`). A restore returns the
+whole store to the snapshot's moment; a deleted schema stays in the retained
+snapshots until rotation removes them.
 
 **Trust state — awarded.** Four statuses, filtered in the store's SQL, in the
 gate, in `recall` and in the context assembler, with `is_labile` kept
@@ -507,10 +546,11 @@ supplied by the agent and kept apart from the write time. It is not a validity
 interval on a claim: a schema carries no time at which it became or stopped
 being true, and the only read that consults event time ranks by it.
 
-**Two things a reader should weigh.** The install path executes: a 2,366-line
-setup module writes configuration into the detected clients and installs user
-services, and `pyproject.toml` changed on 13 October 2026, inside the seven-day
-cooldown on 15 October. And the licence is AGPL-3.0-or-later with a commercial
+**Two things a reader should weigh.** `slowave setup` writes configuration
+into the detected clients and installs user services, run by hand after a pip
+install and from `post_install` by the in-tree Homebrew formula; and
+`pyproject.toml` changed on 13 October 2026, inside the seven-day cooldown on
+15 October. And the licence is AGPL-3.0-or-later with a commercial
 licence offered separately and a CLA in the tree.
 
 ## 10. Tests, Evals, and Benchmarks
@@ -555,9 +595,12 @@ repository. The tree does hold run output under `data/runs`, dated 9 June to 9
 July 2026 and last changed on 14 July; the headline figures first appear in
 the docs on 1 September.
 
-**The rebuild and the procedure delete are the untested seams.** No test
-remembers a fact and survives a rebuild with it, and no test asserts that
-deleting a procedure removes its projection row.
+**The rebuild and the procedure delete are the untested seams.**
+`test_rebuild.py` seeds sessions of `user_message` events and asserts counts and
+determinism; no test remembers a fact, rebuilds, and recalls it.
+`test_procedure_hard_delete_removes_embedded_definition_and_references` asserts
+on the raw event, the recall items and the snapshot JSON, and on neither
+projection table (`tests/unit/test_dashboard_delete.py:141-188`).
 
 No paper: a search of the README and `docs/` for `arxiv`, `bibtex`,
 `CITATION.cff` and a DOI returns nothing.
@@ -612,25 +655,20 @@ who wants one local store, no API key for memory operations, and a per-project
 boundary that holds by default. Read it for the generalization ladder, the
 delete preview, the mutation-tested gold contract and the feedback-derived
 learning projection whatever you end up building. Weigh four things before
-adopting. The AGPL comes with a commercial-licence path. The install writes
-client configuration and user services through a module that executes at
-install time. The rebuild will not carry explicitly remembered memories across
+adopting. The AGPL comes with a commercial-licence path. `slowave setup`
+writes client configuration and user services, and the in-tree Homebrew
+formula runs it on install. The rebuild will not carry explicitly remembered memories across
 a logic-version change. And the surface grew fast between 8 June and 14 October
 2026 — wait out the dependency cooldown, and read `slowave/cli/setup.py` before
 running it.
 
 ## 12. Open Questions
 
-- Does a logic-version rebuild lose remembered memories in practice? The
-  reading says the rebuild's only schema writer skips remember-only episodes;
-  a run of `slowave rebuild --force` over a store holding one remembered fact
-  would settle it.
-- Should a status survive a rebuild? A `stale` mark lives on the schema row and
-  the feedback that caused it is keyed on the old row id, so neither is in a
-  shape the replay can use.
-- What stops a deleted claim coming back? The schema row and its references go,
-  but the `raw_events` it was derived from stay, with nothing recording that a
-  person removed it.
+- What should a rebuild carry across? A run of `slowave rebuild --force` over
+  a store holding one remembered fact would settle whether remembered memories
+  are lost in practice; a `stale` mark and the feedback behind it are keyed on
+  the old row id; and nothing records that a person removed a claim whose
+  `raw_events` remain.
 - Should the catalog apply the stage-2 discount? The rule is the same on every
   path; the price is paid on two of three.
 - Should the procedure delete reach the projection? The startup backfill
@@ -644,8 +682,8 @@ running it.
 | Path | Lines | What it holds |
 | --- | --- | --- |
 | `slowave/storage/schema.sql` | 720 | Thirty-three tables with their design commentary: `raw_events` and `logic_versions` (115-151), `schemas` (167-206), `schema_evidence` (208), `schema_relations` and `schema_coactivation` (236-275), the retrieval-decision trail (381-431), `feedback_events` (517-548), `procedure_search_documents` (592-606), `scope_registry` (663) |
-| `slowave/symbolic/schema_store.py` | 2156 | `VALID_STATUS` (30-35), `update_status` with its fold-to-stale and its coercion to `active` (691-716), `list` with no default status (1495-1518), the generalization sweep's status predicate (1045), the prototype lookup's (1485), and the status and scope predicates on the lexical and embedding candidate queries (1581-1585, 1648-1652), `dedup_exact` (1758) |
-| `slowave/core/consolidation.py` | 623 | The remember-only skip (171-186, 536-550), the primary-prototype lookup that reinforces without consulting status (278-293), the near-duplicate guard over active rows (296-320) |
+| `slowave/symbolic/schema_store.py` | 2156 | `VALID_STATUS` (30-35), `update_status` with its fold-to-stale and its coercion to `active` (691-716), `list` with no default status (1495-1518), the generalization sweep's status predicate (1045), the prototype lookup's (1485), and the status and scope predicates on the lexical and embedding candidate queries (1581-1585, 1648-1652), `dedup_exact` (1758), `reinforce_schema` (607-666), `decay_unused` (1891-1960) |
+| `slowave/core/consolidation.py` | 623 | The remember-only skip (171-186, 536-550), the primary-prototype lookup that reinforces without reading or changing status (278-293), the near-duplicate guard over active rows (296-320) |
 | `slowave/core/services/retrieval.py` | 2054 | The multilingual channel (452-493), `relevant_catalog` (837), `recall` with its mode-gated status sets (1427, 1558-1569), `context` (1763-1765), `_cross_scope_gate` (1773-1820) and its call sites (1574, 1649) |
 | `slowave/core/context.py` | 1227 | `WorkingMemoryGate._eligible`: status by mode and the `strict_scope` stage wall (668-717) |
 | `slowave/core/services/rebuild.py` | 342 | The derived-table list (67-81), the wipe (223-224), the replay and consolidation that follow (292-293) |
@@ -658,7 +696,9 @@ running it.
 | `slowave/symbolic/procedural_memory.py` | 925 | `load_procedures` for the exact scope (287), `retrieve_procedures` with its fusion and admission floor (423-520) |
 | `slowave/ops.py` | 1646 | `_select_context_reinstatement` (368-403), `activate` (475), `recall` (1038), the API's `needs_review` key mapped to `is_labile` (1312), `commit` (1401) and its backfill (1540) |
 | `slowave/mcp/tools.py` | 2487 | The five tools at 1572, 1786, 1969, 2147 and 2354, the read tools fixing `strict_scope` |
-| `slowave/cli/setup.py` | 2366 | Client detection and configuration; executes at install time |
+| `slowave/cli/setup.py` | 2366 | Client detection and configuration, run by `slowave setup`; the daily backup timers (2195, 2208-2221) |
+| `slowave/cli/backup.py` | — | Snapshot, rotation (31, 71, 97-130) and `restore` (237-312) |
+| `Formula/slowave.rb` | — | The Homebrew formula whose `post_install` runs `slowave setup` (21-25) |
 | `tests/retrieval_quality/contracts.py` | 139 | `RetrievalGold` (18-29) and `evaluate` with its `passed` conjunction (94-122) |
 | `tests/acceptance/test_memory_lifecycle.py` | 1065 | `hard_negative` (360), `scope_twins` (392), the stale transition (431), the mutation cases (963-989) |
 | `tests/acceptance/server.py` | 271 | The acceptance-only mutation registry (116-200) |
@@ -689,6 +729,8 @@ git grep -n -i -E 'csrf|authorization|origin' -- slowave/dashboard/app.py   # no
 ```
 
 ## History
+
+**2026-10-15** — [`23c951420944009ce8cea8762fa4d4a30eff810d`](https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d), same pin. Corrected: consolidation's reinforcement in place leaves a schema's status unchanged, so a stale schema is not reactivated ([section 7](#7-write-mechanics)); `slowave setup` runs when invoked, and a pip install executes nothing, while the in-tree Homebrew formula runs it from `post_install`. Added: salience decay of unrecalled schemas, procedure ranking by recorded outcome, the dashboard's feedback measurements, and daily backup with restore. The rebuild and deletion account is stated once, in section 1. No mark moved.
 
 **2026-10-15** — [`23c951420944009ce8cea8762fa4d4a30eff810d`](https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d), version 0.22.2, 43 commits past the previous pin. Three marks stand, each re-verified at both pins. Upstream: the MCP tools deliver from a declarative catalog with a multilingual channel and without the stage-2 discount ([section 6](#6-retrieval-mechanics)); a retrieval-decision trail; a feedback-derived learning projection; Copilot CLI setup; procedure admission on the applicability cosine alone; the Home procedure count reading raw events. Wrong at the previous pin: `occurred_at` is an event-time clock, so not every timestamp was a record time; the rebuild does not re-form remembered schemas, so the derived layers could not always be rebuilt; and seven cases, not three, paired required with forbidden content. Screened first: one auto-run surface, five build-time execution points, one unpinned surface, `pyproject.toml` inside the cooldown. Nothing installed, built or run.
 

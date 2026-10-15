@@ -28597,16 +28597,18 @@ tools fix the mode to strict_scope</td>
 formula, with a setup command that configures every detected client —
 Claude Code, Copilot CLI, Codex, Cursor, Cline, Windsurf and Devin
 Desktop, OpenCode, and Claude Desktop — and installs daemon, worker and
-backup user services, plus a local web dashboard with a Cytoscape graph
-view. No LLM API key is required for any memory operation</td>
+backup user services when run, or from the Homebrew formula's
+post_install, plus a local web dashboard with a Cytoscape graph view. No
+LLM API key is required for any memory operation</td>
 <td>A replay engine rebuilds derived memory from raw_events when the
 configured logic version differs from the store's, under an
 optimistic-lease claim so exactly one process rebuilds. Consolidation
-forms and reinforces schemas geometrically; salience decays;
-co-activation edges are rebuilt from the recall and feedback ledgers and
-decay on a seven-day half-life; a generalization sweep advances or
-corrects stages; graph-health snapshots and worker runs are
-recorded</td>
+forms and reinforces schemas geometrically; unrecalled schemas older
+than 30 days lose salience each pass, remembered ones excepted; a daily
+timer snapshots the database with seven kept; co-activation edges are
+rebuilt from the recall and feedback ledgers and decay on a seven-day
+half-life; a generalization sweep advances or corrects stages;
+graph-health snapshots and worker runs are recorded</td>
 <td>Four lifecycle statuses, two of which withhold a schema from every
 shipped read path, with a stale reason drawn from contradicted,
 superseded, outdated, unsupported or withdrawn. Confidence and salience
@@ -28644,8 +28646,8 @@ AGPL-3.0-or-later with a separate commercial licence offered. Deleting a
 procedure leaves its summary, step text and originating query in the
 procedure-search projection, which the Home activity chart counts. And
 the surface is wide: 33 tables, a dashboard of over 4,000 lines, and a
-client-setup module that executes at install time and installs user
-services</td>
+client-setup module that writes into every detected client and installs
+user services, which the Homebrew formula runs on install</td>
 </tr>
 <tr>
 <td><a href="../systems/smriti/"><code>smriti</code></a></td>

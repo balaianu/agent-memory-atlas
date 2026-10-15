@@ -166,12 +166,12 @@ supplies judgement; the store supplies memory.</p>
 <p>It is AGPL-3.0-or-later, with a separate commercial licence offered
 in <code>COMMERCIAL.md</code> and contributions taken under a CLA. The
 screen found one auto-run surface (<code>server.json</code>, which
-declares version 0.20.3 against a package at 0.22.2), five build-time
-execution paths — the <code>Makefile</code>, an install-time
-client-setup module and three pytest <code>conftest.py</code> files —
-one unpinned dependency surface with a lockfile beside it, and
-<code>pyproject.toml</code> changed on 13 October 2026, inside the
-seven-day cooldown, so nothing was installed, built or run.</p>
+declares version 0.20.3 against a package at 0.22.2) and five build-time
+execution paths: the <code>Makefile</code>, the client-setup module,
+flagged by its filename, and three pytest <code>conftest.py</code>
+files. It found one unpinned dependency surface with a lockfile beside
+it, and <code>pyproject.toml</code> changed on 13 October 2026, inside
+the seven-day cooldown, so nothing was installed, built or run.</p>
 <p><strong>Cross-scope reach is earned, not granted.</strong> Every
 schema carries a scope, the store's candidate queries filter on it in
 SQL, and the widening rule lives in the predicate rather than in the
@@ -364,12 +364,18 @@ the facet blobs <em>"support topical relation diagnostics and replay
 inspection; they do not determine semantic truth"</em>.</p>
 <p>The surface is wide for work dated 8 June to 14 October 2026: 33
 tables, a dashboard of over 4,000 lines, a CLI of over 2,000, and a
-client-setup module of 2,366 lines that runs at install time, writes
+client-setup module of 2,366 lines. <code>slowave setup</code> writes
 configuration for eight client keys and installs daemon, worker and
-backup user services. The multilingual encoder is fetched from Hugging
+backup user services. It runs when invoked: the build backend is plain
+setuptools with no install hook, so a pip or pipx install executes
+nothing. The Homebrew formula in the tree is the exception, calling
+<code>slowave setup</code> from its <code>post_install</code>
+(<code>Formula/slowave.rb:21-25</code>); the tap the install guide names
+is a different repository, <code>mrsalty/slowave</code>, which this
+reading did not open. The multilingual encoder is fetched from Hugging
 Face at a pinned revision on a cache miss
 (<code>symbolic/retrieval_encoder.py</code>). Read the setup module
-before installing, because it edits files outside the project.</p>
+before running it, because it edits files outside the project.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
@@ -388,9 +394,9 @@ prototypes are formed or updated in the latent store.</li>
 <li><strong>Consolidate.</strong> <code>core/consolidation.py:180</code>
 skips a prototype whose sampled episodes are all remember events →
 <code>:282</code> looks up <code>find_by_primary_prototype</code> and
-reinforces any match in place, the status not consulted → otherwise
-<code>:300</code> checks the nearest active neighbour against the 0.92
-near-duplicate cosine → only then is a new schema written.</li>
+reinforces any match in place, its status neither read nor changed →
+otherwise <code>:300</code> checks the nearest active neighbour against
+the 0.92 near-duplicate cosine → only then is a new schema written.</li>
 <li><strong>Activate and recall over MCP.</strong> Both tools call
 <code>ops</code> with <code>mode="strict_scope"</code> and
 <code>relevant_set=True</code> (<code>mcp/tools.py:1700-1713</code>,
@@ -535,6 +541,17 @@ rank, weighted 2:1:1. A procedure is admitted when its applicability
 cosine reaches 0.60 or the FTS match is specific, and a context facet
 that disagrees with the caller's rejects it
 (<code>symbolic/procedural_memory.py:423-520</code>).</p>
+<p>Admission decides whether a procedure can appear; its record orders
+the ones admitted. Each helped report adds 0.03, up to 0.09, and each
+harmed report subtracts 0.06, up to 0.18, so one harm outweighs one help
+at a tie. A verified success adds 0.015, a partially verified one half
+that, and a failed source subtracts 0.03
+(<code>symbolic/procedural_memory.py:20-26</code>,
+<code>:520-546</code>). The docstring states the order of operations:
+reuse evidence applies only after admission, so it cannot surface an
+irrelevant procedure. A failed procedure is kept and returned with a
+caveat calling it <em>"cautionary evidence, not recommended
+guidance"</em> (<code>:326</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>The agent writes; the store maintains. <code>slowave_remember</code>
 is the explicit path: it appends a raw event and writes a schema at
@@ -547,11 +564,17 @@ sets out.</p>
 <p>Consolidation has to decide whether the thing it is forming already
 exists. It asks two questions in order. The same primary prototype means
 the same engram, so the schema is reinforced in place — <em>"one schema
-per primary prototype"</em> — and the status is not consulted, so a
-schema in any lifecycle state is reactivated by a match rather than
-duplicated. Failing that, a nearest active neighbour at or above 0.92
-cosine is strengthened instead of copied. Otherwise a new schema is
-formed, classified and related.</p>
+per primary prototype"</em>. Reinforcement raises salience, capped at
+20, replaces confidence and merges the supporting episodes and evidence;
+it neither reads nor writes the status
+(<code>symbolic/schema_store.py:607-666</code>). A <code>stale</code> or
+<code>archived</code> schema that matches therefore absorbs the
+re-derived claim and stays withheld, neither duplicated nor revived. The
+comment above the call says a match <em>"reactivates"</em> the engram
+(<code>core/consolidation.py:278-281</code>); the update does not.
+Failing that, a nearest active neighbour at or above 0.92 cosine is
+strengthened instead of copied. Otherwise a new schema is formed,
+classified and related.</p>
 <p><code>dedup_exact</code> handles the other duplicate case: exact
 normalised duplicates are marked <code>archived</code> with their
 salience dropped to 0.05 and related to the canonical row.</p>
@@ -562,6 +585,17 @@ The learning projection goes further: rather than incrementing a tally
 it recomputes a schema's learning effect from the feedback ledger and
 applies it as an absolute value, so a refined feedback row replaces its
 contribution instead of stacking on it.</p>
+<p><strong>Unused memory fades.</strong> Every consolidation pass ends
+with <code>decay_unused</code>
+(<code>symbolic/schema_store.py:1891-1960</code>, called from
+<code>core/services/consolidation.py:112</code>). An <code>active</code>
+schema formed more than 30 days ago and never recalled, its recurrence
+count still zero, loses 0.15 salience per pass, floored at 0.01, and is
+flagged labile once it falls below 0.30. Schemas written by
+<code>slowave_remember</code> carry the <code>source_kind</code>
+<code>explicit_remember</code> (<code>core/engine.py:718-719</code>) and
+are skipped. Decay lowers rank and changes no status, so it withholds
+nothing.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
 <p>Five MCP tools — <code>slowave_activate</code>,
 <code>slowave_recall</code>, <code>slowave_remember</code>,
@@ -569,7 +603,9 @@ contribution instead of stacking on it.</p>
 <code>slowave setup</code> that detects and configures Claude Code,
 Copilot CLI, Codex, Cursor, Cline, Windsurf and Devin Desktop, OpenCode
 and Claude Desktop, with a <code>--dry-run</code> first. Published on
-PyPI with a Homebrew formula; no API key required for anything.</p>
+PyPI with a Homebrew formula; no API key required for anything. A pip
+install leaves configuration to that command; the in-tree formula runs
+it from <code>post_install</code>.</p>
 <p>The tool set encodes the intended rhythm rather than exposing the
 store. There is no MCP verb for deleting, none for editing a schema's
 status directly, and none for the dashboard's lifecycle operations. The
@@ -586,6 +622,18 @@ POST with no token and no Origin check
 localhost. Anything that can reach the port while it runs can issue a
 delete: a shell the agent holds, or a page in the user's browser where
 the browser's own private-network rules allow it.</p>
+<p>The dashboard also measures memory through its own ledgers. Per
+memory it shows exposures, uses, the use rate, and reports of
+irrelevant, stale and wrong (<code>dashboard/app.py:1180-1192</code>).
+Per retrieval kind it counts what was exposed, assessed, used and left
+unassessed, and how many items were delivered in two or more tasks
+(<code>dashboard/metrics.py:178-186</code>). Per session it shows
+whether feedback came back (<code>dashboard/app.py:3215</code>), and per
+tool response an estimated token overhead, characters divided by four
+where no estimate was stored
+(<code>dashboard/metrics.py:236-244</code>). Each figure is a delivery
+count or the agent's own report, so it shows whether memory was used,
+not whether a task went better.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>Tombstone — withheld, on a deliberate design choice.</strong>
@@ -595,26 +643,25 @@ scrubbed, and consolidation's identity key is the primary prototype of
 whatever it is forming now. The same proposition re-derived from a later
 session, or re-formed from the retained <code>raw_events</code> by the
 rebuild that follows a logic-version change, is a new schema with
-nothing in the store positioned to intercept it. The trade runs the
-other way too: a store that keeps no record of what it deleted has
-nothing to leak.</p>
-<p><strong>The rebuild is a correctness risk in both
-directions.</strong> It re-forms what a person deleted, and it does not
-re-form what the agent remembered, since the only schema writer it runs
-skips remember-only episodes. Every status is reset with the rows.
-<code>test_rebuild.py</code> seeds sessions of <code>user_message</code>
-events and asserts counts and determinism; no test remembers a fact,
-rebuilds, and recalls it.</p>
-<p><strong>Procedure deletion misses the projection.</strong> The
-procedure delete leaves the <code>procedure_search_documents</code> row
-and the <code>procedure_search_fts</code> entry holding its summary,
-steps and the query that preceded it. The residue is not a tombstone: it
-is keyed on <code>proc_&lt;session_id&gt;</code>, and no write path
-consults it.
-<code>test_procedure_hard_delete_removes_embedded_definition_and_references</code>
-asserts on the raw event, the recall items and the snapshot JSON, and on
-neither projection table
-(<code>tests/unit/test_dashboard_delete.py:141-188</code>).</p>
+nothing in the store positioned to intercept it (<a
+href="#1-executive-summary">section 1</a> sets out both directions of
+the rebuild). The trade runs the other way too: a store that keeps no
+record of what it deleted has nothing to leak. The procedure-search rows
+a procedure delete leaves behind are not a tombstone either: they are
+keyed on <code>proc_&lt;session_id&gt;</code>, and no write path
+consults them.</p>
+<p><strong>Recovery is a snapshot.</strong> <code>slowave backup</code>
+takes an online SQLite <code>.backup()</code> copy, gzips it and keeps
+the last seven, or <code>SLOWAVE_BACKUP_KEEP</code>
+(<code>cli/backup.py:29-31</code>, <code>:71</code>,
+<code>:97-130</code>), and setup installs a daily launchd or systemd
+timer that runs it (<code>cli/setup.py:2195</code>,
+<code>:2208-2221</code>). <code>slowave restore</code> takes one such
+file, asks for confirmation, stops the registered services, keeps the
+current database as <code>slowave.db.bak</code>, clears the WAL sidecars
+and swaps the file (<code>cli/backup.py:237-312</code>). A restore
+returns the whole store to the snapshot's moment; a deleted schema stays
+in the retained snapshots until rotation removes them.</p>
 <p><strong>Trust state — awarded.</strong> Four statuses, filtered in
 the store's SQL, in the gate, in <code>recall</code> and in the context
 assembler, with <code>is_labile</code> kept explicitly distinct from
@@ -652,9 +699,10 @@ genuine second clock on events, supplied by the agent and kept apart
 from the write time. It is not a validity interval on a claim: a schema
 carries no time at which it became or stopped being true, and the only
 read that consults event time ranks by it.</p>
-<p><strong>Two things a reader should weigh.</strong> The install path
-executes: a 2,366-line setup module writes configuration into the
-detected clients and installs user services, and
+<p><strong>Two things a reader should weigh.</strong>
+<code>slowave setup</code> writes configuration into the detected
+clients and installs user services, run by hand after a pip install and
+from <code>post_install</code> by the in-tree Homebrew formula; and
 <code>pyproject.toml</code> changed on 13 October 2026, inside the
 seven-day cooldown on 15 October. And the licence is AGPL-3.0-or-later
 with a commercial licence offered separately and a CLA in the tree.</p>
@@ -704,9 +752,13 @@ repository. The tree does hold run output under <code>data/runs</code>,
 dated 9 June to 9 July 2026 and last changed on 14 July; the headline
 figures first appear in the docs on 1 September.</p>
 <p><strong>The rebuild and the procedure delete are the untested
-seams.</strong> No test remembers a fact and survives a rebuild with it,
-and no test asserts that deleting a procedure removes its projection
-row.</p>
+seams.</strong> <code>test_rebuild.py</code> seeds sessions of
+<code>user_message</code> events and asserts counts and determinism; no
+test remembers a fact, rebuilds, and recalls it.
+<code>test_procedure_hard_delete_removes_embedded_definition_and_references</code>
+asserts on the raw event, the recall items and the snapshot JSON, and on
+neither projection table
+(<code>tests/unit/test_dashboard_delete.py:141-188</code>).</p>
 <p>No paper: a search of the README and <code>docs/</code> for
 <code>arxiv</code>, <code>bibtex</code>, <code>CITATION.cff</code> and a
 DOI returns nothing.</p>
@@ -764,24 +816,20 @@ and a per-project boundary that holds by default. Read it for the
 generalization ladder, the delete preview, the mutation-tested gold
 contract and the feedback-derived learning projection whatever you end
 up building. Weigh four things before adopting. The AGPL comes with a
-commercial-licence path. The install writes client configuration and
-user services through a module that executes at install time. The
-rebuild will not carry explicitly remembered memories across a
-logic-version change. And the surface grew fast between 8 June and 14
-October 2026 — wait out the dependency cooldown, and read
+commercial-licence path. <code>slowave setup</code> writes client
+configuration and user services, and the in-tree Homebrew formula runs
+it on install. The rebuild will not carry explicitly remembered memories
+across a logic-version change. And the surface grew fast between 8 June
+and 14 October 2026 — wait out the dependency cooldown, and read
 <code>slowave/cli/setup.py</code> before running it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>Does a logic-version rebuild lose remembered memories in practice?
-The reading says the rebuild's only schema writer skips remember-only
-episodes; a run of <code>slowave rebuild --force</code> over a store
-holding one remembered fact would settle it.</li>
-<li>Should a status survive a rebuild? A <code>stale</code> mark lives
-on the schema row and the feedback that caused it is keyed on the old
-row id, so neither is in a shape the replay can use.</li>
-<li>What stops a deleted claim coming back? The schema row and its
-references go, but the <code>raw_events</code> it was derived from stay,
-with nothing recording that a person removed it.</li>
+<li>What should a rebuild carry across? A run of
+<code>slowave rebuild --force</code> over a store holding one remembered
+fact would settle whether remembered memories are lost in practice; a
+<code>stale</code> mark and the feedback behind it are keyed on the old
+row id; and nothing records that a person removed a claim whose
+<code>raw_events</code> remain.</li>
 <li>Should the catalog apply the stage-2 discount? The rule is the same
 on every path; the price is paid on two of three.</li>
 <li>Should the procedure delete reach the projection? The startup
@@ -820,13 +868,15 @@ its fold-to-stale and its coercion to <code>active</code> (691-716),
 <code>list</code> with no default status (1495-1518), the generalization
 sweep's status predicate (1045), the prototype lookup's (1485), and the
 status and scope predicates on the lexical and embedding candidate
-queries (1581-1585, 1648-1652), <code>dedup_exact</code> (1758)</td>
+queries (1581-1585, 1648-1652), <code>dedup_exact</code> (1758),
+<code>reinforce_schema</code> (607-666), <code>decay_unused</code>
+(1891-1960)</td>
 </tr>
 <tr>
 <td><code>slowave/core/consolidation.py</code></td>
 <td>623</td>
 <td>The remember-only skip (171-186, 536-550), the primary-prototype
-lookup that reinforces without consulting status (278-293), the
+lookup that reinforces without reading or changing status (278-293), the
 near-duplicate guard over active rows (296-320)</td>
 </tr>
 <tr>
@@ -913,7 +963,21 @@ fixing <code>strict_scope</code></td>
 <tr>
 <td><code>slowave/cli/setup.py</code></td>
 <td>2366</td>
-<td>Client detection and configuration; executes at install time</td>
+<td>Client detection and configuration, run by
+<code>slowave setup</code>; the daily backup timers (2195,
+2208-2221)</td>
+</tr>
+<tr>
+<td><code>slowave/cli/backup.py</code></td>
+<td>—</td>
+<td>Snapshot, rotation (31, 71, 97-130) and <code>restore</code>
+(237-312)</td>
+</tr>
+<tr>
+<td><code>Formula/slowave.rb</code></td>
+<td>—</td>
+<td>The Homebrew formula whose <code>post_install</code> runs
+<code>slowave setup</code> (21-25)</td>
 </tr>
 <tr>
 <td><code>tests/retrieval_quality/contracts.py</code></td>
@@ -970,6 +1034,17 @@ git grep -n -E &#39;@mcp\.tool\(name=&#39; -- slowave/mcp                   # fi
 git grep -n -E &#39;mode=&quot;strict_scope&quot;&#39; -- slowave/mcp/tools.py      # both MCP read tools fix the mode
 git grep -n -i -E &#39;csrf|authorization|origin&#39; -- slowave/dashboard/app.py   # nothing: the delete routes check no token or Origin</code></pre>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d"><code class="commit-id" title="23c951420944009ce8cea8762fa4d4a30eff810d">23c95142…</code></a>,
+same pin. Corrected: consolidation's reinforcement in place leaves a
+schema's status unchanged, so a stale schema is not reactivated (<a
+href="#7-write-mechanics">section 7</a>); <code>slowave setup</code>
+runs when invoked, and a pip install executes nothing, while the in-tree
+Homebrew formula runs it from <code>post_install</code>. Added: salience
+decay of unrecalled schemas, procedure ranking by recorded outcome, the
+dashboard's feedback measurements, and daily backup with restore. The
+rebuild and deletion account is stated once, in section 1. No mark
+moved.</p>
 <p><strong>2026-10-15</strong> — <a
 href="https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d"><code class="commit-id" title="23c951420944009ce8cea8762fa4d4a30eff810d">23c95142…</code></a>,
 version 0.22.2, 43 commits past the previous pin. Three marks stand,
