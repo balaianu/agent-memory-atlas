@@ -2616,10 +2616,10 @@ href="https://github.com/szara7678/OpenAkashic/commit/6c916d9aac6198de0912a97739
 surfaces are unpinned, so nothing was installed and nothing was run</li>
 <li><a href="https://github.com/TrianglLabs/otis">TrianglLabs/otis</a>
 at <a
-href="https://github.com/TrianglLabs/otis/commit/879397c8ec9fd2488c69b742891f6b6c28c2af23"><code class="commit-id" title="879397c8ec9fd2488c69b742891f6b6c28c2af23">879397c8…</code></a>
-— read only; the manifest changed the day before the reading and carries
-twenty-two floating ranges with no lockfile, so nothing was installed
-and no test was run</li>
+href="https://github.com/TrianglLabs/otis/commit/b8b8aabae1e4674778ad2545fcf71ceabd6b0515"><code class="commit-id" title="b8b8aabae1e4674778ad2545fcf71ceabd6b0515">b8b8aaba…</code></a>
+— read only; <code>package.json</code> and <code>bun.lock</code> changed
+inside the seven-day cooldown and a <code>postinstall</code> is
+declared, so nothing was installed and no test was run</li>
 <li><a href="https://github.com/Q00/ouroboros">Q00/ouroboros</a> at <a
 href="https://github.com/Q00/ouroboros/commit/79a423e80f93d4acc2aa0ee5b98340e86a766476"><code class="commit-id" title="79a423e80f93d4acc2aa0ee5b98340e86a766476">79a423e8…</code></a>
 — read only; two harness hooks fire on prompt submit and after every
@@ -18136,6 +18136,31 @@ held no arXiv reference; <code>README.md:1126</code> cites the
 jina-reranker-v3 paper. Two enumerations were short:
 <code>confirmed</code> had two readers, both pending-list builders, and
 two snapshot scripts also named <code>merge-proposals.jsonl</code>.</li>
+<li><strong>Five published claims about <a
+href="../systems/otis/">Otis</a> were wrong at <a
+href="https://github.com/TrianglLabs/otis/commit/879397c8ec9fd2488c69b742891f6b6c28c2af23"><code class="commit-id" title="879397c8ec9fd2488c69b742891f6b6c28c2af23">879397c8…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The report said the <code>compacted</code> event carries the messages it
+replaced; its <code>messages</code> field held the kept suffix,
+<code>result.keptMessages</code>
+(<code>src/app/conversation.ts:215-219</code>,
+<code>src/core/compaction.ts:62</code>), and the replaced turns survived
+as earlier events the log never rewrites, plus an in-turn
+<code>turn</code> segment. It said the dependency manifest had no
+lockfile; <code>bun.lock</code> had been committed since the
+repository's first commit on 16 July 2026. It said the hashed session
+directory recorded no mapping back to its workspace;
+<code>registerWorkspacePath</code> wrote the absolute path to
+<code>workspace.json</code>
+(<code>src/storage/workspace-registry.ts:15</code>), and the desktop's
+global history listed those sessions. It said every skill file was 0600;
+the manager set 0700 on its own directories and 0600 on its manifest and
+lock, and cloned files kept the modes git wrote. And its figures of
+23,700 lines at v0.1.36 and 419 lines in <code>session-events.ts</code>
+were the previous pin's, where this one measured 30,661 lines at v0.1.48
+and 613. The first rested on the field's name rather than its caller,
+the third on a reading that predated the registry, and the last on
+figures carried across a re-pin.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

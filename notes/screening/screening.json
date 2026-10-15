@@ -33166,19 +33166,31 @@
     "otis": {
       "counts": {
         "AGENT": 1,
+        "EXEC": 1,
         "FLOAT": 1,
-        "FRESH": 1
+        "FRESH": 2,
+        "NOTE": 1
       },
-      "files_scanned": 3,
+      "files_scanned": 9,
       "findings": [
+        {
+          "detail": "changed 6 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "bun.lock"
+        },
         {
           "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "package.json"
+        },
+        {
+          "detail": "npm lifecycle `postinstall`: chmod +x node_modules/node-pty/prebuilds/*/spawn-helper 2>/dev/null || true",
+          "kind": "EXEC",
+          "path": "package.json"
         }
       ],
-      "revision": "879397c8ec9fd2488c69b742891f6b6c28c2af23",
-      "screened_at": "2026-09-17T18:19:58+00:00",
+      "revision": "b8b8aabae1e4674778ad2545fcf71ceabd6b0515",
+      "screened_at": "2026-10-15T21:43:26+00:00",
       "slug": "otis",
       "source": "reused-clone",
       "status": "screened",

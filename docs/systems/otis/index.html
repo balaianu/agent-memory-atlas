@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A local terminal agent whose
-durable memory is a resumable session log and a set of skills cloned
-from a git URL with no revision — in a repository that refuses its own
-release binary on a checksum mismatch.">
+    <meta name="description" content="A local coding agent with a
+session log, a Markdown fact store recalled by word across workspaces,
+and skills cloned from unpinned git URLs.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Otis — Agent Memory Atlas">
-    <meta property="og:description" content="A local terminal agent
-whose durable memory is a resumable session log and a set of skills
-cloned from a git URL with no revision — in a repository that refuses
-its own release binary on a checksum mismatch.">
+    <meta property="og:description" content="A local coding agent with a
+session log, a Markdown fact store recalled by word across workspaces,
+and skills cloned from unpinned git URLs.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Otis — Agent Memory Atlas">
-    <meta name="twitter:description" content="A local terminal agent
-whose durable memory is a resumable session log and a set of skills
-cloned from a git URL with no revision — in a repository that refuses
-its own release binary on a checksum mismatch.">
+    <meta name="twitter:description" content="A local coding agent with
+a session log, a Markdown fact store recalled by word across workspaces,
+and skills cloned from unpinned git URLs.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Otis — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ its own release binary on a checksum mismatch.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Otis",
-      "description": "A local terminal agent whose durable memory is a resumable session log and a set of skills cloned from a git URL with no revision \u2014 in a repository that refuses its own release binary on a checksum mismatch.",
+      "description": "A local coding agent with a session log, a Markdown fact store recalled by word across workspaces, and skills cloned from unpinned git URLs.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,24 +99,23 @@ its own release binary on a checksum mismatch.">
           <p class="eyebrow">The binary is pinned, the skills are
 not</p>
           <h1>Otis</h1>
-          <p class="document-deck">A local terminal agent whose durable
-memory is a resumable session log and a set of skills cloned from a git
-URL with no revision — in a repository that refuses its own release
-binary on a checksum mismatch.</p>
+          <p class="document-deck">A local coding agent with a session
+log, a Markdown fact store recalled by word across workspaces, and
+skills cloned from unpinned git URLs.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/TrianglLabs/otis">
               <span>Source</span>
               <strong>TrianglLabs/otis</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/TrianglLabs/otis/commit/879397c8ec9fd2488c69b742891f6b6c28c2af23" title="879397c8ec9fd2488c69b742891f6b6c28c2af23">
+            <a class="meta-pill revision-pill" href="https://github.com/TrianglLabs/otis/commit/b8b8aabae1e4674778ad2545fcf71ceabd6b0515" title="b8b8aabae1e4674778ad2545fcf71ceabd6b0515">
               <span>Analyzed revision</span>
-              <code>879397c8…</code>
+              <code>b8b8aaba…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-17</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/TrianglLabs--otis" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,19 @@ binary on a checksum mismatch.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>58,775
+lines of TypeScript in 181 files under src/, 54,069 more in 145 test
+files; the fact store, src/memory/memory.ts, is 339 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>233
+commits on main by one author and a release bot, 16 July – 15 October
+2026; version 0.2.38</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,758
+vitest cases in 145 files, 11 of them in tests/memory/memory.test.ts;
+none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,364 +151,426 @@ binary on a checksum mismatch.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Otis is a terminal coding agent — 23,700 lines of TypeScript at
-v0.1.36, MIT, macOS and Linux — that runs against any public serverless
-Fireworks model supporting tool calls, or against a llama.cpp runtime it
-downloads and manages itself. The premise is locality: <em>"Sessions,
-configuration, usage, tool activity, and diffs stay local"</em>, with
-inference under Fireworks' zero-data-retention default and no service of
-the project's own.</p>
-<p>Its durable state is three things. <strong>Sessions</strong> are
-append-only JSONL under a per-workspace directory, resumable by id or by
-<code>--continue</code>. <strong><code>AGENTS.md</code></strong> files
-are collected from the home directory and every ancestor of the working
-directory, ordered so the nearest file lands last. And
-<strong>skills</strong> are directories of Markdown the agent loads by
-name through a <code>skill</code> tool whose description is the whole
-retrieval policy: <em>"Read SKILL.md before following a matching
-skill."</em></p>
-<p><strong>The skills are the memory worth reading about, and they are
-unpinned.</strong> Installing one is
-<code>git clone -- &lt;url&gt; &lt;dir&gt;</code> with no revision, no
-tag and no depth; updating is <code>git pull --ff-only</code>. The
-runtime manifest schema
-(<code>ManagedSkillSource = { id, url, skills: [{ name, relativePath }] }</code>)
-has no field for a commit or a hash, so what the agent will follow
-tomorrow is whatever that repository's default branch says tomorrow.</p>
-<p>That is worth naming because of what sits beside it. The same
-codebase verifies a SHA-256 in three other places. Its <strong>own
-release archive</strong>:
-<code>sha256File(archivePath) !== options.artifact.sha256</code> aborts
-the install, and the manifest parser rejects a checksum that is missing
-or not 64 hex characters. The <strong>llama.cpp binaries</strong> it
-downloads, against six hard-coded digests in
-<code>src/inference/llama-binary.ts</code>. And every <strong>GGUF
-weight file</strong>, in <code>src/inference/gguf-cache.ts</code>, which
-verifies before publishing into the cache, re-verifies a resumed partial
-download, and treats a mismatch as a discard.</p>
-<p>And <code>skills-lock.json</code> in the repository root records a
-<code>computedHash</code> for the one skill vendored during development.
-That string appears <strong>exactly once in the entire tree</strong>:
-nothing in <code>src/</code>, <code>scripts/</code> or
-<code>tests/</code> writes it, reads it or checks it. The project treats
-its own binary, its inference runtime and its model weights as
-supply-chain risks, and the instructions its agent reads and follows as
-a URL.</p>
-<p><strong>Where the skill code is rigorous is the other half.</strong>
-<code>readSkillResource</code> refuses absolute paths, resolves the
-request against the skill root, asserts containment, calls
-<code>realpath</code>, asserts containment <em>again</em> so a symlink
-cannot escape, and decodes with
-<code>TextDecoder("utf-8", { fatal: true })</code>. The manifest parser
-rejects <code>..</code> segments, absolute paths, duplicate ids and
-malformed names. Git runs with <code>--</code> before the URL and a
-scrubbed environment. Every skill directory is 0700 and every file 0600.
-The containment of a skill already on disk is careful; which skill
-arrived is not checked at all.</p>
+<p>Otis is a local coding agent whose memory is three stores: an
+append-only session log, a Markdown fact store the agent writes with
+<code>remember</code> and reads with <code>recall</code>, and skills
+fetched from git. The fact store is small, legible and redacted;
+<code>recall</code> reaches every workspace's transcripts by design. The
+skills are the weak point: a skill is cloned from a URL with no revision
+recorded, in a codebase that checksums its own binary, its inference
+runtime, its model weights and its one bundled skill.</p>
+<p>The <strong>fact store</strong> arrived on 27 September 2026 and
+follows a layout the code calls the Agent Memory Repo: a
+<code>MEMORY.md</code> index linking topic files, one fact per bullet,
+with the session it came from and the day. There are two scopes — a
+folder per workspace and one global folder — and only the two indexes
+enter the system prompt; the agent reads a topic, or searches facts and
+past sessions, through <code>recall</code>
+(<code>src/memory/memory.ts:193</code>, <code>:310</code>).</p>
+<p><strong>Recall crosses workspaces on purpose.</strong> Facts come
+from the asking workspace and the global scope, and up to eight
+transcript excerpts come from every workspace's sessions except the
+asking one. The test suite asserts it, and the README says the result
+goes to whichever model is answering, hosted or local
+(<code>tests/memory/memory.test.ts:220-263</code>,
+<code>README.md:284-296</code>).</p>
+<p><strong>The skills are unpinned.</strong> Installing one is
+<code>git clone</code> of the URL, with
+<code>--branch &lt;ref&gt;</code> when the URL names a
+<code>/tree/&lt;ref&gt;/</code> folder; updating is
+<code>git pull --ff-only</code>. The manifest records <code>id</code>,
+<code>url</code>, <code>path</code>, <code>installedAt</code>, the skill
+list and a declared plugin identity, and no commit or hash
+(<code>src/skills/manager.ts:126-132</code>, <code>:201</code>,
+<code>src/skills/catalog.ts:247-257</code>).</p>
+<p>The contrast is inside the same tree. The release archive is refused
+on a SHA-256 mismatch (<code>src/cli/update.ts:158-161</code>). The
+llama.cpp runtime archives carry 38 hard-coded digests and every GGUF
+file is verified before it is published into the cache. And the bundled
+<code>documents</code> skill is materialised into a directory named for
+a SHA-256 of its contents, with a modified cached resource refused
+(<code>src/skills/bundled.ts:19</code>, <code>:61-67</code>). The one
+skill the project ships is content-addressed; a skill a user installs is
+a moving branch. <code>skills-lock.json</code> carries a
+<code>computedHash</code> that appears once in the tree and that nothing
+reads.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>Three durable surfaces, none of which holds a belief.</p>
 <p><strong>A session</strong> is a stream of events — prompts,
-responses, tool activity, usage, compaction — appended to one JSONL
-file, with a title, a message count and an <code>updatedAt</code>. It is
-retrieved whole, by id or by recency, never searched.</p>
+responses, tool activity, usage, compaction — appended to one JSONL file
+per session. It is resumed whole, by id or by recency, and searched by
+word.</p>
+<p><strong>A fact</strong> is one Markdown bullet in a topic file, with
+optional <code>[source: …; added: YYYY-MM-DD]</code> metadata. It is
+born by <code>remember</code> (the agent's tool, the
+<code>/memory</code> command, the desktop settings page or an import of
+another agent's memory). It dies by <code>forget</code>, which deletes
+the line. There is no state between: a fact is live until it is removed,
+and nothing records that it was.</p>
 <p><strong>A skill</strong> is procedural memory with an install step.
-It is fetched, listed in a catalog, and read on demand; nothing scores
-it, ages it or retires it.</p>
-<p><strong><code>AGENTS.md</code></strong> is the instruction layer,
-assembled per invocation from the home directory upward so that
-<em>"closer files override broader ones"</em> — a scoping rule expressed
-as ordering rather than as a filter.</p>
-<p>The one place something is decided about memory is compaction, and it
-decides generously:</p>
-<pre class="text"><code>context reaches AUTO_COMPACT_THRESHOLD_TOKENS (250_000)
+It is fetched, catalogued with any skill in <code>.agents/skills</code>
+or another agent's skill folder, and read on demand. The catalog entry
+is a name, a description, two paths, two invocation switches and a
+bundled flag, with no score or expiry
+(<code>src/skills/catalog.ts:207-218</code>).</p>
+<p><strong>Instructions</strong> are assembled per invocation from the
+home directory down to the working directory, nearest last, reading
+<code>CLAUDE.md</code>, <code>GEMINI.md</code>, Copilot or Cursor files
+where a folder has no <code>AGENTS.md</code>
+(<code>src/core/context.ts:61-110</code>).</p>
+<p>Compaction is the one place something is decided about context, and
+it decides generously:</p>
+<pre class="text"><code>context reaches the threshold: min(250_000, window minus a reserve)
         │
         ▼
-summary replaces the messages in the model&#39;s context
+summary + kept suffix replace the messages in the model&#39;s context
         │
-        └── session log appends { type: &quot;compacted&quot;, summary, messages, toolActivities }
-                                                              ^^^^^^^^
-                                         the replaced messages are kept, not dropped</code></pre>
-<p>The model forgets and the store does not. Most systems in this atlas
-compact by destroying the source; here the event that performs the
-compaction carries the material it compacted, so a resumed session can
-still be read back in full even though the agent will not see it
-again.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — what Otis keeps between sessions, and which of it is pinned</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: what Otis keeps between sessions, and which of it is pinned
+        └── session log appends { type: &quot;compacted&quot;, summary,
+                                  messages = kept suffix,
+                                  turn = the in-flight segment, if mid-turn }
+            earlier turn events are never rewritten</code></pre>
+<p>The model forgets and the store does not. The replaced turns stay on
+disk as the events that recorded them, and an in-turn checkpoint
+archives the active turn's segment in the event itself, so session
+search finds a word written before a compaction
+(<code>src/storage/session.ts:144-182</code>,
+<code>tests/storage/session-search.test.ts:38-58</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — what Otis keeps between sessions, which of it reaches the prompt, and which of it is pinned</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: what Otis keeps between sessions, which of it reaches the prompt, and which of it is pinned
 flowchart TD
-  RUN[&quot;otis — a turn&quot;] --&gt; CTX[&quot;AGENTS.md, home → cwd,&lt;br/&gt;nearest last&quot;]
-  RUN --&gt; SESS[(&quot;session JSONL&lt;br/&gt;one dir per workspace:&lt;br/&gt;basename-sha256(abs path)[:12]&quot;)]
+  RUN[&quot;otis — a turn&quot;] --&gt; CTX[&quot;instructions: home → cwd,&lt;br/&gt;nearest last; CLAUDE.md etc.&lt;br/&gt;where no AGENTS.md&quot;]
+  RUN --&gt; SESS[(&quot;session JSONL&lt;br/&gt;dir = basename-sha256(abs path)[:12]&lt;br/&gt;workspace.json records the path&quot;)]
+  IDX[&quot;MEMORY.md, workspace + global&quot;] --&gt;|&quot;system prompt, ≤32 KiB each&quot;| RUN
+  RUN --&gt;|&quot;remember: redact, append bullet&quot;| FACTS[(&quot;topic files&lt;br/&gt;workspace folder + global folder&quot;)]
+  FACTS --&gt; IDX
+  RUN --&gt;|&quot;forget: delete the line&quot;| FACTS
+  RUN --&gt;|&quot;recall(query)&quot;| REC{&quot;whole-word match&quot;}
+  FACTS --&gt; REC
+  ALL[(&quot;every workspace&#39;s sessions&lt;br/&gt;minus the asking one&quot;)] --&gt;|&quot;≤ 8 excerpts&quot;| REC
+  REC --&gt;|&quot;redacted text&quot;| RUN
   RUN --&gt;|&quot;skill tool, by name&quot;| CAT[&quot;skill catalog&quot;]
-  COMP{&quot;context ≥ 250k tokens&quot;} --&gt;|summary into context| RUN
-  COMP --&gt;|&quot;append: summary AND the replaced messages&quot;| SESS
-  CAT --&gt; DISK[(&quot;skills on disk, 0700&lt;br/&gt;read path: realpath + contained twice&quot;)]
-  GIT[&quot;git clone -- URL   /   git pull --ff-only&quot;] --&gt;|&quot;no revision, no hash&quot;| DISK
-  UPD[&quot;otis update&quot;] --&gt;|&quot;sha256 checked, install aborts on mismatch&quot;| BIN[&quot;the otis binary&quot;]
-  SESS -.-&gt;|&quot;directory name hashes the absolute path&quot;| MOVE[&quot;move the project → history orphaned&quot;]</code></pre></details></figure>
+  GIT[&quot;git clone URL / git pull --ff-only&quot;] --&gt;|&quot;no revision recorded&quot;| DISK[(&quot;installed skills&quot;)]
+  BUN[&quot;bundled skill&quot;] --&gt;|&quot;dir named by sha256 of contents&quot;| CAT
+  DISK --&gt; CAT
+  COMP{&quot;context ≥ threshold&quot;} --&gt;|&quot;summary + kept suffix&quot;| RUN
+  COMP --&gt;|&quot;append compacted event&quot;| SESS</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <ul>
 <li><strong><code>src/core/</code></strong> — <code>agent.ts</code> runs
-the turn loop, <code>compaction.ts</code> holds the threshold and the
-summary marker, <code>context.ts</code> walks for
-<code>AGENTS.md</code>.</li>
+the turn loop and places the memory indexes in the prompt
+(<code>:299</code>); <code>compaction.ts</code> holds the threshold and
+the cut; <code>context.ts</code> walks for instruction files.</li>
+<li><strong><code>src/memory/memory.ts</code></strong> — the fact store:
+<code>remember</code>, <code>rememberAll</code>, <code>forget</code>,
+<code>listMemory</code>, <code>memoryIndex</code>, <code>recall</code>,
+<code>redactPrivate</code>, and the optional git commit.</li>
 <li><strong><code>src/storage/</code></strong> —
-<code>session.ts</code>, <code>session-events.ts</code> (419 lines),
-<code>session-files.ts</code>, <code>session-lock.ts</code>: the JSONL
-store, its event union and its locking.</li>
-<li><strong><code>src/skills/</code></strong> — 781 lines across ten
-files: <code>manager.ts</code> installs and updates,
-<code>catalog.ts</code> lists, <code>read.ts</code> serves a resource to
-the tool, <code>managed-manifest.ts</code> validates the on-disk
-manifest, <code>manager-lock.ts</code> is a PID-and-token mutex with a
-30-second staleness rule.</li>
-<li><strong><code>src/tools/</code></strong> — ten tools:
-<code>web_search</code>, <code>web_read</code>, <code>skill</code>,
-<code>read</code>, <code>grep</code>, <code>glob</code>,
-<code>write</code>, <code>edit</code>, <code>bash</code>,
-<code>agent</code>.</li>
-<li><strong><code>src/inference/</code></strong> — model catalogue,
-hardware probe, GGUF cache and a managed llama.cpp binary, which is
-where the second and third checksum surfaces live.</li>
-<li><strong><code>src/desktop/</code></strong> — an Electron main,
-preload and renderer beside the terminal UI.</li>
-<li><strong><code>src/permissions/</code>, <code>src/local/</code>,
-<code>src/cli/</code></strong> — approval, platform paths and settings,
-and the terminal UI plus a headless CLI.</li>
+<code>session.ts</code>, <code>session-events.ts</code>,
+<code>session-index.ts</code> (a per-file digest cache and the
+searchable texts), <code>session-files.ts</code>,
+<code>session-lock.ts</code>, <code>workspace-registry.ts</code>.</li>
+<li><strong><code>src/skills/</code></strong> — <code>manager.ts</code>
+installs, updates and removes, with its manifest parser and lock;
+<code>catalog.ts</code> lists and serves resources;
+<code>bundled.ts</code> materialises the shipped skill.</li>
+<li><strong><code>src/app/other-agents.ts</code></strong> — lists and
+imports Claude Code, Codex and Gemini CLI instructions and memory.</li>
+<li><strong><code>src/tools/</code></strong> — nineteen tools;
+<code>recall</code>, <code>remember</code> and <code>forget</code> are
+the memory-facing ones beside <code>skill</code>.</li>
+<li><strong><code>src/inference/</code></strong>,
+<strong><code>src/desktop/</code></strong>,
+<strong><code>src/cli/</code></strong> — model runtimes, the Electron
+app, the terminal UI, the headless CLI and <code>otis serve</code>.</li>
 </ul>
 <h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
-<p>A single binary from a release archive, or <code>bun run</code> from
-source. Two keys — a Fireworks key for inference and a Parallel key for
-web search and page reading. No database, no service, no daemon.</p>
-<p>The screen flagged what a reader should weigh before installing from
-source: <code>package.json</code> changed the day before this reading
-and has twenty-two floating ranges with no lockfile beside it, so a
-fresh install resolves whatever those ranges now allow.</p>
+<p>A single binary from a release archive, a desktop app, or
+<code>bun run</code> from source. Inference can be fully local through a
+managed llama.cpp server, Ollama, LM Studio or any OpenAI-compatible
+server; hosted inference needs a provider key, and web search and page
+reading go to Parallel. No database, no service of the project's own.
+Every store is plain files a person can read and repair, and the fact
+store is Markdown a person can edit directly.</p>
+<p>The screen at this pin reported a <code>postinstall</code> that marks
+a <code>node-pty</code> helper executable, <code>package.json</code>
+changed on 15 October 2026 and <code>bun.lock</code> on 8 October, both
+inside the seven-day cooldown, and 42 floating ranges resolved by the
+committed <code>bun.lock</code>.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
+<p><strong>The fact write</strong> — <code>rememberAll</code>
+(<code>src/memory/memory.ts:240-261</code>) collapses whitespace, runs
+<code>redactPrivate</code>, appends
+<code>- text [source: …; added: …]</code> to the topic file with
+<code>appendFile</code>, links the topic from <code>MEMORY.md</code> if
+absent, and calls <code>commitMemory</code>, which commits only when the
+memory folder itself holds a <code>.git</code>
+(<code>:172-186</code>).</p>
+<p><strong>The forget</strong> — <code>forget</code>
+(<code>:264-302</code>) scans every topic file, prefers an exact
+lower-cased match, falls back to substring, refuses unless exactly one
+line matches, and rewrites the file without it; an emptied topic file
+and its index link are removed.</p>
+<p><strong>The recall</strong> — <code>recall</code>
+(<code>:310-339</code>): <code>searchNeedles(query, true)</code> turns
+each word of three or more letters into a whole-word regex, facts are
+scored by how many needles hit <code>topic + text</code>, and
+<code>searchAllSessions(query, { seeds: [cwd], words: true })</code>
+supplies transcript hits, filtered by <code>hit.id !== session</code>
+and cut to eight. The whole output passes
+<code>redactPrivate</code>.</p>
 <p><strong>The session partition</strong> —
-<code>session-files.ts:44</code>:</p>
+<code>defaultSessionDirectory</code>
+(<code>src/storage/session-files.ts:16-24</code>):</p>
 <pre class="ts"><code>const hash = createHash(&quot;sha256&quot;).update(workspace).digest(&quot;hex&quot;).slice(0, 12)
-return `${slug || &quot;workspace&quot;}-${hash}`</code></pre>
-<p><strong>The skill install</strong> — <code>manager.ts:60</code>,
-<code>await this.#git(["clone", "--", cleanURL, temporarySource])</code>,
-and the update at <code>:160</code>,
-<code>await this.#git(["pull", "--ff-only"], { cwd: sourceDirectory })</code>.</p>
-<p><strong>The manifest contract</strong> —
-<code>managed-types.ts</code> in full:</p>
-<pre class="ts"><code>export type ManagedSkill = { name: string; relativePath: string }
-export type ManagedSkillSource = { id: string; url: string; skills: ManagedSkill[] }
-export type SkillManagerManifest = { version: 1; sources: ManagedSkillSource[] }</code></pre>
-<p><strong>The containment</strong> — <code>read.ts</code>:
+return join(sessionRootDirectory(), `${slug || &quot;workspace&quot;}-${hash}`)</code></pre>
+<p><code>registerWorkspacePath</code> writes <code>workspace.json</code>
+with the absolute path beside the sessions
+(<code>src/storage/workspace-registry.ts:19-29</code>).</p>
+<p><strong>The skill install</strong> —
+<code>SkillManager.install</code>
+(<code>src/skills/manager.ts:88-175</code>):
+<code>git clone [--branch ref] -- repository dir</code>, discovery,
+symlinks into <code>~/.agents/skills</code>, and a manifest entry
+without a commit. <strong>The update</strong> (<code>:177-268</code>)
+resolves <code>rev-parse HEAD</code> into <code>previousCommit</code>,
+pulls, and uses <code>previousCommit</code> only for
+<code>git reset --hard</code> if a later step fails
+(<code>:256</code>).</p>
+<p><strong>The containment</strong> — <code>readSkillResource</code>
+(<code>src/skills/catalog.ts:163-205</code>):
 <code>assertInside(skill.root, requested)</code> before
-<code>realpath</code>, <code>assertInside(skill.root, canonical)</code>
-after it.</p>
-<p><strong>The binary check</strong> —
-<code>cli/update/binary-installer.ts:30</code>, which is the standard
-this project applies to itself.</p>
+<code>realpath</code>, <code>assertInside(root, canonical)</code> after
+it, and <code>TextDecoder("utf-8", { fatal: true })</code>.</p>
+<p><strong>The checksums</strong> —
+<code>src/cli/update.ts:158-161</code> for the release archive,
+<code>src/inference/llama-runtime.ts:1008</code> for the runtime
+archive, <code>src/inference/gguf-cache.ts:415</code> for weights,
+<code>src/skills/bundled.ts:61-67</code> for the shipped skill.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>There is no schema for a memory, because nothing is extracted. The
-session event union is the closest thing, and
-<code>{ type: "compacted"; summary; messages; toolActivities? }</code>
-is its most interesting member for this atlas: an event that carries
-what it replaced.</p>
-<p>Files are private by construction — directories created
-<code>0o700</code> and <code>chmod</code>ed again after, files written
-<code>0o600</code>, and the manifest written to a temporary path and
-<code>rename</code>d into place so a reader never sees a partial
-file.</p>
-<p>Nothing carries provenance, a source, a confidence, a validity
-interval or a status. A skill's origin is its source id and URL in the
-manifest; which commit produced the text on disk is not recorded
-anywhere.</p>
+<p>A fact is <code>{ scope, topic, date?, text }</code> parsed from a
+bullet by one regex,
+<code>/^- (.+?)(?: \[((?:source|added): [^\]]*)\])?$/u</code>
+(<code>src/memory/memory.ts:31</code>). <code>source</code> is the
+session id or the importing agent's id; <code>added</code> is the write
+day. There is no id, no status, no confidence and no validity interval.
+A hand-written bullet without metadata is a fact like any other.</p>
+<p>The workspace memory folder is <code>memory/</code> inside the
+workspace's session directory, so a fact's scope is where its file
+lives; the global folder is <code>memory/</code> under the data
+directory (<code>:82-101</code>). Earlier single-file layouts —
+<code>memory.md</code> beside the sessions, and in 0.2.6 the project's
+<code>.otis/memory.md</code> — are migrated on first use and the old
+files deleted.</p>
+<p>The session event union keeps
+<code>{ type: "compacted"; summary; messages; throughSeq?; promptId?; steeringCount?; turn? }</code>,
+where <code>messages</code> is the kept suffix and <code>turn</code> the
+archived in-flight segment
+(<code>src/storage/session-events.ts:91-99</code>).</p>
+<p>Files are private by construction — memory and session directories
+created <code>0o700</code>, facts, indexes and session files written
+<code>0o600</code>, the skill manifest written to a temporary path and
+<code>rename</code>d into place. A skill's origin is its source id and
+URL; which commit produced the text on disk is not recorded.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>There is no retrieval over memory, and the design says so by
-omission. A session is resumed whole. A skill is loaded by exact name.
-<code>AGENTS.md</code> is concatenated by ancestry. The
-<code>grep</code> and <code>glob</code> tools search the
-<em>workspace</em>, not the history.</p>
-<p>For a coding agent that is a defensible position — the working tree
-is the memory that matters and it is already searchable — and it is the
-same position the atlas records for the file-native harnesses. Its cost
-is the one those share: a session from three weeks ago is findable only
-if the operator remembers it exists, and there is nothing to rank.</p>
+<p>Two indexes are always in context. <code>memoryIndex</code> reads
+each scope's <code>MEMORY.md</code> as it is on disk, and
+<code>buildSystemPrompt</code> places them in a
+<code>&lt;memory&gt;</code> block, each truncated at 32 KiB, with the
+instruction to read a topic through <code>recall</code> before relying
+on it (<code>src/inference/system-prompt.ts:123-130</code>).
+Hand-written lines in an index reach the prompt untouched, which the
+suite asserts (<code>tests/memory/memory.test.ts:297-306</code>).</p>
+<p>Everything else is tool-mediated and lexical. A fact matches when any
+whole query word appears in its topic name or text, and facts with more
+matching words rank first; there is no embedding, no stemming and no
+recency. Session hits rank title matches above content matches, then by
+matched-word count, then by recency, with a snippet around the first hit
+(<code>src/storage/session.ts:406-435</code>). Tool outputs and
+compaction summaries are excluded from the searchable text
+(<code>src/storage/session-index.ts:157-163</code>).</p>
+<p>The session half of <code>recall</code> reads every workspace
+directory under the data root (<code>digestAllSessions</code>,
+<code>src/storage/session.ts:383</code>), excluding only the asking
+session's id. The <code>recall</code> tool description says so:
+<em>"excerpts from past sessions in every workspace"</em>. A project's
+transcripts are therefore retrievable from any other project, through
+redaction that removes credential shapes, emails and phone, card and
+national-id numbers and nothing else.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Writes are synchronous, append-only and unconditional: no model call
-decides what is worth keeping, and there is no extraction, consolidation
-or background pass anywhere in the tree. A memory is retrievable as soon
-as the event is flushed.</p>
-<p><code>--ephemeral</code> refuses to create a session at all, and
-cannot be combined with <code>--session</code> or
-<code>--continue</code> — a small, correct guard.</p>
-<p>Deletion is per session (<code>deleteSession</code>) and total. There
-is no per-fact correction because there are no facts, and a skill is
-corrected by pulling its remote, which is the same operation as being
+<p>Writes are synchronous and model-free: no extractor decides what to
+keep, and no background pass consolidates. A fact is retrievable as soon
+as <code>appendFile</code> returns; a session event as soon as its line
+is synced.</p>
+<p>The agent writes facts on its own initiative through
+<code>remember</code>, guided by a tool description that asks for one
+durable sentence about the project or the user's tooling and never about
+people. <code>remember</code> and <code>forget</code> are in
+<code>RESTRICTED_BY_DEFAULT</code>, and the interactive default mode is
+<code>auto</code>, under which a restricted tool is allowed without
+asking; <code>ask</code> prompts and <code>dontAsk</code> denies
+(<code>src/permissions/policy.ts:12</code>, <code>:48-57</code>,
+<code>:83-84</code>). The headless CLI defaults to <code>dontAsk</code>,
+so a headless run denies <code>remember</code> unless started with
+<code>--auto</code>.</p>
+<p><code>--ephemeral</code> refuses to create a session and cannot be
+combined with <code>--session</code> or <code>--continue</code>
+(<code>src/cli/headless-cli.ts:395-396</code>). It governs the session
+log only.</p>
+<p><code>forget</code> deletes the line and leaves no record of the
+value. The import page marks another agent's fact as imported by exact
+text match against live facts
+(<code>src/app/other-agents.ts:45-74</code>), so a fact forgotten in
+Otis is offered as new on the next import. When the memory folder is a
+git repository, the deleted line survives in that repository's history,
+which is the user's.</p>
+<p>Session deletion is per session and total, artifacts first. A skill
+is corrected by pulling its remote, which is the same operation as being
 changed without asking.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>The agent <em>is</em> the product, so integration is the tool list
-and the permission layer rather than an adapter. The <code>skill</code>
-tool is the memory-facing one, and its description carries the only
-retrieval instruction in the system: read SKILL.md before following a
-matching skill.</p>
-<p><code>AGENTS.md</code> is read as data by the harness and handed to
-the model as context — the same file this atlas's screening treats as
-instructions addressed to a reading agent, which is worth noticing on
-both sides: Otis ships one for its own repository.</p>
+<p>The agent is the product, so integration is the tool list and the
+permission layer. The memory-facing tools are <code>recall</code> (also
+available to subagents, <code>src/core/agent.ts:115-123</code>),
+<code>remember</code>, <code>forget</code> and <code>skill</code>.</p>
+<p>Otis reads other agents' material in place when
+<code>otherAgents</code> is on, which is the default: skills from
+<code>.claude/skills</code>, <code>.cursor/skills</code>,
+<code>.gemini/skills</code> and <code>.github/skills</code> at every
+ancestor and at home, and those agents' instruction files where a folder
+has no <code>AGENTS.md</code>
+(<code>src/skills/catalog.ts:16-45</code>). Installed skills are
+activated as symlinks in the shared <code>~/.agents/skills</code>
+folder, which the catalog's own comment says Codex also reads, so a
+skill installed through Otis is visible outside it. The desktop import
+copies Claude Code's per-project memory into the workspace scope and
+Codex's and Gemini CLI's into the global scope
+(<code>src/app/other-agents.ts:94-122</code>).</p>
+<p>The README suggests cloning a shared memory repository into a memory
+folder's place. Its <code>MEMORY.md</code> then enters the system prompt
+as written, from whatever that remote held when it was cloned.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>The unpinned skill is the finding.</strong> A skill is
-instructions the model reads and follows. Installing it takes the
-default branch; <code>otis skills update</code> takes whatever that
-branch now holds; and the manifest has nowhere to record what was
-approved. A reader who audits a skill today has audited a moving target,
-and nothing in the system would report that it moved.</p>
-<p>The fix is small and the project already owns the parts: record the
-resolved commit at install, clone at that commit, and make update an
-explicit bump that shows the diff. <code>git.ts</code> already runs
-arbitrary git argument lists, and <code>#updateSource</code> already
-calls <code>rev-parse HEAD</code> — but for rollback, not for
-provenance. The commit it resolves is captured into a local
-<code>previousCommit</code>, used to restore the checkout if a later
-step of the update fails, and never written to the manifest. The
-distance between that and pinning is one field.</p>
-<p><strong>The care elsewhere is real and worth crediting</strong>,
-because it is what makes the gap legible rather than sloppy:
-<code>--</code> before a URL, <code>--ff-only</code> on pull, a scrubbed
-child environment, double containment around <code>realpath</code>, a
-fatal UTF-8 decode, <code>..</code> and absolute-path rejection in the
-manifest parser, atomic manifest writes, 0700/0600 throughout, and a
-PID-plus-token mutex that treats a partial lock file as live until it
-ages out.</p>
-<p><strong>Compaction does not destroy evidence</strong>, which is the
-property most systems here get wrong.</p>
-<p><strong>Moving a project orphans its history.</strong> The session
-directory hashes the <em>absolute</em> workspace path, so renaming a
-checkout leaves the old sessions on disk under a name nothing will look
-up again. The hash prevents collisions between two projects with the
-same basename, which is why it is there; the cost is not recorded
-anywhere a user would see it.</p>
+instructions the model reads and follows. Installing takes the default
+branch or a named ref, <code>update</code> takes whatever that branch
+holds at the time, and the manifest has nowhere to record what was
+reviewed. The project's own <code>bundled.ts</code> is the worked
+example of the alternative: the cache directory is named for a SHA-256
+of the skill's contents and a modified resource is refused. Recording
+the resolved commit at install and showing a diff on update would close
+the gap; <code>#updateSource</code> resolves that commit for rollback
+and discards it.</p>
+<p><strong>Recall is a cross-project read.</strong> Workspace facts stay
+in their workspace, but transcript excerpts do not, and the read is not
+behind a permission: the <code>recall</code> tool is unrestricted.
+Redaction is a fixed list of shapes, so a project-specific secret that
+matches none of them reaches another project's context and, with a
+hosted model, the provider.</p>
+<p><strong>The fact store has no doubt state.</strong> A wrong fact is
+live until it is forgotten, and a forgotten one leaves nothing that
+would stop it being remembered again. The prompt's precedence rule — the
+repository and the user's instructions win — is advice to the model, not
+a filter.</p>
+<p><strong>The care elsewhere is real.</strong> <code>--</code> before a
+URL and a refusal of URLs starting with <code>-</code>,
+<code>--ff-only</code>, a scrubbed child environment, containment on
+both sides of <code>realpath</code>, a fatal UTF-8 decode,
+<code>..</code> and absolute-path rejection in the manifest parser,
+atomic manifest writes, and a PID-plus-token lock that treats a partial
+lock file as live for 30 seconds.</p>
+<p><strong>Compaction does not destroy evidence</strong>, because the
+log is never rewritten.</p>
+<p><strong>A move resets the workspace view.</strong> The session
+directory hashes the absolute path, so after a move
+<code>--continue</code> and workspace facts start empty.
+<code>workspace.json</code> records the old path, and the desktop's
+global history lists the old sessions, so the material is findable from
+there and through <code>recall</code>; the workspace facts are not.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>82 test files, 18,051 lines</strong>, across thirteen
-directories mirroring <code>src/</code>, including a
-<code>skills/</code> suite, run by <code>bunx vitest</code> with a
-coverage script and a CI badge on the README.
-<code>bun run verify</code> chains <code>check</code>,
-<code>typecheck</code> and <code>test</code>.</p>
-<p><strong>The search suite carries the one assertion this atlas
-counts.</strong> <code>tests/storage/session-search.test.ts</code>
-writes a session holding one ordinary turn and one compaction summary
+<p>The suite runs under vitest with a CI badge;
+<code>tests/memory/memory.test.ts</code> covers the fact store across 11
+cases: layout and indexing, ambiguous and missing <code>forget</code>,
+migration of the earlier layouts, git commits only inside a memory
+repository, a refused commit that keeps the fact, redaction, recall
+ranking and the tool round trip.</p>
+<p><strong>Three assertions are the ones this atlas counts.</strong>
+<code>tests/storage/session-search.test.ts:101-122</code> writes a
+session holding one ordinary turn and one compaction-summary turn
 containing <em>"discussed the zephyr budget"</em>, then requires
 <code>searchSessions</code> for <code>"zephyr"</code> to resolve to
-<code>[]</code>. The word appears nowhere else in the store, so the
-assertion is keyed on a value only the summary holds, and the comment
-above it states the property rather than implying it: <em>"The word only
-appears inside the compaction summary, which is not searchable."</em>
-Beside it an empty query resolves to exactly one result, which is what
-stops the assertion passing on a search that returns nothing at all.
-That is <code>negative_eval</code>, and it is the strict kind — the
-query is called and the result is what is asserted about.</p>
-<p><code>tests/skills/manager.test.ts</code> covers the update path's
-rollback, including the case where the pull succeeds and a later step
-fails. What no test asserts is a pinned revision, because there is none
-to assert.</p>
-<p>There is no benchmark and the project claims none — no accuracy
-number, no comparison, no leaderboard. For a coding agent that is the
-honest posture, and the atlas records it as such rather than as an
-absence.</p>
-<p>Nothing was run for this review: the manifest changed the day before
-the reading and carries twenty-two floating ranges with no lockfile,
-which the seven-day cooldown in this project's screening rules
-refuses.</p>
-<h2 id="11-patterns-worth-stealing">11. Patterns Worth Stealing</h2>
+<code>[]</code>; an empty query returning the session, and the case at
+<code>:38-58</code> finding a word written before a compaction, are the
+controls. <code>tests/memory/memory.test.ts:253-261</code> requires
+<code>recall("limiter", cwd, "s-current")</code> to include a matching
+session from another workspace directory and to exclude the asking
+session's title. And <code>:279-283</code> requires
+<code>recall("me")</code> not to return a fact containing "memory" while
+<code>recall("memory")</code> and <code>recall("layout")</code> do. That
+is <code>negative_eval</code>.</p>
+<p>What is not asserted: no case remembers a workspace fact in one
+folder and recalls from another, so the directory partition of facts is
+untested; every memory test uses one working directory. No skill test
+asserts a recorded revision, because the manifest has none;
+<code>tests/skills/manager.test.ts:107-115</code> asserts the rollback
+commit only.</p>
+<p>There is no benchmark and the project claims none. Nothing was run
+for this reading: two dependency files changed inside the seven-day
+cooldown and a <code>postinstall</code> is declared.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Keep what you compacted, in the event that compacts
-it.</strong> One field on one event — <code>messages</code> beside
-<code>summary</code> — and the store stops being lossy while the context
-still gets smaller.</li>
+<li><strong>Never rewrite the session log, and archive the in-flight
+segment at a mid-turn checkpoint.</strong> The context shrinks and the
+record does not.</li>
+<li><strong>Index in the prompt, bodies on demand.</strong> Two short
+<code>MEMORY.md</code> files cost a few lines per turn, and the model
+fetches a topic when it needs it.</li>
+<li><strong>Redact on both sides.</strong> <code>remember</code> redacts
+before writing and <code>recall</code> redacts before returning, so a
+secret that reached a transcript does not come back through memory in a
+credential shape.</li>
+<li><strong>Content-address what you ship.</strong> A cache directory
+named for the hash of its contents, and a refusal when a cached file
+differs, is a few lines.</li>
 <li><strong>Assert containment on both sides of
-<code>realpath</code>.</strong> Checking the requested path and then the
-canonical path is two lines and closes the symlink escape that one check
-leaves open.</li>
-<li><strong>Refuse the combination, not just the flag.</strong>
-<code>--ephemeral</code> cannot be used with <code>--session</code> or
-<code>--continue</code>, so "do not persist" cannot be silently
-overridden by "resume this".</li>
-<li><strong>Order context by proximity and say so.</strong> Home first,
-cwd last, with the convention written in the loader's docstring rather
-than assumed.</li>
+<code>realpath</code>.</strong></li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Procedural memory pinned to a URL.</strong> If a skill is
-instructions the agent will follow, the thing to record is the revision
-that was reviewed.</li>
+<li><strong>Procedural memory pinned to a URL.</strong> Record the
+revision that was reviewed.</li>
 <li><strong>A hash field nothing computes.</strong>
 <code>computedHash</code> in <code>skills-lock.json</code> reads as an
-integrity guarantee to anyone who opens the file, and appears once in
-the whole tree.</li>
-<li><strong>Deriving a store's location from an absolute path</strong>
-without recording the mapping, so a move is indistinguishable from an
-empty history.</li>
+integrity check and is read by nothing.</li>
+<li><strong>A cross-project read with no permission gate.</strong> If
+recall must span projects, make the span an argument the user grants,
+not the default.</li>
+<li><strong>Deletion that forgets it happened</strong> when an import or
+a model can write the same value again.</li>
 </ul>
 <h3 id="fit">Fit</h3>
 <p>Right for someone who wants a local coding agent on open weights with
-a readable session history and no service in the middle — the locality
-claim is honest, the file permissions are right, and the code is
-unusually careful for its size.</p>
-<p>Wrong as a memory system to lift. There is no fact store, no
-correction, no scope key and no retrieval; the transferable parts are
-the compaction event, the containment checks and the ephemeral guard,
-which are three ideas rather than an architecture. And if you adopt the
-skill manager, adopt it with a revision field first.</p>
-<h2 id="12-antipatterns--risks">12. Antipatterns / Risks</h2>
+readable history and a fact store they can edit in a text editor. Wrong
+as a memory system to lift for anything multi-project or shared:
+workspace isolation is a directory, the transcript half of recall
+ignores it, and there is no correction state. Adopt the skill manager
+only with a revision field added.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li><strong>Skills track a moving branch</strong>, with no recorded
-revision and no diff on update.</li>
-<li><strong>A vestigial integrity field</strong> that suggests a check
-the code does not perform.</li>
-<li><strong>No epistemic state at all</strong>, so a skill that turns
-out to be wrong is corrected only by editing or removing it — and
-re-installing restores it.</li>
-<li><strong>Session history keyed by absolute path</strong>, orphaned by
-a move.</li>
-<li><strong>Eight floating dependency ranges with no lockfile</strong>,
-in a project whose own release path is checksum-verified.</li>
-<li><strong><code>AGENTS.md</code> from every ancestor of the working
-directory</strong>, including directories the user did not author, is
-instruction content assembled by location — safe in a personal checkout
-and worth knowing about in a shared one.</li>
-</ul>
-<h2 id="13-build-vs-borrow-takeaways">13. Build-vs-Borrow Takeaways</h2>
-<p>Borrow the compaction event and the containment pair. Both are small,
-both fix failures this atlas records repeatedly — compaction that
-destroys its source, and a path check that a symlink walks around — and
-neither depends on anything else here.</p>
-<p>Build, before relying on the skill manager: a resolved commit
-recorded at install time, an update that reports what changed, and a
-manifest field to hold it. The repository's own updater is the worked
-example of the standard to apply.</p>
-<p>Do not look here for a memory layer. Otis is a well-made agent that
-persists its work; the belief-shaped machinery this atlas compares is
-absent by design.</p>
-<h2 id="14-open-questions">14. Open Questions</h2>
-<ul>
-<li><strong>Was <code>skills-lock.json</code> once enforced?</strong>
-The file carries a <code>computedHash</code> and a
-<code>sourceType</code> the runtime manifest has no concept of, which
-reads like a development-time record of a vendored document rather than
-a lapsed check — but nothing in the tree says which.</li>
-<li><strong>What happens on an <code>--ff-only</code> failure?</strong>
-A force-pushed skill remote makes the update fail rather than silently
-rewrite, which is the safe outcome; what the user is told, and whether
-the stale copy keeps being loaded, was not traced here.</li>
-<li><strong>Is there a path for a user-authored local skill?</strong>
-The manager is built around remote sources; whether a skill directory
-placed on disk by hand is catalogued alongside them was not
-determined.</li>
-<li><strong>How much does the agent actually read?</strong> Skills are
-loaded by name on the model's initiative, so their effect depends
-entirely on the model choosing to call the tool — measurable from the
-session logs the project already writes, and not measured anywhere.</li>
+<li><strong>Was <code>skills-lock.json</code> once enforced?</strong> It
+carries a <code>sourceType</code> and a <code>computedHash</code> the
+runtime manifest has no concept of; whether it is a development record
+or a lapsed check was not determined.</li>
+<li><strong>What does <code>update</code> do for a skill installed at a
+tag?</strong> <code>--branch &lt;tag&gt;</code> leaves a detached
+checkout, where <code>git pull --ff-only</code> should fail; the
+manager's message for that case was not traced.</li>
+<li><strong>How often does the agent call <code>remember</code>
+unprompted?</strong> The session logs record every call; the rate was
+not measured for this reading.</li>
+<li><strong>Is cross-workspace recall wanted by users of shared
+machines?</strong> The desktop settings expose memory editing but no
+switch for the session half of recall.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
@@ -512,48 +582,72 @@ session logs the project already writes, and not measured anywhere.</li>
 </thead>
 <tbody>
 <tr>
-<td><code>src/skills/manager.ts</code></td>
-<td>Install and update; the clone and the <code>--ff-only</code>
-pull</td>
+<td><code>src/memory/memory.ts</code></td>
+<td>The fact store: write, forget, index, recall, redaction, git
+commit</td>
 </tr>
 <tr>
-<td><code>src/skills/managed-manifest.ts</code></td>
-<td>The on-disk manifest schema, path-traversal and duplicate
-guards</td>
+<td><code>src/tools/schema.ts</code></td>
+<td><code>recall</code>, <code>remember</code>, <code>forget</code> and
+<code>skill</code> tool definitions</td>
 </tr>
 <tr>
-<td><code>src/skills/managed-types.ts</code></td>
-<td>The whole managed-skill contract — no revision, no hash</td>
+<td><code>src/permissions/policy.ts</code></td>
+<td>Restricted tools and the <code>auto</code> default</td>
 </tr>
 <tr>
-<td><code>src/skills/read.ts</code></td>
-<td>Containment before and after <code>realpath</code>; fatal UTF-8
-decode</td>
+<td><code>src/storage/session.ts</code></td>
+<td>Session store, <code>compact</code>, <code>compactTurn</code>,
+per-workspace and all-workspace search</td>
 </tr>
 <tr>
-<td><code>src/skills/manager-lock.ts</code></td>
-<td>PID-and-token mutex with a staleness rule</td>
-</tr>
-<tr>
-<td><code>src/storage/session-events.ts</code></td>
-<td>The event union, including <code>compacted</code> with its replaced
-messages</td>
+<td><code>src/storage/session-index.ts</code></td>
+<td>Digest cache and searchable texts</td>
 </tr>
 <tr>
 <td><code>src/storage/session-files.ts</code></td>
 <td>Per-workspace directory naming and private modes</td>
 </tr>
 <tr>
+<td><code>src/storage/workspace-registry.ts</code></td>
+<td><code>workspace.json</code>, the path behind each hashed
+directory</td>
+</tr>
+<tr>
 <td><code>src/core/compaction.ts</code></td>
-<td>The 250k threshold and the summary marker</td>
+<td>Threshold, cut point and summary validation</td>
 </tr>
 <tr>
 <td><code>src/core/context.ts</code></td>
-<td><code>AGENTS.md</code> collection, home first and cwd last</td>
+<td>Instruction files, home first and cwd last, other agents' names</td>
 </tr>
 <tr>
-<td><code>src/cli/update/binary-installer.ts</code></td>
-<td>The checksum verification the skills path lacks</td>
+<td><code>src/skills/manager.ts</code></td>
+<td>Install, update, remove, manifest parser, lock</td>
+</tr>
+<tr>
+<td><code>src/skills/catalog.ts</code></td>
+<td>Skill discovery, other agents' skill folders, containment</td>
+</tr>
+<tr>
+<td><code>src/skills/bundled.ts</code></td>
+<td>The content-addressed bundled skill</td>
+</tr>
+<tr>
+<td><code>src/app/other-agents.ts</code></td>
+<td>Import of Claude Code, Codex and Gemini CLI memory</td>
+</tr>
+<tr>
+<td><code>src/cli/update.ts</code></td>
+<td>The release-archive checksum</td>
+</tr>
+<tr>
+<td><code>tests/memory/memory.test.ts</code></td>
+<td>Fact store and recall cases</td>
+</tr>
+<tr>
+<td><code>tests/storage/session-search.test.ts</code></td>
+<td>The compaction-summary exclusion case</td>
 </tr>
 <tr>
 <td><code>skills-lock.json</code></td>
@@ -561,7 +655,97 @@ messages</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run in a full clone at
+<code class="commit-id" title="b8b8aabae1e4674778ad2545fcf71ceabd6b0515">b8b8aaba…</code>
+(<code>HEAD</code>) and, where marked, at
+<code class="commit-id" title="879397c8ec9fd2488c69b742891f6b6c28c2af23">879397c8…</code>
+(<code>OLD</code>), with <code>/usr/bin/git</code>.</p>
+<ul>
+<li><code>computedHash</code> is read by nothing:
+<code>git grep -n computedHash HEAD -- .</code> and the same at
+<code>OLD</code> each return one line,
+<code>skills-lock.json</code>.</li>
+<li>No revision in the skill manifest:
+<code>git grep -n -E 'commit|revision|sha|hash' HEAD -- src/skills/catalog.ts</code>
+returns one comment line and no field; the manifest's other writer is
+<code>src/skills/manager.ts:154-161</code>.</li>
+<li>No tombstone:
+<code>git grep -n -i -E 'tombstone|suppress(ed|ion)' HEAD -- src</code>
+and at <code>OLD</code> return only French UI strings in
+<code>src/desktop/renderer/i18n/messages/fr.ts</code>.</li>
+<li>No trust state:
+<code>git grep -n -i -E '\b(trust_state|epistemic|unverified|quarantin|contested|confidence)\b' HEAD -- src</code>
+and at <code>OLD</code> return nothing.</li>
+<li>No valid time:
+<code>git grep -n -i -E 'valid_?(from|to|until)\b|validFrom|validTo|validUntil|bitemporal|valid[ _]time|\basOf\b' HEAD -- src</code>
+and at <code>OLD</code> return nothing.</li>
+<li>Recall's session read is unscoped:
+<code>git grep -n -E 'searchAllSessions\(' HEAD -- src</code> returns
+<code>src/app/global-sessions.ts:75</code>,
+<code>src/memory/memory.ts:326</code> and the definition.</li>
+<li>Every writer of the <code>compacted</code> event passes the kept
+suffix:
+<code>git grep -n -E '\.compact\(|\.compactTurn\(|keptMessages' HEAD -- src</code>
+and at <code>OLD</code>.</li>
+<li>Memory tools run under the default mode:
+<code>git grep -n -E 'DEFAULT_PERMISSION_MODE|RESTRICTED_BY_DEFAULT' HEAD -- src</code>.</li>
+<li>No cross-folder fact case:
+<code>git grep -n -E 'remember\(|recall\(' HEAD -- tests</code> returns
+calls in three files, each case using one working directory.</li>
+<li>No revision assertion in the skill tests:
+<code>git grep -n -E 'installedAt|revision|previousCommit' HEAD -- tests/skills/manager.test.ts</code>
+returns the rollback check at <code>:107</code>, <code>:115</code> and
+<code>installedAt: expect.any(String)</code> at <code>:235</code>.</li>
+<li>Cloned skill files keep git's modes:
+<code>git grep -n chmod HEAD -- src/skills</code> returns the manifest
+temp file and <code>ensurePrivateDirectory</code> only.</li>
+<li>Lockfile history:
+<code>git log --diff-filter=A --format='%h %ci' -- bun.lock</code>
+returns the repository's first commit, 16 July 2026.</li>
+<li>No paper:
+<code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' HEAD -- README.md docs</code>
+returns nothing.</li>
+<li>The session log is appended, not rewritten:
+<code>git grep -n -E 'writeFile|truncate|rename\(|\brm\(' HEAD -- src/storage/session.ts src/storage/session-files.ts src/storage/session-events.ts src/storage/session-index.ts</code>
+returns the append in <code>appendJsonLine</code>
+(<code>session-files.ts:47</code>), the two <code>rm</code> calls of
+<code>deleteSession</code> (<code>session.ts:308-309</code>) and a field
+check.</li>
+<li>Fact recall has no embedding or stemming:
+<code>git grep -n -i -E 'embedding|vector|stemm' HEAD -- src/memory src/storage</code>
+returns nothing.</li>
+<li>Every fact writer:
+<code>git grep -n -E '\b(remember|rememberAll)\(' HEAD -- src</code>
+returns the tool (<code>src/tools/index.ts:103</code>), the
+<code>/memory</code> command, the desktop runtime (<code>:1237</code>;
+<code>:289</code> and <code>:295</code> are an unrelated local function
+for serve settings) and the import
+(<code>src/app/other-agents.ts:106</code>).</li>
+<li>No database:
+<code>git grep -n -i -E 'sqlite|postgres|lancedb|qdrant|chroma' HEAD -- package.json src</code>
+returns nothing.</li>
+<li>No benchmark: <code>git ls-files | grep -i -E 'bench|eval'</code>
+returns nothing.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/TrianglLabs/otis/commit/b8b8aabae1e4674778ad2545fcf71ceabd6b0515"><code class="commit-id" title="b8b8aabae1e4674778ad2545fcf71ceabd6b0515">b8b8aaba…</code></a>
+— 136 commits on, v0.1.48 to v0.2.38. <code>negative_eval</code> holds
+at both pins and gains two recall cases; no other mark moves. A fact
+store with <code>recall</code>, <code>remember</code> and
+<code>forget</code> arrived on 27 September 2026 (<a
+href="#5-memory-data-model">section 5</a>); recall reads transcripts
+from every workspace (<a href="#6-retrieval-mechanics">section 6</a>);
+other agents' skills, instructions and memory are read or imported (<a
+href="#8-agent-integration">section 8</a>). The skill manifest gained a
+path and an install time and no revision. Five claims were wrong at the
+previous pin — the compaction event's contents, the lockfile, the path
+mapping, skill file modes and a carried-forward census — and are
+corrected in the body and in Known Limitations. Screened before reading:
+no auto-run surface, a new <code>postinstall</code>, two dependency
+files inside the cooldown, one unpinned surface, <code>AGENTS.md</code>
+read as data. Nothing was installed or run.</p>
 <p><strong>2026-09-17</strong> — <a
 href="https://github.com/TrianglLabs/otis/commit/879397c8ec9fd2488c69b742891f6b6c28c2af23"><code class="commit-id" title="879397c8ec9fd2488c69b742891f6b6c28c2af23">879397c8…</code></a>
 — re-read 27 commits on, 183 files and +18,853/-1,634 across releases up
@@ -575,12 +759,12 @@ with one ordinary turn and one compaction summary containing
 <em>"discussed the zephyr budget"</em>, then requires
 <code>searchSessions</code> for <code>"zephyr"</code> to resolve to
 <code>[]</code>. The word appears nowhere else in the store, so the
-assertion is keyed on a value only the summary holds, and the comment
-states the property instead of leaving it implied: <em>"The word only
-appears inside the compaction summary, which is not searchable."</em> An
-empty query resolving to exactly one result sits beside it, which is
-what stops the assertion passing on a search that returns nothing at
-all, and a third case asserts a genuinely absent phrase returns nothing
+assertion is keyed on a value only the summary holds. The comment states
+the property instead of leaving it implied: <em>"The word only appears
+inside the compaction summary, which is not searchable."</em> An empty
+query resolving to exactly one result sits beside it, which is what
+stops the assertion passing on a search that returns nothing at all, and
+a third case asserts a genuinely absent phrase returns nothing
 either.</p>
 <p>It is the strict form of the mark — the query is called and the
 result is what is asserted about — and it lands on the property this

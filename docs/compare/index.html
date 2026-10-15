@@ -24465,33 +24465,52 @@ a suppressed claim stays out of a recall result</td>
 </tr>
 <tr>
 <td><a href="../systems/otis/"><code>otis</code></a></td>
-<td>A session event in an append-only JSONL log, and a skill — a
-directory of Markdown fetched from a git remote and loaded by name</td>
-<td>Files under the platform data directory, one directory per workspace
-named for its path hash, mode 0700 with 0600 files</td>
-<td>None over memory. A session is resumed by id or by recency; a skill
-is loaded by name through the <code>skill</code> tool; the agent greps
-the workspace, not its history</td>
+<td>A session event in an append-only JSONL log; a fact, one Markdown
+bullet with an optional source and added date in a topic file indexed by
+MEMORY.md; and a skill, a directory of Markdown loaded by name</td>
+<td>Files under the platform data directory: one directory per
+workspace, named for a hash of its absolute path, holding its session
+logs and its memory folder, and a global memory folder beside them;
+directories 0700, files 0600</td>
+<td>Each scope's MEMORY.md is placed in the system prompt. The recall
+tool ranks workspace and global facts by how many whole query words they
+contain and appends up to eight transcript excerpts from every workspace
+except the asking session. Skills load by name</td>
 <td>Every prompt, response, tool activity and compaction is appended as
-an event; skills are written only by an explicit install or update
-command</td>
-<td>A session can be deleted or never written at all with
-<code>--ephemeral</code>; a skill is updated by
-<code>git pull --ff-only</code> from whatever its remote now holds</td>
-<td>Sessions are partitioned into a directory named
-<code>&lt;basename&gt;-&lt;sha256 of the absolute path&gt;</code>; no
-scope key is stored on a record or applied as a filter</td>
-<td>The agent is the product — a terminal UI, a headless CLI and an
-Electron desktop shell, over Fireworks models or a local llama.cpp
-runtime, with ten tools including <code>skill</code></td>
-<td>None. Compaction runs in the turn loop at a token threshold; nothing
-rewrites the store on a schedule</td>
-<td>No epistemic state anywhere. A skill is trusted because it is
-installed, and a session event is a record of what happened</td>
-<td>Compaction is lossy for the model and lossless for the store — the
-replaced messages are kept in the event that replaces them</td>
-<td>A skill is pinned to a URL and not to a revision, so the agent's
-procedural memory changes when somebody else's default branch does</td>
+an event. Facts are appended by the remember tool, the /memory command,
+the desktop settings page or an import of Claude Code, Codex or Gemini
+CLI memory, after a regex redaction. Skills arrive by an explicit
+install</td>
+<td>forget removes the one fact whose text matches exactly or by
+substring and rewrites its topic file; a memory folder that is a git
+repository gets a commit per change. A session can be deleted or not
+written with --ephemeral; a skill is updated by git pull --ff-only</td>
+<td>Facts are workspace or global by directory, and recall reads both.
+Session excerpts in recall come from every workspace. The workspace
+directory is the basename plus 12 hex digits of a sha256 of the absolute
+path, and workspace.json records the path</td>
+<td>The agent is the product: a terminal UI, a headless CLI, an Electron
+desktop app and an otis serve daemon, over managed llama.cpp, Ollama or
+OpenAI-compatible servers and several hosted providers, with nineteen
+tools including skill, recall, remember and forget</td>
+<td>None over memory. Compaction runs in the turn loop at a token
+threshold, routines run scheduled prompts as ordinary sessions, and
+nothing rewrites the fact store on a schedule</td>
+<td>No epistemic state. A fact holds until forgotten, a skill is trusted
+because it is installed, and the memory prompt tells the model the
+repository and the user's instructions win on disagreement</td>
+<td>Compaction is lossy for the model and lossless for the store,
+because the session log is never rewritten and an in-turn checkpoint
+archives the segment it summarises. Facts are plain Markdown a person
+can edit, committed per change when the folder is a git repository, and
+both remember and recall pass a credential and personal-detail
+redactor</td>
+<td>A remote skill is pinned to a URL and not to a revision, while the
+bundled skill is content-addressed and the binary checksum-verified.
+Recall returns transcript excerpts from every workspace to whichever
+model is answering. remember and forget run without asking under the
+interactive default auto mode. A moved project starts with no sessions
+or workspace facts under its new path</td>
 </tr>
 <tr>
 <td><a
