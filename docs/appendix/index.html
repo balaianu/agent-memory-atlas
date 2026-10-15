@@ -14590,6 +14590,50 @@ cooldown, nine unpinned surfaces (Python requirements with
 there is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
 <code>CLAUDE.md</code>, and the 17-line LICENSE is the Apache-2.0 notice
 with no rider. Nothing was installed, built or run.</li>
+<li><strong><code>FastBuilderAI/memory</code> was examined and has no
+report: it clusters and lexically indexes documents a person supplies,
+rebuilds that index in process memory on every start, and gives the
+agent a query tool and nothing that writes.</strong> MIT, read at <a
+href="https://github.com/FastBuilderAI/memory/commit/8989fa5c4fbd454baa5128ff42d680212f0d5668"><code class="commit-id" title="8989fa5c4fbd454baa5128ff42d680212f0d5668">8989fa5c…</code></a>,
+the head of <code>main</code> on 4 October 2026, crate and wheel
+<code>fastmemory</code> 0.4.10, 48 commits since 25 March 2026. It is
+about 3,100 lines of Rust under <code>src/</code> and
+<code>tests/</code>. The CLI's <code>build</code>, <code>query</code>,
+<code>serve</code> and <code>mcp</code> commands each read one markdown
+file, parse its <code>## [ID: x]</code> sections into Function, Data,
+Access and Event nodes, and cluster them with Louvain into nested JSON
+blocks (<code>src/main.rs:91-121</code>). <code>query</code> matches a
+lowercased substring against block names, actions and ids and returns
+the deepest matching block (<code>src/query.rs:3-43</code>). The REST
+server and the stdio MCP server hold that JSON string for the life of
+the process (<code>src/server.rs:9-14</code>,
+<code>src/mcp.rs:4</code>), and the MCP tool list has one entry,
+<code>query_memory</code> (<code>src/mcp.rs:30</code>). The
+<code>--datahost</code> option for S3, Postgres and warehouses returns a
+fixed one-section stub containing the URI
+(<code>src/main.rs:94-95</code>). The Python <code>SearchMemory</code>
+class, ported from MahaBodi, chunks prose into passages and ranks them
+with BM25 over exact terms, stems and trigram-fuzzy terms
+(<code>src/index.rs</code>, <code>src/search.rs:103</code>). Its
+<code>add_documents</code> appends and rebuilds the in-memory graph and
+index (<code>src/search.rs:260-289</code>, <code>src/lib.rs:390</code>);
+there is no method that removes, updates or saves an entry. The README's
+Neo4j and Access-node security material is prose in
+<code>production.md</code> and <code>architecture.md</code>, and the
+<code>A_</code> nodes are labels the agent is told to self-regulate on,
+with no read path that filters by them. This is a retrieval index over
+user documents with no agent-written memory, which is the out-of-scope
+case. Screened before reading, from a full clone: no auto-run surface,
+no build-time execution, nothing inside the cooldown, no unpinned
+surface; <code>Cargo.lock</code> is present and 13 days unchanged, and
+there is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
+<code>CLAUDE.md</code>. The LICENSE is the MIT notice with no rider. The
+CLI pings a licence endpoint only when a key or
+<code>FASTMEMORY_TELEMETRY=1</code> is set
+(<code>src/telemetry.rs:21-79</code>), and an optional native clustering
+library is loaded with <code>libloading</code> from an absolute path
+(<code>src/louvain_backend.rs:118</code>). Nothing was installed, built
+or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
