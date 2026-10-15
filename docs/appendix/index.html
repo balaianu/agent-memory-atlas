@@ -3842,13 +3842,13 @@ the seven-day cooldown across two scanned files; nothing was installed,
 built or run</li>
 <li><a href="https://github.com/memtomem/memtomem">memtomem/memtomem</a>
 at <a
-href="https://github.com/memtomem/memtomem/commit/95baf6286f0eb779e6850a41a59b771daca9ccf5"><code class="commit-id" title="95baf6286f0eb779e6850a41a59b771daca9ccf5">95baf628…</code></a>
-— read only, from a shallow clone; one auto-run surface (a
-<code>.claude-plugin/</code> directory), two build-time execution
-points, two unpinned surfaces and seven dependency files inside the
-seven-day cooldown across seventeen scanned files, plus
-<code>CLAUDE.md</code> read as data; nothing was installed and nothing
-was run</li>
+href="https://github.com/memtomem/memtomem/commit/d844f08ce66ecd5da28995f885980fe33a6bf42c"><code class="commit-id" title="d844f08ce66ecd5da28995f885980fe33a6bf42c">d844f08c…</code></a>
+— read only, from a full clone; two auto-run surfaces (a
+<code>.claude-plugin/</code> directory and an MCP registry record,
+<code>server.json</code>), two build-time execution points, two unpinned
+surfaces and five dependency files inside the seven-day cooldown across
+nineteen scanned files, plus <code>CLAUDE.md</code> read as data;
+nothing was installed and nothing was run</li>
 <li><a
 href="https://github.com/ScriptedAlchemy/tracedecay">ScriptedAlchemy/tracedecay</a>
 at <a
@@ -16944,6 +16944,33 @@ execution; the build backend had no install hook, and only the in-tree
 Homebrew formula ran <code>slowave setup</code> from
 <code>post_install</code>. The first followed a code comment rather than
 the update it described.</li>
+<li><strong>Five published claims about <a
+href="../systems/memtomem/">memtomem</a> were wrong at <a
+href="https://github.com/memtomem/memtomem/commit/95baf6286f0eb779e6850a41a59b771daca9ccf5"><code class="commit-id" title="95baf6286f0eb779e6850a41a59b771daca9ccf5">95baf628…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the scope fragment was composed into every chunk query.
+<code>mem_consolidate</code> built its groups from
+<code>get_source_files_with_counts</code> and
+<code>list_chunks_by_source</code>, which took no boundary, and returned
+previews of every project's chunks
+(<code>packages/memtomem/src/memtomem/server/tools/consolidation.py:48</code>,
+<code>:66</code>, <code>:75</code>); <code>scope_enforced</code> holds
+on the retrieval paths. It said the registry test meant a future read
+surface could not skip the gate. The test guarded the vocabulary gate
+rather than the boundary, and its docstring said a green run did not
+mean no unvalidated read surface could exist
+(<code>packages/memtomem/tests/test_scope_vocabulary_architectural_guard.py:50-62</code>).
+It withheld <code>human_review</code> on the consent flag alone and said
+correction lived only in files. A candidate queue with pending, approved
+and rejected states sat in the tree, cleared by
+<code>mem_candidate_review</code> on the agent's tool surface with
+<code>reviewer</code> defaulting to <code>"user"</code>
+(<code>packages/memtomem/src/memtomem/server/tools/formation.py:221-224</code>).
+Its <code>bitemporal</code> record cited
+<code>test_search_scope_filter.py</code>, which held no validity case;
+<code>test_temporal_validity.py</code> did. And it dated the first
+commit 28 March 2026; the first commit is dated 10 April 2026. The
+second followed the test's name rather than its docstring.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

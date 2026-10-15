@@ -233,7 +233,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`memsearch`](../../content/systems/memsearch.md) | `.claude-plugin/` |
 | [`memseek`](../../content/systems/memseek.md) | `.claude-plugin/`, `.vscode/tasks.json` |
 | [`memspec`](../../content/systems/memspec.md) | `hooks/` |
-| [`memtomem`](../../content/systems/memtomem.md) | `.claude-plugin/` |
+| [`memtomem`](../../content/systems/memtomem.md) | `.claude-plugin/`, `server.json` |
 | [`memv`](../../content/systems/memv.md) | `.claude/settings.json`, `.claude/settings.local.json` |
 | [`mengram`](../../content/systems/mengram.md) | `.claude-plugin/`, `.mcp.json`, `server.json` |
 | [`mentedb`](../../content/systems/mentedb.md) | `.github/copilot-instructions.md` |

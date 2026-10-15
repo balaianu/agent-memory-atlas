@@ -1532,23 +1532,23 @@ the next time the same content arrives, and `supersedes`, which exists in the
 type, the parser and a database `CHECK`, is consulted by no read path.
 
 **[memtomem](../systems/memtomem/) makes the scope rule impossible for a
-caller to drop.** A markdown-first memory where the files are the authority and
-SQLite is an index over them, and where the three scope tiers are enforced by a
-SQL fragment composed into every chunk query — one that is documented as
-non-empty in every case *"so callers cannot accidentally drop the context rule
-by treating an empty fragment as 'no filter'"*. Out of a project it pins the
-user tier and excludes every project's rows, because the caller did not say
-whose shared chunks would be safe to show; inside one it unions user with that
-project; the caller's own filter narrows or opts explicitly into crossing. Three
-things stop that eroding: the adjacency path re-checks scope and validity
-before showing a neighbour, and an explicit filter there only ever widens;
-a registry test asserts every declared scope surface calls the vocabulary gate
-and fails when a new sink appears classified as neither; and an id-restricted
-recall still applies the boundary, with the rule in the test's own docstring —
-*"'I know its id' is not authorization."* What it does not model is belief: a
+caller to drop on any retrieval path.** A markdown-first memory where the files
+are the authority and SQLite is an index over them, and where the three scope
+tiers are enforced by a SQL fragment composed into every search and recall
+query — one that is documented as non-empty in every case *"so callers cannot
+accidentally drop the context rule by treating an empty fragment as 'no
+filter'"*. Out of a project it pins the user tier and excludes every project's
+rows, because the caller did not say whose shared chunks would be safe to show;
+inside one it unions user with that project; the caller's own filter narrows or
+opts explicitly into crossing. The adjacency path re-checks scope and validity
+before showing a neighbour, and an id-restricted recall applies the boundary,
+with the rule in the test's own docstring — *"'I know its id' is not
+authorization."* Two maintenance listings read around it: `mem_consolidate`,
+on the agent's surface through `mem_do`, previews every project's chunks, and
+`mem_list` names every project's files. What it does not model is belief: a
 chunk has no status, so a stale memory is corrected by editing the file, and
-supersession, tombstones and forgetting are answered by the user's version
-control rather than by the store.
+the candidate review queue beside the index is cleared by an approve verb the
+agent itself holds.
 
 **[Lore](../systems/loreai/) deletes by issuing a death certificate, and makes
 the importer read it.** A transparent LLM proxy that distils sessions into

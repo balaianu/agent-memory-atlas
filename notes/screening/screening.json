@@ -24906,11 +24906,11 @@
         "AGENT": 1,
         "EXEC": 2,
         "FLOAT": 2,
-        "FRESH": 7,
+        "FRESH": 5,
         "NOTE": 1,
-        "RUNS": 1
+        "RUNS": 2
       },
-      "files_scanned": 17,
+      "files_scanned": 19,
       "findings": [
         {
           "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 1 entr(ies): marketplace.json",
@@ -24918,9 +24918,9 @@
           "path": ".claude-plugin/"
         },
         {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "packages/memtomem/pyproject.toml"
+          "detail": "MCP server manifest; declares a start command — mentions command; launches a package fetched at run time (uvx)",
+          "kind": "RUNS",
+          "path": "server.json"
         },
         {
           "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
@@ -24943,11 +24943,6 @@
           "path": "packages/opencode-memtomem/package.json"
         },
         {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "pyproject.toml"
-        },
-        {
           "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "uv.lock"
@@ -24963,8 +24958,8 @@
           "path": "packages/memtomem/tests/web/conftest.py"
         }
       ],
-      "revision": "95baf6286f0eb779e6850a41a59b771daca9ccf5",
-      "screened_at": "2026-09-15T23:53:30+00:00",
+      "revision": "d844f08ce66ecd5da28995f885980fe33a6bf42c",
+      "screened_at": "2026-10-15T14:46:30+00:00",
       "slug": "memtomem",
       "source": "reused-clone",
       "status": "screened",

@@ -18724,46 +18724,55 @@ memory honest here are all operator-driven</td>
 <td><a href="../systems/memtomem/"><code>memtomem</code></a></td>
 <td>A chunk of a markdown file with heading hierarchy, a chunk type, a
 namespace, tags, a scope tier and project root, an optional validity
-window from frontmatter, an <code>origin</code> naming the writer when
-the consolidation policy produced it, a redaction count and a source
-span hash</td>
+window from frontmatter, an origin naming the writer when the
+consolidation policy produced it, a redaction count and a source span
+hash</td>
 <td>Markdown files on disk as the authority, indexed into SQLite with
-hybrid BM25 and vector search; the user tier under
-<code>~/.memtomem/memories</code>, project tiers under the project</td>
-<td>Hybrid BM25 plus semantic with an always-on scope fragment, a
-namespace filter, an optional as-of instant, and an adjacency expansion
-that re-checks system prefixes, scope and validity before showing a
-neighbour</td>
-<td><code>mm add</code> on the CLI and <code>mem_add</code> /
-<code>mem_batch_add</code> over MCP, both resolving a scope tier to a
-canonical directory and both passing the content through a redaction
-guard; folder indexing for existing markdown</td>
-<td>Files are the source of truth and are edited directly; consolidation
-proposes groups and applies a summary only to a virtual path it owns;
-export and import bundles carry an HMAC self-provenance marker</td>
-<td>Three tiers — <code>user</code>, <code>project_shared</code>,
-<code>project_local</code> — resolved to directories, stored on the
-chunk with a <code>project_root</code>, and enforced as an always-on SQL
-fragment with the caller's filter layered on top as intent</td>
-<td>An MCP server, a CLI, an HTTP API with a web dashboard, Claude Code
-plugins, Kimi skills and an OpenCode integration</td>
-<td>Indexing and reindexing, a scheduler, consolidation proposals,
-entity extraction and backfill, quality experiments with replay and
-gates</td>
+FTS5 and sqlite-vec; the user tier under ~/.memtomem/memories, project
+tiers under the project, and read-only roots that memtomem indexes and
+never rewrites</td>
+<td>Hybrid BM25 plus dense search with an always-on scope fragment, a
+namespace filter, a validity gate at an as-of instant or the current
+one, and an adjacency expansion that re-checks system prefixes, scope
+and validity before showing a neighbour; chunks of a missing source are
+held out of ranked search</td>
+<td>mm add on the CLI and mem_add or mem_batch_add over MCP, both
+resolving a scope tier to a canonical directory and passing content
+through a redaction guard; folder indexing for existing markdown; a
+candidate queue that turns session events or external proposals into
+pending candidates, and approval writes through mem_add</td>
+<td>Files are the source of truth and are edited directly; a missing
+source keeps its chunks hidden until it returns or is purged;
+consolidation applies a summary only to a virtual path it owns; export
+and import bundles carry an HMAC self-provenance marker</td>
+<td>Three tiers, user, project_shared and project_local, resolved to
+directories, stored on the chunk with a project_root, and enforced as an
+always-on SQL fragment with the caller's filter layered on top as
+intent; mem_list, mem_consolidate and mem_export read every project</td>
+<td>An MCP server also started as mm serve, a CLI, an HTTP API with a
+web dashboard, Claude Code plugins including opt-in prompt and write
+hooks, Kimi skills, an OpenCode integration, a Hermes plugin and a
+recall-only Hermes memory provider</td>
+<td>Indexing, a file watcher, a scheduler, consolidation proposals and
+policies, entity extraction, session and maintenance-run pruning, and
+quality experiments with replay and gates</td>
 <td>A credential-redaction guard at the write boundary with 19
 secret-class patterns kept in sync with a sibling project, a two-gate
-consent record for writes into git-tracked directories, and an HMAC
+consent record for writes into git-tracked directories, a candidate
+queue whose transitions are recorded with actor and reason, and an HMAC
 marker that distinguishes a self-export from a foreign bundle</td>
-<td>A scope fragment that cannot be dropped and a registry test that
-fails when a new scope sink appears unclassified; consolidation that
-refuses a summary path holding foreign chunks; documentation that states
-what each guarantee does not prove</td>
-<td>The consent that clears a git-tracked write is a boolean parameter
-the calling agent can set for itself, which the code says out loud; the
-self-export provenance marker skips the redaction re-scan for bundles
-that may contain pre-guard rows; there is no status on a chunk, so a
-stale memory is corrected by editing or deleting the file rather than by
-the store</td>
+<td>A scope fragment that cannot come back empty on any retrieval path,
+with id-addressed reads answering an out-of-boundary id as a missing
+one; adjacency that re-checks visibility and only widens it;
+consolidation that refuses a summary path holding foreign chunks;
+documentation that states what each guarantee does not prove</td>
+<td>mem_consolidate, reachable through mem_do in the default tool mode,
+returns previews and ids of every project's chunks, and mem_list names
+every project's files; the candidate queue's approve verb is on the
+agent's own tool surface with reviewer defaulting to user; a rejected
+candidate blocks only the same session's re-extraction; the git-tracked
+write consent is a boolean the agent sets; the self-export marker skips
+the redaction re-scan for bundles that may hold pre-guard rows</td>
 </tr>
 <tr>
 <td><a href="../systems/memu/"><code>memu</code></a></td>
