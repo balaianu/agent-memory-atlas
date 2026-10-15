@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 744 reports.**
+**This page covers all 745 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -4363,6 +4363,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, Python, version 2.0.3, 387,713 lines across 720 test files, 43 of them memory, plus a `benchmarks/` tree and a fixture generator spanning retention classes and admission states. Schemas are versioned strings validated against exact field sets, ids are regex-constrained, and every path helper asserts it stays under the memory root.
 - Study when: you need admission control over what an agent may be told, and you want the decision to be re-checkable at the point of use rather than trusted from a log.
 - Do not copy when: you need a tombstone that stops the same content being re-captured — these are keyed on record id and revision, which makes them deletion receipts — or when the evidence behind an approval has to outlive its retention window.
+
+### [`hermes-fleet-memory`](../systems/hermes-fleet-memory/)
+
+- Best idea: **scope decided by the process and narrowed, never widened, by the call.** `validate_domain_access` turns the node's `FLEET_HARD_DOMAIN` into an allowed set of itself plus `shared` and raises before any Qdrant call when a tool argument names another domain or `all`; both agent reads put the result into the filter beside `status = active`.
+- Biggest risk: **the boundary binds the agent and not the node.** One `QDRANT__SERVICE__API_KEY` guards the whole collection and the wizard hands it to every machine, so anyone with a shell on a work laptop reads the personal domain directly, and the domain itself comes from an `.env` file loaded with `override=True`.
+- Most reusable component: `validate_domain_access` in `client/fleet_memory.py:255-292` — forty lines that encode a read set, a write default and the refusals, small enough to lift into any MCP memory server.
+- Second risk: **every correction destroys what it corrects.** Slot writes overwrite with a revision counter and no prior value; the episodic near-duplicate merge ignores `client_id` and copies the newer writer's pin flag, so it rewrites another subsystem's note and can unpin it. Last-Write-Wins applies only when the caller passes a timestamp, which no caller in the tree does outside the tests.
+- Maturity impression: MIT, 6,067 lines of Python, 66 commits by one author between 9 and 24 September 2026. 70 pytest functions run in CI on Ubuntu and Windows, but the Qdrant mock ignores `query_filter`, so no test observes a filter excluding a row. The README's latency and capacity tables have no harness in the tree. One mark, `scope_enforced`.
+- Study when: you run one agent on several machines and want a shared store where a confused or injected agent on one machine cannot ask its way into another machine's notes.
+- Do not copy when: the boundary must hold against a compromised machine, several people share the store, or a wrong memory has to be corrected with a record of what it said before.
 
 ### [`bitterbot-desktop`](../systems/bitterbot-desktop/)
 - Best idea: **address the facts that matter most by key, because similarity cannot find them.** The canonical ledger states the premise most similarity-gated stores never examine — "importance is orthogonal to similarity: a canonical fact is short, low-entropy, and shares no embedding mass with a cold conversation's first message" — and answers it by injecting those facts unconditionally under a hard cap, with a closed ADD / STRENGTHEN / SUPERSEDE / REJECT op set and deterministic, "never an LLM prose decision" demotion. A status of `active`, `retired` or `superseded` decides what reaches the prompt.

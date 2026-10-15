@@ -1400,6 +1400,21 @@ per request before any wider reach, returning a refusal sentence when
 declined (<code>archive-extension.ts:109-125</code>). The gate sits on
 the store that is off by default. <strong>Put the same reach gate on
 every store the agent can widen.</strong></p>
+<p><strong><a href="../../systems/hermes-fleet-memory/">Hermes Fleet
+Memory</a> decides the key from the process and leaves the credential
+fleet-wide.</strong> Every card carries a <code>domain</code>, and
+<code>validate_domain_access</code> derives the readable set from the
+node's <code>FLEET_HARD_DOMAIN</code>: a tool argument may narrow it and
+a request for another domain or <code>all</code> raises before any
+network call (<code>client/fleet_memory.py:255-292</code>). Both agent
+reads put the result into the Qdrant filter, and the write path stamps
+the node's domain and confines the near-duplicate probe to it. The probe
+does not include <code>client_id</code>, so a similar note from another
+subsystem is overwritten and takes the first one's id, the shape <a
+href="../../systems/synapse-layer/">Synapse Layer</a> shows with a
+content hash. Underneath, one Qdrant API key reads every domain and
+every node holds it. <strong>A scope the agent cannot widen is the right
+default; say in the threat model that the machine can.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <p>The first of these need not be written by hand. <a
 href="https://github.com/promptfoo/promptfoo">promptfoo</a> ships a

@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="An MCP server giving several
+Hermes nodes one Qdrant collection, with a per-node domain filter,
+deterministic slot overwrites and a 90-day episodic expiry.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Hermes Fleet
+Memory — Agent Memory Atlas">
+    <meta property="og:description" content="An MCP server giving
+several Hermes nodes one Qdrant collection, with a per-node domain
+filter, deterministic slot overwrites and a 90-day episodic expiry.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hermes Fleet
+Memory — Agent Memory Atlas">
+    <meta name="twitter:description" content="An MCP server giving
+several Hermes nodes one Qdrant collection, with a per-node domain
+filter, deterministic slot overwrites and a 90-day episodic expiry.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Hermes Fleet Memory — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Hermes Fleet Memory",
+      "description": "An MCP server giving several Hermes nodes one Qdrant collection, with a per-node domain filter, deterministic slot overwrites and a 90-day episodic expiry.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A domain-firewalled Qdrant memory shared
+across a Hermes fleet</p>
+          <h1>Hermes Fleet Memory</h1>
+          <p class="document-deck">An MCP server giving several Hermes
+nodes one Qdrant collection, with a per-node domain filter,
+deterministic slot overwrites and a 90-day episodic expiry.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/amrlazw/hermes-fleet-memory">
+              <span>Source</span>
+              <strong>amrlazw/hermes-fleet-memory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/amrlazw/hermes-fleet-memory/commit/87ce8978accdeb2e5a4252b51e7d02842c95ebd5" title="87ce8978accdeb2e5a4252b51e7d02842c95ebd5">
+              <span>Analyzed revision</span>
+              <code>87ce8978…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/amrlazw--hermes-fleet-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>amrlazw--hermes-fleet-memory</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>6,067
+lines of Python; the memory path is client/fleet_memory.py lines 1–697
+and 1115–1146, client/knowledge_graph.py, client/secret_scan.py and
+server/cleaner.py</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>66
+commits on main by one author under four name spellings, 9 September –
+24 September 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>70
+pytest functions in 10 files plus a control-plane smoke script, run in
+CI on Ubuntu and Windows; the Qdrant mock ignores every
+filter</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Hermes Fleet Memory is a FastMCP stdio server that gives several
+machines running <a href="../hermes-agent/">Hermes Agent</a> one shared
+Qdrant collection of memory cards. Each node is pinned to a domain —
+<code>work</code>, <code>personal</code> or <code>all</code> — and the
+agent can store a card, search it by vector similarity, or walk
+regex-extracted entity relations. Nothing is injected into the prompt:
+the documented Hermes setting is <code>memory.provider: none</code>, and
+retrieval happens only when the agent calls a tool.</p>
+<p>What is notable is the domain firewall. The node's domain comes from
+its environment, the agent's <code>target_domain</code> argument can
+only narrow it, and a request for another domain raises before any
+network call. Slot cards get a UUID5 id from domain, client and slot
+name, so a fact with one right value is overwritten rather than
+duplicated. What is weak is everything after the write: no correction
+keeps history, no tool deletes, the near-duplicate merge crosses clients
+and clears pins, and every node holds the one Qdrant key that reads
+every domain directly.</p>
+<p>The repository also ships a remote desktop bridge, a SQLite task
+plane with Ed25519 completion receipts and a setup wizard. Those are
+coordination and remote execution rather than memory, and this report
+covers them only where they touch the store.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The firewall binds the agent and not the node.</strong>
+<code>validate_domain_access</code> refuses a cross-domain argument
+(<code>client/fleet_memory.py:255-292</code>), and both reads apply the
+result as a Qdrant filter. The credential underneath is one
+<code>QDRANT__SERVICE__API_KEY</code> for the whole collection
+(<code>server/docker-compose.yml</code>), which the wizard hands to
+every node. The boundary holds against a prompt-injected agent and not
+against anyone with a shell on a work machine.</li>
+<li><strong>Episodic dedup rewrites someone else's card.</strong> The
+near-duplicate probe filters on domain, status and
+<code>memory_type</code> and not on <code>client_id</code> or
+<code>pinned</code> (<code>:593-599</code>). A match above 0.95 cosine
+is upserted with the new writer's text, client, author and pin flag, so
+an unpinned write silently unpins a pinned note and starts its 90-day
+clock.</li>
+<li><strong>Last-Write-Wins is opt-in.</strong> A stale write is refused
+only when the caller passes <code>timestamp</code> (<code>:571</code>).
+No caller in the tree does outside the tests, so the model is the only
+party that can invoke the guard the threat model credits with preventing
+split-brain.</li>
+<li><strong>The tests cannot see a filter.</strong>
+<code>MockQdrantStorage.query_points</code> in
+<code>tests/conftest.py:53-67</code> ignores <code>query_filter</code>,
+so no committed test observes the domain or status predicate excluding a
+row.</li>
+</ul>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a <strong>card</strong>: a piece of Markdown text with a
+domain and two optional names. The card has no epistemic state.
+<code>status</code> exists on every payload and every read filters on
+<code>status = active</code>, but the only writer sets
+<code>"active"</code> (<code>client/fleet_memory.py:648</code>), so the
+field withholds nothing. What the card has instead is an identity rule
+that decides whether a new write replaces an old one.</p>
+<p>There are two identity rules, and the agent chooses between them by
+whether it supplies both <code>slot_name</code> and
+<code>client_id</code>.</p>
+<ul>
+<li><strong>Slot cards</strong> are addressed facts. The id is
+<code>uuid5(NAMESPACE_DNS, "domain:client_id:slot_name")</code>
+(<code>:553</code>), the card is forced pinned with
+<code>expires_at = 0</code>, and each write overwrites the previous
+value with <code>revision + 1</code>. The old text is gone;
+<code>created_at</code> is reset to the new write's time as well
+(<code>:655</code>).</li>
+<li><strong>Episodic cards</strong> are addressed by similarity. The
+writer embeds the text and asks Qdrant for the nearest active episodic
+card in the same domain above 0.95 cosine (<code>:593-618</code>). A hit
+is overwritten in place; a miss gets a UUID4. Either way the card
+expires 90 days after this write unless the caller pins it
+(<code>:657</code>).</li>
+</ul>
+<p>A card stops being a belief in one of three ways: a later write to
+the same slot replaces it, a near-duplicate episodic write replaces it,
+or the cleaner deletes it after <code>expires_at</code>. Nothing marks a
+card wrong, superseded or disputed, and nothing the agent holds deletes
+one.</p>
+<p>Who may move a card is decided by the node, not by the card. A work
+node may write <code>work</code> or <code>shared</code>; a personal node
+<code>personal</code> or <code>shared</code>; an <code>all</code> node
+anything. Writes are agent-controlled, there is no background
+extraction, and the store is treated as ground truth: the skill file
+calls the cards "authoritative state cards for all nodes".</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the write path forks on whether a slot name is supplied, both forks overwrite without history, and the node's domain gates both the write and the two reads</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the write path forks on whether a slot name is supplied, both forks overwrite without history, and the node&#39;s domain gates both the write and the two reads
+flowchart TD
+    W[&quot;fleet_memory_store(text, client_id, slot_name, target_domain, pinned, timestamp)&quot;] --&gt; G{&quot;validate_domain_access: target inside node domain plus shared?&quot;}
+    G -- &quot;no&quot; --&gt; PE[&quot;PermissionError, nothing sent&quot;]
+    G -- &quot;yes&quot; --&gt; S{&quot;secret pattern found?&quot;}
+    S -- &quot;yes, domain shared&quot; --&gt; RJ[&quot;rejected: secret_detected&quot;]
+    S -- &quot;no, or other domain&quot; --&gt; K{&quot;slot_name and client_id both given?&quot;}
+    K -- &quot;yes&quot; --&gt; U5[&quot;id = uuid5(domain:client_id:slot_name), pinned, no expiry&quot;]
+    U5 --&gt; L{&quot;timestamp given and older than stored updated_at?&quot;}
+    L -- &quot;yes&quot; --&gt; CR[&quot;conflict_rejected&quot;]
+    L -- &quot;no, or no timestamp&quot; --&gt; OV[&quot;upsert: text replaced, revision + 1, created_at reset&quot;]
+    K -- &quot;no&quot; --&gt; ND{&quot;nearest active episodic card in same domain at 0.95 cosine or above?&quot;}
+    ND -- &quot;yes&quot; --&gt; RW[&quot;upsert over match: text, client_id, author, pinned all replaced, expiry reset to 90 days&quot;]
+    ND -- &quot;no&quot; --&gt; NEW[&quot;new uuid4 card, expires in 90 days unless pinned&quot;]
+    OV --&gt; ST[(&quot;one Qdrant collection, status always active&quot;)]
+    RW --&gt; ST
+    NEW --&gt; ST
+    ST --&gt; R1[&quot;fleet_memory_search: vector query, filter status, domain, optional client_id&quot;]
+    ST --&gt; R2[&quot;fleet_graph_search: scroll up to 5000, match entity, substring or relation&quot;]
+    ST --&gt; CL[&quot;cleaner.py cron: unpinned and expired, append to JSONL, delete&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>The memory runtime is one Python file,
+<code>client/fleet_memory.py</code>, run as an MCP stdio server on each
+node. It embeds locally with fastembed
+(<code>BAAI/bge-small-en-v1.5</code>, 384 dimensions, two threads by
+default) and talks to Qdrant over HTTP with a ten-second timeout
+(<code>:96-102</code>, <code>:227-252</code>). There is no local store
+on a node: every read and write goes to the shared collection.</p>
+<p>The collection is created by <code>bootstrap_collection</code> with
+cosine distance, INT8 scalar quantisation kept in RAM, HNSW
+<code>m=16</code>, and keyword payload indexes on <code>domain</code>,
+<code>client_id</code>, <code>status</code>, <code>memory_type</code>,
+<code>pinned</code>, <code>revision</code> and <code>entities</code>
+(<code>:1115-1146</code>). Two placements are documented. Option A runs
+Qdrant 1.13.2, a wstunnel server and Caddy on a VPS with Docker
+(<code>server/docker-compose.yml</code>), and nodes reach it through an
+outbound WebSocket tunnel. Option B points every node at a Qdrant Cloud
+URL.</p>
+<p><code>server/cleaner.py</code> is the only background process, meant
+for a weekly cron on the hub. The rest of <code>server/</code> is a
+FastAPI task plane over SQLite (<code>server/control-plane/</code>),
+with leases, retries, an outbox and Ed25519-signed completion receipts.
+<code>client/desktop_bridge.py</code> is a loopback HTTP server exposing
+allowlisted commands and jailed file reads on a workstation. Neither
+reads or writes the memory collection.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li><strong>What has to run:</strong> a Qdrant instance reachable from
+every node, and the MCP server per node. The VPS option adds wstunnel
+and Caddy.</li>
+<li><strong>Offline:</strong> a node with no Qdrant has no memory at
+all. A failed search returns one synthetic card with
+<code>slot_name</code> <code>connectivity_notice</code> and
+<code>pinned: True</code> carrying the error text
+(<code>:376-388</code>); a failed store returns
+<code>connectivity_error</code> and the card is lost unless the agent
+retries.</li>
+<li><strong>API keys:</strong> no model key is needed. Qdrant needs its
+API key unless it is open on loopback.</li>
+<li><strong>First run:</strong> <code>pip install</code> of four
+packages, then <code>client/fleet_memory.py --init --domain work</code>,
+which probes Qdrant, creates the collection and writes
+<code>client/.env</code> with mode 0600 (<code>:1342-1402</code>). The
+first search downloads about 130 MB of model unless <code>--warm</code>
+ran first.</li>
+<li><strong>Repair by hand:</strong> only through Qdrant's own API or
+dashboard. Cards are JSON payloads; the expired-card archive is plain
+JSONL.</li>
+</ul>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write.</strong> <code>fleet_memory_store</code>
+(<code>client/fleet_memory.py:505-696</code>) validates the domain
+(<code>:526</code>), resolves <code>effective_domain</code> with an
+<code>all</code> node defaulting to <code>shared</code>
+(<code>:527-529</code>), and runs <code>find_secrets</code> from
+<code>client/secret_scan.py</code>. A finding in <code>shared</code>
+returns <code>rejected</code> before anything is embedded
+(<code>:533-545</code>). The slot branch computes the UUID5, retrieves
+the existing point and applies the timestamp check
+(<code>:552-582</code>); a retrieve failure is swallowed under the
+comment "Fall open for test environments" (<code>:580-582</code>). The
+episodic branch embeds the text, probes for a near duplicate and reuses
+its id (<code>:583-630</code>). Both then embed again, run
+<code>extract_entities_and_relations</code>, build the payload and call
+<code>upsert</code> (<code>:632-669</code>).</p>
+<p><strong>Extraction.</strong> <code>client/knowledge_graph.py</code>
+is 50 lines of regex: wikilinks, backticked identifiers and capitalised
+phrases become up to 15 entities, and nine fixed verbs between two
+entities become up to 15 relation triples. It runs synchronously on
+every write and calls no model.</p>
+<p><strong>Search.</strong> <code>fleet_memory_search</code>
+(<code>:295-388</code>) validates the domain outside its
+<code>try</code> block, so a <code>PermissionError</code> escapes to the
+caller (<code>:311</code>, re-raised at <code>:376-377</code>). It
+embeds the query, builds a <code>must</code> filter of
+<code>status = active</code>, the domain set and an optional
+<code>client_id</code>, and calls <code>query_points</code>, falling
+back to the legacy <code>search</code> on any exception.</p>
+<p><strong>Graph query.</strong> <code>fleet_graph_query</code>
+(<code>:391-502</code>) applies the same <code>status</code> and domain
+filter to a paginated <code>scroll</code>, capped at
+<code>FLEET_GRAPH_SCAN_LIMIT</code> (5,000) and reported as
+<code>truncated</code> when the cap cuts it short. Each payload is a hit
+if the entity is in its entity list, is a substring of its text, or is
+an endpoint of one of its relations.</p>
+<p><strong>Expiry.</strong> <code>clean_expired_memories</code>
+(<code>server/cleaner.py:58-111</code>) filters
+<code>status = active</code>, <code>pinned = False</code> and
+<code>0 &lt; expires_at &lt; now</code>, appends each batch to
+<code>~/.hermes/archives/expired_episodic_memories.jsonl</code>, then
+deletes the ids. Deleted points stop matching, so each pass rescrolls
+from the start.</p>
+<p><strong>Integration.</strong> The tools are registered at
+<code>:715-747</code>: <code>fleet_memory_search</code>,
+<code>fleet_memory_store</code>, <code>fleet_graph_search</code>, and
+two deprecated aliases from the project's five-day rename to Synapse
+(<code>fleet_synapse_search</code>, <code>fleet_synapse_store</code>).
+<code>skills/fleet-memory/SKILL.md</code> tells the agent to call search
+before inspecting a remote machine by shell.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The payload is a flat dictionary built at
+<code>client/fleet_memory.py:642-658</code>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Written as</th>
+<th>Read by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>caller text</td>
+<td>both reads, embedding</td>
+</tr>
+<tr>
+<td><code>domain</code></td>
+<td>node domain or caller's narrower choice</td>
+<td>both read filters, dedup probe</td>
+</tr>
+<tr>
+<td><code>client_id</code></td>
+<td>caller or <code>generic</code></td>
+<td>optional search filter</td>
+</tr>
+<tr>
+<td><code>slot_name</code></td>
+<td>caller or <code>episodic</code></td>
+<td>returned only</td>
+</tr>
+<tr>
+<td><code>memory_type</code></td>
+<td><code>slot</code> or <code>episodic</code></td>
+<td>dedup probe filter</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>the constant <code>active</code></td>
+<td>every read filter, cleaner</td>
+</tr>
+<tr>
+<td><code>pinned</code></td>
+<td>forced true for slots, caller flag otherwise</td>
+<td>cleaner filter</td>
+</tr>
+<tr>
+<td><code>revision</code></td>
+<td>previous plus one on overwrite</td>
+<td>returned only</td>
+</tr>
+<tr>
+<td><code>entities</code>, <code>relations</code></td>
+<td>regex extraction</td>
+<td>graph query</td>
+</tr>
+<tr>
+<td><code>author_node</code>, <code>author_profile</code></td>
+<td><code>FLEET_NODE_NAME</code> or <code>HERMES_PROFILE</code></td>
+<td>returned only</td>
+</tr>
+<tr>
+<td><code>created_at</code>, <code>updated_at</code></td>
+<td>caller <code>timestamp</code> or the clock</td>
+<td>LWW check</td>
+</tr>
+<tr>
+<td><code>expires_at</code></td>
+<td>0 when pinned, else 90 days on</td>
+<td>cleaner filter</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Scope.</strong> <code>domain</code> is the only enforced key.
+<code>client_id</code> names a subsystem and is applied only when the
+caller passes it. There is no user, session or agent key; a node is the
+principal.</p>
+<p><strong>Provenance.</strong> <code>author_node</code> is whatever the
+node's environment says, with a platform-based default
+(<code>:638</code>). The episodic overwrite replaces it, so a card's
+author is its last writer, not its first.</p>
+<p><strong>Time.</strong> <code>created_at</code> and
+<code>updated_at</code> are both set from one <code>now</code> on every
+write, and <code>now</code> is the caller's <code>timestamp</code> when
+supplied. That parameter is a replication clock for the LWW check, not a
+validity time, and the overwrite discards whatever came before.</p>
+<p><strong>Correction.</strong> In-place overwrite with a revision
+counter and no prior value. No tombstone, no supersession link, no
+history table.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is tool-mediated and on demand. Nothing is injected at
+session start, and the documented Hermes configuration disables the
+provider slot that would otherwise prefetch.</p>
+<p><code>fleet_memory_search</code> is plain dense retrieval: one
+embedding, one filtered Qdrant query, top <code>limit</code> (default 5)
+by cosine. No query rewriting, no lexical arm, no reranking and no
+recency term. The output carries the score, domain, client, slot, text,
+pin flag, revision, entities and timestamps, so the agent sees
+provenance and age and must judge them itself.</p>
+<p><code>fleet_graph_search</code> is not a graph traversal in the
+database sense. It reads every authorised card up to the cap and keeps
+those mentioning the entity, then returns one hop of relation triples
+and the neighbouring entity names. The substring test makes it a lexical
+arm as much as a graph one: <code>"api"</code> matches any card whose
+text contains those three letters. On a large collection it is a full
+scan per call.</p>
+<p>Failure modes follow from the shapes. Dense-only retrieval over short
+cards will miss exact identifiers that the embedding does not separate,
+which the graph tool's substring match partly covers. Overwritten cards
+are never stale hits, because the old text no longer exists. Expired
+cards stay retrievable until the cleaner runs, since no read filters on
+<code>expires_at</code>.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is an explicit tool call from the agent. There is no
+extraction from conversation, no session-end capture and no background
+consolidation. Deduplication is the only merge, and it is a replacement
+rather than a merge: the new text wins outright.</p>
+<p><strong>Conflict handling</strong> is the LWW check on slot writes.
+It compares a caller-supplied <code>timestamp</code> against the stored
+<code>updated_at</code> and refuses an older write
+(<code>client/fleet_memory.py:571-578</code>). An untimestamped write
+always wins. The read-then-upsert is not atomic, so two concurrent slot
+writes both read revision <code>n</code> and both store
+<code>n + 1</code>, and whichever lands second is kept.</p>
+<p><strong>The episodic overwrite crosses two boundaries it should
+keep.</strong> The probe filter holds domain, status and
+<code>memory_type</code> (<code>:593-599</code>) but not
+<code>client_id</code>, so a near-identical note from a different
+subsystem replaces the original and takes its id. And the payload's
+<code>pinned</code> is the new writer's flag (<code>:584</code>,
+<code>:649</code>), so a pinned note matched by an ordinary write loses
+its pin and gets an <code>expires_at</code> 90 days out. Whether 0.95
+cosine on bge-small separates "X is enabled" from "X is not enabled" is
+not tested here; the example in <code>tests/test_dedup.py:39-49</code>
+replaces "Wolf proxy healthy" with "Wolf proxy healthy and
+verified".</p>
+<p><strong>Filtering of inputs</strong> is a credential scan. Ten named
+patterns cover hex-256 keys, the project's own <code>flk_</code>,
+<code>tok_</code> and <code>cfut_</code> tokens, OpenAI-style, GitHub,
+AWS, Slack and Telegram tokens and PEM private keys
+(<code>client/secret_scan.py:11-23</code>). A match refuses a
+<code>shared</code> write and stores a <code>work</code> or
+<code>personal</code> write with a <code>secret_warning</code> saying
+anyone holding the Qdrant key can read it. No filter addresses
+prompt-injected content.</p>
+<p><strong>Deletion</strong> is the cleaner only. Its client is built
+from <code>FLEET_QDRANT_HOST</code>, <code>FLEET_QDRANT_PORT</code> and
+<code>FLEET_QDRANT_KEY</code> (<code>server/cleaner.py:33-36</code>,
+<code>:59-60</code>). It reads neither <code>FLEET_QDRANT_URL</code> nor
+<code>FLEET_QDRANT_HTTPS</code>, both of which the MCP server honours
+(<code>client/fleet_memory.py:99-100</code>). On the Qdrant Cloud
+deployment that the setup wizard marks recommended for two machines
+(<code>fleet_wizard.py:344</code>), the cleaner as written connects to
+<code>127.0.0.1:6333</code> and expires nothing. Its collection name
+also comes from <code>FLEET_COLLECTION_NAME</code>, which the server
+does not read.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<ul>
+<li><strong>Blocking:</strong> yes. A store embeds the text twice on the
+episodic path, once for the probe and once for the upsert, then makes up
+to three Qdrant round trips. Embedding runs locally in tens of
+milliseconds per the README's own figures; no model call is
+involved.</li>
+<li><strong>Lag:</strong> none beyond the upsert. A stored card is
+searchable on the next query from any node.</li>
+<li><strong>Whole-store passes:</strong> none for memory.
+<code>fleet_graph_search</code> scans up to 5,000 cards per call, and
+the cleaner scans only expired cards.</li>
+<li><strong>Injection:</strong> zero by default. Search returns at most
+<code>limit</code> cards as a tool result, so nothing sits in a cached
+prompt prefix.</li>
+</ul>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The server is registered as an MCP server in Hermes
+<code>mcp_servers</code>, Claude Code, Claude Desktop or Cursor. Hermes
+is the intended host: the module loads <code>~/.hermes/.env</code> or
+<code>HERMES_ENV_FILE</code>, stamps <code>HERMES_PROFILE</code> as the
+author profile, and the docs require <code>memory.provider: none</code>.
+That takes the <a
+href="../../patterns/pluggable-memory-provider/">pluggable provider</a>
+slot out of play and makes this a sibling of Hermes's own memory rather
+than a mounted provider.</p>
+<p>The agent has full agency over memory content and none over scope. It
+decides what to store, which identity rule applies, whether to pin, and
+whether to pass a timestamp. It cannot choose a domain outside its
+node's set, and it has no delete.</p>
+<p>Two documentation claims do not match the code. The README says
+<code>--init</code> "registers <code>fleet-memory</code> in Hermes, and
+disables ambient prompt injection". <code>cmd_init</code> writes
+<code>client/.env</code> and prints a <code>claude mcp add</code> line,
+and nothing in the tree writes <code>~/.hermes/config.yaml</code>
+(<code>fleet_wizard.py:137</code> only checks that it exists,
+<code>:557</code> prints a snippet). The skill file lists
+<code>python</code> and <code>node</code> as allowlisted bridge
+binaries; <code>client/desktop_bridge.py:76-91</code> removes them with
+a comment explaining why.</p>
+<p>The same server registers six <code>desktop_*</code> tools and two
+<code>fleet_task_*</code> tools beside the memory ones. An adopter
+wanting only the memory has to strip them, or leave
+<code>FLEET_BRIDGE_KEY</code> and <code>FLEET_TASKS_URL</code> unset, in
+which case each returns a configuration error.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Scope.</strong> The domain filter is the strongest mechanism
+here and it is correctly placed: decided before any network call,
+applied on both reads, and not widenable by a tool argument. Its limit
+is the trust boundary it assumes. <code>ENFORCED_DOMAIN</code> is read
+from <code>client/.env</code>, which is loaded with
+<code>override=True</code> and so beats the MCP client's own
+<code>env</code> block (<code>client/fleet_memory.py:36-39</code>,
+<code>:93</code>). And every node holds the one Qdrant key. The
+SECURITY.md threat it closes is the one it names — a prompt-injected
+agent asking for another domain — and not a compromised node.</p>
+<p><strong>Provenance and trust.</strong> <code>author_node</code> and
+<code>revision</code> are the whole of it. Neither is verified, the
+episodic overwrite replaces the author, and nothing distinguishes a card
+a person wrote from one the agent inferred. The store cannot represent
+uncertainty or a disputed value.</p>
+<p><strong>Data loss.</strong> Overwrites keep no prior value. A wrong
+slot write destroys the right one, a near-duplicate write destroys a
+different client's note, and the cleaner's archive holds only expired
+cards. Qdrant snapshots are the only recovery path;
+<code>server/backup-and-export.sh</code> is the operator's script for
+that.</p>
+<p><strong>Concurrency.</strong> LWW is advisory and non-atomic, as
+section 7 sets out. Clock skew between nodes decides timestamped
+conflicts, since <code>updated_at</code> is each writer's wall
+clock.</p>
+<p><strong>Privacy.</strong> Telemetry is opt-in:
+<code>send_anonymous_beacon</code> posts a hashed host id, OS and domain
+mode to <code>fleet.republikus.my</code> only when
+<code>FLEET_TELEMETRY=1</code> and <code>DO_NOT_TRACK</code> is not
+<code>1</code>, and only from <code>--init</code>
+(<code>:1149-1186</code>). <code>PRIVACY.md</code> describes the
+same.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I did not run the suite. The tree holds 70 pytest functions in 10
+files under <code>tests/</code>, plus
+<code>server/control-plane/tests/smoke_test.py</code>, and
+<code>.github/workflows/ci.yml</code> runs both on Ubuntu and Windows
+across Python 3.10 to 3.12. The workflow installs the MCP client extras
+explicitly and fails if <code>HAS_MCP</code> is false, because without
+them the MCP tool tests skip themselves.</p>
+<p>The memory tests cover the domain allowed sets and refusals
+(<code>tests/test_domain_isolation.py</code>, 8), slot UUID5 identity
+and the LWW refusal (<code>tests/test_lww_concurrency.py</code>, 3), the
+episodic dedup id reuse and author stamping
+(<code>tests/test_dedup.py</code>, 2), the cleaner
+(<code>tests/test_cleaner.py</code>, 2), regex extraction and graph
+pagination (<code>tests/test_knowledge_graph.py</code>, 4), and the
+credential refusal with a clean-write control
+(<code>tests/test_secret_guard.py</code>, 7).</p>
+<p><strong>No test can fail on a retrieval filter.</strong>
+<code>MockQdrantStorage.query_points</code> returns every stored point
+regardless of <code>query_filter</code>, under a comment reading "Simple
+domain match simulation" (<code>tests/conftest.py:53-67</code>). The
+domain tests assert on <code>validate_domain_access</code> and on the
+<code>PermissionError</code> from a cross-domain store; none seeds a
+<code>personal</code> card and queries from a <code>work</code> node.
+That is why <code>negative_eval</code> is withheld: the must-not cases
+are about a request being refused, not about a populated store keeping a
+row out of a result.</p>
+<p><strong>The cleaner test takes the wrong exit.</strong> Its mock
+<code>scroll</code> returns the same expired point on every call
+(<code>tests/test_cleaner.py:51-54</code>), so
+<code>clean_expired_memories</code> runs all 200 batches and leaves
+through the "stopped after" warning branch. The assertion checks the
+last delete's ids, which pass on any batch, so the drain loop's normal
+exit is never exercised.</p>
+<p>The README's test listing shows 22 passing cases, a subset of the
+tree at this commit. Its benchmark tables — 8.4 ms indexed search, 68
+years of capacity, $0.00 per thousand turns — have no harness, raw
+output or script in the tree. No paper is cited.</p>
+<p>What I would want first: a populated-store test with cards in all
+three domains asserting a <code>work</code> search returns no
+<code>personal</code> card and does return the <code>work</code> and
+<code>shared</code> ones; a dedup test with two clients' near-duplicates
+asserting both survive; and a cleaner test against a URL-configured
+Qdrant.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Decide scope from the process, not the call.</strong> Read
+the boundary from configuration the agent cannot edit, let a tool
+argument only narrow it, and raise before the network call. A
+prompt-injected request then fails loudly with nothing sent.</li>
+<li><strong>Give a fact with one right value an address.</strong> A
+deterministic id from scope, owner and name turns "update my GPU
+profile" into an overwrite rather than a third near-identical card,
+without a similarity threshold.</li>
+<li><strong>Refuse credentials at the widest scope, warn at the narrow
+ones.</strong> The scan is cheap and blocks the write that would expose
+a secret to every reader.</li>
+<li><strong>Report a scan cap instead of hiding it.</strong>
+<code>fleet_graph_query</code> returns <code>scanned_points</code> and
+<code>truncated</code>, so a caller knows its answer was partial.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Dedup across owners.</strong> A similarity merge has to stay
+inside every key the reads filter on, or the merge moves a record out of
+its owner's view. The same failure appears in <a
+href="../synapse-layer/">Synapse Layer</a>, keyed on content hash rather
+than cosine.</li>
+<li><strong>Copying flags from the newer writer during a merge.</strong>
+A pin, a review mark or an expiry exemption describes the record, not
+the write; carry it forward or the merge undoes a decision someone
+made.</li>
+<li><strong>A conflict guard the caller must opt into.</strong> If stale
+writes matter, stamp the time on the server side and require it, or the
+guard protects nothing in practice.</li>
+<li><strong>Writer and maintainer reading different connection
+settings.</strong> The cleaner composes its own client from a subset of
+the variables; derive both from one function.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one person running Hermes or Claude Code on two or three
+machines who wants a shared notebook, and wants a confused or injected
+agent on the work laptop unable to pull personal notes by asking. It
+costs a Qdrant instance and very little else, and the code is small
+enough to read in an hour.</p>
+<p>Walk away if the boundary has to hold against the machine rather than
+the agent, if several people share the collection, or if a wrong memory
+must be correctable with a record of what it said before. Walk away too
+if you want memory captured for you: every card here exists because the
+agent chose to call a tool.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether <code>MatchValue(value=False)</code> on <code>pinned</code>
+and the range on <code>expires_at</code> select anything when
+<code>pinned</code> carries a keyword payload index and holds a boolean
+(<code>client/fleet_memory.py:1138-1143</code>,
+<code>server/cleaner.py:63-69</code>). Settling it needs a running
+Qdrant 1.13.</li>
+<li>How often bge-small puts a negation above 0.95 cosine of its
+positive, and so how often episodic dedup replaces a statement with its
+contradiction.</li>
+<li>Whether any deployment runs the cleaner against Qdrant Cloud, given
+the connection settings it ignores.</li>
+<li>Where the README's latency and parity figures were measured; no
+harness is committed.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Store, write, read:</strong>
+<code>client/fleet_memory.py</code>
+(<code>validate_domain_access</code>, <code>fleet_memory_search</code>,
+<code>fleet_graph_query</code>, <code>fleet_memory_store</code>,
+<code>bootstrap_collection</code>, tool registration at
+<code>:715-747</code>).</li>
+<li><strong>Extraction and input filtering:</strong>
+<code>client/knowledge_graph.py</code>,
+<code>client/secret_scan.py</code>.</li>
+<li><strong>Background:</strong> <code>server/cleaner.py</code>.</li>
+<li><strong>Deployment:</strong> <code>server/docker-compose.yml</code>,
+<code>server/Caddyfile.example</code>,
+<code>server/wstunnel-restrictions.yaml</code>,
+<code>client/.env.example</code>, <code>fleet_wizard.py</code>.</li>
+<li><strong>Agent surfaces:</strong>
+<code>skills/fleet-memory/SKILL.md</code>, <code>AGENTS.md</code>,
+<code>CLAUDE.md</code>, <code>.cursorrules</code>.</li>
+<li><strong>Out of memory scope:</strong>
+<code>client/desktop_bridge.py</code>,
+<code>client/fleet_startup_sync.py</code>,
+<code>server/control-plane/</code>.</li>
+<li><strong>Tests:</strong> <code>tests/conftest.py</code>,
+<code>tests/test_domain_isolation.py</code>,
+<code>tests/test_lww_concurrency.py</code>,
+<code>tests/test_dedup.py</code>, <code>tests/test_cleaner.py</code>,
+<code>tests/test_knowledge_graph.py</code>,
+<code>tests/test_secret_guard.py</code>,
+<code>tests/test_mcp_tools.py</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E '"status"|status=' -- client server/cleaner.py fleet_wizard.py</code>
+— the memory payload's only <code>status</code> value is
+<code>"active"</code> at <code>fleet_memory.py:648</code>; the other
+hits are tool responses.</li>
+<li><code>git grep -n -E 'scroll\(|query_points\(|\.search\(|\.retrieve\(|\.upsert\(|\.delete\(|set_payload|overwrite_payload|delete_payload'</code>
+— Qdrant calls only in <code>client/fleet_memory.py</code>,
+<code>server/cleaner.py</code> and the test mock; the only
+<code>delete</code> is the cleaner's.</li>
+<li><code>git grep -n -E 'superseded|archived|"deleted"|invalid|valid_from|valid_to|valid_until|tombstone' -- ':!*.md'</code>
+— no supersession, validity or tombstone field; <code>archived</code>
+hits are the cleaner and the bridge's zip tool.</li>
+<li><code>git grep -n 'fleet_memory_store('</code> — the definition and
+an <code>AGENTS.md</code> example; every other call is under
+<code>tests/</code>.</li>
+<li><code>git grep -n -E 'timestamp' -- client/fleet_memory.py</code> —
+the parameter, its docstring and its two uses; no internal caller passes
+it.</li>
+<li><code>git grep -n -i -E 'offline|pending_writes|outbox|replay|flush' -- client/fleet_memory.py</code>
+— no client-side write queue.</li>
+<li><code>git grep -n -E 'FLEET_QDRANT_URL|FLEET_QDRANT_HTTPS|FLEET_COLLECTION_NAME|COLLECTION_NAME ='</code>
+— <code>server/cleaner.py</code> reads only
+<code>FLEET_COLLECTION_NAME</code>; the URL and HTTPS settings are read
+by <code>client/fleet_memory.py</code> and written by the wizard.</li>
+<li><code>git grep -n -E 'config\.yaml|provider|hermes mcp|mcp add|holographic|fact_store' -- '*.py' '*.sh' '*.ps1'</code>
+— <code>fleet_wizard.py:137</code> checks the Hermes config exists and
+<code>:557</code> prints a snippet; nothing writes it.</li>
+<li><code>git grep -n -E 'MemoryProvider|prefetch|sync_turn|on_session|memory\.provider|provider: none'</code>
+— documentation only; no Hermes provider class and no context
+assembler.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+<li><code>git log --format='%h %ad %s' --date=short | grep -i -E 'synapse|rename'</code>
+— the rebrand to <code>hermes-fleet-synapse</code> at
+<code>a395c2e</code> on 11 September 2026 and its reversal at
+<code>d754ec2</code> on 16 September.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/amrlazw/hermes-fleet-memory/commit/87ce8978accdeb2e5a4252b51e7d02842c95ebd5"><code class="commit-id" title="87ce8978accdeb2e5a4252b51e7d02842c95ebd5">87ce8978…</code></a>
+— first reading, at the head of <code>main</code>, the merge of 24
+September 2026. One mark, <code>scope_enforced</code>. Screened before
+reading from a full clone: one auto-run surface,
+<code>.cursorrules</code>, setup instructions for a reading agent,
+treated as data with <code>AGENTS.md</code> and <code>CLAUDE.md</code>.
+Two build-time execution points, <code>setup.py</code>, which launches
+the wizard for any argument it does not recognise as a build command,
+and <code>tests/conftest.py</code>; nothing inside the cooldown; one
+unpinned surface, <code>pyproject.toml</code> with no lockfile. MIT with
+no rider. Read with <code>git grep</code> and <code>sed</code>; nothing
+installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

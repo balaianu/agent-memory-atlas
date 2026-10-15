@@ -16147,6 +16147,38 @@
       "status": "screened",
       "url": "https://github.com/NousResearch/hermes-agent"
     },
+    "hermes-fleet-memory": {
+      "counts": {
+        "AGENT": 3,
+        "EXEC": 2,
+        "FLOAT": 1,
+        "RUNS": 1
+      },
+      "files_scanned": 8,
+      "findings": [
+        {
+          "detail": "editor rules injected into an agent's context",
+          "kind": "RUNS",
+          "path": ".cursorrules"
+        },
+        {
+          "detail": "executes arbitrary Python at install time",
+          "kind": "EXEC",
+          "path": "setup.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        }
+      ],
+      "revision": "87ce8978accdeb2e5a4252b51e7d02842c95ebd5",
+      "screened_at": "2026-10-15T04:52:38+00:00",
+      "slug": "hermes-fleet-memory",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/amrlazw/hermes-fleet-memory"
+    },
     "hestia": {
       "counts": {
         "AGENT": 1,

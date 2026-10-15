@@ -9,7 +9,7 @@ A finding is a place execution can happen, not an accusation. Most are ordinary.
 The point is that the surface is now written down instead of discovered by
 typing `npm install`.
 
-**Progress: 744 of 744 screened at the report's current pin.**
+**Progress: 745 of 745 screened at the report's current pin.**
 
 0 further record(s) describe a revision the report has since moved
 off, and 0 report(s) have no record at all.
@@ -17,9 +17,9 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 352 |
+| Repositories with an auto-run surface (`RUNS`) | 353 |
 | Repositories with a dependency surface inside the cooldown (`FRESH`) | 405 |
-| Repositories with build-time execution (`EXEC`) | 541 |
+| Repositories with build-time execution (`EXEC`) | 542 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
 
@@ -161,6 +161,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`growmos`](../../content/systems/growmos.md) | `.claude/settings.json`, `.mcp.json`, `server.json` |
 | [`headroom`](../../content/systems/headroom.md) | `.claude-plugin/`, `.devcontainer/devcontainer.json`, `.github/copilot-instructions.md`, `server.json` |
 | [`hermes-agent`](../../content/systems/hermes-agent.md) | `.envrc` |
+| [`hermes-fleet-memory`](../../content/systems/hermes-fleet-memory.md) | `.cursorrules` |
 | [`hindsight`](../../content/systems/hindsight.md) | `.claude-plugin/`, `.githooks/` |
 | [`hipocampus`](../../content/systems/hipocampus.md) | `.claude-plugin/`, `hooks/`, `hooks/hooks.json` |
 | [`hivemind-activeloop`](../../content/systems/hivemind-activeloop.md) | `.claude-plugin/` |

@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 744 reports.</strong></p>
+<p><strong>This page covers all 745 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -19043,6 +19043,45 @@ rather than trusted from a log.</li>
 being re-captured — these are keyed on record id and revision, which
 makes them deletion receipts — or when the evidence behind an approval
 has to outlive its retention window.</li>
+</ul>
+<h3 id="hermes-fleet-memory"><a
+href="../systems/hermes-fleet-memory/"><code>hermes-fleet-memory</code></a></h3>
+<ul>
+<li>Best idea: <strong>scope decided by the process and narrowed, never
+widened, by the call.</strong> <code>validate_domain_access</code> turns
+the node's <code>FLEET_HARD_DOMAIN</code> into an allowed set of itself
+plus <code>shared</code> and raises before any Qdrant call when a tool
+argument names another domain or <code>all</code>; both agent reads put
+the result into the filter beside <code>status = active</code>.</li>
+<li>Biggest risk: <strong>the boundary binds the agent and not the
+node.</strong> One <code>QDRANT__SERVICE__API_KEY</code> guards the
+whole collection and the wizard hands it to every machine, so anyone
+with a shell on a work laptop reads the personal domain directly, and
+the domain itself comes from an <code>.env</code> file loaded with
+<code>override=True</code>.</li>
+<li>Most reusable component: <code>validate_domain_access</code> in
+<code>client/fleet_memory.py:255-292</code> — forty lines that encode a
+read set, a write default and the refusals, small enough to lift into
+any MCP memory server.</li>
+<li>Second risk: <strong>every correction destroys what it
+corrects.</strong> Slot writes overwrite with a revision counter and no
+prior value; the episodic near-duplicate merge ignores
+<code>client_id</code> and copies the newer writer's pin flag, so it
+rewrites another subsystem's note and can unpin it. Last-Write-Wins
+applies only when the caller passes a timestamp, which no caller in the
+tree does outside the tests.</li>
+<li>Maturity impression: MIT, 6,067 lines of Python, 66 commits by one
+author between 9 and 24 September 2026. 70 pytest functions run in CI on
+Ubuntu and Windows, but the Qdrant mock ignores
+<code>query_filter</code>, so no test observes a filter excluding a row.
+The README's latency and capacity tables have no harness in the tree.
+One mark, <code>scope_enforced</code>.</li>
+<li>Study when: you run one agent on several machines and want a shared
+store where a confused or injected agent on one machine cannot ask its
+way into another machine's notes.</li>
+<li>Do not copy when: the boundary must hold against a compromised
+machine, several people share the store, or a wrong memory has to be
+corrected with a record of what it said before.</li>
 </ul>
 <h3 id="bitterbot-desktop"><a
 href="../systems/bitterbot-desktop/"><code>bitterbot-desktop</code></a></h3>

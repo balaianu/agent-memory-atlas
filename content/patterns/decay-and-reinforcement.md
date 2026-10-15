@@ -393,6 +393,8 @@ permanent."*
 
 **[Cortex (gambletan)](../../systems/gambletan-cortex/) decays on last access and never records an access.** Episode half-life is 72 hours plus 144 times base salience, and consolidation archives an episode below 0.05 effective salience (`cortex-core/src/episode.rs:153-221`, `cortex-core/src/consolidation.rs:288-318`). `EpisodeStore::touch`, which would refresh `last_accessed` and raise `access_boost`, has no caller outside a test, and retrieval writes nothing back. A default episode therefore leaves recall about 478 hours after ingest, however often it was returned. **Reinforcement needs a writer on the read path, or decay is a retention timer.**
 
+**[Hermes Fleet Memory](../../systems/hermes-fleet-memory/) lets a near-duplicate write decide another card's lifetime.** Episodic cards expire 90 days after their last write unless pinned, and a cron cleaner archives and deletes them (`server/cleaner.py:58-111`). A write within 0.95 cosine of an existing episodic card overwrites it, and the payload's `pinned` and `expires_at` come from the new write (`client/fleet_memory.py:584`, `:649`, `:657`). Repetition therefore extends a note's life, and an unpinned repetition of a pinned note returns it to the 90-day clock. **Reinforcement should only lengthen a life; an exemption a person set belongs to the record, not to the latest write.**
+
 ## Implementation checklist
 
 - Store retrieval strength separately from confidence and trust.
