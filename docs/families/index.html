@@ -1230,37 +1230,33 @@ provenance view it is built around cannot yet be filled. Its own
 enforcement is a transport rule refusing to save a token for anything
 but HTTPS or loopback, tested down to a LAN address not counting as
 local; instance tokens live in <code>localStorage</code>.</p>
-<p><strong><a href="../systems/neuralmind/">NeuralMind</a> writes a test
-that its own marketing numbers are reproducible.</strong> An open-core
-persistent memory and context compressor for coding agents — 102,514
-lines of Python, MIT except <code>neuralmind/tier2/</code>, which is
-source-available — whose memory is an index over a repository rather
-than a store of claims. Its audit trail earns the mark: an append-only
-JSONL with a tamper-evident SHA-256 chain, a <code>verify</code> that
-recomputes every entry, and rotation that preserves continuity by
-seeding the new file from the archived file's final hash, covering the
-build and ingestion paths and recording failures as well as successes; a
-second chain under the commercial licence carries governance events with
-its own genesis hash. The licence statement is the clearest open-core
-boundary here — one directory, two licences, and a forward-only promise
-that "every release up to and including v2.0.1 was published entirely
-under MIT and remains MIT permanently". The unusual artifact is
-<code>tests/test_site_claims.py</code>, which gates the project's own
-website: every <code>N×</code> ratio on a high-traffic page must be
-listed in <code>site/claims.json</code> "with a source and a
-reproduction command", names on a
-<code>private_names_never_publish</code> manifest must not appear under
-<code>site/</code>, and absolute privacy claims are forbidden — with the
-docstring naming the four drifts that shipped before it existed,
-including a <code>63.6×</code> transcription of <code>65.6×</code>, a
-latency figure "with no measurement behind it anywhere in the repo", a
-100% recall claim "the current public benchmark contradicts (93.75%
-mean; <code>click</code> is 0.79)", and a real client name in a report
-every other document anonymises. The chain's weakness sits beside its
-strength: <code>_emit_audit</code> swallows every exception so the log
-never blocks a query, and <code>verify</code> skips an unparseable entry
-as a legacy line with "no chain check" — so the chain proves nothing was
-altered while a hole verifies clean. One mark.</p>
+<p><strong><a href="../systems/neuralmind/">NeuralMind</a> lets a commit
+decide when a recorded decision stops being believed.</strong> An
+open-core memory and context compressor for coding agents — MIT except
+<code>neuralmind/tier2/</code>, which is source-available — whose code
+graph is an index rebuilt rather than corrected, and whose decision
+store is the part that holds beliefs. Recording a decision fingerprints
+the git blob of every file it names. A post-commit scan marks it STALE
+when a commit changes one of those files without carrying exactly that
+blob; search returns ACTIVE decisions only, and a PreToolUse guard shows
+the stale ones, with the recorded reason, before the agent edits the
+file. A committed case asserts that the default search withholds a STALE
+and an INVALIDATED decision matching the query while
+<code>status="all"</code> on the same store returns all three. The audit
+trail is an append-only JSONL hash chain whose verifier fails on an
+unreadable line, a hashless record after the chain starts and a broken
+link, and the one tampering it cannot see — records cut from the end —
+is pinned as a test. But <code>_emit_audit</code> swallows every
+exception, so a failed append leaves a gap nothing counts, and a
+decision change reaches the chain only as the name of the MCP tool that
+made it. The maintenance view's <code>--stale</code> filter returns
+ACTIVE decisions untouched for 90 days and never one whose status is
+STALE. The unusual artifact is <code>tests/test_site_claims.py</code>,
+which gates the project's own website: every <code>N×</code> ratio on a
+high-traffic page must be listed in <code>site/claims.json</code> "with
+a source and a reproduction command", and its docstring names the drift
+that shipped before it, including a <code>63.6×</code> transcription of
+<code>65.6×</code>. Three marks.</p>
 <p><strong><a href="../systems/maximem-synap-sdk/">Maximem Synap SDK</a>
 proves its identifier contract by parsing its own source — in one of its
 two languages.</strong> The Apache-2.0 public client surface of a hosted

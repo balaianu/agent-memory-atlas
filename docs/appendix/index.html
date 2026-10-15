@@ -4064,12 +4064,12 @@ installed, built or run</li>
 <li><a
 href="https://github.com/dfrostar/neuralmind">dfrostar/neuralmind</a> at
 <a
-href="https://github.com/dfrostar/neuralmind/commit/38c74096f5e8e82c79feb037ece7395461fab4f8"><code class="commit-id" title="38c74096f5e8e82c79feb037ece7395461fab4f8">38c74096…</code></a>
-— read only, from a shallow clone; open-core, MIT except
+href="https://github.com/dfrostar/neuralmind/commit/434efc6912c82539785f5010274db0ad79193401"><code class="commit-id" title="434efc6912c82539785f5010274db0ad79193401">434efc69…</code></a>
+— read only, from a full clone; open-core, MIT except
 <code>neuralmind/tier2/</code>, which is source-available under a
-Commercial Modules License and was read as source. Fifteen files
+Commercial Modules License and was read as source. Sixteen files
 scanned, no auto-run surfaces, one build-time execution point, three
-unpinned surfaces, eight dependency files inside the seven-day cooldown,
+unpinned surfaces, one dependency file inside the seven-day cooldown,
 and the <code>CLAUDE.md</code> read as data. Nothing was installed,
 built or run</li>
 <li><a
@@ -12194,7 +12194,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">192
+href="../capabilities/">193
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems
@@ -17817,6 +17817,35 @@ and <code>:225-240</code>; at the pin those were
 <code>:446-458</code>. The withheld mark rested on a summary of the
 suite rather than a search of it, and the rest on text carried forward
 from the first reading without being read against the pin.</li>
+<li><strong>Four published claims about <a
+href="../systems/neuralmind/">NeuralMind</a> were wrong at <a
+href="https://github.com/dfrostar/neuralmind/commit/38c74096f5e8e82c79feb037ece7395461fab4f8"><code class="commit-id" title="38c74096f5e8e82c79feb037ece7395461fab4f8">38c74096…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+praised audit rotation for seeding the new file from the archived file's
+final hash. The backward scan in <code>rotate</code> stopped on the
+archive's trailing newline and read nothing, so the continuation marker
+chained to zeros, and the marker's hash covered its own
+<code>prev_sha256</code>, which <code>verify</code> excluded; a rotated
+log failed <code>verify</code> at line 1
+(<code>neuralmind/audit.py:272-303</code>, <code>:183-202</code>), and
+<code>rotate</code> had no production caller. It said
+<code>verify</code> treated an unparseable entry as a legacy line and
+updated the running hash from its content, as the comment at
+<code>:187</code> says. <code>read_events</code> dropped unparseable
+lines before <code>verify</code> saw them, one invalid UTF-8 byte made
+it return no records and <code>verify</code> report <code>ok</code>
+(<code>:163-171</code>), and a record without a hash reset the running
+hash to zeros (<code>:188</code>). It said the core had no delete or
+forget path; <code>neuralmind memory reset</code> cleared a synapse
+namespace through <code>clear_namespace</code>
+(<code>neuralmind/cli.py:2506</code>,
+<code>neuralmind/synapses.py:2255</code>), and the decay run at session
+start deleted edges below a threshold
+(<code>neuralmind/synapses.py:926</code>,
+<code>neuralmind/hooks.py:328</code>). And it counted 150 test files
+where the tree held 145 named <code>test_*.py</code>. The first two
+rested on a docstring and a comment rather than the code beneath
+them.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

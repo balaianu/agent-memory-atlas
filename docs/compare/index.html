@@ -21148,62 +21148,62 @@ matches every space</td>
 </tr>
 <tr>
 <td><a href="../systems/neuralmind/"><code>neuralmind</code></a></td>
-<td>A content node in a code graph, with synapse weights learned from
-use, plus ingested documents and chapter-indexed long-form text</td>
-<td>Local project state on disk with SQLite, a JSONL audit trail per
-project, and compressed context artifacts</td>
+<td>A content node in a code graph with synapse weights learned from
+use, ingested documents, and an architectural decision: title,
+rationale, commit, affected files with a git blob fingerprint each, a
+confidence and a status</td>
+<td>Local project state under .neuralmind: SQLite for decisions and
+synapses, a JSONL hash-chained audit trail, and the code-graph index
+with its vectors</td>
 <td>BM25 and embeddings with a context selector and compressors,
-graph-aware, tuned by a CI tuner and measured by committed eval
-harnesses</td>
-<td>Backend build over a repository, document ingestion, and hook-driven
-capture from coding-agent sessions</td>
-<td>Rebuild rather than mutate — the index is regenerated; no delete or
-forget surface was found in the core</td>
-<td>Per project path; a Team tier adds seats and a self-hosted control
-plane under the source-available licence</td>
-<td>An MCP server, editor extensions, agent hooks, a CLI, a daemon and a
-dashboard</td>
-<td>A daemon with backpressure, a CI tuner, contribution scoring, and a
-self-benchmark workflow</td>
-<td>Two hash-chained audit trails with verifiers, an MCP security layer,
-a compliance annotation engine, and a test suite that gates the
+graph-aware; decisions by FTS5, a local embedding scan, or both fused by
+reciprocal rank, ACTIVE only unless a status is asked for</td>
+<td>Backend build over a repository, document ingestion, hook-driven
+usage learning, and decisions recorded through the CLI or an MCP
+tool</td>
+<td>The index is rebuilt; a synapse namespace can be cleared and weak
+edges decay away; a decision is amended in place, marked STALE by the
+post-commit scan, invalidated or restored; the decision delete method
+has no caller</td>
+<td>Per project directory, chosen on every MCP call by a path the caller
+supplies; synapse weights partitioned by git-branch namespace, with
+personal and shared merged into every read</td>
+<td>An MCP server, Claude Code hooks, a Hermes plugin, editor
+extensions, a CLI, a daemon and a dashboard</td>
+<td>A post-commit decision scan, synapse decay and team-memory import at
+session start, a daemon with backpressure, a CI tuner and benchmark
+workflows</td>
+<td>A status on every decision that search filters on, a stale-decision
+warning before an edit, two hash-chained audit trails with strict
+verifiers, role-gated MCP tools, and a test suite that gates the
 project's own published numbers</td>
-<td>The audit trail is a real tamper-evident chain rather than a log
-file: SHA-256 over the previous hash plus a stable serialization, a
-<code>verify</code> that recomputes the whole chain, and — the part most
-implementations skip — a rotation that preserves continuity by seeding
-the new file from the archived file's final hash and writing a
-continuation marker. The licensing statement is the clearest open-core
-boundary in this corpus: one directory, two licences, and a forward-only
-guarantee that "every release up to and including v2.0.1 was published
-entirely under MIT and remains MIT permanently." And
-<code>tests/test_site_claims.py</code> gates the project's own
-marketing: every <code>N×</code> ratio on a high-traffic page must
-appear in <code>site/claims.json</code> "with a source and a
-reproduction command", names on a
-<code>private_names_never_publish</code> list must not appear anywhere
-under <code>site/</code>, and absolute privacy claims are forbidden —
-with the docstring naming the four classes of drift that shipped before
-it existed, including a <code>63.6×</code> transcription of
-<code>65.6×</code>, a latency number "with no measurement behind it
-anywhere in the repo", a 100% recall claim "the current public benchmark
-contradicts (93.75% mean; <code>click</code> is 0.79)", and a real
-client name in a report every other document anonymises</td>
-<td>The audit chain proves no entry was altered and nothing proves no
-entry is missing, and both escapes are in the code.
-<code>_emit_audit</code> wraps the append in a bare
-<code>except Exception: pass</code> under the comment "Audit logging
-must never block primary query/build/search flows", so a permission
-error, a full disk or a serialisation failure produces a silent gap that
-<code>verify</code> cannot see. Separately, <code>verify</code> treats
-an unparseable entry as a "[l]egacy line" and updates the running hash
-from its content with "no chain check", so a line that does not look
-chained is skipped rather than failing the walk. For a tamper-evident
-log, a hole verifies clean. Beyond that, the memory is an index over a
-repository rather than a store of claims: there is no status, no
-provenance on a node beyond its source file, and no delete or forget
-path in the core — correcting what the system believes means
-rebuilding</td>
+<td>Staleness is computed from the repository rather than from time.
+Recording a decision fingerprints the git blob of every file it names;
+the post-commit scan marks it STALE when a commit changes one of those
+files, unless that commit holds exactly the fingerprinted blobs, so the
+commit that carries a decision does not retire it and the next edit
+does. Search withholds STALE and INVALIDATED decisions, and the
+PreToolUse guard shows them, with the reason recorded on each, before
+the agent edits a file they govern. The audit verifier fails on an
+unreadable line, a hashless record after the chain starts and a broken
+link, and a committed test pins the one tampering it cannot see. And
+tests/test_site_claims.py gates the project's own marketing: every N×
+ratio on a high-traffic page must appear in site/claims.json with a
+source and a reproduction command, private names may not appear under
+site/, and the guards carry negative controls built from the copy that
+shipped</td>
+<td>_emit_audit wraps the append in a bare except Exception: pass, so a
+build or ingest whose audit write fails leaves a gap nothing counts, and
+records cut from the end of the log verify clean because the hash
+carries no key. The chain records a decision change only as the name of
+the MCP tool that made it: an amend overwrites the rationale, a status
+change is an UPDATE, and invalidation is published only to the
+in-process event bus. The maintenance view called stale returns ACTIVE
+decisions untouched for 90 days and never a decision whose status is
+STALE. dependency_constraints and author have no writer, so cascade
+invalidation never fires. The project boundary is a path the MCP caller
+supplies, the default declared identity takes its role from the call,
+and the edit guard tells the agent itself to run restore</td>
 </tr>
 <tr>
 <td><a href="../systems/neuroca/"><code>neuroca</code></a></td>
@@ -33343,7 +33343,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>192 of 749:</em> <a
+<p><em>193 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33469,6 +33469,7 @@ href="../systems/muninn/"><code>muninn</code></a>, <a
 href="../systems/muninndb/"><code>muninndb</code></a>, <a
 href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/neoth/"><code>neoth</code></a>, <a
+href="../systems/neuralmind/"><code>neuralmind</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
 href="../systems/npcpy/"><code>npcpy</code></a>, <a
@@ -34380,7 +34381,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>474 of 749:</em> <a
+<p><em>475 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34695,6 +34696,7 @@ href="../systems/nanoclaw/"><code>nanoclaw</code></a>, <a
 href="../systems/neko/"><code>neko</code></a>, <a
 href="../systems/neo-agent-brain/"><code>neo-agent-brain</code></a>, <a
 href="../systems/neurakeep/"><code>neurakeep</code></a>, <a
+href="../systems/neuralmind/"><code>neuralmind</code></a>, <a
 href="../systems/neuron/"><code>neuron</code></a>, <a
 href="../systems/neurostack/"><code>neurostack</code></a>, <a
 href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
@@ -34888,7 +34890,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-474 repositories of
+475 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

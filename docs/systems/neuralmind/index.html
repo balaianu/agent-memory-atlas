@@ -4,31 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="Persistent memory and context
-compression for coding agents, whose audit trail is an append-only hash
-chain that survives rotation — and whose test suite refuses to let a
-performance multiplier appear on the marketing site unless
-<code>claims.json</code> gives it a source and a command to reproduce
-it.">
+    <meta name="description" content="Code-graph memory and context
+compression for coding agents, whose recorded decisions go stale when a
+commit changes the files they describe.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="NeuralMind — Agent Memory Atlas">
-    <meta property="og:description" content="Persistent memory and
-context compression for coding agents, whose audit trail is an
-append-only hash chain that survives rotation — and whose test suite
-refuses to let a performance multiplier appear on the marketing site
-unless <code>claims.json</code> gives it a source and a command to
-reproduce it.">
+    <meta property="og:description" content="Code-graph memory and
+context compression for coding agents, whose recorded decisions go stale
+when a commit changes the files they describe.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NeuralMind — Agent Memory Atlas">
-    <meta name="twitter:description" content="Persistent memory and
-context compression for coding agents, whose audit trail is an
-append-only hash chain that survives rotation — and whose test suite
-refuses to let a performance multiplier appear on the marketing site
-unless <code>claims.json</code> gives it a source and a command to
-reproduce it.">
+    <meta name="twitter:description" content="Code-graph memory and
+context compression for coding agents, whose recorded decisions go stale
+when a commit changes the files they describe.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>NeuralMind — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -50,7 +41,7 @@ reproduce it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "NeuralMind",
-      "description": "Persistent memory and context compression for coding agents, whose audit trail is an append-only hash chain that survives rotation \u2014 and whose test suite refuses to let a performance multiplier appear on the marketing site unless `claims.json` gives it a source and a command to reproduce it.",
+      "description": "Code-graph memory and context compression for coding agents, whose recorded decisions go stale when a commit changes the files they describe.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -108,26 +99,23 @@ reproduce it.">
           <p class="eyebrow">A test that every performance ratio on the
 website is reproducible</p>
           <h1>NeuralMind</h1>
-          <p class="document-deck">Persistent memory and context
-compression for coding agents, whose audit trail is an append-only hash
-chain that survives rotation — and whose test suite refuses to let a
-performance multiplier appear on the marketing site unless
-<code>claims.json</code> gives it a source and a command to reproduce
-it.</p>
+          <p class="document-deck">Code-graph memory and context
+compression for coding agents, whose recorded decisions go stale when a
+commit changes the files they describe.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/dfrostar/neuralmind">
               <span>Source</span>
               <strong>dfrostar/neuralmind</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/dfrostar/neuralmind/commit/38c74096f5e8e82c79feb037ece7395461fab4f8" title="38c74096f5e8e82c79feb037ece7395461fab4f8">
+            <a class="meta-pill revision-pill" href="https://github.com/dfrostar/neuralmind/commit/434efc6912c82539785f5010274db0ad79193401" title="434efc6912c82539785f5010274db0ad79193401">
               <span>Analyzed revision</span>
-              <code>38c74096…</code>
+              <code>434efc69…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/dfrostar--neuralmind" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -135,7 +123,21 @@ it.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+except neuralmind/tier2/, which is source-available under the NeuralMind
+Commercial Modules License</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>154,119
+lines of Python in 457 files; the decision store and its tools,
+neuralmind/memory/, are 4,824 lines in 6 files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,606
+commits on main by 13 author names, 16 April – 14 October 2026; version
+4.15.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>3,866
+test functions in 223 test files, 237 of them in 12 files under
+tests/memory; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -151,95 +153,115 @@ it.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>NeuralMind is "[p]ersistent memory and context compression for AI
-coding agents" — 102,514 lines of Python at version 3.11.3, open-core:
-MIT for everything except <code>neuralmind/tier2/</code>, which is
-source-available under a Commercial Modules License.</p>
-<p>Three things here are worth taking somewhere else, and one of them is
-not about memory at all.</p>
-<p>The audit trail is a genuine tamper-evident chain.
-<code>AuditTrail</code> appends JSONL entries whose SHA-256 covers the
-previous hash plus a stable serialization, <code>verify</code> walks the
-chain recomputing every entry, and — the detail that separates a real
-implementation from a gesture — the archive path preserves chain
-continuity across rotation by seeding the new active file from the
-archived file's final hash and writing a continuation marker. A second,
-independently chained log in <code>tier2/audit.py</code> carries
-governance events with its own genesis hash,
-<code>SHA256("neuralmind-team-audit-v1")</code>, and a doctest that
-asserts <code>verify()["ok"]</code>.</p>
-<p>The licensing statement is the clearest open-core boundary in this
-corpus. One repository, two licences, one directory, and a forward-only
-guarantee stated without hedging: "every release up to and including
-v2.0.1 was published entirely under MIT and remains MIT permanently. The
-boundary takes effect with v3.0.0." The commercial modules stay in the
-repository and stay readable — "source-available, not closed" — and a
-one-seat licence auto-issues with no signup and no expiry.</p>
-<p>And then there is <code>tests/test_site_claims.py</code>, which is
-the most unusual test in this corpus. It guards the project's own
-marketing site against untrue numbers, and its docstring explains why it
-exists by listing four classes of drift that had already shipped:</p>
+<p>NeuralMind is persistent memory and context compression for coding
+agents: a code graph with synapse weights learned from use, and a store
+of architectural decisions that a post-commit scan marks STALE when a
+commit changes the files a decision describes. The scan is what to take
+from it, because staleness comes from the repository's own blobs rather
+than from a clock. The weak side is the edge of each mechanism: the
+audit chain drops an entry silently when an append fails, the chain
+records a decision change only as the name of the MCP tool that made it,
+and the maintenance view called "stale" never lists a decision whose
+status is STALE.</p>
+<p>The repository is open-core. Everything is MIT except
+<code>neuralmind/tier2/</code>, which is source-available under a
+Commercial Modules License, and the boundary is stated without hedging:
+"every release up to and including v2.0.1 was published entirely under
+MIT and remains MIT permanently. The boundary takes effect with v3.0.0."
+The commercial modules stay in the tree and readable —
+"source-available, not closed" — and a one-seat licence auto-issues with
+no signup and no expiry.</p>
+<p><strong>The decision store.</strong> A decision carries a title, a
+rationale, the commit it was recorded at, the files it concerns and a
+status of <code>ACTIVE</code>, <code>STALE</code> or
+<code>INVALIDATED</code>. Recording one also stores the git blob id of
+each named file. After every commit, the hook
+<code>neuralmind init-hook</code> installs runs
+<code>decisions scan</code>, which marks STALE each decision naming a
+changed file unless the commit holds exactly the blobs that decision saw
+— "edit <code>auth.py</code>, record why, commit — the decision survives
+… edit <code>auth.py</code> again before or after committing and it goes
+STALE" (<code>neuralmind/memory/invalidate.py:7-14</code>). Search
+returns ACTIVE decisions only, and a PreToolUse hook lists the
+non-ACTIVE ones that govern a file, with the recorded reason, before the
+agent edits it (<code>neuralmind/hooks.py:1065</code>).</p>
+<p><strong>The audit chain.</strong> <code>AuditTrail</code> appends
+JSONL records whose SHA-256 covers the previous hash and a sorted
+serialization, and <code>verify</code> reads the file strictly: an
+unreadable line, a record without a hash after the chain has started,
+and a <code>prev_sha256</code> that does not match the record before it
+each fail with the line number. What it cannot see is pinned as a test,
+under the docstring "Known limit, kept as a test so the docs never claim
+otherwise": records cut from the end verify clean
+(<code>tests/test_audit_new.py:262-267</code>). A second, independent
+chain in <code>tier2/audit.py</code> carries governance events with its
+own genesis hash.</p>
+<p><strong>The site-claims test.</strong>
+<code>tests/test_site_claims.py</code> guards the marketing site against
+untrue numbers, and its docstring lists the drift that shipped before it
+existed:</p>
 <blockquote>
-<p>"the same token-reduction figure attributed to three different repo
-sizes … a transcription error of that figure (<code>63.6×</code> for
+<p>"a transcription error of that figure (<code>63.6×</code> for
 <code>65.6×</code>) sitting one card away from the original, a
-query-latency number with no measurement behind it anywhere in the repo,
-a <code>100%</code> gold-file recall claim the current public benchmark
-contradicts (93.75% mean; <code>click</code> is 0.79), and the real name
-of a private client whose field report every doc deliberately
-anonymizes."</p>
+query-latency number with no measurement behind it anywhere in the
+repo"</p>
 </blockquote>
-<p>The three rules it now enforces are: every <code>N×</code> ratio on a
-high-traffic page must be listed in <code>site/claims.json</code> "with
-a source and a reproduction command"; names on a
-<code>private_names_never_publish</code> manifest must not appear
-anywhere under <code>site/</code>; and the absolute-privacy-claim
-patterns the docs guard forbids apply to the site too. Multipliers under
-2× are exempt with a stated reason — "those are decay coefficients and
-worked examples in the publications, not claims."</p>
-<p>Requiring a <em>reproduction command</em> is what makes rule one more
-than a citation check. A vendor benchmark with a command anyone can run
-is a different artifact from a number in a card.</p>
-<p>The weakness is in the same place as the strength. The chain proves
-that no entry was altered. Nothing proves that no entry is missing, and
-the code contains two ways for one to go missing.
-<code>_emit_audit</code> wraps the append in a bare
-<code>except Exception: pass</code>, under a comment stating the intent
-— "Audit logging must never block primary query/build/search flows" — so
-a disk error or a serialisation failure drops the entry silently. And
-<code>verify</code> treats a line it cannot parse as a "[l]egacy line",
-updates the running hash from its content, and proceeds with "no chain
-check".</p>
-<p>For a tamper-evident log, a hole verifies clean.</p>
+<p>Every <code>N×</code> ratio on a high-traffic page must be listed in
+<code>site/claims.json</code> "with a source and a reproduction
+command"; names on a <code>private_names_never_publish</code> manifest
+must not appear under <code>site/</code>; and the docs guard's
+absolute-privacy patterns apply to the site. Further tests refuse a
+ratio the manifest records as superseded, a ratio quoted beside a
+repository size it was not measured on, and copy that calls a field
+report "CI-gated".
+<code>test_guards_actually_trip_on_known_bad_copy</code> proves the
+guards fire on the copy that shipped.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
+<p>The system holds three kinds of memory, and they end differently.</p>
 <p>A <strong>content node</strong> is a piece of the repository in a
-code graph, with synapse weights learned from use.</p>
-<p>A <strong>build</strong> regenerates that graph; there is no edit and
-no delete.</p>
-<p>An <strong>audit entry</strong> is a link in a chain that survives
-file rotation.</p>
-<p>A <strong>claim</strong> — in the marketing sense — is a number that
-must be reproducible or it may not be published.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the audit chain proves entries were not altered, and two paths let an entry be absent without the verifier noticing</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the audit chain proves entries were not altered, and two paths let an entry be absent without the verifier noticing
+code graph. A build regenerates the graph, so a node is never corrected,
+only re-derived.</p>
+<p>A <strong>synapse</strong> is a learned association between nodes,
+written by usage hooks into a namespace — <code>personal</code>,
+<code>shared</code>, or <code>branch:&lt;name&gt;</code> on a feature
+branch — and read as a weighted merge of the active namespace with
+<code>personal</code> and <code>shared</code>. Synapses decay at session
+start, edges below a threshold are deleted, and
+<code>neuralmind memory reset</code> clears one namespace.</p>
+<p>A <strong>decision</strong> is a stated belief about why the code is
+shaped as it is, and the only memory here with an epistemic state. It is
+ACTIVE when recorded. A commit that changes one of its files without
+carrying the fingerprinted blob makes it STALE: on record, withheld from
+search, shown before an edit. A person, or the agent from a shell,
+re-anchors it to HEAD with <code>restore</code> or retires it with
+<code>invalidate</code>. Nothing deletes one:
+<code>DecisionStore.delete</code> has no caller.</p>
+<p>An <strong>audit record</strong> is a link in a hash chain. It says
+that a build, an ingestion or an MCP call happened, and who the caller
+says made it; it does not say what a decision changed from or to.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a decision leaves search when a commit changes its files, and the hash-chained audit trail records only which tool changed it</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a decision leaves search when a commit changes its files, and the hash-chained audit trail records only which tool changed it
 flowchart TB
-    B[&quot;backend build&quot;] --&gt; EM[&quot;NeuralMind._emit_audit —&lt;br/&gt;the single emitter&quot;]
-    ING[&quot;ingest_document&quot;] --&gt; EM
-    SRCH[&quot;search · wakeup · probe&quot;] --&gt; EM
-    EM --&gt; TRY{&quot;try: audit.append_event&quot;}
-    TRY --&gt;|&quot;ok&quot;| CHAIN[&quot;entry.sha256 = SHA256(prev_hash&lt;br/&gt;+ stable serialization)&quot;]
-    TRY --&gt;|&quot;except Exception: pass —&lt;br/&gt;&#39;Audit logging must never block&lt;br/&gt;primary query/build/search flows&#39;&quot;| GAP[&quot;entry silently dropped&quot;]
-    CHAIN --&gt; JL[(&quot;audit_events.jsonl —&lt;br/&gt;append-only&quot;)]
-    JL --&gt; ROT[&quot;rotation: archive oversized file,&lt;br/&gt;seed the new file&#39;s chain from the&lt;br/&gt;archived file&#39;s FINAL hash,&lt;br/&gt;write a continuation marker&quot;]
-    JL --&gt; V{&quot;verify() walks the chain&quot;}
-    V --&gt;|&quot;recomputed == stored&quot;| OK[&quot;ok&quot;]
-    V --&gt;|&quot;line will not parse&quot;| LEG[&quot;&#39;Legacy line — update prev_sha&lt;br/&gt;from its content (no chain check)&#39;&quot;]
-    GAP -.-&gt;|&quot;a hole verifies clean&quot;| OK
-    LEG -.-&gt; OK
-    T2[(&quot;tier2/audit.py — a second chain&lt;br/&gt;for governance events;&lt;br/&gt;genesis SHA256(&#39;neuralmind-team-audit-v1&#39;);&lt;br/&gt;source-available, not MIT&quot;)] --- JL
-    SITE[&quot;tests/test_site_claims.py&quot;] --&gt; R1[&quot;every N× ratio on a high-traffic page&lt;br/&gt;must be in site/claims.json with a&lt;br/&gt;source AND a reproduction command&quot;]
-    SITE --&gt; R2[&quot;names on private_names_never_publish&lt;br/&gt;must not appear anywhere under site/&quot;]
-    SITE --&gt; R3[&quot;no absolute privacy claims&quot;]
-    WHY[&quot;the four drifts that shipped before it:&lt;br/&gt;one figure on three repo sizes ·&lt;br/&gt;63.6× for 65.6× · a latency number with&lt;br/&gt;no measurement · a 100% recall claim the&lt;br/&gt;benchmark contradicts · a real client name&quot;] -.-&gt; SITE</code></pre></details></figure>
+    REC[&quot;record — CLI or neuralmind_record_decision:&lt;br/&gt;status ACTIVE, git blob fingerprint per named file&quot;] --&gt; ACT([&quot;ACTIVE&quot;])
+    ACT --&gt;|&quot;post-commit scan: a named file changed&lt;br/&gt;and the commit lacks the fingerprinted blob&quot;| ST([&quot;STALE&quot;])
+    ACT --&gt;|&quot;invalidate — CLI or MCP tool&quot;| INV([&quot;INVALIDATED&quot;])
+    ST --&gt;|&quot;invalidate&quot;| INV
+    ST --&gt;|&quot;restore — CLI only; the edit guard&lt;br/&gt;tells the agent to run it&quot;| ACT
+    ACT --&gt; Q{&quot;search · query tool · export:&lt;br/&gt;WHERE status = ACTIVE&quot;}
+    ST -.-&gt;|&quot;withheld&quot;| Q
+    INV -.-&gt;|&quot;withheld&quot;| Q
+    ST --&gt; GU[&quot;PreToolUse guard: listed with status&lt;br/&gt;and recorded reason before an edit&quot;]
+    INV --&gt; GU
+    ST --&gt; LAB[&quot;memory_get · timeline · status ALL:&lt;br/&gt;returned, each row labelled&quot;]
+    INV --&gt; LAB
+    MUT[&quot;amend · status change&quot;] --&gt;|&quot;UPDATE in place&quot;| DB[(&quot;memory.db&quot;)]
+    MUT -.-&gt;|&quot;publish decision_invalidated —&lt;br/&gt;in-process event bus only&quot;| BUS[&quot;no durable record&quot;]
+    B[&quot;build · ingest · query · search&quot;] --&gt; EM[&quot;_emit_audit&quot;]
+    EM --&gt;|&quot;except Exception: pass&quot;| GAP[&quot;entry dropped,&lt;br/&gt;nothing counts it&quot;]
+    EM --&gt; CH[(&quot;audit_events.jsonl —&lt;br/&gt;SHA-256 over prev hash + record&quot;)]
+    MCP[&quot;every MCP call, by tool name&quot;] --&gt; SC[&quot;secure_call&quot;] --&gt; CH
+    CH --&gt; V{&quot;verify, strict&quot;}
+    V --&gt;|&quot;unreadable line · hashless record after&lt;br/&gt;the chain starts · broken prev link&quot;| FAIL[&quot;fails, with line and reason&quot;]
+    V --&gt;|&quot;records cut from the end ·&lt;br/&gt;a chain rehashed by whoever can write the file&quot;| PASS[&quot;passes&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -250,8 +272,29 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
+<td><code>neuralmind/memory/store.py</code></td>
+<td>The decision store: SQLite, FTS5, cached vectors, blob fingerprints,
+status</td>
+</tr>
+<tr>
+<td><code>neuralmind/memory/invalidate.py</code></td>
+<td>The post-commit scan and the carried-by-commit exemption</td>
+</tr>
+<tr>
+<td><code>neuralmind/memory/mcp_tools.py</code></td>
+<td>Seven decision tools: query, audit, record, invalidate, and a
+three-layer search, timeline and get</td>
+</tr>
+<tr>
+<td><code>neuralmind/memory/eval.py</code>,
+<code>semantic.py</code></td>
+<td>A maintenance-replay harness, a gold query-set scorer, local MiniLM
+ranking</td>
+</tr>
+<tr>
 <td><code>neuralmind/audit.py</code></td>
-<td>The MIT hash-chained trail, its verifier and its rotation</td>
+<td>The MIT hash-chained trail, its strict verifier and its
+rotation</td>
 </tr>
 <tr>
 <td><code>neuralmind/tier2/audit.py</code></td>
@@ -259,132 +302,322 @@ flowchart TB
 </tr>
 <tr>
 <td><code>neuralmind/core.py</code></td>
-<td>Build, ingest, search, and the single audit emitter</td>
+<td>Build, ingest, query and search, and the single audit emitter</td>
 </tr>
 <tr>
-<td><code>neuralmind/context_selector.py</code>,
-<code>compressors.py</code></td>
-<td>Context compression, the product claim</td>
+<td><code>neuralmind/synapses.py</code>, <code>namespaces.py</code></td>
+<td>Learned associations and the branch namespace they are written
+to</td>
 </tr>
 <tr>
-<td><code>neuralmind/bm25.py</code>, <code>bge_embedder.py</code></td>
-<td>The retrieval arms</td>
+<td><code>neuralmind/team_memory.py</code>,
+<code>peer_review.py</code></td>
+<td>Team bundle import, the review band, the pending queue</td>
 </tr>
 <tr>
-<td><code>evals/</code></td>
-<td>Faithfulness, quality, parity, onboarding, SWE-bench and a book
-corpus</td>
+<td><code>neuralmind/mcp_security.py</code></td>
+<td>Role policy, identity binding, rate limit, MCP audit</td>
 </tr>
 <tr>
 <td><code>tests/test_site_claims.py</code>,
 <code>test_docs_claims.py</code></td>
 <td>The project's own numbers, gated</td>
 </tr>
-<tr>
-<td><code>LICENSING.md</code></td>
-<td>One directory, two licences, forward-only</td>
-</tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Everything runs locally: SQLite files and JSONL under the project's
+<code>.neuralmind/</code>, a local embedding model that
+<code>neuralmind build</code> downloads once, and an optional daemon. No
+API key is needed to store anything. Decision search "never downloads
+the model" (<code>neuralmind/memory/semantic.py:20</code>); without it,
+hybrid search falls back to keyword results with a notice. The decision
+store is one SQLite file, readable with any client, and
+<code>neuralmind decisions export</code> renders the ACTIVE decisions as
+Markdown. With <code>security.require_encrypted_storage: true</code>,
+the store refuses to open unless the OS reports full-disk encryption
+(<code>neuralmind/storage_guard.py:1-19</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>tests/test_site_claims.py:1-26</code>. Read the docstring
-before the code — it is a post-mortem of four shipped inaccuracies and
-the rules that followed, and it is the most transferable thing in the
-repository.</p>
-<p><code>neuralmind/audit.py:234-290</code> for rotation that preserves
-chain continuity, which is the part of a hash chain most implementations
-get wrong or skip.</p>
-<p><code>neuralmind/core.py:442-465</code> for the emitter, and the
-<code>except Exception: pass</code> that is the chain's blind spot.</p>
+<p><strong>Recording a decision.</strong>
+<code>DecisionStore.record</code>
+(<code>neuralmind/memory/store.py:497</code>) inserts an ACTIVE row and
+calls <code>_capture_fingerprints</code> (<code>:782</code>), which
+stores the git blob id of each named file as <code>git add</code> would
+compute it. The MCP tool passes <code>commit_sha</code> as the caller
+gives it, defaulting to the empty string
+(<code>neuralmind/memory/mcp_tools.py:700-713</code>); the CLI resolves
+HEAD (<code>neuralmind/cli.py:3360-3390</code>).</p>
+<p><strong>Going stale.</strong> The post-commit hook runs
+<code>decisions scan . --quiet</code>
+(<code>neuralmind/cli.py:6503</code>).
+<code>InvalidationEngine.scan</code>
+(<code>neuralmind/memory/invalidate.py:336</code>) lists the files HEAD
+changed against its first parent and finds decisions naming any of them
+by relative or absolute path. It skips one whose fingerprints equal the
+committed blobs (<code>:522-543</code>) and calls
+<code>mark_stale</code> on the rest, which sets the status and appends
+the reason to the decision's evidence list
+(<code>neuralmind/memory/store.py:692-719</code>).</p>
+<p><strong>Reading.</strong> <code>search</code>
+(<code>neuralmind/memory/store.py:956</code>) defaults to ACTIVE and
+dispatches to <code>_query_fts</code> (<code>:1180</code>),
+<code>_query_like</code> (<code>:1233</code>) or
+<code>_semantic_search</code> (<code>:1059</code>), each with the status
+in its WHERE clause, and hybrid mode fuses the first and third by
+reciprocal rank. The edit guard reads by file through
+<code>find_by_files(..., include_invalidated=True)</code> and keeps the
+non-ACTIVE rows (<code>neuralmind/hooks.py:1089-1098</code>).</p>
+<p><strong>Leaving STALE.</strong> <code>restore</code>
+(<code>neuralmind/memory/store.py:721</code>) resets the status to
+ACTIVE, re-anchors the commit and re-fingerprints; it is reached only
+from <code>neuralmind decisions restore</code>
+(<code>neuralmind/cli.py:3511</code>). <code>invalidate</code>
+(<code>neuralmind/memory/store.py:657</code>) is reached from the CLI
+and from the MCP tool.</p>
+<p><strong>Auditing.</strong> <code>_emit_audit</code>
+(<code>neuralmind/core.py:599-623</code>) calls
+<code>AuditTrail.append_event</code>
+(<code>neuralmind/audit.py:139</code>) inside a bare
+<code>except Exception: pass</code>. <code>verify</code>
+(<code>:208-299</code>) walks the file through
+<code>_read_lines_strict</code> (<code>:301</code>), and
+<code>neuralmind audit verify</code> runs it on demand
+(<code>neuralmind/cli.py:3017</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>The memory is an index over a repository rather than a store of
-claims: content nodes in a code graph with synapse weights, ingested
-documents, and chapter indexes for long-form text.</p>
-<p>That shape answers most of the atlas's usual questions by
-construction. There is no epistemic status because a node is not a
-belief; there is no supersession because a rebuild replaces the graph;
-there is no delete path in the core because forgetting means not
-indexing. Provenance is the source file.</p>
-<p>The consequence worth naming is correction. If the graph encodes
-something wrong — a stale file, a misattributed symbol — the remedy is a
-rebuild, and there is no way to mark a single node as not-to-be-trusted
-in the meantime.</p>
+<p>The <code>decisions</code> table holds <code>id</code>,
+<code>title</code>, <code>rationale</code>, <code>commit_sha</code>,
+<code>files_affected</code>, <code>decision_type</code>,
+<code>confidence</code>, <code>status</code>, <code>author</code>,
+<code>created_at</code>, <code>updated_at</code>, <code>evidence</code>,
+<code>rejected_alternatives</code>, <code>dependency_constraints</code>
+and <code>tags</code> (<code>neuralmind/memory/store.py:172-193</code>).
+<code>decision_fingerprints</code> keys a blob id on decision and path;
+<code>decision_vectors</code> caches one embedding per decision against
+a content hash and model id, and a delete trigger removes it with its
+decision.</p>
+<p>The status is the trust state, and the evidence list is its
+provenance: every transition out of ACTIVE appends a line — "Marked
+STALE: commit 1a2b3c4 changed …" or "Invalidated: …" — and the edit
+guard reads the newest such line back as the reason.
+<code>confidence</code> is printed by the guard and the export;
+<code>search</code> takes a <code>min_score</code> floor on it that no
+shipped caller passes.</p>
+<p>Two declared fields have no writer. Neither the CLI nor the MCP tool
+passes <code>author</code> or <code>dependency_constraints</code>; the
+one assignment of either is the eval harness's fixture
+(<code>neuralmind/memory/eval.py:430-433</code>).
+<code>cascade_invalidation</code> finds dependents through
+<code>dependency_constraints</code>
+(<code>neuralmind/memory/store.py:896-924</code>), so in a store written
+through the shipped surfaces it finds none.</p>
+<p>Decisions are scoped by file location only: one
+<code>memory.db</code> per project directory. Synapse rows carry a
+<code>namespace</code>, and a read merges the active namespace,
+<code>personal</code> and <code>shared</code> at fixed weights
+(<code>neuralmind/synapses.py:590-600</code>). A feature branch's
+learning is invisible from another feature branch, and everything
+learned on the default branch is visible from all of them. There is no
+valid-time field anywhere: <code>created_at</code> and
+<code>updated_at</code> are write clocks, and <code>commit_sha</code>
+anchors a decision to a tree, not to a period.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 and embeddings with a context selector and compressors, tuned by
-a CI tuner and measured by the eval harnesses in <code>evals/</code>.
-Unlike several projects read recently, the corpora are committed —
-<code>evals/book_retrieval/</code> carries an actual book,
-<code>evals/quality/baseline.json</code> an actual baseline — so the
-numbers can be reproduced by someone who is not the author. That is the
-same discipline the site-claims test enforces, applied upstream of the
-claim.</p>
+<p>Code retrieval is BM25 and embeddings with a context selector and
+compressors, graph-aware, tuned by a CI tuner and measured by committed
+eval harnesses under <code>evals/</code> — an actual book under
+<code>evals/book_retrieval/</code>, a baseline under
+<code>evals/quality/</code> — so the numbers can be reproduced by
+someone who is not the author.</p>
+<p>Decision retrieval has three modes. Keyword search drops stopwords
+and matches any remaining term as a prefix in FTS5, ranked by
+<code>bm25()</code>; a LIKE scan stands in on SQLite builds without
+FTS5. Semantic search ranks by cosine similarity against cached MiniLM
+vectors, re-embedding any whose text or model changed. Hybrid, the
+default, fuses the two by reciprocal rank over a deeper pool than the
+caller asked for.</p>
+<p>The MCP surface splits retrieval into three layers to bound tokens.
+<code>neuralmind_memory_search</code> returns compact rows of id, title,
+status, type, commit, date and file count;
+<code>neuralmind_memory_timeline</code> returns neighbours by creation
+time around an anchor; <code>neuralmind_memory_get</code> returns full
+records, capped at 20 ids per call
+(<code>neuralmind/memory/mcp_tools.py:200-362</code>). Only the first
+applies a status filter, and only it lets the model widen that filter;
+every row the other two return carries its status.</p>
+<p>The maintenance view uses "stale" in a second sense.
+<code>audit(stale_only=True)</code> returns ACTIVE decisions whose
+<code>updated_at</code> is older than 90 days
+(<code>neuralmind/memory/store.py:1371-1387</code>), and the orphan
+check returns ACTIVE decisions whose commit is not in
+<code>git rev-list --all</code> (<code>:1389-1432</code>). A decision
+the commit scan marked STALE matches neither, so
+<code>neuralmind decisions audit --stale</code> and
+<code>neuralmind_audit_decisions</code> with <code>stale_only</code>
+never list one, though the docstring promises "only STALE
+decisions".</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Build and ingest, both audited. A build failure emits an audit event
-with <code>status="failure"</code>, which is the right half to remember:
-a log that records only successes tells you nothing about the run that
-went wrong.</p>
+<p>Builds and ingestion write the code graph; usage hooks write
+synapses; a person or the agent writes decisions, through
+<code>neuralmind decisions record</code> or
+<code>neuralmind_record_decision</code>. A decision is not deduplicated:
+recording the same title twice yields two rows, and nothing compares a
+new decision with an INVALIDATED one.</p>
+<p>An amend overwrites the rationale in place and appends to the
+evidence and rejected-alternatives lists
+(<code>neuralmind/cli.py:3439-3455</code>); the previous rationale is
+not kept. Status changes are UPDATEs. Writes fail open:
+<code>record</code> and <code>update</code> log and return when SQLite
+fails, while <code>invalidate</code> and <code>restore</code>, as
+explicit user actions, raise.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The decision write is synchronous and cheap: one INSERT and one
+<code>git hash-object</code> over the named files. The scan runs once
+per commit in the post-commit hook — one diff against the first parent,
+one <code>ls-tree</code> for the changed paths, and a lookup chunked
+under SQLite's parameter limit — and always exits 0, so it never fails
+the commit it follows. Semantic search embeds only decisions whose
+vector is missing or out of date. Nothing re-reads the whole store in
+the background.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>An MCP server, editor extensions, agent hooks, a CLI, a daemon with
-backpressure, and a dashboard. The product claim is token reduction
-through context compression, and the claim is one of the numbers
-<code>site/claims.json</code> has to justify.</p>
+<p>The MCP server exposes the seven decision tools beside the code-graph
+tools. The default role policy gives <code>builder</code> all seven and
+<code>reader</code> the five reads
+(<code>neuralmind/mcp_security.py:25-89</code>). Under
+<code>security.identity: declared</code>, the default, the server
+"believes the call's own <code>actor</code> and <code>role</code>"
+(<code>:196-206</code>), so the role gate holds only against a client
+that declares a narrower one. <code>security.identity: os</code> takes
+the role from the OS account over stdio and records any mismatch.</p>
+<p>Every MCP call carries a <code>project_path</code>, and any existing
+directory is accepted. The decision store opened is the one under that
+path, so the project boundary is the caller's choice.</p>
+<p>The PreToolUse hook injects the stale-decision guard before an edit,
+ending with an instruction to the agent: "If a STALE decision still
+holds after you check the code,
+<code>neuralmind decisions restore &lt;id&gt;</code> re-anchors it to
+HEAD" (<code>neuralmind/hooks.py:1129-1133</code>). The agent records
+decisions as ACTIVE through its own tool. A Hermes plugin gives Hermes
+the same per-turn code context and session recap that the Claude Code
+hooks give Claude Code.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Two independent hash chains, a compliance annotation engine, an MCP
-security layer with its own audit integration, and no telemetry.</p>
-<p>The honest assessment of the chains is that they are well built and
-under-guarded at the edges. A tamper-evident log answers "was this
-record changed?" and not "is this record complete", and completeness is
-the property an audit is usually wanted for. Two lines of code decide it
-here: the swallowed exception, and the legacy-line branch.</p>
-<p>Both have cheap fixes that do not compromise the stated intent. The
-emitter could increment a dropped-entry counter and surface it in
-<code>verify</code>'s result, so a gap becomes visible without ever
-blocking a query. The legacy branch could record how many unchained
-lines it skipped, so "ok" stops meaning "ok, apart from the ones I did
-not check."</p>
+<p><strong>The audit chain detects alteration and admits three kinds of
+absence.</strong> The verifier is strict about what is in the file. It
+cannot see an entry that was never written: <code>_emit_audit</code>
+swallows every exception under the comment "Audit logging must never
+block primary query/build/search flows"
+(<code>neuralmind/core.py:621-623</code>), and no counter records the
+drop. It cannot see records cut from the end, and a test says so. And it
+accepts records before the first hash as written before the chain
+existed, counted in <code>unchained</code>, so a log stripped of every
+hash passes as an unchained log
+(<code>neuralmind/audit.py:255-266</code>). The hash has no key, so
+anyone who can write the file can rehash it; the release notes recommend
+an exported copy off the host for that reason.</p>
+<p><strong>Rotation verifies and does not run.</strong>
+<code>rotate</code> hashes its continuation marker the way
+<code>append_event</code> does, and <code>verify</code> checks the
+marker against the archive's last hash while the archive exists
+(<code>neuralmind/audit.py:338-359</code>, <code>:389-452</code>). No
+CLI command or production path calls it, and when it does run it deletes
+archives older than 90 days.</p>
+<p><strong>The chain names the tool, not the change.</strong> An MCP
+record or invalidate call leaves an <code>mcp_call</code> event naming
+the tool and the role; the decision id, the old status and the old
+rationale are not in it, and a CLI change leaves nothing.
+<code>_emit_local_audit</code> in the CLI has no caller.</p>
+<p><strong>Human review: a queue whose admission the producer
+sets.</strong> Imported team synapse edges that score inside a review
+band wait in <code>team_pending_review</code> until
+<code>neuralmind memory review-approve</code> promotes them to
+<code>shared</code>, and no MCP tool reaches that verb
+(<code>neuralmind/team_memory.py:592-640</code>,
+<code>neuralmind/cli.py:3273-3296</code>). The score, though, is
+computed from the bundle's own <code>activation_count</code> and
+<code>last_activated</code>
+(<code>neuralmind/contribution_scoring.py:160-168</code>), so a bundle
+that states high values auto-promotes past the queue. For decisions, the
+agent writes ACTIVE directly and is told to run <code>restore</code>
+itself.</p>
+<p><strong>Scope.</strong> The project boundary is a model-supplied
+path, and the synapse namespace partitions ranking weights rather than
+readers, so no retrieval path here enforces a stored scope against its
+caller.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>150 test files, committed eval corpora, a self-benchmark CI workflow,
-and the two claims guards.</p>
-<p>The claims guards deserve the last word because they are rare enough
-to be worth naming as a category. Most projects treat their README as
-marketing and their tests as engineering. This one treats a published
-number as an assertion that can be false, gives it a source and a
-reproduction command, and fails the build if a new one appears without
-them. The four drifts listed in the docstring are what happens without
-that, and every one of them is a mistake an honest project makes.</p>
+<p>3,866 test functions in 223 files, 237 of them under
+<code>tests/memory</code>. Nothing was run for this reading.</p>
+<p>The decision store's must-not case is
+<code>TestLayer1StatusFilter</code>
+(<code>tests/memory/test_progressive_retrieval.py:81-136</code>): three
+decisions match the query, one STALE and one INVALIDATED, and the
+default search must return exactly the ACTIVE one, while
+<code>status="all"</code> on the same store returns all three. The audit
+tests cover each verifier failure mode, the rotation link, and the
+pinned tail-deletion limit
+(<code>tests/test_audit_new.py:180-403</code>). The synapse test
+<code>test_branch_namespaces_are_isolated_from_each_other</code>
+(<code>tests/test_synapse_namespaces.py:197</code>) asserts that one
+branch's edges are absent from another's, through a namespace list the
+test supplies rather than a production read.</p>
+<p><code>neuralmind decisions eval</code> runs
+<code>MaintenanceEval</code>, five synthetic tasks that each seed ACTIVE
+and STALE decisions and report <code>stale_influence_rate</code> beside
+recall and precision, and <code>QuerySetEval</code>, which scores
+recall@k and MRR per search mode against
+<code>tests/memory/fixtures/decision_queries.json</code>. Both report
+metrics; neither is an assertion.</p>
+<p>The site-claims guards are the unusual part. Most projects treat
+their README as marketing and their tests as engineering. This one
+treats a published number as an assertion that can be false, gives it a
+source and a reproduction command, and fails the build when a new one
+appears without them.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Test your own claims. If you publish a multiplier, put it in a
-manifest with its source and the command that regenerates it, and fail
-CI when a number appears on a high-traffic page without one. The
-exemption for values under 2× — "decay coefficients and worked examples
-… not claims" — is the detail that keeps the rule usable.</p>
-<p>Keep a list of names that must never be published and assert it
-against the site. The drift that motivated this one included a real
-client name in a document every other copy anonymised; a grep in CI is a
-complete defence.</p>
-<p>Preserve the chain across rotation. A hash chain that resets when the
-file rolls over is two chains, and the seam is exactly where a missing
-entry would sit. Seeding the new file from the archived final hash and
-writing a continuation marker costs a few lines.</p>
-<p>Count what you swallow. "This must never block the primary flow" is a
-correct requirement and a silent <code>pass</code> is the wrong
-implementation of it: increment a counter, surface it in the verifier,
-and the log can be both non-blocking and honest about its gaps.</p>
-<p>And state your licence boundary the way this one does — one
-directory, one sentence, and a forward-only promise about what stays
-permissive.</p>
+<h3 id="steal">Steal</h3>
+<p>Derive staleness from the artifact the memory describes. Fingerprint
+the files a decision is about when it is recorded, and mark it stale on
+the first commit that changes them without carrying exactly those bytes.
+That exempts the commit that lands the decision and catches every later
+edit, with no diff analysis and no clock.</p>
+<p>Show a doubted belief at the moment it matters, labelled, instead of
+hiding it. The edit guard puts a stale decision and the reason it went
+stale in front of the agent before it touches the file the decision
+governs.</p>
+<p>Pin your known limits as tests. A test asserting that the verifier
+passes a log with its tail cut off stops the documentation from claiming
+otherwise.</p>
+<p>Test your own claims: a manifest of published numbers, each with a
+source and a reproduction command, and a CI guard with a negative
+control built from the copy that shipped.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Two meanings for one status word. A filter called "stale" that
+returns aged ACTIVE rows, beside a status called STALE that it never
+returns, makes the maintenance view miss exactly the decisions the scan
+flagged.</p>
+<p>A silent <code>pass</code> around an audit append. "Must never block
+the primary flow" is a correct requirement; a counter surfaced by the
+verifier meets it without turning a failed append into an invisible
+one.</p>
+<p>A dependency graph with no writer. A cascade that walks
+<code>dependency_constraints</code> is dead code until some surface lets
+a caller name a dependency.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a single developer or a small team who want an agent to
+remember why the code is shaped as it is, and who will let a post-commit
+hook run. The decision store is the part to evaluate; the code graph is
+a context compressor with a memory attached. It does not suit memory
+that must be attributable or reversible decision by decision: amendments
+overwrite, the audit chain records tool names rather than changes, and
+the project boundary is whatever path the caller sends.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether a memory node can be corrected without a full rebuild. No
-delete, forget or invalidate path was found in the core.</p>
-<p>Whether <code>verify</code> is run anywhere automatically. It exists
-on both chains and a doctest exercises the tier2 one; nothing observed
-schedules it.</p>
+<p>How often the scan marks a decision STALE that still holds. The
+policy is "[b]etter to lose a valid memory than serve a stale one", and
+only running it on a repository with history would say what that
+costs.</p>
 <p>How many audit entries are lost in practice. The swallowed exception
-makes the answer unknowable from the log itself, which is the point of
-the finding.</p>
+makes the answer unknowable from the log itself.</p>
+<p>Whether anyone drains the team review queue. It fills at session
+start from a committed bundle, and its only drain is a CLI command.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -395,24 +628,58 @@ the finding.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>tests/test_site_claims.py</code></td>
-<td>Four shipped inaccuracies, and the three rules that followed</td>
+<td><code>neuralmind/memory/invalidate.py:1-50</code>,
+<code>:336-433</code></td>
+<td>The scan, the carried-by-commit exemption, the event bus</td>
 </tr>
 <tr>
-<td><code>neuralmind/audit.py:234-290</code></td>
-<td>Rotation that preserves hash-chain continuity</td>
+<td><code>neuralmind/memory/store.py:657-780</code></td>
+<td>Invalidate, mark stale, restore, and the delete nothing calls</td>
 </tr>
 <tr>
-<td><code>neuralmind/core.py:442-465</code></td>
+<td><code>neuralmind/memory/store.py:956-1283</code></td>
+<td>Search: three ranking paths, each filtering on status</td>
+</tr>
+<tr>
+<td><code>neuralmind/memory/store.py:1285-1432</code></td>
+<td>The maintenance view and its second meaning of stale</td>
+</tr>
+<tr>
+<td><code>neuralmind/memory/mcp_tools.py:200-362</code></td>
+<td>The three-layer search, timeline and get</td>
+</tr>
+<tr>
+<td><code>neuralmind/hooks.py:1065-1135</code></td>
+<td>The stale-decision guard and its instruction to the agent</td>
+</tr>
+<tr>
+<td><code>neuralmind/audit.py:139-359</code></td>
+<td>Append, the strict verifier, the rotation marker check</td>
+</tr>
+<tr>
+<td><code>neuralmind/core.py:599-623</code></td>
 <td>The single emitter, and the exception it swallows</td>
 </tr>
 <tr>
-<td><code>neuralmind/audit.py:173-196</code></td>
-<td>The verifier, and the legacy line it does not check</td>
+<td><code>neuralmind/mcp_security.py:196-340</code></td>
+<td>Declared versus OS identity, and the per-call audit</td>
 </tr>
 <tr>
-<td><code>neuralmind/tier2/audit.py</code></td>
-<td>A second chain, source-available, with a genesis hash</td>
+<td><code>neuralmind/team_memory.py:550-640</code>,
+<code>neuralmind/contribution_scoring.py:101-170</code></td>
+<td>The review band and the bundle-supplied score</td>
+</tr>
+<tr>
+<td><code>tests/memory/test_progressive_retrieval.py:81-136</code></td>
+<td>The must-not case and its positive control</td>
+</tr>
+<tr>
+<td><code>tests/test_audit_new.py:180-403</code></td>
+<td>Verifier failure modes and the pinned limit</td>
+</tr>
+<tr>
+<td><code>tests/test_site_claims.py</code></td>
+<td>The drift that shipped, and the guards that followed</td>
 </tr>
 <tr>
 <td><code>LICENSING.md</code></td>
@@ -420,7 +687,66 @@ the finding.</p>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E '[.]delete[(]' -- neuralmind integrations skills scripts editors</code>
+— <code>embedder.py:706</code> (a Chroma collection) and editor and web
+caches; no caller of <code>DecisionStore.delete</code>.</li>
+<li><code>git grep -n -E 'dependency_constraints|author=' -- neuralmind ':!neuralmind/memory/store.py' ':!neuralmind/memory/invalidate.py'</code>
+— <code>neuralmind/memory/eval.py:430</code>, <code>:433</code> only,
+the harness fixture.</li>
+<li><code>git grep -n -E '[.]rotate[(]' -- neuralmind scripts</code> —
+<code>neuralmind/metrics_pipeline.py:141</code>, the metrics collector's
+own method; no caller of <code>AuditTrail.rotate</code>.</li>
+<li><code>git grep -n -E 'append_event[(]|AuditTrail|get_audit_trail' -- neuralmind/memory</code>
+— no match; the decision store does not write the audit chain.</li>
+<li><code>git grep -n -E 'publish[(]"decision_invalidated"' -- neuralmind</code>
+— <code>neuralmind/memory/invalidate.py:554</code>, the event bus.</li>
+<li><code>git grep -n '_emit_local_audit'</code> — the definition at
+<code>neuralmind/cli.py:2968</code> only.</li>
+<li><code>git grep -n -E '_emit_audit|append_event' -- neuralmind/cli.py</code>
+— <code>:2978</code> only, inside the uncalled
+<code>_emit_local_audit</code>; no <code>decisions</code> command writes
+the audit chain.</li>
+<li><code>git grep -n -E 'min_score' -- neuralmind ':!neuralmind/memory/store.py'</code>
+— no match.</li>
+<li><code>git grep -n -E 'WHERE status = .ACTIVE.' -- neuralmind/memory/store.py</code>
+— <code>:1383</code> (aged ACTIVE), <code>:1422</code> (orphaned
+ACTIVE), <code>:1470</code> (export); the stale filter never selects
+status STALE.</li>
+<li><code>git grep -n -i -E 'tombstone|rejected_value|suppress' -- neuralmind/memory</code>
+— one hit, the eval docstring's "suppressing stale ones";
+<code>record</code> consults no earlier decision.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_at|effective_(from|at)|as_of|bitemporal' -- neuralmind</code>
+— no match.</li>
+<li><code>git grep -n -E 'review-approve|review_approve|restore' -- neuralmind/mcp_server.py neuralmind/memory/mcp_tools.py</code>
+— one unrelated hit, <code>mcp_server.py:1308</code>; no approve or
+restore verb on the MCP surface.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md CITATION.cff</code>
+— no match; <code>CITATION.cff</code> cites the software.</li>
+<li><code>git grep -n -i -E 'anthropic' -- LICENSE LICENSE-COMMERCIAL.md LICENSING.md neuralmind/tier2/LICENSE</code>
+— no match; no rider on analysis.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/dfrostar/neuralmind/commit/434efc6912c82539785f5010274db0ad79193401"><code class="commit-id" title="434efc6912c82539785f5010274db0ad79193401">434efc69…</code></a>
+— 338 commits on, version 3.11.3 to 4.15.1. A decision store arrived on
+17 September 2026; its status filter earns <code>trust_state</code> and
+its default-search case earns <code>negative_eval</code> (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>).
+<code>verify</code> became strict on 5 October in <a
+href="https://github.com/dfrostar/neuralmind/commit/454904f4bbf62bdab4692942d2642ea7c9eced28"><code class="commit-id" title="454904f4bbf62bdab4692942d2642ea7c9eced28">454904f4…</code></a>.
+Wrong at the first pin: rotation chained its marker to zeros and failed
+<code>verify</code>, unreadable lines were dropped rather than seen as
+legacy, and synapse memory had reset and decay deletes (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Overtaken: the
+recall figure the site-claims docstring quotes. Screened from a full
+clone: sixteen files, no auto-run surfaces, one build-time execution
+point, three unpinned surfaces, <code>pyproject.toml</code> inside the
+cooldown, <code>CLAUDE.md</code> read as data. Nothing was installed,
+built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/dfrostar/neuralmind/commit/38c74096f5e8e82c79feb037ece7395461fab4f8"><code class="commit-id" title="38c74096f5e8e82c79feb037ece7395461fab4f8">38c74096…</code></a>
 — first reading, at a commit dated 16 September 2026. The repository is
