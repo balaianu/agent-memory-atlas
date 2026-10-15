@@ -442,53 +442,55 @@ href="../systems/agent-context-os/"><code>agent-context-os</code></a></td>
 <code>state/weekly-priorities.md</code>, a dated file under
 <code>sessions/</code>, a project folder, a skill — each carrying a
 <code>**Last Updated:**</code> line the kernel parses</td>
-<td>The Git repository itself: templates and conventions in the tree,
-with a <code>contextos</code> Python kernel that reads and rewrites them
-under an atomic-replacement-and-rollback transaction</td>
-<td>A routing table the agent reads — <code>ROUTING.md</code> maps a
-task kind to the files to load — plus read-only, source-attributed
-continuity views over the state files, and a <code>/start</code> command
-that resumes today's session file or falls back to the most recent
-one</td>
-<td>Slash commands and a CLI: a session loop of <code>/start</code>,
-<code>/update</code>, <code>/end</code>, with state advanced through a
-proposal the kernel validates before applying every changed file
-together</td>
-<td>State files are rewritten in place with their
+<td>The Git repository itself, with a gitignored
+<code>.context-os/</code> beside it holding proposals, receipts,
+journals and locks; a separate local Git repository holds the host's
+auto-memory directory for the curator</td>
+<td>A routing table the agent reads, a <code>/start</code> skill that
+resumes today's session file or falls back to the most recent one, and a
+read-only briefing over fixed lifecycle sources plus explicitly selected
+Markdown files, each with freshness, a normalised-text hash and an
+optional expected-revision check</td>
+<td>Slash commands and a CLI: a JSON payload is rendered into a proposal
+with per-file before and after hashes and a diff, then applied only with
+the exact proposal digest echoed back, as one transaction that publishes
+a receipt</td>
+<td>State files are rewritten in place with the
 <code>Last Updated</code> line advanced and the previous date pushed
-onto a newest-first log; the decisions table is appended to and never
-rewritten</td>
+onto a newest-first log; update, end and promotion append decision rows,
+while setup replaces any populated state file listed for replacement.
+The curator retires an auto-memory file to <code>archive/</code> with a
+row in <code>ARCHIVE.md</code></td>
 <td>Directories — <code>projects/</code>, <code>workspace/</code>,
 <code>references/</code>, <code>writing/</code> — with path guards on
-the kernel's local-state access, and a claim system with leases so two
-agents do not take the same task</td>
-<td>First-class Claude Code, Codex, OpenClaw and OpenCode, with
-experimental Cursor, Devin and Hermes adapters; hooks in shell,
-PowerShell and Python, installable bundles with a lockfile, and a
-component manifest</td>
+local-state access, a split-root mode that keeps a working repository
+read-only, and claim leases so two agents do not take the same task; no
+read is filtered by a scope key</td>
+<td>First-class Claude Code, Codex, OpenClaw, OpenCode, Cursor CLI,
+Devin CLI, Devin cloud and Hermes Agent, with Cursor IDE experimental;
+hooks in shell, PowerShell and Python, installable bundles with a
+lockfile, and a component manifest</td>
 <td>None that runs on its own — the passes are checks a person or CI
-invokes: link and doc reachability, SSOT controls exercised in
-disposable copies, bundle locks, component manifests and the continuity
-benchmark</td>
+invokes: link and doc reachability, SSOT controls in disposable copies,
+bundle locks, component manifests, the continuity benchmark, and an
+on-demand curator that writes proposals for the host's auto-memory
+directory</td>
 <td>A five-value freshness status — missing, unknown, future, stale,
-fresh — derived by comparing each state file's <code>Last Updated</code>
-line against a threshold, reported as a diagnostic; only
-<code>current.md</code> gates readiness, and the gate admits both fresh
-and stale</td>
-<td>A benchmark whose baseline is deliberately information-equivalent
-and whose harder profile carries superseded material, scored on quotes
-that must occur in the cited file; a decisions writer that refuses to
-create the log it is meant to append to; and a readiness gate narrowed
-to one file with the reason written down — requiring a real date on all
-three would report an initialized workspace as needing setup
-forever</td>
-<td>The freshness status is derived from a self-reported
-<code>Last Updated</code> line, so a file edited without touching that
-line reads as fresh; the append-only property of the decisions table is
-enforced by the kernel's writer but nothing stops an agent editing the
-Markdown directly, which is what makes the Git history the real control;
-and no benchmark result is committed — the harness prepares prompts a
-reader must run against their own model</td>
+fresh — derived from each state file's <code>Last Updated</code> line
+and reported as a diagnostic; readiness admits fresh and stale
+<code>current.md</code>. A briefing can be told the expected hash of a
+source, and <code>start</code> exits non-zero when one is mismatched or
+unavailable</td>
+<td>A benchmark whose baseline is information-equivalent, whose harder
+profile carries superseded material, and whose scorer requires the cited
+quote to occur in the cited file; committed model trials whose tables a
+test recomputes from the raw responses; and a receipt per applied
+change, published as the commit point and never overwritten</td>
+<td>Freshness reads a self-reported <code>Last Updated</code> line; the
+decisions table is append-only only in three of the kernel's four
+content writers, and the pre-write hook's warning about a direct edit is
+advisory; approval is an echoed digest the kernel says it does not
+authenticate; and receipts are local, gitignored and editable</td>
 </tr>
 <tr>
 <td><a

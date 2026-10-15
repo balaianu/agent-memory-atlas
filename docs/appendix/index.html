@@ -4802,12 +4802,12 @@ rather than left silent</li>
 <li><a
 href="https://github.com/conorbronsdon/agent-context-os">conorbronsdon/agent-context-os</a>
 at <a
-href="https://github.com/conorbronsdon/agent-context-os/commit/15b5acace6830e4cac58e56cf1a102ea6557e762"><code class="commit-id" title="15b5acace6830e4cac58e56cf1a102ea6557e762">15b5acac…</code></a>
-— read only; three auto-run surfaces (agent hooks) and two instruction
-files addressed to a reading agent, read as data, with no build-time
-execution and nothing inside the seven-day cooldown; nothing installed,
-built or run, and the benchmark's absent committed results confirmed
-against <code>docs/continuity-benchmark.md</code></li>
+href="https://github.com/conorbronsdon/agent-context-os/commit/c3b91a3cc67f280352e8b8803cc1c6dd53a8dd19"><code class="commit-id" title="c3b91a3cc67f280352e8b8803cc1c6dd53a8dd19">c3b91a3c…</code></a>
+— read only; three auto-run surfaces (agent hooks and an OpenCode
+command bundle), unchanged since the first pin, and two instruction
+files read as data, with no build-time execution and nothing inside the
+seven-day cooldown; nothing installed, built or run, and the committed
+benchmark tables checked against the rescoring tests</li>
 <li><a
 href="https://github.com/quantamixsol/graqle">quantamixsol/graqle</a> at
 <a
@@ -17846,6 +17846,23 @@ start deleted edges below a threshold
 where the tree held 145 named <code>test_*.py</code>. The first two
 rested on a docstring and a comment rather than the code beneath
 them.</li>
+<li><strong>One published claim about <a
+href="../systems/agent-context-os/">Context OS</a> was wrong at <a
+href="https://github.com/conorbronsdon/agent-context-os/commit/15b5acace6830e4cac58e56cf1a102ea6557e762"><code class="commit-id" title="15b5acace6830e4cac58e56cf1a102ea6557e762">15b5acac…</code></a>,
+the pin it was made at, and is corrected.</strong> The report called
+<code>state/decisions.md</code> a table only ever appended to and never
+rewritten, and grounded <code>audit_log</code> on it and on
+<code>state/current-log.md</code>. The setup workflow could write any
+path under <code>state/</code> (<code>SETUP_ROOTS</code>,
+<code>contextos/kernel.py:140</code>), and <code>render_setup</code>
+replaced a populated file whole once the payload listed it in
+<code>replace_populated</code>
+(<code>contextos/kernel.py:1534-1563</code>, <code>:4155-4157</code>),
+so a production path rewrote both. The mark held on a record the report
+did not cite: the create-only receipt each apply publishes
+(<code>contextos/kernel.py:4198</code>, <code>:4384</code>). The claim
+rested on the writer the session loop uses rather than on every writer
+the path policy admits.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
