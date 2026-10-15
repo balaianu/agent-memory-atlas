@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 751 reports.**
+**This page covers all 752 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6810,6 +6810,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0, 24,295 lines of Python under `app/`, five commits on master between 16 March and 7 September 2026, the first a monorepo sync. 387 test functions needing Postgres and a seeded user, no CI. Two marks: `scope_enforced` and `audit_log`. `negative_eval` is withheld: the one must-not-retrieve case cannot run at the pin, because its fixture reaches the missing import, and it puts both animas under one user, so it tests the anima predicate rather than the RLS it names. `trust_state`, `bitemporal`, `human_review` and `tombstone` are withheld.
 - Study when: you want a curation pass whose every rewrite is inspectable, provenance from memory to events and from knowledge to memory, or tenant isolation done in Postgres row-level security.
 - Do not copy when: you need to self-host from this repository as published, deletion must reach derived knowledge and cached packs, late or back-dated events must still become memories, or tenants who do not trust each other share a deployment, since the manual workflow trigger runs the Dreamer for any anima id.
+
+### [`screenpipe`](../systems/screenpipe/)
+
+- Best idea: **memory that reaches a prompt is fenced on the way out as well as on the way in.** The profile tool rejects instruction-like and secret-bearing text on write, and `render_system_context` scans every row again, replaces a hit with a `[BLOCKED…]` marker, escapes `<` and wraps the block as data, once per agent session.
+- Biggest risk: **deletion stops at the local row.** Range deletion and retention remove frames and transcripts and never touch `memories`, so a fact distilled from a deleted capture keeps its text with `frame_id` set to `NULL`; cross-device tombstones expire after 30 days, and the enterprise telemetry wire format has no delete record.
+- Most reusable component: `crates/screenpipe-engine/src/agent_skills.rs` — agent write provenance as a SHA-256 in a root manifest, an optimistic-concurrency hash on every patch, and ownership that flips to the user when the file is edited by hand.
+- Second risk: **the memory table has no owner.** No scope key, a caller-chosen `source`, and an MCP `update-memory` tool annotated `destructiveHint: false` that hard-deletes any row by id; a `writer` pipe can overwrite a memory the user wrote.
+- Maturity impression: Screenpipe Commercial License, source-available, free for research, personal and seven-day evaluation use; 13,976 commits from 19 June 2024 to 15 October 2026 by 174 contributor identities; 652,443 lines of Rust and 520,509 of TypeScript, of which the memory table and its paths are about 4,100. No marks. `scope_enforced` is withheld because the memory table has no key and the token-bound pipe scope sits on the feedback ledger, untested; `negative_eval` is withheld because the memory tests assert tag-filter precision, not exclusion of deleted or out-of-scope rows, and `human_review` because every confirmation flag is in the agent's own tool schema.
+- Study when: you want an agent to recall a person's own computer work on one machine, or a worked example of fencing profile memory in a system prompt.
+- Do not copy when: several agents or people must not overwrite each other's memories, a deletion must be provable across devices or an archive, or a remembered fact must stay traceable to evidence that has not been deleted.
 
 ### [`hyperconsciousness`](../systems/hyperconsciousness/)
 

@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local desktop recorder whose
+screen text, transcripts and an agent-writable SQLite fact table are
+served to agents over REST and MCP.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Screenpipe — Agent Memory Atlas">
+    <meta property="og:description" content="A local desktop recorder
+whose screen text, transcripts and an agent-writable SQLite fact table
+are served to agents over REST and MCP.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Screenpipe — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local desktop recorder
+whose screen text, transcripts and an agent-writable SQLite fact table
+are served to agents over REST and MCP.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Screenpipe — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Screenpipe",
+      "description": "A local desktop recorder whose screen text, transcripts and an agent-writable SQLite fact table are served to agents over REST and MCP.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Local screen and audio capture with an
+agent-writable fact table</p>
+          <h1>Screenpipe</h1>
+          <p class="document-deck">A local desktop recorder whose screen
+text, transcripts and an agent-writable SQLite fact table are served to
+agents over REST and MCP.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/screenpipe/screenpipe">
+              <span>Source</span>
+              <strong>screenpipe/screenpipe</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/screenpipe/screenpipe/commit/ada8f2fab2f78ea6a9ac8d59f97c932063418a24" title="ada8f2fab2f78ea6a9ac8d59f97c932063418a24">
+              <span>Analyzed revision</span>
+              <code>ada8f2fa…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/screenpipe--screenpipe" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>screenpipe--screenpipe</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Screenpipe
+Commercial License, source-available: free for personal, non-commercial,
+research and seven-day evaluation use, a paid licence for any commercial
+use; no rider on analysis</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>652,443
+lines of Rust in 27 crates and the Tauri app, and 520,509 lines of
+TypeScript outside generated files; the memory table, its routes, the
+profile, cross-device sync and the digest export are about
+4,100</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>13,976
+commits on main by 174 contributor identities, 19 June 2024 – 15 October
+2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>7,691
+Rust test functions and 950 TypeScript test files; memory cases in
+crates/screenpipe-db/tests/db.rs, agent_profile.rs, memories/sync.rs and
+one coding-agent eval grader; none was run for this
+report</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Screenpipe is a local desktop recorder. It captures screen text from
+the accessibility tree or OCR, audio transcripts and input events into
+one SQLite file, and serves that history to agents through a REST API
+and an MCP server. Beside the capture tables sits a small explicit
+memory: a <code>memories</code> table of free-text facts that an agent,
+a scheduled pipe or the user writes, reads back through full-text
+search, and can edit or delete. What is notable is the discipline at the
+agent-facing edges: a profile snapshot frozen per session and fenced as
+data, a raw SQL route behind a read-only connection, and skills whose
+write provenance a manual edit revokes. What is weak is that the memory
+table has no scope, no status and no history, and its deletion semantics
+stop at the local row.</p>
+<p>The capture side is the product; the memory table is a corner of it.
+A <code>memories</code> row is created synchronously by whoever calls
+<code>POST /memories</code>, with no extraction model, deduplication or
+consolidation on the path. The model's reach over it is complete: the
+MCP <code>update-memory</code> tool creates, overwrites and hard-deletes
+any row by id. Nothing records what a memory said before an update.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>A memory outlives the capture it came from.</strong>
+<code>delete_time_range</code> removes frames, transcripts, UI events
+and elements in a range and never touches <code>memories</code>; the
+<code>frame_id</code> link goes <code>NULL</code> and the text stays
+(<code>crates/screenpipe-db/src/db/maintenance.rs:145-349</code>). The
+bundled API skill tells agents to tag a memory because frames are
+pruned.</li>
+<li><strong>Deletion does not travel everywhere the memory
+went.</strong> Cross-device sync carries a <code>sync_uuid</code>
+tombstone for 30 days
+(<code>crates/screenpipe-core/src/memories/sync.rs:39</code>), and the
+enterprise telemetry wire format has no delete record at all
+(<code>crates/screenpipe-telemetry-wire/src/records.rs:182-235</code>).</li>
+<li><strong>The one scope boundary is on the feedback ledger, not the
+memory table.</strong> A pipe reading <code>GET /feedback</code> sees
+only ratings attributed to its own authenticated name
+(<code>crates/screenpipe-engine/src/routes/ai_feedback.rs:347-361</code>).
+<code>memories</code> has no key to filter on, so
+<code>scope_enforced</code> is withheld.</li>
+<li><strong>Model-set <code>confirmed</code> flags stand in for
+review.</strong> Deleting a profile fact and creating a skill both
+require <code>confirmed: true</code>, a field in the agent's own tool
+schema (<code>crates/screenpipe-engine/src/agent_profile.rs:294</code>,
+<code>crates/screenpipe-engine/src/agent_skills.rs:518</code>).</li>
+</ul>
+<p>The licence is the Screenpipe Commercial License: source-available,
+free for personal, non-commercial, research and seven-day evaluation
+use, with any commercial use needing a paid licence. Versions released
+earlier under MIT stay MIT. It carries no rider on analysis.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>Screenpipe holds two kinds of durable state and treats them
+differently. Captured history — frames, screen text, transcripts, UI
+events — is observation: it happened, nothing in it can be false in the
+atlas's sense, and it is managed by retention and range deletion. A
+<code>memories</code> row is a claim someone chose to keep: <em>"facts,
+preferences, decisions the user wants to remember"</em>, in the words of
+the MCP tool description
+(<code>packages/screenpipe-mcp/src/index.ts:554-559</code>). This report
+is about the second, and reads the first only where the two
+interact.</p>
+<p>A memory has one state: present. It is born by an insert with an
+<code>importance</code> float defaulting to 0.5 and a
+<code>source</code> string the caller chooses
+(<code>crates/screenpipe-engine/src/routes/memories.rs:18-37</code>). It
+changes by overwrite: <code>PUT /memories/:id</code> replaces content,
+tags, importance or <code>source_context</code> in place and stamps
+<code>updated_at</code>
+(<code>crates/screenpipe-db/src/db/memories.rs:50-90</code>). It dies by
+hard delete. Nothing between those is a belief state — no candidate,
+verified or rejected value, no supersession link, no validity
+interval.</p>
+<p>Three readers consume it. An agent asks through
+<code>search-content</code> with <code>content_type='memory'</code>; the
+activity summary attaches top memories to a broad time-range answer; and
+Pi and ACP agents receive up to 20 <code>user-profile</code>-tagged rows
+as a frozen block at session start
+(<code>crates/screenpipe-engine/src/agent_profile.rs:17-18</code>,
+<code>:357-389</code>). The profile is the only reader that treats
+memory content as hostile: it re-scans each row for instruction-like and
+secret-bearing text on render and replaces a match with a
+<code>[BLOCKED…]</code> marker.</p>
+<p>Ownership is ambient. The writer may be the user in the Brain
+settings screen, an interactive agent through MCP, a scheduled pipe with
+the <code>writer</code> permission preset, or another device through
+sync. The row records the device in <code>source_context._device</code>,
+which the server stamps and a caller cannot forge
+(<code>crates/screenpipe-engine/src/routes/memories.rs:447-458</code>).
+It does not record which agent or pipe wrote it in any field the server
+controls.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — A memory is written by any API caller, read through four paths, and deleted locally while its copies and its source captures follow separate rules.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: A memory is written by any API caller, read through four paths, and deleted locally while its copies and its source captures follow separate rules.
+flowchart TD
+    C[&quot;Capture: screen text, audio, input&quot;] --&gt; F[&quot;frames, audio_transcriptions, ui_events&quot;]
+    W1[&quot;MCP update-memory&quot;] --&gt; M
+    W2[&quot;POST /memories from any caller or writer pipe&quot;] --&gt; M
+    W3[&quot;user_profile tool: threat scan on write&quot;] --&gt; M
+    W4[&quot;Cross-device sync: LWW on updated_at&quot;] --&gt; M
+    M[&quot;memories row: content, source, tags, importance, frame_id&quot;] --&gt; FTS[&quot;memories_fts, trigger-maintained&quot;]
+    F -. &quot;optional frame_id link&quot; .-&gt; M
+    FTS --&gt; R1[&quot;search-content with content_type memory&quot;]
+    M --&gt; R2[&quot;activity-summary top memories&quot;]
+    M --&gt; R3[&quot;profile snapshot at session start: threat scan on render&quot;]
+    M --&gt; R4[&quot;Obsidian digest: importance 0.4 or above, every 5 minutes&quot;]
+    M --&gt; U[&quot;Data Sync and enterprise upload&quot;]
+    U --&gt; G[&quot;archive and customer gateway&quot;]
+    D[&quot;DELETE /memories/:id or update-memory delete&quot;] --&gt; X[&quot;row removed&quot;]
+    X --&gt; T[&quot;sync_uuid tombstone, kept 30 days&quot;]
+    X -. &quot;no delete record on the wire&quot; .-&gt; G
+    RD[&quot;Range delete or retention&quot;] --&gt; F
+    RD -. &quot;memories untouched, frame_id set NULL&quot; .-&gt; M</code></pre></details></figure>
+<p>The design consequence is that "forget that" has three different
+answers depending on where the fact went. Locally it is a
+<code>DELETE</code>. On another of the user's devices it holds for 30
+days and then depends on that device having synced. In an enterprise
+archive it does not happen.</p>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Screenpipe ships as a Tauri desktop app around a Rust engine,
+<code>screenpipe-engine</code>, that runs capture and an axum HTTP
+server on port 3030
+(<code>crates/screenpipe-engine/src/server.rs</code>). Storage is
+<code>screenpipe-db</code>: one SQLite file built by 117 migrations, a
+write path serialised through <code>begin_immediate_with_retry</code>,
+and a separate read pool whose file-backed connections set
+<code>query_only</code> and, off macOS, open with <code>mode=ro</code>
+(<code>crates/screenpipe-db/src/db/setup.rs:328-347</code>). Media lands
+as mp4, wav and jpeg files beside it.</p>
+<p>Agent surfaces are layered on that server.
+<code>packages/screenpipe-mcp</code> is a stdio MCP server whose tools
+call the local API with the desktop key, plus a separate HTTP MCP server
+that exposes only <code>search_content</code>
+(<code>packages/screenpipe-mcp/src/http-server.ts:157</code>). The
+desktop also runs its own agents: an interactive Pi or ACP chat, and
+scheduled "pipes" — Markdown prompts in <code>pipe.md</code> with YAML
+frontmatter, run on a schedule with a minted <code>sp_pipe_</code> token
+whose permissions the server enforces.</p>
+<p>Four transports move memories off the machine, each optional:</p>
+<ul>
+<li><strong>Cross-device memory sync</strong>, a manifest merged
+last-write-wins and carried, per the migration's own comment, through
+the encrypted <code>SyncManager</code>; triggered from the sync download
+loop or the settings screen
+(<code>crates/screenpipe-engine/src/sync_api.rs:1525-1560</code>).</li>
+<li><strong>Data Sync</strong>, an account-scoped upload of capture and
+memory rows as JSONL
+(<code>apps/screenpipe-app-tauri/src-tauri/src/data_sync.rs</code>).</li>
+<li><strong>Enterprise telemetry</strong>, the same JSONL into a
+write-only bucket, read by a customer-run gateway that ingests it into
+its own SQLite copy
+(<code>crates/screenpipe-gateway/src/lib.rs:5-40</code>).</li>
+<li><strong>External export</strong>, a five-minute job writing a digest
+note into an Obsidian vault and static MCP recall guidance into
+<code>~/.claude/CLAUDE.md</code> and <code>~/.codex/AGENTS.md</code>
+(<code>crates/screenpipe-engine/src/external_memory_sync.rs:1-25</code>).</li>
+</ul>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Everything memory-related runs locally with no model and no network:
+the table, FTS5 and the routes need only the engine. Storing a memory
+needs no provider key, but the local server requires a bearer token on
+every request by default — <code>api_auth</code> defaults to
+<code>true</code>
+(<code>crates/screenpipe-config/src/recording.rs:1027</code>) — and the
+key lives in the secret store inside <code>db.sqlite</code> or comes
+from <code>SCREENPIPE_API_KEY</code>
+(<code>crates/screenpipe-engine/src/auth_key.rs:20-27</code>). Install
+is the desktop app or the CLI; the full tree is a large Rust and
+TypeScript build. The memories table is readable and repairable by hand
+in the SQLite file, though the bundled skill tells agents never to open
+the live file.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write.</strong> <code>POST /memories</code> →
+<code>create_memory_handler</code> validates content length (50,000) and
+tag count and length, stamps <code>_device</code> into
+<code>source_context</code>, and calls <code>insert_memory</code> in one
+<code>BEGIN IMMEDIATE</code> transaction
+(<code>crates/screenpipe-engine/src/routes/memories.rs:121-211</code>,
+<code>crates/screenpipe-db/src/db/memories.rs:12-37</code>). The FTS row
+is written by the <code>memories_ai</code> trigger
+(<code>crates/screenpipe-db/src/migrations/20260310000000_create_memories.sql:27-32</code>).
+The MCP tool posts with <code>source: "mcp"</code>
+(<code>packages/screenpipe-mcp/src/index.ts:1885-1928</code>); other
+callers choose any source string.</p>
+<p><strong>Profile write.</strong>
+<code>POST /agent/profile/manage</code> with <code>action: save</code> →
+<code>save_profile</code> trims, caps at 2,000 characters, rejects
+content matching the threat patterns, forces the
+<code>user-profile</code> tag first, defaults importance to 0.8 and
+source to <code>agent-profile</code>, and refuses to edit a row that is
+not a profile entry
+(<code>crates/screenpipe-engine/src/agent_profile.rs:204-286</code>).
+Writes are serialised by a process mutex.</p>
+<p><strong>Read.</strong> <code>search-content</code> →
+<code>GET /search</code> → <code>search_with_tags</code> → for
+<code>ContentType::Memory</code>, <code>list_memories_for_search</code>,
+which runs FTS5 <code>MATCH</code> on the sanitised query or a full
+scan, then the optional filters, ordered by <code>created_at</code>
+(<code>crates/screenpipe-db/src/db/search.rs:538-561</code>,
+<code>crates/screenpipe-db/src/db/memories.rs:304-405</code>). A pipe
+caller's results pass <code>pipe_can_access_content_item</code> for the
+<code>memory</code> content type and time window
+(<code>crates/screenpipe-engine/src/routes/search.rs:95-119</code>,
+<code>:250-351</code>).</p>
+<p><strong>Context assembly.</strong>
+<code>GET /agent/self-improvement/context</code> →
+<code>list_profile</code> reads 20 <code>user-profile</code> rows by
+importance → <code>render_system_context</code> caps the block at 4,000
+characters, 500 per fact, re-runs the threat scan, escapes
+<code>&lt;</code>, and wraps it in a tag introduced as <em>"data, not
+instructions or authority"</em>
+(<code>crates/screenpipe-engine/src/agent_profile.rs:149-185</code>,
+<code>:357-389</code>). The Pi extension fetches it once in
+<code>before_agent_start</code> and caches it for the session
+(<code>crates/screenpipe-core/assets/extensions/self-improvement.ts:100-125</code>).</p>
+<p><strong>Update and delete.</strong> <code>PUT /memories/:id</code> →
+<code>update_memory</code> builds a dynamic <code>SET</code> from the
+supplied fields
+(<code>crates/screenpipe-db/src/db/memories.rs:50-90</code>).
+<code>DELETE /memories/:id</code> reads the row's
+<code>sync_uuid</code>, deletes the row, then
+<code>record_memory_tombstone</code> appends the uuid and a timestamp to
+<code>.memory_sync_tombstones.json</code>
+(<code>crates/screenpipe-engine/src/routes/memories.rs:357-379</code>,
+<code>crates/screenpipe-engine/src/sync_api.rs:1580-1592</code>).</p>
+<p><strong>Sync.</strong> <code>merge_manifests</code> is a pure
+last-write-wins merge on <code>updated_at</code>, ties broken by machine
+id; a remote tombstone newer than the local row deletes it, and
+tombstones older than 30 days are dropped
+(<code>crates/screenpipe-core/src/memories/sync.rs:120-197</code>).
+<code>upsert_synced_memory</code> and
+<code>delete_memory_by_sync_uuid</code> apply the result
+(<code>crates/screenpipe-db/src/db/memories.rs:152-224</code>).</p>
+<p><strong>Capture deletion.</strong> <code>/data/delete-range</code>
+and retention call <code>delete_time_range</code> or its local and batch
+variants: elements, frames, orphaned video chunks, transcripts, orphaned
+audio chunks, UI events, display layout and orphaned semantic rows, in
+one transaction
+(<code>crates/screenpipe-db/src/db/maintenance.rs:145-349</code>).
+Retention defaults to <code>Media</code>, which keeps every row and
+removes only media files
+(<code>crates/screenpipe-engine/src/retention.rs:56-74</code>).</p>
+<p><strong>Feedback.</strong> <code>POST /feedback</code> refuses any
+pipe token with <em>"pipes cannot rate their own outputs"</em>;
+<code>GET /feedback</code> forces the producer to <code>pipe:</code>
+plus the token's pipe name for a pipe caller
+(<code>crates/screenpipe-engine/src/routes/ai_feedback.rs:214-226</code>,
+<code>:347-361</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The table is eleven columns across three migrations: <code>id</code>,
+<code>content</code>, <code>source</code> (default <code>'user'</code>),
+<code>source_context</code> (JSON text), <code>tags</code> (JSON array
+text, default <code>'[]'</code>), <code>importance</code>
+(<code>REAL</code>, default 0.5), <code>created_at</code>,
+<code>updated_at</code>, then <code>frame_id</code> referencing
+<code>frames(id) ON DELETE SET NULL</code>, and <code>sync_uuid</code>
+with <code>sync_modified_by</code> for cross-device identity
+(<code>crates/screenpipe-db/src/migrations/20260310000000_create_memories.sql:2-11</code>,
+<code>20260315000000_add_frame_id_to_memories.sql</code>,
+<code>20260506120000_add_memories_sync_columns.sql</code>). A partial
+unique index on <code>sync_uuid</code> gives synced rows a stable
+identity.</p>
+<p>There is no scope column. A row says which device wrote it, inside a
+JSON blob, and nothing else about ownership. Tags are the only
+partition, and they are content: the profile is the set of rows tagged
+<code>user-profile</code>, and any caller can add that tag through the
+general route. A row so tagged bypasses the profile write's threat scan
+but not the render-time one.</p>
+<p>Provenance is thin and partly caller-asserted. <code>source</code> is
+whatever the caller sends; the MCP server sends <code>mcp</code> and the
+profile path <code>agent-profile</code>, but a pipe posting directly can
+write <code>user</code>. <code>frame_id</code> points at the capture a
+memory came from while that capture exists. A sync update overwrites
+<code>created_at</code> with the remote copy's value
+(<code>crates/screenpipe-db/src/db/memories.rs:174-190</code>), so it is
+the time the first device recorded the row, not when the fact held.</p>
+<p>Temporal fields are record time only. Correction is overwrite with no
+prior version kept. Separate stores hold other memory-shaped things:
+agent skills under <code>&lt;data_dir&gt;/skills</code> with a
+provenance manifest, a per-pipe <code>memory.md</code> of lessons that
+each bundled pipe prompt asks its agent to keep, and a
+<code>feedback</code> table of human ratings keyed on target and
+producer.</p>
+<p>The <code>screenpipe-team-memory</code> crate defines a team-memory
+file format — Markdown with YAML frontmatter and a
+<code>provenance</code> block naming worker tier, model and attestation
+(<code>crates/screenpipe-team-memory/src/lib.rs:1-80</code>). No crate
+in the tree depends on it, so it is a declared format with no producer
+or consumer at this commit.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is lexical and application-driven. With a query, FTS5 over
+<code>content</code> and <code>tags</code> with <code>unicode61</code>
+tokenisation; without one, a scan of the table. Filters are
+<code>source</code>, a substring tag match from
+<code>GET /memories?tags=</code>, an exact AND tag match from the search
+path, <code>min_importance</code>, and a <code>created_at</code> range.
+Ordering is <code>created_at</code> or <code>importance</code>,
+descending by default; there is no BM25 rank in the
+<code>ORDER BY</code>
+(<code>crates/screenpipe-db/src/db/memories.rs:304-405</code>). An
+<code>ocr_text_embeddings</code> table exists in the migrations and
+nothing outside them reads or writes it, so there is no vector arm.</p>
+<p><code>content_type=all</code> does not return memories; a model has
+to ask for them by type, or get them through the activity summary. The
+MCP server truncates each result's text to 1,000 characters unless the
+model opts out
+(<code>packages/screenpipe-mcp/src/index.ts:1394</code>).</p>
+<p>The failure modes follow from the shape. A query word missing from
+the row misses it outright. A stale fact and its correction both match
+until someone deletes the old one, because nothing links them. And the
+substring tag filter on <code>GET /memories?tags=</code> matches
+<code>person:adam</code> for <code>person:ada</code>, while the search
+path's exact filter does not — the db test suite asserts the exact
+behaviour on the search path only
+(<code>crates/screenpipe-db/tests/db.rs:504-600</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is explicit and synchronous: one <code>INSERT</code> or
+<code>UPDATE</code> in a <code>BEGIN IMMEDIATE</code> transaction,
+retrievable through FTS as soon as it commits. No model runs on the
+write path, and no background pass rewrites the table. The Obsidian
+export reads at most 1,000 rows at importance 0.4 or above every five
+minutes and rewrites one owned note
+(<code>crates/screenpipe-engine/src/external_memory_sync.rs:59</code>,
+<code>:366-381</code>).</p>
+<p>There is no deduplication. The MCP description asks the model to
+update rather than duplicate; the profile tool's description says
+<em>"List first and update a matching fact"</em>. Both are prose.
+Conflict handling is last write wins, locally by statement order and
+across devices by <code>updated_at</code>.</p>
+<p>The profile path is the one memory write with a content gate.
+<code>find_agent_content_threat</code> rejects invisible Unicode
+controls and ten regex families — injection phrasing, role hijack,
+system-prompt exfiltration, HTML-comment injection, hardcoded secrets,
+private keys and token prefixes, and <code>send … to https://</code> —
+after folding full-width ASCII
+(<code>crates/screenpipe-engine/src/agent_profile.rs:391-460</code>).
+The same function guards agent skills and nothing else; the general
+<code>POST /memories</code> route stores what it is given.</p>
+<p>One small trigger gap: <code>memories_au</code> fires only
+<code>WHEN OLD.content IS NOT NULL AND OLD.content != ''</code>. The
+HTTP route accepts empty content, so a row created empty and edited
+later is never added to <code>memories_fts</code>, and a query cannot
+find it
+(<code>crates/screenpipe-db/src/migrations/20260310000000_create_memories.sql:27-46</code>).</p>
+<p>Agent skills are the more careful store.
+<code>AgentSkillStore::create</code> writes <code>SKILL.md</code> and
+records <code>created_by: screenpipe-agent</code> with the content's
+SHA-256 in a root manifest; <code>read_unlocked</code> reports a skill
+as agent-owned only while the file's hash matches; <code>patch</code>
+requires the caller to supply the current hash and refuses a skill whose
+origin is <code>user</code>
+(<code>crates/screenpipe-engine/src/agent_skills.rs:164-313</code>). A
+person editing a skill by hand therefore takes it away from the agent,
+and a test asserts it
+(<code>manual_changes_revoke_agent_write_provenance</code>,
+<code>:708</code>).</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The stdio MCP server registers <code>update-memory</code> with
+create, update and delete in one tool, and directs reads to
+<code>search-content</code>
+(<code>packages/screenpipe-mcp/src/index.ts:554-571</code>). The tool is
+annotated <code>destructiveHint: false</code> and
+<code>idempotentHint: true</code> while its <code>delete: true</code>
+branch hard-deletes a row with no confirmation. A client that gates
+destructive tools on that annotation will not ask.</p>
+<p>Native agents get <code>user_profile</code> and
+<code>skill_manage</code> from the self-improvement extension, and other
+ACP agents get the same pair from a bundled tool server
+(<code>crates/screenpipe-core/assets/acp/screenpipe-tools.mjs:508-560</code>).
+The profile block is frozen per agent session, so a write mid-session
+reaches the prompt only in a new session — stated in the guidance and
+implemented by the cached promise. The block is appended to the system
+prompt once per session, which keeps a provider's prefix cache stable
+within it.</p>
+<p>Pipes reach memory through HTTP. The <code>reader</code> preset and
+the default allowlist give <code>GET /search</code> but not
+<code>GET /memories</code>; the <code>writer</code> preset adds
+<code>POST /memories</code>, <code>PUT /memories/*</code> and
+<code>DELETE /memories/*</code>
+(<code>crates/screenpipe-core/src/pipes/permissions.rs:531-547</code>).
+A pipe's policy is written by the server into its directory and enforced
+on each request, with a curl-only rule and a static write sandbox in the
+Pi extension
+(<code>crates/screenpipe-core/assets/extensions/screenpipe-permissions.ts:653-700</code>,
+<code>:830-878</code>).</p>
+<p>For Claude Code and Codex, the export writes static recall guidance,
+not memory rows, into the user's instruction files between markers and
+removes it when the connection is disabled
+(<code>crates/screenpipe-engine/src/external_memory_sync.rs:300-318</code>).
+Adapting the memory layer to another agent means calling five REST
+routes; nothing in it is specific to Screenpipe's own runtime.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Scope.</strong> <code>memories</code> has no scope key, and
+every authenticated caller is the same principal to it. A pipe with the
+<code>writer</code> preset can overwrite or delete a memory the user
+wrote, and an interactive agent can delete any row by id. The pipe
+policy is a real boundary on capture data — app, window, content type
+and time are checked per result. Neither reaches the memory table's
+ownership, because there is none.</p>
+<p><strong>Why <code>scope_enforced</code> is withheld.</strong> The one
+stored key applied on a read path sits on a side store. Human ratings
+carry <code>producer_ref</code> such as <code>pipe:daily-recap</code>
+(<code>apps/screenpipe-app-tauri/lib/ai-feedback.ts:76</code>), and when
+a pipe token is present <code>list_ai_feedback_handler</code> discards
+the caller's <code>producer</code> argument and binds the token's own
+pipe name into the SQL
+(<code>crates/screenpipe-engine/src/routes/ai_feedback.rs:347-361</code>,
+<code>crates/screenpipe-db/src/db/feedback.rs:146-190</code>). That is a
+real boundary, and a model cannot widen it by argument. The mark does
+not measure it. The feedback table is a ledger of ratings on AI outputs,
+not the memory this report is about; no committed test asserts the
+boundary; and with <code>api_auth</code> disabled every caller is
+unrestricted.</p>
+<p><strong>The pipe-token fallback.</strong> When <code>api_auth</code>
+is off, <code>pipe_permissions_layer</code> treats an
+<code>sp_pipe_</code> token missing from the registry as an ordinary
+user request with no restrictions, and a request with no pipe token
+likewise
+(<code>crates/screenpipe-engine/src/pipe_permissions_middleware.rs:109-117</code>).
+With the default <code>api_auth: true</code>, the outer auth layer
+rejects an unregistered token first
+(<code>crates/screenpipe-engine/src/server.rs:365-374</code>), so the
+fallback opens only when a user disables auth.</p>
+<p><strong>Deletion and derived artifacts.</strong> The nomination asked
+for these to be inspected; the answers are specific.</p>
+<ul>
+<li><em>Range deletion and retention.</em> Frames, elements,
+transcripts, UI events and orphaned semantic rows go;
+<code>memories</code>, <code>meetings</code> with their provider
+transcript segments, activity intervals, outputs and feedback are not in
+the range delete
+(<code>crates/screenpipe-db/src/db/maintenance.rs:145-349</code>). A
+memory distilled from a frame keeps its text with <code>frame_id</code>
+set to <code>NULL</code>.</li>
+<li><em>Retention modes.</em> <code>Media</code>, the default, removes
+only media files and keeps every text row; <code>Lean</code> also strips
+element trees, accessibility JSON and UI events; <code>All</code>
+removes rows
+(<code>crates/screenpipe-engine/src/retention.rs:56-74</code>).</li>
+<li><em>Residue.</em> The database ships with
+<code>auto_vacuum=NONE</code>, so the incremental vacuum after retention
+reclaims nothing (<code>retention.rs:656-668</code>), and no path turns
+<code>secure_delete</code> on. Deleted text sits in free pages until
+reused.</li>
+<li><em>Copies.</em> Cross-device tombstones last 30 days; a device
+offline longer re-pushes a deleted row as local-only, and the merge
+keeps it. A corrupt tombstone file is read as empty
+(<code>sync_api.rs:1552-1565</code>). The enterprise and Data Sync paths
+send no delete, and the gateway upserts memories with no delete path
+(<code>crates/screenpipe-gateway/src/ingest.rs:872-902</code>).</li>
+<li><em>Redaction.</em> The PII redaction worker reconciles frames,
+elements and UI events; it reads no <code>memories</code> row.</li>
+</ul>
+<p><strong>Injection.</strong> Memory content returned by
+<code>search-content</code> reaches the model as text with the bundled
+skill's instruction to treat it as untrusted evidence. The profile path
+is defended on both sides; the general path is defended by prose.</p>
+<p><strong>Raw SQL.</strong> <code>/raw_sql</code> accepts statements
+starting with <code>SELECT</code>, <code>WITH</code> or
+<code>EXPLAIN</code>, which alone would admit
+<code>WITH … DELETE</code>. It runs on the read pool, where
+<code>query_only</code> is on, so a write fails in SQLite
+(<code>crates/screenpipe-engine/src/routes/content.rs:659-716</code>,
+<code>crates/screenpipe-db/src/db/maintenance.rs:63-74</code>).</p>
+<p><strong>Uncertainty.</strong> The table cannot represent doubt.
+<code>importance</code> orders and gates the export; it does not
+withhold a row from anything.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I read the tests and ran none of them. Memory-specific coverage is
+narrow and sound where it exists.</p>
+<ul>
+<li><code>crates/screenpipe-db/tests/db.rs:504-600</code>,
+<code>test_memory_filter_by_tags</code>: three memories, exact AND tag
+matching, <code>person:ada</code> not matching <code>person:adam</code>,
+a prefix matching nothing, and FTS composed with tags. Each negative is
+paired with a positive on the same fixture.</li>
+<li><code>evals/coding-agent/graders/memory-tag-filter.rs</code>: a
+grader for a coding agent's fix, asserting exact id sets over a fixture
+with malformed tag rows and an unchanged table afterwards.</li>
+<li><code>crates/screenpipe-engine/src/agent_profile.rs:483-597</code>:
+the snapshot is bounded and escaped, a poisoned fact is blocked in
+render, full-width injection is caught, and the profile tool refuses to
+edit a non-profile row.</li>
+<li><code>crates/screenpipe-core/src/memories/sync.rs:251-356</code>:
+ten merge cases, including tombstone wins, resurrection by a newer local
+edit, and GC.</li>
+</ul>
+<p>These do not earn <code>negative_eval</code>. The tag cases test
+filter precision on a user-chosen label, which is ordinary recall
+testing; nothing asserts that a deleted memory, a memory from another
+pipe, or a memory denied by a <code>Content(memory)</code> rule stays
+out of a populated result. The feedback ledger's pipe boundary goes
+untested where the db tests exercise the ledger: they call
+<code>list_feedback</code> with no producer.</p>
+<p>No retrieval benchmark covers memories. The repository's evals are
+for its coding agent, audio transcription and meeting detection. No
+paper is cited.</p>
+<p>Tests to add before trusting it: delete then search for the same
+text; a range delete over a frame with a linked memory, asserting what
+the product intends; a pipe token reading <code>GET /feedback</code>
+with another pipe's producer in the query; and a tombstone older than 30
+days against an offline device's copy.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Fence injected memory as data on render, not only on
+write.</strong> Running the same threat scan on the way out catches rows
+that arrived by a path that skipped the write check, which every
+multi-writer store has.</li>
+<li><strong>Freeze the memory block per session.</strong> One fetch at
+session start keeps the prompt prefix stable and makes "when does a
+write take effect" a single documented answer.</li>
+<li><strong>Make write provenance a hash in a manifest the subject
+cannot write.</strong> An agent may patch only what it created and what
+nobody has edited since; a manual edit flips ownership with no flag to
+set.</li>
+<li><strong>Derive the read scope from the credential and ignore the
+argument.</strong> Replacing the caller's <code>producer</code> with the
+token's identity is one line, and it is the line that matters.</li>
+<li><strong>Back a prefix allowlist with a connection that cannot
+write.</strong> The check is advisory; <code>query_only</code> is the
+guarantee.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A delete that stops at the first copy.</strong> Every
+transport that ships a memory needs a delete record, or a deletion is
+local by construction.</li>
+<li><strong>Expiring tombstones without expiring the devices they
+protect against.</strong> A 30-day TTL is a promise that no replica
+stays offline longer.</li>
+<li><strong>Derived rows with a nullable pointer to their
+source.</strong> If a capture's deletion should take what was distilled
+from it, <code>ON DELETE SET NULL</code> is the opposite
+instruction.</li>
+<li><strong>Tool annotations that understate the tool.</strong>
+<code>destructiveHint: false</code> on a verb that deletes undoes
+whatever confirmation a client would have shown.</li>
+<li><strong>A <code>confirmed</code> field in the agent's own
+schema.</strong> It records that the model typed <code>true</code>.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Screenpipe suits a person who wants an agent to recall their own
+computer work, on their own machine, and is content for that agent to
+manage a small list of facts with full authority. The capture side
+carries the value and the memory table is a convenience on top of it. It
+does not suit a deployment where several agents or people must not
+overwrite each other's memories, where a deletion must be provable
+across devices or an enterprise archive, or where a remembered fact must
+be traceable to evidence that has not been deleted. Adopting it
+commercially needs a paid licence.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether a pipe agent's shell can obtain the desktop API key —
+through <code>screenpipe auth token</code>, the environment or the
+secret store — which would step around every pipe policy including the
+feedback scope. The static sandbox gates writes and curl targets; reads
+of the data directory were not traced.</li>
+<li>Whether the hosted Data Sync service and the enterprise archive
+delete anything on their side when a user deletes locally; that code is
+not in this repository.</li>
+<li>Whether the encryption the sync migration's comment describes for
+<code>BlobType::Memories</code> is end-to-end; <code>SyncManager</code>
+was not read.</li>
+<li>How often memories are written in practice and by whom; the Brain
+screen calls them <em>"what the AI has learned about you from your
+activity"</em>, and no bundled pipe at this commit posts to
+<code>/memories</code>.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>crates/screenpipe-db/src/migrations/20260310000000_create_memories.sql</code>,
+<code>20260315000000_add_frame_id_to_memories.sql</code>,
+<code>20260506120000_add_memories_sync_columns.sql</code>,
+<code>crates/screenpipe-db/src/db/memories.rs</code>,
+<code>crates/screenpipe-db/src/db/setup.rs</code>.</li>
+<li><strong>Write and delete:</strong>
+<code>crates/screenpipe-engine/src/routes/memories.rs</code>,
+<code>crates/screenpipe-engine/src/agent_profile.rs</code>,
+<code>crates/screenpipe-engine/src/agent_skills.rs</code>.</li>
+<li><strong>Read:</strong>
+<code>crates/screenpipe-db/src/db/search.rs</code>,
+<code>crates/screenpipe-engine/src/routes/search.rs</code>,
+<code>crates/screenpipe-engine/src/routes/activity_summary.rs</code>,
+<code>crates/screenpipe-engine/src/routes/content.rs</code>.</li>
+<li><strong>Sync and export:</strong>
+<code>crates/screenpipe-core/src/memories/sync.rs</code>,
+<code>crates/screenpipe-engine/src/sync_api.rs</code>,
+<code>crates/screenpipe-engine/src/external_memory_sync.rs</code>,
+<code>apps/screenpipe-app-tauri/src-tauri/src/data_sync.rs</code>,
+<code>crates/screenpipe-telemetry-wire/src/records.rs</code>,
+<code>crates/screenpipe-gateway/src/ingest.rs</code>,
+<code>crates/screenpipe-team-memory/src/lib.rs</code>.</li>
+<li><strong>Capture deletion:</strong>
+<code>crates/screenpipe-db/src/db/maintenance.rs</code>,
+<code>crates/screenpipe-engine/src/retention.rs</code>.</li>
+<li><strong>Permissions and feedback:</strong>
+<code>crates/screenpipe-core/src/pipes/permissions.rs</code>,
+<code>crates/screenpipe-engine/src/pipe_permissions_middleware.rs</code>,
+<code>crates/screenpipe-engine/src/server.rs</code>,
+<code>crates/screenpipe-engine/src/routes/ai_feedback.rs</code>,
+<code>crates/screenpipe-db/src/db/feedback.rs</code>,
+<code>crates/screenpipe-core/assets/extensions/screenpipe-permissions.ts</code>.</li>
+<li><strong>Agent surfaces:</strong>
+<code>packages/screenpipe-mcp/src/index.ts</code>,
+<code>packages/screenpipe-mcp/src/http-server.ts</code>,
+<code>crates/screenpipe-core/assets/extensions/self-improvement.ts</code>,
+<code>crates/screenpipe-core/assets/acp/screenpipe-tools.mjs</code>,
+<code>crates/screenpipe-core/assets/skills/screenpipe-api/SKILL.md</code>.</li>
+<li><strong>Tests:</strong>
+<code>crates/screenpipe-db/tests/db.rs</code>,
+<code>evals/coding-agent/graders/memory-tag-filter.rs</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root, with <code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'DELETE FROM memories'</code> —
+<code>memories.rs:94</code> and <code>:218</code> only; no maintenance,
+retention or range path deletes a memory.</li>
+<li><code>git grep -n -o -E 'DELETE FROM [a-z_]+' -- crates/screenpipe-db/src/db/maintenance.rs crates/screenpipe-db/src/db/semantic.rs</code>
+— audio_chunks, audio_transcriptions, display_layout, elements, frames,
+ui_events, video_chunks, semantic_actors, semantic_items,
+semantic_runs.</li>
+<li><code>git grep -n -E 'DELETE FROM (meetings|meeting_transcript_segments|activity_[a-z]+|outputs|feedback)' -- '*.rs'</code>
+— per-record deletes in <code>meetings.rs</code>,
+<code>activity_ledger.rs</code>, <code>outputs.rs</code> and
+<code>feedback.rs</code>; none in <code>maintenance.rs</code>.</li>
+<li><code>git grep -n -i -E 'delete|tombstone' -- crates/screenpipe-telemetry-wire/src</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'delete|tombstone|purge' -- apps/screenpipe-app-tauri/src-tauri/src/data_sync.rs apps/screenpipe-app-tauri/src-tauri/src/enterprise/sync.rs apps/screenpipe-app-tauri/src-tauri/src/enterprise/upload.rs</code>
+— no match.</li>
+<li><code>git grep -n -i 'secure_delete'</code> — three hits, each
+setting it <code>OFF</code> (<code>storage/in_place.rs:106</code>,
+<code>storage/reclaim.rs:393</code>, <code>:499</code>).</li>
+<li><code>git grep -n -E 'ocr_text_embeddings' -- ':!crates/screenpipe-db/src/migrations'</code>
+— no match.</li>
+<li><code>git grep -n -E 'screenpipe[-_]team[-_]memory'</code> —
+<code>Cargo.lock</code>, the crate's own <code>Cargo.toml</code> and a
+coverage comment in <code>docs/ORG_DATA_UNIFICATION_SPEC.md</code>; no
+dependent crate.</li>
+<li><code>git grep -n -E 'ALTER TABLE memories' -- crates/screenpipe-db/src/migrations</code>
+— the <code>frame_id</code> and sync-column migrations only.</li>
+<li><code>git grep -n -i -E 'status|state|valid' -- crates/screenpipe-db/src/migrations/20260310000000_create_memories.sql crates/screenpipe-db/src/migrations/20260315000000_add_frame_id_to_memories.sql crates/screenpipe-db/src/migrations/20260506120000_add_memories_sync_columns.sql</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'memor(y|ies)_(events|history|audit|log|versions)|audit_log' -- '*.rs' '*.sql'</code>
+— no match.</li>
+<li><code>git grep -n -E 'find_agent_content_threat' -- '*.rs'</code> —
+<code>agent_profile.rs</code> and <code>agent_skills.rs:344</code>
+only.</li>
+<li><code>git grep -n -w -i 'memories' -- crates/screenpipe-redact/src</code>
+— no match.</li>
+<li><code>git grep -n -E 'Content\(memory\)|is_content_type_allowed\("memory"\)' -- '*.rs' '*.ts'</code>
+— no match; no test denies memory content to a pipe.</li>
+<li><code>git grep -n -E 'list_feedback\(' -- '*.rs'</code> — the
+handler, the gateway and two db tests, each test passing
+<code>None</code> for the producer.</li>
+<li><code>git grep -n -E 'record_memory_tombstone\(' -- '*.rs'</code> —
+the memories route and the profile delete.</li>
+<li><code>git grep -n -i -E 'sandbox-exec|seatbelt|landlock|bubblewrap|bwrap' -- '*.rs' '*.ts'</code>
+— no match; no OS-level sandbox for pipe agents.</li>
+<li><code>git grep -l -i -E 'localhost:3030/memories|/memories"|update-memory|POST /memories' -- crates/screenpipe-core/assets/pipes</code>
+— no match.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- '*.md' '*.cff'</code>
+— <code>crates/screenpipe-audio-eval/evals/ATTRIBUTION.md</code>, a
+dataset attribution; no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/screenpipe/screenpipe/commit/ada8f2fab2f78ea6a9ac8d59f97c932063418a24"><code class="commit-id" title="ada8f2fab2f78ea6a9ac8d59f97c932063418a24">ada8f2fa…</code></a>
+— first reading, at the head of <code>main</code>, 94 commits after the
+nominated <code class="commit-id" title="01aac0d55e21497fb25afcdfbd45077b47bdc576">01aac0d5…</code>; every
+memory, sync, permission, feedback and deletion path cited here has the
+same blob at both. Shallow clone. Screened before reading: two auto-run
+surfaces (<code>.devcontainer/devcontainer.json</code>; the LFS filter
+in <code>.gitattributes</code>, which this machine's git-lfs ran at
+checkout to fetch media), 14 build-time execution points, 15 unpinned
+surfaces, and 72 dependency files dated inside the cooldown by a clone
+that dates every file to the tip. Nothing was installed, built or run.
+No marks: the memory table carries none of the seven, and the feedback
+ledger's pipe boundary is not memory scope.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 751 reports.</strong></p>
+<p><strong>This page covers all 752 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31149,6 +31149,50 @@ published, deletion must reach derived knowledge and cached packs, late
 or back-dated events must still become memories, or tenants who do not
 trust each other share a deployment, since the manual workflow trigger
 runs the Dreamer for any anima id.</li>
+</ul>
+<h3 id="screenpipe"><a
+href="../systems/screenpipe/"><code>screenpipe</code></a></h3>
+<ul>
+<li>Best idea: <strong>memory that reaches a prompt is fenced on the way
+out as well as on the way in.</strong> The profile tool rejects
+instruction-like and secret-bearing text on write, and
+<code>render_system_context</code> scans every row again, replaces a hit
+with a <code>[BLOCKED…]</code> marker, escapes <code>&lt;</code> and
+wraps the block as data, once per agent session.</li>
+<li>Biggest risk: <strong>deletion stops at the local row.</strong>
+Range deletion and retention remove frames and transcripts and never
+touch <code>memories</code>, so a fact distilled from a deleted capture
+keeps its text with <code>frame_id</code> set to <code>NULL</code>;
+cross-device tombstones expire after 30 days, and the enterprise
+telemetry wire format has no delete record.</li>
+<li>Most reusable component:
+<code>crates/screenpipe-engine/src/agent_skills.rs</code> — agent write
+provenance as a SHA-256 in a root manifest, an optimistic-concurrency
+hash on every patch, and ownership that flips to the user when the file
+is edited by hand.</li>
+<li>Second risk: <strong>the memory table has no owner.</strong> No
+scope key, a caller-chosen <code>source</code>, and an MCP
+<code>update-memory</code> tool annotated
+<code>destructiveHint: false</code> that hard-deletes any row by id; a
+<code>writer</code> pipe can overwrite a memory the user wrote.</li>
+<li>Maturity impression: Screenpipe Commercial License,
+source-available, free for research, personal and seven-day evaluation
+use; 13,976 commits from 19 June 2024 to 15 October 2026 by 174
+contributor identities; 652,443 lines of Rust and 520,509 of TypeScript,
+of which the memory table and its paths are about 4,100. No marks.
+<code>scope_enforced</code> is withheld because the memory table has no
+key and the token-bound pipe scope sits on the feedback ledger,
+untested; <code>negative_eval</code> is withheld because the memory
+tests assert tag-filter precision, not exclusion of deleted or
+out-of-scope rows, and <code>human_review</code> because every
+confirmation flag is in the agent's own tool schema.</li>
+<li>Study when: you want an agent to recall a person's own computer work
+on one machine, or a worked example of fencing profile memory in a
+system prompt.</li>
+<li>Do not copy when: several agents or people must not overwrite each
+other's memories, a deletion must be provable across devices or an
+archive, or a remembered fact must stay traceable to evidence that has
+not been deleted.</li>
 </ul>
 <h3 id="hyperconsciousness"><a
 href="../systems/hyperconsciousness/"><code>hyperconsciousness</code></a></h3>

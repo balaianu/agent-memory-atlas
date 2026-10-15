@@ -1452,6 +1452,19 @@ boundary is a read boundary. A non-owner's <code>memory_store</code>
 call with the model-chosen source <code>user</code> writes a third-party
 fact into the worldview every user reads, and a committed test pins that
 case as intended.</p>
+<p><strong><a href="../../systems/screenpipe/">Screenpipe</a> scopes the
+store a pipe learns from and leaves the store it writes
+unscoped.</strong> Human ratings carry a <code>producer_ref</code> such
+as <code>pipe:daily-recap</code>, and when a pipe token is present
+<code>list_ai_feedback_handler</code> discards the caller's
+<code>producer</code> argument and binds the token's own pipe name into
+the SQL
+(<code>crates/screenpipe-engine/src/routes/ai_feedback.rs:347-361</code>,
+<code>crates/screenpipe-db/src/db/feedback.rs:146-190</code>). The
+<code>memories</code> table beside it has no key at all, so a pipe with
+the <code>writer</code> preset can overwrite or delete any memory,
+including one the user wrote. No committed test exercises the feedback
+boundary.</p>
 <p><strong><a
 href="../../systems/hyperconsciousness/">Hyperconsciousness</a> checks
 every link of a delegation chain on every governed read, and its own

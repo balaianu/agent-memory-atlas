@@ -9,7 +9,7 @@ A finding is a place execution can happen, not an accusation. Most are ordinary.
 The point is that the surface is now written down instead of discovered by
 typing `npm install`.
 
-**Progress: 751 of 751 screened at the report's current pin.**
+**Progress: 752 of 752 screened at the report's current pin.**
 
 0 further record(s) describe a revision the report has since moved
 off, and 0 report(s) have no record at all.
@@ -17,9 +17,9 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 356 |
-| Repositories with a dependency surface inside the cooldown (`FRESH`) | 394 |
-| Repositories with build-time execution (`EXEC`) | 549 |
+| Repositories with an auto-run surface (`RUNS`) | 357 |
+| Repositories with a dependency surface inside the cooldown (`FRESH`) | 395 |
+| Repositories with build-time execution (`EXEC`) | 550 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
 
@@ -333,6 +333,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`rust-self-learning-memory`](../../content/systems/rust-self-learning-memory.md) | `.claude/hooks/`, `.claude/settings.json`, `.githooks/`, `.opencode/`, `.vscode/settings.json` |
 | [`ruvector`](../../content/systems/ruvector.md) | `.claude/hooks/`, `.claude/settings.json`, `.githooks/`, `.gitmodules` |
 | [`sage-memory`](../../content/systems/sage-memory.md) | `.claude/settings.json`, `server.json` |
+| [`screenpipe`](../../content/systems/screenpipe.md) | `.devcontainer/devcontainer.json`, `.gitattributes` |
 | [`second-brain-cloudflare`](../../content/systems/second-brain-cloudflare.md) | `.cursor/rules/` |
 | [`selvedge`](../../content/systems/selvedge.md) | `.claude-plugin/`, `.mcp.json`, `hooks/`, `hooks/hooks.json`, `server.json` |
 | [`serena`](../../content/systems/serena.md) | `.devcontainer/devcontainer.json`, `.github/copilot-instructions.md`, `.vscode/settings.json`, `server.json` |

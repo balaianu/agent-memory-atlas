@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 751
+    <meta name="description" content="The 752
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 751
+    <meta property="og:description" content="The 752
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-751 systems grouped by eight architectural
+752 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 751 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 752 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 751 systems
+          <p class="document-deck">The 752 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>751 systems do not fall into 182 categories. They
+<p>752 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -888,7 +888,7 @@ href="../systems/mindmemos/"><code>mindmemos</code></a>, <a
 href="../systems/synapse-layer/"><code>synapse-layer</code></a>, <a
 href="../systems/remembra/"><code>remembra</code></a>, <a
 href="../systems/elephantasm-core/"><code>elephantasm-core</code></a>,
-<a
+<a href="../systems/screenpipe/"><code>screenpipe</code></a>, <a
 href="../systems/hyperconsciousness/"><code>hyperconsciousness</code></a></p>
 <p><strong>Statewave answers the family's hardest question by refusing
 to ask it at read time.</strong> Apache-2.0, 462 commits from April to
@@ -1099,11 +1099,11 @@ href="../systems/supermemory/"><code>supermemory</code></a> the hosted
 core is not visible at all; in <a
 href="../systems/mem0/"><code>mem0</code></a> several documented
 capabilities are managed-platform-only.</p>
-<p><strong>Omi is the family's only ambient-capture member, and the
-constraint shows in the design.</strong> It records conversations and
-screen activity continuously, so its memory is not what a user chose to
-tell it but what a microphone happened to hear — which produces two
-problems the others do not have, and it has answers to both.
+<p><strong>Omi turns ambient capture into memory, and the constraint
+shows in the design.</strong> It records conversations and screen
+activity continuously, so its memory is not what a user chose to tell it
+but what a microphone happened to hear — which produces two problems the
+others do not have, and it has answers to both.
 <code>capture_confidence</code> and <code>veracity</code> are separate
 fields because a misheard sentence and a doubted claim fail
 independently, and <code>subject_attribution</code> records whether a
@@ -1466,6 +1466,20 @@ published tree imports billing and organisation modules it does not
 contain, and its one must-not-retrieve test cannot run there, so
 <code>negative_eval</code> is withheld. Two marks:
 <code>scope_enforced</code>, <code>audit_log</code>.</p>
+<p><strong><a href="../systems/screenpipe/">Screenpipe</a> captures
+ambiently and remembers only what someone writes down.</strong> A
+source-available Rust and TypeScript desktop recorder that keeps screen
+text, transcripts and input events in one local SQLite file and serves
+them to agents over REST and MCP. Its memory is a separate
+<code>memories</code> table of free-text facts that an agent, a
+scheduled pipe or the user creates, overwrites and hard-deletes, read
+back by FTS5 and injected as a frozen, threat-scanned profile block at
+agent start. The table has no scope key, no status and no history. A
+memory distilled from a capture outlives that capture's range deletion,
+and a deletion reaches other devices through a 30-day tombstone and
+never reaches the enterprise archive. No marks: the one token-bound read
+scope is on a feedback ledger beside the memories, where a pipe reads
+human ratings only under its own authenticated name.</p>
 <p><strong><a
 href="../systems/hyperconsciousness/">Hyperconsciousness</a> governs who
 reads a memory and leaves what the memory says to its writer.</strong>
