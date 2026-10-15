@@ -9924,34 +9924,30 @@ guard call on the same line as the assignment, so it cannot establish
 what its SARIF output implies. <strong><a
 href="../systems/re-call/">RE-call</a> found its own negative set inside
 the corpus it indexes, and measured the damage before fixing
-it.</strong> An Apache-2.0 Python retrieval and memory layer at version
-0.13.0 — 102,183 lines over 253 modules with 494 test files, on the
-caller's own PostgreSQL with pgvector — pitched as "[m]emory that
-abstains instead of guessing", where every hit carries one of eleven
-verdicts and only <code>ok</code> ever becomes evidence. The passage to
-read is about its test data. The off-topic query pool, the subjects a
-search is supposed to abstain on, was written as Python literals, and
-this is a system people point at code corpora including its own:
-"[t]hese subjects are DATA, and as Python literals they were also
-CORPUS", so a corpus rooted at the repository ingested the list and
-disqualified every subject in it. The contamination was measured — none
-of twenty-five subjects surviving against a repository-rooted corpus,
-eleven of twenty-five against a third-party corpus of the same size, "so
-the failure was recall dogfooding itself, not the pool being too small"
-— the pool moved to a <code>.json</code> file the corpus globs do not
-match, and the distinctive words are now deliberately never written in
-prose, because naming one re-contaminates the pool. The author records
-breaking that rule twice while fixing it, once "caught only because the
-measured survivor count moved the wrong way". Around that sits
-<code>docs/preregistrations/</code>, 162 dated documents stating what
-was going to be measured before it was, with amendments and results
-filed separately, which is the habit the rest of the project's care
-descends from. It carries all seven capabilities; the two things to
-weigh against them are a development mode that serves results the trust
-gate never judged, stamped <code>unverified</code> so they cannot pass
-as judged ones, and a
-<code>generation_promoted_unsafe_development</code> audit event for a
-promotion that skipped validation.</p>
+it.</strong> An AGPL-3.0 Python retrieval and memory layer at version
+0.14.0 — 129,735 lines over 336 modules, on the caller's own PostgreSQL
+with pgvector — pitched as "[m]emory that abstains instead of guessing",
+where every hit carries a verdict from a closed set of ten and only
+<code>ok</code> ever becomes evidence. The passage to read is about its
+test data. The off-topic query pool, the subjects a search is supposed
+to abstain on, was written as Python literals, and this is a system
+people point at code corpora including its own: "[t]hese subjects are
+DATA, and as Python literals they were also CORPUS", so a corpus rooted
+at the repository ingested the list and disqualified every subject in
+it. The contamination was measured — no subject surviving against a
+repository-rooted corpus, eleven surviving against a third-party corpus
+of the same size, "so the failure was recall dogfooding itself, not the
+pool being too small" — the pool moved to a <code>.json</code> file the
+corpus globs do not match, and the distinctive words are deliberately
+never written in prose, because naming one re-contaminates the pool. The
+review path closes in the other direction: an agent can report that one
+memo replaces another, a person accepts or rejects it on a token-guarded
+local dashboard, and a rejection is keyed on the claim, so neither the
+agent nor the opt-in model arbiter can raise it again. It carries all
+seven capabilities; the things to weigh against them are two Claude Code
+hooks that inject memo text without the verdict, and a development mode
+that serves results the trust gate never judged, stamped
+<code>unverified</code> so they cannot pass as judged ones.</p>
 <p><strong><a href="../systems/temvera/">Temvera</a> publishes the
 attack that works against it, and commits a test that keeps the
 admission honest.</strong> An Apache-2.0 Python research artifact at

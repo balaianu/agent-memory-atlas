@@ -316,12 +316,13 @@ docstring: <em>"There is deliberately no
 <code>recall_rewrite_apply</code>. The MCP client is the model, so
 letting it supply a reviewer id and an audit note would make the named
 human gate a formality it satisfies by typing a string: the gate becomes
-a field, not a person."</em> Its one fact-writing tool states the same
-rule as a property of its inputs — trust verdicts, timestamps, approval
-fields and writer identity are <em>"server-owned and cannot be supplied
-here"</em> — and the structural half holds underneath, since a
-downstream function takes a <code>PromotedFact</code> that only the
-promotion path produces.</p>
+a field, not a person."</em> The agent's verb is a report, queued until
+a person accepts or rejects it on a token-guarded local dashboard or at
+the CLI, and the structural half holds underneath, since a downstream
+function takes a <code>PromotedFact</code> that only the promotion path
+produces. Its one fact-writing tool keeps approval fields and writer
+identity <em>"server-owned"</em>, and applies a fact behind a
+deterministic evidence check with no person in it.</p>
 <p><strong>Why:</strong> fully automatic memory, memory a person can
 review before it takes effect, and memory a person authors are three
 different products with three different failure modes, and the

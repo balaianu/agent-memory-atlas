@@ -4351,18 +4351,22 @@ dependency surface and none inside the seven-day cooldown, with
 was installed, built or run. MIT</li>
 <li><a href="https://github.com/GiulioDER/RE-call">GiulioDER/RE-call</a>
 at <a
-href="https://github.com/GiulioDER/RE-call/commit/1157360f1e0704a06548d93a4f4797c415c722f9"><code class="commit-id" title="1157360f1e0704a06548d93a4f4797c415c722f9">1157360f…</code></a>
-— read only; fifteen files scanned, three auto-run surfaces, three
-build-time execution points (<code>recall/setup.py</code>, which
+href="https://github.com/GiulioDER/RE-call/commit/ab4d37de84681a630c46589d4986aeb843bb2e35"><code class="commit-id" title="ab4d37de84681a630c46589d4986aeb843bb2e35">ab4d37de…</code></a>
+— read only; fifteen files scanned, three auto-run surfaces (the
+<code>.claude-plugin/</code> marketplace manifest, the
+<code>hooks/</code> payload directory and an MCP
+<code>server.json</code> that launches a <code>uvx</code> package),
+three build-time execution points (<code>recall/setup.py</code>, which
 executes at install time, <code>tests/conftest.py</code>, which runs on
 pytest collection, and the <code>Makefile</code> default target), one
-unpinned dependency surface and three dependency files inside the
-seven-day cooldown, with <code>uv.lock</code> present. A
-<code>hooks/pre-commit</code> payload sits in the tree uninstalled and
+unpinned dependency surface under <code>benchmarks/</code>, and no
+dependency file inside the seven-day cooldown, with <code>uv.lock</code>
+present. The <code>hooks/pre-commit</code> payload is uninstalled and
 inert. <code>AGENTS.md</code> and <code>CLAUDE.md</code> are addressed
 to a reading agent and were recorded as data. Nothing was installed,
 built or run, and no PostgreSQL was started, so every claim in the
-report is read from source. Apache-2.0</li>
+report is read from source. AGPL-3.0-only, with a commercial licence
+beside it</li>
 <li><a
 href="https://github.com/okf-memory/okf-agent-memory">okf-memory/okf-agent-memory</a>
 at <a
@@ -16886,6 +16890,27 @@ scoping; the CLI, stdio MCP and bindings use <code>aidememo-core</code>,
 which is not behind the trait and takes <code>source_id</code> from the
 call
 (<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:791-810</code>).</li>
+<li><strong>Four published claims about <a
+href="../systems/re-call/">RE-call</a> were wrong at <a
+href="https://github.com/GiulioDER/RE-call/commit/1157360f1e0704a06548d93a4f4797c415c722f9"><code class="commit-id" title="1157360f1e0704a06548d93a4f4797c415c722f9">1157360f…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+counted 162 dated preregistrations running from 15 August to 15
+September 2026; that was the count at the first-reading pin, and at this
+one <code>docs/preregistrations/</code> held 188, the last dated 16
+September. Its tests section gave 494 test files, the first pin's
+figure, where this pin had 518 entries under <code>tests/</code>. The
+inspected-repositories entry named the licence Apache-2.0;
+<code>LICENSE</code> at this pin was the PolyForm Noncommercial License
+1.0.0, introduced by
+<code class="commit-id" title="3e1adc25393b8f48721d797915aaf05ee33cf87d">3e1adc25…</code>, as the report's
+own summary said. And the <code>scope_enforced</code> record said no
+query path reached the rows without the tenant GUC set. The write-time
+hook queried <code>recall_chunks_v1</code> with an explicit predicate
+and no GUC (<code>recall_hooks/write_time.py:222-229</code>), and
+<code>recall/pool.py:38-52</code> stated that a superuser or
+<code>BYPASSRLS</code> role ignores the policy, which the MCP server
+allowed for single-tenant serving with a warning. The mark holds,
+because every statement carries the tenant predicate.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

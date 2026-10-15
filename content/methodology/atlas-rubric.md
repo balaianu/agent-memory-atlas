@@ -199,11 +199,12 @@ a plan verb and no apply twin, and says why in the docstring: *"There is
 deliberately no `recall_rewrite_apply`. The MCP client is the model, so letting
 it supply a reviewer id and an audit note would make the named human gate a
 formality it satisfies by typing a string: the gate becomes a field, not a
-person."* Its one fact-writing tool states the same rule as a property of its
-inputs — trust verdicts, timestamps, approval fields and writer identity are
-*"server-owned and cannot be supplied here"* — and the structural half holds
-underneath, since a downstream function takes a `PromotedFact` that only the
-promotion path produces.
+person."* The agent's verb is a report, queued until a person accepts or
+rejects it on a token-guarded local dashboard or at the CLI, and the
+structural half holds underneath, since a downstream function takes a
+`PromotedFact` that only the promotion path produces. Its one fact-writing
+tool keeps approval fields and writer identity *"server-owned"*, and applies
+a fact behind a deterministic evidence check with no person in it.
 
 **Why:** fully automatic memory, memory a person can review before it takes
 effect, and memory a person authors are three different products with three

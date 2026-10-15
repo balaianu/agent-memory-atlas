@@ -25936,77 +25936,65 @@ than an exact index at identical recall</td>
 </tr>
 <tr>
 <td><a href="../systems/re-call/"><code>re-call</code></a></td>
-<td>A source document chunked and indexed, carrying declared validity,
-lineage and supersession; beside it an <code>AtomicFact</code> —
-namespace, subject, predicate, object, context, <code>valid_from</code>,
-<code>valid_until</code> — promoted through a review gate into an
+<td>A source document chunked and indexed with declared validity,
+lineage and supersession; beside it an AtomicFact (namespace, subject,
+predicate, object, context, valid_from, valid_until) applied into an
 append-only fact ledger</td>
 <td>The caller's own PostgreSQL with pgvector, every memory table under
-forced row-level security keyed on a tenant GUC; generations, audit
-events, tombstones, calibrations and the fact ledger share the
-scheme</td>
+forced row-level security keyed on a tenant GUC; the rejection ledger
+and the agent stale-report queue are SQLite sidecars beside the markdown
+corpus</td>
 <td>Dense, sparse and graph legs fused, reranked, then judged: each hit
-returns a verdict, a score and provenance, and only <code>ok</code> hits
-become evidence</td>
-<td>Generation builds from a manifest, an MCP write path, harness hooks,
-and a promotion pipeline that turns extracted proposals into facts only
-after a named review</td>
-<td>Declared supersession makes the current memory outrank a stale but
-similar one; <code>forget()</code> writes a permanent per-source
-tombstone that every future build re-checks</td>
-<td>Tenant isolation is forced row-level security in Postgres, not an
-application predicate; folder and facet scope is a separate
-caller-supplied retrieval dimension over the same rows</td>
-<td>A CLI, an MCP server, a Codex plugin, Claude Code hooks, a desktop
-packaging path and Docker compose files</td>
+returns a verdict, a score and provenance, and only ok hits become
+evidence. Two Claude Code hooks inject memos without the verdict</td>
+<td>Generation builds from a manifest, an MCP fact write behind a
+deterministic evidence check, harness hooks that index sessions, and a
+review path where a person turns an agent report or a model proposal
+into a supersedes declaration in the memo</td>
+<td>A declared supersedes edge in the newer memo makes the older one
+superseded; a rejected claim is recorded by claim key and refused on
+every later write; forget() erases a source and writes a permanent
+per-source tombstone every build re-checks</td>
+<td>Tenant isolation is an explicit predicate on every statement with
+forced row-level security behind it; folder and facet scope is a
+separate caller-supplied retrieval dimension; the prompt-time hook is
+scoped to one project's memo directory</td>
+<td>A CLI, an MCP server, a Codex plugin, Claude Code hooks at session
+start, prompt submit, pre-tool-use, pre-compact and session end, a local
+review dashboard, a desktop packaging path and Docker compose files</td>
 <td>Generation builds, graph rebuilds, calibration fitting and
-invalidation, dependency invalidation, and a garbage collector over
-superseded generations</td>
-<td>A closed eleven-value verdict vocabulary, calibrated thresholds with
-a certification status, strict mode that refuses rather than answers, a
-degraded mode with a verdict of its own so it cannot be mistaken for a
+invalidation, dependency invalidation, a garbage collector over
+superseded generations, and an opt-in model arbiter that proposes
+supersession pairs for review</td>
+<td>A closed ten-value verdict vocabulary, calibrated thresholds with a
+certification status, strict mode that refuses rather than answers, and
+a degraded mode with a verdict of its own so it cannot be mistaken for a
 judged result</td>
-<td>The evaluation discipline is what makes this repository unusual.
-<code>docs/preregistrations/</code> holds 162 dated markdown documents
-running from mid-August to mid-September 2026, beside the query-set JSON
-files several of them cite, each stating what was going to be measured
-before it was, with amendments filed as separate dated files and results
-as separate <code>-result.md</code> documents, so a hypothesis and its
-outcome cannot be quietly reconciled after the fact. The negative-set
-story is the one to read in full: the off-topic pool lives in JSON
-rather than Python because as literals the subjects were also corpus,
-the contamination was measured rather than assumed (none of twenty-five
-subjects surviving against eleven for an uncontaminated corpus of the
-same size), the distinctive words are never named in prose because
-naming one re-contaminates the pool, and three committed guards hold all
-of it — a project that has understood that its own tree is part of the
-test environment. Beside that, the verdict vocabulary is argued rather
-than listed: <code>unverified</code> exists so that a degraded hit
-cannot pass as a judged one, since reusing <code>low_confidence</code>
-"would have made 'we measured this and it scored badly'
-indistinguishable from 'nobody measured anything'"</td>
-<td>Licence first, because it changed at 0.14.0: PolyForm Noncommercial
-1.0.0 for this release and later, Apache-2.0 for 0.13.x and earlier,
-with commercial production, a hosted service and redistribution all
-needing a separate written licence. Then size and operational weight:
-103,088 lines of Python over 254 modules with 518 test files, a required
-PostgreSQL with pgvector, and at this pin three auto-run surfaces and
-three build-time execution points, among them a <code>setup.py</code>
-that executes at install time and a <code>conftest.py</code> that runs
-on pytest collection. Nothing here was installed or run, so every claim
-is read from source. The degraded path is the substantive one:
-development mode retrieves without a certified threshold and stamps
-<code>unverified</code>, and
-<code>generation_promoted_unsafe_development</code> is a real audit
-event, so a deployment can serve unjudged results and a generation can
-reach production without the validation that normally precedes it — both
-are named honestly in the code, which is why they are visible here at
-all, but they are escape hatches that ship. The reviewer identity is a
-supplied string rather than an authenticated principal. And the decision
-ledger, the only record of <em>why</em> a particular search abstained,
-is off by default and best-effort by design: a ledger write failure is
-counted and logged, never raised, so the audit of retrieval decisions is
-exactly as complete as the operator's configuration makes it</td>
+<td>The off-topic pool is the passage to read: the subjects lived as
+Python literals, a code corpus rooted at the repository ingested them
+and disqualified all twenty-five, and the measurement against a
+third-party corpus of the same size, which kept eleven, is what showed
+the fault was self-ingestion. The pool moved to JSON, the distinctive
+words are never named in prose, and three committed guards hold it. The
+verdict vocabulary is argued rather than listed: unverified exists so a
+degraded hit cannot pass as a judged one. And the review path closes in
+both directions: an agent can report that one memo replaces another, a
+person decides off the agent's surface, and a rejection is keyed on the
+claim so neither the agent nor the model arbiter can raise it again</td>
+<td>Licence first: AGPL-3.0-only, with a commercial licence for closed
+products and unpublished hosted services, and the Claude marketplace
+manifest declares Apache-2.0. Then weight: a required PostgreSQL with
+pgvector, three auto-run surfaces and three build-time execution points
+at this pin, among them a setup.py that executes at install time and a
+conftest.py that runs on pytest collection. The two Claude Code
+injection hooks bypass the trust gate: the prompt-time hook ranks memo
+files by BM25 and tells the model to follow a hit that settles the
+question, and the write-time hook injects chunk text by raw SQL, so a
+superseded memo can reach the prompt through either. Development mode
+serves unverified results and generation_promoted_unsafe_development is
+a real audit event. The reviewer is a typed name. The decision ledger is
+off by default and best-effort, so the record of why a search abstained
+is as complete as the operator configured it</td>
 </tr>
 <tr>
 <td><a href="../systems/reasonix/"><code>reasonix</code></a></td>

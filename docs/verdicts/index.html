@@ -21295,18 +21295,17 @@ small pool. The pool moved to JSON, which the wizard's globs do not
 match; the distinctive words are never named in prose because naming one
 re-contaminates the pool; and three committed guards hold it, with a
 colliding corpus refused rather than silently narrowed.</li>
-<li>Biggest risk: <strong>two honestly-named escape hatches that still
-ship.</strong> Development mode retrieves without a certified threshold
-and stamps <code>unverified</code>, and
+<li>Biggest risk: <strong>the injection hooks bypass the gate the search
+path enforces.</strong> The prompt-time hook ranks memo files by BM25
+and injects three summaries under "If one of these already settles the
+question, say so and follow it", and the write-time hook injects chunk
+text by raw SQL; neither reads a verdict or a <code>supersedes:</code>
+declaration, and both are on by default. Beside those, development mode
+stamps unjudged results <code>unverified</code>,
 <code>generation_promoted_unsafe_development</code> is a real audit
-event, so a deployment can serve unjudged results and a generation can
-reach production without the validation that normally gates it. Both are
-visible only because the code names them. Beside those,
-<code>reviewer_id</code> is a supplied string rather than an
-authenticated principal, and the decision ledger — the only record of
-<em>why</em> a search abstained on a given day — is off by default and
-best-effort by design, so the retrieval audit is exactly as complete as
-the operator configured it.</li>
+event, the reviewer is a typed name rather than an authenticated
+principal, and the decision ledger is off by default and
+best-effort.</li>
 <li>Most reusable component: the <code>Verdict</code> vocabulary, where
 each value is defined against the one it would otherwise be confused
 with. <code>unverified</code> "is not a weaker <code>ok</code>: it says
@@ -21316,12 +21315,12 @@ measured this and it scored badly' indistinguishable from 'nobody
 measured anything'"; <code>ambiguous_supersession</code> "fails closed
 rather than being served with a guessed successor". Only <code>ok</code>
 becomes evidence.</li>
-<li>Maturity impression: PolyForm Noncommercial 1.0.0 since 0.14.0 and
-Apache-2.0 for 0.13.x and earlier, version 0.14.0, 103,088 lines of
-Python over 254 modules with 518 test files, PostgreSQL with pgvector
-under forced row-level security, an MCP server, a Codex plugin and
-harness hooks, and 162 dated preregistrations with amendments and
-results filed as separate documents. Three auto-run surfaces and three
+<li>Maturity impression: AGPL-3.0-only with a commercial licence beside
+it since 5 October 2026, version 0.14.0, 129,735 lines of Python over
+336 modules with 7,303 test functions in 624 files, PostgreSQL with
+pgvector under forced row-level security, an MCP server, a local review
+dashboard, a Codex plugin and harness hooks, and 69 dated
+preregistrations in the public tree. Three auto-run surfaces and three
 build-time execution points at this pin, including a
 <code>setup.py</code> that executes at install time; nothing was
 installed or run.</li>

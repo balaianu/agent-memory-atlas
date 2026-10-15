@@ -4,28 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="Agent memory on PostgreSQL with
-pgvector where every hit carries one of eleven verdicts, strict mode
-refuses instead of answering, erasure writes a permanent tombstone the
-builder re-checks, and 162 dated preregistrations record what was going
-to be measured before it was.">
+    <meta name="description" content="Agent memory on PostgreSQL where
+every hit carries a verdict and only <code>ok</code> becomes evidence,
+and a claim a person rejected stays rejected.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="RE-call — Agent Memory Atlas">
     <meta property="og:description" content="Agent memory on PostgreSQL
-with pgvector where every hit carries one of eleven verdicts, strict
-mode refuses instead of answering, erasure writes a permanent tombstone
-the builder re-checks, and 162 dated preregistrations record what was
-going to be measured before it was.">
+where every hit carries a verdict and only <code>ok</code> becomes
+evidence, and a claim a person rejected stays rejected.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="RE-call — Agent Memory Atlas">
     <meta name="twitter:description" content="Agent memory on PostgreSQL
-with pgvector where every hit carries one of eleven verdicts, strict
-mode refuses instead of answering, erasure writes a permanent tombstone
-the builder re-checks, and 162 dated preregistrations record what was
-going to be measured before it was.">
+where every hit carries a verdict and only <code>ok</code> becomes
+evidence, and a claim a person rejected stays rejected.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>RE-call — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ going to be measured before it was.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "RE-call",
-      "description": "Agent memory on PostgreSQL with pgvector where every hit carries one of eleven verdicts, strict mode refuses instead of answering, erasure writes a permanent tombstone the builder re-checks, and 162 dated preregistrations record what was going to be measured before it was.",
+      "description": "Agent memory on PostgreSQL where every hit carries a verdict and only `ok` becomes evidence, and a claim a person rejected stays rejected.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,25 +99,23 @@ going to be measured before it was.">
           <p class="eyebrow">The off-topic pool had to be moved out of
 Python, because the code corpus was ingesting it</p>
           <h1>RE-call</h1>
-          <p class="document-deck">Agent memory on PostgreSQL with
-pgvector where every hit carries one of eleven verdicts, strict mode
-refuses instead of answering, erasure writes a permanent tombstone the
-builder re-checks, and 162 dated preregistrations record what was going
-to be measured before it was.</p>
+          <p class="document-deck">Agent memory on PostgreSQL where
+every hit carries a verdict and only <code>ok</code> becomes evidence,
+and a claim a person rejected stays rejected.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/GiulioDER/RE-call">
               <span>Source</span>
               <strong>GiulioDER/RE-call</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/GiulioDER/RE-call/commit/1157360f1e0704a06548d93a4f4797c415c722f9" title="1157360f1e0704a06548d93a4f4797c415c722f9">
+            <a class="meta-pill revision-pill" href="https://github.com/GiulioDER/RE-call/commit/ab4d37de84681a630c46589d4986aeb843bb2e35" title="ab4d37de84681a630c46589d4986aeb843bb2e35">
               <span>Analyzed revision</span>
-              <code>1157360f…</code>
+              <code>ab4d37de…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/GiulioDER--RE-call" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,24 @@ to be measured before it was.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>7</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0-only
+with a separate commercial licence; 0.14.0 and every PolyForm-era commit
+are also under PolyForm Noncommercial 1.0.0, and 0.13.x and earlier keep
+Apache-2.0 or MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>129,735
+lines of Python in 336 modules across recall, recall_mcp, recall_hooks
+and four smaller packages; 179,273 more in 624 files under
+tests/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>2,371
+commits by 4 author names (one maintainer under two spellings,
+Dependabot and Claude), 6 July – 14 October 2026; version 0.14.0, with
+the AGPL relicensing listed under Unreleased</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>7,303
+test functions in 624 files under tests/, 109 of those files gated on a
+live Postgres by requires_db; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>7</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,17 +156,21 @@ to be measured before it was.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>RE-call is "[m]emory that abstains instead of guessing" — version
-0.14.0, 103,088 lines of Python across 254 modules with 518 test files,
-running on the caller's own PostgreSQL with pgvector. <strong>The
-licence changed between the previous pin and this one</strong>: releases
-up to and including 0.13.x stay Apache-2.0, and this release and later
-ones are under the PolyForm Noncommercial License 1.0.0, which permits
-personal, educational and noncommercial research use and requires a
-separate written licence for commercial production, a hosted service or
-redistribution. A <code>COMMERCIAL_LICENSE.md</code> sits beside it in
-the tree. It stores source documents, indexes them, "and keeps validity
-and lineage attached to every hit."</p>
+<p>RE-call is retrieval-backed agent memory on the caller's own
+PostgreSQL that judges every hit before it can be used: one closed
+vocabulary of ten verdicts, of which only <code>ok</code> becomes
+evidence, with a strict mode that refuses instead of answering. The care
+around its own test data is what sets it apart, and the review path is
+sound in both directions: a person decides, and a claim a person
+rejected stays rejected. The weak side is the injection hooks, which put
+memo text in front of the model without the verdict.</p>
+<p><strong>The licence is AGPL-3.0-only</strong>, with a separate
+commercial licence for closed products and for a hosted service run
+without publishing its source. Release 0.14.0 and every commit published
+under PolyForm Noncommercial 1.0.0 are also granted under the AGPL by a
+statement dated 5 October 2026 (<code>LICENSE_GRANT_AGPL.md</code>), and
+0.13.x and earlier keep Apache-2.0 or MIT. Contributions come in under a
+CLA.</p>
 <p>The pitch is a distinction rather than a feature:</p>
 <blockquote>
 <p>"Plain vector search returns nearby text. RE-call also asks whether
@@ -166,21 +179,6 @@ superseded claim comes back marked <code>superseded</code>; a result
 that does not clear the calibrated trust gate becomes
 <code>ABSTAIN</code> with a reason."</p>
 </blockquote>
-<p>That is implemented as a closed vocabulary of eleven verdicts, of
-which exactly one — <code>ok</code> — becomes evidence. The rest stay
-readable and never become the answer. Under a strict policy the gate
-does not degrade quietly; it raises.</p>
-<p><strong>What makes this repository worth a careful read is not the
-retrieval stack but what surrounds it.</strong>
-<code>docs/preregistrations/</code> holds 162 dated markdown documents,
-running from 15 August to 15 September 2026, each stating what was about
-to be measured before the measurement happened. Amendments are separate
-dated files (<code>...-amendment-2.md</code> through
-<code>-amendment-5.md</code> on one canary), and results are separate
-documents again (<code>2026-08-27-checker-ground-truth.md</code> beside
-<code>2026-08-27-checker-ground-truth-result.md</code>). A hypothesis
-and its outcome cannot be reconciled after the fact when both are
-committed under their own dates.</p>
 <p><strong>The single best passage in the tree is about the project's
 own test data.</strong> The off-topic query pool — subjects a search
 must abstain on — was written as Python literals, and RE-call is a
@@ -192,56 +190,99 @@ when none of its content words appear anywhere in the corpus under test,
 so a code corpus that includes recall's own tree ingested this very list
 and then disqualified every one of its 25 subjects."</p>
 </blockquote>
-<p>It was measured, not assumed: none of twenty-five survived against a
-repository-rooted corpus, eleven of twenty-five against a third-party
-corpus of the same size, "so the failure was recall dogfooding itself,
-not the pool being too small." The pool moved to JSON, which the
-wizard's <code>**/*.py</code> and <code>**/*.md</code> globs do not
-match. And the distinctive words are deliberately never written in
-prose, because naming one re-contaminates the pool — a rule the author
-reports breaking twice while fixing it, "once in a comment in
-<code>recall/wizard/queryset.py</code>, caught only because the measured
-survivor count moved the wrong way, and once in THIS paragraph, caught
-in seconds by the guard below."</p>
-<p>Every one of the atlas's seven capabilities is present, and the
-reason is visible in the code rather than in the README: each was built
-as an argument about what a neighbouring design would have got
-wrong.</p>
+<p>It was measured, not assumed. Against a repository-rooted corpus no
+subject survived; a third-party corpus of the same size kept eleven, "so
+the failure was recall dogfooding itself, not the pool being too small"
+(<code>recall/eval/synthetic.py:75-100</code>). The pool moved to JSON,
+which the wizard's <code>**/*.py</code> and <code>**/*.md</code> globs
+do not match. The distinctive words are never written in prose, because
+naming one re-contaminates the pool, and the author records breaking
+that rule twice while fixing it.</p>
+<p><strong>A rejected claim is keyed on the claim, not on a
+row.</strong> An agent holding the MCP server can report that one memo
+replaces another; the report is queued, and a person accepts or rejects
+it in a local dashboard or at the CLI. A rejection goes into a ledger
+keyed on a hash of the relation and both memo names, and the agent's
+report tool, the dashboard queue and the rewriter all consult it. The
+same claim cannot be raised again by the agent or by the opt-in model
+arbiter (<code>recall/stale_reports.py:224-232</code>,
+<code>recall/rewrite.py:775-776</code>).</p>
+<p><strong>The preregistration habit is visible in what remains
+public.</strong> <code>docs/preregistrations/</code> holds 69 dated
+documents, 15 August to 26 September 2026, each stating what was about
+to be measured. Commit <a
+href="https://github.com/GiulioDER/RE-call/commit/6161946cbc77d7100655f2955354da834af95b78"><code class="commit-id" title="6161946cbc77d7100655f2955354da834af95b78">6161946c…</code></a>
+on 26 September 2026 moved 792 files of run traces and experiment
+records, every amendment and <code>-result.md</code> among them, to the
+maintainer's private archive. They remain reachable in history, which is
+where the pairing of a hypothesis with its separately dated outcome can
+be read.</p>
+<p>All seven capabilities are present. The two places to weigh against
+them are the hooks and a development mode that serves results the gate
+never judged, stamped <code>unverified</code> so they cannot pass as
+judged ones.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>hit</strong> carries a verdict, and only <code>ok</code>
-becomes evidence.</p>
-<p>A <strong>verdict</strong> is a member of a closed set, each one
-defined against the one it is most likely to be confused with.</p>
-<p>A <strong>tombstone</strong> is permanent, keyed on the source URI,
-and re-checked mid-build.</p>
-<p>A <strong>tenant</strong> is a Postgres row-level-security policy,
-not a <code>WHERE</code> clause.</p>
-<p>A <strong>preregistration</strong> is what you wrote down before you
-measured.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — retrieval is judged against two independent time axes and a calibrated threshold, only ok hits become evidence, strict mode refuses rather than degrading, and erasure writes a permanent tombstone the builder re-checks inside the ingest</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: retrieval is judged against two independent time axes and a calibrated threshold, only ok hits become evidence, strict mode refuses rather than degrading, and erasure writes a permanent tombstone the builder re-checks inside the ingest
+<p>A <strong>memory</strong> is a markdown memo the user or an agent
+wrote, chunked into a generation. Its author can declare
+<code>valid_from</code>, <code>valid_until</code> and
+<code>supersedes:</code> in frontmatter, and those declarations are what
+the gate reads.</p>
+<p>A <strong>hit</strong> carries a <strong>verdict</strong>, a member
+of a closed set, each value defined against the one it would be confused
+with. Only <code>ok</code> becomes evidence; the rest are returned and
+readable.</p>
+<p>A memory <strong>stops being guidance</strong> in five ways:</p>
+<ul>
+<li><strong>Superseded.</strong> A newer memo declares
+<code>supersedes:</code> naming it. The edge is dated by when the
+superseding memo was written, so a replay of an earlier instant sees the
+memory as current.</li>
+<li><strong>Expired or not yet valid.</strong> Its declared validity
+window does not contain the evaluation instant.</li>
+<li><strong>Not yet known.</strong> Under <code>known_as_of</code>, its
+first write is after that instant.</li>
+<li><strong>Withheld by the gate.</strong> Below the calibrated
+threshold it is <code>low_confidence</code>; under a strict policy a
+gate that cannot run raises <code>TrustRefusal</code> instead of
+answering.</li>
+<li><strong>Erased.</strong> <code>forget(source_uri)</code> deletes its
+chunks from every generation and writes a permanent per-source
+tombstone.</li>
+</ul>
+<p>A <strong>claim</strong> — "B supersedes A" — has an identity
+independent of any proposal: <code>claim_key</code> over the relation
+and both memo stems. A claim reaches the corpus only when a person
+accepts it, and a claim a person rejects is refused at every later write
+of it.</p>
+<p>A <strong>tenant</strong> is a predicate on every statement with a
+forced Postgres row-level-security policy behind it.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a hit is judged on two time axes and only ok becomes evidence, an agent report waits for a person, a rejection is keyed on the claim and refused at every later write, and the two injection hooks bypass the gate</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a hit is judged on two time axes and only ok becomes evidence, an agent report waits for a person, a rejection is keyed on the claim and refused at every later write, and the two injection hooks bypass the gate
 flowchart TB
-    Q[&quot;a query&quot;] --&gt; LEGS[&quot;dense · sparse · graph legs, fused and reranked&quot;]
-    RLS[(&quot;recall_chunks_v1 —&lt;br/&gt;FORCE ROW LEVEL SECURITY&lt;br/&gt;tenant_id = current_setting(GUC)&quot;)] --&gt; LEGS
-    LEGS --&gt; EV[&quot;trust.evaluate — pure: no DB access, no clock reads&quot;]
-    VT[&quot;now = VALID time:&lt;br/&gt;drives expired, not_yet_valid&lt;br/&gt;from declared valid_from/valid_until&quot;] --&gt; EV
-    TT[&quot;known_as_of = TRANSACTION time:&lt;br/&gt;drives not_yet_known from&lt;br/&gt;first_indexed_at, not indexed_at&quot;] --&gt; EV
-    TT -.-&gt;|&quot;using the LAST write &#39;claimed a memo edited today&lt;br/&gt;had never existed before the edit, so every replay&lt;br/&gt;of an earlier instant reported an empty store&#39;&quot;| FIXED[&quot;a bug found, fixed, written down&quot;]
-    SUPE[&quot;supersession edges are rewound too:&lt;br/&gt;an edge dates from when its&lt;br/&gt;superseding document was written&quot;] --&gt; EV
-    EV --&gt; V{&quot;one of eleven verdicts&quot;}
-    V --&gt;|&quot;ok&quot;| USE[&quot;evidence: trusted = [h for h in hits if h.verdict == &#39;ok&#39;]&quot;]
-    V --&gt;|&quot;superseded · expired · not_yet_valid ·&lt;br/&gt;not_yet_known · low_confidence ·&lt;br/&gt;invalid_metadata · not_entailed ·&lt;br/&gt;dependency_invalidated&quot;| SEEN[&quot;returned and readable —&lt;br/&gt;never the answer&quot;]
-    V --&gt;|&quot;ambiguous_supersession&quot;| CLOSED[&quot;fails closed rather than&lt;br/&gt;guessing a successor&quot;]
-    V --&gt;|&quot;unverified&quot;| DEG[&quot;the DEGRADED-mode verdict:&lt;br/&gt;&#39;not a weaker ok — the trust gate never ran&#39;&quot;]
-    GATE{&quot;strict policy?&quot;} --&gt; EV
-    GATE --&gt;|&quot;strict&quot;| REFUSE[&quot;raise TrustRefusal —&lt;br/&gt;including a deliberate&lt;br/&gt;BROAD-CATCH: fail-closed&quot;]
-    GATE --&gt;|&quot;degraded&quot;| DEG
+    MEMO[&quot;a markdown memo — frontmatter may declare&lt;br/&gt;valid_from · valid_until · supersedes&quot;] --&gt; BUILD[&quot;generation build&lt;br/&gt;re-checks _is_tombstoned three times&lt;br/&gt;inside the ingest&quot;]
     FORGET[&quot;forget(source_uri)&quot;] --&gt; TS[(&quot;recall_source_tombstones&lt;br/&gt;PK (tenant_id, source_uri)&lt;br/&gt;FK → the source_forgotten audit event&quot;)]
-    TS --&gt; BUILD[&quot;every future build calls _is_tombstoned&quot;]
-    BUILD -.-&gt;|&quot;re-checked INSIDE the ingest, because an erasure&lt;br/&gt;arriving mid-build would otherwise land after&lt;br/&gt;the check that would have caught it&quot;| PERM[&quot;permanent: the URI is barred from every future build&quot;]
-    AUD[(&quot;recall_audit_events — appended on the&lt;br/&gt;build&#39;s OWN connection: generation_created,&lt;br/&gt;built, failed, abandoned, validated,&lt;br/&gt;rolled_back, gc, source_forgotten&quot;)] --- BUILD
-    PROP[&quot;a model-extracted proposal&quot;] --&gt; REV{&quot;review_proposal: _require_review_fields&quot;}
-    REV -.-&gt;|&quot;raises without reviewer identity,&lt;br/&gt;timestamp AND a non-blank audit note&quot;| REFUSED[&quot;no promotion&quot;]
-    REV --&gt; PF[&quot;PromotedFact — the only type&lt;br/&gt;downstream writers accept&quot;]</code></pre></details></figure>
+    TS -.-&gt;|&quot;consulted by every later build&quot;| BUILD
+    BUILD --&gt; CH[(&quot;recall_chunks_v1 — FORCE ROW LEVEL SECURITY&lt;br/&gt;plus WHERE tenant_id = %s on every statement&quot;)]
+    BUILD --&gt; AUD[(&quot;recall_audit_events — INSERT only,&lt;br/&gt;on the build&#39;s own connection&quot;)]
+    CH --&gt; LEGS[&quot;dense · sparse · graph legs, fused and reranked&quot;]
+    LEGS --&gt; EV[&quot;trust_gate.evaluate — pure: no DB access, no clock reads&quot;]
+    VT[&quot;now = VALID time from the author&#39;s&lt;br/&gt;valid_from / valid_until&quot;] --&gt; EV
+    TT[&quot;known_as_of = TRANSACTION time&lt;br/&gt;from first_indexed_at&quot;] --&gt; EV
+    EV --&gt; V{&quot;its verdict, from a closed set of ten&quot;}
+    V --&gt;|&quot;ok&quot;| USE[&quot;evidence: only ok hits&quot;]
+    V --&gt;|&quot;superseded · expired · not_yet_valid ·&lt;br/&gt;not_yet_known · low_confidence ·&lt;br/&gt;invalid_metadata · ambiguous_supersession ·&lt;br/&gt;dependency_invalidated · unverified&quot;| SEEN[&quot;returned and readable, never evidence&quot;]
+    EV --&gt;|&quot;strict policy and the gate cannot run&quot;| REFUSE[&quot;raise TrustRefusal&quot;]
+    CH -.-&gt;|&quot;raw SQL, no verdict&quot;| WT[&quot;write-time hook injects chunk text&quot;]
+    MEMO -.-&gt;|&quot;BM25 over memo files, no verdict&quot;| PT[&quot;prompt-time hook injects three summaries&quot;]
+    AGENT[&quot;agent: recall_report_stale&lt;br/&gt;both quotes must be verbatim&quot;] --&gt; RL
+    ARB[&quot;opt-in model arbiter&quot;] --&gt; RL
+    RL{&quot;claim_key in the rejection ledger?&quot;}
+    RL --&gt;|&quot;yes&quot;| NO[&quot;refused before it is queued or written&quot;]
+    RL --&gt;|&quot;no&quot;| Q[(&quot;pending queue — SQLite sidecar,&lt;br/&gt;or a stale_report audit row&quot;)]
+    Q --&gt; P{&quot;a person, in recall dashboard&lt;br/&gt;or recall rewrite apply&quot;}
+    P --&gt;|&quot;reject: reviewer + reason&quot;| LEDGER[(&quot;RejectionLedger&lt;br/&gt;PK claim_key&quot;)]
+    LEDGER -.-&gt; RL
+    P --&gt;|&quot;accept: review_proposal → PromotedFact&quot;| WRITE[&quot;apply_rewrite writes supersedes: into the newer memo&quot;]
+    WRITE --&gt; MEMO</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -252,28 +293,51 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>recall/trust.py</code></td>
-<td>The gate: two time axes, the verdicts, and where it refuses</td>
+<td><code>recall/trust_gate.py</code></td>
+<td>The gate: two time axes, the verdicts, supersession rewinding</td>
+</tr>
+<tr>
+<td><code>recall/trust.py</code>,
+<code>recall/trust_verdicts.py</code></td>
+<td>Calibration loading, strict refusal, the single definition of
+<code>ok</code></td>
 </tr>
 <tr>
 <td><code>recall/types.py</code></td>
 <td>The verdict vocabulary, each value argued against its neighbour</td>
 </tr>
 <tr>
-<td><code>recall/generations.py</code></td>
-<td>Builds, the audit events, and the tombstone re-checks</td>
+<td><code>recall/generations.py</code>,
+<code>recall/generation_store.py</code></td>
+<td>Builds, the audit events, <code>forget()</code> and the tombstone
+re-checks</td>
 </tr>
 <tr>
-<td><code>recall/migrations/sql/0008_generation_foundation.sql</code></td>
-<td>Forced RLS, the audit table, the tombstone table</td>
+<td><code>recall/migrations/sql/</code></td>
+<td>Forced RLS, the audit table, the tombstone table, the fact
+ledger</td>
+</tr>
+<tr>
+<td><code>recall/rewrite.py</code></td>
+<td>Claim keys, the rejection ledger, the rewriter that declares
+<code>supersedes:</code></td>
+</tr>
+<tr>
+<td><code>recall/stale_reports.py</code>,
+<code>recall_mcp/stale_reports_api.py</code></td>
+<td>The agent-report queue, local and server-side</td>
+</tr>
+<tr>
+<td><code>recall/dashboard/</code></td>
+<td>The local review page and its token-guarded server</td>
 </tr>
 <tr>
 <td><code>recall/promotion.py</code></td>
 <td>The review gate a proposal cannot go around</td>
 </tr>
 <tr>
-<td><code>recall/decision_ledger.py</code></td>
-<td>A witness of retrieval decisions, deliberately not an enforcer</td>
+<td><code>recall_hooks/</code></td>
+<td>Claude Code hooks, including the two that inject memory text</td>
 </tr>
 <tr>
 <td><code>recall/eval/</code>, <code>docs/preregistrations/</code></td>
@@ -281,107 +345,211 @@ flowchart TB
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>A PostgreSQL with pgvector is required for anything beyond the hooks;
+<code>recall setup</code> and <code>recall quickstart</code> provision
+it, and Docker compose files ship. The corpus is the user's markdown, so
+it is readable and repairable by hand, and the rejection ledger and
+stale-report queue are SQLite files in a <code>.recall/</code> directory
+beside it. The MCP server runs over stdio by default and over
+authenticated HTTP for several tenants, where it refuses to start under
+a role that bypasses row-level security
+(<code>recall_mcp/server.py:682-700</code>). An embedder is required to
+index; a hashing embedder exists for tests.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>recall/trust.py:520-544</code> — the two axes, how they
-compose, and the <code>first_indexed_at</code> bug that made every
-point-in-time replay return an empty store.</p>
-<p><code>recall/types.py:55-81</code> — eleven verdicts, and the
-argument for why <code>unverified</code> is not
-<code>low_confidence</code>.</p>
-<p><code>recall/generations.py:566-570</code> with <code>:810</code>,
-<code>:976</code>, <code>:1005</code> — one tombstone check, called
-three times, for a reason stated in
-<code>generation_store.py:52-58</code>.</p>
-<p><code>recall/migrations/sql/0008_generation_foundation.sql:128-133</code>
-— <code>FORCE ROW LEVEL SECURITY</code> on the chunk table itself.</p>
-<p><code>recall/promotion.py:200-210</code> — a gate that refuses three
-ways.</p>
-<p><code>recall/eval/synthetic.py:75-100</code> — the negative pool that
-was contaminating itself, measured.</p>
+<p><strong>Judging a hit.</strong> <code>trust_gate._verdict</code>
+(<code>recall/trust_gate.py:137-204</code>) reads the declared window
+through <code>validity_bounds</code>
+(<code>recall/frontmatter.py:737-748</code>), checks
+<code>first_indexed_at</code> against <code>known_as_of</code> before
+supersession, resolves the successor through
+<code>resolve_successor</code>, and falls through to the threshold.
+<code>evaluate</code> (<code>:210-250</code>) states the two axes in its
+docstring.</p>
+<p><strong>Building evidence.</strong>
+<code>recall/evidence.py:390</code> keeps only <code>ok</code> hits, and
+<code>recall/trust.py:353-360</code> turns any dependency failure into
+<code>TrustRefusal(DEPENDENCY_UNAVAILABLE)</code> under a
+<code># BROAD-CATCH: fail-closed</code>.</p>
+<p><strong>Reporting and deciding a supersession.</strong>
+<code>recall_report_stale</code>
+(<code>recall_mcp/server.py:2185-2229</code>) calls the stale-report
+queue, which checks both quotes verbatim, confines both paths to the
+corpus root, and consults the rejection ledger at
+<code>recall/stale_reports.py:224-232</code>. The dashboard's queue
+merges agent reports, cached arbiter proposals and server-side
+<code>stale_report</code> rows by claim key and drops rejected and
+already-declared ones (<code>recall/dashboard/review.py:381-385</code>).
+Accepting runs the promotion chain and <code>apply_rewrite</code>
+(<code>:401-450</code>); rejecting writes the ledger
+(<code>:447</code>).</p>
+<p><strong>Refusing a rejected claim.</strong>
+<code>RejectionLedger</code> (<code>recall/rewrite.py:245-330</code>) is
+keyed on <code>claim_key</code> (<code>:219-232</code>);
+<code>apply_rewrite</code> checks it before reading the memo
+(<code>:775-776</code>), and <code>recall rewrite plan</code> marks
+rejected proposals
+(<code>recall/cli_commands/extract_rewrite.py:372</code>).</p>
+<p><strong>Erasing a source.</strong> <code>forget</code>
+(<code>recall/generations.py:1822-1961</code>) deletes the chunks and
+writes the <code>source_forgotten</code> event (<code>:1852-1856</code>)
+and the tombstone (<code>:1865</code>) in one transaction. Every build
+calls <code>_is_tombstoned</code> (<code>:599-604</code>) at
+<code>:1230</code>, <code>:1288</code> and <code>:1326</code>, for the
+reason given at <code>recall/generation_store.py:82-88</code>.</p>
+<p><strong>Injecting at prompt time.</strong>
+<code>user_prompt_submit</code> ranks <code>load_memos</code> with BM25
+and renders three summaries
+(<code>recall_hooks/prompt_time.py:246-327</code>,
+<code>:378-407</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Source documents are chunked into <code>recall_chunks_v1</code> with
-declared validity, lineage and supersession attached, all under a tenant
-policy. Beside them, <code>AtomicFact</code> is a structured claim —
-namespace, subject, predicate, object, context, <code>valid_from</code>,
-<code>valid_until</code> — validated on construction and promoted into
-an append-only fact ledger with a current-state projection. Generations
-version the corpus: a build produces a new generation, promotion makes
-it active, and a garbage collector removes superseded ones.</p>
+<p>Source documents are chunked into <code>recall_chunks_v1</code>, or
+the legacy table a store is configured with, with declared validity,
+lineage and supersession in metadata, all under a tenant policy.
+<code>AtomicFact</code> is a structured claim — namespace, subject,
+predicate, object, context, <code>valid_from</code>,
+<code>valid_until</code> — appended as events to
+<code>recall_fact_ledger_events</code> and projected to current state at
+an instant (<code>recall/fact_ledger.py:587-602</code>). Generations
+version the corpus: a build produces one, promotion makes it active,
+rollback returns to an earlier one, and a garbage collector removes
+retired ones.</p>
+<p>The rejection ledger's row is
+<code>(claim_key, reviewer_id, reason, rejected_at)</code>. The
+stale-report queue's row carries the claim key, both memo names, both
+quotes, the reporting client, a count, and a status of
+<code>pending</code>, <code>accepted</code> or <code>rejected</code>.
+The server-side <code>stale_report</code> audit row carries quote
+fingerprints rather than text, because "the audit ledger is outside the
+reach of <code>forget</code>".</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p>Dense, sparse and graph legs are fused and reranked, then every
-surviving hit is judged by <code>trust.evaluate</code> — a pure function
-with no database access and no clock reads, which is what makes the two
-time axes testable without a database. Calibration supplies the
-threshold, and carries its own certification status, so the system can
-tell a threshold it fitted from one it never had.</p>
+surviving hit is judged by <code>evaluate</code>. Calibration supplies
+the threshold and carries its own certification status, so the system
+can tell a threshold it fitted from one it never had; without a
+certified one, development mode stamps every hit
+<code>unverified</code>.</p>
+<p>The hooks are a separate read path. The write-time hook runs one raw
+SQL query against the active generation with an explicit tenant
+predicate and injects chunk text with its <code>ts_rank</code>
+(<code>recall_hooks/write_time.py:205-229</code>). The prompt-time hook
+reads the memo files from the Claude Code project memory directory and
+injects up to three summaries, each stamped with the dates the memo
+states about itself. It does so under the instruction "If one of these
+already settles the question, say so and follow it"
+(<code>recall_hooks/prompt_time.py:399</code>). Neither hook reads a
+verdict or a <code>supersedes:</code> declaration, and both are on by
+default.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>A build reads a manifest, skips tombstoned URIs, writes chunks, and
 appends its lifecycle events on the same connection. The corpus
 fingerprint is computed from the manifest minus the tombstoned set, so a
-build whose only change is an erasure is still a distinct generation
-rather than a no-op. Extracted proposals take the other path, through
-review.</p>
+build whose only change is an erasure is a distinct generation.
+<code>recall_apply_fact</code> writes a structured fact directly, behind
+a deterministic controller that accepts only evidence-card ids from
+<code>recall_evidence</code> and refuses an unsupported claim or a
+contradiction without supersession. Supersession edges take the review
+path.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
 <p>A CLI, an MCP server registered as
-<code>io.github.GiulioDER/re-call</code>, a Codex plugin, Claude Code
-hooks, desktop packaging and Docker compose files. Several
-preregistrations measure the integration itself — hook ordering,
-in-process against MCP transport, tool-definition context cost, and
-Claude Code with and without RE-call, calibrated and not.</p>
+<code>io.github.GiulioDER/re-call</code> with twenty-four tools and a
+<code>RECALL_MCP_TOOLS</code> subset switch, a Codex plugin, Claude Code
+hooks at five events, a local dashboard, desktop packaging and Docker
+compose files. <code>recall_report_use</code> lets the agent record
+whether memory helped, made no difference or misled a task, as an audit
+row that changes nothing in search. Several preregistrations measure the
+integration itself — hook ordering, in-process against MCP transport,
+and tool-definition context cost.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>The review gate is kept off the model's own surface, and the
 project says why.</strong> The MCP server registers
-<code>recall_rewrite_plan</code> and no apply twin, and the docstring is
-the clearest statement of this rule anywhere in the corpus: <em>"There
-is deliberately no <code>recall_rewrite_apply</code>. The MCP client is
-the model, so letting it supply a reviewer id and an audit note would
-make the named human gate a formality it satisfies by typing a string:
-the gate becomes a field, not a person. This surface proposes; a human
-applies at <code>recall rewrite apply</code>."</em> The plan tool hands
-back the exact CLI line a person would run
-(<code>recall_mcp/reasoning_admin.py:14-20</code>), so the handoff is
-spelled out rather than implied. The one fact-writing tool states the
-same rule as a property of its inputs: on
-<code>recall_apply_fact</code>, trust verdicts, timestamps, approval
-fields and writer identity are <em>"server-owned and cannot be supplied
-here"</em>. That is what <code>human_review</code> is for, and this is
-the version to copy.</p>
-<p>Fail-closed is the default posture and is written as such, including
-a broad exception catch annotated with its intent. The gaps are the
-configured ones: a development mode that serves <code>unverified</code>
-results, a <code>generation_promoted_unsafe_development</code> path that
-exists, and a decision ledger that is off unless enabled and best-effort
-when it is. The mutation audit is the part that is not optional — it
-commits with the build.</p>
+<code>recall_rewrite_plan</code> and no apply twin, and the docstring
+states the rule: <em>"There is deliberately no
+<code>recall_rewrite_apply</code>. The MCP client is the model, so
+letting it supply a reviewer id and an audit note would make the named
+human gate a formality it satisfies by typing a string: the gate becomes
+a field, not a person."</em></p>
+<p>The agent's verb is a report, and its docstring says what the report
+cannot do: "nothing in memory changes until they accept it". The
+dashboard that accepts it binds 127.0.0.1, refuses a foreign
+<code>Host</code> header, and requires a per-launch token and a CSRF
+field (<code>recall/dashboard/server.py:8-12</code>,
+<code>:496-514</code>, <code>:579</code>). The reviewer is a name typed
+into that form or passed to <code>--reviewer</code>, not an
+authenticated principal.</p>
+<p><code>recall_apply_fact</code> is a different kind of write. Its
+inputs exclude trust verdicts, timestamps, approval fields and writer
+identity, which are "server-owned and cannot be supplied here", and the
+fact is applied when the deterministic controller accepts the cited
+evidence; no person is involved.</p>
+<p><strong>The trust gate governs evidence, not injection.</strong>
+Strict mode refuses; the evidence builder admits only <code>ok</code>.
+The hooks put memo text into the prompt without consulting either, so a
+memo the gate would mark <code>superseded</code> can reach the model
+through the prompt-time hook with an instruction to follow it.</p>
+<p><strong>Tenant isolation is two guards.</strong> The project's own
+account in <code>recall/pool.py:38-52</code> is that RLS backstops a
+forgotten predicate and the predicate backstops a GUC that was never
+set, and that a superuser or <code>BYPASSRLS</code> role ignores the
+policy. <code>check_rls_effective</code> reports which case a connection
+is in, and authenticated multi-tenant serving refuses the bypass.</p>
+<p>The configured gaps are a development mode that serves
+<code>unverified</code> results, a
+<code>generation_promoted_unsafe_development</code> path, and a decision
+ledger that is off unless enabled and best-effort when it is. The
+mutation audit is not optional; it commits with the build.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>494 test files, evaluation suites over LoCoMo, LongMemEval, BEIR and
-synthetic corpora, a labelled gap study, and abstention scored as its
-own axis. The preregistration directory is the artifact that
-distinguishes it: hypotheses, amendments and results filed separately
-and dated, including negative results and a holdout-validation
-document.</p>
+<p>7,303 test functions in 624 files, 109 of them gated on a live
+Postgres; none were run for this reading. The tenancy test is the
+committed must-not-retrieve case
+(<code>tests/test_tenancy_retrieval.py:70-87</code>), the trusted-search
+tests pin supersession and expiry end to end
+(<code>tests/test_trusted_search.py:24-47</code>), and the generation
+suite covers erasure during a build and tombstones surviving rollback
+and garbage collection. Evaluation suites cover LoCoMo, LongMemEval,
+BEIR and synthetic corpora, with abstention scored as its own axis and a
+near-miss set scored as a false-confidence rate.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Write down what you are about to measure, in a dated file, before you
-measure it. Everything else here follows from that habit.</p>
+<h3 id="steal">Steal</h3>
+<p>Key a rejection on the claim, and consult it at every writer. A claim
+key over the relation and normalised names makes the agent's report, the
+model's proposal and the human's rewrite refuse the same thing.</p>
+<p>Give the agent a report verb instead of an apply verb, and require
+verbatim quotes so the reviewer decides on text in front of them.</p>
 <p>Check whether your evaluation data is inside your corpus. If your
 system indexes code and your negative examples are Python literals, they
 are corpus, and the failure is silent.</p>
 <p>Re-check your tombstones inside the ingest, not only at the start of
 it.</p>
 <p>Define each status against the one it will be confused with, and say
-so in the type. <code>unverified</code> and <code>low_confidence</code>
-look interchangeable until somebody has to explain a result.</p>
+so in the type.</p>
+<h3 id="avoid">Avoid</h3>
+<p>An injection hook that bypasses the gate the search path enforces. A
+hook is the read path the model sees most often, and a verdict that only
+the search tool honours leaves the stale memo one prompt away.</p>
+<p>A reviewer field that is a typed string, where the deployment can
+bind it to a login.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a team or a person who keeps decisions and research notes
+as markdown, runs a PostgreSQL, and wants a memory that refuses rather
+than guesses and records why. Walk away if no database can be stood up,
+or if the hooks' injection must honour supersession.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
+<p>Whether the hooks should read verdicts. The write-time hook has the
+database in hand and the prompt-time hook has the frontmatter; either
+could drop a superseded memo.</p>
 <p>Whether the degraded path should be reachable in a packaged install
-at all. Both escape hatches are honestly named and audited, which is the
-right second-best; the first-best would be that a deployment cannot
-serve an unjudged result.</p>
+at all. Both escape hatches are named and audited; the first-best would
+be that a deployment cannot serve an unjudged result.</p>
 <p>Whether <code>reviewer_id</code> should be bound to an authenticated
-identity. The gate is structural and the field is a string, so the
-mechanism is stronger than the attribution it records.</p>
+identity, given that the dashboard holds a per-launch token.</p>
+<p>Whether a claim key should survive a memo rename. Both the rejection
+ledger and the source tombstone are keyed on names, so renaming a file
+reopens a rejected claim and re-admits an erased source under its new
+path.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -392,34 +560,116 @@ mechanism is stronger than the attribution it records.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>recall/types.py:55-81</code></td>
+<td><code>recall/types.py:53-79</code></td>
 <td>A status vocabulary where each value argues against its
 neighbour</td>
 </tr>
 <tr>
-<td><code>recall/trust.py:520-544</code></td>
+<td><code>recall/trust_gate.py:137-250</code></td>
 <td>Two time axes that compose, and the replay bug that shaped them</td>
+</tr>
+<tr>
+<td><code>recall/rewrite.py:219-330</code></td>
+<td>A rejection keyed on the claim, with its error contract</td>
+</tr>
+<tr>
+<td><code>recall/stale_reports.py:1-30</code></td>
+<td>An agent report that changes nothing until a person accepts it</td>
+</tr>
+<tr>
+<td><code>recall/dashboard/review.py:1-32</code></td>
+<td>One queue over three sources, closed the same way</td>
 </tr>
 <tr>
 <td><code>recall/eval/synthetic.py:75-100</code></td>
 <td>Your own repository contaminating your own negative set</td>
 </tr>
 <tr>
-<td><code>recall/generations.py:566-570</code></td>
-<td>A tombstone check placed where the race actually is</td>
+<td><code>recall/generations.py:599-604</code>, <code>:1230</code></td>
+<td>A tombstone check placed where the race is</td>
 </tr>
 <tr>
-<td><code>recall/promotion.py:200-210</code></td>
-<td>A review gate that refuses without a reviewer, a time and a
-note</td>
+<td><code>recall/pool.py:38-52</code></td>
+<td>What RLS protects against and what it does not</td>
 </tr>
 <tr>
-<td><code>docs/preregistrations/</code></td>
-<td>162 dated statements of what was going to be measured</td>
+<td><code>recall_hooks/prompt_time.py:378-407</code></td>
+<td>An injection with dates and no verdict</td>
+</tr>
+<tr>
+<td><code>tests/test_tenancy_retrieval.py:70-87</code></td>
+<td>A must-not-retrieve case and its control in one assertion</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>, and at the previous pin
+<code class="commit-id" title="1157360f1e0704a06548d93a4f4797c415c722f9">1157360f…</code> where noted.</p>
+<ul>
+<li><code>git grep -nE 'recall_source_tombstones|_is_tombstoned|tombstoned_sources' -- ':!tests' ':!docs'</code>
+— the migration, <code>recall/schema.py:41</code> and
+<code>recall/generations.py</code> only, at both pins; no reader outside
+the generation path.</li>
+<li><code>git grep -nE 'class RejectionLedger|_rejected_claims|rejected_claims|is_rejected' -- recall recall_mcp</code>
+— <code>recall/rewrite.py</code>,
+<code>recall/cli_commands/extract_rewrite.py</code>,
+<code>recall/stale_reports.py</code>,
+<code>recall/dashboard/review.py</code> and
+<code>recall/dashboard/activity.py</code>; at the previous pin
+<code>recall/rewrite.py</code>, <code>recall/cli.py</code> and
+<code>recall/cli_commands/extract_rewrite.py</code>.</li>
+<li><code>git grep -nE 'rejected_claims' -- 'recall*' | grep -iE 'delete|update'</code>
+— no match; nothing removes a rejection.</li>
+<li><code>git grep -nE '^\s+name="recall_' -- recall_mcp/server.py</code>
+— twenty-four tools; no <code>apply</code>, <code>approve</code>,
+<code>accept</code> or <code>reject</code> verb.
+<code>recall_calibration_publish</code> carries the admin scope and
+<code>recall_forget</code> erases; neither resolves a review.</li>
+<li><code>git grep -niE '(UPDATE|DELETE FROM|TRUNCATE)\s+recall_audit_events' -- 'recall*' ':!tests'</code>
+— no match at either pin; the only DELETE is the operator example in
+<code>docs/DECISION_LEDGER.md:135</code>.</li>
+<li><code>git grep -nE 'recall_audit_events' -- 'recall*' ':!tests' ':!*.sql'</code>
+— INSERTs in <code>recall/generations.py</code>,
+<code>recall/store.py</code> and <code>recall/calibration_v2.py</code>,
+and SELECTs in <code>recall/dashboard/db.py</code>.</li>
+<li><code>git grep -niE 'supersed|verdict' -- recall_hooks/prompt_time.py recall_hooks/write_time.py</code>
+— no match at either pin.</li>
+<li><code>git grep -nE 'set_config|current_setting' -- recall_hooks</code>
+— no match; the write-time hook sets no GUC.</li>
+<li><code>git grep -nE 'known_as_of' -- recall_mcp 'recall/*.py'</code>
+— <code>recall_mcp/graph_expansion.py</code>,
+<code>recall_mcp/retrieval.py</code>, <code>recall/store.py</code>,
+<code>recall/reasoning.py</code>, <code>recall/types.py</code> and the
+trust gate; <code>recall_search</code> exposes no time argument.</li>
+<li><code>git grep -nE 'review_proposal|promote_accepted_proposal' -- recall</code>
+— <code>recall/cli_commands/extract_rewrite.py:447-450</code> and
+<code>recall/dashboard/review.py:405-406</code> besides the
+definitions.</li>
+<li><code>git grep -nE '"license"' -- '*.json'</code> —
+<code>.claude-plugin/marketplace.json:21</code> declares
+<code>Apache-2.0</code>; both plugin manifests declare
+<code>AGPL-3.0-only</code>.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE LICENSE_GRANT_AGPL.md COMMERCIAL_LICENSE.md NOTICE</code>
+— no match; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/GiulioDER/RE-call/commit/ab4d37de84681a630c46589d4986aeb843bb2e35"><code class="commit-id" title="ab4d37de84681a630c46589d4986aeb843bb2e35">ab4d37de…</code></a>
+— 232 commits on. Screened first; nothing installed or run. The licence
+moved to AGPL-3.0-only on 5 October 2026, with a grant extending it to
+the PolyForm-era commits. <code>not_entailed</code> left the vocabulary
+with the entailment judge, leaving ten verdicts, and the gate moved to
+<code>recall/trust_gate.py</code>. An agent report verb, a local review
+dashboard and an opt-in model arbiter arrived, all closed through the
+claim-keyed rejection ledger, on which <code>tombstone</code> is
+re-grounded (<a href="#4-essential-implementation-paths">section 4</a>).
+<code>negative_eval</code> is re-grounded on the tenancy test, since the
+distractor set is scored as a rate. The public preregistrations went
+from 188 to 69, with amendments and results moved to a private archive.
+Four claims were wrong at the previous pin and are listed in the <a
+href="../../appendix/#known-limitations">known limitations</a>. All
+seven marks held at both pins.</p>
 <p><strong>2026-09-19</strong> — re-pinned to <a
 href="https://github.com/GiulioDER/RE-call/commit/1157360f1e0704a06548d93a4f4797c415c722f9"><code class="commit-id" title="1157360f1e0704a06548d93a4f4797c415c722f9">1157360f…</code></a>,
 29 commits and 184 files on. <strong>All seven marks re-tested and
@@ -434,10 +684,11 @@ function cannot take an unreviewed proposal because only
 <code>PromotedFact</code>. What the record now cites beside it is the
 absence: the MCP server registers <code>recall_rewrite_plan</code> and
 no apply twin, and its docstring states the rule this atlas's rubric
-arrived at independently — <em>"letting it supply a reviewer id and an
-audit note would make the named human gate a formality it satisfies by
-typing a string: the gate becomes a field, not a person."</em>
-<code>recall_apply_fact</code> repeats it as an input property, with
+arrived at independently. It reads: <em>"letting it supply a reviewer id
+and an audit note would make the named human gate a formality it
+satisfies by typing a string: the gate becomes a field, not a
+person."</em></p>
+<p><code>recall_apply_fact</code> repeats it as an input property, with
 approval fields and writer identity server-owned. Quoted in section 9,
 and re-call is added to the rubric's list of what passing looks like.
 The stated limit is unchanged: on the CLI path <code>reviewer_id</code>
