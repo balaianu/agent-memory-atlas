@@ -5007,7 +5007,7 @@ sessions.</li>
 <li><a
 href="https://github.com/ennisaaaaaaaa-stack/tideline-memory">ennisaaaaaaaa-stack/tideline-memory</a>
 at <a
-href="https://github.com/ennisaaaaaaaa-stack/tideline-memory/commit/76490fe2c422f1213e735e63c289fef5ae8044f6"><code class="commit-id" title="76490fe2c422f1213e735e63c289fef5ae8044f6">76490fe2…</code></a>
+href="https://github.com/ennisaaaaaaaa-stack/tideline-memory/commit/07fbd67808016d3a27d15d4ada671adfc59ff5bc"><code class="commit-id" title="07fbd67808016d3a27d15d4ada671adfc59ff5bc">07fbd678…</code></a>
 — read only, and the screening script reported it could not see an
 execution surface in this tree, so it was read by hand and the report
 says so. PolyForm Noncommercial 1.0.0: commercial use is outside the
@@ -15997,6 +15997,31 @@ new one; the rest of <code>quality.h</code>, <code>cli.h</code>,
 the evidence record's test anchors were unchanged. The same summary also
 kept the count of two marks after <code>human_review</code> was
 withdrawn on 2026-09-19.</li>
+<li><strong>Four published claims about <a
+href="../systems/tideline-memory/">Tideline</a> were wrong at <a
+href="https://github.com/ennisaaaaaaaa-stack/tideline-memory/commit/76490fe2c422f1213e735e63c289fef5ae8044f6"><code class="commit-id" title="76490fe2c422f1213e735e63c289fef5ae8044f6">76490fe2…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the five fixtures contained four assertions, all a path check, and that
+breaking every cooldown rule would leave them exiting zero; they
+recorded 77 named checks through a <code>check()</code> helper and
+exited 1 on any failure
+(<code>tests/fixture_phase13_cooldown.py:236</code>), the four
+<code>assert</code> statements being setup guards. It said narratives
+and snapshots were kept outside the context window and not injected; the
+provider's session-start block injected the latest snapshot and up to
+three recent high-weight narratives
+(<code>plugins/tideline_provider.py:298-320</code>), and per-turn
+prefetch injected more. It described <code>context</code> and
+<code>threads</code> as one live row per key; both were append tables
+with no key constraint (<code>server.py:110</code>, <code>:119</code>).
+And it said there was no append-only record and no status column;
+<code>amendments</code> was an append-only revision layer over
+narratives whose semantic fields were never updated
+(<code>server.py:182-187</code>), and <code>threads</code> carried a
+<code>status</code> column. No mark moved on these; the first rested on
+counting <code>assert</code> rather than reading what the scripts did
+with their results, and the last two on reading the schema's history
+tables without the rest of it.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

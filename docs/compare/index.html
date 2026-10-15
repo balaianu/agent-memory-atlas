@@ -29694,49 +29694,71 @@ run</td>
 <tr>
 <td><a
 href="../systems/tideline-memory/"><code>tideline-memory</code></a></td>
-<td>Two layers: a live row per key in <code>profiles</code>,
-<code>self_concept</code>, <code>context</code> and <code>threads</code>
-that is what gets injected, and <code>narratives</code> and
-<code>snapshots</code> holding the unsummarised past outside the context
-window</td>
-<td>SQLite, with history tables carrying the whole prior value of every
-overwritten profile and self-concept field, each capped at thirty
-versions per key by an AFTER INSERT trigger</td>
-<td>Keyword search with embeddings optional — an unconfigured embedder
-degrades to pure keyword search, and the project states it needs no GPU
-and no cloud</td>
-<td>Live writes overwrite by UPSERT after archiving the whole prior
-value; deep writes append narratives; nightly passes scan for conflicts,
-build an entity graph, refresh recurrence and compute soft clusters</td>
-<td>No supersession and no rejected-value record. An overwrite archives
-its predecessor, and the trigger then deletes everything beyond the
-thirty most recent versions of that key, leaving no marker that older
-ones existed</td>
-<td>None — the design is one agent's own memory, and there is no scope
-key on any read</td>
-<td>An MCP server, a Kimi-code hook and shim, and three plugins;
-<code>docs/who-can-use.txt</code> matches four install depths to intent,
-down to using it as a structured notebook</td>
-<td>Nightly consolidation under prompts named dream_sleep, dream_digest
-and dream_solidify, beside scripts for conflict scanning, entity-graph
-building, recurrence refresh and soft clustering</td>
-<td>None. No status, no confidence, no decay and no validity window;
-what protects a wrong value is that its predecessor was archived and can
-be rolled back within thirty writes</td>
-<td>Every overwrite archives the whole prior value before the UPSERT, so
-a destructive write becomes a rollback point while the injected table
-stays small; the cap is enforced by a database trigger rather than
-application code, so it holds for every writer; the live and deep layers
-are separated so nothing had to be summarised to stay injectable; and
-the project publishes a four-tier guide matching install depth to
-intent, including the smallest configuration worth having</td>
-<td>Five test fixtures run to 931 lines and contain four assertions
-between them, every one the same check that <code>server.py</code>
-exists, so the carefully specified cooldown and trajectory semantics in
-their headers are defended by nothing and there is no CI workflow at
-all; the rollback layer keeps thirty versions per key and drops older
-ones with no marker that they existed; and the PolyForm Noncommercial
-licence puts any commercial use outside the grant</td>
+<td>A structured narrative (gesture, context, moment, cognition
+direction, tags, entities, source links, four 1-5 weight dimensions)
+whose semantic fields are never updated, with an append-only stack of
+amendments; beside it one live row per key for profiles, self-concept
+fields and world-stance pages, plus threads, snapshots and a raw context
+timeline</td>
+<td>One SQLite file with FTS5 trigram indexes on narratives, amendments
+and context; vectors stored as JSON on the narrative row and in an
+amendment-vector side table; history tables keep the thirty most recent
+prior values per profile, self-concept field and world-stance page,
+enforced by AFTER INSERT triggers</td>
+<td>Hybrid search over context, narratives and amendments: FTS5 with a
+LIKE fallback for short queries, cosine above 0.3 on narrative and
+amendment vectors filtered by model namespace, collapsed to the best
+score per narrative; session-start injection of self-concept, the latest
+snapshot, open threads, up to three recent high-weight narratives, raw
+context chunks, topic clusters and profiles; per-turn semantic prefetch
+with a keyword fallback</td>
+<td>memory_write inserts a narrative and recomputes recurrence and
+normalised weights; memory_amend appends a correction with a reason and
+the last attention-log sighting of the target; profile, self-concept and
+world-stance writes archive the prior value and UPSERT; thread edits
+overwrite in place; sync_turn, context_record and sensory_ingest append
+to the context timeline, which a nightly LLM pass solidifies into
+narratives</td>
+<td>No delete tool and no DELETE on narratives, amendments, context or
+snapshots. A narrative changes only by gaining amendments and having its
+derived weights recomputed; overwrites of keyed rows keep thirty prior
+values and a trigger deletes older ones with no marker; thread edits
+keep nothing</td>
+<td>None. The design is one agent's own memory and no read path carries
+a scope key</td>
+<td>An MCP stdio server with twenty-six tools, a Hermes provider plugin
+implementing session-start injection, per-turn prefetch, pre-compression
+rescue and session-end persistence, the same lifecycle as Kimi Code
+hooks, and a four-tier guide matching install depth to intent</td>
+<td>Operator-scheduled DREAM passes under three prompts (solidify,
+digest, sleep), with deterministic scripts for unindexed-context
+scanning, conflict-candidate scanning, entity-graph building, recurrence
+refresh, topic and embedding clustering, and amendment-vector backfill
+under a two-level cooldown</td>
+<td>None on memory. Threads carry an open, explored or abandoned
+lifecycle; conflict candidates sit in a side table with an open,
+resolved, parked or dismissed status that nothing in the tree moves off
+open; a sensory consent tier gates writes under a policy the caller may
+supply</td>
+<td>A narrative is immutable and a correction is a timestamped, reasoned
+layer on top, so the wrong reading stays visible and searchable while
+one function composes the effective text for every consumer; each
+amendment records what the writer last saw of the target, or that it
+never saw it; overwrites of keyed rows archive the whole prior value and
+a trigger bounds the archive for every writer; the fixture suite asserts
+behaviour and exits non-zero, including a boundary check whose comment
+records that its earlier version was vacuous; and a guide names the
+smallest configuration worth installing</td>
+<td>A since or until filter on memory_search reaches only the last of
+five LIKE clauses on the narrative fallback, because the appended AND
+binds tighter than the unparenthesised OR chain; thread edits overwrite
+content with no archive; the archive helper swallows an OperationalError
+and lets the overwrite proceed; the archive drops versions older than
+thirty with no marker; the consent policy is a tool argument, so the
+no-raw-samples default binds only callers that omit it; no runner or CI
+executes the fixtures, and the provider fixture exits 0 with SKIP in a
+fresh clone; and the PolyForm Noncommercial licence puts any commercial
+use outside the grant</td>
 </tr>
 <tr>
 <td><a href="../systems/tidemind/"><code>tidemind</code></a></td>
@@ -33424,7 +33446,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>444 of 734:</em> <a
+<p><em>445 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
 href="../systems/aeris/"><code>aeris</code></a>, <a
@@ -33842,6 +33864,7 @@ href="../systems/the-librarian/"><code>the-librarian</code></a>, <a
 href="../systems/theurian/"><code>theurian</code></a>, <a
 href="../systems/thoughtdag/"><code>thoughtdag</code></a>, <a
 href="../systems/throughline/"><code>throughline</code></a>, <a
+href="../systems/tideline-memory/"><code>tideline-memory</code></a>, <a
 href="../systems/tidemind/"><code>tidemind</code></a>, <a
 href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
 <a href="../systems/token-optimizer/"><code>token-optimizer</code></a>,
@@ -33901,7 +33924,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-444 repositories of
+445 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -25310,39 +25310,39 @@ assertion does not.</li>
 <h3 id="tideline-memory"><a
 href="../systems/tideline-memory/"><code>tideline-memory</code></a></h3>
 <ul>
-<li>Best idea: <strong>archive the whole prior value before every
-overwrite, and cap the history in a trigger.</strong> Profiles and
-self-concept are overwrite-style writes; before each <code>UPSERT</code>
-the previous value is stored in full, and an <code>AFTER INSERT</code>
-trigger keeps the thirty most recent versions per key
-<em>"防无限膨胀"</em> — to prevent unbounded growth. Two extra columns
-turn a destructive write into a rollback point while the injected table
-stays small enough to inject, and putting the bound in the database
-means it holds for every writer.</li>
-<li>Biggest risk: <strong>the behaviour is specified in prose and
-checked by nothing.</strong> Five fixtures run to 931 lines — the
-cooldown one enumerates five precise rules for how a connection failure
-differs from an item failure — and between them they contain four
-<code>assert</code> statements, every one the same check that
-<code>server.py</code> exists on disk. There is no CI workflow in the
-repository. A change breaking all five rules would leave every fixture
-exiting zero.</li>
-<li>Most reusable component: <code>server.py:145-175</code>, the two
-history tables with their indexes and capping triggers — about thirty
-lines, and independent of everything else here.</li>
+<li>Best idea: <strong>a narrative is never edited; a correction is an
+amendment stacked on it.</strong> The schema comment states the rule —
+<em>"条目不可变：narratives 永不 UPDATE 语义字段"</em> — and no
+statement in the tree breaks it. Each amendment carries a reason, a time
+and a <code>view_state</code> recording the target's last retrieval, or
+<code>blindspot</code> when it was never retrieved. One function
+composes base and amendments into the effective text that search, recall
+and the night pass all read, so the wrong reading stays visible and
+searchable.</li>
+<li>Biggest risk: <strong>the keyed state around that core is weaker
+than the core.</strong> A <code>since</code> or <code>until</code>
+filter on <code>memory_search</code> binds only the last of five
+<code>OR</code>ed LIKE clauses on the narrative fallback, so
+out-of-window narratives return. Thread edits overwrite content with no
+archive. Profile and self-concept archives drop everything past thirty
+versions with no marker, and the archive helper lets the overwrite
+proceed when archiving fails.</li>
+<li>Most reusable component: <code>server.py:973-1016</code> and
+<code>:1783-1834</code>, the amend handler and the single function that
+composes a narrative with its amendments — the pattern transfers to any
+store whose memories are sometimes wrong.</li>
 <li>Maturity impression: <strong>PolyForm Noncommercial 1.0.0</strong>,
-which puts any commercial use outside the grant and is the first fact
-for anyone evaluating substrates to build on. Python over SQLite, thirty
-files, bilingual, with a four-tier <code>who-can-use</code> guide
-matching install depth to intent down to <em>"use it as a smart
-notebook"</em>. No marks. The screening script could not see an
-execution surface in this tree and reported it unscreened rather than
-clean; it was read by hand.</li>
-<li>Study when: you want the distinction its README draws for an agent
-reader — <em>"remembering is replaying what happened — carrying state is
-holding what those events left behind, reshaped by everything
-since"</em> — and a worked example of separating what gets injected from
-what merely gets kept.</li>
+which puts any commercial use outside the grant. Python over SQLite,
+nine fixture scripts with 169 named checks that exit 1 on failure, run
+by nothing — no runner and no CI. One mark, <code>negative_eval</code>,
+on the salience read port. The upstream rewrote its whole history to
+replace personal names with pseudonyms. The screening script could not
+see an execution surface in this tree and reported it unscreened rather
+than clean; it was read by hand.</li>
+<li>Study when: you want corrections that do not destroy what they
+correct, or a fixture whose comment records that its earlier boundary
+check was vacuous and whose commit records the mutation that proved the
+fix.</li>
 </ul>
 <h3 id="xiaoo"><a href="../systems/xiaoo/"><code>xiaoo</code></a></h3>
 <ul>
