@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 735 reports.</strong></p>
+<p><strong>This page covers all 736 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30528,6 +30528,45 @@ agents.</li>
 <li>Do not copy when: the memory must be defended against the agent
 writing it, a removed skill must stay removed, or several projects on
 one machine must not see each other's skills.</li>
+</ul>
+<h3 id="obsidian-wiki"><a
+href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></h3>
+<ul>
+<li>Best idea: <strong>generated memory files are reconciled, not
+overwritten, under one lock.</strong> <code>memory sync</code> appends
+the log line, rebuilds only the category sections of
+<code>index.md</code> and the generated sections of <code>hot.md</code>,
+keeps every other heading and the <code>## Key Takeaways</code> slot
+verbatim, and refuses a file without its <code>generated_by</code>
+marker until <code>memory migrate --apply</code> has backed it up.</li>
+<li>Biggest risk: <strong>the MCP mount has no key check.</strong> Every
+<code>/v1/</code> route depends on <code>require_key</code>, but
+<code>app.mount("/mcp", _mcp_app)</code> attaches nothing, and mcp 2.2.0
+adds bearer middleware only when given auth settings the server never
+passes; <code>memory_write</code> and <code>memory_profile</code> are on
+that surface, and no test sends a request to <code>/mcp</code>.</li>
+<li>Most reusable component: <code>obsidian_wiki/temporal.py</code> with
+<code>current_pages</code> in <code>graphrag.py</code> — authored event
+time beside ingestion time, an inclusive <code>valid_until</code>, a
+malformed date counted as current, and a <code>superseded_by</code>
+pointer returned with a historical hit.</li>
+<li>Second risk: <strong>filters live on different read paths.</strong>
+Search honours the validity window and ignores visibility tags and
+lifecycle; the context pack honours <code>public_only</code> and ignores
+the window; the recap's project filter is a substring match that returns
+every thread when none matches.</li>
+<li>Maturity impression: MIT, 15,722 lines of Python and 40 skills, 359
+commits by 39 authors between 6 April and 12 October 2026. Two marks,
+<code>bitemporal</code> and <code>negative_eval</code>, the second on
+exact-list exclusion tests with positive controls. 1,165 pytest
+functions; the server suite skips in CI, and the README's agent study
+has no run logs in the tree.</li>
+<li>Study when: you want a human-readable knowledge vault an agent
+builds and a person fixes by hand, with a concurrency-safe writer for
+the bookkeeping files and an as-of query over authored validity.</li>
+<li>Do not copy when: agent writes must be reviewed before they count, a
+page's status must keep it out of answers, or several principals share
+one server.</li>
 </ul>
         </article>
       </div>

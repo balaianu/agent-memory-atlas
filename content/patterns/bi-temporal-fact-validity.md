@@ -238,6 +238,8 @@ gains a closed copy and an open copy that both claim validity from the start.
 
 [local-memory-mcp](../../systems/local-memory-mcp/) carries the three ClawMem columns on its graph observations and answers a narrower question than it advertises. `memory_entity_open({asOf})` filters on `[valid_from, valid_to)` and the server instructions call that *"What did I know at this date?"*. But the moment `memory_observation_supersede` closed an interval is not recorded, so a retroactive `validTo` changes what an earlier as-of call returned, and `valid_from` has no interactive writer — only `memory_import` sets it, and the boundary tests set it by raw SQL. It passes Helm's diagnostic on the end of the interval and on restore, and the whitepaper lists `expired_at` as roadmap.
 
+[obsidian-wiki](../../systems/obsidian-wiki/) is the pattern on a Markdown vault with one read path short. `valid_from` and `valid_until` are frontmatter a person or agent writes beside the stamped `created` and `updated`, and `graphrag.query` keeps only pages current at `as_of`, returning a historical hit's `superseded_by` so the model can follow it (`obsidian_wiki/graphrag.py:232-241`, `:626-631`). The structural intents see the whole graph on purpose, since deleting a page breaks the historical pages linking to it. The context pack loads pages without the predicate (`obsidian_wiki/context_pack.py:197-207`), so the same superseded claim drops out of search and arrives in a packed prompt. No skill writes either field, while the ingest skill's own supersession move, `lifecycle: archived`, filters nothing.
+
 ## A third clock
 
 Two clocks answer *what was true* and *what did we believe*. The temporal

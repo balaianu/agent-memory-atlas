@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="Markdown skills and a
+dependency-free Python package that let coding agents compile an
+Obsidian vault, with lexical search, event-time filtering and
+session-start recap injection.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="obsidian-wiki — Agent Memory Atlas">
+    <meta property="og:description" content="Markdown skills and a
+dependency-free Python package that let coding agents compile an
+Obsidian vault, with lexical search, event-time filtering and
+session-start recap injection.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="obsidian-wiki — Agent Memory Atlas">
+    <meta name="twitter:description" content="Markdown skills and a
+dependency-free Python package that let coding agents compile an
+Obsidian vault, with lexical search, event-time filtering and
+session-start recap injection.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>obsidian-wiki — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "obsidian-wiki",
+      "description": "Markdown skills and a dependency-free Python package that let coding agents compile an Obsidian vault, with lexical search, event-time filtering and session-start recap injection.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">An Obsidian vault a coding agent compiles,
+behind a deterministic memory writer</p>
+          <h1>obsidian-wiki</h1>
+          <p class="document-deck">Markdown skills and a dependency-free
+Python package that let coding agents compile an Obsidian vault, with
+lexical search, event-time filtering and session-start recap
+injection.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/Ar9av/obsidian-wiki">
+              <span>Source</span>
+              <strong>Ar9av/obsidian-wiki</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/Ar9av/obsidian-wiki/commit/7a3d143eb854840caf620dc91435ed87f1deb820" title="7a3d143eb854840caf620dc91435ed87f1deb820">
+              <span>Analyzed revision</span>
+              <code>7a3d143e…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Ar9av--obsidian-wiki" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>Ar9av--obsidian-wiki</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>15,722
+lines of Python in obsidian_wiki/, memory.py 1,618 and cli.py 3,503 of
+them; 40 skills in 11,468 lines of SKILL.md</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>359
+commits on main by 39 authors, 6 April 2026 – 12 October 2026; the pin
+is 12 commits past the v2026.10.2 tag</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,165
+pytest functions in 64 test files; CI installs only pytest, so the
+server suite skips; a 26-case retrieval benchmark gated in the
+suite</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>obsidian-wiki turns an Obsidian vault into a knowledge base a coding
+agent compiles. Forty Markdown skills tell the agent how to ingest
+documents, chat history and the current session into interlinked pages,
+and a dependency-free Python package owns the parts with one correct
+answer: the log, the index, a word-capped snapshot, a profile and todo
+table, and a lexical graph query. What is notable is the writer and the
+event-time filter: every memory file goes through one lock and an atomic
+replace, and search drops a page whose <code>valid_until</code> has
+passed while pointing at its successor. What is weak is that the trust
+vocabulary is decoration. A page's <code>lifecycle</code> can be
+<code>disputed</code> or <code>archived</code> and every code read path
+returns it regardless, and the agent can promote its own staged
+writes.</p>
+<p>The design premise is stated in <code>obsidian_wiki/client.py</code>:
+the caller has an LLM, so the storage layer has none.
+<code>Memory.add</code>, <code>remember</code> and <code>todo</code>
+route knowledge, facts about a person and open threads to three
+different files, and the vault stays readable, greppable and diffable.
+Distillation, deduplication and contradiction handling are skill prose
+the agent executes with its own file tools, which makes most of the
+epistemic machinery a convention rather than a mechanism.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The MCP mount has no key check.</strong> Every REST route
+depends on <code>require_key</code>
+(<code>obsidian_wiki/server.py:156-162</code>), but
+<code>app.mount("/mcp", _mcp_app)</code> attaches none
+(<code>:318</code>), and the deployment docs say the bearer token is
+required on <code>/mcp</code>. In mcp 2.2.0, the lockfile's version, the
+MCP app adds bearer middleware only when it is given auth settings, and
+<code>MCPServer("obsidian-wiki")</code> is given none. No test sends a
+request to <code>/mcp</code>.</li>
+<li><strong>Lifecycle is a label.</strong> <code>draft</code>,
+<code>reviewed</code>, <code>verified</code>, <code>disputed</code> and
+<code>archived</code> are validated
+(<code>obsidian_wiki/trust.py:32-43</code>), printed in the context pack
+(<code>context_pack.py:309-310</code>) and listed under contradictions
+in <code>hot.md</code> (<code>memory.py:1119-1121</code>).
+<code>graphrag.query</code> never reads the field.</li>
+<li><strong>Two read paths filter on two different axes.</strong> Search
+honours the validity window and ignores visibility tags; the context
+pack honours <code>public_only</code> and ignores the window
+(<code>context_pack.py:197-207</code>).</li>
+<li><strong>The recap's project scope falls open.</strong>
+<code>build_recap</code> keeps threads whose origin or text contains the
+project name as a substring, and returns every thread when none matches
+(<code>memory.py:1259-1264</code>).</li>
+</ul>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a file a person or an agent wrote. There are three kinds,
+routed by the caller: a knowledge page under a category folder, a
+durable fact about a person as a row of <code>_meta/profile.md</code>,
+and an open thread as a row of <code>_meta/todos.md</code>. Nothing is
+extracted by code. The epistemic work is done by the model following
+skill text, and the package checks shape, not truth.</p>
+<p><strong>The real gate is a directory.</strong>
+<code>wiki-capture --quick</code>, which the Stop hook asks for, writes
+notes into <code>_raw/</code>, and so does the browser extension.
+<code>_raw</code>, <code>_staging</code> and the archive folders are in
+<code>vault.SKIP_DIRS</code>
+(<code>obsidian_wiki/vault.py:19-22</code>), which every page walker
+uses, so a captured note is invisible to search, the context pack, the
+index and the recap until <code>wiki-ingest</code> compiles it into a
+page and moves the source to <code>_raw/_archived/</code>. The ingest is
+the agent's own judgement; no person sits between <code>_raw</code> and
+the live vault unless staged writes are on.</p>
+<p><strong>A page is born <code>draft</code> and stays retrievable in
+every state.</strong> The schema in
+<code>.skills/llm-wiki/SKILL.md:387-474</code> gives every page
+<code>base_confidence</code>, <code>lifecycle</code> and
+<code>lifecycle_changed</code>, and says only ingest sets
+<code>draft</code> and only a human edit sets <code>reviewed</code>,
+<code>verified</code> or <code>disputed</code>. That rule is prose. Lint
+reports two transition classes as illegal — any fall back to
+<code>draft</code> and any exit from <code>archived</code> — and only
+for pages with an entry in the trust ledger
+(<code>trust.py:739-788</code>). An agent writing <code>verified</code>
+into frontmatter raises nothing.</p>
+<p>How each read path treats the fields that look like they should
+withhold a page:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>search (<code>graphrag.query</code>)</th>
+<th>context pack</th>
+<th>recap</th>
+<th><code>hot.md</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>valid_until</code> passed</td>
+<td>dropped unless <code>--include-historical</code></td>
+<td>returned</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>lifecycle: archived</code></td>
+<td>returned, no label</td>
+<td>returned, labelled</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>lifecycle: disputed</code></td>
+<td>returned, no label</td>
+<td>returned, labelled</td>
+<td>n/a</td>
+<td>listed as a contradiction</td>
+</tr>
+<tr>
+<td><code>visibility/pii</code> tag</td>
+<td>returned</td>
+<td>dropped only with <code>public_only</code></td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>redirects_to</code> stub</td>
+<td>returned</td>
+<td>returned</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table></div>
+<p>The search predicate is <code>current_pages</code>
+(<code>graphrag.py:232-241</code>, applied at <code>:631</code>); the
+context-pack loader is <code>load_pages</code>
+(<code>context_pack.py:197-207</code>). <code>wiki-query</code> adds a
+third reader: it reads <code>hot.md</code> and <code>index.md</code>
+first and falls back to <code>Grep</code> over the vault, and neither
+sees the window.</p>
+<p><strong>Correction has three spellings and one of them
+filters.</strong> The ingest skill supersedes a page by setting
+<code>lifecycle: archived</code> and <code>superseded_by</code>; that
+filters nothing. <code>valid_until</code> drops a page from search, but
+no skill tells the agent to write it. <code>wiki-dedup</code> replaces
+the losing page with a <code>redirects_to</code> stub and says the page
+walker skips it, so its index entry disappears. No module in
+<code>obsidian_wiki/</code> reads <code>redirects_to</code>, and
+<code>rebuild_index</code> lists the stub as a page. A profile fact dies
+by <code>forget</code>, which deletes the row, and a page dies by
+deleting the file.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a note reaches the obsidian-wiki read paths, which correction moves each path honours, and where the MCP door sits</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a note reaches the obsidian-wiki read paths, which correction moves each path honours, and where the MCP door sits
+flowchart TD
+    STOP[&quot;Stop hook asks for&lt;br/&gt;wiki-capture --quick&quot;] --&gt; RAW[&quot;_raw/ note:&lt;br/&gt;invisible to every&lt;br/&gt;page walker&quot;]
+    EXT[&quot;browser extension&quot;] --&gt; RAW
+    RAW --&gt; ING{&quot;wiki-ingest:&lt;br/&gt;the agent decides&quot;}
+    ING --&gt; PAGE[&quot;page, lifecycle draft,&lt;br/&gt;base_confidence&quot;]
+    MW[&quot;memory_write via MCP,&lt;br/&gt;Memory.add&quot;] --&gt; PAGE
+    STG[&quot;_staging/ when the&lt;br/&gt;skill chooses it&quot;] --&gt;|&quot;staging promote,&lt;br/&gt;run by the agent&quot;| PAGE
+    PAGE --&gt; ARC[&quot;lifecycle archived +&lt;br/&gt;superseded_by&quot;]
+    PAGE --&gt; VU[&quot;valid_until set&lt;br/&gt;by hand&quot;]
+    PAGE --&gt; RED[&quot;redirects_to stub&lt;br/&gt;from wiki-dedup&quot;]
+    PAGE --&gt; S[&quot;memory_search,&lt;br/&gt;graph-query&quot;]
+    PAGE --&gt; CP[&quot;memory_context_pack&quot;]
+    VU --&gt;|&quot;dropped unless as_of&lt;br/&gt;falls inside&quot;| S
+    VU -.-&gt;|&quot;ignored&quot;| CP
+    ARC -.-&gt;|&quot;returned&quot;| S
+    ARC -.-&gt;|&quot;returned, labelled&quot;| CP
+    RED -.-&gt;|&quot;returned&quot;| S
+    PROF[&quot;profile and todo rows,&lt;br/&gt;one file per user_id&quot;] --&gt; REC[&quot;memory_recap,&lt;br/&gt;SessionStart hook&quot;]
+    REC --&gt; PJ{&quot;project substring&lt;br/&gt;matches a thread?&quot;}
+    PJ -- &quot;no&quot; --&gt; ALL[&quot;every open thread&quot;]
+    NOKEY[&quot;/mcp mount:&lt;br/&gt;no require_key&quot;] -.-&gt; MW</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>The package is a library and a CLI over a directory; nothing runs
+between calls. <code>obsidian_wiki/memory.py</code> owns the five memory
+files, <code>graphrag.py</code> and <code>graph_analysis.py</code> the
+link graph and search, <code>context_pack.py</code> the budgeted pack,
+<code>trust.py</code> the review ledger, <code>staging.py</code>
+promotion, <code>temporal.py</code> the validity window, and
+<code>cli.py</code> exposes all of it as <code>obsidian-wiki</code>. The
+<code>dependencies = []</code> claim holds for the core; the server
+needs the <code>[server]</code> extra (FastAPI, uvicorn,
+<code>mcp&gt;=2.0</code>).</p>
+<p><strong>Persistence.</strong> Pages are Markdown with YAML
+frontmatter, parsed by hand-written readers rather than a YAML library —
+three of them, in <code>memory.parse_frontmatter</code>,
+<code>context_pack._frontmatter_values</code> and the regexes in
+<code>graphrag.build_index</code>. Every write to <code>log.md</code>,
+<code>index.md</code>, <code>hot.md</code> and the two
+<code>_meta</code> tables takes <code>.memory.lock</code>
+(<code>memory.py:132-140</code>) and lands by temp file and
+<code>os.replace</code> (<code>:143-156</code>). The lock is an
+<code>O_CREAT|O_EXCL</code> lockfile stolen once it is older than 60
+seconds, whether or not its holder is alive
+(<code>cache.py:95-130</code>). Page writes are not under it:
+<code>Memory.add</code> writes atomically and then syncs, and the
+server's <code>write_page</code> uses a plain <code>write_text</code>
+before taking the lock to log (<code>server.py:127-133</code>).</p>
+<p><strong>Search.</strong> <code>graphrag.build_index</code> reads
+every page on every query; there is no persistent index except a
+betweenness cache for the <code>bridges</code> intent. A vault of a few
+thousand pages is the scale the docs measure.</p>
+<p><strong>Session brain.</strong> <code>sessions-build</code> indexes
+Claude, Codex and other agent transcripts with a pure-stdlib TF-IDF and
+clusters them into a sidecar under
+<code>~/.claude/session-brain/</code>. It never writes to the vault and
+stores no belief; it is a finder for transcripts.</p>
+<p><strong>Server.</strong> <code>python -m obsidian_wiki.server</code>
+is one process, one vault, one API key, binding loopback by default; the
+Docker image sets <code>WIKI_HOST=0.0.0.0</code>. REST routes under
+<code>/v1/</code> depend on <code>require_key</code>, and the console at
+<code>/ui</code> carries no data itself. The MCP app is mounted at
+<code>/mcp</code> without that dependency
+(<code>server.py:306-318</code>). Reading the mcp 2.2.0 source at its
+tag, <code>streamable_http_app</code> wraps the endpoint in
+<code>RequireAuthMiddleware</code> only when a token verifier exists,
+which requires auth settings the server never passes. The same function
+enables DNS-rebinding protection for a loopback <code>host</code>
+argument, which restricts the Host header to loopback names. A
+non-browser client that sends one reaches all eight tools,
+<code>memory_write</code> and <code>memory_profile</code> included,
+without the key. This is a reading of code; I did not run the
+server.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p><code>pip install obsidian-wiki</code> and
+<code>obsidian-wiki setup --vault ~/brain</code> scaffold the vault and
+register both hooks in <code>~/.claude/settings.json</code>; the Claude
+Code plugin route ships the skills without the CLI or the hooks. No API
+key, no model and no network service are needed to store or search. The
+store is a folder a person can open in Obsidian, edit, grep and push to
+a private repository, and the generated files are rebuilt from the pages
+rather than trusted. A vault whose <code>index.md</code> or
+<code>hot.md</code> predates the writer is refused until
+<code>memory migrate --apply</code> backs it up to
+<code>_archives/</code> (<code>memory.py:1377-1430</code>). Semantic
+search is delegated to an external QMD collection that the query skill
+uses when configured; the package has no vector arm.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> The Stop hook
+(<code>.claude/hooks/wiki-stop-capture.sh</code>) classifies the
+transcript's tool calls as read-only or mutating and, after any file
+edit or four shell calls with one mutation, exits 2 with a request to
+run <code>/wiki-capture --quick</code> (<code>:561</code>). The quick
+mode writes <code>_raw/&lt;date&gt;-&lt;slug&gt;.md</code> and nothing
+else. The full mode also proposes profile facts and threads, written
+with <code>obsidian-wiki memory profile set</code> and
+<code>memory todo add</code>
+(<code>.skills/wiki-capture/SKILL.md:278-306</code>).</p>
+<p><strong>Compile.</strong> <code>wiki-ingest</code> is prose. It
+distils sources into category pages with <code>lifecycle: draft</code>,
+a computed <code>base_confidence</code>, typed
+<code>relationships</code> and inline <code>^[inferred]</code> or
+<code>^[ambiguous]</code> markers, moves each promoted raw file to
+<code>_raw/_archived/</code>, records the snapshot with
+<code>obsidian-wiki snapshots set</code> and the manifest with
+<code>cache-update</code>, then runs <code>memory sync</code>.</p>
+<p><strong>Code writes.</strong> <code>Memory.add</code>
+(<code>client.py:186-240</code>) renders a page with a deterministic
+title and the first sentence as <code>summary</code>, keeps the original
+<code>created</code> on a rewrite, writes atomically and calls
+<code>sync("MEMORY_ADD")</code>. <code>server.write_page</code>
+(<code>server.py:92-134</code>) does the same through
+<code>memory_write</code>, with folded YAML scalars.
+<code>set_fact</code> and <code>forget_fact</code>
+(<code>memory.py:821-874</code>) rewrite the profile table under the
+lock; <code>add_todo</code> touches an existing open thread of the same
+text instead of duplicating it (<code>:955-980</code>).</p>
+<p><strong>Sync.</strong> <code>memory sync VERB key=value</code>
+appends one log line, reconciles <code>index.md</code> against the pages
+on disk, keeping any non-category section verbatim, and regenerates
+<code>hot.md</code>, all under one lock (<code>client.py:349-371</code>,
+<code>server.py:273-291</code>). <code>build_hot</code> drops activity,
+then contradictions, then threads, and truncates
+<code>## Key Takeaways</code> last to fit the 500-word cap
+(<code>memory.py:1129-1206</code>).</p>
+<p><strong>Search.</strong> <code>graphrag.query</code>
+(<code>graphrag.py:597-722</code>) builds the index, classifies the
+question into an intent, filters to current pages, and ranks with
+<code>_score</code> (<code>:202-229</code>): 10 for an exact slug or
+title, 6 for a title prefix match, 4 for a tag, 2 for the summary, plus
+up to 2 for link degree, times a tier weight. It returns candidates, a
+<code>should_read</code> list of at most three pages, and
+<code>index_only</code> when one candidate clearly leads.</p>
+<p><strong>Context pack.</strong> <code>build_context_pack</code>
+(<code>context_pack.py:362-432</code>) loads pages, scores topic terms
+over title, aliases, tags, summary, path and body
+(<code>:214-225</code>), and binary-searches each page's compressed body
+into the remaining budget under an "UNTRUSTED REFERENCE DATA"
+header.</p>
+<p><strong>Session start.</strong> <code>wiki-session-recap.sh</code>
+resolves the vault, runs
+<code>memory recap --project &lt;git repo name&gt;</code>, drops the
+output if it is the empty-vault line, and prints it framed as recorded
+data, not instructions. <code>build_recap</code>
+(<code>memory.py:1236-1300</code>) emits profile facts above
+<code>min_confidence</code>, open threads with a stale mark after 30
+days, and the last five log lines, cut to 350 words.</p>
+<p><strong>Review.</strong> <code>staging.promote</code>
+(<code>staging.py:167-217</code>) renames a staged file onto its live
+path after checking both content hashes against what the reviewer saw,
+and refuses a <code>.patch.md</code>. <code>trust-record</code> writes
+the ledger of approved confidence values and material fingerprints
+(<code>trust.py:281-470</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><strong>Pages.</strong> Frontmatter carries <code>title</code>,
+<code>category</code>, <code>tags</code>, <code>summary</code>,
+<code>sources</code>, <code>created</code>, <code>updated</code>,
+<code>tier</code> (<code>core</code>, <code>supporting</code>,
+<code>peripheral</code>), <code>base_confidence</code>,
+<code>lifecycle</code>, <code>lifecycle_changed</code>, optional
+<code>lifecycle_reason</code> and <code>superseded_by</code>, optional
+<code>valid_from</code> and <code>valid_until</code>, typed
+<code>relationships</code>, <code>snapshots</code> and
+<code>provenance</code> fractions. <code>created</code> and
+<code>updated</code> are dates the writer stamps; <code>updated</code>
+overwrites. The trust fingerprint hashes the page with the volatile
+trust fields stripped, so a lifecycle change does not mark a page stale
+but a body change does (<code>trust.py:206-238</code>).</p>
+<p><strong>Profile and todos.</strong> Five and six columns of a
+Markdown table respectively, parsed with an escaped-pipe splitter so
+hand edits round-trip (<code>memory.py:756-790</code>). A fact is keyed
+case-insensitively on its key and replaced on re-set. A todo has an id,
+<code>open</code>, <code>done</code> or <code>dropped</code>, an origin,
+and created and touched dates.</p>
+<p><strong>Scoping.</strong> <code>check_scope</code> validates a
+<code>user_id</code> against
+<code>^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$</code> because it becomes a
+filename (<code>memory.py:236-251</code>), and <code>profile_path</code>
+and <code>todos_path</code> select
+<code>_meta/profile.&lt;scope&gt;.md</code> (<code>:254-261</code>).
+That is a physical partition: no record carries the key and no query
+applies it. Pages have no scope, and the docs call <code>user_id</code>
+"a namespace, not an authorization boundary".</p>
+<p><strong>Log.</strong> <code>- [TS] VERB key=value</code> lines,
+appended with <code>O_APPEND</code> under the lock
+(<code>memory.py:327-358</code>). The verb and fields are whatever the
+caller passes, and read-only skills are told to log <code>QUERY</code>
+lines.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Three code readers serve the model. <code>memory_search</code> is the
+graph query over title, tags and summary; body text is not scored, so a
+fact past a page's first sentence is findable only if the summary or
+tags carry its words. The context pack scores body text at a weight of 1
+and budgets by a characters-over-four estimate. The recap is not
+retrieval but injection: a fixed block at session start.</p>
+<p>The query skill adds two uncoded readers: <code>hot.md</code> and
+<code>index.md</code> are read first, and <code>Grep</code> over the
+vault is the fallback. Neither applies the validity window, so a
+historical page reaches the model through either of them.</p>
+<p><strong>Ranking is lexical and term-prefix based.</strong>
+<code>_score</code> compiles <code>\b{term}</code> per term, so
+<code>tag</code> matches <code>tags</code> and <code>ich</code> does not
+match inside <code>tatsächlich</code>. The documented benchmark run
+reports recall@5 of 0.950 and <code>should_read_precision</code> of
+0.444 on the bundled vault, and the gold set carries paraphrase cases
+that score zero by design (<code>docs/cli.md:262-285</code>).</p>
+<p><strong>Temporal filtering.</strong> <code>--as-of DATE</code> and
+<code>--include-historical</code> change which pages are rankable; the
+structural intents (<code>impact</code>, <code>bridges</code>,
+<code>hubs</code>, <code>clusters</code>) deliberately see the whole
+graph, because deleting a page breaks historical pages that link to it
+(<code>graphrag.py:232-241</code>). A candidate that carries
+<code>superseded_by</code> returns it, so the model can follow the
+pointer. A malformed date counts as current, so a typo never hides a
+page.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is explicit and synchronous: a file is on disk when the
+call returns, and the next query rebuilds the index from disk, so the
+lag before a page is searchable is zero. The cost moves to reads and
+syncs. Each query reads every page, and each <code>memory sync</code>
+rescans every page to reconcile <code>index.md</code> and rebuild
+<code>hot.md</code>, so both scale with the vault rather than with the
+change.</p>
+<p>Model work happens only inside skills. <code>wiki-ingest</code>,
+<code>wiki-update</code> and the history ingests run in the agent's own
+turn and spend its tokens; <code>wiki-rebuild</code> archives the live
+vault and recompiles it from sources, which is the one whole-store
+rewrite and is a skill the user invokes. The manifest records content
+hashes so a second ingest of the same library processes the delta.</p>
+<p><strong>Deduplication.</strong> <code>add_todo</code> dedups open
+threads on case-folded text. Pages dedup only through
+<code>wiki-dedup</code>, which merges and leaves a redirect stub.
+<code>Memory.add</code> with an existing title overwrites that page's
+body, keeping <code>created</code>.</p>
+<p><strong>Hostile input.</strong> The recap and the context pack are
+framed as untrusted reference data. Page content written through
+<code>memory_write</code> is not filtered, and an unauthenticated MCP
+caller can write it (section 3).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The agent blocks on nothing but file I/O in code paths; ingest blocks
+the agent for as long as the skill runs, because the agent is doing the
+extraction. The recap injects at most 350 words once per session at the
+top of context, so it does not move within a session's prompt prefix.
+<code>hot.md</code> is capped at 500 words and read on demand by the
+query skill.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>Skills are the primary interface. <code>setup.sh</code> and
+<code>obsidian-wiki setup</code> symlink one <code>.skills/</code>
+directory into each supported agent's skill folder, and
+<code>test_skill_mirrors.py</code> checks the mirrors. The agent is
+expected to call <code>graph-query</code>, read <code>should_read</code>
+pages, write pages with its own Write tool, and end every writing skill
+with <code>memory sync</code>.</p>
+<p>Two hooks bracket a Claude Code session, registered by
+<code>hooks.py</code> into <code>~/.claude/settings.json</code>. Both
+exit 0 silently on every failure, so a missing install is invisible from
+inside a session; <code>hooks status</code> and <code>doctor</code>
+exist to surface it. <code>WIKI_SESSION_RECAP=false</code> and
+<code>WIKI_STOP_CAPTURE=false</code> turn them off.</p>
+<p>For other runtimes, <code>from obsidian_wiki import Memory</code>
+gives the three verbs, search, context and recap in-process, and the
+server gives the same over REST and MCP with a <code>user_id</code> on
+the person-shaped tools. The agent has full write reach on every
+surface: <code>memory_write</code>,
+<code>memory_profile set|forget</code>, <code>memory_todo</code> and
+<code>memory_sync</code> are all on the MCP tool list.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Concurrency</strong> is the strongest part. Before
+<code>memory.py</code>, fifteen-odd skills rewrote the memory files
+without a lock and dropped each other's updates, a history the module
+docstring records. One lock across log, index and hot prevents a
+snapshot describing a vault state that never existed, and the migration
+guard refuses to regenerate a hand-curated file.</p>
+<p><strong>Review is advisory.</strong> Staged writes exist only when a
+skill chooses <code>_staging/</code>; no module reads
+<code>WIKI_STAGED_WRITES</code>, and <code>memory_write</code> and
+<code>Memory.add</code> write live. Promotion is
+<code>obsidian-wiki staging promote</code>, which
+<code>wiki-stage-commit</code> tells the agent to run,
+<code>--all</code> included
+(<code>.skills/wiki-stage-commit/SKILL.md:21</code>,
+<code>:108-128</code>). The trust ledger's <code>--approved</code> flag
+is, in the skill's own words, "a workflow assertion, not a cryptographic
+signature" (<code>.skills/wiki-lint/SKILL.md:274-275</code>). The
+revision pinning in <code>promote</code> is real protection against a
+concurrent agent write during review, and it protects a person who is
+reviewing, not a gate that requires one.</p>
+<p><strong>Audit.</strong> <code>log.md</code> is an activity log rather
+than a mutation record. The caller chooses the verb, profile and todo
+mutations write no line, quick captures write none, and
+<code>memory timezone --apply</code> rewrites the log's stamps in place
+after backing it up. Git history, when sync is configured, is the record
+of what changed.</p>
+<p><strong>Auth.</strong> REST requires the bearer key and compares it
+with <code>hmac.compare_digest</code>; <code>/mcp</code> does not
+(section 3). The path check in <code>staging.resolve_in_vault</code>
+resolves symlinks before comparing, and <code>test_server.py</code>
+covers traversal on the REST routes.</p>
+<p><strong>Uncertainty.</strong> A page can say <code>disputed</code>
+and an inline <code>^[ambiguous]</code>, and a profile fact carries the
+writer's own confidence, which the recap can threshold. None of these
+keeps a page out of a code read path.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is large and specific: 1,165 test functions over 64 files.
+Memory behaviour is covered in <code>test_memory.py</code>,
+<code>test_client.py</code>, <code>test_temporal.py</code>,
+<code>test_context_pack.py</code>, <code>test_staging.py</code>,
+<code>test_trust.py</code> and <code>test_timezone_migration.py</code>,
+including lock contention, migration backups and hand-edit round
+trips.</p>
+<p><strong>Must-not cases with controls.</strong>
+<code>test_query_as_of_returns_the_page_that_was_true_then</code>
+asserts an exact one-page candidate list at each date and the excluded
+count (<code>tests/test_temporal.py:109-129</code>).
+<code>test_public_only_filters_before_ranking</code> asserts the loader
+returns exactly the public page from three
+(<code>tests/test_context_pack.py:116-121</code>).
+<code>test_recap_scopes_threads_to_a_project</code> pairs a present
+thread with an absent one (<code>tests/test_memory.py:792-798</code>).
+None covers the recap's fall-open branch, and
+<code>test_user_id_isolates_todos_and_recap</code> asserts the other
+user's thread is absent from a recap without asserting the user's own is
+present (<code>tests/test_client.py:211-218</code>).</p>
+<p><strong>The server suite does not run in CI.</strong>
+<code>test_server.py</code> opens with
+<code>pytest.importorskip("fastapi")</code> and
+<code>importorskip("mcp")</code>, and
+<code>.github/workflows/tests.yml</code> installs only
+<code>pytest</code>. No test in the tree sends a request to
+<code>/mcp</code>.</p>
+<p><strong>Retrieval benchmark.</strong> <code>obsidian-wiki eval</code>
+scores recall@k, MRR, intent accuracy and <code>should_read</code>
+precision against a JSONL gold set. <code>tests/fixtures/bench/</code>
+holds a 15-page vault and 26 cases, one of them an <code>as_of</code>
+case, and <code>test_bench_vault_meets_baseline</code> fails below
+recall@1 0.80, recall@5 0.90, MRR 0.85 and intent accuracy 1.00
+(<code>tests/test_evaluate.py:28-33</code>, <code>:217-225</code>).</p>
+<p><strong>The README's agent study is not in the tree.</strong> "Does
+it actually help?" reports 81 s against 19 s and 44% against 83%
+accuracy over four structural questions, two repetitions each, on a
+38-page vault, and says its full data and per-run logs are in PR #175.
+That pull request's body carries the same summary tables, and its eleven
+changed files are code, docs and tests; I found no run logs in it. The
+questions measure graph navigation, not recall of a stored memory. No
+paper accompanies the project; the README credits Andrej Karpathy's LLM
+Wiki gist for the pattern.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Reconcile generated files instead of overwriting
+them.</strong> Regenerate only the sections you own, keep every other
+heading verbatim, and refuse to touch a file without your marker until a
+backed-up migration has run.</li>
+<li><strong>One lock for a logical update that spans files.</strong> A
+log line, an index and a snapshot that describe one change should land
+together or not at all.</li>
+<li><strong>Event time with a successor pointer.</strong> A historical
+claim that drops out of default search and names what replaced it is a
+small amount of code and answers "which gateway do we run" without
+losing the answer for an earlier date.</li>
+<li><strong>Pin what the reviewer saw.</strong> Promotion that compares
+both content hashes against the reviewed revision, and treats "no live
+page" as a revision, refuses the race where an agent writes during
+review.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A status vocabulary with no filtering reader.</strong> Five
+lifecycle values and a transition lint read as a trust model; if no
+query excludes <code>archived</code> or <code>disputed</code>, the field
+is a label, and the docs should say so.</li>
+<li><strong>Filters split across read paths.</strong> When search
+honours one predicate and the context assembler another, the model sees
+whichever path the agent chose. Put every withholding predicate in one
+loader both paths share.</li>
+<li><strong>A scope filter that falls back to everything.</strong>
+Returning all threads when the project matches none turns an empty scope
+into a leak; return nothing and say so.</li>
+<li><strong>Mounting a second protocol beside an authenticated
+one.</strong> A dependency on the REST routes does not reach a mounted
+sub-application, and a test of the REST 401 does not prove the mount is
+closed.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one person, or a small trusted team, who wants an agent to
+build a knowledge base they can read and fix by hand, and who will
+review the vault in Git rather than in a queue. It costs nothing to run
+and nothing to leave. It does not suit a deployment where the agent's
+writes must be checked before they count, or where several principals
+share a server: the review steps are instructions to the same agent,
+pages have no scope, and the MCP surface takes writes without the key.
+Teams that need semantic recall over paraphrase should plan on the
+external QMD collection or another index; the bundled search finds words
+that are in titles, tags and summaries.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is the <code>/mcp</code> mount meant to sit behind a reverse proxy
+that enforces the key, or should <code>require_key</code> wrap it as the
+deployment docs describe?</li>
+<li>Should <code>graphrag.query</code> and <code>load_pages</code> share
+one predicate set, so <code>public_only</code> reaches search and the
+validity window reaches the pack?</li>
+<li>Is <code>lifecycle: archived</code> meant to filter like
+<code>valid_until</code>, given that the ingest skill uses it as the
+supersession move?</li>
+<li>Which component is meant to honour <code>redirects_to</code>, which
+the dedup skill says the page walker skips?</li>
+<li>Where are the per-run logs behind the README's agent study?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Memory surface:</strong>
+<code>obsidian_wiki/memory.py</code>,
+<code>obsidian_wiki/clock.py</code>, <code>obsidian_wiki/cache.py</code>
+(<code>advisory_lock</code>), <code>obsidian_wiki/vault.py</code>.</li>
+<li><strong>Search and pack:</strong>
+<code>obsidian_wiki/graphrag.py</code>,
+<code>obsidian_wiki/graph_analysis.py</code>,
+<code>obsidian_wiki/temporal.py</code>,
+<code>obsidian_wiki/context_pack.py</code>,
+<code>obsidian_wiki/evaluate.py</code>.</li>
+<li><strong>Trust and review:</strong>
+<code>obsidian_wiki/trust.py</code>,
+<code>obsidian_wiki/staging.py</code>,
+<code>obsidian_wiki/lint.py</code>,
+<code>obsidian_wiki/provenance.py</code>.</li>
+<li><strong>Surfaces:</strong> <code>obsidian_wiki/client.py</code>,
+<code>obsidian_wiki/server.py</code>, <code>obsidian_wiki/cli.py</code>,
+<code>obsidian_wiki/hooks.py</code>,
+<code>.claude/hooks/wiki-session-recap.sh</code>,
+<code>.claude/hooks/wiki-stop-capture.sh</code>,
+<code>extensions/brain/background.js</code>.</li>
+<li><strong>Skills:</strong> <code>.skills/llm-wiki/SKILL.md</code>,
+<code>.skills/wiki-ingest/SKILL.md</code>,
+<code>.skills/wiki-capture/SKILL.md</code>,
+<code>.skills/wiki-query/SKILL.md</code>,
+<code>.skills/wiki-stage-commit/SKILL.md</code>,
+<code>.skills/wiki-dedup/SKILL.md</code>,
+<code>.skills/wiki-lint/SKILL.md</code>.</li>
+<li><strong>Session brain:</strong>
+<code>obsidian_wiki/session_index.py</code>,
+<code>obsidian_wiki/session_graph.py</code>,
+<code>obsidian_wiki/session_query.py</code>.</li>
+<li><strong>Tests:</strong> <code>tests/test_memory.py</code>,
+<code>tests/test_client.py</code>, <code>tests/test_temporal.py</code>,
+<code>tests/test_context_pack.py</code>,
+<code>tests/test_server.py</code>, <code>tests/test_evaluate.py</code>,
+<code>tests/fixtures/bench/</code>,
+<code>.github/workflows/tests.yml</code>.</li>
+<li><strong>Dependency read for the auth finding:</strong>
+<code>src/mcp/server/mcpserver/server.py</code> and
+<code>src/mcp/server/lowlevel/server.py</code> in
+modelcontextprotocol/python-sdk at tag v2.2.0.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E 'lifecycle' -- obsidian_wiki/graphrag.py obsidian_wiki/client.py obsidian_wiki/server.py obsidian_wiki/session_query.py</code>
+— no match; search never reads the field.</li>
+<li><code>git grep -n -E 'lifecycle' -- obsidian_wiki</code> — readers
+in <code>trust.py</code>, <code>lint.py</code>, <code>cli.py</code>, the
+label at <code>context_pack.py:309</code> and the contradiction line at
+<code>memory.py:1119</code>.</li>
+<li><code>git grep -n -E 'is_current|current_pages|valid_until' -- obsidian_wiki/context_pack.py obsidian_wiki/memory.py</code>
+— no match; the pack and the recap ignore the window.</li>
+<li><code>git grep -n -E 'valid_from|valid_until' -- .skills | grep -v -E 'wiki-lint|wiki-query'</code>
+— no match; no writing skill names either field.</li>
+<li><code>git grep -n -E 'valid_from|valid_until' -- obsidian_wiki ':!obsidian_wiki/temporal.py' ':!obsidian_wiki/graphrag.py' ':!obsidian_wiki/lint.py' ':!obsidian_wiki/cli.py'</code>
+— no match; no write path in code sets them.</li>
+<li><code>git grep -n -E 'redirects_to' -- obsidian_wiki</code> — no
+match.</li>
+<li><code>git grep -n -E 'WIKI_STAGED_WRITES' -- obsidian_wiki</code> —
+a help string at <code>cli.py:3118</code> and the docstring at
+<code>staging.py:3</code>; nothing reads the variable.</li>
+<li><code>git grep -n -E 'append_log\(' -- obsidian_wiki</code> —
+callers in <code>cli.py</code> (<code>memory log</code>,
+<code>memory sync</code>), <code>client.py</code>,
+<code>server.py</code>, <code>memory.py</code> (timezone migration) and
+<code>staging.py</code>; none in <code>set_fact</code>,
+<code>forget_fact</code>, <code>add_todo</code> or
+<code>set_todo_status</code>.</li>
+<li><code>git grep -n -E 'visibility/' -- obsidian_wiki/graphrag.py obsidian_wiki/memory.py</code>
+— one hit, <code>graphrag.py:562</code>, excluding visibility tags from
+cluster labels; no filter.</li>
+<li><code>git grep -n -E 'require_key|Depends' -- obsidian_wiki/server.py</code>
+— the REST decorators only; the <code>app.mount("/mcp", ...)</code> line
+carries no dependency.</li>
+<li><code>git grep -n -E '"/mcp|/mcp/' -- tests</code> — no match.</li>
+<li><code>git grep -n -E 'importorskip' -- tests</code> and
+<code>/usr/bin/grep -n 'pip install' .github/workflows/tests.yml</code>
+— the server suite skips without FastAPI and mcp, and CI installs only
+pytest.</li>
+<li><code>git grep -n -E '\^\[inferred|speculat' -- obsidian_wiki</code>
+— one hit, a docstring in <code>graphrag.py:23</code>; the speculation
+check is skill prose.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION' -- . ':!uv.lock'</code>
+— skill prose about ingesting papers and the plugin description; no
+citation block and no <code>CITATION.cff</code>.</li>
+<li><code>gh api repos/Ar9av/obsidian-wiki/pulls/175/files --jq '.[].filename'</code>
+— eleven files of code, docs and tests; no run logs.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/Ar9av/obsidian-wiki/commit/7a3d143eb854840caf620dc91435ed87f1deb820"><code class="commit-id" title="7a3d143eb854840caf620dc91435ed87f1deb820">7a3d143e…</code></a>
+— first reading, at the head of <code>main</code>, a commit of 12
+October 2026 twelve commits past v2026.10.2. Two marks,
+<code>bitemporal</code> and <code>negative_eval</code>. Screened before
+reading from a full clone: five auto-run surfaces
+(<code>.claude/settings.json</code> with SessionStart and Stop hooks
+running the two <code>.claude/hooks/</code> scripts, a
+<code>.claude-plugin/</code> manifest, <code>.cursor/rules/</code>,
+<code>.github/copilot-instructions.md</code>), each read and found to
+touch only the local vault and transcript. One build-time execution
+point (<code>tests/conftest.py</code>), nothing inside the cooldown and
+no unpinned surface, with <code>uv.lock</code> unchanged for 33 days;
+<code>CLAUDE.md</code>, <code>AGENTS.md</code> and
+<code>GEMINI.md</code> treated as data. MIT with no rider. Read with
+<code>git grep</code> and <code>sed</code>; the mcp 2.2.0 source was
+read, not installed; nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

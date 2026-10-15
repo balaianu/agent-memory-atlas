@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-735, generated from each report's frontmatter —
+736, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-735, generated from each report's frontmatter —
+736, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-735, generated from each report's frontmatter —
+736, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 735, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 736, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-735, generated from each report's frontmatter —
+736, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 735 systems by the seven mechanisms
+filters all 736 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -21290,6 +21290,61 @@ default-deny recall predicate with supersession that follows reach</td>
 scope boundary is a prompt</td>
 </tr>
 <tr>
+<td><a
+href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></td>
+<td>A Markdown page with YAML frontmatter: title, category, tags,
+summary, sources, created and updated, plus lifecycle, base_confidence,
+tier, typed relationships and optional valid_from, valid_until and
+superseded_by. Beside it, profile facts and todos as rows of Markdown
+tables under _meta</td>
+<td>Plain files in an Obsidian vault: category folders of pages, _raw
+for unpromoted captures, _staging for opt-in review, an append-style
+log.md, a generated index.md and hot.md, profile and todo tables per
+scope, a trust ledger JSON and a manifest. Git is the backup</td>
+<td>graph-query scores title, tags and summary terms with a link-degree
+bonus and tier weight over an index built from every page on each call,
+after dropping pages outside their validity window; a context pack
+scores body text too and fits pages to a token budget; the agent also
+reads hot.md, index.md and greps</td>
+<td>Explicit. Skills tell the agent to write pages with its own file
+tools, capture drops notes in _raw, and wiki-ingest compiles them into
+pages. Memory.add, memory_write and memory profile or todo commands
+write through code. A memory sync call then logs, reconciles index.md
+and regenerates hot.md under one lock</td>
+<td>The agent rewrites pages in place. Supersession sets lifecycle
+archived and superseded_by, which nothing filters; valid_until filters
+the search path only; dedup leaves a redirect stub no code honours.
+forget deletes a profile row; deleting a file drops it from the
+regenerated index</td>
+<td>Physical: user_id selects a separate profile and todo file per
+scope, and pages stay shared. The recap's project filter is a substring
+match that falls back to every thread when nothing matches. public_only
+on the context pack drops pages tagged visibility internal or pii;
+search applies no scope</td>
+<td>40 skills symlinked into Claude Code, Cursor, Codex, Windsurf,
+Gemini CLI and others; a SessionStart hook injecting a recap and a Stop
+hook asking for a quick capture; a CLI; a Python Memory class; a FastAPI
+and MCP server with eight tools; a browser extension writing to
+_raw</td>
+<td>None in the package. The Stop hook asks the model to capture;
+daily-update and wiki-rebuild are skills the agent runs. Every memory
+sync rescans all pages to rebuild index.md and hot.md</td>
+<td>A five-value lifecycle and a base_confidence per page, labelled in
+the context pack and in the agent's citations and filtered by no code; a
+manual trust ledger whose approve flag is an assertion the caller makes;
+inline inferred and ambiguous markers in the prose</td>
+<td>Human-readable store with every generated file reconciled rather
+than overwritten; one lock and atomic replace for every memory file;
+event-time filtering with a successor pointer and an as-of query; a
+framed, word-capped session recap; refusal to clobber a hand-curated
+vault until a backed-up migration</td>
+<td>The MCP mount carries no API-key check while the REST routes do;
+lifecycle is a label nothing filters; the window filters search but not
+the context pack; the recap's project filter falls back to everything;
+the agent can promote its own staged writes; CI never runs the server
+tests</td>
+</tr>
+<tr>
 <td><a href="../systems/octobrain/"><code>octobrain</code></a></td>
 <td>A titled note with content, a memory type (22 are defined), tags, up
 to 20 related files, the git commit at write time, importance, a source
@@ -32368,7 +32423,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>66 of 735:</em> <a
+<p><em>66 of 736:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32438,7 +32493,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>190 of 735:</em> <a
+<p><em>190 of 736:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32636,7 +32691,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>122 of 735:</em> <a
+<p><em>123 of 736:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32724,6 +32779,7 @@ href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
 href="../systems/nodedb/"><code>nodedb</code></a>, <a
 href="../systems/nornicdb/"><code>nornicdb</code></a>, <a
 href="../systems/nougenshards/"><code>nougenshards</code></a>, <a
+href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a>, <a
 href="../systems/omega-memory/"><code>omega-memory</code></a>, <a
 href="../systems/openmemory/"><code>openmemory</code></a>, <a
 href="../systems/openzync-core/"><code>openzync-core</code></a>, <a
@@ -32766,7 +32822,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>324 of 735:</em> <a
+<p><em>324 of 736:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33106,7 +33162,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>253 of 735:</em> <a
+<p><em>253 of 736:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33369,7 +33425,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 735:</em> <a
+<p><em>96 of 736:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33469,7 +33525,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>451 of 735:</em> <a
+<p><em>452 of 736:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33778,6 +33834,7 @@ href="../systems/nougenshards/"><code>nougenshards</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
 href="../systems/obelyth-cortex/"><code>obelyth-cortex</code></a>, <a
 href="../systems/obsidian-mind/"><code>obsidian-mind</code></a>, <a
+href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a>, <a
 href="../systems/octop-memory/"><code>octop-memory</code></a>, <a
 href="../systems/oh-my-hermes/"><code>oh-my-hermes</code></a>, <a
 href="../systems/omegaclaw-core/"><code>omegaclaw-core</code></a>, <a
@@ -33953,8 +34010,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-451 repositories of
-735 assert that particular material must
+452 repositories of
+736 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -34027,7 +34084,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 735 is the real figure for the second kind, and
+of 736 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

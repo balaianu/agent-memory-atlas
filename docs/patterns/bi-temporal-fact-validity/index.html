@@ -445,6 +445,21 @@ writer — only <code>memory_import</code> sets it, and the boundary tests
 set it by raw SQL. It passes Helm's diagnostic on the end of the
 interval and on restore, and the whitepaper lists
 <code>expired_at</code> as roadmap.</p>
+<p><a href="../../systems/obsidian-wiki/">obsidian-wiki</a> is the
+pattern on a Markdown vault with one read path short.
+<code>valid_from</code> and <code>valid_until</code> are frontmatter a
+person or agent writes beside the stamped <code>created</code> and
+<code>updated</code>, and <code>graphrag.query</code> keeps only pages
+current at <code>as_of</code>, returning a historical hit's
+<code>superseded_by</code> so the model can follow it
+(<code>obsidian_wiki/graphrag.py:232-241</code>, <code>:626-631</code>).
+The structural intents see the whole graph on purpose, since deleting a
+page breaks the historical pages linking to it. The context pack loads
+pages without the predicate
+(<code>obsidian_wiki/context_pack.py:197-207</code>), so the same
+superseded claim drops out of search and arrives in a packed prompt. No
+skill writes either field, while the ingest skill's own supersession
+move, <code>lifecycle: archived</code>, filters nothing.</p>
 <h2 id="a-third-clock">A third clock</h2>
 <p>Two clocks answer <em>what was true</em> and <em>what did we
 believe</em>. The temporal database literature names a third, decision

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 735 reports.**
+**This page covers all 736 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6668,3 +6668,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0 with a trademark NOTICE, 8,043 lines of Python in the package and 27 commits by one author, all dated 13 October 2026. Four marks, `trust_state`, `scope_enforced`, `audit_log` and `negative_eval`. CI runs 112 pytest functions on SQLite and pgvector; three benchmark runs are committed with per-session rows whose totals recompute.
 - Study when: you want procedural memory for coding agents promoted on observed, repeated success rather than on a model's judgement, with a bounded pointer and a capability mapping that carries skills between agents.
 - Do not copy when: the memory must be defended against the agent writing it, a removed skill must stay removed, or several projects on one machine must not see each other's skills.
+
+### [`obsidian-wiki`](../systems/obsidian-wiki/)
+
+- Best idea: **generated memory files are reconciled, not overwritten, under one lock.** `memory sync` appends the log line, rebuilds only the category sections of `index.md` and the generated sections of `hot.md`, keeps every other heading and the `## Key Takeaways` slot verbatim, and refuses a file without its `generated_by` marker until `memory migrate --apply` has backed it up.
+- Biggest risk: **the MCP mount has no key check.** Every `/v1/` route depends on `require_key`, but `app.mount("/mcp", _mcp_app)` attaches nothing, and mcp 2.2.0 adds bearer middleware only when given auth settings the server never passes; `memory_write` and `memory_profile` are on that surface, and no test sends a request to `/mcp`.
+- Most reusable component: `obsidian_wiki/temporal.py` with `current_pages` in `graphrag.py` — authored event time beside ingestion time, an inclusive `valid_until`, a malformed date counted as current, and a `superseded_by` pointer returned with a historical hit.
+- Second risk: **filters live on different read paths.** Search honours the validity window and ignores visibility tags and lifecycle; the context pack honours `public_only` and ignores the window; the recap's project filter is a substring match that returns every thread when none matches.
+- Maturity impression: MIT, 15,722 lines of Python and 40 skills, 359 commits by 39 authors between 6 April and 12 October 2026. Two marks, `bitemporal` and `negative_eval`, the second on exact-list exclusion tests with positive controls. 1,165 pytest functions; the server suite skips in CI, and the README's agent study has no run logs in the tree.
+- Study when: you want a human-readable knowledge vault an agent builds and a person fixes by hand, with a concurrency-safe writer for the bookkeeping files and an as-of query over authored validity.
+- Do not copy when: agent writes must be reviewed before they count, a page's status must keep it out of answers, or several principals share one server.

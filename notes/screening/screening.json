@@ -28856,6 +28856,53 @@
       "status": "screened",
       "url": "https://github.com/breferrari/obsidian-mind"
     },
+    "obsidian-wiki": {
+      "counts": {
+        "AGENT": 3,
+        "EXEC": 1,
+        "NOTE": 2,
+        "RUNS": 5
+      },
+      "files_scanned": 12,
+      "findings": [
+        {
+          "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 2 entr(ies): marketplace.json, plugin.json",
+          "kind": "RUNS",
+          "path": ".claude-plugin/"
+        },
+        {
+          "detail": "agent harness hook scripts — 2 entr(ies): wiki-session-recap.sh, wiki-stop-capture.sh",
+          "kind": "RUNS",
+          "path": ".claude/hooks/"
+        },
+        {
+          "detail": "agent harness hooks (SessionStart / PreToolUse / Stop) — mentions SessionStart, Stop, command, hooks",
+          "kind": "RUNS",
+          "path": ".claude/settings.json"
+        },
+        {
+          "detail": "editor rules injected into an agent's context — 1 entr(ies): obsidian-wiki.mdc",
+          "kind": "RUNS",
+          "path": ".cursor/rules/"
+        },
+        {
+          "detail": "instructions injected into an agent's context",
+          "kind": "RUNS",
+          "path": ".github/copilot-instructions.md"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        }
+      ],
+      "revision": "7a3d143eb854840caf620dc91435ed87f1deb820",
+      "screened_at": "2026-10-15T03:59:47+00:00",
+      "slug": "obsidian-wiki",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/Ar9av/obsidian-wiki"
+    },
     "octobrain": {
       "counts": {
         "AGENT": 1,
