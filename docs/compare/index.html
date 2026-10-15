@@ -31528,46 +31528,53 @@ embedder matches surface form until a model is configured</td>
 </tr>
 <tr>
 <td><a href="../systems/veracium/"><code>veracium</code></a></td>
-<td>A typed edge — subject, relation, object — carrying provenance,
-volatility, a validity interval, an invalidation reason from a closed
-vocabulary, and flags for active, quarantined, use-only and
-needs-confirmation; dated episodes sit beside the graph and an optional
-LLM-curated wiki above it</td>
-<td>One SQLite file with a structurally declared schema registry:
-fifteen versions, every object carrying a REQUIRED or REBUILDABLE
-policy, and DDL held byte-identical to what <code>sqlite_master</code>
-stores</td>
-<td>An entity-matched subgraph for the query, plus dated episodes and
-the wiki when enabled; third-party claims are present but not
-assertable, and quarantined material never surfaces unprompted</td>
-<td><code>remember</code> ingests an event, types the claims and stamps
-provenance from the channel; a claim from received email or an external
-document is quarantined at birth rather than classified later</td>
-<td>Supersession with a recorded reason, invalidation that retains
-history, and source revocation keyed on a content digest with a
-<code>lift</code> that reverses it — both actions appended, the standing
-set derived</td>
-<td><code>user_id</code> NOT NULL on every table and leading every
-index, with a pure reference implementation of the read surface that
-conforming implementations are bound to by pinned vectors</td>
-<td>A Python library — <code>Memory.remember</code> /
-<code>Memory.recall</code> — over any <code>Complete</code> callable,
-with a CLI, an MCP server manifest and a portability layer</td>
-<td>Fenced consolidation with a lease and an operation record,
-crash-safe by a durable state machine rather than by a lock</td>
-<td>Provenance including a <code>QUARANTINED</code> class that is never
-asserted, <code>needs_confirmation</code> for an edge past its expected
-lifetime, a closed six-value invalidation vocabulary, and
-<code>assertable</code> as the derived gate the read path uses</td>
-<td>The audit record is a precondition for the state change rather than
-a consequence of it; third-party claims are quarantined structurally
-rather than by a classifier; a revoked source is quarantined on
-re-ingest rather than silently readmitted; and refused supersessions are
-recorded with the rule version that refused them</td>
-<td>The specification apparatus is enormous relative to the mechanism —
-fifteen schema versions and spec-section citations throughout — so the
-cost of adopting it is understanding a governance model, not an API; and
-the benchmark that ranks it first is the same author's</td>
+<td>A typed edge — subject, relation, object — carrying provenance, a
+disclosure tier, volatility, a valid_from and invalidated_at, an
+invalidation reason from a closed vocabulary, and flags for
+needs-confirmation and ungrounded; dated episodes sit beside the graph
+and an optional LLM-compiled wiki above it</td>
+<td>One SQLite file under a declared schema registry at version 16,
+opened only on the one qualified SQLite build, with a per-edge event
+journal and side tables for confirmations, refusals, revocations and
+redactions</td>
+<td>Lexical scoring over the user's edges plus everything off the user
+node, an optional embedding lane fused by rank, dated episodes and the
+wiki; quarantined and use-only material renders under a never-assert
+marker on query and is left out of the session briefing</td>
+<td>remember ingests an event and an LLM extracts triples; the event's
+author and declared source floor the disclosure, the extractor routes
+third-party claims to a quarantined relation, and valid_from is the
+event date</td>
+<td>Supersession under an effective-authority rule, with declined
+supersessions recorded; dispute and correct invalidate with a reason;
+source revocation by source identity; targeted redaction of one record's
+content with an attestation; per-user erasure</td>
+<td>user_id on every memory table and every read; the MCP server binds
+one user per deployment and takes no user argument; an optional
+host-supplied principal narrows recall within a user</td>
+<td>A Python library over any Complete callable, with a CLI, a six-tool
+MCP server whose trust baseline the host sets once, export and import,
+and Claude Code hook examples</td>
+<td>maintain runs lifecycle — lapse, decay, staleness flags — and fenced
+consolidation under a lease recorded in a durable operation table</td>
+<td>Disclosure tiers floored by the event's author and declared source,
+a derived assertable gate, a staleness flag only a host-API confirmation
+clears, and source revocation that quarantines a revoked source's later
+events at ingest</td>
+<td>Confirmation commits its audit row in the same transaction or fails
+whole; every edge write is journaled with its full state through one
+choke point that a test enumerates; nothing from a third-party channel
+becomes assertable; a declined supersession is recorded with both
+authorities and the rule version; a redaction receipt names the derived
+records that may still hold the content</td>
+<td>valid_from is the event date, the time a statement was made, so the
+store cannot record that a fact became true before it was said. Source
+revocation is keyed on the source's identity, not a value, and is
+reached through a store-module function the Memory API does not wrap.
+The QUARANTINED label depends on the extractor's routing; the channel
+guarantees only the use-only floor. The store opens on one SQLite build
+and requires Python 3.14. Redaction rewrites journal states and a
+confirmations column in place</td>
 </tr>
 <tr>
 <td><a href="../systems/verel/"><code>verel</code></a></td>
@@ -33142,7 +33149,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 749:</em> <a
+<p><em>66 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33206,8 +33213,7 @@ href="../systems/titen/"><code>titen</code></a>, <a
 href="../systems/universal-memory-engine/"><code>universal-memory-engine</code></a>,
 <a href="../systems/utopia/"><code>utopia</code></a>, <a
 href="../systems/velantrim-exocortex-crystal/"><code>velantrim-exocortex-crystal</code></a>,
-<a href="../systems/veracium/"><code>veracium</code></a>, <a
-href="../systems/verel/"><code>verel</code></a>, <a
+<a href="../systems/verel/"><code>verel</code></a>, <a
 href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
@@ -33412,7 +33418,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>126 of 749:</em> <a
+<p><em>125 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33531,7 +33537,6 @@ href="../systems/theurian/"><code>theurian</code></a>, <a
 href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
 <a href="../systems/titen/"><code>titen</code></a>, <a
 href="../systems/utopia/"><code>utopia</code></a>, <a
-href="../systems/veracium/"><code>veracium</code></a>, <a
 href="../systems/verel/"><code>verel</code></a>, <a
 href="../systems/verimem/"><code>verimem</code></a>, <a
 href="../systems/vestige/"><code>vestige</code></a>, <a

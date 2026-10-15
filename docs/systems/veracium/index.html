@@ -4,27 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A provenance-typed memory whose
-third-party claims are quarantined by construction, whose audit record
-is a precondition for the state change rather than a consequence of it,
-and which keeps a durable log of the corrections it declined to make.">
+    <meta name="description" content="A provenance-typed SQLite memory
+where third-party content is never assertable, confirmation commits its
+audit row or fails, and refused supersessions are recorded.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Veracium — Agent Memory Atlas">
-    <meta property="og:description" content="A provenance-typed memory
-whose third-party claims are quarantined by construction, whose audit
-record is a precondition for the state change rather than a consequence
-of it, and which keeps a durable log of the corrections it declined to
-make.">
+    <meta property="og:description" content="A provenance-typed SQLite
+memory where third-party content is never assertable, confirmation
+commits its audit row or fails, and refused supersessions are
+recorded.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Veracium — Agent Memory Atlas">
-    <meta name="twitter:description" content="A provenance-typed memory
-whose third-party claims are quarantined by construction, whose audit
-record is a precondition for the state change rather than a consequence
-of it, and which keeps a durable log of the corrections it declined to
-make.">
+    <meta name="twitter:description" content="A provenance-typed SQLite
+memory where third-party content is never assertable, confirmation
+commits its audit row or fails, and refused supersessions are
+recorded.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Veracium — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -46,7 +43,7 @@ make.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Veracium",
-      "description": "A provenance-typed memory whose third-party claims are quarantined by construction, whose audit record is a precondition for the state change rather than a consequence of it, and which keeps a durable log of the corrections it declined to make.",
+      "description": "A provenance-typed SQLite memory where third-party content is never assertable, confirmation commits its audit row or fails, and refused supersessions are recorded.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,25 +100,23 @@ make.">
         <div class="document-hero-inner">
           <p class="eyebrow">The refusals are recorded too</p>
           <h1>Veracium</h1>
-          <p class="document-deck">A provenance-typed memory whose
-third-party claims are quarantined by construction, whose audit record
-is a precondition for the state change rather than a consequence of it,
-and which keeps a durable log of the corrections it declined to
-make.</p>
+          <p class="document-deck">A provenance-typed SQLite memory
+where third-party content is never assertable, confirmation commits its
+audit row or fails, and refused supersessions are recorded.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/veracium-ai/Veracium">
               <span>Source</span>
               <strong>veracium-ai/Veracium</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/veracium-ai/Veracium/commit/1d33f0197696ba36903a5f1f3ca9d204e6016fc3" title="1d33f0197696ba36903a5f1f3ca9d204e6016fc3">
+            <a class="meta-pill revision-pill" href="https://github.com/veracium-ai/Veracium/commit/c31bd9f086a35ef361fcf62b1515c04d996c8013" title="c31bd9f086a35ef361fcf62b1515c04d996c8013">
               <span>Analyzed revision</span>
-              <code>1d33f019…</code>
+              <code>c31bd9f0…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/veracium-ai--Veracium" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -129,7 +124,20 @@ make.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>7</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>29,201
+lines of Python in 57 files under src/ and 92,371 in 249 files under
+tests/; 43 numbered specifications under specs/ beside
+them</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,739
+commits by 3 author names, 11 July – 15 October 2026, 1,723 of them by
+one; package version 0.26.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>3,207
+test functions in 249 files under tests/; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -145,387 +153,536 @@ make.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Veracium is the library released alongside <em>Ground Truth First: A
+<p>Veracium is a Python memory library over one SQLite file, written
+spec-first by one author, where content from a third-party channel
+cannot become an asserted fact. A host-only confirmation commits its
+audit row or fails, and every edge write is journaled with its full
+state. The weak side is time and correction: the validity date is when a
+statement was made, and the revocation that keeps a source out is keyed
+on the source, not on any value.</p>
+<p>It is the library released alongside <em>Ground Truth First: A
 Longitudinal Evaluation Instrument for Agent Memory, and the Tenure
 Crossover in Memory-Architecture Rankings</em> (<a
 href="https://arxiv.org/abs/2607.21962">arXiv:2607.21962</a>, Quentin
-Spencer, 24 July 2026). MIT, 25,593 lines under <code>src/</code>
-against <strong>62,104 lines of tests across 159 files</strong>, 1,397
-commits since 11 July 2026.</p>
-<p><strong>All seven capability marks</strong>, which eight systems here
-carry. The reasons are what make it worth a report rather than a row:
-three of the seven are the strongest instance of their mark the atlas
-has read.</p>
+Spencer, 24 July 2026). It carries five marks: <code>trust_state</code>,
+<code>scope_enforced</code>, <code>audit_log</code>,
+<code>human_review</code> and <code>negative_eval</code>.</p>
 <ul>
-<li><p><strong>The audit record is a precondition, not a
-consequence.</strong> <code>confirm_edge</code> is the only path that
-clears <code>needs_confirmation</code>, and it writes the
+<li><strong>The audit record is a precondition.</strong>
+<code>confirm_edge</code> is the only path that clears
+<code>needs_confirmation</code>, and it writes the
 <code>confirmations</code> row inside the same transaction under a
-stated rule: <em>"if the record cannot commit, the whole confirmation
-fails and the flag stays set."</em> Most audit logs in this corpus are
-written after the fact and best-effort.</p></li>
-<li><p><strong>Third-party claims are quarantined by
-construction.</strong> A claim from received email or an external
-document is born <code>QUARANTINED</code> — <em>"unverified third-party
-claim; never asserted"</em> — because of the channel it arrived on, not
-because a classifier judged it. The read path gates on
-<code>assertable</code>, and quarantine is one of its three
-conditions.</p>
-<p>A second reason routes to the same value rather than to a new one.
-When the source an event arrives from stands revoked, every edge of that
-event and the episode with it are born <code>QUARANTINED</code> — the
-ingest path reads standing revocations once per event, before any record
-is written, because <em>"an event half-quarantined by a mid-ingest
-revocation would be worse than either whole answer."</em> Nothing is
-refused: there is no host-configurable refusal, so a revoked source's
-write is recorded and fenced rather than dropped, and the row carries
-<code>quarantined_at_birth</code> and the revocation digest that caused
-it. The audit line takes the digest rather than a count deliberately —
-it is content-free, and it makes <em>"which source is still
-writing"</em> answerable from the audit sink alone, where <em>"a bare
-count answers only 'how much'."</em> A later lift of the revocation does
-not revisit the floor.</p></li>
-<li><p><strong>Refusals are durable.</strong>
+stated contract: <em>"if the record cannot commit, the whole
+confirmation fails and the flag stays set"</em>
+(<code>src/veracium/store/base.py:429-443</code>).</li>
+<li><strong>Nothing from a third-party channel is assertable.</strong>
+Ingest floors an event authored by, or derived from, a third party to
+<code>USE_ONLY</code>; the extractor's <code>third_party_claim</code>
+relation becomes <code>QUARANTINED</code>. Both fail the
+<code>assertable</code> gate, which the briefing and the wiki compiler
+filter on (<code>src/veracium/ingest.py:189-208</code>).</li>
+<li><strong>Refusals are durable.</strong>
 <code>supersession_refusals</code> records the corrections the system
-<em>declined</em> to make: the prior edge, the incoming edge, both
-effective authorities, and the <code>rule_version</code> that refused.
-Every system here records what it superseded; this is the only one that
-records what it would not.</p></li>
+declined: prior edge, incoming edge, both effective authorities and the
+<code>rule_version</code> that refused
+(<code>src/veracium/store/schema_version.py:211-216</code>).</li>
 </ul>
-<p>The cost is stated plainly in section 9: the specification apparatus
-around all of this is larger than the mechanism, and adopting it means
-adopting a governance model.</p>
+<p>The cost is in section 9: adopting this means adopting a
+specification apparatus of 43 numbered specs, and a store that opens on
+one qualified SQLite build.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A memory is an edge with a position on four independent axes, and the
-read path asks about all four before it will state anything as fact.</p>
-<p><em>Where did it come from</em> is <code>provenance</code>, and one
-of its values is <code>QUARANTINED</code>. <em>When was it true</em> is
-<code>valid_from</code> to <code>invalidated_at</code>. <em>When did we
-last see it</em> is <code>observed_at</code>. <em>Is it still worth
-asserting</em> is <code>needs_confirmation</code> and
-<code>active</code>. The derived gate is one line —
-<code>active and not quarantined and not use_only</code> — and
-everything the agent is allowed to state passes it.</p>
-<p>The interesting consequence is that a third-party claim is never
-<em>wrong</em> here, it is <em>unasserted</em>. It stays in the graph,
-is queryable, can be confirmed by a person, and until then cannot be
-spoken.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a claim's channel decides its provenance at birth, and every later transition is gated on a record that must commit before the transition counts</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
-%% caption: a claim&#39;s channel decides its provenance at birth, and every later transition is gated on a record that must commit before the transition counts
-    IN[&quot;remember(user, event)&quot;] --&gt; CH{&quot;channel&quot;}
-    CH --&gt;|&quot;user said it&quot;| P1[&quot;provenance: authored&quot;]
-    CH --&gt;|&quot;received email · external doc&quot;| P2[&quot;provenance: QUARANTINED&lt;br/&gt;never asserted&quot;]
-    CH --&gt;|&quot;identity digest in&lt;br/&gt;standing_revocations&quot;| P3[&quot;QUARANTINED at birth&quot;]
+<p>A memory is an edge, and four of its fields decide whether it may be
+stated: whether it is <code>active</code>, its disclosure tier, and
+whether <code>valid_from</code> has arrived. <code>assertable</code> is
+the conjunction —
+<code>active and not quarantined and not use_only and valid_now</code> —
+and it is what the session briefing, the wiki compiler and the answer
+gate consult (<code>src/veracium/schema.py:828-844</code>).</p>
+<p><strong>A memory is born in a tier set by its channel and its
+extractor.</strong> The author and declared content source are the
+floor: <code>THIRD_PARTY</code> or <code>ASSISTANT</code> anywhere in
+them yields <code>USE_ONLY</code>, may shape behaviour, never
+volunteered. The extractor's prompt routes a third party's claim about
+the user to the relation <code>third_party_claim</code>, which becomes
+<code>QUARANTINED</code>. A claim the extractor misroutes lands
+<code>USE_ONLY</code> instead: unassertable as well, but eligible to
+shape behaviour. An event from a source whose identity stands revoked is
+<code>QUARANTINED</code> whole, edges and episode, before anything is
+written.</p>
+<p><strong>It stops counting by invalidation with a reason.</strong>
+<code>invalidated_at</code> and <code>invalidation_reason</code> retire
+an edge — <code>superseded</code>, <code>lapsed</code>,
+<code>decayed</code>, <code>disputed</code>, <code>corrected</code>,
+<code>absorbed_duplicate</code>, <code>revoked_source</code> or
+<code>redacted</code> — and the row stays for history. Nothing in the
+tree deletes an edge except per-user erasure.</p>
+<p><strong>A durable edge can go stale.</strong> <code>maintain</code>
+sets <code>needs_confirmation</code> on one past its expected lifetime.
+It stays assertable, rendered with a "possibly stale" warning, and only
+the host's <code>confirm</code> clears the flag.</p>
+<p><strong>Time is the statement's time.</strong>
+<code>valid_from</code> is the event date the caller passes, which
+ingest documents as <em>"when a statement was made, not what it is
+about"</em>. It equals <code>observed_at</code> at birth. A correction
+stamps the prior's <code>invalidated_at</code> with the correction's own
+event date. The store's own clock appears only in the journal
+(<code>src/veracium/ingest.py:86-137</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the channel and the extractor set a tier at birth, the assertable gate decides what may be stated, and every edge write lands in the journal in the same transaction</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the channel and the extractor set a tier at birth, the assertable gate decides what may be stated, and every edge write lands in the journal in the same transaction
+flowchart TD
+    IN[&quot;remember(event, author, date)&quot;] --&gt; REV{&quot;source identity in&lt;br/&gt;standing revocations?&quot;}
+    REV --&gt;|yes| Q1[&quot;whole event QUARANTINED&quot;]
+    REV --&gt;|no| AUTH{&quot;author or derived_from&lt;br/&gt;third party or assistant?&quot;}
+    AUTH --&gt;|yes| FLOOR[&quot;floor: USE_ONLY&quot;]
+    AUTH --&gt;|no| MENT[&quot;MENTIONABLE&quot;]
+    FLOOR --&gt; EXT{&quot;extractor relation&lt;br/&gt;third_party_claim?&quot;}
+    MENT --&gt; EXT
+    EXT --&gt;|yes| Q2[&quot;QUARANTINED&quot;]
+    EXT --&gt;|no| KEEP[&quot;tier kept&quot;]
 
-    P1 &amp; P2 &amp; P3 --&gt; E[(&quot;edge&lt;br/&gt;valid_from · invalidated_at · observed_at&lt;br/&gt;volatility · needs_confirmation · active&quot;)]
+    Q1 &amp; Q2 &amp; KEEP --&gt; SUP{&quot;supersession under&lt;br/&gt;effective authority&quot;}
+    SUP --&gt;|declined| REF[(&quot;supersession_refusals&lt;br/&gt;both authorities · rule_version&quot;)]
+    SUP --&gt; E[(&quot;edge&lt;br/&gt;valid_from = event date&quot;)]
+    E --&gt; J[(&quot;edge_event journal&lt;br/&gt;created · mutated · invalidated · reinstated · redacted&quot;)]
 
-    E --&gt; GATE{&quot;assertable =&lt;br/&gt;active ∧ ¬quarantined ∧ ¬use_only&quot;}
-    GATE --&gt;|yes| CTX[&quot;recall(): subgraph + episodes + wiki&quot;]
-    GATE --&gt;|no| HELD([&quot;present, queryable, unspoken&quot;])
+    E --&gt; GATE{&quot;assertable =&lt;br/&gt;active ∧ ¬quarantined ∧ ¬use_only ∧ valid_now&quot;}
+    GATE --&gt;|yes| SAY[&quot;briefing · wiki input · grounded answer&quot;]
+    GATE --&gt;|no| HOLD[&quot;query recall only,&lt;br/&gt;under a never-assert marker&quot;]
 
-    CONF[&quot;confirm_edge(actor: USER | HOST)&quot;] --&gt;|&quot;one transaction&quot;| TX{&quot;confirmations row commits?&quot;}
-    TX --&gt;|no| FAIL([&quot;whole confirmation fails,&lt;br/&gt;flag stays set&quot;])
-    TX --&gt;|yes| CLR[&quot;needs_confirmation cleared&lt;br/&gt;observed_at advanced&quot;]
-    CLR --&gt; E
-
-    NEW[&quot;incoming edge&quot;] --&gt; SUP{&quot;supersede prior?&quot;}
-    SUP --&gt;|applied| SO[(&quot;supersession_operations&quot;)]
-    SUP --&gt;|&quot;declined&quot;| SR[(&quot;supersession_refusals&lt;br/&gt;prior · incoming · both effectives · rule_version&quot;)]
-
-    REV[&quot;revoke(identity_digest)&quot;] --&gt; RL[(&quot;source_revocations&lt;br/&gt;append only · revoke | lift&quot;)]
-    RL -.-&gt;|&quot;standing set derived, never stored&quot;| SWEEP[&quot;sweep(): retire · recompute · reinstate&lt;br/&gt;+ completeness class + blind spot&quot;]
-    SWEEP --&gt; E</code></pre></details></figure>
+    MAINT[&quot;maintain()&quot;] --&gt;|past expected lifetime| FLAG[&quot;needs_confirmation&quot;]
+    FLAG --&gt; CONF[&quot;host confirm()&lt;br/&gt;not on the MCP surface&quot;]
+    CONF --&gt; TX{&quot;confirmations row commits?&quot;}
+    TX --&gt;|no| FAIL[&quot;confirmation fails,&lt;br/&gt;flag stays set&quot;]
+    TX --&gt;|yes| CLR[&quot;flag cleared, journaled&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<p>One SQLite file, a Python library, and an amount of specification
-machinery that is itself the story. The schema is not a string of
-<code>CREATE TABLE</code> calls but a <strong>declared
-registry</strong>: fifteen versions, each object a
-<code>SchemaObject</code> with a kind, a name, DDL held
-<em>byte-identical to what SQLite stores in
-<code>sqlite_master.sql</code></em>, and a policy of
-<code>REQUIRED</code> or <code>REBUILDABLE</code>. A validator refuses
-to let a table be marked rebuildable — <em>"repairing a table would
-destroy data or silently change behaviour"</em> — and refuses duplicate
-typed keys and non-contiguous versions.</p>
-<p>The reason for the byte-identity is recorded as a measurement rather
-than a principle: a <code>sources</code> table declared one way and
-migrated another produced two different stored schemas for what was
-nominally one version.</p>
+<p>One SQLite file and a Python package. The schema is a
+<strong>declared registry</strong>: sixteen versions, each object a
+<code>SchemaObject</code> with a kind, a name, DDL held byte-identical
+to what SQLite stores in <code>sqlite_master.sql</code>, and a policy of
+<code>REQUIRED</code> or <code>REBUILDABLE</code>. Only an index may be
+rebuildable, because <em>"Repairing a table would destroy data;
+repairing a trigger or view silently changes behaviour"</em>
+(<code>src/veracium/store/schema_version.py:61-64</code>,
+<code>:733</code>). Migrations run under a durable operation record, and
+the evidence files that qualify a runtime ship as package data.</p>
+<p>The memory tables are <code>edges</code>, <code>episodes</code>,
+<code>edge_event</code>, <code>episode_event</code>,
+<code>confirmations</code>, <code>request_registry</code>,
+<code>supersession_refusals</code>,
+<code>supersession_operations</code>, <code>source_revocations</code>,
+<code>contribution_ledger</code>, <code>consolidation_ops</code>,
+<code>edge_embedding</code>, <code>policy_receipt</code>,
+<code>redactions</code>, <code>write_counter</code> and
+<code>wiki</code>, each keyed by <code>user_id</code>. Three singletons
+— <code>store_identity</code>, <code>store_epoch</code>,
+<code>act_counter</code> — carry no user.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The store opens only on SQLite 3.45.1 as packaged by Ubuntu 24.04.
+The README states that on any other build <em>"it refuses to create a
+store AND refuses to open an existing one"</em>, and
+<code>sqlite_runtimes.json</code> lists one runtime.
+<code>pyproject.toml</code> requires Python 3.14 or newer. Together
+these make the first run a matter of finding a Python 3.14 linked
+against that one library build.</p>
+<p>Writing anything needs an LLM: <code>remember</code> extracts triples
+through a <code>Complete</code> callable, and the MCP server expects
+<code>ANTHROPIC_API_KEY</code>. An embedder is optional. Reads of the
+store and the briefing are LLM-free. The file is ordinary SQLite with
+JSON in the <code>edges.json</code> column, inspectable by hand;
+<code>veracium why</code> prints one edge's whole biography from the
+journal, confirmations, contributions and refusals
+(<code>src/veracium/why.py:114-233</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><strong>Quarantine is a property of the channel.</strong>
-<code>ingest</code> stamps disclosure from who authored the event and
-where it arrived, so an external document's claims are
-<code>QUARANTINED</code> before anything reads them. Contrast the common
-arrangement in this corpus, where everything is ingested equal and a
-later pass tries to work out what was trustworthy.</p>
-<p><strong>Revocation is keyed on content and consulted at
-birth.</strong> <code>source_revocations</code> is append-only per user
-with <code>action IN ('revoke','lift')</code> over an
-<code>identity_digest</code>; the standing set is <em>derived, never
-stored</em>, so a lift is a new row rather than a mutation.
-<code>ingest.py</code> then does the thing that turns this from a delete
-into a tombstone:</p>
-<pre class="python"><code>revoked_at_birth = (_birth_digest is not None
-                    and _birth_digest in store.standing_revocations(user_id))</code></pre>
-<p>and the record is admitted with <code>Disclosure.QUARANTINED</code>.
-Re-ingesting revoked material does not silently restore it and does not
-fail loudly either — it arrives unasserted.
-<code>tests/test_0023_non_revival.py</code> pins six paths by which it
-must not come back: it cannot reinforce, renew, supersede, be absorbed
-as a duplicate, or enter consolidation.</p>
-<p><strong>The sweep states its own blind spot.</strong>
-<code>revocation_sweep.py</code> is 822 lines of pure, I/O-free,
-clock-free reference implementation computing the standing set, each
-survivor's completeness class and basis, the effect list
-(<code>retire</code>/<code>recompute</code>/<code>reinstate</code>) and
-<em>"the COMPLETENESS STATEMENT — the blast radius AND the blind
-spot."</em> Its pinned vectors live beside it with a self-executing
-harness, on a stated rationale: <em>"a disagreement between two
-implementations is a failing vector rather than an argument."</em> The
-recompute is restrict-only, because a non-monotone recompute would be
-<em>"a promotion wearing a recompute's clothes."</em></p>
-<p><strong>Confirmation is atomic or it did not happen.</strong> The
-<code>confirm_edge</code> contract, in the store base class, is the
-strongest audit statement in this corpus and worth quoting whole: one
-transaction verifies ownership and assertability, clears the flag,
-advances <code>observed_at</code>/<code>confidence</code>, writes the
-confirmation episode and persists the mandatory record; if the record
-cannot commit the confirmation fails; it is idempotent on
-<code>(user_id, correlation_id)</code> against a request digest built
-from <em>the caller's</em> inputs so two date-less retries are one
-request; a different request under the same id is an integrity conflict;
-and <em>"a backend that cannot do this atomically MUST raise, not
-degrade."</em></p>
+<p><strong>Write.</strong> <code>Memory.remember</code>
+(<code>src/veracium/__init__.py:551</code>) normalises the event date
+through <code>_event_dt</code>, which refuses a malformed or future date
+rather than falling back to now. <code>ingest_event</code> reads the
+standing revocation set once per event, so <em>"the whole event gets one
+verdict"</em>, then extracts and builds edges with
+<code>valid_from=when</code>
+(<code>src/veracium/ingest.py:339-352</code>, <code>:797</code>). Each
+edge passes through <code>_build_supersession_plan</code>, which the
+store applies atomically with a compare-and-swap fingerprint
+(<code>src/veracium/graph.py:402-460</code>).</p>
+<p><strong>Journal.</strong> Every function that writes
+<code>edges</code> is listed in <code>EDGE_WRITE_SITE_RULINGS</code>
+with its event ruling, and a test derives the population by regex and
+refuses an unlisted site. Each calls <code>_journal_edge_write</code>
+inside its transaction, which decides the kind from the write and
+appends the full JSON state
+(<code>src/veracium/store/sqlite.py:143-173</code>,
+<code>:308-380</code>).</p>
+<p><strong>Read.</strong> <code>recall</code> scores the user's edges
+lexically, keeps every edge off the user node eligible, optionally fuses
+an embedding lane, adds episodes and the wiki, and renders within a
+token budget in a frozen priority order
+(<code>src/veracium/__init__.py:821-925</code>,
+<code>src/veracium/graph.py:733-767</code>). With no query it builds a
+briefing that skips every non-assertable edge
+(<code>src/veracium/proactive.py:168-189</code>). <code>answer</code>
+runs recall and an abstention gate over the grounded partition only.</p>
+<p><strong>Confirm.</strong> <code>confirm_edge</code> verifies
+ownership and assertability, clears the flag, advances
+<code>observed_at</code> and <code>confidence</code>, writes a
+confirmation episode, journals the edge and inserts the
+<code>confirmations</code> row, idempotent on
+<code>(user_id, correlation_id)</code>
+(<code>src/veracium/store/sqlite.py:751-845</code>).</p>
+<p><strong>Revoke.</strong> <code>revoke_source</code> appends a
+<code>revoke</code> or <code>lift</code> row to
+<code>source_revocations</code> keyed on a source identity digest, and
+the sweep retires, recomputes or reinstates what that source contributed
+(<code>src/veracium/store/revocation.py:306</code>). The Memory API
+exposes no wrapper; outside tests, its one caller is
+<code>selfcheck.py</code>.</p>
+<p><strong>Redact.</strong> <code>redact</code> replaces one record's
+content carriers with a marker in one transaction, sets every prior
+journal state for that edge to the marker, appends a
+<code>redacted</code> event and writes an attestation row
+(<code>src/veracium/store/sqlite.py:3095-3266</code>). Its receipt
+carries no content digest, sets <code>receipts_complete=False</code>,
+and names the derived records that may still carry the content.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>An <code>Edge</code> carries
 <code>subject</code>/<code>relation</code>/<code>object</code>, a
-<code>note</code>, a <code>Volatility</code> class, a
-<code>Provenance</code>, <code>valid_from</code>,
-<code>invalidated_at</code>, an <code>invalidation_reason</code> from a
-closed vocabulary — <code>superseded</code>, <code>lapsed</code>,
-<code>decayed</code>, <code>disputed</code>, <code>corrected</code>,
-<code>absorbed_duplicate</code> — a <code>supersedes</code> pointer, an
-<code>original_relation</code> for structural re-disposition, and
-<code>needs_confirmation</code>.</p>
-<p>Two things about that list are unusual.</p>
-<p><strong>Why a memory stopped counting is a field.</strong> Six named
-reasons, so <em>lapsed</em> (its lifetime ran out) is distinguishable
-from <em>disputed</em> (someone objected) and from
-<em>absorbed_duplicate</em> (it merged into another). Most stores here
-record that a memory is inactive and leave the reason to be inferred
-from adjacent rows.</p>
+<code>note</code>, a <code>Volatility</code>, a <code>Provenance</code>
+(author, evidence ref, <code>observed_at</code>, disclosure, confidence,
+source id, origin), <code>valid_from</code>,
+<code>invalidated_at</code>, <code>invalidation_reason</code>,
+<code>supersedes</code>, <code>original_relation</code>,
+<code>needs_confirmation</code>, <code>ungrounded</code>, an agreement
+record and outcome aggregates
+(<code>src/veracium/schema.py:712-760</code>).</p>
+<p><strong>Why a memory stopped counting is a field.</strong> The
+invalidation reasons form a closed registry, so <em>lapsed</em> is
+distinguishable from <em>disputed</em> and from
+<em>absorbed_duplicate</em>; <code>redacted</code> may be written only
+by a redaction.</p>
+<p><strong>The time fields are three clocks with two producers.</strong>
+<code>valid_from</code> and <code>observed_at</code> both come from the
+caller's event date at ingest; <code>observed_at</code> then advances on
+confirmation. <code>edge_event.recorded_at</code> is minted by the store
+and never accepted from a caller
+(<code>src/veracium/store/edge_events.py:37-50</code>). Two docstrings
+describe <code>observed_at</code> as when Veracium recorded a fact
+(<code>src/veracium/__init__.py:1803-1815</code>,
+<code>src/veracium/graph.py:763-766</code>). The code sets it from the
+caller's date, and spec 0029 calls it <em>"observation metadata, not
+transaction time"</em>.</p>
+<p><strong>Source identity is a pair, not content.</strong>
+<code>identity_digest</code> is SHA-256 over a framed
+<code>(origin, source_id)</code>, where <code>source_id</code> is a
+host-chosen id for a mailbox or connector
+(<code>src/veracium/source_identity.py:1-63</code>). Revocation,
+contribution ledgers and import notices join on it.</p>
 <p><strong>Serialization is a contract.</strong>
-<code>original_relation</code> is omitted from <code>model_dump</code>
-when <code>None</code> so an unaffected edge's JSON stays byte-identical
-to its pre-feature shape — an optional field that serialized its own
-<code>None</code> <em>"breaks every byte contract."</em> That level of
-care about the wire format is what makes the portability layer and the
-schema manifests checkable.</p>
+<code>original_relation</code> and <code>agreement</code> are omitted
+from every dump when <code>None</code>, so an unaffected edge's JSON
+stays byte-identical to its shape before those fields existed; the code
+calls a serialized <code>None</code> something that <em>"breaks every
+byte contract"</em>.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p><code>recall</code> assembles an entity-matched subgraph for the
-query, adds dated episodes and, when enabled, the LLM-curated wiki.
-Retrieval is graph traversal rather than vector search; the atlas's
-storage census records the arm as <code>graph</code>.</p>
-<p>The gate is where the trust model earns its keep:
-<code>assertable</code> decides what may be stated, quarantined material
-<em>"never surfaces unprompted"</em>, and <code>use_only</code> material
-is available for reasoning without being assertable. A claim from a
-stranger's email is therefore in the store, findable, and unable to
-become something the agent says.</p>
+<p>Retrieval is lexical token scoring over the user's edges — subject,
+relation, object and note — with every edge off the user node eligible
+and relevance deciding what survives the cap, recency on
+<code>observed_at</code> as tiebreak. An embedding lane runs when the
+host supplies an <code>Embed</code> callable, scoped before top-k and
+checked against a content digest so a stale vector is skipped
+(<code>src/veracium/store/sqlite.py:3416-3440</code>). A host
+<code>PolicyLane</code> can add a third ranked lane whose firing writes
+a durable receipt.</p>
+<p>The rendered context partitions grounded from unverified. On a query,
+quarantined and use-only edges appear under a never-assert marker. The
+briefing volunteers only assertable, mentionable edges. A supplied
+<code>principal</code> restricts every carrier to what the visibility
+relation admits, renders cross-scope material as unassertable testimony
+and drops the wiki. With <code>as_of</code>, recall answers from the
+valid-time interval, which section 5 notes is the statement-date
+interval.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Ingest types the event, stamps provenance, and applies supersession
-under an effective-authority rule. When the rule declines, the decision
-is written to <code>supersession_refusals</code> with both edges, both
-effective authorities and the <code>rule_version</code> — so a later
-rule change can be reasoned about against the decisions the old rule
-made, instead of being invisible.</p>
-<p>Consolidation is fenced: <code>consolidation_ops</code> is a durable
-state machine with an operation id, a fence, a state, an owner, a lease
-and its expiry, so a crashed consolidation is recoverable by takeover
-rather than by a lock nobody holds.</p>
+<p>Writes are synchronous: <code>remember</code> blocks on an LLM
+extraction, then on a journaled transaction. The extractor copies dates
+from a supplied calendar and is told to emit third-party assertions only
+as <code>third_party_claim</code>. After extraction, ingest refuses or
+flags what it cannot ground: an object whose specifics are not in the
+event text is <code>ungrounded</code>, and a flagged triple from an
+event that is not user-effective is refused and counted.</p>
+<p>Supersession applies only when the incoming edge's effective
+authority is at least the prior's. When it is not, the prior stays
+active, both are visible as a contest, and a refusal row is written.
+Reinforcement stores the restatement untouched and does not renew the
+prior, so restating a stale fact does not clear its flag.</p>
+<p>Consolidation is fenced: <code>consolidation_ops</code> holds an
+operation id, a fence, a state, an owner, a lease and its expiry, so a
+crashed run is recovered by takeover. Writes from a revoked source are
+admitted quarantined rather than refused.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A library first — <code>Memory(llm=...)</code>,
-<code>remember</code>, <code>recall</code> — over any
-<code>Complete</code> callable, with an MCP server manifest, a CLI and a
-portability layer. The package docstring states the isolation invariant
-as part of the interface: <em>"Memory is per-user; one user's memory
-never reaches another's."</em></p>
+<p>The MCP server serves six tools — <code>remember</code>,
+<code>recall</code>, <code>answer</code>, <code>maintain</code>,
+<code>record_procedure</code>, <code>describe_procedures</code> — over a
+user fixed at construction
+(<code>src/veracium/mcp_server.py:374-509</code>). The host sets a
+capability once: unset, every event is third-party class and a
+model-supplied <code>author</code> can only restrict;
+<code>direct</code> means the deployment vouches for the model's
+authorship labels. The source id is the deployment's, never a tool
+argument. Correction, dispute, confirmation, redaction, export and
+erasure are library calls a host makes;
+<code>examples/claude_code_hooks/</code> shows capture and briefing
+hooks.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The three strongest properties are the ones listed in section 1, and
-the honest counterweight is the size of what surrounds them.</p>
+<p><strong>Injection resistance is structural, with one model-dependent
+label.</strong> No path from a third-party channel reaches the
+assertable set, and the MCP <code>author</code> argument cannot raise
+trust under the default capability. Which unassertable tier a
+third-party claim lands in is the extractor's call.</p>
+<p><strong>The audit trail is strong and has one in-place
+rewrite.</strong> The journal and the confirmations table are
+append-only except for redaction, which tombstones prior journal states
+and a confirmation's request digest, and per-user erasure, which deletes
+them (<code>src/veracium/store/sqlite.py:3145-3188</code>,
+<code>:3293-3321</code>). A test pins exactly those two writers
+(<code>tests/test_0029_carrier.py:142-163</code>).</p>
+<p><strong>Correction is record-keyed.</strong> <code>dispute</code> and
+<code>correct</code> retire an edge by id; supersession reads only
+active edges; redaction attests a record by id and refuses a write that
+would reintroduce the marker. Nothing records a rejected value that a
+later extraction consults. Source revocation stops a source, not a
+value: the same value from another source, or restated by the user, is
+admitted normally.</p>
+<p><strong>Valid time is the statement's time.</strong> A fact said in
+June about March carries <code>valid_from</code> June unless the host
+backdates the event. An <code>as_of</code> read therefore answers
+<em>what had been said by T</em>, and the journal answers <em>what the
+store held at T</em>.</p>
 <p><strong>The apparatus is larger than the mechanism.</strong> Comments
-cite spec sections inline — <code>specs/0008 §6d</code>,
-<code>specs/0013 §4e</code>, <code>0022 R11</code>, <code>0025 §2</code>
-— a v6 migration is described as <em>"the repo's FIRST ALTER of an
-existing table"</em> with its ALTER-path DDL held as a reviewed constant
-the migration must byte-match, and a scope surface is said to have
-<em>"survived fourteen review rounds"</em>. For a reader evaluating this
-against a two-file memory library, the thing being adopted is a
-governance model with a store attached. That is a real cost and it is
-not hidden; whether it is the right trade depends entirely on whether
-the adopter's memory is one whose corrections have to be defensible.</p>
+cite spec sections and review rounds inline, and the 43 numbered
+specifications run to 54,073 lines of Markdown beside 29,201 lines of
+source. What an adopter takes on is a governance model with a store
+attached, and the single qualified SQLite build is the first part of it
+they will meet.</p>
 <p><strong>The benchmark that ranks it first is the same
-author's.</strong> The paper introduces the evaluation instrument and
-Veracium in one document, and reports Veracium's layered architecture
-best among the memory systems at 96.8% short-horizon. What makes that
-readable rather than circular is in section 10.</p>
+author's.</strong> The paper introduces the instrument and Veracium
+together; section 10 says what makes the comparison readable.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>104 test files and 39,168 lines against 17,707 of source — more than
-two to one, and the highest ratio at this size in the corpus. Nothing
-was run for this review. Test files are named for the specs they
-discharge (<code>test_0023_non_revival.py</code>,
-<code>test_0020_read_surfaces.py</code>,
-<code>test_0003_supersession_contested.py</code>), which makes the suite
-readable as a conformance record rather than as coverage.</p>
-<p><code>negative_eval</code> rests on assertions about what recall must
-<em>not</em> contain — <code>assert "unemployed" not in r.context</code>
-after a supersession, and a cross-scope pair asserting two other users'
-entities are absent — plus the six non-revival cases.</p>
-<h3 id="the-paper-and-why-the-self-benchmark-is-readable">The paper, and
-why the self-benchmark is readable</h3>
-<p><em>Ground Truth First</em> inverts the usual pipeline. Benchmarks
-<em>"generate conversations first and extract answer keys afterwards —
-with documented label-error and contamination problems"</em>; this one
-emits facts with validity intervals, volatility classes and source
-channels <strong>before any text exists</strong>, renders chat and email
-from per-event fact manifests, verifies every planted fact, and
-instantiates questions mechanically, so gold answers are
-<em>"script-valid by construction."</em> About 380 questions, 15 types,
-fictionalised.</p>
-<p>Four features of the setup matter to this atlas more than the
-ranking.</p>
-<p><strong>It measures two horizons, and the ranking inverts between
-them.</strong> The headline finding — the <em>tenure crossover</em> — is
-that a budgeted curated-map memory leading at three weeks (96%) falls to
-72% by nine weeks as evicted content is lost, while a provenance-typed
-graph rises to 90%, with the inversion positive for all six users under
-cross-family re-judging (exact p=0.031). <strong>Short-horizon
-benchmarks systematically favour designs that discard</strong>, and
-almost every evaluation this atlas has read is short-horizon.</p>
-<p><strong>It runs a no-memory control and a full-history
-baseline.</strong> The full-rendered-history baseline <em>"ties or
-exceeds the best memory system at the short horizon but shows no
-judge-independent advantage at nine weeks, at about twice the read
-cost."</em> An author reporting that their own memory system is matched
-by simply pasting the transcript — at the horizon most benchmarks use —
-is the same finding this page records from <a
+<p>I ran nothing. Test files are named for the specs they discharge, so
+the suite reads as a conformance record. <code>negative_eval</code>
+rests on three committed cases, each beside a positive read of the same
+populated store:
+<code>tests/test_0003_supersession_contested.py:87-104</code>,
+<code>tests/test_0020_read_surfaces.py:271-302</code> and
+<code>:459-485</code>. All use a fake LLM. The principal cases assert
+scope within one user. The per-user partition is checked by
+<code>check_isolation</code> in the robustness harness
+(<code>tests/robustness/invariants.py:220-227</code>), which drives a
+scripted run.</p>
+<p><code>tests/test_0023_non_revival.py</code> holds seven cases: five
+assert that a revoked source does not reinforce, renew, supersede, merge
+as a duplicate or enter consolidation, and two are controls. They assert
+write effects, not retrieval.</p>
+<h3 id="the-paper">The paper</h3>
+<p><em>Ground Truth First</em> emits facts with validity intervals,
+volatility classes and source channels before any text exists, renders
+chat and email from per-event manifests, and instantiates questions
+mechanically so gold answers are, in its words, <em>"script-valid by
+construction"</em>. Its headline is that rankings invert with history
+length: a budgeted curated-map memory leads at three weeks and falls by
+nine as evicted content is lost, while a provenance-typed graph
+rises.</p>
+<p>It runs a no-memory control and a full-history baseline that
+<em>"ties or exceeds the best memory system at the short horizon"</em>,
+the same finding this atlas records from <a
 href="../../benchmarks/#a-benchmark-whose-baseline-wins-and-the-category-that-cannot-fail">FP-AMB</a>'s
-TF-IDF baseline, and it is why the self-benchmark reads as evidence
-rather than marketing.</p>
-<p><strong>Write quality predicts read quality, and it is
-measured.</strong> <em>"Weakly-written facts fail 24% vs 2%."</em> This
-atlas repeatedly finds capture treated as the cheap half of a memory
-system; here is the number.</p>
-<p><strong>Injection resistance is tested as a structural
-property.</strong> It <em>"tracked whether provenance boundaries survive
-representation"</em> — which is the same claim the quarantine design
-makes, evaluated rather than asserted.</p>
-<p>Three replicates, a versioned LLM judge and a fixed answerer are
-stated. The corpus generator and harness are released with the library.
-What no artifact here recomputes is the published means — the numbers
-live in the paper, and this repository is the library rather than the
-run record.</p>
+TF-IDF baseline. The corpus generator and harness ship under
+<code>bench/</code>; the published means are in the paper and no
+artifact here recomputes them.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p><strong>Make the audit record a precondition.</strong> <em>"If the
-record cannot commit, the whole confirmation fails and the flag stays
-set"</em> is one sentence and it is the difference between an audit
-trail and an audit trail with gaps exactly where the system was under
-stress.</p>
-<p><strong>Quarantine by channel, not by classifier.</strong> Deciding
-that received email is unasserted because it is received email needs no
-model, cannot drift, and is the property an injection probe actually
-tests.</p>
-<p><strong>Record the corrections you refuse.</strong> A supersession
-that was declined, stamped with the rule version that declined it, is
-what lets a later rule change be evaluated against the decisions the old
-one made.</p>
-<p><strong>Key a revocation on the content, and quarantine on
-re-ingest.</strong> Deleting rows lets the next sync restore them; a
-digest in a standing set makes the re-ingested copy arrive unasserted
-instead.</p>
-<p><strong>Give "no longer valid" a vocabulary.</strong> Six reasons
-cost nothing and turn a dead row into a diagnosis.</p>
+<h3 id="steal">Steal</h3>
+<p>Make the audit record a precondition. One transaction that clears the
+flag and inserts the record, failing whole, removes the gap where an
+audit trail goes quiet under stress.</p>
+<p>Journal every row write through one choke point, and test the
+population. A regex over the store's own source that refuses an unlisted
+writer keeps the journal complete as the store grows.</p>
+<p>Floor trust by channel before any model runs. Received email that can
+never become assertable needs no classifier to be right.</p>
+<p>Record the corrections you refuse, with the rule version, so a later
+rule change can be judged against what the old rule declined.</p>
+<p>Return what a deletion cannot vouch for. A redaction receipt that
+names the derived records that may still hold the content is honest
+about propagated copies.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Calling a statement date a validity date. If the extractor can read
+"since March" from the text, a separate field for it is the difference
+between when something was said and when it became true.</p>
+<p>Keying a correction on the record or the source and expecting it to
+stop a value. Re-extraction mints a new record, and the user is a source
+too.</p>
+<p>Docstrings that describe a caller-supplied field as the store's
+clock; the journal's <code>recorded_at</code> is that clock, and the two
+answer different questions.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits an application whose memory must explain itself to someone
+— a user asking why it said something, a reviewer of corrections — and
+which ingests text other people wrote. It assumes a host that
+authenticates users, runs <code>maintain</code>, confirms through its
+own UI, and can run on the qualified SQLite build. Walk away if you need
+a small library, a rejected value to stay rejected, or valid time
+distinct from when a fact was said.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p><strong>What does the apparatus cost a second implementer?</strong>
-The reference modules and pinned vectors exist so a second backend can
-be checked, and no second backend exists in the tree to check them
-against.</p>
-<p><strong>Does the tenure crossover reproduce off this corpus?</strong>
-It is the paper's most consequential claim for everyone else's benchmark
-design, measured once, on a synthetic corpus by the author of the system
-that wins at the long horizon.</p>
-<p><strong>How much of the seven marks survives a smaller
-adoption?</strong> Quarantine, revocation and confirmation are separable
-ideas; whether they work outside the spec apparatus that produced them
-is not something the tree answers.</p>
+<p>Whether a host-facing <code>revoke_source</code> will join the Memory
+API; the sweep and its vectors are complete, and the one non-test caller
+is the self-check.</p>
+<p>Whether the extractor will ever populate a valid time from content.
+Spec 0029 describes the store before its journal as <em>"bi-temporal in
+VALID time only"</em>, and the journal added the transaction axis, not a
+content-derived valid one.</p>
+<p>Whether the single qualified SQLite build widens, which decides
+whether a store moved between machines stays openable.</p>
+<p>Whether the tenure crossover reproduces off this synthetic
+corpus.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Path</th>
-<th>What it holds</th>
+<th>What to read it for</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>src/veracium/schema.py</code></td>
-<td><code>Edge</code>, <code>Provenance</code>,
-<code>ConfirmationActor</code>, the invalidation vocabulary,
+<td><code>src/veracium/schema.py:90-152</code>,
+<code>:712-844</code></td>
+<td>Disclosure tiers, confirmation types, <code>Edge</code>,
 <code>assertable</code></td>
 </tr>
 <tr>
+<td><code>src/veracium/ingest.py:86-208</code>, <code>:339-352</code>,
+<code>:797</code></td>
+<td>The event-date rule, the disclosure floor, the once-per-event
+revocation read</td>
+</tr>
+<tr>
+<td><code>src/veracium/graph.py:402-460</code>,
+<code>:733-767</code></td>
+<td>Supersession planning, lexical subgraph retrieval</td>
+</tr>
+<tr>
+<td><code>src/veracium/proactive.py:168-189</code></td>
+<td>The briefing's assertable gate</td>
+</tr>
+<tr>
+<td><code>src/veracium/compile.py:146-155</code></td>
+<td>The wiki compiler's input filter</td>
+</tr>
+<tr>
+<td><code>src/veracium/store/sqlite.py:143-173</code>,
+<code>:308-380</code></td>
+<td>Edge write sites and the journal choke point</td>
+</tr>
+<tr>
+<td><code>src/veracium/store/sqlite.py:751-845</code></td>
+<td><code>confirm_edge</code></td>
+</tr>
+<tr>
+<td><code>src/veracium/store/sqlite.py:3095-3321</code></td>
+<td>Redaction and erasure</td>
+</tr>
+<tr>
+<td><code>src/veracium/store/base.py:429-443</code></td>
+<td>The confirmation contract</td>
+</tr>
+<tr>
 <td><code>src/veracium/store/schema_version.py</code></td>
-<td>The declared registry at schema version 14, REQUIRED vs
-REBUILDABLE</td>
+<td>The declared registry at version 16</td>
 </tr>
 <tr>
-<td><code>src/veracium/store/base.py</code></td>
-<td>The <code>confirm_edge</code> contract, including the
-must-raise-not-degrade rule</td>
+<td><code>src/veracium/source_identity.py</code></td>
+<td>The source identity digest</td>
 </tr>
 <tr>
-<td><code>src/veracium/store/revocation_sweep.py</code></td>
-<td>The pure sweep, the completeness statement, the pinned vectors</td>
+<td><code>src/veracium/store/revocation.py</code>,
+<code>revocation_sweep.py</code></td>
+<td>Revocation and the pure sweep</td>
 </tr>
 <tr>
-<td><code>src/veracium/ingest.py</code></td>
-<td>Channel-derived disclosure, and the one standing-state read per
-event that quarantines a revoked source's writes</td>
+<td><code>src/veracium/mcp_server.py:374-509</code></td>
+<td>The six tools and the host capability</td>
 </tr>
 <tr>
-<td><code>src/veracium/scope.py</code>, <code>scope_linkage.py</code>,
-<code>scope_read.py</code></td>
-<td>The per-user read surface</td>
+<td><code>tests/test_0029_carrier.py</code></td>
+<td>Journal completeness and append-only</td>
 </tr>
 <tr>
-<td><code>src/veracium/graph.py</code></td>
-<td><code>subgraph_for_query</code>, <code>render_edges</code></td>
+<td><code>tests/test_confirm_contract_0008.py</code></td>
+<td>Atomic, idempotent, host-only confirmation</td>
 </tr>
 <tr>
-<td><code>tests/test_0023_non_revival.py</code></td>
-<td>Seven paths a revoked source must not return by</td>
-</tr>
-<tr>
-<td><code>tests/test_0023_quarantine_at_birth.py</code></td>
-<td>One verdict per event, and a later lift that does not revisit the
-floor</td>
-</tr>
-<tr>
-<td><code>tests/test_0023_resurfacing_pin.py</code></td>
-<td>A manifest regenerated from the shipped surface, with each cell
-asserted by name so a wrongly-regenerated pin still fails</td>
-</tr>
-<tr>
-<td><code>tests/test_0020_read_surfaces.py</code>,
-<code>test_0003_supersession_contested.py</code></td>
-<td>Cross-scope and post-supersession absence</td>
+<td><code>tests/test_0003_supersession_contested.py</code>,
+<code>tests/test_0020_read_surfaces.py</code></td>
+<td>The must-not-appear cases</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'valid_from[[:space:]]*=' -- src ':!*evidence*'</code>
+— <code>ingest.py:797</code> and <code>__init__.py:2104</code> take
+<code>when</code>, the event date; <code>procedures.py:171</code> takes
+<code>when or utcnow()</code>; <code>graph.py:505</code> keeps the
+earlier of two; the rest reconstruct or recompute. No producer reads a
+time from content.</li>
+<li><code>git grep -n -E 'DELETE FROM|UPDATE [a-z_]+ SET' -- src ':!*evidence*'</code>
+— the <code>edge_event</code> and <code>confirmations</code> writers are
+<code>_redact_in_txn</code> (<code>sqlite.py:3145</code>,
+<code>:3184</code>) and <code>forget_user</code> (<code>:3314</code>,
+<code>:3318</code>); no <code>DELETE FROM edges</code> appears, and
+<code>forget_user</code> reaches <code>edges</code> through
+<code>_ERASE_TABLES</code>.</li>
+<li><code>git grep -n -i -E 'prune|retention|vacuum|purge' -- src ':!*evidence*'</code>
+— prose and the unused <code>prune</code> table entries in
+<code>scope_linkage.py</code>; no retention prune.</li>
+<li><code>git grep -n -i -E 'tombstone|blocklist|denylist|rejected value|re-?assert' -- src ':!*evidence*'</code>
+— redaction's journal tombstone, telemetry consent, and a gate comment;
+nothing keyed on a value.</li>
+<li><code>git grep -n -E 'def (revoke|lift)|revoke_source' -- src</code>
+— the function in <code>store/revocation.py</code> and its calls in
+<code>selfcheck.py</code>; no Memory method.</li>
+<li><code>git grep -n -E 'needs_confirmation[[:space:]]*=[^=]|needs_confirmation=' -- src ':!*evidence*'</code>
+— two setters to True and one to False, in
+<code>confirm_edge</code>.</li>
+<li><code>git grep -n -E '\.(confirm|confirm_edge|confirm_notice|redact|correct)\(' -- ':!tests' ':!specs' ':!*.md'</code>
+— the Memory methods' own store calls; no CLI or hook caller.</li>
+<li><code>git grep -n 'include_quarantined=False' -- src</code> —
+<code>compile.py:152</code>, the wiki compiler.</li>
+<li><code>git grep -n -E 'QUARANTINE_RELATION|third_party_claim' -- src/veracium/ingest.py src/veracium/prompts.py</code>
+— the relation is the extractor's output, checked at
+<code>ingest.py:197</code>.</li>
+<li><code>git grep -n -i -E 'anthropic|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/veracium-ai/Veracium/commit/c31bd9f086a35ef361fcf62b1515c04d996c8013"><code class="commit-id" title="c31bd9f086a35ef361fcf62b1515c04d996c8013">c31bd9f0…</code></a>
+— 299 commits on, schema version 14 to 16. Added: targeted redaction,
+imported redaction notices awaiting a host confirmation, a request
+registry, a Python 3.14 floor. Two marks withdrawn, both wrong at the
+earlier pin: <code>tombstone</code>, because source revocation is keyed
+on <code>(origin, source_id)</code>, not content (<a
+href="#5-memory-data-model">section 5</a>); <code>bitemporal</code>,
+because <code>valid_from</code> is the event date, equal to
+<code>observed_at</code> at birth (<a href="#2-mental-model">section
+2</a>). <code>audit_log</code> re-anchored on the edge journal. Also
+wrong then: a three-condition <code>assertable</code>, channel-born
+quarantine, cross-user test cases, fifteen schema versions, and a census
+carried from an earlier pin. Screened from a full clone: four files, one
+auto-run manifest, <code>tests/conftest.py</code>,
+<code>pyproject.toml</code> unpinned and inside the cooldown. Nothing
+was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — re-pinned to <a
 href="https://github.com/veracium-ai/Veracium/commit/1d33f0197696ba36903a5f1f3ca9d204e6016fc3"><code class="commit-id" title="1d33f0197696ba36903a5f1f3ca9d204e6016fc3">1d33f019…</code></a>,
 43 commits and 82 files on. <strong>All seven marks hold</strong>, and
@@ -533,11 +690,11 @@ href="https://github.com/veracium-ai/Veracium/commit/1d33f0197696ba36903a5f1f3ca
 answers the producer test rather than on the enum. The closed
 <code>ConfirmationActor</code> is still there and still explains itself
 — the field used to be free-form and <em>"a host could smuggle prose
-past the constraints on the other fields"</em> — but a closed enum a
+past the constraints on the other fields"</em>. But a closed enum a
 caller supplies would not be enough on its own, and the code says so
 first: <em>"Both fields are audit metadata and grant NOTHING — authority
 comes from the protected <code>confirm()</code> call path, not from any
-label."</em> That path is <code>ConfirmationCallPath.HOST_API</code>,
+label"</em>. That path is <code>ConfirmationCallPath.HOST_API</code>,
 documented as never model-reachable, and the claim checks out against
 the surface: the MCP server declares <code>remember</code>,
 <code>recall</code>, <code>answer</code>, <code>maintain</code>,
@@ -575,10 +732,10 @@ run. <strong>All seven marks.</strong> <code>tombstone</code> rests on
 <code>source_revocations</code> being keyed on a content
 <code>identity_digest</code>, appended rather than mutated, and
 consulted by <code>ingest</code> so a re-ingested revoked source is born
-quarantined; <code>audit_log</code> on <code>confirmations</code> being
+quarantined. <code>audit_log</code> on <code>confirmations</code> being
 a precondition for the transition rather than a record of it;
 <code>human_review</code> on <code>confirm_edge</code> with a closed
-<code>ConfirmationActor</code>; <code>trust_state</code> on the
+<code>ConfirmationActor</code>. <code>trust_state</code> on the
 quarantine/needs-confirmation/use-only trio behind a derived
 <code>assertable</code>; <code>bitemporal</code> on
 <code>valid_from</code>/<code>invalidated_at</code> beside

@@ -839,12 +839,14 @@ That is the sharpest form the atlas's central finding has taken. A survey
 written by the authors of a system reviewed here, working from threat models
 rather than from repositories, independently derives the capability the atlas
 counts, defines it more precisely than this atlas does, and reports that nobody
-has published it. The repositories disagree, and one of them disagrees in the
-literature's own currency: [Veracium](../systems/veracium/) carries a
-value-level tombstone — the mechanism Verified Forgetting requires — and was
-released alongside [arXiv:2607.21962](https://arxiv.org/abs/2607.21962). The
-rest carry the mechanism and, so far as their own repositories record, no paper
-at all. That is the asymmetry worth naming: the literature and the code have
+has published it. The repositories disagree: the systems carrying a
+value-level tombstone — the mechanism Verified Forgetting requires — carry it
+with, so far as their own repositories record, no paper at all. The nearest
+published neighbour is [Veracium](../systems/veracium/), released alongside
+[arXiv:2607.21962](https://arxiv.org/abs/2607.21962), whose targeted redaction
+returns a receipt naming the derived records that may still carry the content.
+That answers the propagated-copies clause as a disclosure rather than a proof,
+and its revocation is keyed on a source rather than a value. That is the asymmetry worth naming: the literature and the code have
 each found half of it, and the code's half is mostly unpublished.
 
 The "propagated copies" clause has a partial answer too, from further outside the

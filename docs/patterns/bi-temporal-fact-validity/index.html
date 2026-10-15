@@ -509,7 +509,8 @@ occurred window.</li>
 href="../../systems/veracium/">Veracium</a> keeps
 <code>observed_at</code> beside a <code>valid_from</code> that is
 <em>"first-known and immutable"</em>; <code>confirm_edge</code> advances
-the one and never the other. <a href="../../systems/elai/">ELAI</a>'s
+the one and never the other, and ingest starts both at the caller's
+event date. <a href="../../systems/elai/">ELAI</a>'s
 <code>last_observed_at</code> starts equal to <code>ingested_at</code>
 and <code>valid_from</code>, is bumped by <code>update_trust</code>
 during recall, and recall sorts by it. That is recency, not

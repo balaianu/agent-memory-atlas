@@ -262,7 +262,7 @@ thing to settle when a system claims one:
   `created_at` — and its temporal recall channel filters on the occurred window.
 - **Last seen.** [Veracium](../../systems/veracium/) keeps `observed_at` beside a
   `valid_from` that is *"first-known and immutable"*; `confirm_edge` advances the
-  one and never the other. [ELAI](../../systems/elai/)'s `last_observed_at`
+  one and never the other, and ingest starts both at the caller's event date. [ELAI](../../systems/elai/)'s `last_observed_at`
   starts equal to `ingested_at` and `valid_from`, is bumped by `update_trust`
   during recall, and recall sorts by it. That is recency, not assertion.
 - **Three columns, two axes.** [memv](../../systems/memv/) carries `valid_at`,

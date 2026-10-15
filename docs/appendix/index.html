@@ -2187,11 +2187,13 @@ installed and nothing was run; <code>AGENTS.md</code> and
 <li><a
 href="https://github.com/veracium-ai/Veracium">veracium-ai/Veracium</a>
 at <a
-href="https://github.com/veracium-ai/Veracium/commit/1d33f0197696ba36903a5f1f3ca9d204e6016fc3"><code class="commit-id" title="1d33f0197696ba36903a5f1f3ca9d204e6016fc3">1d33f019…</code></a>
-— read only, from a full clone; four files scanned, one auto-run
-surface, one build-time execution point, one unpinned dependency surface
-and one dependency file inside the seven-day cooldown. Nothing was
-installed, built or run and no benchmark was reproduced. MIT</li>
+href="https://github.com/veracium-ai/Veracium/commit/c31bd9f086a35ef361fcf62b1515c04d996c8013"><code class="commit-id" title="c31bd9f086a35ef361fcf62b1515c04d996c8013">c31bd9f0…</code></a>
+— read only, from a full clone; four files scanned, one auto-run surface
+(<code>server.json</code>, a registry manifest), one build-time
+execution point (<code>tests/conftest.py</code>), one unpinned
+dependency surface and one dependency file inside the seven-day
+cooldown, both <code>pyproject.toml</code>. Nothing was installed, built
+or run and no benchmark was reproduced. MIT</li>
 <li><a href="https://github.com/VectifyAI/OpenKB">VectifyAI/OpenKB</a>
 at <a
 href="https://github.com/VectifyAI/OpenKB/commit/ff54396e575ee6feb0113b631a34caa082b441cc"><code class="commit-id" title="ff54396e575ee6feb0113b631a34caa082b441cc">ff54396e…</code></a>
@@ -17333,6 +17335,33 @@ tag the version. Two anchors,
 <code>memory-store-conformance.ts:4238-4262</code> and
 <code>memory-store.ts:999-1030</code>, were lines at the first pin, <a
 href="https://github.com/takecchi/mnemora/commit/3676311e73ad95ca650957d44ccb46a627cc74da"><code class="commit-id" title="3676311e73ad95ca650957d44ccb46a627cc74da">3676311e…</code></a>.</li>
+<li><strong>Seven published claims about <a
+href="../systems/veracium/">Veracium</a> were wrong at <a
+href="https://github.com/veracium-ai/Veracium/commit/1d33f0197696ba36903a5f1f3ca9d204e6016fc3"><code class="commit-id" title="1d33f0197696ba36903a5f1f3ca9d204e6016fc3">1d33f019…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>tombstone</code> on source revocation, saying its key was
+the content's identity; <code>identity_digest</code> was SHA-256 over a
+framed <code>(origin, source_id)</code>
+(<code>src/veracium/source_identity.py</code>,
+<code>src/veracium/ingest.py:336</code>), which names a source, not a
+value. It awarded <code>bitemporal</code> on <code>valid_from</code>
+beside <code>observed_at</code>; ingest set both from the caller's event
+date, which its own docstring calls <em>"when a statement was made, not
+what it is about"</em> (<code>src/veracium/ingest.py:84</code>,
+<code>:767-774</code>), so valid time was an observation time. It gave
+<code>assertable</code> three conditions where
+<code>src/veracium/schema.py:810-812</code> had four,
+<code>valid_now</code> among them. It said third-party claims were born
+<code>QUARANTINED</code> by their channel; the channel set
+<code>USE_ONLY</code>, and <code>QUARANTINED</code> came from the
+extractor's <code>third_party_claim</code> relation
+(<code>src/veracium/ingest.py:182-201</code>). It described a
+principal-scope test inside one user as a cross-user one
+(<code>tests/test_0020_read_surfaces.py:271-302</code>), counted fifteen
+schema versions where <code>SCHEMA_VERSION</code> was 14, and carried a
+size census from an earlier pin. The first two rested on a field's name
+and a docstring rather than on the digest's constructor and the field's
+writers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
