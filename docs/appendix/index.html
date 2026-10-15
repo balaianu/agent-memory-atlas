@@ -2096,8 +2096,8 @@ eight unpinned dependency surfaces and a root lockfile 100 days old;
 nothing was installed, built or run</li>
 <li><a href="https://github.com/openmasq/openmasq">openmasq/openmasq</a>
 at <a
-href="https://github.com/openmasq/openmasq/commit/a8d9a9ee3214305bbe0f79e3679d848ae23a7af8"><code class="commit-id" title="a8d9a9ee3214305bbe0f79e3679d848ae23a7af8">a8d9a9ee…</code></a>
-— read only; a <code>.githooks/</code> directory not installed, nineteen
+href="https://github.com/openmasq/openmasq/commit/2e401b6f5a81b1e872bebfaf9a792aadca8e2149"><code class="commit-id" title="2e401b6f5a81b1e872bebfaf9a792aadca8e2149">2e401b6f…</code></a>
+— read only; a <code>.githooks/</code> directory not installed, ten
 dependency files inside the seven-day cooldown, nothing installed</li>
 <li><a
 href="https://github.com/no-human-ai/no_human">no-human-ai/no_human</a>
@@ -16971,6 +16971,36 @@ Its <code>bitemporal</code> record cited
 <code>test_temporal_validity.py</code> did. And it dated the first
 commit 28 March 2026; the first commit is dated 10 April 2026. The
 second followed the test's name rather than its docstring.</li>
+<li><strong>Six published claims about <a
+href="../systems/openmasq/">OpenMasq</a> were wrong at <a
+href="https://github.com/openmasq/openmasq/commit/a8d9a9ee3214305bbe0f79e3679d848ae23a7af8"><code class="commit-id" title="a8d9a9ee3214305bbe0f79e3679d848ae23a7af8">a8d9a9ee…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+memory extraction sent not one new byte of real data, repeating the
+comment at <code>packages/ui/src/memory/extract.ts:26-30</code>.
+<code>runMemoryExtraction</code> read every user turn past the watermark
+whether or not its redaction had completed
+(<code>packages/ui/src/state/memory/memoryExtractionRun.ts:103-106</code>)
+and replayed it through <code>applyVault</code> alone
+(<code>packages/ui/src/memory/extract.ts:185-186</code>), so a turn
+refused before its values reached the vault went to the extractor as
+typed. It said an organisation could close the feature remotely; closing
+access hid the screen while injection, search and extraction continued
+(<code>packages/ui/src/state/billing/featureAccess.ts:21-32</code>). It
+called the store one per install; settings, and the memory with them,
+were keyed per signed-in account
+(<code>packages/ui/src/state/storePersistence.ts:40-41</code>). It said
+merging two devices' card lists was left to
+<code>autoCleanMemory</code>; the sync merged per card id three ways,
+propagated deletion as an id-keyed tombstone, and carried neither
+<code>factsLog</code> nor <code>reviewedAt</code>
+(<code>packages/sync/src/userdata.ts:77-86</code>,
+<code>:166-243</code>). Its <code>negative_eval</code> record said a
+greeting injected neither card's text; the case asserted only the first
+card's fact absent
+(<code>packages/ui/src/evals/memoryFlow.test.ts:64-72</code>). And its
+census of 197 commits and version 0.9.0 was the first reading's; this
+pin held 268 commits and version 0.11.1. The first rested on a code
+comment rather than the replay it described.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

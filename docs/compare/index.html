@@ -23534,16 +23534,17 @@ than grows, a <code>factsLog</code> of up to three replaced sentences, a
 <code>updatedAt</code> — plus one always-injected <code>profile</code>
 of at most 1,200 characters</td>
 <td>The <code>memoire</code> field of the settings object — in the
-desktop app's per-account libSQL database, encrypted at rest in packaged
+desktop app's per-account libSQL file, encrypted at rest in packaged
 builds through an Electron <code>safeStorage</code> key and stripped
 from the plaintext <code>localStorage</code> mirror whenever that
-database exists; in <code>localStorage</code> alone in the browser
-preview; per-card e5 vectors and text hashes in a
-<code>memory_embeddings</code> table on the desktop; the same cards and
-profile ride the end-to-end encrypted user-data sync</td>
+database exists; in an account-keyed <code>localStorage</code> entry
+alone in the browser preview; per-card e5 vectors and text hashes in a
+<code>memory_embeddings</code> table on the desktop; cards and profile
+ride the end-to-end encrypted user-data sync without
+<code>factsLog</code> or <code>reviewedAt</code></td>
 <td>At send time a deterministic client-side cascade on real values —
-the typed text mentions the entity or an alias, the entity is already in
-the conversation's vault, or a distinctive token appears — then one hop
+the typed text mentions the entity or an alias, the entity is in the
+conversation's vault, or a distinctive token appears — then one hop
 along cards whose facts name a certainly-mentioned entity, filled by
 score then recency under a 4,000-character budget; on demand,
 <code>memory_search</code> scores cards by content-word hits and tops up
@@ -23551,20 +23552,22 @@ from an on-device multilingual-e5-small index above cosine 0.88</td>
 <td>Deferred: an idle timer of 120 seconds after a turn, a flush on blur
 or switching conversations, and a startup sweep over at most three
 recent conversations run one extraction call with the conversation's own
-model at temperature 0 over the already-redacted wire, off by default;
-an explicit « retiens que… » runs regardless, re-reads a few earlier
-turns, includes the assistant's, sweeps up to four calls with an
-exclusion list and reports its count; every entity must anchor verbatim
-in the real text or is dropped</td>
+model at temperature 0 over the replayed wire of turns whose redaction
+completed, off by default; an explicit « retiens que… » runs regardless,
+re-reads a few earlier turns, includes the assistant's, sweeps up to
+four calls with an exclusion list and reports its count; every entity
+must anchor verbatim in the real text or is dropped</td>
 <td>An attribute fact replaces its competing sentence and the loser
 enters <code>factsLog</code>; a restatement keeps the richer version and
 logs nothing; saturation evicts whole sentences oldest first; a card
-updates in place and is never duplicated by design; delete is immediate
-with a six-second undo; there is no supersession record, no TTL and no
-tombstone</td>
-<td>One store per install with no scope key on a card; a
-per-conversation switch cuts both the injection and the tool; the org
-can close the feature remotely</td>
+updates in place; delete is immediate with a six-second undo and syncs
+as a tombstone keyed on the card id; there is no supersession record, no
+TTL and no value-keyed rejection</td>
+<td>One store per signed-in account, selected by a per-account database
+file or storage key at load; no scope key on a card; a per-conversation
+switch cuts both the injection and the tool; an organisation's remote
+flag hides the Mémoire screen and leaves injection, search and
+extraction running</td>
 <td>A block titled « Mémoire de l'utilisateur » inside the system
 content of every send, built before the user-message pass so its
 entities are forced into the vault, then pseudonymised through the same
@@ -23583,19 +23586,20 @@ since an extracted entity must resolve to text the user or the assistant
 actually wrote; a pseudonym the vault cannot map back is refused; secret
 shapes are dropped; a real failure is shown as « réessayez » instead of
 a count of zero; no state ever keeps a card out of a prompt</td>
-<td>Egress-neutral extraction from the wire the model already saw;
-injection selected on real values and forced into the redaction vault so
-a remembered name cannot leak under the regex engine; attribute
-replacement with a restorable history; measured thresholds with the
-measurements written beside them; a scenario suite that runs the
-product's own pipeline over a growing memory</td>
+<td>Egress-neutral extraction by design, replaying only redacted turns
+through the send-time substitution; injection selected on real values
+and forced into the redaction vault so a remembered name cannot leak
+under the regex engine; attribute replacement with a restorable history;
+measured thresholds with the measurements written beside them; a
+scenario suite that runs the product's own pipeline over a growing
+memory</td>
 <td>Cards live in the clear on the machine and in plaintext
 <code>localStorage</code> wherever there is no host database; the inbox
 is the only review and nothing waits for it, which is why no review mark
 is carried; a card's only time is its last update, injected as a date
-the model is asked to reason from; French-keyed attribute and glue
-lists; the per-entity card model has no place for a fact about two
-entities except as a mention link</td>
+the model is asked to reason from; the restorable history and the review
+state stay on the device that wrote them; French-keyed attribute and
+glue lists</td>
 </tr>
 <tr>
 <td><a href="../systems/openmemory/"><code>openmemory</code></a></td>

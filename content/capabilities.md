@@ -236,7 +236,7 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 
 | Stored in | Systems | Read off code | | Retrieval arm | Systems | Read off code |
 | --- | ---: | ---: | --- | --- | ---: | ---: |
-| Files on disk | 377 | 329 | | Lexical | 545 | 483 |
+| Files on disk | 376 | 328 | | Lexical | 545 | 483 |
 | SQLite | 367 | 312 | | Vector | 480 | 410 |
 | Postgres | 142 | 121 | | Graph | 235 | 206 |
 | Delegated to the adopter | 49 | 36 | | No arm named in the review | 87 | 59 |
@@ -245,7 +245,7 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 | In-process only | 35 | 28 | |  |  |  |
 | Qdrant | 27 | 20 | |  |  |  |
 | LanceDB | 24 | 19 | |  |  |  |
-| Embedded key-value | 22 | 18 | |  |  |  |
+| Embedded key-value | 23 | 19 | |  |  |  |
 | Redis | 17 | 12 | |  |  |  |
 | Milvus | 10 | 8 | |  |  |  |
 | MongoDB | 8 | 6 | |  |  |  |

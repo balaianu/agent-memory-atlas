@@ -14945,11 +14945,11 @@ href="../systems/openmasq/"><code>openmasq</code></a></h3>
 <ul>
 <li>Best idea: <strong>extract from the wire the model already saw, and
 let the vault be the hallucination filter.</strong> The extractor reads
-the redacted replay, answers in fakes, and every entity is un-redacted
-locally and must appear verbatim in the real text or is dropped; a value
-present only on the wire is refused as an unresolved pseudonym. No new
-byte leaves the machine, and the model's own knowledge is inadmissible
-by construction.</li>
+only turns whose redaction completed, replayed through the send-time
+substitution, and answers in fakes; every entity is un-redacted locally
+and must appear verbatim in the real text or is dropped, and a value
+present only on the wire is refused as an unresolved pseudonym. The
+model's own knowledge is inadmissible by construction.</li>
 <li>Biggest risk: <strong>nothing a card knows about itself keeps it out
 of a prompt.</strong> <code>reviewedAt</code> and
 <code>source: "auto"</code> feed an inbox and no read path; every card
@@ -14960,15 +14960,15 @@ replacement with a bounded, restorable history, a restatement rule that
 tolerates inflection and never folds a changed number or month, and
 whole-sentence eviction at saturation, all pure and tested case by
 case.</li>
-<li>Maturity impression: Apache-2.0, 197 commits in eleven days by one
-author on a <code>dev</code> default branch, a desktop app at 0.9.0 with
-a signed macOS build, 5,274 lines of memory code with 239 test cases and
-a scenario suite that runs the product's own pipeline over a growing
-memory; one of seven capability marks. <code>human_review</code> was
-withdrawn on the 2026-09-19 re-read for the reason the report's own risk
-line already gave: <code>reviewedAt</code> has two click-handler writers
-and one reader, the Memory page's inbox, and the selection cascade that
-decides what is injected never consults it.</li>
+<li>Maturity impression: Apache-2.0, 642 commits on a <code>dev</code>
+default branch between 25 August and 14 October 2026, 614 by one author
+and the rest by dependabot, a desktop app at 0.16.0 with a signed macOS
+build, 5,398 lines of memory code with 239 test cases and a scenario
+suite that runs the product's own pipeline over a growing memory; one
+capability mark. <code>human_review</code> is not carried:
+<code>reviewedAt</code> has two click-handler writers and one reader,
+the Memory page's inbox, and the selection cascade that decides what is
+injected never consults it.</li>
 <li>Study when: you already redact and need cross-conversation memory
 that cannot add an egress path, or you want a worked example of
 selecting memory on real values and forcing the selected names into the
