@@ -731,32 +731,27 @@ coherent with its design: a merged record has no status, no validity
 interval and no supersession link, so the store holds the current value
 for a key and has no vocabulary for a claim that has stopped being
 true.</p>
-<p><strong><a href="../systems/aidememo/">AideMemo</a> makes the
-authorized scope a different type from the requested one, so no backend
-can be handed an unscoped write.</strong> A dual MIT/Apache-2.0 Rust
-working memory at version 0.1.0 — 95,480 lines across thirteen crates,
-one binary serving a CLI, MCP over stdio and HTTP, and bindings for four
-languages. Most multi-tenant stores on this page take the caller's word
-for which tenant a write belongs to and then rely on a predicate
-somebody remembered to add; this one forecloses the question.
-<code>AuthorizedCommand</code> is "[c]ommand paired with server-owned
-authorization context", its only constructor returns
+<p><strong><a href="../systems/aidememo/">AideMemo</a> holds two
+identity rules in one repository and applies the strict one on the
+server.</strong> A dual MIT/Apache-2.0 Rust working memory at version
+0.1.0: a local fact graph behind a CLI, a stdio MCP server, a Python SDK
+and bindings for four languages, beside a separate server profile. On
+the server, <code>AuthorizedCommand</code> is "[c]ommand paired with
+server-owned authorization context", its only constructor returns
 <code>ProjectScopeMismatch</code> "when the untrusted envelope selects a
-different project", and <code>MutationCommand</code> — the single
-argument <code>CommandStore::execute</code> accepts — carries that
-authorized command as a field, so there is no unscoped value left to
-pass to an adapter. The audit row obeys the same rule and is
-transactional: adapters "persist its canonical fingerprint, resource
-mutation, receipt, change entry, and audit entry in one transaction",
-and its <code>tenant_id</code> is the "[s]erver-derived tenant" with
-<code>actor_id</code> the "[s]erver-derived actor provenance" — the
-record of who changed a memory is not a string the caller supplied. Two
-annotations carry the same instinct: <code>ActorKind</code> separates a
-<code>Human</code> ("[i]nteractive person") from an <code>Agent</code>
-and a <code>Service</code>, and <code>display_name</code> is marked
-"never used for authorization". What the model says nothing about is
-truth — <code>RecordStatus</code> governs accounts rather than claims,
-and the only times are creation, update and a revision.</p>
+different project", and <code>MutationCommand</code> carries it as a
+field, so no adapter can be handed a client-chosen scope; each mutation
+commits with an audit row whose tenant and actor come from the bearer
+token. The local store takes its namespace from the call:
+<code>source_id</code> is an argument that overrides the installed
+<code>AIDEMEMO_SOURCE_ID</code>, and only
+<code>aidememo mcp-serve</code> with bound tokens injects it and refuses
+an override. Locally a superseded fact is withheld from every default
+agent read, and committed tests assert that filter and namespace
+isolation; but supersession means replaced rather than disbelieved,
+<code>observed_at</code> is when a fact was seen rather than when it
+held, and the Claude Code session-start hook reads through CLI
+<code>recent</code>, which applies neither filter.</p>
 <p><strong><a href="../systems/cognee-rs/">Cognee-RS</a> puts the
 ownership check below the layer that documents it.</strong> A Rust
 reimplementation of <a href="../systems/cognee/">cognee</a> — 269,864

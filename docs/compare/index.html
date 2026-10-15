@@ -1686,69 +1686,72 @@ code index while excluding the memories</td>
 </tr>
 <tr>
 <td><a href="../systems/aidememo/"><code>aidememo</code></a></td>
-<td>A canonical resource addressed by tenant, project and resource
-reference, carrying a revision and a state that is either a key-sorted
-JSON body or a durable deletion tombstone</td>
-<td>One embedded local store or PostgreSQL behind one storage-neutral
-command trait, with a replica cache for clients</td>
-<td>Facts, graph traversal and history over the canonical state, with a
-change feed replicas follow by cursor</td>
-<td>Every mutation is a command with an idempotency key and a canonical
-fingerprint, applied atomically with its receipt, change entry and audit
-entry</td>
-<td>An upsert replaces the canonical body; a deletion writes a durable
-tombstone rather than removing the row, so replicas learn about it
-through the same change feed</td>
-<td>Tenant and project, bound by a server-owned
-<code>ProjectAuthorization</code> that the command type refuses to let a
-client override</td>
-<td>One Rust binary with a CLI, an MCP server over stdio and HTTP, a
-Python agent SDK, and native bindings for Python, Node, Elixir and
-C</td>
-<td>None over memory; the change feed is pulled by replicas rather than
-pushed by a worker</td>
-<td>Server-derived actor and tenant on every audit row, an actor kind
-that distinguishes a person from an agent, idempotency fingerprints that
-refuse a reused id with a different body, and a conformance fixture
-every backend must pass</td>
-<td>Two rules, both enforced by types rather than by review. The first
-is that the caller does not get to say what scope it is writing in:
-<code>AuthorizedCommand</code> pairs an envelope with a "server-owned
-authorization context" and refuses construction with
-<code>ProjectScopeMismatch</code> when "the untrusted envelope selects a
-different project", and because <code>MutationCommand</code> carries an
-<code>AuthorizedCommand</code> as a field, no backend can be handed an
-unscoped mutation at all. The second is that the audit row is not the
-caller's account of itself — <code>tenant_id</code> is the
-"[s]erver-derived tenant" and <code>actor_id</code> the
-"[s]erver-derived actor provenance" — and it is committed with the
-mutation, the receipt and the change entry "in one transaction", so an
-unaudited write is not a reachable state. Two smaller lines carry the
-same discipline. <code>ActorKind</code> separates <code>Human</code>
-("[i]nteractive person") from <code>Agent</code> ("[n]amed coding or
-reasoning agent profile") and <code>Service</code>, so provenance
-records what kind of thing acted rather than only which id. And
-<code>display_name</code> is annotated "[h]uman-readable label; never
-used for authorization", which forecloses the rename-widens-access bug
-before anybody writes it</td>
-<td>There is no epistemic state on a memory. <code>RecordStatus</code> —
-<code>Active</code>, <code>Suspended</code>, <code>Archived</code> —
-governs tenants, projects and actors rather than claims:
-<code>Suspended</code> "does not grant access or accept mutations" and
-<code>Archived</code> makes a project "read-only and retained for export
-or audit", so the vocabulary decides what an account may do and never
-whether a stored fact should be believed. Time is single-axis: records
-carry <code>created_at_ms</code>, <code>updated_at_ms</code> and a
-revision, with no field for when a claim was true as distinct from when
-it was written, so history here is a version chain over write time. The
-deletion tombstone is durable and replicated, which is right for
-convergence, and it is keyed on the resource rather than on the value —
-nothing stops the same content being written back afterwards, and no
-record says it was once removed. And the conformance fixture, which is
-the project's strongest quality instrument, checks command-level
-refusals — scope mismatch, stale revision, cursor range — rather than
-asserting that particular material fails to come back from a
-retrieval</td>
+<td>Locally, a typed fact (decision, convention, preference, lesson,
+error and others) linked to entities and relations, with an optional
+source namespace and actor, an observation time, a supersession stamp
+and a pinned flag. On the server, a canonical resource with a revision
+and either a key-sorted JSON body or a deletion tombstone</td>
+<td>A local SQLite file by default or redb, with a cold sibling file for
+archived facts and an optional DuckDB analytics mirror. A separate
+server profile keeps canonical state in SQLite or PostgreSQL behind one
+storage-neutral command trait</td>
+<td>BM25 first, with semantic HNSW search when lexical evidence is weak,
+graph traversal, entity resolution and recent facts composed into
+context packs; filters for namespace, event-time window, as-of record
+time and supersession. The server answers snapshot, change feed,
+resource and lexical or hybrid search per project</td>
+<td>Explicit typed writes from the agent, the CLI, markdown ingest and
+an opt-in pending log, deduplicated on content hash per namespace after
+an optional privacy screen. Server mutations carry an idempotency key
+and fingerprint and commit with receipt, change entry and audit row</td>
+<td>Local facts are superseded by stamp, edited in place, archived to a
+cold file or hard-deleted from the CLI; an identical re-add returns the
+existing row. On the server an upsert replaces the body and a deletion
+writes a durable tombstone that replicas receive</td>
+<td>Server: tenant and project from the bearer token's membership on
+every read and write. Local HTTP MCP with bound tokens: source and actor
+injected and overrides refused. Local stdio MCP, CLI and bindings: a
+source namespace the caller may pass or override, and separate store
+files per registered project</td>
+<td>One Rust binary: CLI, stdio MCP with 29 tools, an HTTP MCP server, a
+daemon, a Python agent SDK, native bindings for Python, Node, Elixir and
+C, Claude Code and Hermes plugins, and a separate server binary with
+REST and a ten-tool HTTP MCP</td>
+<td>None by default. Consolidation and archiving run when invoked; the
+Hermes and Claude Code hooks inject context at session start and capture
+or preview candidate facts per turn; replicas pull the server's change
+feed by cursor</td>
+<td>Supersession withheld by default reads, an observation time beside
+record time, an opt-in pending log for Hermes auto-capture,
+server-derived tenant and actor on every server audit row, idempotency
+fingerprints that refuse a reused id with a different body, and a
+conformance fixture every server backend runs</td>
+<td>Two places where identity is taken from the credential rather than
+the call. The server's <code>AuthorizedCommand</code> refuses an
+envelope whose project differs from the authorized one, and
+<code>MutationCommand</code>, the only thing
+<code>CommandStore::execute</code> accepts, carries it as a field, so no
+adapter can be handed a client-chosen scope.
+<code>aidememo mcp-serve</code> with bound tokens does the same at the
+local edge: it writes the token's <code>source_id</code> and
+<code>actor_id</code> into every call and answers a different value with
+an error naming the override. The local store keeps an observation time
+apart from record time and withholds superseded facts from every default
+agent read, and committed tests assert both the supersession filter and
+namespace isolation across eight read paths with positive controls</td>
+<td>The default local deployment enforces neither identity rule: stdio
+MCP, CLI and bindings take <code>source_id</code> and
+<code>actor_id</code> from the call, an explicit argument overrides the
+installed namespace, and an omitted one reads every namespace. The
+Claude Code session-start hook runs CLI <code>recent</code>, which
+passes no namespace and <code>current_only: false</code>, so superseded
+facts from every namespace reach the prompt. A CLI write routed through
+a running daemon drops <code>--observed-at</code>. An identical re-add
+of a superseded fact returns the hidden row, which suppresses exact
+repeats by accident and paraphrases not at all. The pending log records
+no approver. On the server, an unwired public
+<code>delete_tenant_data</code> erases audit rows with everything
+else</td>
 </tr>
 <tr>
 <td><a href="../systems/aigent-os/"><code>aigent-os</code></a></td>
@@ -34190,7 +34193,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>465 of 749:</em> <a
+<p><em>466 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34221,7 +34224,8 @@ href="../systems/agno/"><code>agno</code></a>, <a
 href="../systems/ai-agent-automation/"><code>ai-agent-automation</code></a>,
 <a
 href="../systems/ai-brain-starter/"><code>ai-brain-starter</code></a>,
-<a href="../systems/aigent-os/"><code>aigent-os</code></a>, <a
+<a href="../systems/aidememo/"><code>aidememo</code></a>, <a
+href="../systems/aigent-os/"><code>aigent-os</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/alphaonedev-ai-memory/"><code>alphaonedev-ai-memory</code></a>,
 <a href="../systems/altk-evolve/"><code>altk-evolve</code></a>, <a
@@ -34689,7 +34693,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-465 repositories of
+466 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A Rust working memory for coding
-agents where a mutation cannot reach any backend without a server-owned
-authorization, and the audit row committed beside it takes its tenant
-and actor from the server rather than the request.">
+    <meta name="description" content="A coding-agent working memory in
+Rust: local facts with supersession and an observation time, beside a
+server whose writes carry server-owned scope and audit.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="AideMemo — Agent Memory Atlas">
-    <meta property="og:description" content="A Rust working memory for
-coding agents where a mutation cannot reach any backend without a
-server-owned authorization, and the audit row committed beside it takes
-its tenant and actor from the server rather than the request.">
+    <meta property="og:description" content="A coding-agent working
+memory in Rust: local facts with supersession and an observation time,
+beside a server whose writes carry server-owned scope and audit.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AideMemo — Agent Memory Atlas">
-    <meta name="twitter:description" content="A Rust working memory for
-coding agents where a mutation cannot reach any backend without a
-server-owned authorization, and the audit row committed beside it takes
-its tenant and actor from the server rather than the request.">
+    <meta name="twitter:description" content="A coding-agent working
+memory in Rust: local facts with supersession and an observation time,
+beside a server whose writes carry server-owned scope and audit.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>AideMemo — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ its tenant and actor from the server rather than the request.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "AideMemo",
-      "description": "A Rust working memory for coding agents where a mutation cannot reach any backend without a server-owned authorization, and the audit row committed beside it takes its tenant and actor from the server rather than the request.",
+      "description": "A coding-agent working memory in Rust: local facts with supersession and an observation time, beside a server whose writes carry server-owned scope and audit.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -99,27 +96,26 @@ its tenant and actor from the server rather than the request.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">The client says which project it wants; the
-type refuses to carry that claim into the store</p>
+          <p class="eyebrow">The server refuses the project a client
+names; the default local store takes it as a filter</p>
           <h1>AideMemo</h1>
-          <p class="document-deck">A Rust working memory for coding
-agents where a mutation cannot reach any backend without a server-owned
-authorization, and the audit row committed beside it takes its tenant
-and actor from the server rather than the request.</p>
+          <p class="document-deck">A coding-agent working memory in
+Rust: local facts with supersession and an observation time, beside a
+server whose writes carry server-owned scope and audit.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/taeyun16/aidememo">
               <span>Source</span>
               <strong>taeyun16/aidememo</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/taeyun16/aidememo/commit/58b803cc6b717fbf6559303e0d3f08e8b75673d4" title="58b803cc6b717fbf6559303e0d3f08e8b75673d4">
+            <a class="meta-pill revision-pill" href="https://github.com/taeyun16/aidememo/commit/21f7d1a848210e0e65414a2e46b46ec1b433b8e0" title="21f7d1a848210e0e65414a2e46b46ec1b433b8e0">
               <span>Analyzed revision</span>
-              <code>58b803cc…</code>
+              <code>21f7d1a8…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/taeyun16--aidememo" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,21 @@ and actor from the server rather than the request.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+OR Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>95,351
+lines of Rust in 135 files across thirteen crates; the local engine,
+aidememo-core, is 29,876 of them and the server profile's five crates
+19,807, test files included</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>565
+commits on main by 3 author names, one of them dependabot, 12 April – 14
+October 2026; version 0.1.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>578
+Rust test attributes in 85 files and 118 Python test functions in 8
+files; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,89 +153,116 @@ and actor from the server rather than the request.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>AideMemo is "[p]ortable working memory for coding agents and
-orchestrators" — MIT or Apache-2.0, Rust, version 0.1.0, 95,480 lines
-across 135 files in thirteen crates, shipping "[o]ne Rust binary. One
-embedded store. A code-first SDK, MCP tools, CLI, and native
-bindings."</p>
-<p><strong>The mechanism to take away is where the project id comes
-from.</strong> Almost every multi-tenant store in this corpus accepts
-the caller's word for which tenant or project a write belongs to, and
-then relies on a predicate somebody remembered to add. AideMemo makes
-that impossible to express:</p>
-<blockquote>
-<p>"Command paired with server-owned authorization context."</p>
-<p>"Returns <code>DomainError::ProjectScopeMismatch</code> when the
-untrusted envelope selects a different project."</p>
-</blockquote>
-<p><code>AuthorizedCommand::authorize</code> is the only constructor,
-and it compares the server's <code>ProjectAuthorization</code> against
-the envelope's <code>project_id</code> before producing anything. The
-enforcement then rides the type: <code>MutationCommand</code> — the
-single argument <code>CommandStore::execute</code> accepts — holds an
+<p>AideMemo is a Rust working memory for coding agents with two stores
+that share a name and not a rule. The default product is a local fact
+graph behind a CLI, a stdio MCP server, a Python SDK and native
+bindings, in which a fact carries an observation time beside its record
+time and a supersession stamp every default agent read withholds. Beside
+it sits a server profile whose mutations cannot reach a backend without
+a server-owned project authorization, and whose audit rows take tenant
+and actor from the bearer token. The weak side is that the default local
+deployment applies neither identity rule: its namespace and actor are
+whatever the call says. Nothing local marks a fact disbelieved or
+records when it stopped holding.</p>
+<p>It is dual-licensed MIT OR Apache-2.0 and describes itself as
+"[p]ortable working memory for coding agents and orchestrators".</p>
+<p><strong>The server's rule is a type.</strong>
+<code>AuthorizedCommand</code> is a "[c]ommand paired with server-owned
+authorization context", and its only constructor returns
+<code>DomainError::ProjectScopeMismatch</code> "when the untrusted
+envelope selects a different project". <code>MutationCommand</code>, the
+single argument <code>CommandStore::execute</code> accepts, holds an
 <code>AuthorizedCommand&lt;()&gt;</code> as a field, so a backend
-adapter cannot be handed a mutation whose scope came from the request.
-There is no unscoped path to forget, because there is no unscoped value
-to pass.</p>
-<p><strong>The audit row follows the same rule, and it is
-transactional.</strong> The storage contract is stated on
-<code>MutationCommand</code> itself: adapters "persist its canonical
-fingerprint, resource mutation, receipt, change entry, and audit entry
-in one transaction." An <code>AuditEntry</code> is "[i]mmutable audit
-record committed with a mutation and its receipt", and the two fields a
-reader should check are annotated with their provenance rather than
-their contents — <code>tenant_id</code> is the "[s]erver-derived
-tenant", <code>actor_id</code> the "[s]erver-derived actor provenance".
-What is recorded is who the server determined acted, not who the request
-said did.</p>
-<p><strong>Two smaller lines carry the same instinct.</strong>
-<code>ActorKind</code> distinguishes <code>Human</code> — "[i]nteractive
-person" — from <code>Agent</code>, "[n]amed coding or reasoning agent
-profile", and <code>Service</code>, so the audit can say what kind of
-thing made a change and not only which identifier. And on the tenant
-record, <code>display_name</code> carries the annotation
-<code>"Human-readable label; never used for authorization"</code>, which
-closes the rename-widens-access bug in advance.</p>
-<p><strong>What is absent is any judgement about the memories
-themselves.</strong> <code>RecordStatus</code> is <code>Active</code>,
-<code>Suspended</code>, <code>Archived</code>, and it governs accounts
-rather than claims: a suspended record "does not grant access or accept
-mutations", an archived project is "read-only and retained for export or
-audit". Nothing in the model says a stored fact is doubtful, superseded
-or wrong, and the only time fields are <code>created_at_ms</code>,
-<code>updated_at_ms</code> and a revision — a version chain over write
-time with no second axis.</p>
+adapter cannot be handed a mutation whose project came from the request
+(<code>crates/aidememo-domain/src/command.rs:190-256</code>). The
+adapters write the resource, receipt, change entry and audit row in one
+transaction, and the receipt's tenant and actor come from the
+authorization
+(<code>crates/aidememo-store-local/src/lib.rs:432-560</code>). The
+project's own server document calls this profile "a workspace-only
+engineering contract", not the hosted deployment
+(<code>docs/SERVER_SSOT.md</code>).</p>
+<p><strong>The local store's rule is an argument.</strong> Every MCP
+read tool resolves its namespace as the call's <code>source_id</code>,
+falling back to <code>AIDEMEMO_SOURCE_ID</code>, so an explicit argument
+widens or switches the installed scope and an omitted one with no
+environment reads everything
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:791-810</code>). The
+server's rule reappears in one local mode:
+<code>aidememo mcp-serve</code> with a token-bindings file injects the
+bound <code>source_id</code> and <code>actor_id</code> into every call
+and refuses a different value
+(<code>crates/aidememo-cli/src/cmd/mcp_serve.rs:279-347</code>). The
+shipped <code>.mcp.json</code> and the installers configure stdio, which
+does not.</p>
+<p><strong>A local fact can stop being current without being
+deleted.</strong> <code>fact_supersede</code> stamps
+<code>superseded_at</code> with the write clock and names the
+replacement; search, list and query default <code>current_only</code> to
+true, and the context, session-start and pinned assemblers hard-code it
+(<code>crates/aidememo-core/src/lib.rs:1034-1067</code>,
+<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:354-361</code>).
+<code>observed_at</code> records when a fact was observed or decided,
+separately from insertion, and the <code>since</code> and
+<code>until</code> windows read it while <code>as_of</code> reads the
+record axis (<code>crates/aidememo-core/src/search.rs:171-205</code>).
+Supersession says a fact was replaced, not that it is wrong, and
+<code>observed_at</code> is when something was seen or said, not an
+interval over which it held.</p>
+<p><strong>The context path the Claude Code plugin uses misses both
+filters.</strong> Its SessionStart hook runs
+<code>aidememo recent --last 7d</code>, and the CLI <code>recent</code>
+lists with <code>source_id: None</code> and
+<code>current_only: false</code>
+(<code>plugins/claude/scripts/aidememo-session-start.py:13-15</code>,
+<code>crates/aidememo-cli/src/cmd/recent.rs:74-85</code>). A superseded
+fact from any namespace in the store, written in the last week, is
+injected at session start.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>command</strong> is authorized before it is a command.</p>
-<p>A <strong>scope</strong> is what the server decided, never what the
-envelope asked for.</p>
-<p>An <strong>audit row</strong> commits with the mutation or the
-mutation does not commit.</p>
-<p>A <strong>deletion</strong> is a tombstone replicas receive, not a
-row that vanishes.</p>
-<p>A <strong>status</strong> describes the account, not the claim.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — a client envelope is bound to a server-owned authorization before it can become a mutation, the type carrying that binding is the only thing a backend accepts, and the audit row with its server-derived tenant and actor commits in the same transaction as the change</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a client envelope is bound to a server-owned authorization before it can become a mutation, the type carrying that binding is the only thing a backend accepts, and the audit row with its server-derived tenant and actor commits in the same transaction as the change
+<p>A <strong>fact</strong> is the local unit: typed text attached to
+entities, with an optional namespace and actor the writer supplies.</p>
+<p>A fact is <strong>current</strong> until something supersedes it, and
+<strong>superseded</strong> facts are history: kept, hidden from default
+reads, returned by <code>current_only: false</code> and by
+<code>as_of</code> queries that predate the supersession.</p>
+<p><strong>Time</strong> is an observation stamp beside the record
+clock. <code>observed_at</code> is when the thing was observed or
+decided, set from frontmatter or a CLI flag; <code>created_at</code> and
+<code>superseded_at</code> are when the store learned and retired it.
+Nothing records when a fact stopped being true.</p>
+<p>A <strong>detection</strong> from the Hermes capture hook in pending
+mode is not yet a fact. It waits in a JSONL file until a person commits
+or discards it.</p>
+<p>A <strong>server resource</strong> is either present or a deletion
+tombstone, and every change to it carries an audit row whose actor the
+server derived.</p>
+<p><strong>No local fact is ever judged wrong</strong>, only replaced.
+There is no rejected state, and deletion removes the row.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a local fact enters from the agent, an operator or a person-approved pending log, and once superseded is withheld on every default read except recent, while the server binds each mutation to the credential's project and commits its audit row in the same transaction</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a local fact enters from the agent, an operator or a person-approved pending log, and once superseded is withheld on every default read except recent, while the server binds each mutation to the credential&#39;s project and commits its audit row in the same transaction
 flowchart TB
-    CLIENT[&quot;a client envelope: project_id, command_id,&lt;br/&gt;precondition, payload — UNTRUSTED&quot;] --&gt; AUTHZ{&quot;AuthorizedCommand::authorize(&lt;br/&gt;server ProjectAuthorization, envelope)&quot;}
-    SERVER[&quot;the server&#39;s own ProjectAuthorization&quot;] --&gt; AUTHZ
-    AUTHZ --&gt;|&quot;authorization.project_id() != envelope.project_id&quot;| REJECT[&quot;DomainError::ProjectScopeMismatch&lt;br/&gt;naming requested AND authorized&quot;]
-    AUTHZ --&gt;|&quot;they agree&quot;| AC[&quot;AuthorizedCommand — the only way&lt;br/&gt;a scope becomes trusted&quot;]
-    AC --&gt; MC[&quot;MutationCommand carries AuthorizedCommand&lt;br/&gt;as a FIELD, plus fingerprint, resource,&lt;br/&gt;change operation and canonical body&quot;]
-    MC -.-&gt;|&quot;CommandStore::execute accepts only this type,&lt;br/&gt;so no adapter can be handed a mutation&lt;br/&gt;whose project came from the caller&quot;| TYPED[&quot;the scope rule is a type, not a convention&quot;]
-    MC --&gt; TX{&quot;one transaction, per the storage contract&quot;}
-    TX --&gt; R1[(&quot;canonical resource: ProjectScope · revision ·&lt;br/&gt;Present body or Deleted tombstone&quot;)]
-    TX --&gt; R2[(&quot;receipt: command_id + fingerprint&quot;)]
-    TX --&gt; R3[(&quot;change entry — replicas follow by cursor&quot;)]
-    TX --&gt; R4[(&quot;AuditEntry — IMMUTABLE&quot;)]
-    R4 --&gt; F1[&quot;tenant_id: SERVER-DERIVED tenant&quot;]
-    R4 --&gt; F2[&quot;actor_id: SERVER-DERIVED actor provenance&quot;]
-    R4 --&gt; F3[&quot;project_seq · command_id · operation ·&lt;br/&gt;resource · committed_at_ms&quot;]
-    F1 &amp; F2 -.-&gt;|&quot;who changed a memory is not a string&lt;br/&gt;the caller supplied&quot;| HONEST[&quot;the audit cannot be authored by its subject&quot;]
-    R2 -.-&gt;|&quot;fingerprint rejects command-ID reuse with a&lt;br/&gt;different body, so a replay cannot overwrite&lt;br/&gt;what was audited&quot;| IDEM[&quot;idempotency with a tamper check&quot;]
-    ACTOR[&quot;ActorKind: Human, Agent, Service&quot;] -.-&gt;|&quot;provenance records WHAT KIND of thing acted,&lt;br/&gt;not only which id&quot;| F2
-    NAME[&quot;display_name: &#39;never used for authorization&#39;&quot;] -.-&gt;|&quot;a rename can never widen access&quot;| SERVER
-    STATUS[&quot;RecordStatus: Active, Suspended, Archived&quot;] -.-&gt;|&quot;governs the tenant, project or actor —&lt;br/&gt;never whether a stored claim is true&quot;| NOTS[&quot;no trust-state mark&quot;]
-    CONF[&quot;conformance.rs — one backend-neutral fixture&lt;br/&gt;every adapter must pass&quot;] -.-&gt;|&quot;the refusals are checked against each store&lt;br/&gt;rather than argued once in the abstraction&quot;| TX</code></pre></details></figure>
+    subgraph LOCAL[&quot;local fact store: aidememo-core, the default product&quot;]
+        HOOK[&quot;Hermes post-LLM hook,&lt;br/&gt;auto_capture enabled&quot;] --&gt; PEND[(&quot;aidememo-pending.jsonl&lt;br/&gt;read by no retrieval&quot;)]
+        PEND --&gt;|&quot;a person: /aidememo-pending commit,&lt;br/&gt;aidememo pending approve&quot;| ADD
+        AGENT[&quot;agent: aidememo_fact_add,&lt;br/&gt;fact_add_many — no observation time&quot;] --&gt; ADD
+        OPS[&quot;operator: fact add --observed-at,&lt;br/&gt;ingest frontmatter date&quot;] --&gt; ADD
+        ADD{&quot;add_fact: optional privacy screen,&lt;br/&gt;then dedup on namespace + content hash&quot;}
+        ADD --&gt;|&quot;hash present&quot;| SAME[&quot;returns the existing id;&lt;br/&gt;a superseded row stays superseded&quot;]
+        ADD --&gt;|&quot;new&quot;| CUR[&quot;current fact: observed_at · created_at ·&lt;br/&gt;source_id and actor_id as the caller sent them&quot;]
+        CUR --&gt;|&quot;fact_supersede: agent tool, CLI,&lt;br/&gt;consolidation, opt-in auto-supersede&quot;| SUP[&quot;superseded: superseded_at = write clock,&lt;br/&gt;superseded_by = replacement&quot;]
+        CUR --&gt;|&quot;archive&quot;| COLD[(&quot;cold sibling file,&lt;br/&gt;searched only on include_archive&quot;)]
+        CUR --&gt;|&quot;CLI fact delete&quot;| GONE[&quot;row removed, nothing kept&quot;]
+        READ[&quot;search · fact_list · query: current_only defaults true;&lt;br/&gt;context · session_start · pinned hard-code it&quot;] -.-&gt;|&quot;returns&quot;| CUR
+        READ -.-&gt;|&quot;skips&quot;| SUP
+        RECENT[&quot;aidememo_recent, and CLI recent run by the&lt;br/&gt;Claude Code SessionStart hook: current_only false&quot;] -.-&gt;|&quot;returns&quot;| SUP
+        ASOF[&quot;as_of t: created_at at or before t,&lt;br/&gt;not superseded by t&quot;] -.-&gt;|&quot;reconstructs&quot;| SUP
+    end
+    subgraph SERVER[&quot;server profile: aidememo-server&quot;]
+        ENV[&quot;client envelope naming a project — untrusted&quot;] --&gt; AUTHZ{&quot;AuthorizedCommand::authorize against&lt;br/&gt;membership loaded from the bearer token&quot;}
+        AUTHZ --&gt;|&quot;projects differ&quot;| REJ[&quot;ProjectScopeMismatch&quot;]
+        AUTHZ --&gt;|&quot;agree&quot;| TX{&quot;one transaction&quot;}
+        TX --&gt; RES[(&quot;resource: Present body&lt;br/&gt;or Deleted tombstone&quot;)]
+        TX --&gt; AUD[(&quot;ssot_audit: tenant and actor&lt;br/&gt;from the authorization&quot;)]
+    end</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -236,106 +273,350 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>crates/aidememo-domain/command.rs</code></td>
-<td>Authorization binding, the mutation type, the audit record</td>
+<td><code>crates/aidememo-core</code></td>
+<td>The local engine: facts, entities, relations, search, supersession,
+archive, ingest, privacy screen</td>
 </tr>
 <tr>
-<td><code>crates/aidememo-domain/conformance.rs</code></td>
-<td>The fixture every storage adapter must satisfy</td>
+<td><code>crates/aidememo-cli</code></td>
+<td>The binary: CLI, stdio MCP, HTTP MCP (<code>mcp-serve</code>),
+daemon, pending review, installers</td>
 </tr>
 <tr>
-<td><code>crates/aidememo-domain/record.rs</code></td>
-<td>Tenants, projects, actors, and what their statuses mean</td>
+<td><code>crates/aidememo-python</code>, <code>-napi</code>,
+<code>-nif</code>, <code>-ffi</code></td>
+<td>Native bindings over the core</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-domain</code></td>
+<td>Server types: authorization binding, mutation, receipt, audit entry,
+conformance fixture</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-service</code></td>
+<td>Authorize, fingerprint and execute; scoped reads and visibility
+projection</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-server</code></td>
+<td>The server binary: REST, HTTP MCP, search projections</td>
 </tr>
 <tr>
 <td><code>crates/aidememo-store-local</code>,
 <code>-store-postgres</code></td>
-<td>Two adapters behind one trait</td>
+<td>The two <code>CommandStore</code> adapters</td>
 </tr>
 <tr>
 <td><code>crates/aidememo-client</code></td>
-<td>The replica cache and its change cursor</td>
+<td>The replica cache that follows the server's change feed</td>
 </tr>
 <tr>
-<td><code>docs/MEASUREMENTS.md</code>, <code>benchmarks/</code></td>
-<td>The public measurement ledger and its evidence</td>
+<td><code>plugins/claude</code>, <code>plugins/hermes</code></td>
+<td>Hooks, skills, slash commands and the pending capture log</td>
 </tr>
 </tbody>
 </table></div>
+<p>The two halves meet in two places only. <code>--remote-profile</code>
+routes the handoff tools to an authenticated server, and
+<code>aidememo replica</code> keeps a separate cache of server state;
+the local fact store is not a replica of the server.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The default is one binary and one local SQLite file, with no network
+and no model API: <code>.mcp.json</code> runs <code>aidememo mcp</code>
+over stdio. Semantic search uses a local model2vec model; a privacy
+filter, external embedders and rerankers are opt-in sidecars. Registered
+projects select different store files, which is the practical isolation
+boundary for a single user. The store is a SQLite database of JSON
+records, readable with ordinary tools. The server profile needs its own
+binary, provisioned tenants, actors, memberships and bearer tokens, and
+SQLite or PostgreSQL.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>crates/aidememo-domain/src/command.rs:190-213</code> — the only
-way a scope becomes trusted, and the error when it does not.</p>
-<p><code>:244-250</code> — the field that makes the rule unavoidable for
-every backend.</p>
-<p><code>:239-243</code> — the one-transaction storage contract, stated
-on the type it governs.</p>
-<p><code>:306-325</code> — an audit record whose tenant and actor are
-server-derived.</p>
-<p><code>crates/aidememo-domain/src/record.rs:18-28</code>,
-<code>:36</code> — actor kinds, and a display name barred from
-authorization.</p>
+<p><strong>Local write.</strong> <code>AideMemo::add_fact</code> screens
+content, inserts, and optionally auto-supersedes older decisions and
+conventions on the same entity
+(<code>crates/aidememo-core/src/lib.rs:817-893</code>,
+<code>:930-936</code>). The SQLite adapter returns the existing id when
+the namespace holds the same content hash
+(<code>crates/aidememo-core/src/sqlite_store.rs:193-194</code>,
+<code>:1776-1785</code>). The MCP <code>aidememo_fact_add</code> builds
+its input with <code>observed_at: None</code>
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:3501-3515</code>). The
+CLI parses <code>--observed-at</code>, but dispatches through a
+registered daemon with a <code>DaemonFactAdd</code> that has no field
+for it (<code>crates/aidememo-cli/src/main.rs:695-722</code>,
+<code>:3229-3237</code>).</p>
+<p><strong>Supersession.</strong> <code>fact_supersede</code> at
+<code>crates/aidememo-core/src/lib.rs:1034-1067</code>; the MCP tool at
+<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:3721</code>; the atomic
+auto-supersede at
+<code>crates/aidememo-core/src/lib.rs:839-893</code>.</p>
+<p><strong>Local retrieval.</strong> The filter chain in BM25 search
+applies namespace, event window, <code>as_of</code> and
+<code>current_only</code> in that order
+(<code>crates/aidememo-core/src/search.rs:76-85</code>,
+<code>:164-205</code>). MCP defaults are at
+<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:354-361</code> and
+<code>:1032-1035</code>; <code>recent</code> at
+<code>:1443-1477</code>.</p>
+<p><strong>Context assembly.</strong> <code>aidememo_context</code>,
+<code>aidememo_session_start</code> and
+<code>aidememo_pinned_context</code>
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:2370</code>,
+<code>:618</code>, <code>:554</code>). The Claude Code hooks at
+<code>plugins/claude/hooks/hooks.json</code>; the Hermes first-turn
+injection at
+<code>plugins/hermes/src/hermes_aidememo/hooks.py:167-207</code>.</p>
+<p><strong>Pending review.</strong> Capture at
+<code>plugins/hermes/src/hermes_aidememo/capture_adapter.py:121-133</code>;
+commit at
+<code>crates/aidememo-cli/src/cmd/pending/mod.rs:280-297</code> and
+<code>plugins/hermes/src/hermes_aidememo/slash.py:288-312</code>.</p>
+<p><strong>Server mutation.</strong> <code>command</code> at
+<code>crates/aidememo-server/src/lib.rs:412-451</code> →
+<code>CommandService::execute_prepared</code> at
+<code>crates/aidememo-service/src/lib.rs:163-196</code> →
+<code>execute_transaction</code> at
+<code>crates/aidememo-store-local/src/lib.rs:432-560</code>.</p>
+<p><strong>Server reads.</strong> <code>changes</code>,
+<code>materialized_changes</code>, <code>snapshot</code> and
+<code>search</code> at
+<code>crates/aidememo-server/src/lib.rs:485-662</code>; the service's
+scoped reads and participant visibility at
+<code>crates/aidememo-service/src/lib.rs:207-427</code>.</p>
+<p><strong>Local scope binding.</strong>
+<code>bind_request_identity</code> and
+<code>enforce_identity_field</code> at
+<code>crates/aidememo-cli/src/cmd/mcp_serve.rs:279-347</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A canonical resource keyed by tenant, project and resource reference,
-with a revision and a state that is either recursively key-sorted JSON
-or a durable deletion tombstone. Around it: commands with idempotency
-keys and canonical fingerprints, receipts, change entries with a project
-sequence, and immutable audit rows.</p>
+<p><strong>Local.</strong> <code>FactRecord</code> carries
+<code>id</code>, <code>content</code>, <code>fact_type</code>,
+<code>entity_ids</code>, <code>tags</code>, <code>source</code>, an
+optional <code>source_id</code> and <code>actor_id</code>,
+<code>source_confidence</code>, <code>relevance_score</code>,
+<code>created_at</code>, <code>updated_at</code>,
+<code>observed_at</code>, <code>superseded_at</code>,
+<code>superseded_by</code>, access counters and <code>pinned</code>
+(<code>crates/aidememo-core/src/types.rs:431-490</code>). The SQLite
+table stores the record as JSON beside a <code>content_hash</code>,
+unique per namespace. Relations carry a <code>scope_source_id</code>.
+Search sessions and feedback have their own tables. There is no status
+field beyond the supersession stamp, and no table records mutations.</p>
+<p><strong>Server.</strong> <code>CanonicalResource</code> holds a
+<code>ProjectScope</code>, a <code>ResourceRef</code>, a revision and a
+<code>ResourceState</code> of <code>Present { body }</code> or
+<code>Deleted</code>
+(<code>crates/aidememo-domain/src/command.rs:258-282</code>).
+<code>ssot_audit</code> holds tenant, project, project sequence, command
+id, operation, resource kind and id, actor and commit time; the bodies
+live on <code>ssot_changes</code>
+(<code>crates/aidememo-store-local/src/lib.rs:1160-1195</code>).
+<code>RecordStatus</code> — <code>Active</code>, <code>Suspended</code>,
+<code>Archived</code> — governs tenants, projects and actors, not
+memories (<code>crates/aidememo-domain/src/record.rs:6-16</code>).
+<code>ActorKind</code> separates <code>Human</code>, <code>Agent</code>
+and <code>Service</code>, and <code>display_name</code> is annotated
+"[h]uman-readable label; never used for authorization"
+(<code>:18-36</code>).</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Facts, graph traversal and history over canonical state, with
-replicas following a change feed by cursor and a local cache
-materialising it. Cursor epoch and range mismatches are refused with
-named errors rather than silently reset.</p>
+<p>Local search runs BM25 first and falls back to semantic HNSW when
+lexical evidence is weak or the query is CJK; <code>bm25_only</code>
+skips the model. Results are ranked with time decay on
+<code>observed_at</code> or <code>created_at</code>; by default
+decisions, conventions, patterns, preferences, lessons and errors are
+exempt (<code>crates/aidememo-core/src/config.rs:401-413</code>).
+<code>aidememo_query</code> composes search, entity resolution,
+traversal and recent facts in four modes, and
+<code>aidememo_context</code> adds pinned facts and personalisation.</p>
+<p>Superseded facts drop out of every default agent read but one.
+<code>recent</code> lists with <code>current_only: false</code> on both
+the MCP tool and the CLI, labelling each superseded fact with
+<code>superseded_by</code>
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:1134-1136</code>).
+Archived facts sit in a cold file that search reads only on
+<code>include_archive</code>.</p>
+<p>The namespace filter is an equality on <code>source_id</code>
+(<code>crates/aidememo-core/src/search.rs:164-169</code>), applied when
+the call carries one. Global tools — overview, doctor — refuse a call
+that carries a namespace, so a scoped identity cannot reach them
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:1323-1330</code>,
+<code>:1399-1405</code>).</p>
+<p>The server answers search from a lexical or semantic projection
+rebuilt from the scoped project snapshot, keyed by scope, with
+<code>at_least_seq</code> refusing a request ahead of the snapshot
+(<code>crates/aidememo-server/src/lib.rs:625-720</code>). Handoff
+records are visible only to their sender and receiver, on reads and on
+the change feed
+(<code>crates/aidememo-service/src/lib.rs:362-399</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Every mutation carries an idempotency key and a fingerprint over "the
-real project, precondition, operation, and payload". A retry with the
-same id and the same body replays the stored receipt; a retry with the
-same id and a different body is rejected. The mutation, its receipt, its
-change entry and its audit row commit together.</p>
+<p>Local writes are explicit: the agent calls
+<code>aidememo_fact_add</code> or <code>fact_add_many</code>, an
+operator runs the CLI or <code>aidememo ingest</code> over a markdown
+wiki, or a person commits pending detections. Nothing calls a model on
+the default write path. An optional privacy screen calls a local sidecar
+before persistence. Writes are synchronous.</p>
+<p>Deduplication is exact: the unique index on namespace and content
+hash makes an identical re-add return the existing id, merging entity
+links. When that row is superseded the re-add is absorbed into hidden
+history, while a paraphrase creates a current fact. Edits rewrite
+content in place and are refused when the new text duplicates another
+fact in the namespace.</p>
+<p>The Claude Code UserPromptSubmit hook previews candidate facts and
+tells the model to save durable ones itself; nothing is written. In
+Hermes, capture runs after each LLM call in <code>pending</code> or
+<code>direct</code> mode, off by default.</p>
+<p>Server writes go through typed routes for facts, sessions, handoffs
+and contexts, and a raw route for <code>custom.*</code> resources. The
+fingerprint covers "the real project, precondition, operation, and
+payload"; a retry with the same body replays the receipt and a different
+body is refused.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>One binary serving a CLI and an MCP surface over both stdio and HTTP,
-a Python agent SDK, and native bindings for Python, Node, Elixir and C —
-with a <code>COMPARE.md</code> that sets itself against mem0, Graphiti
-and Letta by name.</p>
+<p>The stdio MCP server registers 29 tools, from search, query and
+context to supersede, archive and edit; it has no delete
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:4580-4612</code>). A
+build with the <code>analytics</code> feature adds an unlisted
+<code>aidememo_analytics_query</code> that runs SQL over a DuckDB mirror
+of all facts with no namespace predicate (<code>:4688-4730</code>). The
+CLI installs MCP configuration for several agents, with optional
+<code>--source-id</code> and <code>--actor-id</code> written into the
+server environment.</p>
+<p>The Claude Code plugin injects pinned facts, an overview and recent
+facts at startup, resume and compaction. The Hermes plugin injects
+recent facts on the first turn, starts a workflow pack when a message
+looks like a ticket, and reads the namespace for that pack from the
+message text
+(<code>plugins/hermes/src/hermes_aidememo/hooks.py:59-66</code>,
+<code>:176-190</code>).</p>
+<p>The server exposes REST and a ten-tool HTTP MCP surface whose tools
+re-enter the REST router with the caller's bearer, with tool lists
+scoped by role.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The strong parts are the type-enforced scope, the transactional and
-server-derived audit, the idempotency fingerprint, and a conformance
-fixture that holds every backend to the same observable outcomes. The
-absent part is any statement about the content: nothing marks a memory
-as stale, disputed or corrected, and there is no second time axis to ask
-what was true rather than what was written.</p>
+<p><strong>The server's identity discipline holds on every path
+read.</strong> Tenant and actor never come from the request; project
+selection is checked against membership on every read and write; the
+HTTP MCP layer adds no second path. <code>display_name</code> is barred
+from authorization by annotation.</p>
+<p><strong>The local default has no identity discipline.</strong>
+<code>source_id</code> and <code>actor_id</code> are arguments. An
+installed <code>AIDEMEMO_SOURCE_ID</code> is a default, not a bound, and
+an agent passing a different namespace reads it. Bound-token
+<code>mcp-serve</code> closes this for HTTP clients, except for
+<code>aidememo_analytics_query</code> in builds that compile it.</p>
+<p><strong>Supersession is a replacement marker, not a belief
+state.</strong> The agent sets it through
+<code>aidememo_fact_supersede</code>, with no review, and the
+replacement may be any live fact in the hot store.
+<code>superseded_at</code> says a fact was replaced, never that it is
+disbelieved, and nothing marks a fact disputed or wrong, so the filter
+that withholds it from default reads is not a trust state.</p>
+<p><strong>Time is not bitemporal.</strong> <code>observed_at</code> is
+when a fact was observed or said, written by ingest, the CLI and pending
+approval, and read by <code>since</code> and <code>until</code>
+(<code>crates/aidememo-core/src/types.rs:459-468</code>,
+<code>crates/aidememo-core/src/search.rs:171-189</code>). It is not a
+validity interval, and <code>as_of</code> reads <code>created_at</code>
+and <code>superseded_at</code>, both record time
+(<code>:191-205</code>).</p>
+<p><strong>Deletion.</strong> CLI <code>fact delete</code> removes the
+row and keeps nothing; the next identical write creates a fresh current
+fact. Server deletions keep a tombstone keyed on the resource.
+<code>delete_tenant_data</code> erases a tenant's audit rows along with
+everything else and is called by nothing in the tree; the CLI subcommand
+for it returns an error
+(<code>crates/aidememo-store-postgres/src/lib.rs:427-494</code>,
+<code>crates/aidememo-cli/src/cmd/postgres.rs:115-130</code>). Both
+schemas give the audit table a foreign key to projects, and PostgreSQL's
+cascades on delete.</p>
+<p><strong>Review gates one producer, not the agent.</strong> With
+<code>auto_capture.enabled</code>, the Hermes post-LLM hook appends
+detections to <code>aidememo-pending.jsonl</code>, which no retrieval
+reads, and only the CLI <code>pending review</code>,
+<code>approve</code> and <code>reject</code> and the
+<code>/aidememo-pending</code> slash command drain it; no agent tool
+does
+(<code>plugins/hermes/src/hermes_aidememo/capture_adapter.py:121-133</code>,
+<code>crates/aidememo-cli/src/cmd/pending/mod.rs:280-297</code>). The
+capture is opt-in, and the same agent writes active facts directly with
+<code>aidememo_fact_add</code> and <code>aidememo_fact_add_many</code>,
+so review does not gate the producer's own writes. An approval records
+nothing about who approved: committed facts carry the tags
+<code>auto-recorded</code> and <code>aidememo-pending-review</code>, no
+actor and no namespace.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>A backend-neutral conformance fixture that "describes outcomes, not
-I/O" and is run by each adapter, an identity conformance suite beside
-it, a benchmarks tree, and a public measurement ledger that states where
-durable numbers live and deliberately ignores raw scenario output
-"because it contains temporary paths and run-specific identifiers".</p>
+<p>Unit and integration tests cover both halves. The domain crate's
+conformance fixture "describes outcomes, not I/O" and each adapter runs
+it: create, replay, actor conflict, body conflict, stale revision,
+update, delete and change-feed cursors. The SQLite contract test asserts
+the audit count beside it.</p>
+<p>The local MCP tests carry the retrieval negatives.
+<code>fact_list_defaults_current_only_true</code> asserts a superseded
+fact is absent by default and present on request.
+<code>scoped_read_tools_do_not_expose_neighbouring_source_content</code>
+asserts beta-namespace content stays out of eight alpha-scoped read
+paths while alpha content comes back. The bound-token router test
+asserts a beta token cannot fetch an alpha fact and that override
+attempts at top level and inside a batch are refused.
+<code>fact_list_as_of_hides_facts_superseded_before_the_cutoff</code>
+covers the record axis; the <code>since</code> parser test is a smoke
+check, as its comment says.</p>
+<p>No test drives the Claude Code session-start hook against a store
+holding superseded or foreign-namespace facts. No test covers the daemon
+path dropping <code>--observed-at</code>.</p>
+<p><code>docs/MEASUREMENTS.md</code> is the project's ledger of
+retrieval and agent-UX numbers; it notes the LongMemEval and LFM scripts
+behind some of them were removed, with results kept as historical
+evidence. No benchmark was reproduced here, and I ran none of the
+tests.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Make the authorized scope a different type from the requested one. A
-predicate can be forgotten on one read path; a constructor that refuses
-a mismatched envelope cannot, and a store that only accepts the
-authorized type has no unscoped path left to audit.</p>
-<p>Derive the audit's actor on the server. An audit row whose actor
-field is filled in by the actor is a record of a claim, not of an
-act.</p>
-<p>Put the transactional requirement on the type the adapters implement.
-"Persist … in one transaction" written on the command struct is a
-contract every backend author reads; the same sentence in a README is
-one they may not.</p>
-<p>Annotate the fields that must never be used for authorization.
-<code>display_name: "never used for authorization"</code> costs nothing
-and forecloses a whole class of bug.</p>
+<h3 id="steal">Steal</h3>
+<p><strong>Make the authorized scope a different type from the requested
+one.</strong> A constructor that refuses a mismatched envelope, and a
+store that accepts only the authorized type, leave no unscoped path to
+forget.</p>
+<p><strong>Bind identity at the transport, and refuse rather than
+overwrite.</strong> <code>mcp-serve</code> writes the token's namespace
+into every call and answers a conflicting one with an error, so a
+misconfigured client fails loudly instead of silently writing elsewhere.
+Global tools refuse a scoped identity outright.</p>
+<p><strong>Stamp observation time apart from insertion time, and give
+each its own parameter.</strong> <code>since</code>/<code>until</code>
+and <code>as_of</code> answer different questions, and the code says
+which column each reads.</p>
+<p><strong>Pair a must-not assertion with a must-return in the same
+call.</strong> The scoped read test checks alpha content present and
+beta content absent per tool, so a filter that returns nothing cannot
+pass.</p>
+<h3 id="avoid">Avoid</h3>
+<p><strong>A scope that the call may override.</strong> An environment
+default that an argument replaces is a convenience, not a boundary; the
+same product shipping both a bound and an unbound transport invites a
+reader to assume the stronger.</p>
+<p><strong>A context assembler that bypasses the read defaults.</strong>
+The session-start hook calls a listing command whose defaults differ
+from the agent's tools, and that is where superseded and foreign facts
+leak.</p>
+<p><strong>Two write paths with different field sets.</strong> A daemon
+shortcut that drops an argument the direct path honours is a silent data
+loss no test sees.</p>
+<h3 id="fit">Fit</h3>
+<p>For one developer with a store per project, the local half is a
+capable, model-free working memory, and its unenforced namespace matters
+little. For a shared store across teams, apps or users, use bound-token
+<code>mcp-serve</code> or the server profile, and do not rely on stdio
+or the bindings for isolation. A reader who needs correctable beliefs —
+a rejected value that stays rejected — will not find it here.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether a memory will ever carry a status of its own. Every guarantee
-here is about who may write and what was written; none is about whether
-what was written is still true, and a working memory for long-running
-agents eventually needs that vocabulary.</p>
-<p>Whether the conformance fixture will grow retrieval assertions. It is
-the right instrument, already run against every backend, and it
-currently checks that bad commands are refused rather than that
-withdrawn material stops coming back.</p>
+<p>Whether the server profile is meant to replace the local store or sit
+beside it; <code>docs/SERVER_SSOT.md</code> describes local stores
+becoming read caches, which the code at this pin does not do for
+facts.</p>
+<p>Whether a Hermes agent can invoke a registered slash command itself,
+which decides whether <code>/aidememo-pending commit all</code> is
+reachable from the producing side.</p>
+<p>Whether superseding and then re-adding identical content is meant to
+stay hidden, or is an accident of the dedup index.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -346,28 +627,108 @@ withdrawn material stops coming back.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>crates/aidememo-domain/src/command.rs:190-213</code></td>
-<td>A scope the caller cannot assert</td>
+<td><code>crates/aidememo-domain/src/command.rs:190-256</code></td>
+<td>A scope the caller cannot assert, carried by the only mutation
+type</td>
 </tr>
 <tr>
-<td><code>:244-250</code></td>
-<td>Why no backend can be handed an unscoped mutation</td>
+<td><code>crates/aidememo-domain/src/command.rs:307-326</code></td>
+<td>An audit record whose tenant and actor are server-derived</td>
 </tr>
 <tr>
-<td><code>:306-325</code></td>
-<td>An audit row whose actor is derived, not declared</td>
+<td><code>crates/aidememo-store-local/src/lib.rs:432-560</code></td>
+<td>Resource, receipt, change and audit in one transaction</td>
 </tr>
 <tr>
-<td><code>crates/aidememo-domain/src/record.rs:36</code></td>
-<td>One annotation that forecloses a class of bug</td>
+<td><code>crates/aidememo-service/src/lib.rs:207-427</code></td>
+<td>Scoped server reads and participant visibility</td>
 </tr>
 <tr>
-<td><code>crates/aidememo-domain/src/conformance.rs:1-6</code></td>
-<td>One fixture, every storage backend</td>
+<td><code>crates/aidememo-cli/src/cmd/mcp_serve.rs:279-347</code></td>
+<td>Bound-token identity injection and refusal</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-cli/src/cmd/mcp_tools.rs:791-810</code></td>
+<td>The local namespace: argument first, environment second</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-core/src/types.rs:431-490</code></td>
+<td>The local fact record and its time fields</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-core/src/search.rs:164-205</code></td>
+<td>Namespace, event-window and as-of predicates</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-core/src/lib.rs:817-893</code>,
+<code>:1034-1067</code></td>
+<td>Auto-supersede and supersede</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-cli/src/cmd/recent.rs:74-85</code></td>
+<td>The listing the Claude Code hook injects</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-cli/src/cmd/pending/mod.rs:280-297</code></td>
+<td>Committing a pending detection</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-cli/src/cmd/mcp_tools.rs:5179-5300</code>,
+<code>:6190-6229</code></td>
+<td>The negative retrieval tests</td>
+</tr>
+<tr>
+<td><code>crates/aidememo-domain/src/conformance.rs</code></td>
+<td>One fixture, every server backend</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of each pin with <code>git grep -n -E</code>;
+the results were identical at both.</p>
+<ul>
+<li><code>'(DELETE FROM|UPDATE) ssot_audit' -- crates</code> —
+<code>crates/aidememo-store-postgres/src/lib.rs:467</code> only, inside
+<code>delete_tenant_data</code>.</li>
+<li><code>'delete_tenant_data|backup::delete_tenant' -- crates ':!crates/aidememo-store-postgres/src'</code>
+— no match; no caller.</li>
+<li><code>'"observed_at"' -- crates/aidememo-cli/src/cmd/mcp_tools.rs</code>
+— <code>:1123</code> only, an output field; no MCP tool reads it as
+input.</li>
+<li><code>'tombstone|blocklist|denylist|suppress|rejected_' -- crates/aidememo-core/src</code>
+— one test name in <code>sync.rs</code>; no rejected-value record.</li>
+<li><code>'pending|approve' -- plugins/hermes/src/hermes_aidememo/tools.py</code>
+— no match; no pending tool for the agent.</li>
+<li><code>'source_id: None|current_only: false' -- crates/aidememo-cli/src/cmd/recent.rs</code>
+— <code>:78</code> and <code>:83</code>.</li>
+<li><code>'observed_at' -- crates/aidememo-cli/src/main.rs</code> —
+parsed at <code>:697-702</code> and used at <code>:858</code>; absent
+from <code>DaemonFactAdd</code> at <code>:3229-3237</code>.</li>
+<li><code>'"aidememo_[a-z_]+" =&gt;' -- crates/aidememo-cli/src/cmd/mcp_tools.rs</code>
+— 30 arms, the last behind <code>#[cfg(feature = "analytics")]</code>;
+no delete tool.</li>
+<li><code>-i 'anthropic|machine learning|not (be )?used (for|to)|artificial' -- LICENSE LICENSE-MIT LICENSE-APACHE</code>
+— no match; no rider.</li>
+<li><code>-i 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs COMPARE.md</code>
+— related-work citations only; no paper about AideMemo.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/taeyun16/aidememo/commit/21f7d1a848210e0e65414a2e46b46ec1b433b8e0"><code class="commit-id" title="21f7d1a848210e0e65414a2e46b46ec1b433b8e0">21f7d1a8…</code></a>
+— 21 commits on: clippy cleanups, a removed semantic cache in the server
+worker, dependency bumps; no mechanism moved. The first reading covered
+only the server profile and was wrong at its pin about the default local
+store. <code>negative_eval</code> gained, earned then on committed MCP
+tests (<a href="#10-tests-evals-and-benchmarks">section 10</a>). It did
+not describe <code>observed_at</code>, supersession or the Hermes
+pending queue; each is a near-miss for its mark (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Also wrong then:
+one store behind the command trait, and the server's scope given as the
+system's (<a href="#3-architecture">section 3</a>). Screened from a full
+clone: two auto-run surfaces, two lockfiles inside the cooldown, five
+build-time execution points, five unpinned surfaces;
+<code>AGENTS.md</code> and <code>CLAUDE.md</code> read as data. Nothing
+was installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/taeyun16/aidememo/commit/58b803cc6b717fbf6559303e0d3f08e8b75673d4"><code class="commit-id" title="58b803cc6b717fbf6559303e0d3f08e8b75673d4">58b803cc…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

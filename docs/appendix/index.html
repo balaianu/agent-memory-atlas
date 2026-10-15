@@ -4489,10 +4489,10 @@ seven-day cooldown. Nothing was installed, built or run and no session
 transcript was extracted. Apache-2.0</li>
 <li><a href="https://github.com/taeyun16/aidememo">taeyun16/aidememo</a>
 at <a
-href="https://github.com/taeyun16/aidememo/commit/58b803cc6b717fbf6559303e0d3f08e8b75673d4"><code class="commit-id" title="58b803cc6b717fbf6559303e0d3f08e8b75673d4">58b803cc…</code></a>
+href="https://github.com/taeyun16/aidememo/commit/21f7d1a848210e0e65414a2e46b46ec1b433b8e0"><code class="commit-id" title="21f7d1a848210e0e65414a2e46b46ec1b433b8e0">21f7d1a8…</code></a>
 — read only; two auto-run surfaces, five build-time execution points,
-five unpinned dependency surfaces and twenty-seven dependency files
-inside the seven-day cooldown, with <code>Cargo.lock</code> present.
+five unpinned dependency surfaces and two dependency files inside the
+seven-day cooldown, with <code>Cargo.lock</code> present.
 <code>AGENTS.md</code> and <code>CLAUDE.md</code> are addressed to a
 reading agent and were recorded as data. Nothing was installed, built or
 run and no benchmark was reproduced. MIT OR Apache-2.0</li>
@@ -16857,6 +16857,35 @@ lines, 287 test functions, <code>src/store.rs</code> at 12,206 lines —
 described <a
 href="https://github.com/genomewalker/chitta-field/commit/f3176e587dced64dd3a6a663a40a58e3802b0a10"><code class="commit-id" title="f3176e587dced64dd3a6a663a40a58e3802b0a10">f3176e58…</code></a>;
 at the pin <code>src/store.rs</code> was 3,728 lines.</li>
+<li><strong>Six published claims about <a
+href="../systems/aidememo/">AideMemo</a> were wrong at <a
+href="https://github.com/taeyun16/aidememo/commit/58b803cc6b717fbf6559303e0d3f08e8b75673d4"><code class="commit-id" title="58b803cc6b717fbf6559303e0d3f08e8b75673d4">58b803cc…</code></a>,
+the pin they were made at, and are corrected.</strong> The report read
+the server profile and described it as the whole system, so the default
+local store went unread. It said the only times were creation, update
+and a revision and did not describe <code>FactRecord.observed_at</code>
+(<code>crates/aidememo-core/src/types.rs:463-468</code>), an observation
+time read by <code>since</code> and <code>until</code>
+(<code>crates/aidememo-core/src/search.rs:171-189</code>). It said
+nothing marked a stored fact superseded and did not describe
+<code>superseded_at</code>, withheld by default on search, list, query
+and every context assembler
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:354-361</code>). It did
+not credit <code>negative_eval</code>, though
+<code>fact_list_defaults_current_only_true</code> and
+<code>scoped_read_tools_do_not_expose_neighbouring_source_content</code>
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:6190-6229</code>,
+<code>:5179-5300</code>) asserted superseded and foreign-namespace facts
+absent beside positive controls. It did not describe the Hermes pending
+queue for auto-captured facts, which no retrieval reads and no agent
+tool drains
+(<code>crates/aidememo-cli/src/cmd/pending/mod.rs:280-297</code>). And
+it placed the embedded local store behind the storage-neutral command
+trait and gave the server's credential-bound scope as the system's
+scoping; the CLI, stdio MCP and bindings use <code>aidememo-core</code>,
+which is not behind the trait and takes <code>source_id</code> from the
+call
+(<code>crates/aidememo-cli/src/cmd/mcp_tools.rs:791-810</code>).</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

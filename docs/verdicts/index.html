@@ -22011,52 +22011,50 @@ posture the project states for itself.</li>
 <h3 id="aidememo"><a
 href="../systems/aidememo/"><code>aidememo</code></a></h3>
 <ul>
-<li>Best idea: <strong>the scope a command runs under is a different
-type from the one the caller asked for.</strong>
+<li>Best idea: <strong>the scope a server command runs under is a
+different type from the one the caller asked for.</strong>
 <code>AuthorizedCommand</code> is "[c]ommand paired with server-owned
 authorization context", its only constructor returns
 <code>DomainError::ProjectScopeMismatch</code> "when the untrusted
 envelope selects a different project", and <code>MutationCommand</code>
 — the single thing <code>CommandStore::execute</code> accepts — carries
-an <code>AuthorizedCommand</code> as a field. So no backend adapter can
-be handed a mutation whose project came from the request: there is no
-unscoped value to pass and therefore no read or write path left to
-forget the predicate on. The audit follows the same rule and is
-transactional — adapters "persist its canonical fingerprint, resource
-mutation, receipt, change entry, and audit entry in one transaction",
-and the row's <code>tenant_id</code> is the "[s]erver-derived tenant"
-with <code>actor_id</code> the "[s]erver-derived actor provenance".</li>
-<li>Biggest risk: <strong>nothing in the model is about whether a memory
-is true.</strong> <code>RecordStatus</code> — <code>Active</code>,
-<code>Suspended</code>, <code>Archived</code> — governs tenants,
-projects and actors rather than claims: suspended "does not grant access
-or accept mutations", archived is "read-only and retained for export or
-audit". There is no field marking a stored fact stale, disputed or
-corrected, and the only times are <code>created_at_ms</code>,
-<code>updated_at_ms</code> and a revision, so history is a version chain
-over write time with no second axis. The deletion tombstone is durable
-and replicated, which is right for convergence, and keyed on the
-resource rather than the value, so the same content can be written back
-with no record that it was removed.</li>
-<li>Most reusable component: two annotations. <code>ActorKind</code>
-separates <code>Human</code> ("[i]nteractive person") from
-<code>Agent</code> ("[n]amed coding or reasoning agent profile") and
-<code>Service</code>, so provenance records what kind of thing acted and
-not merely which id — the distinction this atlas spends most of its
-review-mark judgements on. And <code>display_name</code> carries
-<code>"Human-readable label; never used for authorization"</code>, which
-forecloses the rename-widens-access bug before anyone writes it.</li>
-<li>Maturity impression: MIT or Apache-2.0, Rust, version 0.1.0, 95,480
-lines over 135 files in thirteen crates, one binary with CLI, MCP over
-stdio and HTTP, a Python agent SDK and bindings for Node, Elixir and C,
-two storage adapters behind one trait, and a backend-neutral conformance
-fixture each must pass. Two auto-run surfaces and twenty-seven
-dependency files inside the cooldown at this pin.</li>
+an <code>AuthorizedCommand</code> as a field. Every server read loads
+membership from the bearer token, and each mutation commits with an
+audit row whose tenant and actor come from the authorization.
+<code>aidememo mcp-serve</code> with bound tokens repeats the rule at
+the local edge, injecting the token's <code>source_id</code> and
+refusing a different one.</li>
+<li>Biggest risk: <strong>the default local deployment takes identity
+from the call.</strong> The stdio MCP server, CLI and bindings read
+<code>source_id</code> and <code>actor_id</code> as arguments, an
+explicit namespace overrides the installed
+<code>AIDEMEMO_SOURCE_ID</code>, and an omitted one reads every
+namespace. The Claude Code session-start hook injects CLI
+<code>recent</code>, which passes no namespace and
+<code>current_only: false</code>, so superseded facts from every
+namespace reach the prompt; a CLI write routed through a running daemon
+drops <code>--observed-at</code>.</li>
+<li>Most reusable component: the local read defaults and the tests that
+pin them. A superseded fact is withheld from search, list, query and
+every context assembler unless the caller asks for history, and
+<code>scoped_read_tools_do_not_expose_neighbouring_source_content</code>
+asserts foreign-namespace content absent from eight read paths while the
+caller's own content comes back in the same calls.</li>
+<li>Maturity impression: MIT or Apache-2.0, Rust, version 0.1.0, 95,351
+lines in 135 files across thirteen crates — a local engine of 29,876
+beside a server profile of 19,807 — one binary with CLI, stdio and HTTP
+MCP, a Python agent SDK, bindings for Node, Elixir and C, and Claude
+Code and Hermes plugins. Tests: 578 Rust test attributes and 118 Python
+test functions. Two auto-run surfaces and two dependency files inside
+the cooldown at this pin.</li>
 <li>Study when: your tenant predicate is a <code>WHERE</code> clause
-somebody has to remember, or your audit's actor field is filled in by
-the actor.</li>
-<li>Do not copy when: you need the store to say a memory has gone stale.
-Two marks: scope enforced, mutation audit.</li>
+somebody has to remember, your audit's actor field is filled in by the
+actor, or you want an MCP transport that binds a namespace to a token
+and refuses an override.</li>
+<li>Do not copy when: you deploy the local store over stdio for more
+than one tenant, or a fact must be marked disbelieved, held over a
+validity interval, or reviewed before the agent's own writes land. Three
+marks: scope enforced, mutation audit, negative eval.</li>
 </ul>
 <h3 id="cogz"><a href="../systems/cogz/"><code>cogz</code></a></h3>
 <ul>
