@@ -30087,65 +30087,65 @@ table keeps the number</td>
 <td><a href="../systems/temvera/"><code>temvera</code></a></td>
 <td>A belief — subject, attribute, value, a valid interval, a recorded
 and a last-confirmed time, an authority level, sources, derivation
-lineage, a status and a supersession link — written as an immutable
-event</td>
-<td>Append-only JSONL event ledgers in a Git repository, with a
-protected variant that encrypts each belief's payload under its own key
-and keeps only metadata and ciphertext in history</td>
-<td>Exact, lexical and vector retrieval over a projection rebuilt from
-the events, with calibrated fusion and reranking; every query takes a
-valid instant and a transaction instant</td>
-<td>Events appended through a store that refuses duplicate ids, with
-ingest gated by a provenance and signature policy before a claim may
-act</td>
-<td>Revision and expiry are events rather than edits; erasure destroys a
-per-belief key and appends a receipt, and redaction runs in two phases
-with a recovery path</td>
-<td>Tenant is carried on the signed evidence envelope and is a required
-argument to authorization, which refuses cross-tenant evidence; it
-governs acting rather than searching</td>
+lineage, a status and a supersession link — materialised from immutable
+lifecycle events</td>
+<td>Append-only JSONL event files in a directory, either plain or with
+each belief's payload encrypted under its own key; Markdown projections
+and index snapshots rebuilt from them and optionally committed to Git;
+an independent SQLite oracle as a cross-check</td>
+<td>The oracle answers a subject and attribute at a transaction instant
+and a valid instant. A separate hybrid retriever fuses exact, lexical,
+hashed-vector and one-hop graph channels by reciprocal rank over a
+caller-supplied state, applying valid time only when its temporal
+channel is requested</td>
+<td>Events appended through a store that refuses duplicate event ids,
+with both clocks supplied by the caller. No policy runs on the append
+path; the ingest and action gates are separate functions</td>
+<td>Reconfirm, supersede, expire and purge are events. A purge removes a
+belief from the projection and leaves its payload in the plain ledger;
+<code>redact_payloads</code> rewrites that payload in place and appends
+a receipt, and the protected store erases by destroying the belief's
+key</td>
+<td>None in the store or on any read path. A tenant string exists only
+on the signed evidence envelope the action gate checks</td>
 <td>A <code>temvera</code> CLI over the substrate and the experiment
-harness, plus adapters for the external systems the paper measures</td>
-<td>Consolidation and decay studies, a literature-freeze tool for the
-paper's prior-art review, and artifact verification over sealed
-runs</td>
-<td>Five ranked authority levels that refuse rather than discount,
-Ed25519-signed evidence envelopes, derivation-laundering detection, and
-adversarial probes whose one success is published</td>
+harness, plus adapters for Mem0, LangMem, Graphiti, Cognee and
+Hindsight</td>
+<td>None in the substrate. Decay and consolidation studies, a
+literature-freeze tool for the paper's prior-art review, LongMemEval
+label adjudication and artifact verification over sealed runs sit in the
+harness</td>
+<td>Five authority levels fixed at ingest and read only by action gates
+that refuse rather than discount, Ed25519-signed evidence envelopes,
+derivation-laundering detection, and adversarial probes whose one
+success is published</td>
 <td>Two things, and they are the same habit applied twice. The first is
 <code>bypass.py</code>, which publishes the attack that works:
 <code>compromised_trusted_signer</code> activates, is declared
 <code>expected_limitation=True</code>, and
 <code>tests/test_bypass.py</code> asserts that it is the only probe that
-activates — so a newly-working bypass breaks the build and the honest
-admission cannot be deleted without the test noticing. The second is the
-artifact discipline. "Every number the paper reports is an aggregation
-over sealed per-case transcripts, so the whole paper can be checked
-without an API key, a database server, or a dataset download", with
-<code>verify_paper_claims.py</code> pairing "each figure as printed in
-the paper with a recomputation from a sealed run" and failing "if either
-half moves" — the check catches a corrected number as readily as a
-corrupted one. Regeneration is deliberately decoupled from verification,
-"so you can confirm what we computed before deciding whether to re-run
-generation". The status section is written the same way, listing what
-remains incomplete and stating that "[c]laims outside the frozen
-synthetic fixtures remain hypotheses"</td>
-<td>This is a research reference implementation and says so: version
-0.0.1, "[n]o production readiness is claimed", and a provisional API.
-The substrate is 7,683 lines of Python with no server, so treat the
-mechanisms as demonstrations rather than as something to deploy. The
-deletion story is the one to read carefully against the project's own
-subject matter: crypto-shredding makes an erased payload unrecoverable
-and leaves a receipt, but nothing on the ingest path consults those
-receipts, so re-asserting an erased value produces a new belief with no
-sign that the store once destroyed it — a deletion record rather than a
-tombstone. Tenant scoping governs authorization rather than retrieval,
-so it answers whether evidence may act and not what a search returns.
-There is no human-review surface: the review tooling in the tree belongs
-to the paper's prior-art process, not to the memory. And the paper's
-external comparisons need an OpenAI key, a Neo4j server and a second
-interpreter, which is a real barrier to the half of the work that
-measures other people's systems</td>
+activates, so a newly working bypass breaks the suite and the admission
+cannot be deleted without the test noticing. The second is the artifact
+discipline: "the whole paper can be checked without an API key, a
+database server, or a dataset download", and
+<code>verify_paper_claims.py</code> pairs each figure as printed with a
+recomputation from a sealed run and fails if either half moves, which
+catches a corrected number as readily as a corrupted one. The query
+protocol makes both instants mandatory, so each baseline is the oracle
+with one axis deleted in a single statement</td>
+<td>A research reference implementation at version 0.0.1 under a
+provisional API, and the README says "[n]o production readiness is
+claimed". The governance layer is not wired to the memory: authority is
+fixed at ingest and read only by action gates that no append and no
+retrieval calls, the tenant is never stored, and the superseded and
+expired statuses are written and never filtered on. The hybrid retriever
+and packet builder index superseded and expired beliefs and return them
+unless a caller asks for the temporal channel. Transaction time is
+supplied by the writer. A purge leaves the payload in the plain ledger,
+<code>redact_payloads</code> rewrites that ledger in place, and no
+ingest path reads the deletion receipts, so an erased value can return
+as a new belief. Regenerating the external comparisons needs an OpenAI
+key, a Neo4j server and a second interpreter</td>
 </tr>
 <tr>
 <td><a
@@ -33211,7 +33211,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>193 of 749:</em> <a
+<p><em>192 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33392,7 +33392,6 @@ href="../systems/statewave/"><code>statewave</code></a>, <a
 href="../systems/stella/"><code>stella</code></a>, <a
 href="../systems/stratagate/"><code>stratagate</code></a>, <a
 href="../systems/swarmai/"><code>swarmai</code></a>, <a
-href="../systems/temvera/"><code>temvera</code></a>, <a
 href="../systems/theurian/"><code>theurian</code></a>, <a
 href="../systems/throughline/"><code>throughline</code></a>, <a
 href="../systems/tidemind/"><code>tidemind</code></a>, <a
@@ -33545,7 +33544,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>328 of 749:</em> <a
+<p><em>327 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33855,7 +33854,6 @@ href="../systems/synapse-layer/"><code>synapse-layer</code></a>, <a
 href="../systems/tanglies-agentos/"><code>tanglies-agentos</code></a>,
 <a href="../systems/teamai-cli/"><code>teamai-cli</code></a>, <a
 href="../systems/telemem/"><code>telemem</code></a>, <a
-href="../systems/temvera/"><code>temvera</code></a>, <a
 href="../systems/tencentdb-agent-memory/"><code>tencentdb-agent-memory</code></a>,
 <a href="../systems/theurian/"><code>theurian</code></a>, <a
 href="../systems/tigrimosr/"><code>tigrimosr</code></a>, <a

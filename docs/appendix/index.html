@@ -4395,10 +4395,10 @@ through <code>npx</code>), one build-time execution point
 cooldown. Nothing was installed, built or run. MIT</li>
 <li><a href="https://github.com/suanlab/temvera">suanlab/temvera</a> at
 <a
-href="https://github.com/suanlab/temvera/commit/75243a3dbc3dfeda3613fb69e940c774f5ff4e5b"><code class="commit-id" title="75243a3dbc3dfeda3613fb69e940c774f5ff4e5b">75243a3d…</code></a>
+href="https://github.com/suanlab/temvera/commit/81cde831d3f1b874550b1dfdeb42b1261578a0fd"><code class="commit-id" title="81cde831d3f1b874550b1dfdeb42b1261578a0fd">81cde831…</code></a>
 — read only; four files scanned, no auto-run surfaces, no build-time
-execution points, one unpinned dependency surface and one dependency
-file inside the seven-day cooldown. <code>AGENTS.md</code> and
+execution points, one unpinned dependency surface and no dependency file
+inside the seven-day cooldown. <code>AGENTS.md</code> and
 <code>CLAUDE.md</code> are addressed to a reading agent and were
 recorded as data. Nothing was installed, built or run, and none of the
 paper's verification scripts were executed. Apache-2.0</li>
@@ -12173,7 +12173,7 @@ each reference the analyzer could not resolve, so the index ships its
 own coverage gaps. Read against the corpus this atlas holds, that is a
 discrete ordered status that withholds, kept apart from where a claim
 came from, and applied on the read path — the combination <a
-href="../capabilities/">193
+href="../capabilities/">192
 systems</a> here express as a single float, and the reason
 <code>trust_state</code> is the mark most often refused. <strong>And the
 README states the retrieval consequence better than most memory systems
@@ -17232,6 +17232,30 @@ harnesses were under <code>tests/</code>, and
 <code>docs/benchmarks.md</code> carried results. And it gave 16 MCP
 tools and 49 test files where the tree registered 19 tools and held 68
 test files.</li>
+<li><strong>Five published claims about <a
+href="../systems/temvera/">Temvera</a> were wrong at <a
+href="https://github.com/suanlab/temvera/commit/75243a3dbc3dfeda3613fb69e940c774f5ff4e5b"><code class="commit-id" title="75243a3dbc3dfeda3613fb69e940c774f5ff4e5b">75243a3d…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>trust_state</code> on the authority enum, which is fixed
+at ingest and read only by action gates whose callers are the bypass
+probes and the threat fixture
+(<code>src/temvera/governance.py:69-97</code>,
+<code>src/temvera/security.py:26-41</code>). It awarded
+<code>scope_enforced</code> on a tenant that exists only on an
+unpersisted evidence envelope; no store, query, retriever or packet
+takes one, and the record itself said the check governed authorization
+rather than retrieval. It said ingest was gated before it landed by six
+checks; those were the action gate's, and no append called either policy
+method (<code>src/temvera/store.py:24-35</code>). It said every query
+took both instants; the hybrid retriever applied valid time only on
+request and the packet builder took neither
+(<code>src/temvera/hybrid.py:47-52</code>,
+<code>src/temvera/retrieval.py:28-36</code>). And it described the plain
+ledger's redaction as leaving the record intact;
+<code>redact_payloads</code> rewrote ingest lines with
+<code>os.replace</code> (<code>src/temvera/store.py:169</code>). The two
+marks rested on what the gate checked rather than on which path called
+it.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

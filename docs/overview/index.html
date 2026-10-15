@@ -152,7 +152,7 @@ removing a single vector. See <a
 href="#the-layer-below-delete-what-the-storage-engine-does-with-the-vector">the
 layer below delete</a>.</li>
 <li><strong>Scope is the most implemented mechanism and the
-shallowest.</strong> 328 of
+shallowest.</strong> 327 of
 749 apply a scope key as a filter on the read path.
 It is also the mark most often satisfied by a single predicate that a
 background job then ignores.</li>
@@ -167,7 +167,7 @@ preamble, a summarization or a write, which is a different and weaker
 thing. Read the count as a ceiling on the strict reading rather than as
 its total.</li>
 <li><strong>Trust is usually a number, not a state.</strong>
-193 of 749 record
+192 of 749 record
 a discrete epistemic status. The rest store a confidence float, which
 cannot express <em>rejected</em> and so cannot survive being wrong.</li>
 </ol>
@@ -365,7 +365,7 @@ discard the source cannot.</li>
 levels, and the atlas's <code>scope_enforced</code> mark only certifies
 the middle one. A scope <em>tag</em> stored beside the memory is a hope.
 A scope <em>key applied as a filter on the read path</em> is what
-328 of 749
+327 of 749
 systems here have, and is what the mark means. A scope <em>boundary</em>
 — authenticated identity, grants, and a filter that a caller cannot
 widen by passing a different argument — is rarer than the count

@@ -9941,11 +9941,12 @@ that serves results the trust gate never judged, stamped
 <p><strong><a href="../systems/temvera/">Temvera</a> publishes the
 attack that works against it, and commits a test that keeps the
 admission honest.</strong> An Apache-2.0 Python research artifact at
-version 0.0.1 — 11,702 lines over 93 files — sitting behind a PVLDB
+version 0.0.1 — 13,439 lines over 99 files — sitting behind an ICDE 2027
 paper whose title states this page's own thesis, <em>Temporal Fields Are
 Not Temporal Correctness: Measuring Bitemporal and Deletion Semantics in
 Deployed Agent Memory</em>. It is both a harness that measures other
-systems and a reference substrate implementing what it argues for.
+systems and a reference substrate that replays lifecycle events at a
+transaction instant and answers at a valid instant.
 <code>run_bypass_probes</code> returns four adversarial results, each
 carrying whether it activated and whether that was expected:
 cross-tenant replay, claim tampering and expired-signature replay must
@@ -9956,10 +9957,12 @@ asserts that exactly one probe activated and that it is the declared
 one, so a newly-working bypass breaks the build and deleting the
 admission breaks it too. The same habit runs through the paper artifact,
 where each printed figure is paired with a recomputation from a sealed
-run and the check "fails if either half moves". Its own gap is the one
-its subject matter makes conspicuous: erasure destroys a per-belief key
-and appends a receipt, and nothing on the ingest path reads those
-receipts back, so an erased value can return as a new belief.</p>
+run and the check "fails if either half moves". Its gaps are in the
+wiring. The authority ranks, signatures and tenant check live in an
+action gate that no store write and no retrieval path calls, so the
+store itself carries no trust state and no scope. And erasure destroys a
+per-belief key and appends a receipt that nothing on the ingest path
+reads back, so an erased value can return as a new belief.</p>
 <p><strong><a href="../systems/verimem/">Verimem</a> argues that a
 tamper-evident chain must not remember what it deleted.</strong> An
 AGPL-3.0 Python memory at version 0.7.7.dev0 — 129,569 lines in the core

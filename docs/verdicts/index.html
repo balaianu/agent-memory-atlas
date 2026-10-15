@@ -21490,11 +21490,13 @@ Crypto-shredding makes an erased payload unrecoverable and appends a
 <code>destroyed_key_sha256</code> receipt, with a two-phase journal so
 an interrupted purge is finished rather than half-done — but no ingest
 path consults those receipts, so a value destroyed on Monday can be
-re-asserted on Tuesday with nothing to contradict it. Tenant scoping
-governs authorization rather than retrieval, so it decides whether
-evidence may act and not what a search returns. And the project states
-its own limits plainly: version 0.0.1, no production readiness claimed,
-a provisional API, and "[c]laims outside the frozen synthetic fixtures
+re-asserted on Tuesday with nothing to contradict it. The trust
+machinery sits beside the memory rather than in it: authority is fixed
+at ingest and read only by an action gate that no append or retrieval
+calls, and the tenant lives on an evidence envelope no store persists,
+so nothing bounds what a search returns. And the project states its own
+limits plainly: version 0.0.1, no production readiness claimed, a
+provisional API, and "[c]laims outside the frozen synthetic fixtures
 remain hypotheses".</li>
 <li>Most reusable component: the query protocol that makes both instants
 mandatory —
@@ -21506,15 +21508,15 @@ to <code>INGEST</code> only, and the weaker comparators accept
 answering. Every system in the comparison receives the same two
 instants, so the ablation is one statement and not a different
 harness.</li>
-<li>Maturity impression: Apache-2.0, Python, version 0.0.1, 11,702 lines
-over 93 files, a PVLDB Experiment/Analysis/Benchmark artifact with
-thirty sealed runs and 87 verified figures, adapters for the external
-systems it measures, and no server or MCP surface. No auto-run surfaces
-at this pin.</li>
+<li>Maturity impression: Apache-2.0, Python, version 0.0.1, 13,439 lines
+over 99 files, an ICDE 2027 Experimental, Analysis and Benchmark
+artifact with 44 accepted sealed runs whose printed figures a script
+rechecks, adapters for the five external systems it measures, and no
+server or MCP surface. No auto-run surfaces at this pin.</li>
 <li>Study when: your security suite passes entirely, or your
 <code>as_of</code> parameter is optional.</li>
-<li>Do not copy when: you need something deployable. Five marks: trust
-state, bitemporal, scope enforced, mutation audit, negative evals.</li>
+<li>Do not copy when: you need something deployable. Three marks:
+bitemporal, mutation audit, negative evals.</li>
 </ul>
 <h3 id="mindreader"><a
 href="../systems/mindreader/"><code>mindreader</code></a></h3>
