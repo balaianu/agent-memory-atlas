@@ -1472,23 +1472,21 @@ withholds a document from fetch, listing, lookup and the session primer while
 its versions stay fetchable by number. Three marks: `trust_state`,
 `scope_enforced`, `negative_eval`.
 
-**[LLM Memory](../systems/llm-memory-api/) tests everything except the fence.**
+**[LLM Memory](../systems/llm-memory-api/) shares one note and grants its prefix.**
 A Postgres memory and multi-agent collaboration service whose distinctive part
 is deliberation — `discussions` with participants, ballots and votes, a
-realtime or async mode, and an `outcome` constrained by the database to
-`consensus`, `deadlock`, `partial` or `abandoned`, so an unresolved argument
-cannot be recorded as agreement. Its namespaces carry separate `can_read`,
-`can_write` and `can_delete` flags, which is better than the binary most
-systems here use. But `getReadableNamespaces` returns an array of permitted
-namespaces *or* `null` meaning "wildcard, no filtering needed", and of its
-eight call sites one passes two arguments where three are expected: the actor's
-type lands where the actor's name belongs, so that endpoint adds a namespace
-named `agent` or `user` instead of the caller's own, drops the caller's own
-namespace from their own listing, and — for a wildcard holder, whose answer is
-`null` — calls `.includes` on it and throws. The correct call sits eight lines
-above and another thirty lines below. None of the fifteen test files covers the
-permission service, which is how a one-argument slip in the security boundary
-of a multi-tenant store stayed in.
+realtime or async mode, and an `outcome` the server derives from the closed
+votes and the database constrains to `consensus`, `deadlock`, `partial` or
+`abandoned`. A discussion concluded with no closed vote is recorded as
+`consensus`. Its namespaces carry separate `can_read`, `can_write` and
+`can_delete` flags, checked on every retrieval path. Beside them, a note
+share's `slug_pattern` is documented as an exact slug or a folder ending in
+`/`, while the access check and the search filter match every pattern as an
+unescaped LIKE prefix. A share of one note therefore grants every note whose
+slug extends it, to a slug the agent supplies. Separately, the ingest-status
+listing passes the actor's type where its name belongs, adding a namespace
+named `agent` or `user` and dropping the caller's own. No test covers either
+permission service.
 
 **[Titen](../systems/titen/) makes a purge something later writes collide
 with.** A Bun and SQLite memory with no model and no embedding provider on any

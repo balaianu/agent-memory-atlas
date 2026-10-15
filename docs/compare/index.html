@@ -15078,46 +15078,55 @@ session filter; facts carry no source or scope</td>
 <td><a
 href="../systems/llm-memory-api/"><code>llm-memory-api</code></a></td>
 <td>A markdown document in a namespace, chunked into
-<code>memory_chunks</code> for indexing; plus notes with their own
-per-actor sharing, chat messages, and discussions with participants,
-ballots and votes</td>
-<td>PostgreSQL — a 2,024-line schema covering actors, agents, API keys,
-admin and namespace permissions, documents, chunks, chat, discussions,
-mail, MCP sessions and an error log</td>
-<td>Meaning-and-keyword search over chunks, narrowed to a namespace when
-one is named or to the actor's readable namespaces when the query is a
-wildcard, with an optional slug-prefix scope</td>
+<code>memory_chunks</code> for indexing, with a kind, a client-supplied
+metadata object and a soft-delete stamp; beside it chat messages, mail,
+and discussions with participants, ballots and votes</td>
+<td>PostgreSQL with pgvector, built by 279 migration files;
+<code>docs/schema.sql</code> is a snapshot from 24 July 2026 and the
+root <code>schema.sql</code> one from 8 April 2026 that lacks
+<code>note_permissions</code></td>
+<td>Vector search over chunks with a BM25 boost, a filename boost, time
+decay by kind or cognitive type and an access boost, narrowed to one
+permitted namespace or, for a wildcard query, to the readable namespaces
+plus note shares; a substring or regex grep over notes</td>
 <td>REST and MCP tool handlers write documents into a namespace after a
-permission check; a chunker splits them; embeddings and enrichment run
-as services</td>
-<td>Documents are replaced and cleaned up against a caller-supplied list
-of valid source files; a dream service consolidates; permissions are
-rewritten wholesale by an admin route</td>
+permission check, falling back to a note-level share; a chunker splits
+them; embeddings and enrichment run as services</td>
+<td>Edit in place by search-and-replace; delete is a soft delete that
+removes the chunks and can be restored; a daily cron soft-deletes notes
+whose decay factor falls below 0.05 and empties retired conversation
+notes to content-free rows; permissions are rewritten wholesale by an
+admin route</td>
 <td>A <code>namespace_permissions</code> row per actor and namespace
 carrying <code>can_read</code>, <code>can_write</code> and
 <code>can_delete</code>, with <code>/</code> as a wildcard and an
-implicit grant on the namespace named after the actor; plus note-level
-sharing and an actor-visibility table</td>
-<td>An MCP server plus a REST API, a web UI with a notes tree,
-installers and a deploy script; presented as working with Claude Code,
-claude.ai, Cursor, Windsurf and any MCP client</td>
-<td>Embedding and enrichment services, a cleanup pass, a dream
-consolidation service with a shared cron, and virtual-agent rate
-limiting</td>
-<td>Admin and agent permission tables, per-agent API keys, an error log,
-and discussion outcomes recorded as consensus, deadlock, partial or
-abandoned</td>
-<td>A deliberation model most agent memories do not attempt —
-discussions with participants, ballots, votes, a realtime or async mode,
-and a database-constrained outcome; a permission table that separates
-read from write from delete rather than collapsing them</td>
-<td>No test covers the permission service, and exactly one of its eight
-readable-namespace call sites passes two arguments where three are
-expected, so that endpoint drops the caller's own namespace, adds a
-namespace named after the actor's type, and calls <code>.includes</code>
-on the <code>null</code> that means wildcard; permissions are cached for
-two minutes, so a revocation stays live for that long; the memory unit
-has no status, validity or supersession</td>
+implicit grant on the namespace named after the actor;
+<code>note_permissions</code> shares an exact slug or a folder with one
+actor or all, matched as a prefix on the access check and in search</td>
+<td>An MCP server plus a REST API, a web dashboard with a notes tree,
+OAuth for claude.ai including public clients, installers and a deploy
+script; presented as working with Claude Code, claude.ai, Cursor,
+Windsurf and any MCP client</td>
+<td>Embedding and enrichment services, a daily cleanup cron for decay,
+call-log purge and conversation retention, a dream consolidation service
+with a shared cron, and virtual-agent rate limiting</td>
+<td>Per-actor permission tables, per-agent API keys and HMAC OAuth
+tokens, an identity check that refuses a tool argument naming another
+agent, an error log, and discussion outcomes derived server-side from
+closed votes</td>
+<td>A deliberation model with participants, ballots, majority or
+unanimous votes, a realtime or async mode, and an outcome derived from
+the closed votes rather than declared by the concluder; a permission
+table that separates read from write from delete; every retrieval path,
+including the context assemblers, reads through a namespace check</td>
+<td>The note-share check and the search filter match every
+<code>slug_pattern</code> as an unescaped LIKE prefix, so a share of one
+note grants its prefix siblings to a model-supplied slug; the
+ingest-status listing passes the actor type where the name belongs; any
+registered user can list every share in the deployment; a discussion
+concluded with no closed vote is recorded as consensus; no test covers
+either permission service; permissions are cached for two minutes and
+HMAC OAuth tokens do not expire</td>
 </tr>
 <tr>
 <td><a

@@ -18593,41 +18593,43 @@ sessions and recall must hold there.</li>
 <h3 id="llm-memory-api"><a
 href="../systems/llm-memory-api/"><code>llm-memory-api</code></a></h3>
 <ul>
-<li>Best idea: <strong>deliberation with a database-constrained
+<li>Best idea: <strong>deliberation with a derived, constrained
 outcome.</strong> The schema carries <code>discussions</code> with
 participants, ballots and votes, a <code>mode</code> of
 <code>realtime</code> or <code>async</code>, and an <code>outcome</code>
 checked against <code>consensus</code>, <code>deadlock</code>,
-<code>partial</code> or <code>abandoned</code> — so an unresolved
-argument between agents cannot be quietly recorded as agreement. Its
-permission rows also split <code>can_read</code>, <code>can_write</code>
-and <code>can_delete</code> rather than collapsing to a binary.</li>
-<li>Biggest risk: <strong>the fence is untested, and one of its eight
-call sites is wrong.</strong>
-<code>getReadableNamespaces(actorId, actorName, actorType)</code>
-returns an array of permitted namespaces or <code>null</code> meaning
-"wildcard, no filtering needed". Seven callers pass three arguments;
-<code>routes/memory.js:48</code> passes two, so <code>actorName</code>
-receives the actor <em>type</em> — the implicit own-namespace grant then
-adds a namespace named <code>agent</code> or <code>user</code> instead
-of the caller's, the caller's own namespace is dropped from their own
-listing, and for a wildcard holder the next line calls
-<code>.includes</code> on <code>null</code> and throws. Nothing in the
-fifteen test files covers <code>namespace-permissions.js</code>, which
-is why it survived; <code>scope_enforced</code> is withheld for want of
-a producer test, and <code>negative_eval</code> for want of any must-not
-assertion.</li>
+<code>partial</code> or <code>abandoned</code>;
+<code>computeOutcome</code> derives it from the closed general votes
+rather than taking it from the concluder. Its permission rows also split
+<code>can_read</code>, <code>can_write</code> and
+<code>can_delete</code> rather than collapsing to a binary.</li>
+<li>Biggest risk: <strong>a share of one note grants every note whose
+slug begins with it.</strong> A
+<code>note_permissions.slug_pattern</code> is documented as an exact
+slug or a folder ending in <code>/</code>, and
+<code>listSharedDocuments</code> honours that, but
+<code>hasNoteAccess</code> — the fallback behind <code>read_note</code>,
+<code>save_note</code>, <code>edit_note</code> and
+<code>delete_note</code> — and the wildcard search filter both match
+<code>LIKE slug_pattern || '%'</code> for every pattern, unescaped. The
+slug is the model's argument, so <code>scope_enforced</code> is withheld
+on this. Beside it, <code>routes/memory.js:48</code> passes the actor
+type where <code>getReadableNamespaces</code> expects the name, a
+discussion concluded with no closed vote records <code>consensus</code>,
+and no test covers either permission service; <code>negative_eval</code>
+is withheld for want of any must-not assertion.</li>
 <li>Most reusable component: the three-way permission split with a
-<code>/</code> wildcard row, and note-level sharing kept beside it with
-a comment saying which complements which.</li>
-<li>Maturity impression: MIT, 1,185 commits since 20 February 2026,
-42,805 lines of JavaScript and Go outside <code>node_modules</code>
-against fifteen test files, a 2,024-line PostgreSQL schema covering
-actors, agents, keys, permissions, documents, chunks, chat, discussions,
-mail and MCP sessions, with an MCP server, a REST API, a web UI and
-self-hosting scripts.</li>
+<code>/</code> wildcard row, and <code>validateIdentity</code>, which
+refuses a tool argument naming another agent instead of ignoring
+it.</li>
+<li>Maturity impression: MIT, 1,222 commits from 20 February to 14
+October 2026, 46,361 lines of JavaScript and Go outside
+<code>node_modules</code> against 27 <code>node:test</code> files and 8
+script tests, a schema built by 279 migration files, with an MCP server,
+a REST API, a web dashboard, OAuth for claude.ai and self-hosting
+scripts.</li>
 <li>Study when: multi-agent deliberation with recorded outcomes is the
-thing you need, and you will review the permission paths yourself.</li>
+thing you need, and you will audit the share paths yourself.</li>
 <li>Do not copy when: you need memory that models belief, validity or
 correction, or a fence with tests behind it.</li>
 </ul>

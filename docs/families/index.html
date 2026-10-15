@@ -3478,28 +3478,25 @@ nor counted. An archive state withholds a document from fetch, listing,
 lookup and the session primer while its versions stay fetchable by
 number. Three marks: <code>trust_state</code>,
 <code>scope_enforced</code>, <code>negative_eval</code>.</p>
-<p><strong><a href="../systems/llm-memory-api/">LLM Memory</a> tests
-everything except the fence.</strong> A Postgres memory and multi-agent
-collaboration service whose distinctive part is deliberation —
-<code>discussions</code> with participants, ballots and votes, a
-realtime or async mode, and an <code>outcome</code> constrained by the
-database to <code>consensus</code>, <code>deadlock</code>,
-<code>partial</code> or <code>abandoned</code>, so an unresolved
-argument cannot be recorded as agreement. Its namespaces carry separate
+<p><strong><a href="../systems/llm-memory-api/">LLM Memory</a> shares
+one note and grants its prefix.</strong> A Postgres memory and
+multi-agent collaboration service whose distinctive part is deliberation
+— <code>discussions</code> with participants, ballots and votes, a
+realtime or async mode, and an <code>outcome</code> the server derives
+from the closed votes and the database constrains to
+<code>consensus</code>, <code>deadlock</code>, <code>partial</code> or
+<code>abandoned</code>. A discussion concluded with no closed vote is
+recorded as <code>consensus</code>. Its namespaces carry separate
 <code>can_read</code>, <code>can_write</code> and
-<code>can_delete</code> flags, which is better than the binary most
-systems here use. But <code>getReadableNamespaces</code> returns an
-array of permitted namespaces <em>or</em> <code>null</code> meaning
-"wildcard, no filtering needed", and of its eight call sites one passes
-two arguments where three are expected: the actor's type lands where the
-actor's name belongs, so that endpoint adds a namespace named
-<code>agent</code> or <code>user</code> instead of the caller's own,
-drops the caller's own namespace from their own listing, and — for a
-wildcard holder, whose answer is <code>null</code> — calls
-<code>.includes</code> on it and throws. The correct call sits eight
-lines above and another thirty lines below. None of the fifteen test
-files covers the permission service, which is how a one-argument slip in
-the security boundary of a multi-tenant store stayed in.</p>
+<code>can_delete</code> flags, checked on every retrieval path. Beside
+them, a note share's <code>slug_pattern</code> is documented as an exact
+slug or a folder ending in <code>/</code>, while the access check and
+the search filter match every pattern as an unescaped LIKE prefix. A
+share of one note therefore grants every note whose slug extends it, to
+a slug the agent supplies. Separately, the ingest-status listing passes
+the actor's type where its name belongs, adding a namespace named
+<code>agent</code> or <code>user</code> and dropping the caller's own.
+No test covers either permission service.</p>
 <p><strong><a href="../systems/titen/">Titen</a> makes a purge something
 later writes collide with.</strong> A Bun and SQLite memory with no
 model and no embedding provider on any path, where a claim carries a

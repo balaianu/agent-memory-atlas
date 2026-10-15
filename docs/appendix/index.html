@@ -3883,9 +3883,9 @@ was installed and nothing was run</li>
 <li><a
 href="https://github.com/jeffdafoe/llm-memory-api">jeffdafoe/llm-memory-api</a>
 at <a
-href="https://github.com/jeffdafoe/llm-memory-api/commit/630843156595138031f13f1b559de541ad37aa97"><code class="commit-id" title="630843156595138031f13f1b559de541ad37aa97">63084315…</code></a>
-— read only, from a shallow clone; no auto-run surfaces, no build-time
-execution points, one unpinned surface and three dependency files inside
+href="https://github.com/jeffdafoe/llm-memory-api/commit/36eb2fb2a4157e54e94681d184a2b33837ccd2dc"><code class="commit-id" title="36eb2fb2a4157e54e94681d184a2b33837ccd2dc">36eb2fb2…</code></a>
+— read only, from a full clone; no auto-run surfaces, no build-time
+execution points, one unpinned surface and two dependency files inside
 the seven-day cooldown across six scanned files, plus
 <code>CLAUDE.md</code> read as data; nothing was installed and nothing
 was run</li>
@@ -17394,6 +17394,28 @@ commit, dated 18 September 2026, for a reading made on 16 September at
 href="https://github.com/tpsdev-ai/flair/commit/02512aae1e859bcfa75d494f34b7a535a8caf0b5"><code class="commit-id" title="02512aae1e859bcfa75d494f34b7a535a8caf0b5">02512aae…</code></a>.
 The scope claim rested on the module header's list of paths rather than
 on every reader of the table.</li>
+<li><strong>Five published claims about <a
+href="../systems/llm-memory-api/">LLM Memory</a> were wrong at <a
+href="https://github.com/jeffdafoe/llm-memory-api/commit/630843156595138031f13f1b559de541ad37aa97"><code class="commit-id" title="630843156595138031f13f1b559de541ad37aa97">63084315…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>scope_enforced</code> because the permission service had
+no test, which the rubric does not require; the mark stays withheld
+because <code>hasNoteAccess</code> and the search filter match every
+share pattern as a LIKE prefix
+(<code>node/api/src/services/note-permissions.js:130</code>,
+<code>node/api/src/services/memory.js:276</code>). It said the
+database-constrained outcome meant an unresolved discussion could not be
+recorded as agreement; <code>computeOutcome</code> returned
+<code>consensus</code> when no general vote had closed
+(<code>node/api/src/services/discussion.js:173-175</code>). It named the
+root <code>schema.sql</code> as the model; that file dated from 8 April
+2026 and lacked <code>note_permissions</code>. It counted fifteen test
+files where there were twenty-three, missing eight script tests under
+<code>node/api/scripts</code>. And it said deletion kept no record of
+the deleted value; deletion was a restorable soft delete, beside a daily
+decay soft-delete and retention rows emptied but kept
+(<code>node/api/src/services/documents.js:481-565</code>,
+<code>node/api/src/services/cleanup.js:114-331</code>).</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
