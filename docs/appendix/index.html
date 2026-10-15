@@ -4237,11 +4237,11 @@ dependency files inside the seven-day cooldown. Nothing was installed,
 built or run</li>
 <li><a href="https://github.com/takecchi/mnemora">takecchi/mnemora</a>
 at <a
-href="https://github.com/takecchi/mnemora/commit/509f4e739ca1ad017876a5b661062d23c2ead773"><code class="commit-id" title="509f4e739ca1ad017876a5b661062d23c2ead773">509f4e73…</code></a>
-— read only, from a shallow clone; nineteen files scanned, no auto-run
-surfaces, no build-time execution points, three unpinned surfaces and
-nine dependency files inside the seven-day cooldown. Nothing was
-installed, built or run</li>
+href="https://github.com/takecchi/mnemora/commit/472ea321c6d9f6ffdcc685bacf152f67a6f79a48"><code class="commit-id" title="472ea321c6d9f6ffdcc685bacf152f67a6f79a48">472ea321…</code></a>
+— read only, from a full clone; 21 files scanned, no auto-run surfaces,
+no build-time execution points, four unpinned surfaces and no dependency
+file inside the seven-day cooldown. Nothing was installed, built or
+run</li>
 <li><a
 href="https://github.com/genomewalker/chitta-field">genomewalker/chitta-field</a>
 at <a
@@ -17298,6 +17298,41 @@ secret-scan, atomic-write, receipt and census claims were true of the
 first pin and were carried through a re-pin unchecked; the scope mark
 rested on the slug branch rather than on the default that bypassed
 it.</li>
+<li><strong>Eight published claims about <a
+href="../systems/mnemora/">mnemora</a> were wrong at <a
+href="https://github.com/takecchi/mnemora/commit/509f4e739ca1ad017876a5b661062d23c2ead773"><code class="commit-id" title="509f4e739ca1ad017876a5b661062d23c2ead773">509f4e73…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>scope_enforced</code>, though every recall stage set the
+store filter's tenant from <code>ctx.tenantId</code>
+(<code>packages/core/src/recall-runtime.ts:564</code>,
+<code>:631</code>, <code>:1129</code>) and the conformance kit asserted
+a cross-tenant <code>get</code> null beside a same-tenant control
+(<code>packages/testkit/src/memory-store-conformance.ts:284-300</code>);
+the mark was earned. It said nothing recorded a mutation beyond the
+status itself, or who made it; <code>memory_events</code> held a row per
+transition with a caller-declared actor and a digest snapshot
+(<code>packages/postgres/migrations/0001_init.sql:145-158</code>). It
+called the transitions to archived and forgotten unconditional,
+repeating a doc comment; <code>forget</code> compare-and-set the
+observed status (<code>packages/core/src/runtime.ts:3234-3238</code>)
+and the archive sweep locked only active rows
+(<code>packages/postgres/src/memory-store.ts:1935-1940</code>). It
+described a recall footprint recording what a recall touched;
+<code>recall-footprint.ts</code> is a pure function estimating whether
+mnemora beats sending the whole conversation
+(<code>packages/core/src/recall-footprint.ts:14-15</code>). It drew the
+validity gate as active only when <code>validAt</code> was supplied; it
+defaulted to now
+(<code>packages/core/src/recall-runtime.ts:305-306</code>). It said a
+memory whose provenance was never established could not be built; an
+inferred memory's <code>model</code> defaulted to <code>unknown</code>
+(<code>packages/core/src/runtime.ts:128</code>, <code>:2113</code>). It
+gave the version as 0.1.1 from <code>package.json</code>; the pin is
+release tag <code>v0.5.0</code>, and the project's ADR 0070 makes the
+tag the version. Two anchors,
+<code>memory-store-conformance.ts:4238-4262</code> and
+<code>memory-store.ts:999-1030</code>, were lines at the first pin, <a
+href="https://github.com/takecchi/mnemora/commit/3676311e73ad95ca650957d44ccb46a627cc74da"><code class="commit-id" title="3676311e73ad95ca650957d44ccb46a627cc74da">3676311e…</code></a>.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

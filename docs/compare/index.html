@@ -19980,66 +19980,58 @@ imported only by a test, so every type ages on one recency curve</td>
 </tr>
 <tr>
 <td><a href="../systems/mnemora/"><code>mnemora</code></a></td>
-<td>A memory with content, a status, a strength bounded at 1, an
-occurred and a recorded time, an optional validity window, and a
-provenance that is a discriminated union</td>
-<td>Postgres, behind store interfaces a shared conformance kit tests; an
-outbox table carries background work</td>
-<td>Similarity × decay × tag match × freshness × strength, over lexical
-and vector stores, with a digest band and a recorded recall
-footprint</td>
-<td>Observations in, extraction to memories; creation is idempotent on a
-content hash</td>
-<td>Status transitions under an <code>expectedStatus</code>
-compare-and-set, with <code>supersededById</code> recording which memory
-replaced this one</td>
-<td>A <code>tenantId</code> on every call as the isolation boundary and
-an optional <code>subjectId</code> for organisation inside it — both
-opaque strings the caller supplies</td>
-<td>A library to sit beneath LangGraph, Mastra or a hand-written agent
-rather than to replace one; adapters for OpenAI, Anthropic and a local
-embedding model</td>
-<td>Reinforcement, forgetting, consolidation and reflection, driven
-through an outbox with an inline scheduler for tests</td>
-<td>Provenance as a typed union, a contested status that stays in
-recall, a recall footprint recording what a recall actually touched, and
-a strength ceiling</td>
-<td>Provenance is implemented as the tag of a discriminated union —
-<code>stated | inferred | consolidated | reflected | imported</code> —
-and the code says why: the owner's seventh principle, distinguishing the
-AI's inference from what the user stated, "is implemented as the value
-of <code>kind</code> itself rather than an additional flag". Each arm
-then demands its own evidence: <code>stated</code> requires a source
-observation and a time, <code>inferred</code> requires the model, the
-prompt version, the basis memory and observation ids, and a confidence.
-A memory whose provenance was never established cannot be constructed.
-The spelling of that union lives in exactly one place after the enum was
-found duplicated by hand into the recall query's
-<code>excludeProvenanceKinds</code>, with the reasoning recorded: "when
-a closed union's spelling exists in two places, fixing one and
-forgetting the other depends on attention, and will certainly fail." The
-recall filter admits <code>contested</code> alongside
-<code>active</code>, so a disputed memory is surfaced rather than
-silently resolved. And <code>MAX_STRENGTH = 1</code> exists because
-without a ceiling "a Memory written with one larger value would dominate
-that tenant's recall — the same hole ADR 0036 closed for
-<code>freshness</code>", with the constant exported so a caller can read
-that the ceiling exists and what it is</td>
-<td>There is no tenancy to enforce, and the code says so plainly rather
-than implying otherwise: "mnemora keeps no ledger of tenants.
-<code>tenantId</code> is an opaque string the caller passes; it performs
-no existence check and no authentication." Every read does carry
-<code>WHERE tenant_id = ${ctx.tenantId}</code>, so a correct caller is
-isolated and a careless one is not, and the separation of concerns is
-deliberate — the same file distinguishes the tenant as the isolation
-boundary from the subject as the unit of organisation within it, and
-warns against confusing the asymmetry. That places the safety boundary
-in the embedding application, which is the right place for a library of
-this shape and the thing to know before treating the tenant column as a
-control. Otherwise: no mutation record beyond the status transitions
-themselves, nothing consulted at write time against a forgotten memory
-so the same content can be re-created after being forgotten, and version
-0.1.1 with a migration document already in the tree</td>
+<td>A memory with content, digest, a five-value status, a strength
+bounded at 1, occurred and recorded times, an optional validity window,
+an optional claim key, caller attributes, and a provenance that is a
+discriminated union</td>
+<td>Postgres with pgvector, behind store interfaces a shared conformance
+kit tests; an outbox table carries background work, and a memory_events
+table records each status change</td>
+<td>Similarity × decay × tag match × freshness × strength over vector
+and lexical candidates, gated by status, validity and decay, with
+contested companions pulled in, an association frame, a digest band, and
+a stored record of each recall</td>
+<td>Observations in, LLM extraction to memories; creation is idempotent
+on observation, extractor version and content hash; an optional claim
+key marks a conflicting pair contested</td>
+<td>Compare-and-set status transitions with an event per change; forget
+then purge, which overwrites content with a fixed string and keeps the
+row; a separate erase-tenant routine deletes every table's rows for one
+tenant</td>
+<td>A required tenantId on every call, applied as a predicate on every
+read; an optional subjectId organises memories within a tenant. Both are
+opaque caller strings and nothing authenticates them</td>
+<td>A library to sit beneath LangGraph, Mastra or a hand-written agent;
+adapters for OpenAI, Anthropic, a local embedding model and BullMQ; no
+tool surface of its own</td>
+<td>Embedding, extraction, consolidation and reflection through an
+outbox drained by tick(), a decay archive sweep, and an event retention
+purge the operator runs</td>
+<td>Provenance as a typed union checked at the store's write entry, a
+contested status that stays in recall with its companion, an event per
+status change with a caller-declared actor, and a strength ceiling</td>
+<td>Provenance is the tag of a discriminated union,
+<code>stated | inferred | consolidated | reflected | imported</code>,
+and each arm names its own evidence: <code>stated</code> a source
+observation and a time, <code>inferred</code> a model, a prompt version,
+basis ids and a confidence. The store checks the arm at its write entry
+and Postgres checks the kind and the source observation. A contested
+memory is surfaced with its counterpart rather than resolved at write
+time. Every multiplier in the ranking formula is bounded and the bound
+exported, <code>MAX_STRENGTH = 1</code> among them. Status transitions
+are compare-and-set, and each writes a <code>memory_events</code> row
+with the digest at the time</td>
+<td>The tenant is an opaque caller string with no existence check and no
+authentication, so the isolation the read path enforces is only as good
+as the application's choice of string. <code>inferred</code> provenance
+records the model the caller configured, <code>unknown</code> when none,
+not the model the provider ran. The event log is pruned by a per-tenant
+retention setting and erased with the tenant, so it is not an audit log.
+Forget is record-keyed: the same content in a new observation is
+extracted as a new active memory. Background consolidation and
+reflection run under the seed memory's subject, so a subjectless seed
+gathers neighbours from the whole tenant. A forgotten, unpurged memory's
+digest stays in earlier recall records</td>
 </tr>
 <tr>
 <td><a href="../systems/mnemory/"><code>mnemory</code></a></td>
@@ -33554,7 +33546,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>326 of 749:</em> <a
+<p><em>327 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33756,6 +33748,7 @@ href="../systems/mindreader/"><code>mindreader</code></a>, <a
 href="../systems/minta/"><code>minta</code></a>, <a
 href="../systems/mira/"><code>mira</code></a>, <a
 href="../systems/mirix/"><code>mirix</code></a>, <a
+href="../systems/mnemora/"><code>mnemora</code></a>, <a
 href="../systems/mnemory/"><code>mnemory</code></a>, <a
 href="../systems/mnemos/"><code>mnemos</code></a>, <a
 href="../systems/mnemosyne/"><code>mnemosyne</code></a>, <a

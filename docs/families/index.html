@@ -649,37 +649,27 @@ before-and-after ledger is never rewritten and covers
 <code>CoreMemory.save</code> and <code>delete</code> only. Four
 marks.</p>
 <p><strong><a href="../systems/mnemora/">mnemora</a> makes provenance
-the tag of a union, so a memory cannot exist without saying where it
-came from.</strong> An MIT TypeScript cognitive layer at version 0.1.1 —
-87,938 lines across six packages with 1,212 test cases, documented in
-Japanese — built to sit <em>beneath</em> LangGraph, Mastra or a
-hand-written agent rather than replace one, and aiming to give an
-application remembering rather than saving. <code>Provenance</code> is a
+the tag of a union, so a memory cannot be stored without naming where it
+came from.</strong> An MIT TypeScript library on Postgres, documented in
+Japanese, built to sit <em>beneath</em> LangGraph, Mastra or a
+hand-written agent rather than replace one. <code>Provenance</code> is a
 discriminated union of
-<code>stated | inferred | consolidated | reflected | imported</code>,
-and the module states the reasoning: the principle of distinguishing the
-AI's inference from what the user stated "is implemented as the value of
-<code>kind</code> itself rather than as an additional flag". Each arm
-demands its own evidence — <code>stated</code> a source observation and
-a time, <code>inferred</code> the model, the prompt version, the basis
-memory and observation ids, and a confidence — so a memory whose origin
-was never established is a value the type system will not build. The
-union's spelling lives in one place after it was found hand-copied into
-a recall query, under a rule worth quoting: "when a closed union's
-spelling exists in two places, fixing one and forgetting the other
-depends on attention, and will certainly fail." Recall admits
-<code>active</code> and <code>contested</code> — a disputed memory is
-surfaced, not resolved away — while superseded, archived and forgotten
-stay stored and leave retrieval, and the count beside the scan carries
-the same predicate so a withheld row cannot move it. Three clocks are
-kept apart: occurred, recorded, and a validity window whose gate builds
-<code>isExpired</code> and <code>isNotYetValid</code> as separate
-predicates. Three marks. It has no tenancy to enforce and says so where
-a reader will look: "mnemora keeps no ledger of tenants.
-<code>tenantId</code> is an opaque string the caller passes; it performs
-no existence check and no authentication" — the right place for the
-boundary in a library one layer down, and the thing to know before
-treating the tenant column as a control. <strong><a
+<code>stated | inferred | consolidated | reflected | imported</code>;
+each arm names its own evidence, the store checks the arm at its write
+entry, and Postgres refuses an unknown kind. The evidence is a filled
+slot rather than an observation: an inferred memory's <code>model</code>
+is the configured name, <code>unknown</code> when none is set. Recall
+admits <code>active</code> and <code>contested</code>, and a contested
+hit brings its counterpart or its whole contradiction group along;
+superseded, archived and forgotten rows stay stored and leave retrieval,
+counts included. Three clocks are kept apart: occurred, recorded, and a
+caller-declared validity window gated at a <code>validAt</code> that
+defaults to now. Four marks. The tenant is a predicate on every read and
+an unauthenticated caller string, which the code says where a reader
+will look; the boundary sits with the embedding application, the right
+place for a library one layer down. The event log records each status
+change with a declared actor and is pruned by a per-tenant retention
+setting, so it is not an audit log. <strong><a
 href="../systems/engram-cognitive/">Engram Cognitive</a> has four
 columns named for two time axes and one clock that writes them
 all.</strong> An Apache-2.0 Python library at version 2.4.1 — 15,574

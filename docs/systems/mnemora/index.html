@@ -4,28 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A cognitive layer meant to sit
-under an existing agent framework, where a memory's origin is a
-discriminated union rather than a flag, a contested memory is still
-recalled, and three time concepts — occurred, recorded, valid between —
-are kept apart.">
+    <meta name="description" content="A Postgres-backed TypeScript
+memory layer for beneath an agent framework: provenance is a union tag,
+contested memories stay in recall, valid time is gated.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="mnemora — Agent Memory Atlas">
-    <meta property="og:description" content="A cognitive layer meant to
-sit under an existing agent framework, where a memory's origin is a
-discriminated union rather than a flag, a contested memory is still
-recalled, and three time concepts — occurred, recorded, valid between —
-are kept apart.">
+    <meta property="og:description" content="A Postgres-backed
+TypeScript memory layer for beneath an agent framework: provenance is a
+union tag, contested memories stay in recall, valid time is gated.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="mnemora — Agent Memory Atlas">
-    <meta name="twitter:description" content="A cognitive layer meant to
-sit under an existing agent framework, where a memory's origin is a
-discriminated union rather than a flag, a contested memory is still
-recalled, and three time concepts — occurred, recorded, valid between —
-are kept apart.">
+    <meta name="twitter:description" content="A Postgres-backed
+TypeScript memory layer for beneath an agent framework: provenance is a
+union tag, contested memories stay in recall, valid time is gated.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>mnemora — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ are kept apart.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "mnemora",
-      "description": "A cognitive layer meant to sit under an existing agent framework, where a memory's origin is a discriminated union rather than a flag, a contested memory is still recalled, and three time concepts \u2014 occurred, recorded, valid between \u2014 are kept apart.",
+      "description": "A Postgres-backed TypeScript memory layer for beneath an agent framework: provenance is a union tag, contested memories stay in recall, valid time is gated.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,25 +99,23 @@ are kept apart.">
           <p class="eyebrow">Provenance is the union's tag, so it cannot
 be left unfilled</p>
           <h1>mnemora</h1>
-          <p class="document-deck">A cognitive layer meant to sit under
-an existing agent framework, where a memory's origin is a discriminated
-union rather than a flag, a contested memory is still recalled, and
-three time concepts — occurred, recorded, valid between — are kept
-apart.</p>
+          <p class="document-deck">A Postgres-backed TypeScript memory
+layer for beneath an agent framework: provenance is a union tag,
+contested memories stay in recall, valid time is gated.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/takecchi/mnemora">
               <span>Source</span>
               <strong>takecchi/mnemora</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/takecchi/mnemora/commit/509f4e739ca1ad017876a5b661062d23c2ead773" title="509f4e739ca1ad017876a5b661062d23c2ead773">
+            <a class="meta-pill revision-pill" href="https://github.com/takecchi/mnemora/commit/472ea321c6d9f6ffdcc685bacf152f67a6f79a48" title="472ea321c6d9f6ffdcc685bacf152f67a6f79a48">
               <span>Analyzed revision</span>
-              <code>509f4e73…</code>
+              <code>472ea321…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/takecchi--mnemora" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,20 @@ apart.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>299,793
+lines of TypeScript under packages/ in 1,399 files, 233,912 of them in
+1,238 test files; 34 SQL migrations and 657 decision
+records</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,562
+commits on main by one author name, 5 September – 12 October 2026;
+latest release tag v1.3.0, 7 October 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>7,381
+it/test cases in 1,178 files, counting test files and the testkit
+conformance suites; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,123 +152,126 @@ apart.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>mnemora describes itself as a cognitive layer to lay
-<em>underneath</em> an existing LLM application — MIT, TypeScript,
-version 0.1.1, 87,938 lines across six packages with 1,212 test cases in
-127 files, documentation in Japanese. Its stated aim is one sentence:
-give LLM applications <em>remembering</em>, rather than <em>saving</em>.
-It is explicit that it does not want to replace LangGraph, Mastra or a
-hand-written agent — it wants to sit below them, between the agent loop
-and storage, running observation, recall, association, reinforcement,
-forgetting, consolidation and reflection.</p>
-<p>Three things earn marks, and one line of code explains the project
-better than its README does.</p>
+<p>mnemora is a memory library meant to sit beneath an agent framework,
+between the agent loop and Postgres, where a memory's origin is the tag
+of a discriminated union rather than a flag and a disputed memory is
+surfaced rather than resolved away. The read side is disciplined:
+status, validity window and tenant are SQL predicates on every recall
+stage, and the conformance kit asserts the negatives. The weak side is
+identity, since the tenant is an unauthenticated string and the
+provenance model field is whatever the caller configured.</p>
+<p>It describes its aim as giving LLM applications <em>remembering</em>
+rather than <em>saving</em>, and it does not want to replace LangGraph,
+Mastra or a hand-written agent. The documentation is in Japanese. The
+development model is visible in the tree: <code>docs/autonomy.md</code>
+is addressed to agents working without asking the owner, and decision
+records state when an agent session wrote them.</p>
 <p><strong>Provenance is the tag of a discriminated union.</strong> The
-module says why:</p>
-<blockquote>
-<p>"The owner's principle 7, 'distinguish the AI's inference from facts
-the user stated', is implemented as the value of <code>kind</code>
-itself rather than as an additional flag."</p>
-</blockquote>
-<p><code>stated | inferred | consolidated | reflected | imported</code>,
-and each arm carries what that kind must prove: <code>stated</code>
-needs a source observation id and a time; <code>inferred</code> needs
-the model, the prompt version, a <code>basis</code> of the memory and
-observation ids it reasoned from, and a confidence. A memory whose
-provenance was never established is not a memory with a null field — it
-is a value the type system will not let you build. Nearly every system
-in this corpus carries provenance as an optional string; this one
-carries it as the thing the record <em>is</em>.</p>
-<p>The spelling of that union then lives in exactly one place, after it
-was found duplicated by hand into the recall query's
-<code>excludeProvenanceKinds</code>:</p>
-<blockquote>
-<p>"When a closed union's spelling exists in two places, fixing one and
-forgetting the other depends on attention, and will certainly fail."</p>
-</blockquote>
-<p><strong>A contested memory is still recalled.</strong>
+module's header, in translation, says the distinction between the AI's
+inference and what the user stated is expressed by the value of
+<code>kind</code> itself, not by an additional flag
+(<code>packages/core/src/provenance.ts:3-7</code>). Each arm carries
+what that kind must name: <code>stated</code> a source observation id
+and a time, <code>inferred</code> a model, a prompt version, a
+<code>basis</code> of memory and observation ids, and a confidence
+(<code>:20-43</code>). The store checks the arm against the Zod schema
+at its write entry
+(<code>packages/core/src/new-memory-check.ts:49-60</code>), and Postgres
+refuses an unknown kind or a stated or inferred memory without a source
+observation
+(<code>packages/postgres/migrations/0001_init.sql:65-68</code>).</p>
+<p>The arm's evidence is a filled slot, not an observed fact.
+<code>model</code> is the runtime's configured <code>llmModelId</code>,
+<code>"unknown"</code> when the caller sets none
+(<code>packages/core/src/runtime.ts:170</code>, <code>:2337</code>), and
+<code>confidence</code> is <code>0.5</code> when the extraction
+candidate gives none
+(<code>packages/core/src/extraction.ts:580</code>).</p>
+<p><strong>A contested memory is recalled with its counterpart.</strong>
 <code>MemoryStatus</code> is
-<code>active | superseded | contested | archived | forgotten</code>, and
-the recall scan admits two of them:
-<code>WHERE status IN ('active', 'contested')</code>. Superseded,
-archived and forgotten stay in the store and leave retrieval; contested
-stays in both. A memory under dispute is surfaced rather than resolved
-away at write time — the same stance <a href="../yacmemo/">yacmemo</a>
-takes with its warning marker, reached here through a status value. The
-count beside the scan carries the identical predicate, so a withheld row
-does not move the number either.</p>
+<code>active | superseded | contested | archived | forgotten</code>
+(<code>packages/core/src/memory.ts:16-25</code>), and recall admits two
+of them at every candidate stage
+(<code>packages/core/src/recall-runtime.ts:866</code>,
+<code>:909</code>, <code>:1451</code>). A contested memory brings its
+pair, or its whole contradiction group, into the result as a
+<code>mandatory_companion</code> (<code>:112</code>). It is the stance
+of <a href="../yacmemo/">yacmemo</a>'s warning marker, reached through a
+status value.</p>
 <p><strong>Three time concepts are kept apart.</strong>
 <code>occurred_at</code> is when the thing happened,
-<code>recorded_at</code> is when the store learned it, and
-<code>valid_from</code>/<code>valid_until</code> are the window the
-memory applies in. The effective time is
-<code>COALESCE(occurred_at, recorded_at)</code> under a comment tying
-the convention to the freshness formula, and a caller's
-<code>validAt</code> gates the window — with <code>isExpired</code> and
-<code>isNotYetValid</code> built as <em>separate</em> predicates, so the
-system can distinguish a memory that has lapsed from one that has not
-started, rather than only excluding both.</p>
-<p>The third mark is the conformance kit.
-<code>expect(ids).not.toContain(excluded.id)</code> with
-<code>expect(ids).toContain(kept.id)</code> on the next line, over a
-real store call — and the test after it asserts the eligible count
-equals the in-scope, non-excluded total even when the limit is reduced,
-which is the side channel rather than the list. It lives in a shared kit
-every backend must pass, so the contract binds future adapters and not
-just Postgres.</p>
-<p><strong>There is no tenancy to enforce, and the code says so before a
-reader can assume otherwise:</strong></p>
-<blockquote>
-<p>"mnemora keeps no ledger of tenants. <code>tenantId</code> is an
-opaque string the caller passes; it performs no existence check and no
-authentication."</p>
-</blockquote>
-<p>Every read does emit <code>WHERE tenant_id = ${ctx.tenantId}</code>,
-so a correct caller is isolated — but the string is the caller's, and
-the safety boundary therefore lives in the embedding application. For a
-library meant to sit beneath somebody else's agent that is the right
-place for it, and the same file draws the distinction that makes it
-workable: the tenant is the isolation boundary, the unit of safety; the
-subject is the unit of organisation within a tenant; do not confuse the
-asymmetry. <a href="../anda-db/">Anda DB</a> makes the same separation
-between a Space and a Domain, from the opposite end of the scale.</p>
-<p>One more decision worth borrowing. <code>MAX_STRENGTH = 1</code>
-exists because without a ceiling "a Memory written with one larger value
-would dominate that tenant's recall — the same hole ADR 0036 closed for
-<code>freshness</code>", and the constant is exported so a caller can
-read that the ceiling exists and what it is. A scoring multiplier with
-an unbounded tail is a self-service priority escalation, and this is the
-second time the project has closed it.</p>
+<code>recorded_at</code> when the store learned it, and
+<code>valid_from</code>/<code>valid_until</code> the interval the fact
+holds (<code>packages/core/src/memory.ts:142-165</code>). Recall gates
+on a <code>validAt</code> that defaults to now
+(<code>packages/core/src/recall-runtime.ts:505-506</code>), and the
+aggregate counts expired and not-yet-valid rows as separate reasons
+(<code>packages/postgres/src/memory-store.ts:2136-2141</code>).</p>
+<p><strong>There is no tenancy to authenticate, and the code says so
+where a reader looks.</strong> <code>Ctx</code> states that mnemora
+keeps no ledger of tenants and that <code>tenantId</code> is an opaque
+caller string with no existence check and no authentication
+(<code>packages/core/src/ctx.ts:9-10</code>). Every read applies it, so
+a correct caller is isolated and a careless one is not. The same file
+separates the tenant, the isolation boundary, from the subject, the unit
+of organisation within it. <a href="../anda-db/">Anda DB</a> makes the
+same separation between a Space and a Domain.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>memory</strong> knows what kind of thing it is: something
-said, something inferred, something merged, something reflected on,
-something imported.</p>
-<p><strong>Contested</strong> is not a reason to hide.</p>
+<p>A <strong>memory</strong> is an extracted claim that knows what kind
+of thing it is: something said, inferred, merged, reflected on, or
+imported.</p>
+<p><strong>Contested</strong> is a reason to show both sides, not to
+hide either.</p>
 <p><strong>Happened</strong>, <strong>recorded</strong> and
-<strong>valid between</strong> are three different clocks.</p>
-<p><strong>Strength</strong> has a ceiling, because the second time is
-when you learn that.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — provenance is the union tag rather than a flag, so each kind demands its own evidence; recall admits active and contested, and three time concepts are gated separately</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: provenance is the union tag rather than a flag, so each kind demands its own evidence; recall admits active and contested, and three time concepts are gated separately
+<strong>valid between</strong> are three clocks, and only the third
+decides whether a memory is still true.</p>
+<p><strong>Forgetting</strong> is a status; <strong>purging</strong>
+overwrites the words and keeps the row.</p>
+<p>The state machine, from <code>docs/memory-model.md</code> §11 and the
+runtime methods that implement it:</p>
+<ul>
+<li><code>active → superseded</code> when re-extraction or consolidation
+replaces it, or when a contested pair is resolved against it;
+<code>restoreSuperseded</code> reverses the group.</li>
+<li><code>active → contested</code> when the caller marks a pair, or
+when a new memory's claim key matches exactly one active memory with
+different content and an overlapping window; three or more become a
+group in <code>memory_relations</code> when a relation store is wired,
+and are logged as an unresolved conflict otherwise.</li>
+<li><code>active → archived</code> when the decay sweep finds strength
+below its floor; <code>restoreArchived</code> reverses it.</li>
+<li>any non-forgotten state <code>→ forgotten</code> by
+<code>forget</code>, compare-and-set on the observed status;
+<code>purge</code> then overwrites content and digest and sets
+<code>purgedAt</code>, and is refused for any other status.</li>
+</ul>
+<p>Who moves it: extraction and the claim-key detector are background
+and model-driven; marking, resolving, forgetting, purging and restoring
+are calls the embedding application makes. Nothing in the tree is an
+agent tool.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — an observation becomes a memory whose provenance arm names its evidence; recall admits active and contested rows inside the tenant, the validity window and the decay floor, and brings each contested memory's counterpart along</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: an observation becomes a memory whose provenance arm names its evidence; recall admits active and contested rows inside the tenant, the validity window and the decay floor, and brings each contested memory&#39;s counterpart along
 flowchart TB
-    OBS[&quot;observation in&quot;] --&gt; EXT[&quot;extraction&quot;]
-    EXT --&gt; PROV{&quot;Provenance — a discriminated union,&lt;br/&gt;not a flag on a row&quot;}
-    PROV --&gt;|&quot;stated&quot;| S[&quot;requires sourceObservationId,&lt;br/&gt;speaker, at&quot;]
-    PROV --&gt;|&quot;inferred&quot;| I[&quot;requires model, promptVersion,&lt;br/&gt;basis{memoryIds, observationIds},&lt;br/&gt;confidence&quot;]
-    PROV --&gt;|&quot;consolidated · reflected · imported&quot;| O[&quot;each with its own required fields&quot;]
-    S &amp; I &amp; O --&gt; MEM[(&quot;memory: status · strength (0, 1] ·&lt;br/&gt;occurred_at · recorded_at ·&lt;br/&gt;valid_from · valid_until&quot;)]
+    OBS[&quot;observe(ctx, input)&lt;br/&gt;caller supplies validFrom / validUntil&quot;] --&gt; EXT[&quot;LLM extraction&quot;]
+    EXT --&gt; PROV{&quot;Provenance arm&quot;}
+    PROV --&gt;|&quot;stated&quot;| S[&quot;sourceObservationId, speaker, at&quot;]
+    PROV --&gt;|&quot;inferred&quot;| I[&quot;model = configured llmModelId or &#39;unknown&#39;&lt;br/&gt;promptVersion, basis, confidence ?? 0.5&quot;]
+    S --&gt; CHK[&quot;store write entry:&lt;br/&gt;Zod check of the arm,&lt;br/&gt;Postgres CHECK on kind&quot;]
+    I --&gt; CHK
+    CHK --&gt; MEM[(&quot;memory&lt;br/&gt;status · occurred_at · recorded_at ·&lt;br/&gt;valid_from · valid_until · claim key&quot;)]
+    MEM --&gt; CK{&quot;claim key matches an&lt;br/&gt;active memory with other content&lt;br/&gt;and an overlapping window?&quot;}
+    CK --&gt;|&quot;one match&quot;| CON[&quot;both marked contested&quot;]
+    CK --&gt;|&quot;three or more&quot;| GRP[&quot;contradicts relations,&lt;br/&gt;contested group&quot;]
     MEM --&gt; ST{&quot;status&quot;}
-    ST --&gt;|&quot;active&quot;| IN[&quot;admitted to recall&quot;]
+    ST --&gt;|&quot;active&quot;| IN[&quot;admitted&quot;]
     ST --&gt;|&quot;contested&quot;| IN
-    ST --&gt;|&quot;superseded · archived · forgotten&quot;| OUT[&quot;stored, not recalled —&lt;br/&gt;supersededById records what replaced it&quot;]
-    IN --&gt; TIME{&quot;time gates&quot;}
-    TIME --&gt; EFF[&quot;effective time =&lt;br/&gt;COALESCE(occurred_at, recorded_at)&quot;]
-    TIME --&gt; VAL{&quot;validAt supplied?&quot;}
-    VAL --&gt;|&quot;no&quot;| ALL[&quot;no validity narrowing&quot;]
-    VAL --&gt;|&quot;yes&quot;| WIN[&quot;valid_from &lt;= validAt AND&lt;br/&gt;valid_until &gt; validAt&quot;]
-    WIN --&gt; WHY[&quot;isExpired and isNotYetValid are&lt;br/&gt;separate predicates — the system can say&lt;br/&gt;WHY something fell outside its window&quot;]
-    EFF &amp; ALL &amp; WIN --&gt; SCORE[&quot;similarity × decay × tagMatch ×&lt;br/&gt;freshness × strength&lt;br/&gt;— strength capped at 1 so one row&lt;br/&gt;cannot dominate a tenant&#39;s recall&quot;]
-    SCORE --&gt; PACK[&quot;recall result + a recorded footprint&lt;br/&gt;of what the recall actually touched&quot;]
-    CTX[&quot;Ctx{ tenantId, subjectId? }&quot;] -.-&gt;|&quot;&#39;mnemora keeps no ledger of tenants…&lt;br/&gt;no existence check, no authentication&#39; —&lt;br/&gt;the boundary is the caller&#39;s to hold&quot;| MEM</code></pre></details></figure>
+    ST --&gt;|&quot;superseded · archived · forgotten&lt;br/&gt;(purged rows stay forgotten)&quot;| OUT[&quot;stored, not recalled&quot;]
+    IN --&gt; T{&quot;tenant_id = ctx.tenantId&quot;}
+    T --&gt; V{&quot;validAt, default now:&lt;br/&gt;valid_from &lt;= validAt &lt; valid_until&quot;}
+    V --&gt;|&quot;outside&quot;| WHY[&quot;counted as expired&lt;br/&gt;or not yet valid&quot;]
+    V --&gt;|&quot;inside&quot;| D{&quot;decay floor&quot;}
+    D --&gt; SCORE[&quot;similarity × decay × tagMatch ×&lt;br/&gt;freshness × strength (≤ 1)&quot;]
+    SCORE --&gt; COMP[&quot;contested companions&lt;br/&gt;pulled into the result&quot;]
+    COMP --&gt; REC[&quot;recall result + digest band,&lt;br/&gt;stored as a recalls row&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -275,105 +283,218 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>core</code></td>
-<td>The model, recall runtime, provenance, outbox, strategies (33,220
-lines)</td>
+<td>The model, the runtime, recall, provenance, the outbox contract,
+strategies</td>
 </tr>
 <tr>
 <td><code>postgres</code></td>
-<td>The store adapters and their SQL (17,544)</td>
+<td>The store adapters, their SQL, migrations and a CLI</td>
 </tr>
 <tr>
 <td><code>testkit</code></td>
-<td>Conformance suites every adapter must pass (11,238)</td>
+<td>Conformance suites every adapter must pass, and an in-memory
+store</td>
 </tr>
 <tr>
 <td><code>openai</code>, <code>anthropic</code>,
 <code>local-embedding</code></td>
 <td>Model and embedding adapters</td>
 </tr>
+<tr>
+<td><code>bullmq</code></td>
+<td>A driver that runs <code>tick()</code> from a BullMQ queue</td>
+</tr>
 </tbody>
 </table></div>
-<p>Inside <code>core</code>, the files worth their names:
-<code>provenance.ts</code>, <code>recall-footprint.ts</code>,
-<code>recall-output-validation.ts</code>,
-<code>idempotent-create.ts</code>,
-<code>event-retention-purge.ts</code>, <code>digest-band.ts</code>,
-<code>ann-truncation.ts</code>.</p>
+<p>Postgres holds <code>observations</code>, <code>memories</code>, one
+embedding table per vector space, <code>memory_events</code>,
+<code>recalls</code>, <code>recall_usages</code>, <code>outbox</code>,
+<code>labels</code>, <code>memory_relations</code> and per-tenant
+settings, all keyed by <code>tenant_id</code>
+(<code>packages/postgres/migrations/</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The operator stands up Postgres with pgvector and runs the
+migrations. Background work is not a daemon: the application calls
+<code>tick()</code> or wires the BullMQ driver. Retention purge and
+tenant erasure are exported functions the operator calls;
+<code>tick()</code> handles only extract, embed, consolidate and reflect
+jobs (<code>packages/core/src/runtime.ts:206</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>packages/core/src/provenance.ts:1-40</code> — the union, and
-the argument for it being a union.</p>
-<p><code>packages/core/src/memory.ts:5-30</code> — five statuses and a
-ceiling with its history.</p>
-<p><code>packages/postgres/src/memory-store.ts:999-1050</code> — three
-clocks, two admitted statuses, one predicate shared with the count.</p>
-<p><code>packages/core/src/ctx.ts:1-20</code> — what the tenant is and
+<p><code>packages/core/src/provenance.ts:1-116</code> — the union, its
+schema, and the arms.</p>
+<p><code>packages/core/src/new-memory-check.ts:21-61</code> — the
+write-entry check that re-uses the read schema field by field.</p>
+<p><code>packages/core/src/recall-runtime.ts:505-506</code>,
+<code>:865-909</code>, <code>:1450-1451</code> — the validity default
+and the tenant and status the runtime hands every store.</p>
+<p><code>packages/postgres/src/memory-store.ts:2090-2349</code> — the
+scope aggregate: subject and attribute filters, the period and validity
+predicates, the digest band.</p>
+<p><code>packages/core/src/ctx.ts:1-73</code> — what the tenant is and
 is not.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Content, status, strength, the two timestamps, the validity window,
-<code>supersededById</code>, and the provenance union. Creation is
-idempotent on a content hash, and status changes take an
-<code>expectedStatus</code> so two writers cannot both believe they
-performed the transition.</p>
+<p>Content, <code>contentHash</code>, digest, provenance, status,
+<code>supersededById</code> and <code>contestedWithId</code>, tags, the
+three time fields, an optional <code>claimKey</code> of subject and
+predicate, strength and half-life on a wall clock and an optional
+activity clock, <code>purgedAt</code>, and caller
+<code>attributes</code>
+(<code>packages/core/src/memory.ts:88-266</code>). Creation is
+idempotent on tenant, source observation, extractor version and content
+hash
+(<code>packages/postgres/migrations/0001_init.sql:105-108</code>).</p>
+<p><code>memory_events</code> records <code>created</code>,
+<code>updated</code>, <code>superseded</code>, <code>archived</code>,
+<code>forgotten</code>, <code>purged</code> and their reversals, each
+with an <code>actor</code> the caller declares as human, system or
+clone, a digest snapshot, and a reason in <code>meta</code>
+(<code>packages/postgres/migrations/0001_init.sql:145-158</code>). It
+does not copy content.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p><code>total = similarity × decay × tagMatch × freshness × strength</code>,
-documented in <code>docs/recall.md</code>, with every factor bounded and
-the bounds exported. A digest band returns a compact list alongside the
-full results, and a recall footprint records what the recall touched —
-which is what makes a later question about why something was recalled
-answerable.</p>
+documented in <code>docs/recall.md</code> §7, with every factor bounded
+and <code>MAX_STRENGTH = 1</code> exported
+(<code>packages/core/src/memory.ts:35</code>). Candidates come from the
+vector store and a lexical store, each filtered in SQL by tenant,
+status, period, validity and decay floor
+(<code>packages/postgres/src/vector-store.ts:120-210</code>,
+<code>packages/postgres/src/lexical-store.ts:76-120</code>).</p>
+<p>The tenant predicate is on every read the runtime makes. The runtime
+passes <code>ctx.tenantId</code> as the filter tenant
+(<code>packages/core/src/recall-runtime.ts:865</code>,
+<code>:908</code>, <code>:1450</code>), and the stores also apply the
+ctx tenant, so a filter naming another tenant returns nothing
+(<code>packages/postgres/src/vector-store.ts:207-208</code>,
+<code>packages/postgres/src/lexical-store.ts:81-83</code>).
+<code>get</code>, <code>getMany</code> and <code>getRecall</code> filter
+by tenant (<code>packages/postgres/src/memory-store.ts:1059-1080</code>,
+<code>:2586-2595</code>). The subject narrows within the tenant when the
+caller sets it, and an omitted subject reads the whole tenant
+(<code>packages/core/src/ctx.ts:65</code>).</p>
+<p>A contested hit pulls its counterpart, and a group pulls its members
+through <code>contradicts</code> relations
+(<code>packages/core/src/recall-runtime.ts:1159-1226</code>). A digest
+band lists compact digests of in-scope memories beyond the main results.
+Each recall is stored as a <code>recalls</code> row with the returned
+ids and scores (<code>:2393</code>), and a later
+<code>memory_usage</code> observation names the recalled memories the
+application used, which reinforces them.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Observations are extracted into memories; background cognition runs
-through an outbox rather than inline, with an inline scheduler for
-tests. Forgetting is a status, not a delete — and nothing is consulted
-at write time against a forgotten memory, so the same content can be
-created again afterwards.</p>
+<p>Observations are extracted into memories; embedding, consolidation
+and reflection run through the outbox. An extraction may carry a claim
+key; when one active memory shares it with different content and an
+overlapping window, the pair is marked contested. When the extraction
+has no subject candidate list, the subject the model returns is
+discarded unless the caller sets
+<code>acceptLlmSubjectIdWithoutCandidates</code>
+(<code>packages/core/src/runtime.ts:155-166</code>), so text in an
+observation cannot file a memory under another subject by default.</p>
+<p>Forget is a status change, compare-and-set against the observed
+status (<code>packages/core/src/runtime.ts:4354-4358</code>).
+Re-extraction of an observation that has a forgotten, contested or
+correction-lost memory writes nothing, and consolidation and reflection
+abort if a source was forgotten while the model ran. Those checks are
+keyed on the observation and the source ids
+(<code>packages/core/src/runtime.ts:3023-3035</code>,
+<code>:5501</code>). A new observation with the same content is
+extracted as a new active memory: the only content-hash lookups are
+idempotency re-reads that also match the source observation
+(<code>packages/postgres/src/memory-store.ts:801</code>,
+<code>:852</code>, <code>:1346</code>).</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Deliberately none of its own. The positioning — beneath LangGraph,
-Mastra or a hand-written agent — is unusual in this corpus, where most
-projects want to own the loop, and it is what makes the tenant decision
-coherent: a library one layer down should not invent an authentication
-model for the application above it.</p>
+<p>None of its own. The library registers no MCP server and no tool; an
+agent reaches memory only through whatever the embedding application
+exposes, and the model calls it makes are its own extraction,
+consolidation and reflection prompts. <code>examples/chat</code> is a
+demonstration application with benchmark logs.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The typed provenance is the trust mechanism and it is the strongest
-version of that idea here: not a field a writer may fill, but a tag a
-writer must choose, with each choice demanding its own evidence.</p>
-<p>What is absent: no record of what a memory said before it changed,
-beyond the supersession link; no audit of who changed a status; and no
-authentication, by design.</p>
+<p>The typed provenance is the trust mechanism, checked at the store's
+write entry and in Postgres. Its limit is the model field, which records
+configuration rather than the call that produced the inference.</p>
+<p>Status transitions are guarded and logged. The runtime's supersede,
+restore and forget calls pass an expected status
+(<code>packages/core/src/runtime.ts:3328</code>, <code>:4108</code>,
+<code>:4358</code>), the archive sweep locks only active rows
+(<code>packages/postgres/src/memory-store.ts:4250-4256</code>), and each
+transition writes an event with the digest and the declared actor. The
+log is not append-only. <code>purgeExpiredEventsByRetention</code>
+deletes events older than a tenant's retention setting and leaves an
+<code>events_purged</code> row with the count and range
+(<code>packages/postgres/src/memory-store.ts:1476-1560</code>,
+<code>:1581</code>), and <code>eraseTenant</code> deletes a tenant's
+rows table by table (<code>:3988-4044</code>).</p>
+<p>The tenant boundary is enforced and unauthenticated by design. A
+cross-tenant reference detector scans the whole database for memories
+that point at another tenant's rows
+(<code>packages/postgres/src/cross-tenant-reference-detection.ts</code>);
+it is an operator diagnostic and reads across tenants on purpose.</p>
+<p>Within a tenant, the subject is not a boundary. <code>tick()</code>
+claims outbox jobs by tenant only
+(<code>packages/postgres/src/outbox-store.ts:61-90</code>), so
+background consolidation and reflection set the context subject from the
+seed memory before searching for neighbours
+(<code>packages/core/src/runtime.ts:3738-3739</code>,
+<code>:3754-3755</code>). A seed with no subject keeps the tick's
+context, which for a tenant-wide tick is the whole tenant. The project's
+ADR 0310 records the cross-subject merge rate it measured before that
+change; this reading did not run it.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>1,212 test cases across 127 files, with the conformance kit as the
-interesting part — store behaviour is specified once and every adapter
-is held to it, which is why the negative-evaluation mark attaches to a
-contract rather than to an implementation. Nothing was installed or run
-for this reading.</p>
+<p>The conformance kit is the interesting part: store behaviour is
+specified once and every adapter is held to it. The negative cases sit
+beside positive controls on the same store: a cross-tenant
+<code>get</code> is null and the owner's <code>get</code> returns the
+row
+(<code>packages/testkit/src/memory-store-conformance.ts:705-721</code>);
+a tenant spelled in another case sees nothing and its own spelling sees
+the memory; a ctx/filter tenant mismatch returns nothing and the
+matching pair returns exactly one id
+(<code>packages/testkit/src/lexical-store-conformance.ts:251-298</code>).</p>
+<p>At the runtime, a memory recalled before <code>forget</code> is
+absent after it, with an exact omission count
+(<code>packages/core/src/__tests__/forget.test.ts:409-431</code>).
+<code>examples/chat/bench-results/</code> holds the project's own
+measurement logs, which this reading did not reproduce. Nothing was
+installed or run.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Make provenance the tag, not a flag. A discriminated union whose arms
-demand different evidence turns "we forgot to record where this came
-from" into a compile error.</p>
-<p>Spell a closed union once. This project found the same five values
-copied into a query schema by hand and wrote down why that always fails
-eventually.</p>
-<p>Let contested stay in recall. Suppressing a disputed memory is a
-decision made at write time by whoever wrote last; surfacing it is a
-decision the reader can make with both halves in front of them.</p>
-<p>Bound every multiplier and export the bound. An uncapped factor in a
-ranking formula is a way for one row to outrank everything else, and the
-fix costs one constant.</p>
-<p>And say what your isolation does not do. "No existence check, no
-authentication" in the file that defines the tenant is worth more than a
-tenancy chapter that implies otherwise.</p>
+<h3 id="steal">Steal</h3>
+<p>Make provenance the tag, not a flag, and check the arm where the
+store accepts a write. A union whose arms demand different evidence
+turns a missing origin into a rejected write rather than a null
+column.</p>
+<p>Let contested stay in recall and bring its counterpart. Surfacing
+both halves leaves the decision with the reader who can see both.</p>
+<p>Apply the tenant twice when a filter object and a context both carry
+it. A mismatch then returns nothing instead of the filter's tenant.</p>
+<p>Discard a model-proposed subject unless the caller gave the
+candidates. Text in an observation should not choose whose memory it
+becomes.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Recording a configured model name as the producer of an inference.
+The field reads like evidence and is a setting; capture the model from
+the provider call.</p>
+<p>Calling a log with a retention purge an audit trail. A count of what
+was purged records that history existed, not what it said.</p>
+<h3 id="fit">Fit</h3>
+<p>A fit for a team embedding memory in its own multi-tenant
+application, which authenticates its users and wants a library that will
+not invent an identity model. It assumes Postgres with pgvector, an
+operator who schedules <code>tick()</code> and retention, and a reader
+of Japanese design records. A product that needs the memory layer itself
+to hold the security boundary, or a rejected value to stay rejected
+across new observations, should look elsewhere.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether a forgotten memory can be re-created. Nothing consults status
-at write time, and idempotency is keyed on a content hash whose
-interaction with a forgotten row was not traced.</p>
-<p>What the recall footprint is used for downstream. It is recorded per
-recall; which surface reads it was not established.</p>
-<p>How reflection differs from consolidation in practice. Both are
-provenance kinds and both are background passes; the boundary is drawn
-in the docs rather than in the types.</p>
+<p>Whether any application sets <code>includeOutsideValidity</code> or
+<code>includeFullyDecayed</code> by default; both lift a recall gate and
+are caller options.</p>
+<p>How often the claim-key detector fires in practice. The key is
+model-proposed and opt-in per observation, and its precision was not
+measured here.</p>
+<p>Whether <code>memory_usage</code> reinforcement can be driven by an
+application that echoes every recalled id back as used; the observation
+carries ids the caller supplies.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -384,28 +505,107 @@ in the docs rather than in the types.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>packages/core/src/provenance.ts:1-40</code></td>
-<td>Provenance as a union, and the duplication that taught them</td>
+<td><code>packages/core/src/provenance.ts:1-116</code></td>
+<td>Provenance as a union, and each arm's evidence</td>
 </tr>
 <tr>
-<td><code>packages/core/src/memory.ts:5-30</code></td>
-<td>Five statuses, and a ceiling closed twice</td>
+<td><code>packages/core/src/new-memory-check.ts:21-61</code></td>
+<td>The write-entry check of the provenance arm</td>
 </tr>
 <tr>
-<td><code>packages/postgres/src/memory-store.ts:999-1050</code></td>
-<td>Three clocks and two admitted statuses</td>
+<td><code>packages/core/src/memory.ts:16-51</code></td>
+<td>Five statuses, and a strength ceiling with its reasoning</td>
 </tr>
 <tr>
-<td><code>packages/core/src/ctx.ts:1-20</code></td>
+<td><code>packages/core/src/ctx.ts:1-73</code></td>
 <td>An isolation boundary that declines to authenticate</td>
 </tr>
 <tr>
-<td><code>packages/testkit/src/memory-store-conformance.ts:4238-4262</code></td>
-<td>A negative assertion, its control, and the count beside it</td>
+<td><code>packages/core/src/recall-runtime.ts:505-506</code>,
+<code>:865-909</code>, <code>:1450-1451</code></td>
+<td>Validity default, tenant and status at each candidate stage</td>
+</tr>
+<tr>
+<td><code>packages/postgres/src/memory-store.ts:2090-2349</code></td>
+<td>The scope aggregate and its predicates</td>
+</tr>
+<tr>
+<td><code>packages/postgres/src/vector-store.ts:120-260</code></td>
+<td>Vector candidates under tenant, status and validity</td>
+</tr>
+<tr>
+<td><code>packages/postgres/src/memory-store.ts:1476-1560</code></td>
+<td>The event retention purge and its <code>events_purged</code>
+row</td>
+</tr>
+<tr>
+<td><code>packages/postgres/migrations/0001_init.sql:60-160</code></td>
+<td>Memories, provenance checks, idempotency index, events</td>
+</tr>
+<tr>
+<td><code>packages/testkit/src/memory-store-conformance.ts:705-760</code></td>
+<td>Cross-tenant negatives with positive controls</td>
+</tr>
+<tr>
+<td><code>packages/testkit/src/lexical-store-conformance.ts:236-298</code></td>
+<td>Tenant-case and ctx/filter mismatch negatives</td>
+</tr>
+<tr>
+<td><code>packages/core/src/__tests__/forget.test.ts:409-431</code></td>
+<td>Recalled before forget, absent after</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -nE 'status: \["active", "contested"\]' -- packages/core/src/recall-runtime.ts</code>
+— three hits, <code>:866</code>, <code>:909</code>, <code>:1451</code>,
+one per candidate stage.</li>
+<li><code>git grep -nE 'tenantId: ctx\.tenantId' -- packages/core/src/recall-runtime.ts</code>
+— four hits, <code>:865</code>, <code>:908</code>, <code>:1450</code>,
+<code>:2394</code>.</li>
+<li><code>git grep -niE 'modelcontextprotocol|McpServer|registerTool' -- packages examples</code>
+— no match; no agent tool surface.</li>
+<li><code>git grep -nE 'DELETE FROM memory_events|UPDATE memory_events' -- packages ':!*__tests__*'</code>
+— one hit, the retention purge at
+<code>packages/postgres/src/memory-store.ts:1517</code>;
+<code>eraseTenant</code> deletes through <code>sql.identifier</code> at
+<code>:4044</code>.</li>
+<li><code>git grep -nE 'content_hash = ' -- packages/postgres/src ':!*__tests__*'</code>
+— <code>memory-store.ts:801</code>, <code>:852</code>,
+<code>:1346</code>, each also matching
+<code>source_observation_id</code>.</li>
+<li><code>git grep -nE 'validFrom: |validUntil: ' -- packages/core/src ':!*__tests__*'</code>
+— producers are the observation (<code>runtime.ts:3464-3465</code>,
+<code>extraction.ts:629-630</code>), the memory copied on re-extraction,
+and the intersection for consolidation; none is the write clock.</li>
+<li><code>git grep -nE 'DEFAULT_LLM_MODEL_ID =' -- packages/core/src</code>
+— <code>runtime.ts:170</code>, <code>"unknown"</code>.</li>
+<li><code>git grep -niE 'approve|approval|pending_review|awaiting_review' -- packages/core/src packages/postgres/src packages/postgres/migrations ':!*__tests__*'</code>
+— no match; no review state.</li>
+<li><code>git grep -niE 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/takecchi/mnemora/commit/472ea321c6d9f6ffdcc685bacf152f67a6f79a48"><code class="commit-id" title="472ea321c6d9f6ffdcc685bacf152f67a6f79a48">472ea321…</code></a>
+— 1,181 commits on, from release v0.5.0 to 195 commits past v1.3.0.
+<code>scope_enforced</code> gained, earned at the previous pin: every
+read applied the ctx tenant (<a href="#6-retrieval-mechanics">section
+6</a>). Claim keys, contested groups, purge, tenant erasure and the
+provenance write check arrived (<a href="#2-mental-model">section
+2</a>). Seven further claims were wrong then: the version, the recall
+footprint, an event log said not to exist, guarded transitions called
+unconditional, the validity gate drawn as opt-in, provenance that could
+not be left unestablished, and anchors carried from the first reading;
+the earlier entry's sha is corrected. Screened from a full clone: 21
+files, no auto-run or build-time execution, four unpinned surfaces,
+<code>AGENTS.md</code> and <code>CLAUDE.md</code> read as data. Nothing
+was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/takecchi/mnemora/commit/509f4e739ca1ad017876a5b661062d23c2ead773"><code class="commit-id" title="509f4e739ca1ad017876a5b661062d23c2ead773">509f4e73…</code></a>
 — <code>trust_state</code> re-tested. The mark holds and the vocabulary
@@ -430,7 +630,7 @@ rejection. Recording the limit of a guard beside the guard is the habit
 this atlas looks for; the record now carries it. Screened again first;
 nothing was installed and no suite was run.</p>
 <p><strong>2026-09-16</strong> — <a
-href="https://github.com/takecchi/mnemora/commit/509f4e739ca1ad017876a5b661062d23c2ead773"><code class="commit-id" title="509f4e739ca1ad017876a5b661062d23c2ead773">509f4e73…</code></a>
+href="https://github.com/takecchi/mnemora/commit/3676311e73ad95ca650957d44ccb46a627cc74da"><code class="commit-id" title="3676311e73ad95ca650957d44ccb46a627cc74da">3676311e…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before
 opening, from a shallow clone: nineteen files scanned, no auto-run
 surfaces, no build-time execution points, three unpinned surfaces and

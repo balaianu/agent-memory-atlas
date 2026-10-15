@@ -20702,42 +20702,34 @@ href="../systems/mnemora/"><code>mnemora</code></a></h3>
 <li>Best idea: <strong>provenance is the tag of a discriminated union,
 not a flag on a row.</strong>
 <code>stated | inferred | consolidated | reflected | imported</code>,
-each arm demanding its own evidence — <code>stated</code> a source
-observation and a time, <code>inferred</code> the model, the prompt
-version, the basis memory and observation ids, and a confidence — so a
-memory whose origin was never established is a value the type system
-will not build. The module states the principle it implements:
-distinguishing the AI's inference from what the user stated "is
-implemented as the value of <code>kind</code> itself rather than as an
-additional flag".</li>
-<li>Biggest risk: <strong>there is no tenancy to enforce, which the code
-says where a reader will look.</strong> "mnemora keeps no ledger of
-tenants. <code>tenantId</code> is an opaque string the caller passes; it
-performs no existence check and no authentication." Every read carries
-<code>WHERE tenant_id = ${ctx.tenantId}</code>, so a correct caller is
-isolated and a careless one is not, and the safety boundary sits in the
-embedding application — the right place for a library one layer down,
-and the thing to know before treating the tenant column as a
-control.</li>
-<li>Most reusable component: <code>provenance.ts</code> whole, and
-beside it the one-line rule that put the union's spelling in a single
-place after it was found hand-copied into a recall query: "when a closed
-union's spelling exists in two places, fixing one and forgetting the
-other depends on attention, and will certainly fail."</li>
-<li>Maturity impression: MIT, TypeScript, version 0.1.1, 87,938 lines
-across six packages with 1,212 test cases in 127 files, ADR-numbered
-decisions cited from the code, and a shared conformance kit every store
-adapter must pass — which is why its negative-evaluation test binds a
-contract rather than one implementation. Documentation in Japanese.</li>
-<li>Study when: you carry provenance as an optional string and want to
-see it carried as a type, or you need three time concepts — occurred,
-recorded, valid between — kept apart with separate not-yet-valid and
-expired predicates.</li>
+each arm naming its own evidence — <code>stated</code> a source
+observation and a time, <code>inferred</code> a model, a prompt version,
+basis ids and a confidence — and the store checks the arm at its write
+entry while Postgres refuses an unknown kind.</li>
+<li>Biggest risk: <strong>the tenant is enforced on every read and
+authenticated nowhere.</strong> <code>Ctx</code> states that mnemora
+keeps no ledger of tenants and runs no existence check and no
+authentication; every read carries
+<code>tenant_id = ctx.tenantId</code>, so a correct caller is isolated
+and a careless one is not. Beside it, an inferred memory's model is the
+configured name, <code>unknown</code> when none is set, and the event
+log is pruned by a retention setting.</li>
+<li>Most reusable component: <code>provenance.ts</code> with
+<code>new-memory-check.ts</code>, which reuses the read schema field by
+field to refuse at the write entry a memory that would not pass it when
+read back.</li>
+<li>Maturity impression: MIT, TypeScript, release v1.3.0, 1,562 commits
+by one author name with agent-written decision records, 299,793 lines
+under packages/ with 7,381 test cases, and a shared conformance kit
+every store adapter must pass. Documentation in Japanese.</li>
+<li>Study when: you carry provenance as an optional string and want it
+carried as a type, or you need a validity window kept apart from
+occurred and recorded time, with expired and not-yet-valid named
+separately.</li>
 <li>Do not copy when: you need the library to hold the isolation
-boundary itself. Three marks: trust state, bitemporal, negative eval —
-and note that recall admits <code>contested</code> alongside
-<code>active</code>, so a disputed memory is surfaced rather than
-resolved away.</li>
+boundary itself, or a forgotten value to stay rejected when a new
+observation says it again. Four marks: trust state, bitemporal, scope
+enforced, negative eval.</li>
 </ul>
 <h3 id="chitta-field"><a
 href="../systems/chitta-field/"><code>chitta-field</code></a></h3>
