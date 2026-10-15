@@ -14551,6 +14551,45 @@ one build-time execution point (an npm <code>prepublishOnly</code> in
 behind <code>bash/bun.lock</code>) and no file inside the cooldown.
 There is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
 <code>CLAUDE.md</code>. Nothing was installed, built or run.</li>
+<li><strong><code>harish-gaggar/mcp-server-gateway</code> was examined
+and has no report: its "durable memory" is a chat log the UI replays to
+the person and a checkpoint per request, and the agent never reads
+either back.</strong> Apache-2.0, read at <a
+href="https://github.com/harish-gaggar/mcp-server-gateway/commit/f9698059ef79a4e06681b16e7430e175d7f39792"><code class="commit-id" title="f9698059ef79a4e06681b16e7430e175d7f39792">f9698059…</code></a>,
+the head of <code>main</code> on 3 October 2026, 13 commits since 17
+August 2026. It is an OAuth MCP gateway (about 5,400 lines of TypeScript
+under <code>mcp-gateway/src/</code>), three example MCP servers, a PII
+kit, and a LangGraph agent for JFrog Artifactory (about 9,700 lines of
+Python under <code>Agents/</code>). The gateway's storage is an OAuth
+client-registration key-value store with a TTL
+(<code>mcp-gateway/src/storage/types.ts:9-10</code>, used only by
+<code>client-handlers/dcr.ts:56</code> and <code>cimd.ts:92</code>). The
+agent's <code>jfrog_agent/memory/</code> package (677 lines, SQLite by
+default, Spanner optional) writes threads, messages, LLM call telemetry
+and thumbs feedback (<code>memory/sqlite_backend.py:31-51</code>). The
+one reader of messages is <code>load_thread</code>, which copies them
+into the Streamlit chat pane for display
+(<code>ui/state.py:173-183</code>); <code>run_agent</code> passes only
+the new request into the graph (<code>ui/state.py:263-265</code>). The
+planner's prompt is a system message and that request
+(<code>jfrog_agent/llm.py:249-252</code>), and the graph nodes read
+nothing outside the current run's state. The LangGraph checkpointer is
+keyed by a fresh <code>run_id</code> per message, commented as "each
+message is an independent graph run" (<code>ui/state.py:259-260</code>;
+<code>run.py:62</code>), so it lets an approval interrupt survive a
+restart and carries nothing between requests. The Slack front end keys a
+thread on the channel and prints "memory: N prior turns", but it imports
+<code>from .ask import ask</code>
+(<code>jfrog_agent/slack_bot.py:25</code>), and no <code>ask.py</code>
+exists in the tree or in any commit. The <code>context_optimizer</code>
+package trims and summarises the prompt inside one call, which is
+context-window management. Screened before reading, from a full clone:
+no auto-run surface, no build-time execution, nothing inside the
+cooldown, nine unpinned surfaces (Python requirements with
+<code>&gt;=</code> ranges and caret ranges behind three npm lockfiles);
+there is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
+<code>CLAUDE.md</code>, and the 17-line LICENSE is the Apache-2.0 notice
+with no rider. Nothing was installed, built or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
