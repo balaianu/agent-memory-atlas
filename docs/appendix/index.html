@@ -14765,6 +14765,54 @@ ranges); there is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
 The one committed test, <code>tests/test_mcp_transport.py</code>, covers
 the MCP transport and not memory. Nothing was installed, built or
 run.</li>
+<li><strong><code>guarismo/openclaw-plugin-multimodal-embeddings</code>
+was examined and has no report: it is an embedding provider and a
+read-only media search for OpenClaw's memory index, and it stores,
+corrects and forgets nothing of its own.</strong> MIT (Igor Guarisma),
+554 lines of TypeScript under <code>src/</code> with 68 vitest cases in
+four files, nine commits by one author on 7 and 8 October 2026 (UTC),
+read at <a
+href="https://github.com/guarismo/openclaw-plugin-multimodal-embeddings/commit/d51fba19bb57e3f5700e6412e7b4b0630aa63960"><code class="commit-id" title="d51fba19bb57e3f5700e6412e7b4b0630aa63960">d51fba19…</code></a>
+(version 0.3.0). The plugin makes two registrations
+(<code>src/index.ts:115</code>, <code>src/index.ts:126</code>). The
+first is an embedding provider that sends text, images and audio to an
+OpenAI-compatible <code>/v1/embeddings</code> server, converting
+non-native media through ffmpeg over pipes
+(<code>src/media.ts:8-20</code>). The second is a tool,
+<code>multimodal_media_search</code>. Every table belongs to <a
+href="../systems/openclaw/">OpenClaw</a>'s <code>memory-core</code>: the
+plugin returns vectors and the host indexes, stores, decays and deletes
+them. The tool opens the calling agent's database read-only, by the
+<code>agentId</code> from the tool context rather than from a model
+argument (<code>src/media-search.ts:51</code>,
+<code>src/media-search.ts:89</code>). It runs one query,
+<code>SELECT path, embedding FROM</code> the host's chunks table
+<code>WHERE source = 'memory' AND model = ?</code>
+(<code>src/media-search.ts:55</code>), and keeps rows whose path ends in
+an image or audio extension. It ranks them by cosine similarity and
+drops any hit whose file no longer exists on disk
+(<code>src/media-search.ts:110</code>). Those rows are user files the
+host indexed from <code>memory.search.extraPaths</code>, which makes
+this the document-index case. The one design point that transfers is the
+reindex trigger. Every setting that changes a vector, from base URL and
+prefixes to media label, request format and dimensions, goes into the
+runtime's <code>cacheKeyData</code>, so a change makes the host ask for
+a rebuild (<code>src/index.ts:83</code>). Whether the host's own read
+filters, such as entries removed through <code>memory-forget</code>,
+also govern this direct table read depends on how
+<code>memory-core</code> deletes chunk rows at the plugin's
+<code>openclaw</code> 2026.9.8 dev dependency; that was not read.
+Searches run at this pin with <code>git grep</code>:
+<code>-nEi "insert|update[[:space:]]|delete|writeFile|\.run\(|exec\("</code>
+over <code>src</code> (one match, a comment);
+<code>-nE "openOpenClawAgentDatabase|prepare\("</code> (one read-only
+open, one <code>SELECT</code>);
+<code>-nEi "remember|forget|supersed|tombstone|retract|correct"</code>
+over <code>src</code> (nothing);
+<code>-nEi "arxiv|bibtex|@article|doi\.org|CITATION"</code> over the
+tree (nothing). Screened before reading: no auto-run, build-time or
+cooldown finding, and one FLOAT on <code>package.json</code> with a
+lockfile present; nothing was installed, built or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
