@@ -10707,33 +10707,43 @@ trailer still names its sha</td>
 <tr>
 <td><a href="../systems/gitmem/"><code>gitmem</code></a></td>
 <td>A learning typed scar, win, pattern or anti_pattern, with
-counter-arguments and a protocol</td>
-<td>Postgres with pgvector on Supabase, or a local .gitmem directory on
-the free tier</td>
-<td>Vector search over learnings and decisions from one cross-project
-cache, filtered by severity and type; the primary path holds every scar
-in a single instance regardless of project</td>
-<td>create_learning, with scar-specific validation that refuses the
-write</td>
-<td>archive_learning sets is_active false; nothing is keyed on a
-rejected value</td>
-<td>None applied. <code>project</code> is stored on the row and resolved
-on every call, and the search functions take it as <code>_project</code>
-and ignore it — the cache is unified across projects on the stated
-argument that at about four hundred scars similarity beats partitioning,
-and the remote fallback omits <code>project_filter</code> on purpose so
-it matches the path it stands in for</td>
-<td>MCP server plus lifecycle hooks — SessionStart, UserPromptSubmit,
-PreToolUse, close</td>
-<td>Implicit thread detection from session-embedding similarity;
-analytics over repeat mistakes</td>
-<td>severity, is_active, decay_multiplier, and a repeat_mistake flag
-linked to the original scar</td>
-<td>Refute-or-obey confirmation enforced by a hard-blocking hook, per
-surfaced scar</td>
-<td>The suggestion dismissal counter can never exceed one, so its
-suppression rule is unreachable; and retrieval is cross-project, so a
-scar recorded in one repository surfaces in another</td>
+counter-arguments, applies_when, an action protocol and self-check
+criteria; decisions, threads and sessions are separate stores</td>
+<td>Postgres with pgvector on Supabase from setup.sql, cached locally as
+one embedding index; or JSON files under a .gitmem directory on the free
+tier</td>
+<td>Cosine similarity times decay_multiplier over one cross-project
+in-process index of the 500 most recently updated active learnings, with
+an RPC fallback while the index is cold; BM25 over learnings.json on the
+free tier; severity and type post-filters</td>
+<td>create_learning, refused for a scar without a severity and two
+counter_arguments; session_close writes scar usage, decisions and
+threads</td>
+<td>archive_learning sets is_active false and returns the reason without
+storing it; decay_multiplier is rewritten from usage; nothing deletes a
+learning and nothing is keyed on a rejected value</td>
+<td>Project predicate on threads in Postgres, session history and the
+session_start decision panel; none on any scar read, by design, and none
+on the free-tier threads.json or the free-tier search over
+decisions</td>
+<td>MCP server with Claude Code hooks on SessionStart, UserPromptSubmit,
+PreToolUse, PostToolUse and Stop, plus rule templates for Cursor,
+Copilot and Windsurf</td>
+<td>Behavioural decay refreshed at session_start from 90 days of scar
+usage; an on-disk index cache with per-row delta sync; implicit thread
+suggestions from session-embedding similarity</td>
+<td>severity, is_active, decay_multiplier from dismiss rate, and a
+repeat_mistake flag that analytics reads and nothing in the package
+writes</td>
+<td>Refute-or-obey confirmation with per-decision evidence rules,
+refused after a failed recall, behind a PreToolUse gate that hard-blocks
+consequential commands; dismissals and refutations feed back into
+ranking</td>
+<td>The PreToolUse gate counts confirmations rather than matching them,
+so after one accepted confirm_scars a later recall's scars do not block;
+the scar index is cross-project and capped at 500 rows; the dismissal
+counter cannot exceed one; the free tier evicts the oldest fifth of a
+collection past 10 MB</td>
 </tr>
 <tr>
 <td><a
@@ -34188,7 +34198,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>466 of 749:</em> <a
+<p><em>467 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34335,6 +34345,7 @@ href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a>,
 href="../systems/genome/"><code>genome</code></a>, <a
 href="../systems/gh-aw/"><code>gh-aw</code></a>, <a
 href="../systems/gini-agent/"><code>gini-agent</code></a>, <a
+href="../systems/gitmem/"><code>gitmem</code></a>, <a
 href="../systems/global-agent-memory/"><code>global-agent-memory</code></a>,
 <a href="../systems/gmeow-ontology/"><code>gmeow-ontology</code></a>, <a
 href="../systems/gmr/"><code>gmr</code></a>, <a
@@ -34688,7 +34699,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-466 repositories of
+467 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

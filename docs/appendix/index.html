@@ -1745,7 +1745,7 @@ href="https://github.com/24kchengYe/MemoMind/commit/d45a7a08dfec155f38c0bed41d11
 own Python is 1,411 lines</li>
 <li><a href="https://github.com/gitmem-dev/gitmem">gitmem-dev/gitmem</a>
 at <a
-href="https://github.com/gitmem-dev/gitmem/commit/d47a625f5c08fbd6b1c96f4d2bf4f1b3a15e98f6"><code class="commit-id" title="d47a625f5c08fbd6b1c96f4d2bf4f1b3a15e98f6">d47a625f…</code></a></li>
+href="https://github.com/gitmem-dev/gitmem/commit/430d7431be1c375a94b0050d7682c58f2c45f30b"><code class="commit-id" title="430d7431be1c375a94b0050d7682c58f2c45f30b">430d7431…</code></a></li>
 <li><a
 href="https://github.com/Harshitk-cp/engram">Harshitk-cp/engram</a> at
 <a
@@ -17051,6 +17051,38 @@ withdrawn. It also said the merge gate meant a run that degraded
 retrieval could not land; the gate built its own fixture corpus in an
 in-memory database (<code>packages/eval/src/harness.ts:34-37</code>,
 <code>:146</code>) and did not read the branch.</li>
+<li><strong>Five published claims about <a
+href="../systems/gitmem/">GitMem</a> were wrong at <a
+href="https://github.com/gitmem-dev/gitmem/commit/d47a625f5c08fbd6b1c96f4d2bf4f1b3a15e98f6"><code class="commit-id" title="d47a625f5c08fbd6b1c96f4d2bf4f1b3a15e98f6">d47a625f…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the scar-search fallback had answered PGRST202 "on every call, on every
+deployment, since it was written" and that the deployed functions were
+<code>match_&lt;table&gt;</code> and
+<code>match_&lt;table&gt;_weighted</code>.
+<code>schema/setup.sql:322</code> defined
+<code>gitmem_scar_search</code> and no file in the tree defined a
+<code>match_</code> function, so the rename the report credited as the
+fix (<code class="commit-id" title="06c26eb8c8457900c3ffa3eb53b0f6c992cdd57e">06c26eb8…</code>, 8 August
+2026) is what made the fallback fail on every store built from
+<code>setup.sql</code>, and the committed test asserted the regressed
+name. It said no read path applied a stored project key; threads went
+through <code>buildScopedThreadQuery</code> in
+<code>src/services/thread-scope.ts</code>, and session history, the
+session-start decision panel and <code>log</code>
+(<code>src/tools/log.ts:125</code>) filtered by project. It described
+the <code>PreToolUse</code> gate as holding until every surfaced scar
+was answered; <code>hooks/scripts/recall-check.sh:150</code> blocked
+only while the session's confirmation count was zero. It did not credit
+<code>negative_eval</code>, though
+<code>tests/unit/services/local-file-storage.test.ts:206-221</code>
+asserted that an archived learning stays out of a populated active-only
+list beside two positive controls. And it said the schema recorded
+repeat mistakes and that <code>execution_successful</code> closed the
+loop to the outcome; <code>repeat_mistake</code> had no writer in the
+tree, and <code>execution_successful</code> was derived from the agent's
+own confirmation or reflection. The first rested on a code comment over
+the schema file in the same tree, and the last on the column's
+declaration rather than its writers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -7419,43 +7419,39 @@ and the pruner.</li>
 href="../systems/gitmem/"><code>gitmem</code></a></h3>
 <ul>
 <li>Best idea: a scar is refused at write time unless it carries at
-least two counter-arguments — and they are folded into the embedding
-text and returned on every search, so the objection travels with the
-claim to the point of use. Nothing else in this atlas requires a memory
-to argue against itself.</li>
-<li>Biggest risk: <code>dismiss_suggestion</code> documents that
-"suggestions dismissed 3+ times are permanently suppressed", but
-dismissal sets <code>status = "dismissed"</code> and the matcher skips
-non-pending records, so the same topic creates a fresh suggestion at
-count 0. <code>dismissed_count</code> can never exceed 1 and the
-<code>&lt; 3</code> guard is unreachable; the unit test asserts only the
-reachable branch.</li>
-<li>Most reusable component: the refute-or-obey protocol — every
-surfaced scar answered with <code>APPLYING</code> (past-tense evidence
-and an artifact reference), <code>N_A</code> (scenario comparison) or
-<code>REFUTED</code> (risk acknowledgment), enforced by a
-<code>PreToolUse</code> hook that emits
-<code>{"decision":"block"}</code> on consequential Bash calls only.</li>
-<li>Maturity impression: 59,000 lines of TypeScript, 92 test files
-across five vitest configs, and a <code>gitmem_scar_usage</code> table
-recording <code>reference_type</code> including <code>'none'</code>,
-<code>surfaced_at</code> against <code>acknowledged_at</code>,
-<code>execution_successful</code> and a validation verdict — beside a
-scar-search fallback whose RPC name the project found had returned
-PGRST202 on every call since it was written, invisible because it runs
-only while the local index is cold; no capability marks: the suggestion
-pipeline's <code>promote_suggestion</code>,
-<code>dismiss_suggestion</code> and <code>confirm_scars</code> are all
-registered MCP tools, so the actor that clears a pending proposal or
-answers a surfaced scar is the same one that produced it.</li>
+least two counter-arguments, folded into the embedding text and returned
+on every search, so the objection travels with the claim to the point of
+use. The rule counts strings and sets no minimum length.</li>
+<li>Biggest risk: the <code>PreToolUse</code> gate blocks a
+consequential command only while the session's confirmation count is
+zero, so after one accepted <code>confirm_scars</code> a later recall's
+scars do not block. Separately, <code>dismiss_suggestion</code>'s "3+
+times permanently suppressed" is unreachable: the matcher skips
+dismissed records and the topic returns at count 0.</li>
+<li>Most reusable component: the refute-or-obey protocol —
+<code>APPLYING</code> with past-tense evidence, <code>N_A</code> with a
+scenario comparison, <code>REFUTED</code> with a risk acknowledgment —
+with the batch refused if any recalled scar is unanswered, and refused
+outright when the last recall never reached the store.</li>
+<li>Maturity impression: 66,788 lines of TypeScript, 121 test files
+across five vitest configs, and a release gate that runs the built
+server against a Supabase project holding only <code>setup.sql</code>.
+One capability mark, <code>negative_eval</code>, on a free-tier list
+case asserting that an archived learning stays out;
+<code>human_review</code> fails because <code>promote_suggestion</code>,
+<code>dismiss_suggestion</code> and <code>confirm_scars</code> are
+registered MCP tools. From 8 August to 22 September 2026 the cold-index
+fallback called an RPC no shipped schema defines, under a test that
+asserted that name; the venue gate exercises that path against
+<code>setup.sql</code>.</li>
 <li>Study when: your agent is shown memories and nothing records what it
-did about them.</li>
-<li>Do not copy when: you want the dismissal suppression as written —
-key it on the embedding, not on a generated id — or when you need a
-project boundary: retrieval is one cross-project cache and the
-<code>project</code> argument every caller passes is declared
-<code>_project</code> and ignored, on the stated argument that at about
-four hundred scars similarity beats partitioning.</li>
+did about them — usage rows record <code>none</code> for an ignored
+scar, and dismissals and refutations lower its rank at the next session
+start.</li>
+<li>Do not copy when: you need a project boundary on lessons — every
+scar read draws from one cross-project index of at most 500 learnings,
+by design — or the dismissal suppression as written; key it on the
+embedding, not on a generated id.</li>
 </ul>
 <h3 id="engram-provable"><a
 href="../systems/engram-provable/"><code>engram-provable</code></a></h3>
