@@ -2435,31 +2435,26 @@ parser ships under the same Apache-2.0 licence, so the memory outlives the tool
 rather than the session. **A card has no status field.** Whether a decision is
 current, superseded, resolved or consolidated is decided by the title of the
 container it sits in and a marker stamped into its own prose: `isArchived` is
-`/^archive$/i.test(c.area || '')`, repeated at roughly thirty read paths, and a
-death date for `as_of` time travel is recovered with a regex over the card body.
-That is an epistemic state machine written in regular expressions and spatial
-containment — the reason a human can retire a wrong belief by dragging a
-rectangle, and the reason renaming one container would make every archived
-decision read as current. Three things there are worth a reader's time
-regardless. Its committed benchmark **runs a negative control first** — writers
-that bypass the lock, which lost 17 of 22 cards on the reference machine — and
-declares the run `inconclusive` rather than a pass if the control ever loses
-nothing, which is the only committed benchmark in this corpus that makes its own
-sensitivity a precondition. Its consolidation pass cannot apply without an
-eight-character code that is a hash of the exact candidate set plus the day,
-never printed to the model and obtained by a human running a separate CLI — a
-gate whose own comment records that apply *"used to be a bare flag the dry-run
-TEXT invited the agent to set — a model-proposes-model-approves loop with zero
-human in it."* And `test/archived-visibility.mjs` asserts both halves of a
-distinction most of this atlas collapses: the brief and the per-prompt recall
-path must *refuse* to inject an archived card, while search must still return it,
-labelled — *"the fix is LABELLING, not hiding."* Against that, the trust
-machinery is one host deep. The git-blob freshness check on evidence anchors, the
-append-only capture ledger and the cross-project registry are all reachable only
-from `src/global-brain-hook.mjs`, the Claude Code adapter, so a `brain_note` from
-any of the other eight hosts mutates the brain and records no event. And the bin
-that survives a merge is keyed on card id, not on the claim, so a buried decision
-can be re-asserted later as a fresh card that nothing recognises.
+`/^archive$/i.test(c.area || '')`, the same literal test on 63 lines across four
+source files, and a death date for `as_of` time travel is recovered with a regex
+over the card body. That is an epistemic state machine written in regular
+expressions and spatial containment — the reason a human can retire a wrong
+belief by dragging a rectangle, and the reason renaming one container would make
+every archived decision read as current. Two things there transfer regardless.
+Its committed lock benchmark **runs a negative control first** — writers that
+bypass the lock, recorded at 22 cards attempted and 17 lost — and declares the
+run `inconclusive` rather than a pass if the control ever loses nothing. And its
+tests assert both halves of the recall-versus-injection distinction: the brief
+and both per-prompt hook lanes must exclude an archived card, while search must
+return it, labelled — *"the fix is LABELLING, not hiding."* Against that,
+authority over the lifecycle sits with the agent. `brain_note` correction cues,
+`brain_reconcile`'s `confirm` array and `brain_handoff` `done` all archive cards
+with no person involved, and the human approval code guards only the bulk
+`brain_garden` path. No mutation record is append-only: the capture ledger is
+ring-capped and written by the Claude Code hook alone, restore points are pruned,
+and a graveyard purge replaces its entry. And the bin that survives a merge is
+keyed on card id, not on the claim, so a buried decision can be re-asserted later
+as a fresh card that nothing recognises.
 
 **Agent Mesh is the family's purest log-and-projection design, and the clearest
 case of a schema outrunning its write path.** Its store is

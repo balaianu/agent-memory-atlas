@@ -2400,9 +2400,9 @@ href="https://github.com/alexgreensh/token-optimizer/commit/689cba8a67b3cfbb60e5
 <li><a
 href="https://github.com/dahshanlabs/klypix-mcp">dahshanlabs/klypix-mcp</a>
 at <a
-href="https://github.com/dahshanlabs/klypix-mcp/commit/43e7c5cfa3cc5eb317a63fea802ceaa6d23ed5f3"><code class="commit-id" title="43e7c5cfa3cc5eb317a63fea802ceaa6d23ed5f3">43e7c5cf…</code></a>
+href="https://github.com/dahshanlabs/klypix-mcp/commit/1f133014fff2e931ce7c4566b35d4231f5a1d7ef"><code class="commit-id" title="1f133014fff2e931ce7c4566b35d4231f5a1d7ef">1f133014…</code></a>
 — read only; the dependency surface was inside the seven-day cooldown,
-so nothing was installed and the committed benchmark was inspected
+so nothing was installed and the committed benchmarks were inspected
 rather than reproduced</li>
 <li><a
 href="https://github.com/cbalgeman/agent-mesh">cbalgeman/agent-mesh</a>
@@ -17488,6 +17488,40 @@ rather than 1643. The "64 read queries" carrying the project predicate
 included 11 updates and deletes. And the recorded search for
 <code>declined</code> in the hooks returned two hits from unrelated
 vocabulary rather than none; the claim it grounds holds.</li>
+<li><strong>Eight published claims about <a
+href="../systems/klypix-mcp/">Klypix MCP</a> were wrong at <a
+href="https://github.com/dahshanlabs/klypix-mcp/commit/43e7c5cfa3cc5eb317a63fea802ceaa6d23ed5f3"><code class="commit-id" title="43e7c5cfa3cc5eb317a63fea802ceaa6d23ed5f3">43e7c5cf…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>human_review</code> on <code>brain_garden</code>'s
+approval code. The agent's own <code>brain_note</code> archived any card
+through a <code>CORRECTION</code> cue
+(<code>src/klypix-format.mjs:5863</code>),
+<code>brain_reconcile</code>'s <code>confirm</code> array stamped and
+archived cards by id (<code>bin/klypix-worker.mjs:648</code>), and no
+proposal was stored to wait for anyone, so the code guarded one bulk
+path. It awarded <code>audit_log</code> on the graveyard and restore
+points; <code>purgeGraveyard</code> deleted the entry outright
+(<code>src/brain-graveyard.mjs:162-163</code>),
+<code>pruneBrainHistory</code> ran after every snapshot
+(<code>src/brain-history.mjs:195</code>), and the capture ledger kept
+the newest 1000 lines. It said no MCP tool computed evidence freshness;
+<code>opBrainTaskContext</code> and <code>opBrainAsk</code> called
+<code>inspectCardEvidence</code> (<code>src/klypix-core.mjs:503</code>,
+<code>:683</code>). It said only the Claude Code hook wrote the
+cross-project registry; <code>brain_sync</code> called
+<code>registerProjectBrain</code>
+(<code>bin/klypix-worker.mjs:889</code>) under a comment reading
+<em>"Claude's lifecycle hook is no longer the sole registry
+writer"</em>. It presented the retired "15% to 40%" ranker figure as a
+published result. And it counted 21 tools beside a README sentence of
+"Exactly 19", 57 test files with 53 chained, four hooks and a
+<code>smithery.yaml</code>, where the tree held 22 tools, a README
+saying "Exactly 22", 103 test files with 97 chained, five hooks and no
+Smithery manifest; its <code>human_review</code> record cited
+<code>test/brain-garden.mjs</code>, which never existed. The first
+rested on the gate's own comment rather than on the other verbs that
+reach the same state, and the second on the record's name rather than on
+its deleters.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

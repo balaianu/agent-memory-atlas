@@ -14077,48 +14077,54 @@ per correction and answers no question</td>
 </tr>
 <tr>
 <td><a href="../systems/klypix-mcp/"><code>klypix-mcp</code></a></td>
-<td>A card — a text item in a spatial canvas, carrying an area, an
-optional <code>evidence</code> anchor, <code>closes:</code> and
-<code>verify:</code> fields, and a lifecycle marker written into its own
-prose</td>
-<td>One <code>brain.klypix</code> per repository: a ZIP of
-<code>manifest.json</code>, <code>canvas.json</code> and one JSON file
-per item, committed alongside the code, plus JSONL sidecars under
-<code>.claude/</code> and <code>~/.claude/project-brain/</code></td>
-<td>Lexical always; reciprocal-rank fusion with an on-device BGE
-bi-encoder when the optional model is present, where the lexical arm
-participates only if the query carries an exact identifier, path or
-version anchor</td>
-<td>Deterministic and local — no LLM on the write path. Automatic at
-turn end on Claude Code from <code>🧠 BRAIN [Area]:</code> markers;
-explicit <code>brain_note</code> everywhere else</td>
-<td>Supersede on a case-sensitive <code>CORRECTION:</code> cue or a
-same-area overlap of 0.6, <code>✓</code> resolve, <code>~</code> update
-in place, <code>closes:</code> link — plus a <code>graveyard/</code> bin
-that leaves <code>order</code> entirely and propagates across
-merges</td>
-<td>The file is the scope. One brain per project directory, with no
-scope key stored inside it; <code>search_all_brains</code> crosses them
-from a registry only the Claude Code hook writes</td>
-<td>An MCP server with 21 tools, four Claude Code lifecycle hooks, six
-optional Codex hooks, generated rules files for eight further hosts, a
-git merge driver, a commit hook, and an experimental A2A face</td>
-<td>None that rewrites the store. A supervisor does one npm version
-check per machine per 24 hours and hot-swaps the worker; embedding
-caches warm lazily</td>
-<td>Discrete and durable but unfielded — <code>Archive</code>
-containment plus dated <code>↩︎ superseded</code> / <code>✅</code> /
-<code>⤵ consolidated</code> stamps parsed back out of the card's text,
-and git blob OIDs on <code>ev:</code> anchors that detect a cited file
-changing</td>
-<td>The committed benchmark runs unlocked writers as a negative control
-first and declares itself inconclusive if they lose nothing;
-<code>brain_garden</code> cannot apply without an 8-character code
-derived from the exact candidate set and withheld from the model</td>
-<td>The whole lifecycle is prose and containment, so renaming one
-container silently makes every archived card read as current; the drift
-check, the ledger and the cross-project registry exist on the Claude
-Code path alone</td>
+<td>A card — a text item in a spatial canvas, carrying an area, optional
+evidence records, closes: and verify: fields, provenance, and a
+lifecycle stamp written into its own prose</td>
+<td>One brain.klypix per repository: a ZIP of manifest.json,
+canvas.json, one JSON file per item and a graveyard of deleted items,
+committed alongside the code, plus JSON and JSONL sidecars under
+.claude/ and ~/.claude/project-brain/</td>
+<td>Reciprocal-rank fusion with an on-device BGE bi-encoder when the
+runtime is installed, where the lexical arm joins only if the query
+carries an exact identifier, path or version; two measured per-prompt
+hook lanes that can decide to inject nothing</td>
+<td>Deterministic and local, no LLM on the write path. Automatic at turn
+end on Claude Code from BRAIN markers; explicit brain_note,
+brain_reconcile confirm and brain_handoff on every MCP host</td>
+<td>Supersede on a case-sensitive CORRECTION cue or a same-area overlap
+of 0.6, resolve, update in place, closes: link, and a dated re-adoption
+receipt when a decision returns to an earlier stance; a graveyard bin
+keyed on card id whose purge and restore leave content-free
+receipts</td>
+<td>The file is the scope. One brain per project directory with no scope
+key on a card; a model-supplied canvas argument may name any brain by
+absolute path, and search_all_brains crosses projects from a
+registry</td>
+<td>An MCP server with 26 tools (27 on Windows), five Claude Code
+lifecycle hooks, six optional Codex hooks, generated rules and config
+files for further hosts, a git merge driver, a commit hook, a Claude
+plugin mode, a Windows app bridge and an experimental A2A face</td>
+<td>No pass rewrites the brain. A supervisor checks npm every 6 hours
+and hot-swaps the worker; after an update, and at most daily, the
+updater rewrites KLYPIX-managed config files in every project registered
+in the last 14 days</td>
+<td>Archive containment plus dated superseded, resolved and consolidated
+stamps parsed back out of the card's text; per-card evidence records
+whose source status brain_ask and brain_sync report; a judgment sidecar
+whose actor classes state that no human-confirmed verdict exists</td>
+<td>The committed lock benchmark runs unlocked writers as a negative
+control first and declares itself inconclusive if they lose nothing.
+Recall surfaces and injection surfaces are separated and asserted in
+both directions. Every published retrieval number carries its n, and
+retired numbers are named as retired</td>
+<td>The lifecycle is prose and containment, so renaming one container
+makes every archived card read as current. The agent archives cards
+itself through brain_note, brain_reconcile confirm and brain_handoff
+done; the human approval code gates one bulk consolidation path. The
+capture ledger is ring-capped at 1000 and written by the Claude Code
+hook alone, restore points are pruned, and a graveyard purge replaces
+the entry. A scope-locked box is hidden from the canvas read tools and
+not from brain_ask or the session brief</td>
 </tr>
 <tr>
 <td><a href="../systems/knowl/"><code>knowl</code></a></td>
@@ -33915,7 +33921,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>255 of 749:</em> <a
+<p><em>254 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34021,7 +34027,6 @@ href="../systems/kagura-memory-cloud/"><code>kagura-memory-cloud</code></a>,
 <a href="../systems/kimetsu/"><code>kimetsu</code></a>, <a
 href="../systems/kirocrew/"><code>kirocrew</code></a>, <a
 href="../systems/kleos/"><code>kleos</code></a>, <a
-href="../systems/klypix-mcp/"><code>klypix-mcp</code></a>, <a
 href="../systems/knowl/"><code>knowl</code></a>, <a
 href="../systems/knowledge-worker/"><code>knowledge-worker</code></a>,
 <a href="../systems/kube-coder/"><code>kube-coder</code></a>, <a
@@ -34180,7 +34185,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 749:</em> <a
+<p><em>95 of 749:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -34216,7 +34221,6 @@ href="../systems/invalidate/"><code>invalidate</code></a>, <a
 href="../systems/kage/"><code>kage</code></a>, <a
 href="../systems/khabeer/"><code>khabeer</code></a>, <a
 href="../systems/kirocrew/"><code>kirocrew</code></a>, <a
-href="../systems/klypix-mcp/"><code>klypix-mcp</code></a>, <a
 href="../systems/knowledge-worker/"><code>knowledge-worker</code></a>,
 <a href="../systems/lerim/"><code>lerim</code></a>, <a
 href="../systems/llm-wiki-memory/"><code>llm-wiki-memory</code></a>, <a

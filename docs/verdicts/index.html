@@ -8976,41 +8976,42 @@ href="../systems/klypix-mcp/"><code>klypix-mcp</code></a></h3>
 <ul>
 <li>Best idea: the benchmark runs a negative control before the
 measurement. Ten writers that bypass the lock go first, and
-<code>BENCHMARKS.md</code> records them losing 17 of 22 cards; if they
-ever lose nothing, the run reports <strong>inconclusive</strong> rather
-than a pass. A no-loss number from a harness that cannot detect loss is
-not evidence, and this is the only committed benchmark in the corpus
-that says so and then implements it.</li>
-<li>Biggest risk: the entire lifecycle is prose and containment.
-<code>isArchived</code> is <code>/^archive$/i.test(c.area || '')</code>
-at roughly thirty read paths, and a death date is a regex over the
-card's own text — so renaming one container would silently make every
-retired decision read as current fact, and nothing in <code>test/</code>
-covers that case.</li>
-<li>Most reusable component: <code>gardenApprovalCode</code>.
-Consolidation cannot apply without an eight-character SHA-1 of the exact
-candidate ids plus the day, never printed to the model and obtained by a
-human running <code>npx klypix-mcp garden-code</code>. An agent that
-skipped the review cannot get the code, and an approval issued for one
-candidate set cannot be replayed against another — two properties from
-one line, added after the gate's own comment records it was <em>"a
-model-proposes-model-approves loop with zero human in it."</em></li>
-<li>Maturity impression: Apache-2.0, 23,372 lines across
-<code>src/</code> and <code>bin/</code>, 174 commits since 8 June 2026,
-57 test files and 10,520 test lines with 53 chained in
+<code>BENCHMARKS.md</code> records 22 cards attempted and 17 lost; if
+the control ever loses nothing, the run reports
+<strong>inconclusive</strong> rather than a pass. A no-loss number from
+a harness that cannot detect loss is not evidence, and this harness is
+built so it cannot report one.</li>
+<li>Biggest risk: the lifecycle is prose and containment, and the agent
+holds it. <code>isArchived</code> is
+<code>/^archive$/i.test(c.area || '')</code>, so renaming one container
+would make every retired decision read as current, and nothing in
+<code>test/</code> covers that case. The agent archives cards itself
+through <code>brain_note</code> correction cues,
+<code>brain_reconcile</code>'s <code>confirm</code> array and
+<code>brain_handoff</code> <code>done</code>; the human approval code
+guards only the bulk <code>brain_garden</code> path.</li>
+<li>Most reusable component: the split between recall and injection
+surfaces, asserted in both directions. The session brief and both
+per-prompt hook lanes exclude an archived card, while
+<code>read_canvas</code>, <code>search_canvases</code> and
+<code>brain_ask</code> return it labelled, and
+<code>test/archived-visibility.mjs</code> and
+<code>test/hook-unified-lane.mjs</code> hold both halves — the second
+with a positive control on the same fixture.</li>
+<li>Maturity impression: Apache-2.0, 55,635 lines across
+<code>src/</code> and <code>bin/</code>, 428 commits from 8 June to 14
+October 2026, 142 test files and 44,377 test lines with 133 chained in
 <code>npm test</code> and a publish workflow that gates on them. Several
 test files are named for the dated incident that produced them. The
-README's "Current limitations" section names nine real gaps and every
-one checked here was accurate — except the lock caveat, which is more
-pessimistic than the code.</li>
+README's limitations list understates the code twice: the lock caveat,
+and the claim that no MCP tool reports evidence drift.</li>
 <li>Study when: several agents from different vendors work one
 repository and you want project intent versioned the way code is, in a
 file you can <code>unzip</code> and fix by hand.</li>
 <li>Do not copy when: memory must be multi-user or multi-tenant — there
-is no scope key, and coordination is not merely machine-local but
-OS-user-local — or when the trust machinery has to reach past Claude
-Code, since the freshness check, the mutation ledger and the
-cross-project registry live in that one adapter.</li>
+is no scope key, and coordination is machine-local and OS-user-local —
+or when retiring a belief needs a person's consent, since three of the
+agent's own tools archive cards.</li>
 </ul>
 <h3 id="agent-mesh"><a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a></h3>
