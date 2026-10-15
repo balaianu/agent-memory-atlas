@@ -20713,15 +20713,16 @@ handle the exclusion and the compiler checks that they did. Beside it,
 <code>EpistemicStatus</code> returns a plain <code>f32</code> and can
 never veto — "[h]ow a memory was obtained — orthogonal to confidence" —
 so provenance ranks down without suppressing.</li>
-<li>Biggest risk: <strong>the hash chain is per writer, and nothing
-refuses a restated contradiction at the door.</strong> One segment file
-per writer process means each writer's history is tamper-evident alone
-while their interleaving is not a single chained order — a direct cost
-of the concurrent-writer target. And no write path consults a
-contradicted or superseded memory, so the same claim can be written
-again and is caught, if at all, by the next reconcile pass. The
-remaining state is continuous and the per-kind and per-epistemic
-multipliers are configurable with no ceiling found.</li>
+<li>Biggest risk: <strong>the op log is pruned behind every snapshot,
+and the veto stops at the scored lanes.</strong> Every full snapshot,
+including the one the maintenance thread takes on a WAL budget, deletes
+the segments it covers, so the record of what changed lasts until the
+next checkpoint, and a hash-chain break on replay is a logged warning.
+<code>recall_temporal</code>, <code>recall_hdc</code> and
+<code>recall_artifact</code> check only <code>deleted</code> and return
+a superseded or contradicted memory at full score. The per-status and
+per-epistemic multipliers are read from <code>scoring.json</code> with
+no range check.</li>
 <li>Most reusable component: <code>contradiction.rs</code>'s opening
 premise — "claim-centric, not text-centric. Two memories contradict when
 they make incompatible claims under overlapping scope (same
@@ -20729,17 +20730,17 @@ subject+predicate), not merely when they are semantically similar" —
 and, from <code>log.rs</code>, the <code>vector_space_id</code> stamp
 that lets replay fence out segments written under a foreign embedding
 model, dimension or text format.</li>
-<li>Maturity impression: MIT, Rust, version 2.7.12, 57,134 lines with
-287 test functions, a C FFI, snapshot migrations for five prior formats,
-and a design stated against shared NFS, concurrent writers and
-sub-millisecond recall. Memories are Sparse Distributed Representations,
-64 active bits of 16,384 — rare in this corpus.</li>
+<li>Maturity impression: MIT, Rust, version 2.7.12, 62,415 lines in 113
+files with 345 test functions, a C FFI, nineteen accepted full-snapshot
+formats, and a design stated against shared NFS, concurrent writers and
+sub-millisecond recall. Each memory gets 64 active features from a
+learned dictionary of 16,384 atoms — rare in this corpus.</li>
 <li>Study when: you have a scoring pipeline where some states must be
 excluded rather than down-weighted, or you call a cosine threshold a
 contradiction detector.</li>
-<li>Do not copy when: you need one ordered, chained history across
-writers, or a write-time refusal rather than a later sweep. Two marks:
-trust state, audit log.</li>
+<li>Do not copy when: you need a retained history of mutations, a veto
+honoured on every recall lane, or a write-time refusal rather than a
+caller-driven sweep. Two marks: trust state, negative eval.</li>
 </ul>
 <h3 id="mnemonic"><a
 href="../systems/mnemonic/"><code>mnemonic</code></a></h3>

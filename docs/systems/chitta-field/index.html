@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="An associative memory substrate
-whose statuses return None rather than a low weight when they exclude,
-whose contradiction detector compares claims rather than text, and whose
-write path is a per-writer hash-chained op log.">
+    <meta name="description" content="A Rust associative-memory
+substrate whose excluding statuses return None rather than a low weight,
+so the scored recall lanes skip them as control flow.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="chitta-field — Agent Memory Atlas">
-    <meta property="og:description" content="An associative memory
-substrate whose statuses return None rather than a low weight when they
-exclude, whose contradiction detector compares claims rather than text,
-and whose write path is a per-writer hash-chained op log.">
+    <meta property="og:description" content="A Rust associative-memory
+substrate whose excluding statuses return None rather than a low weight,
+so the scored recall lanes skip them as control flow.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="chitta-field — Agent Memory Atlas">
-    <meta name="twitter:description" content="An associative memory
-substrate whose statuses return None rather than a low weight when they
-exclude, whose contradiction detector compares claims rather than text,
-and whose write path is a per-writer hash-chained op log.">
+    <meta name="twitter:description" content="A Rust associative-memory
+substrate whose excluding statuses return None rather than a low weight,
+so the scored recall lanes skip them as control flow.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>chitta-field — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ and whose write path is a per-writer hash-chained op log.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "chitta-field",
-      "description": "An associative memory substrate whose statuses return None rather than a low weight when they exclude, whose contradiction detector compares claims rather than text, and whose write path is a per-writer hash-chained op log.",
+      "description": "A Rust associative-memory substrate whose excluding statuses return None rather than a low weight, so the scored recall lanes skip them as control flow.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -101,24 +98,23 @@ and whose write path is a per-writer hash-chained op log.">
         <div class="document-hero-inner">
           <p class="eyebrow">A veto is an Option, not a zero</p>
           <h1>chitta-field</h1>
-          <p class="document-deck">An associative memory substrate whose
-statuses return None rather than a low weight when they exclude, whose
-contradiction detector compares claims rather than text, and whose write
-path is a per-writer hash-chained op log.</p>
+          <p class="document-deck">A Rust associative-memory substrate
+whose excluding statuses return None rather than a low weight, so the
+scored recall lanes skip them as control flow.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/genomewalker/chitta-field">
               <span>Source</span>
               <strong>genomewalker/chitta-field</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/genomewalker/chitta-field/commit/c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533" title="c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533">
+            <a class="meta-pill revision-pill" href="https://github.com/genomewalker/chitta-field/commit/5e8b30ed755aa62409ce413385f58edd04039131" title="5e8b30ed755aa62409ce413385f58edd04039131">
               <span>Analyzed revision</span>
-              <code>c5e0ff0e…</code>
+              <code>5e8b30ed…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/genomewalker--chitta-field" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -126,7 +122,20 @@ path is a per-writer hash-chained op log.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT,
+declared in Cargo.toml; the tree carries no LICENSE file</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>62,415
+lines of Rust in 113 files; src/store.rs is 3,728 lines, src/ffi.rs
+3,692 and src/log.rs 1,545</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>440
+commits by 3 author names, 15 March – 20 September 2026; version
+2.7.12</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>345
+#[test] functions across the Rust tree, three benches and a Python WAL
+soak script; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -142,111 +151,139 @@ path is a per-writer hash-chained op log.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>chitta-field is an "[o]rganic associative memory substrate for
-cognitive AI companions" — MIT, Rust, version 2.7.12, 57,134 lines
-across ninety-five files with 287 test functions, a C FFI, and a stated
-design target of shared NFS storage, multiple concurrent writers, and
-sub-millisecond in-process recall. It is the backing store for a
-companion daemon that lives in a separate repository.</p>
-<p>Three layers: an append-only op log as the durable write path, in-RAM
-indexes (semantic, BM25, a cortical sparse index, triplets, a symbol and
-call graph, a temporal index), and periodic binary snapshots so startup
-does not replay the whole log. The cortical index encodes memories as
-Sparse Distributed Representations — 64 active bits out of 16,384 —
-which makes associative recall a bitwise overlap rather than an
-approximate-nearest-neighbour search, and is a genuinely uncommon choice
-in this corpus.</p>
+<p>chitta-field is a Rust memory substrate for an AI companion daemon
+whose excluding statuses return <code>None</code> rather than a low
+weight, so its scored recall lanes drop a superseded, contradicted or
+archived memory as control flow and the compiler makes every caller
+handle it. Its contradiction detector compares claims, not text, and its
+op log stamps the embedding lineage into each segment header. The weak
+side is history: the log is pruned behind every snapshot, a broken hash
+chain only warns, and the veto stops at the scored lanes.</p>
+<p>It is "the backing store for the cc-soul daemon", designed, in the
+README's words, "around the constraints of shared NFS storage, multiple
+concurrent writers, and sub-millisecond in-process recall". What the
+agent asks of it is decided in that other repository.</p>
 <p><strong>A veto is an <code>Option</code>, not a zero.</strong>
 <code>status_multiplier</code> maps the seven memory statuses to a
 scoring factor, and three of them do not have one:</p>
 <pre class="rust"><code>MemoryStatus::Superseded | MemoryStatus::Contradicted | MemoryStatus::Archived =&gt; None,</code></pre>
-<p>The recall loop reads that as
-<code>... .is_none() =&gt; continue</code>. The distinction matters more
-than it looks: a zero weight is a number, and any later stage that
-normalises, re-ranks or blends can multiply it back up.
-<code>None</code> is not a number, and the compiler makes every caller
-decide what to do about it. The comment at the type it guards uses the
-right word — the status "vetoes the memory (excluded from results)".</p>
-<p>There are five callers and each spells the exclusion out differently,
-which is the point: the <code>Option</code> does not let any of them be
-careless. <code>src/store/recall.rs:735</code> uses
-<code>.is_some()</code> as a filter predicate, <code>:955-958</code>
-matches with a <code>None =&gt; continue</code> arm, <code>:1074</code>
-writes <code>Some(s) if ...is_none() =&gt; continue</code>, and
-<code>:1101</code> and <code>src/scoring/factors.rs:184</code> take the
-<code>?</code> early return. A zero would have allowed a sixth caller to
-do nothing at all and still compile.</p>
+<p>The scoring pipeline is documented so that any factor returning
+<code>None</code> "vetoes the memory (excluded from results)"
+(<code>src/scoring/mod.rs:88-90</code>), and <code>StatusFactor</code>
+is in the default pipeline, so semantic and BM25 recall drop the memory
+through <code>pipeline.score(&amp;ctx)?</code>. The graph lanes call the
+helper directly and each spells the exclusion out:
+<code>.is_some()</code> as a filter predicate
+(<code>src/store/recall.rs:735</code>), a
+<code>None =&gt; continue</code> arm (<code>:955-958</code>), an
+<code>is_none() =&gt; continue</code> guard (<code>:1074</code>) and a
+<code>?</code> (<code>:1101</code>). A zero weight is a number any later
+normalisation or blend can multiply back up; <code>None</code> is not a
+number, and a sixth caller cannot ignore it and still compile.</p>
+<p>The veto belongs to the lanes that call it.
+<code>recall_temporal</code>, <code>recall_hdc</code> and
+<code>recall_artifact</code> skip only <code>deleted</code> memories and
+return an archived or contradicted one at full score
+(<code>src/store/recall.rs:1142-1197</code>, <code>:1228-1275</code>,
+<code>:2424-2460</code>).</p>
 <p><strong>Where a memory came from weights it and never withholds
 it.</strong> <code>EpistemicStatus</code> is
 <code>UserStated | ToolDerived | ModelInferred | AutonomousSynthesis</code>,
-under a comment that states the design: "[h]ow a memory was obtained —
-orthogonal to confidence." Its helper returns a plain <code>f32</code>,
-not an <code>Option</code>, so provenance can rank a model-inferred
-memory below a user-stated one and can never silently suppress it. Two
-axes, two return types, and the type signatures carry the policy.</p>
+under the comment "[h]ow a memory was obtained — orthogonal to
+confidence." Its helper returns a plain <code>f32</code>, so provenance
+can rank a model-inferred memory below a user-stated one and can never
+suppress it. Two axes, two return types, and the signatures carry the
+policy.</p>
 <p><strong>Contradiction is about claims, not text.</strong> The
-detector's header draws the line this atlas keeps looking for:</p>
+detector's header:</p>
 <blockquote>
 <p>"Design: claim-centric, not text-centric. Two memories contradict
 when they make incompatible claims under overlapping scope (same
 subject+predicate), not merely when they are semantically similar."</p>
 </blockquote>
-<p>Memory content is parsed into claim atoms and indexed by claim scope.
-Most systems here that advertise contradiction detection are running a
-cosine threshold, which finds restatements and misses genuine
-disagreements phrased differently.</p>
-<p><strong>The write path is a hash-chained op log.</strong> Every
-mutation is an <code>Op</code> — the enum covers payloads, state deltas,
-batched maintenance drains, deletes, association edges, triplets and
-their invalidation, symbols and call edges, demotion, project clearing,
-and six event kinds — appended from sixty-nine call sites in the store.
-Records chain as
+<p>It runs when the FFI caller asks —
+<code>cf_detect_contradictions</code> for one memory,
+<code>cf_scan_contradictions</code> for a realm — and returns candidates
+as JSON. Resolution returns <code>ResolutionOps</code> "for the C++
+caller to apply": a <code>supersedes</code> and a
+<code>contradicts</code> triplet, the loser's confidence set to 0.05,
+and a correction line to store
+(<code>src/contradiction.rs:122-133</code>, <code>:295-337</code>).
+Nothing in this tree sets <code>Contradicted</code> except the generic
+<code>cf_set_memory_status</code>. The reconcile pass that runs in-tree
+is a different detector: a six-word content prefix shared by two
+memories of different kinds
+(<code>src/organ/reconciler.rs:72-112</code>).</p>
+<p><strong>The write path is an op log, and the log is not
+kept.</strong> Every mutation is an <code>Op</code>, appended to the
+writer's segment and chained as
 <code>H = SHA256(seqno || op_type || prev_hash || payload)</code> with a
-CRC each, and the V3 segment header carries a
-<code>vector_space_id</code> so replay can "fence out segments written
-in a foreign vector space (model/dim/text-format)". That last one is
-worth copying on its own: an embedding model or dimension change
-otherwise surfaces as quietly wrong neighbours rather than as an
-error.</p>
-<p>The caveat on that chain is structural and follows from the
-concurrency target. There is one segment file per writer process, so the
-chain is per writer: each writer's own history is tamper-evident, and
-the interleaving of several writers is not a single chained order.</p>
-<p>Two marks. What is absent: nothing is consulted at write time against
-a contradicted or superseded memory, so the same claim can be written
-again and is caught by the next reconcile pass rather than refused at
-the door; the remaining state — strength, decay rate, confidence, and
-the configurable multipliers per kind and per epistemic status — is
-continuous, and no ceiling was found on the multipliers the way a
-ranking factor needs one; and there is no tenancy, the unit being a
-project with its own clear op.</p>
+CRC per record. The V3 header carries a <code>vector_space_id</code>,
+and replay skips segments stamped with a foreign one and moves sealed
+ones to <code>segments/foreign/</code> (<code>src/log.rs:535-551</code>,
+<code>:749-766</code>). Every full snapshot then deletes the segments it
+certifiably covers, and the maintenance thread takes one whenever the
+WAL passes 16 MB or 20,000 records by default
+(<code>src/store/maintenance.rs:1438</code>, <code>:1468-1503</code>;
+<code>src/ffi.rs:317-355</code>). On replay a chain mismatch prints a
+warning and resets the chain head (<code>src/log.rs:1129-1143</code>).
+The chain detects a rewrite in the log a process still holds; it does
+not refuse one, and it does not outlive the next checkpoint.</p>
+<p>Two marks, <code>trust_state</code> and <code>negative_eval</code>. A
+committed test asserts that the three excluding statuses stay out of
+semantic recall beside an active memory that must come back (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>memory</strong> has a status that can veto it and an
-epistemic status that only weights it.</p>
+<p>A <strong>memory</strong> is a payload in a realm with a status that
+can veto it on the scored lanes and an epistemic status that only
+weights it.</p>
+<p>It becomes <strong>Superseded</strong> in three ways. The embedding
+backfill searches the nearest other memory before upserting a new
+vector, and when it lies in the same realm at cosine between 0.88 and
+0.9999 the <em>new</em> memory is marked Superseded and the original
+reinforced (<code>src/store/maintenance.rs:72-117</code>). An exact
+restatement at 0.9999 or above, and a paraphrase below 0.88, are
+admitted. The caller can set any status through
+<code>cf_set_memory_status</code> (<code>src/ffi.rs:3049-3065</code>).
+And <code>prune_by_content</code> with action 1 archives every memory
+whose text contains a pattern (<code>src/store.rs:2150-2189</code>).</p>
 <p>A <strong>contradiction</strong> is two claims about the same subject
-and predicate, not two similar sentences.</p>
-<p>The <strong>log</strong> is the truth; the indexes and snapshots are
-how you avoid re-reading it.</p>
-<p>A <strong>segment</strong> belongs to one writer.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the status helper returns None for the three excluded statuses so the recall loop skips them as control flow, while the epistemic helper returns a plain multiplier and can never veto</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the status helper returns None for the three excluded statuses so the recall loop skips them as control flow, while the epistemic helper returns a plain multiplier and can never veto
+and predicate, found on request and resolved by the caller, who decides
+whether the loser is demoted, marked or deleted.</p>
+<p>A <strong>correction</strong> stored as <code>[correction]</code>
+with a <code>NOT:</code> line is keyed on the bigrams of the wrong
+phrase (<code>src/store.rs:967-1000</code>). When two of its bigrams
+recur in a turn, <code>correction_check</code> returns it ahead of fuzzy
+recall (<code>src/store/keyed.rs:58-118</code>). That is a read-time
+counter to a repeated mistake. No write path consults the index, so the
+wrong phrase can be stored again.</p>
+<p><strong>Deletion</strong> is an op and a flag; the next full snapshot
+leaves deleted memories out, and the segments holding their ops are
+pruned with the rest.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a chitta-field memory stops being believed — three producers of an excluding status, a caller-driven contradiction loop, and a veto that the scored lanes honour and the temporal and HDC lanes do not</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a chitta-field memory stops being believed — three producers of an excluding status, a caller-driven contradiction loop, and a veto that the scored lanes honour and the temporal and HDC lanes do not
 flowchart TB
-    W[&quot;any mutation&quot;] --&gt; OP[&quot;one Op: put payload · update state ·&lt;br/&gt;batched drain · delete · assoc edge ·&lt;br/&gt;triplet + invalidate · symbol + call edge ·&lt;br/&gt;demote · clear project · six event kinds&quot;]
-    OP --&gt; LOG[(&quot;append-only segment,&lt;br/&gt;one file per writer process&quot;)]
-    LOG --&gt; CHAIN[&quot;H = SHA256(seqno ‖ op_type ‖&lt;br/&gt;prev_hash ‖ payload), CRC per record&quot;]
-    CHAIN -.-&gt;|&quot;per segment, so per writer —&lt;br/&gt;tamper-evident alone, no single&lt;br/&gt;chained order across writers&quot;| CAVEAT[&quot;the concurrency target&#39;s cost&quot;]
-    LOG --&gt; REPLAY{&quot;replay / snapshot load&quot;}
-    REPLAY --&gt;|&quot;V3 header carries vector_space_id&quot;| FENCE[&quot;segments from a foreign model,&lt;br/&gt;dimension or text format are fenced out&lt;br/&gt;instead of producing wrong neighbours&quot;]
-    REPLAY --&gt; IDX[&quot;in-RAM indexes: cortical SDR&lt;br/&gt;(64 of 16,384 bits) · semantic · BM25 ·&lt;br/&gt;triplets · symbol graph · temporal&quot;]
-    IDX --&gt; RECALL{&quot;recall scoring&quot;}
-    RECALL --&gt; SM[&quot;status_multiplier(status)&quot;]
-    SM --&gt;|&quot;Active · Verified · Observed · Proposed&quot;| WEIGHT[&quot;Some(weight) — configurable&quot;]
-    SM --&gt;|&quot;Superseded · Contradicted · Archived&quot;| NONE[&quot;None → `continue`&lt;br/&gt;a veto in control flow, not a zero&lt;br/&gt;a later stage could multiply back up&quot;]
-    RECALL --&gt; EM[&quot;epistemic_multiplier(status)&quot;]
-    EM --&gt;|&quot;UserStated · ToolDerived ·&lt;br/&gt;ModelInferred · AutonomousSynthesis&quot;| F32[&quot;a plain f32 — always weights,&lt;br/&gt;never vetoes: &#39;orthogonal to confidence&#39;&quot;]
-    WEIGHT &amp; F32 --&gt; OUT[&quot;ranked results&quot;]
-    CD[&quot;contradiction detector&quot;] --&gt;|&quot;&#39;claim-centric, not text-centric&#39; —&lt;br/&gt;incompatible claims under overlapping&lt;br/&gt;scope (same subject+predicate)&quot;| STATUS[&quot;sets Contradicted&quot;]
-    STATUS --&gt; SM</code></pre></details></figure>
+    PUT[&quot;put_memory: payload in a realm,&lt;br/&gt;embed_pending, status Active&quot;] --&gt; DRAIN[&quot;embedding backfill:&lt;br/&gt;nearest other memory, any status&quot;]
+    DRAIN --&gt;|&quot;same realm, cosine 0.88 to 0.9999&quot;| SUP[&quot;new memory set Superseded,&lt;br/&gt;original reinforced&quot;]
+    DRAIN --&gt;|&quot;below 0.88 or at 0.9999 and above&quot;| LIVE[&quot;admitted Active&quot;]
+    CALLER[&quot;FFI caller (cc-soul)&quot;] --&gt;|&quot;cf_set_memory_status 0..6&quot;| ANY[&quot;any of the seven statuses&quot;]
+    PRUNE[&quot;prune_by_content, action 1&quot;] --&gt; ARCH[&quot;Archived&quot;]
+    CALLER --&gt;|&quot;cf_detect / cf_scan_contradictions&quot;| CD[&quot;claim-centric detector:&lt;br/&gt;same subject + predicate,&lt;br/&gt;incompatible claims&quot;]
+    CD --&gt; CAND[&quot;candidates as JSON, back to the caller&quot;]
+    CALLER --&gt;|&quot;cf_resolve_contradiction&quot;| OPS[&quot;ResolutionOps for the caller:&lt;br/&gt;supersedes + contradicts triplets,&lt;br/&gt;loser confidence 0.05, correction line&quot;]
+    SUP &amp; ANY &amp; ARCH --&gt; SM{&quot;status_multiplier&quot;}
+    LIVE --&gt; SM
+    SM --&gt;|&quot;Active · Verified ·&lt;br/&gt;Observed · Proposed&quot;| W[&quot;Some(weight)&quot;]
+    SM --&gt;|&quot;Superseded · Contradicted ·&lt;br/&gt;Archived&quot;| N[&quot;None&quot;]
+    N --&gt;|&quot;pipeline.score(ctx)? and four&lt;br/&gt;direct callers&quot;| SKIP[&quot;skipped on semantic, BM25,&lt;br/&gt;PPR and association lanes&quot;]
+    N -.-&gt;|&quot;temporal, HDC and artifact&lt;br/&gt;lanes check deleted only&quot;| LEAK[&quot;returned at full score&quot;]
+    W --&gt; EM[&quot;epistemic_multiplier: plain f32,&lt;br/&gt;ranks and never vetoes&quot;]
+    EM --&gt; OUT[&quot;ranked results&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
+<p>A library: a <code>staticlib</code> and an <code>rlib</code> with a C
+FFI, opened in-process by the daemon. The data directory holds one
+segment file per writer process, full snapshots with their sidecars, a
+manifest of snapshot families, and a <code>scoring.json</code> read at
+open.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -256,109 +293,232 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>src/store.rs</code></td>
-<td>The store, recall, and the maintenance passes (12,206 lines)</td>
+<td><code>src/store.rs</code>, <code>src/store/</code></td>
+<td>The store split into recall, maintenance, organs, keyed lanes and
+tests</td>
 </tr>
 <tr>
-<td><code>src/ffi.rs</code></td>
-<td>The C surface (10,361)</td>
+<td><code>src/ffi.rs</code>, <code>src/ffi/</code></td>
+<td>The C surface, the maintenance thread and the startup lanes</td>
 </tr>
 <tr>
 <td><code>src/log.rs</code></td>
-<td>Segments, chaining, replay, fencing</td>
+<td>Segments, chaining, replay, the lineage fence</td>
+</tr>
+<tr>
+<td><code>src/wal_certificate.rs</code></td>
+<td>Which sealed segments a snapshot family covers</td>
 </tr>
 <tr>
 <td><code>src/ops.rs</code></td>
-<td>The complete mutation vocabulary</td>
+<td>The mutation vocabulary, seventy-one <code>Op</code> variants</td>
 </tr>
 <tr>
-<td><code>src/scoring/mod.rs</code></td>
-<td>Where a veto is an <code>Option</code></td>
+<td><code>src/scoring/</code></td>
+<td>The pipeline, the factors, and where a veto is an
+<code>Option</code></td>
 </tr>
 <tr>
 <td><code>src/contradiction.rs</code></td>
-<td>Claim atoms and claim scope</td>
+<td>Claim atoms, claim scope, candidates and resolution ops</td>
+</tr>
+<tr>
+<td><code>src/organ/</code></td>
+<td>Cortex, triplets, constraints, epistemic debt, the reconciler</td>
 </tr>
 <tr>
 <td><code>src/hdc.rs</code>, <code>src/hnsw.rs</code></td>
 <td>Hyperdimensional codes and the ANN index</td>
 </tr>
-<tr>
-<td><code>src/organ/</code></td>
-<td>Triplets, spans, epistemic debt</td>
-</tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to run besides the embedding process: the store is files
+in a directory, and the README targets a shared NFS mount with several
+writers. The embedding model is fixed at build time —
+<code>build.rs</code> writes the dimension, model id and text-format
+version into constants from environment variables, defaulting to
+<code>bge-large-en-v1.5</code> at 1,024 dimensions — and the lineage
+fence exists because those can change between builds. The store is
+binary and not repairable by hand;
+<code>migration/extract_to_jsonl.py</code> is the escape hatch.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/scoring/mod.rs:163-182</code> — two helpers, two return
-types, one policy.</p>
-<p><code>src/state.rs:58-77</code> — the two enums, and the comment that
-keeps them apart.</p>
-<p><code>src/contradiction.rs:1-10</code> — claim-centric, in six
-lines.</p>
-<p><code>src/log.rs:11-30</code> — the chain, the CRC, and the lineage
-stamp.</p>
+<p><strong>Write.</strong> <code>put_memory</code> appends
+<code>PutPayload</code> and indexes the payload with an empty vector;
+<code>backfill_embedding</code>, called when the daemon supplies the
+vector (<code>src/store/maintenance.rs:26-130</code>), appends
+<code>UpdateMemoryContent</code>, runs the cosine dedup, upserts the
+vector, and calls <code>encode_memory</code>, which assigns the cortical
+code and updates the encoder (<code>:814-850</code>).</p>
+<p><strong>Status.</strong> <code>set_memory_status</code> appends an
+<code>UpdateState</code> op (<code>src/store.rs:2611</code>);
+<code>status_multiplier</code> (<code>src/scoring/mod.rs:163-172</code>)
+is the one place a status becomes a veto.</p>
+<p><strong>Retrieval.</strong> <code>recall_semantic_ctx</code> and
+<code>recall_keyword_ctx</code> score through the pipeline
+(<code>src/store/recall.rs:212-680</code>, <code>:1809-1920</code>);
+<code>ppr_lane</code> and <code>expand_associations</code> call the
+helper directly (<code>:683-1019</code>, <code>:1020-1140</code>);
+<code>recall_temporal</code>, <code>recall_hdc</code> and
+<code>recall_artifact</code> do not.</p>
+<p><strong>Contradiction.</strong>
+<code>src/ffi/organs.rs:1670-1822</code> builds a transient
+<code>ContradictionIndex</code> per call; <code>reconcile_pass</code>
+(<code>src/store/organs.rs:478</code>) logs the prefix heuristic's pairs
+as <code>conflict_score</code> triplets.</p>
+<p><strong>Checkpoint and prune.</strong>
+<code>save_full_snapshot_certified</code> writes the snapshot family,
+commits the manifest and calls <code>prune_certified_wal</code>
+(<code>src/store/maintenance.rs:1032-1450</code>,
+<code>:1468-1503</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>A payload plus a state: version, chunk hash, deleted flag, strength,
 decay rate, confidence, access count and timestamps, pin, tier
 (<code>0=L1 hippocampus, 1=L2 cortex, 2=L3 archive</code>), a retrieval
-history, an embed-pending flag, and the two statuses. Pinning is
-exemption from decay.</p>
-<p>An <code>EpistemicDebtStore</code> sits under <code>organ/</code>
-with its own <code>DebtStatus</code> — the project tracks what it owes
-itself epistemically, which is an idea worth a longer look than this
-reading gave it.</p>
+history, an embed-pending flag, a staged flag, and the two statuses.
+Pinning is exemption from decay.</p>
+<p>Triplets carry <code>valid_from_ms</code> and
+<code>valid_to_ms</code>, and the triplet store keeps an ingestion time
+per entry and a supersession map, with <code>query_as_of</code> on world
+time and <code>query_believed_at</code> on ingestion time
+(<code>src/organ/triplet.rs:888-934</code>). The two clocks coincide:
+<code>add_triplet</code> stamps <code>valid_from_ms = now_ms()</code>
+(<code>src/store.rs:2579</code>), and <code>assert_constraint</code>
+stamps its own <code>now</code>
+(<code>src/store/organs.rs:677</code>).</p>
+<p><code>EpistemicDebt</code> under
+<code>src/organ/epistemic_debt.rs</code> records an unresolved question
+with competing hypotheses, a discriminating test, a fragility score and
+an <code>Open | Resolved | Deferred</code> status.
+<code>EpistemicDebtFactor</code> would boost a memory with open debt,
+and every recall call site builds its scoring context with
+<code>has_open_debt: false</code> (<code>src/store/recall.rs:397</code>,
+<code>:558</code>, <code>:1866</code>), so the factor is always 1.0.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>The cortical SDR index is the hot path — overlap counting on
-64-of-16,384 bit codes, with no learned index to warm up or rebuild —
-with the semantic, BM25 and graph indexes beside it, and a scoring
-decomposition that reports each multiplier separately so a result can be
-explained rather than just ranked.</p>
+<p>The cortical lane encodes each embedding as 64 active features from a
+dictionary of 16,384 atoms, chosen by a product-key encoder of two
+128-centroid half-dictionaries, and recall is an intersection over those
+feature ids. The README calls this recall "without a learned ANN index
+for the hot path"; the dictionary itself is learned, updated online with
+a learning rate of 5e-4 on every encode
+(<code>src/organ/cortex.rs:33-38</code>, <code>:183-211</code>;
+<code>src/store/maintenance.rs:847</code>).</p>
+<p>Beside it sit semantic HNSW, BM25, HDC, temporal, triplet and
+symbol-graph lanes, a PPR lane injected into semantic recall, and
+association spreading. The scoring decomposition reports each multiplier
+separately, so a result can be explained rather than just ranked.</p>
+<p>Realm is optional on every lane that takes it. The BM25 lane drops a
+payload from another realm when one is asked for, with the comment "the
+BM25 lane must not leak other projects' memories"
+(<code>src/store/recall.rs:1847-1852</code>); with <code>None</code> it
+reads every realm. Tag selection is global, and the test that pins it
+says so: "Callers must scope the selected payloads"
+(<code>src/store/tests.rs:11-12</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Append an op, update the in-RAM state, snapshot periodically. The
-maintenance drain is explicitly documented as preserving each access
-timestamp and count, which is the detail that keeps a batch pass from
-erasing the very signal decay depends on.</p>
+<p>Append an op, update the in-RAM state, checkpoint on a budget. Each
+writer appends to its own segment; replay merges all writers' ops by a
+per-writer monotone effective timestamp, then instance id, then sequence
+number (<code>src/log.rs:568-571</code>, <code>:604</code>). That is the
+cross-writer order, and it is a wall-clock merge, not a chained one.</p>
+<p>The maintenance drain is documented as preserving each access
+timestamp and count (<code>src/ops.rs:17</code>), which keeps a batch
+pass from erasing the signal decay depends on.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A library with a C FFI; the agent-facing daemon is a separate
-project. That split is why this report stops at the substrate: what is
-asked of it, and how often, is decided elsewhere.</p>
+<p>A library with a C FFI; the agent-facing daemon is cc-soul, a
+separate project. Every status, contradiction resolution, compaction and
+prune verb is an exported <code>extern "C"</code> function, so what the
+agent can reach is decided by what the daemon exposes, which this tree
+does not show.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The chain and the CRC are integrity; the vector-space fence is
-correctness under model change; the veto is policy. The gap is at the
-door — nothing refuses a write that restates a contradicted claim, so
-the reconcile pass carries the whole burden of noticing.</p>
+<p>The CRC is integrity, the lineage fence is correctness under model
+change, and the veto is policy on four lanes.</p>
+<p>The hash chain is evidence while the log exists. Replay recomputes it
+and, on a mismatch, prints "chain record warning … resetting chain" and
+continues. A segment covered by a committed snapshot family is deleted
+through <code>audited_remove</code>, which logs the unlink to stderr
+(<code>src/store.rs:424-431</code>). So <code>audit_log</code> is
+withheld: the record of mutations is pruned behind every checkpoint, and
+nothing reads past ops except replay and peer sync.</p>
+<p><code>tombstone</code> is withheld. The correction lane is keyed on
+the wrong value and consulted on reads only; the cosine dedup supersedes
+a near-duplicate whatever the neighbour's status, and admits an exact
+restatement of a contradicted claim. <code>bitemporal</code> is withheld
+because valid time on triplets and constraints is the write clock.
+<code>scope_enforced</code> is withheld because realm is an optional
+argument and <code>None</code> reads every realm.
+<code>human_review</code> is withheld: <code>witness_memory</code>
+promotes a candidate on a witness-kind string the caller passes, staged
+memories are promoted on first recall, and no state waits for an
+actor.</p>
+<p>The multipliers are unbounded. <code>scoring.json</code> is
+deserialised into <code>ScoringConfig</code> with no range check
+(<code>src/scoring/config.rs:336-357</code>); only
+<code>CHITTA_REPLICATION_MAX</code> is validated. The defaults run from
+0.65 to 1.15 for status and 0.75 to 1.0 for epistemic status, and
+nothing stops a file setting Proposed above Verified.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>287 test functions across the source and benches, with
-snapshot-migration paths for five prior formats — the kind of code that
-only exists once a format has actually shipped and changed. Nothing was
-built or run for this reading.</p>
+<p>345 <code>#[test]</code> functions across the Rust tree, three
+benches, and a Python WAL replica soak script. Nineteen full-snapshot
+magic constants, V1 to V22 with gaps, are accepted on load. I read the
+tests; I ran none, and nothing was built.</p>
+<p><code>test_recall_excludes_invalidated_statuses</code> is the
+negative evaluation. Four memories share one embedding and one realm;
+three are set to Superseded, Contradicted and Archived, and
+<code>recall_semantic</code> with k=20 must return the active one and
+none of the others (<code>src/store/tests.rs:1594-1615</code>). The
+active memory is the positive control, so an empty retriever fails.
+<code>test_windowed_recall_gates_by_time_ranks_by_semantic</code>
+asserts that an out-of-window memory pointing in the query's own
+direction is absent while an in-window one is first
+(<code>:69-100</code>). <code>test_tag_selection_realm_contract</code>
+asserts that realm-scoped semantic and keyword hits carry the requested
+realm (<code>:11-40</code>).</p>
+<p>What is not asserted: that the temporal, HDC or artifact lanes
+withhold a vetoed status, which they do not; and that a chain mismatch
+is refused, which it is not.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Return <code>None</code>, not <code>0.0</code>, when a state
 excludes. A zero weight survives normalisation, re-ranking and blending;
 an <code>Option</code> forces every caller to handle the exclusion, and
 the compiler checks that they did.</p>
 <p>Keep "how it was obtained" and "whether to believe it" in different
-types. A multiplier that can never be a veto is a design decision you
-can enforce in a return type instead of a review comment.</p>
+types. A multiplier that can never be a veto is a design decision
+enforced in a return type instead of a review comment.</p>
 <p>Detect contradiction on claims, not similarity. Two sentences about
 the same subject and predicate that disagree are what you want; two
 sentences that sound alike are what cosine gives you.</p>
-<p>And stamp the embedding lineage into the log header. A model or
-dimension change without a fence does not fail — it quietly returns the
-wrong neighbours, which is worse.</p>
+<p>Stamp the embedding lineage into the log header and skip what does
+not match. A model or dimension change without a fence returns wrong
+neighbours instead of failing.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Putting the veto in a helper that only some lanes call. The type
+makes each caller handle <code>None</code>; it cannot make a lane call
+the helper, and three here do not.</p>
+<p>Calling a write-ahead log an audit trail. If segments are deleted
+behind a checkpoint, the history of a memory is its current state.</p>
+<p>A hash chain that warns and continues. Detection that does not stop
+replay or mark the state is a log line.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a single companion daemon that needs fast associative
+recall over one person's memories on shared storage, and that will drive
+contradiction resolution itself. Walk away if you need a retained
+history of what changed, a scope the library enforces, or a correction
+that refuses the wrong value at write time.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether anything orders the writers. The per-writer segment chain is
-tamper-evident within a process; how several writers' histories are
-reconciled was not traced.</p>
-<p>What the epistemic-debt store does. It has its own status enum under
-<code>organ/</code> and looks like a deliberate mechanism rather than a
-scratch table.</p>
-<p>Whether the scoring multipliers are bounded. They are configurable
-per kind and per epistemic status, and no ceiling was found.</p>
+<p>How cc-soul drives the contradiction loop: which candidates it
+resolves, whether it applies the returned ops as triplets and a
+confidence change, and whether it ever calls
+<code>cf_set_memory_status</code> with Contradicted.</p>
+<p>Whether the temporal and HDC lanes are meant to return vetoed
+statuses, or were added after the scoring pipeline and never wired to
+it.</p>
+<p>Whether anything feeds <code>has_open_debt</code>; the debt store is
+populated through its own ops, and the factor that reads it is passed
+<code>false</code> on every path.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -369,29 +529,121 @@ per kind and per epistemic status, and no ceiling was found.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>src/scoring/mod.rs:163-182</code></td>
-<td>A veto as an <code>Option</code>, beside a weight as an
-<code>f32</code></td>
+<td><code>src/scoring/mod.rs:88-172</code></td>
+<td>The veto documented, the default pipeline, and
+<code>status_multiplier</code> beside
+<code>epistemic_multiplier</code></td>
 </tr>
 <tr>
 <td><code>src/state.rs:58-77</code></td>
 <td>Two orthogonal enums, and the comment that says so</td>
 </tr>
 <tr>
-<td><code>src/contradiction.rs:1-10</code></td>
-<td>Why similarity is not disagreement</td>
+<td><code>src/store/recall.rs:1142-1275</code></td>
+<td>Temporal and HDC recall, which check <code>deleted</code> and not
+status</td>
 </tr>
 <tr>
-<td><code>src/log.rs:11-30</code></td>
-<td>A hash chain, a CRC, and a lineage fence</td>
+<td><code>src/store/maintenance.rs:72-117</code></td>
+<td>The cosine dedup that supersedes the newer memory</td>
 </tr>
 <tr>
-<td><code>src/ops.rs:14-40</code></td>
-<td>The whole mutation vocabulary in one enum</td>
+<td><code>src/contradiction.rs:1-10</code>, <code>:122-133</code>,
+<code>:295-337</code></td>
+<td>Claim-centric detection and the ops returned to the caller</td>
+</tr>
+<tr>
+<td><code>src/organ/reconciler.rs:72-112</code></td>
+<td>The in-tree reconcile heuristic</td>
+</tr>
+<tr>
+<td><code>src/store/keyed.rs:58-118</code></td>
+<td>The correction lane keyed on the wrong phrase</td>
+</tr>
+<tr>
+<td><code>src/log.rs:11-30</code>, <code>:535-551</code>,
+<code>:1129-1143</code></td>
+<td>The chain, the lineage fence, and the warning on a break</td>
+</tr>
+<tr>
+<td><code>src/store/maintenance.rs:1438</code>,
+<code>:1468-1503</code></td>
+<td>Checkpoint and certified WAL pruning</td>
+</tr>
+<tr>
+<td><code>src/ffi.rs:317-355</code></td>
+<td>The maintenance thread's WAL-budget checkpoint</td>
+</tr>
+<tr>
+<td><code>src/store/tests.rs:1594-1615</code></td>
+<td>The must-not-retrieve test</td>
+</tr>
+<tr>
+<td><code>src/ops.rs:14-89</code></td>
+<td>The mutation vocabulary</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -nE 'audited_remove\(' -- src ':!src/store/tests.rs'</code>
+— segment pruning at <code>src/store.rs:489</code> and
+<code>src/store/maintenance.rs:1499</code>, snapshot-family pruning at
+<code>src/store.rs:548-596</code>, the janitor at
+<code>:708</code>.</li>
+<li><code>git grep -nE 'replay_from_offset\(' -- src ':!src/store/tests.rs'</code>
+— peer sync at <code>src/field.rs:1067</code> and two coverage checks;
+no reader of past ops for history.</li>
+<li><code>git grep -nE 'MemoryStatus::Contradicted' -- src ':!src/store/tests.rs'</code>
+— the FFI setter, encode, decode and the veto; nothing in
+<code>src/contradiction.rs</code> or
+<code>src/organ/reconciler.rs</code>.</li>
+<li><code>git grep -nE 'status_multiplier\(' -- src</code> — the
+definition, <code>src/scoring/factors.rs:184</code> and four calls in
+<code>src/store/recall.rs</code>.</li>
+<li><code>git grep -nE 'set_memory_status\(' -- src</code> — three
+production callers and the tests at
+<code>src/store/tests.rs:1605-1607</code>, <code>:1628-1629</code> and
+<code>:1880</code>, all of which recall through
+<code>recall_semantic</code> or none; no test sets a status and calls a
+temporal, HDC or artifact lane.</li>
+<li><code>git grep -nE 'has_open_debt: ' -- src</code> — the field and
+four constructions, all <code>false</code>.</li>
+<li><code>git grep -nE 'let valid_from_ms|valid_from_ms: now' -- src ':!src/organ/triplet.rs'</code>
+— <code>src/store.rs:2579</code> (<code>now_ms()</code>) and
+<code>src/store/organs.rs:677</code> (<code>now</code>).</li>
+<li><code>git grep -nE '\.clamp\(|fn validate' -- src/scoring/config.rs</code>
+— no match.</li>
+<li><code>git grep -nE 'correction_key_idx\.read' -- src</code> —
+<code>src/store/keyed.rs:82</code> only, on the read path.</li>
+<li><code>git grep -nE 'fn (approve|review|confirm)[a-z_]*\(' -- src</code>
+— no match.</li>
+<li><code>git grep -cE 'realm: Option&lt;&amp;str&gt;' -- src/store/recall.rs</code>
+— 15.</li>
+<li><code>git ls-files | grep -iE 'licen|copying'</code> — no match;
+<code>Cargo.toml</code> declares <code>license = "MIT"</code>.</li>
+<li><code>git grep -niE 'arxiv|bibtex|@article|@misc|doi' -- README.md</code>
+— references to prior literature on sparse representations and product
+keys; no paper by the project.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/genomewalker/chitta-field/commit/5e8b30ed755aa62409ce413385f58edd04039131"><code class="commit-id" title="5e8b30ed755aa62409ce413385f58edd04039131">5e8b30ed…</code></a>
+— 31 commits on, all startup, snapshot, index-loading and WAL work.
+<code>audit_log</code> withdrawn: segments covered by a snapshot were
+deleted at the previous pin through <code>compact_wal</code>, and the
+maintenance thread checkpoints and prunes on a WAL budget at this one
+(<a href="#9-reliability-safety-and-trust">section 9</a>).
+<code>negative_eval</code> added on a status-exclusion test present at
+both pins (<a href="#10-tests-evals-and-benchmarks">section 10</a>).
+Also wrong then: the contradiction detector does not set Contradicted,
+and project clearing does not touch memories (<a
+href="#2-mental-model">section 2</a>). The veto is per lane. Screened
+from a full clone: two files, no auto-run surfaces,
+<code>build.rs</code> as one build-time execution point, nothing inside
+the cooldown. Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/genomewalker/chitta-field/commit/c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533"><code class="commit-id" title="c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533">c5e0ff0e…</code></a>
 — <code>trust_state</code> re-tested against the narrowed line, which
@@ -400,23 +652,24 @@ this system answers at the type level: a status that excludes returns
 question and the ranking question are different return types. The mark
 holds. <code>status_multiplier</code> is now at
 <code>src/scoring/mod.rs:164-172</code> and the vocabulary at
-<code>src/state.rs:58-67</code>, both unchanged in substance. The three
-anchors into <code>src/store.rs</code> are dead: the file was split, and
-the call sites are in <code>src/store/recall.rs</code>. Re-mapping them
-raised the count — the record named three enforcement sites and there
-are five, each handling the <code>None</code> a different way:
-<code>.is_some()</code> as a filter predicate (<code>:735</code>), a
-<code>match</code> with a <code>None =&gt; continue</code> arm
-(<code>:955-958</code>), an <code>is_none() =&gt; continue</code> guard
-(<code>:1074</code>), and two <code>?</code> early returns
-(<code>:1101</code>, <code>src/scoring/factors.rs:184</code>). That
-variety is the argument for the <code>Option</code>: a zero would have
-let a sixth caller ignore it and still compile.
-<code>epistemic_multiplier</code> (<code>:175-181</code>) still returns
-a plain <code>f32</code> and still cannot veto. Screened again first;
-nothing was installed and no suite was run.</p>
+<code>src/state.rs:58-67</code>, both unchanged in substance.</p>
+<p>The three anchors into <code>src/store.rs</code> are dead: the file
+was split, and the call sites are in <code>src/store/recall.rs</code>.
+Re-mapping them raised the count — the record named three enforcement
+sites and there are five, each handling the <code>None</code> a
+different way: <code>.is_some()</code> as a filter predicate
+(<code>:735</code>), a <code>match</code> with a
+<code>None =&gt; continue</code> arm (<code>:955-958</code>), an
+<code>is_none() =&gt; continue</code> guard (<code>:1074</code>), and
+two <code>?</code> early returns (<code>:1101</code>,
+<code>src/scoring/factors.rs:184</code>). That variety is the argument
+for the <code>Option</code>: a zero would have let a sixth caller ignore
+it and still compile. <code>epistemic_multiplier</code>
+(<code>:175-181</code>) still returns a plain <code>f32</code> and still
+cannot veto. Screened again first; nothing was installed and no suite
+was run.</p>
 <p><strong>2026-09-16</strong> — <a
-href="https://github.com/genomewalker/chitta-field/commit/c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533"><code class="commit-id" title="c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533">c5e0ff0e…</code></a>
+href="https://github.com/genomewalker/chitta-field/commit/f3176e587dced64dd3a6a663a40a58e3802b0a10"><code class="commit-id" title="f3176e587dced64dd3a6a663a40a58e3802b0a10">f3176e58…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before
 opening, from a shallow clone: two files scanned, no auto-run surfaces,
 one build-time execution point, no unpinned surfaces and one dependency

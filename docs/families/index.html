@@ -8936,19 +8936,21 @@ approve; that humans did rests on the team's pull-request
 discipline.</p>
 <p><strong><a href="../systems/chitta-field/">chitta-field</a> makes a
 veto an <code>Option</code> rather than a zero.</strong> An MIT Rust
-associative-memory substrate at version 2.7.12 — 57,134 lines with 287
-test functions and a C FFI — designed for shared NFS storage, concurrent
-writers and sub-millisecond recall, encoding memories as Sparse
-Distributed Representations of 64 active bits in 16,384 so the hot path
-is bitwise overlap rather than a learned index.
+associative-memory substrate at version 2.7.12, the backing store for
+the cc-soul daemon, designed for shared NFS storage, concurrent writers
+and sub-millisecond recall, with a cortical lane that gives each memory
+64 active features from a learned dictionary of 16,384 atoms.
 <code>status_multiplier</code> maps
 <code>Active | Verified | Observed | Proposed</code> to configurable
 weights and <code>Superseded | Contradicted | Archived</code> to
-<code>None</code>, and the recall loop reads that as
-<code>….is_none() =&gt; continue</code>. The distinction is the point: a
-zero weight is a number any later normalisation or re-rank can multiply
-back up, and an <code>Option</code> is not — the compiler makes every
-caller decide. Held separately, <code>EpistemicStatus</code> —
+<code>None</code>, and the scoring pipeline treats a <code>None</code>
+from any factor as a veto, so semantic, BM25, PPR and association recall
+drop the memory as control flow. The distinction is the point: a zero
+weight is a number any later normalisation or re-rank can multiply back
+up, and an <code>Option</code> is not — the compiler makes every caller
+decide. The veto stops at the lanes that call it, and temporal, HDC and
+artifact recall check only <code>deleted</code>. Held separately,
+<code>EpistemicStatus</code> —
 <code>UserStated | ToolDerived | ModelInferred | AutonomousSynthesis</code>,
 commented "[h]ow a memory was obtained — orthogonal to confidence" —
 returns a plain <code>f32</code>, so provenance ranks a memory down and
@@ -8956,17 +8958,13 @@ can never suppress it. Its contradiction detector draws the line most
 systems here blur: "claim-centric, not text-centric. Two memories
 contradict when they make incompatible claims under overlapping scope
 (same subject+predicate), not merely when they are semantically
-similar." Every mutation is an <code>Op</code> in an append-only segment
-whose records chain as
-<code>SHA256(seqno ‖ op_type ‖ prev_hash ‖ payload)</code>, with a V3
-header carrying a <code>vector_space_id</code> so replay fences out
-segments written under a foreign embedding model or dimension — a
-lineage failure that otherwise surfaces as quietly wrong neighbours. Two
-marks. The chain is per segment and there is one segment per writer
-process, so it is tamper-evidence within a writer and not a single order
-across them; and nothing is consulted at write time against a
-contradicted claim, so a restatement is caught by the next reconcile
-pass rather than refused.</p>
+similar." It runs when the FFI caller asks, and resolution returns ops
+for that caller to apply. Two marks, the second a committed test
+asserting that the three excluding statuses stay out of semantic recall
+beside an active memory that must return. The op log is a recovery log
+rather than a history: every full snapshot deletes the segments it
+covers, and a broken hash chain is logged as a warning while replay
+continues.</p>
 <p><strong><a href="../systems/osiris/">Osiris</a> stopped its parsers
 writing confidence numbers and made them declare how they knew.</strong>
 An AGPL-3.0 Python entity-graph engine — 309,355 lines with 7,735 test

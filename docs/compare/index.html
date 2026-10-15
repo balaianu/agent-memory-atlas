@@ -4629,61 +4629,58 @@ worker and a migration chain past forty rather than a library</td>
 <tr>
 <td><a
 href="../systems/chitta-field/"><code>chitta-field</code></a></td>
-<td>A payload with a state carrying version, strength, decay rate,
-confidence, access counts, a pin, a tier, a retrieval history, a status
-and an epistemic status</td>
-<td>An append-only op log — one segment per writer process — with in-RAM
-indexes and periodic binary snapshots to avoid full replay at
-startup</td>
-<td>A cortical sparse index of 64 active bits in 16,384 for
-sub-millisecond associative recall, beside semantic, BM25, triplet,
-symbol-graph and temporal indexes</td>
-<td>One <code>Op</code> appended to the log per mutation, hash-chained
+<td>A payload in a realm, with a state carrying version, strength, decay
+rate, confidence, access counts, a pin, a tier, a retrieval history, a
+status and an epistemic status</td>
+<td>An append-only op log, one segment file per writer process, with
+in-RAM indexes and full snapshots; segments a certified snapshot covers
+are deleted</td>
+<td>A cortical sparse index assigning each memory 64 active features
+from a dictionary of 16,384 learned atoms, beside semantic HNSW, BM25,
+HDC, temporal, triplet, symbol-graph, PPR and association-spreading
+lanes</td>
+<td>One Op appended to the writer's segment per mutation, hash-chained
 and CRC'd; state is rebuilt by replay or loaded from a snapshot</td>
-<td>Delete is an op and a <code>deleted</code> flag; supersession,
-contradiction and archiving are statuses that veto recall while the
-payload stays</td>
-<td>A project, cleared by its own op; no tenancy model</td>
-<td>A Rust library with a C FFI, backing a companion daemon in a
-separate repository</td>
-<td>Decay, maintenance drains that preserve access timestamps,
-snapshotting, and a reconcile pass that detects illegal edges and
-contradictions</td>
-<td>Statuses that veto, an epistemic status that only weights, a
-claim-level contradiction detector, and a hash-chained log</td>
-<td>Two separations are made deliberately and held. First, a status that
-excludes returns <code>None</code> rather than a small multiplier, so
-the recall loop skips the candidate as control flow — a zero weight is a
-number a later stage can multiply back up, and an <code>Option</code> is
-not. Second, how a memory was obtained is kept orthogonal to whether it
-is believed: <code>EpistemicStatus</code> produces a multiplier and can
-never veto, while <code>MemoryStatus</code> can, so a model-inferred
-memory ranks lower without being silently suppressed. The contradiction
-detector is the third: it is "claim-centric, not text-centric", and the
-header says exactly what that buys — "[t]wo memories contradict when
-they make incompatible claims under overlapping scope (same
-subject+predicate), not merely when they are semantically similar". Most
-systems in this corpus call cosine similarity a contradiction check. The
-log is hash-chained over
-<code>seqno || op_type || prev_hash || payload</code> with a per-record
-CRC, and its V3 header carries a vector-space id so replay refuses
-segments written under a different embedding model or dimension — a
-lineage failure that is otherwise found as silently wrong
-neighbours</td>
-<td>The hash chain is per segment and there is one segment per writer
-process, so with several concurrent writers on the shared storage this
-design targets there is no single chained order — each writer's history
-is tamper-evident on its own, and their interleaving is not. Everything
-else in the state is continuous: strength, decay rate, confidence, the
-multipliers per kind and per epistemic status, all configurable, and the
-report finds no place where they are bounded the way a ranking
-multiplier needs to be. Nothing is consulted at write time against a
-contradicted or superseded memory, so the same claim can be written
-again and will be caught, if at all, by the next reconcile pass rather
-than refused at the door. There is no tenancy: the unit is a project,
-cleared by its own op. And the substrate is explicitly the backing store
-for a companion daemon that lives in another repository, so what an
-agent actually asks of it is not visible here</td>
+<td>Delete is an op and a deleted flag, compacted out of the next full
+snapshot; supersession, contradiction and archiving are statuses that
+veto the scored lanes while the payload stays</td>
+<td>A realm string on every payload, an optional filter on the semantic,
+BM25, HDC and temporal lanes; None reads every realm and tag selection
+is global. ClearProject removes code-file and symbol entries, not
+memories</td>
+<td>A Rust library with a C FFI, the backing store for the cc-soul
+daemon in a separate repository</td>
+<td>A maintenance thread that drains touches, checkpoints a full
+snapshot on a WAL budget and prunes covered segments; decay; an
+embedding backfill that dedups by cosine; a reconcile pass</td>
+<td>Statuses that veto on the scored lanes, an epistemic status that
+only weights, a claim-level contradiction detector served over FFI, a
+hash chain whose breaks are logged, and a lineage fence</td>
+<td>A status that excludes returns <code>None</code> rather than a small
+multiplier, so the scored lanes skip the candidate as control flow — a
+zero weight is a number a later stage can multiply back up, and an
+<code>Option</code> is not. How a memory was obtained is kept orthogonal
+to whether it is believed: <code>EpistemicStatus</code> produces a
+multiplier and can never veto. The contradiction detector is
+"claim-centric, not text-centric": "[t]wo memories contradict when they
+make incompatible claims under overlapping scope (same
+subject+predicate), not merely when they are semantically similar". The
+V3 segment header carries a vector-space id, and replay skips and
+archives segments written under a different embedding model, dimension
+or text format instead of returning wrong neighbours. A committed test
+asserts the three excluding statuses stay out of semantic recall beside
+an active memory that must come back</td>
+<td>The op log is a recovery log, not a history: every full snapshot,
+including the one the maintenance thread takes on a WAL budget, deletes
+the segments it covers, and nothing reads past ops except replay. A
+broken hash chain is logged as a warning and replay continues. The
+status veto holds on the scored lanes and not on temporal, HDC or
+artifact recall. The claim detector and its resolution run only when the
+FFI caller asks, and resolution returns ops for that caller to apply;
+the in-tree reconcile pass uses a six-word prefix heuristic. Valid time
+on triplets is the write clock. Realm is an optional filter. The status
+and epistemic multipliers are deserialised from scoring.json with no
+range check</td>
 </tr>
 <tr>
 <td><a href="../systems/chump/"><code>chump</code></a></td>
@@ -33826,7 +33823,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>257 of 749:</em> <a
+<p><em>256 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33867,7 +33864,6 @@ href="../systems/byterover/"><code>byterover</code></a>, <a
 href="../systems/cambium/"><code>cambium</code></a>, <a
 href="../systems/cashew/"><code>cashew</code></a>, <a
 href="../systems/caura/"><code>caura</code></a>, <a
-href="../systems/chitta-field/"><code>chitta-field</code></a>, <a
 href="../systems/citra/"><code>citra</code></a>, <a
 href="../systems/claude-mem/"><code>claude-mem</code></a>, <a
 href="../systems/claude-self-reflect/"><code>claude-self-reflect</code></a>,
@@ -34194,7 +34190,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>464 of 749:</em> <a
+<p><em>465 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34263,6 +34259,7 @@ href="../systems/byterover/"><code>byterover</code></a>, <a
 href="../systems/cashew/"><code>cashew</code></a>, <a
 href="../systems/cass-memory-system/"><code>cass-memory-system</code></a>,
 <a href="../systems/caura/"><code>caura</code></a>, <a
+href="../systems/chitta-field/"><code>chitta-field</code></a>, <a
 href="../systems/chump/"><code>chump</code></a>, <a
 href="../systems/citra/"><code>citra</code></a>, <a
 href="../systems/claude-engram/"><code>claude-engram</code></a>, <a
@@ -34692,7 +34689,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-464 repositories of
+465 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

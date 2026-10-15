@@ -4237,11 +4237,12 @@ installed, built or run</li>
 <li><a
 href="https://github.com/genomewalker/chitta-field">genomewalker/chitta-field</a>
 at <a
-href="https://github.com/genomewalker/chitta-field/commit/c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533"><code class="commit-id" title="c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533">c5e0ff0e…</code></a>
-— read only, from a shallow clone; two files scanned, no auto-run
-surfaces, one build-time execution point, no unpinned surfaces and one
-dependency file inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/genomewalker/chitta-field/commit/5e8b30ed755aa62409ce413385f58edd04039131"><code class="commit-id" title="5e8b30ed755aa62409ce413385f58edd04039131">5e8b30ed…</code></a>
+— read only, from a full clone; two files scanned, no auto-run surfaces,
+one build-time execution point (<code>build.rs</code>, which writes
+embedding constants into <code>OUT_DIR</code>), no unpinned surfaces and
+nothing inside the seven-day cooldown. Nothing was installed, built or
+run</li>
 <li><a
 href="https://github.com/danielmarbach/mnemonic">danielmarbach/mnemonic</a>
 at <a
@@ -16827,6 +16828,35 @@ reading's commit; at this pin those functions sat at <code>:4040</code>
 and <code>:5719-5725</code>, and the package held 126,812 lines. The
 first rested on the parameter name rather than the clause, the second on
 a search that stopped at the negative-bundle suites.</li>
+<li><strong>Five published claims about <a
+href="../systems/chitta-field/">chitta-field</a> were wrong at <a
+href="https://github.com/genomewalker/chitta-field/commit/c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533"><code class="commit-id" title="c5e0ff0e218d5bd60a3a5d98507b17b1bf97f533">c5e0ff0e…</code></a>,
+the pin they were published at, and are corrected.</strong> The report
+awarded <code>audit_log</code> on the op log. <code>compact_wal</code>
+deleted every segment a committed snapshot covered
+(<code>src/store/maintenance.rs:1397-1430</code>,
+<code>src/store.rs:434-494</code>), exported to the daemon as
+<code>cf_compact_wal</code> and <code>cf_maybe_compact_wal</code>
+(<code>src/ffi.rs:2903</code>, <code>:2922</code>), and no path read
+past ops except replay; the mark is withdrawn. It did not credit
+<code>negative_eval</code>, though
+<code>test_recall_excludes_invalidated_statuses</code>
+(<code>src/store/tests.rs:1596</code>) asserted three excluded statuses
+absent from semantic recall beside an active memory that had to return.
+Its diagram had the contradiction detector set
+<code>Contradicted</code>. The detector returned candidates to the FFI
+caller, resolution returned ops for that caller to apply, the only
+setter was <code>cf_set_memory_status</code>
+(<code>src/ffi.rs:2852</code>), and the reconcile pass the report
+credited used a six-word prefix heuristic
+(<code>src/organ/reconciler.rs:76</code>). It gave the scope as a
+project cleared by its own op; <code>ClearProject</code> removed
+code-file and symbol entries (<code>src/field.rs:1719</code>), and
+memories were scoped by an optional realm. And its census — 57,134
+lines, 287 test functions, <code>src/store.rs</code> at 12,206 lines —
+described <a
+href="https://github.com/genomewalker/chitta-field/commit/f3176e587dced64dd3a6a663a40a58e3802b0a10"><code class="commit-id" title="f3176e587dced64dd3a6a663a40a58e3802b0a10">f3176e58…</code></a>;
+at the pin <code>src/store.rs</code> was 3,728 lines.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
