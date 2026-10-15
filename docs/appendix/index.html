@@ -4428,7 +4428,7 @@ seven-day cooldown. Nothing was installed, built or run and no DuckDB
 file was opened. MIT</li>
 <li><a href="https://github.com/memhtml/memhtml">memhtml/memhtml</a> at
 <a
-href="https://github.com/memhtml/memhtml/commit/a219190e6ca042d9efcdefe24e8eb621b4fcb37d"><code class="commit-id" title="a219190e6ca042d9efcdefe24e8eb621b4fcb37d">a219190e…</code></a>
+href="https://github.com/memhtml/memhtml/commit/a8fa99506ea78bffae2bd252242ca2afe8a1d563"><code class="commit-id" title="a8fa99506ea78bffae2bd252242ca2afe8a1d563">a8fa9950…</code></a>
 — read only; no auto-run surfaces, no build-time execution points, one
 unpinned dependency surface and eighteen dependency files inside the
 seven-day cooldown, with <code>pnpm-lock.yaml</code> present.
@@ -17034,6 +17034,23 @@ framework dependencies private when <code>omnibase-core</code> 0.47
 releases were on PyPI from 29 August 2026. Each rested on a docstring, a
 default left unread, or a field's declaration rather than its
 writer.</li>
+<li><strong>Two published claims about <a
+href="../systems/memhtml/">memhtml</a> were wrong at <a
+href="https://github.com/memhtml/memhtml/commit/a219190e6ca042d9efcdefe24e8eb621b4fcb37d"><code class="commit-id" title="a219190e6ca042d9efcdefe24e8eb621b4fcb37d">a219190e…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>human_review</code> on the ground that a sleep run's
+memories stayed invisible to search until a person merged.
+<code>run</code> restored <code>HEAD</code> only after a failed phase
+(<code>packages/sleep/src/run.ts:249</code>), every write door committed
+to <code>HEAD</code> and re-indexed it
+(<code>apps/cli/src/operations.ts:267-271</code>, <code>:341</code>),
+and the runbook's cron re-indexed every ten minutes
+(<code>RUNBOOK.md:93</code>), so unmerged curation reached the agent's
+searches and its writes landed on the sleep branch; the mark is
+withdrawn. It also said the merge gate meant a run that degraded
+retrieval could not land; the gate built its own fixture corpus in an
+in-memory database (<code>packages/eval/src/harness.ts:34-37</code>,
+<code>:146</code>) and did not read the branch.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

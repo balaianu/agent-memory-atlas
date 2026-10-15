@@ -6751,34 +6751,30 @@ an audit the README undersells: it leads with <code>git diff</code> and
 <code>knowledge/log.md</code> is written by the library on every concept
 write and both MCP handlers pass the flag that controls it as a
 hardcoded true.</p>
-<p><strong><a href="../systems/memhtml/">memhtml</a> gives three actors
-one tree and lets only one of them settle a contradiction.</strong> An
-Apache-2.0 TypeScript system — 132,835 lines over 393 files — storing
-memory as "a git repository of semantic HTML5 files, one fact per file",
-with a rebuildable SQLite index over it and four retrieval arms fused by
-reciprocal rank. The rule the design rests on is written out: "The agent
-writes facts, and it resolves only the conflicts it found itself. Sleep
-curates on a branch when a caller fires it, and it detects conflicts
-without resolving them. The human owns the gate and every one-way door."
-A seventeen-phase nightly pass commits to
-<code>sleep/&lt;date&gt;</code> and leaves <code>main</code> untouched,
-each phase committing separately "so a human reads the curation one
-phase-shaped diff at a time", distilled transcripts landing one commit
-per claim, and any phase that could decide and declines opening a task
-that quotes the sentence it found — "[a] detection is a proposal for a
-human, never a fact the corpus asserts." The merge fast-forwards only
-after a gate that re-runs the retrieval evaluation, whose adversarial
-controls are the project's own merge veto read backwards: the three
-predicates that forbid folding two memories together become the three
-ways to build a plausible impostor, because "a control the veto cannot
-see does not test anything". Two smaller ideas travel well — one scope
-filter string handed to every arm, since "[p]er-arm filters would let a
-scope apply to three arms and not the fourth… No type catches that
-leak", and an empty result that reports how many archived rows the same
-scope matches, so an agent can tell "never existed" from "archived".
-What it does not have is a mutation record outside git: the phase
-trailers and the one-commit-per-claim discipline live in a history a
-rewrite can edit.</p>
+<p><strong><a href="../systems/memhtml/">memhtml</a> writes its
+three-actor rule down, and its read path follows <code>HEAD</code>
+instead.</strong> An Apache-2.0 TypeScript system storing memory as "a
+git repository of semantic HTML5 files, one fact per file", with a
+rebuildable SQLite index and four retrieval arms fused by reciprocal
+rank. The rule is explicit: "The agent writes facts, and it resolves
+only the conflicts it found itself. Sleep curates on a branch when a
+caller fires it, and it detects conflicts without resolving them. The
+human owns the gate and every one-way door." A seventeen-phase nightly
+pass commits phase by phase to <code>sleep/&lt;date&gt;</code>,
+distilled transcripts land one commit per claim, and a phase that
+declines to decide opens a task quoting its evidence. The withholding is
+where it fails. A successful run leaves <code>HEAD</code> on the branch,
+every write door re-indexes <code>HEAD</code>, and the runbook
+re-indexes every ten minutes, so the agent searches curation nobody has
+merged and its own writes land on the sleep branch. The merge gate
+re-runs a retrieval evaluation over a generated fixture corpus and never
+reads the branch, so it catches a ranking-code regression rather than a
+bad night. Two smaller ideas travel well — one scope filter string
+handed to every arm, since "[p]er-arm filters would let a scope apply to
+three arms and not the fourth… No type catches that leak", and an empty
+scoped result that reports how many archived rows the same scope
+matches, so an agent can tell "never existed" from "archived". Three
+marks: trust state, bitemporal, negative evals.</p>
 <p><strong><a href="../systems/ulpia/">Ulpia</a> treats its own
 differentiating claim as an obligation to measure.</strong> An
 Apache-2.0 Rust router over markdown the user already has, with "no

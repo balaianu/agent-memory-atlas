@@ -17134,68 +17134,54 @@ the shared L3 graph</td>
 <tr>
 <td><a href="../systems/memhtml/"><code>memhtml</code></a></td>
 <td>One semantic HTML5 file per fact in a git repository, carrying a
-title, type, claim, entities, validity, confidence and supersession
-meta, addressed by its path</td>
-<td>A git repository of HTML under <code>MEMHTML_ROOT</code> in PARA
-directories, with a rebuildable SQLite index and a merge driver
-installed at init</td>
-<td>Four arms — FTS, vector, recency, salience — fused with reciprocal
-rank, all receiving one scope filter string built once</td>
-<td>A CLI <code>write</code>, an MCP server with fifteen tools, and
-hooks that recall and index but never write, because distilling a
-transcript into a durable fact belongs to the sleep run</td>
-<td>A correction writes <code>memhtml-superseded-by</code> on the loser
-and a <code>supersedes</code> edge on the winner in one commit; eviction
-and compression are a <code>git mv</code> into
-<code>archive/</code></td>
-<td>Facet, type, path and date axes assembled into one filter every arm
-receives, with archived rows excluded by default</td>
-<td>Two binaries, an MCP server over stdio, and installers for Claude
-Code, Codex, Cursor and OpenCode that record a SHA-256 receipt of every
-file and fragment they own</td>
-<td>A seventeen-phase sleep run — dedup, entity resolution, edge typing,
-confidence decay, arc synthesis, retention triage, compression, task
-detection, integrity — each committing phase making its own isolated
-commit with a machine-readable trailer</td>
-<td>Supersession links both ways, an archived state excluded by default,
-tasks that propose rather than assert, and a merge gate that re-runs the
-retrieval evaluation</td>
-<td>The division of labour is the design, and it is written as a rule:
-"The agent writes facts, and it resolves only the conflicts it found
-itself. Sleep curates on a branch when a caller fires it, and it detects
-conflicts without resolving them. The human owns the gate and every
-one-way door." Everything follows from that — curation arrives as
-phase-shaped diffs on a branch, distilled memories land one commit per
-claim "so a reviewer reads one claim at a time", the phases that decline
-to decide open a task quoting its evidence instead, and the merge
-fast-forwards only after a gate that re-runs the retrieval evaluation.
-Two smaller pieces are worth stealing on their own. The scope filter "is
-built ONCE and every arm receives the same string", because "[p]er-arm
-filters would let a scope apply to three arms and not the fourth, which
-surfaces as a scoped query returning a result from outside the scope. No
-type catches that leak" — with an explicit rule that anything narrowing
-one arm's candidates belongs in that arm and "must never enter this
-filter". And <code>archivedMatches</code> turns an empty result into an
-answer: when a scope matches nothing, the count of archived rows the
-same scope matches lets an agent "tell 'never existed' from 'archived'"
-and follow the supersession link to the replacement</td>
-<td>The mutation record is git, which this atlas does not count as an
-audit of memory mutations: the phase trailers, the one-commit-per-claim
-discipline and the receipts are real and they live in a history a
-force-push rewrites, with no separate append-only table in the store.
-Scope is a caller-supplied facet set rather than a stored key applied on
-the caller's behalf — the single-filter design closes the arm-drift leak
-thoroughly, and it still narrows only what the caller asked to narrow,
-so nothing separates one project's memories from another's unless the
-query says so. The bitemporal fallback deserves a reader's attention:
-<code>coalesce(valid_from, event_at, created_at)</code> means a memory
-that declares no validity is treated as valid from the moment it was
-written, so a historical query over a corpus where nobody filled those
-fields answers from write time while looking like it answered from world
-time. And the operational surface is large for a personal memory —
-132,835 lines of TypeScript over 393 files, a seventeen-phase nightly
-pass, Bedrock for embeddings and model calls unless both are switched
-off, and installers that write into four hosts' configuration files</td>
+title, type, claim, entities, facets, citations, event time, validity,
+confidence and supersession metadata, addressed by its path</td>
+<td>A git repository of HTML under MEMHTML_ROOT in PARA directories; a
+rebuildable SQLite index.db projected from HEAD and the working tree; a
+state.db access plane exported to a committed append-only JSONL
+sidecar</td>
+<td>FTS, vector, recency and salience arms fused by reciprocal rank in
+one SQL statement, then MMR; one scope filter string handed to every
+arm, archived and task rows excluded by default</td>
+<td>CLI write and apply, fifteen MCP tools, or a person's own file
+tools; every write door commits to HEAD and re-indexes HEAD; hooks
+recall and index transcripts and never write a memory</td>
+<td>A correction archives the loser with superseded-by and gives the
+winner a supersedes link in one commit; eviction and compression are a
+git mv into archive/YEAR; nothing deletes a memory file</td>
+<td>Caller-supplied type, workspace, tag, entity, facet and date axes in
+one filter; workspace is stored per memory from its projects/ directory
+and applied only when a caller names it</td>
+<td>Two binaries, an MCP server over stdio with fifteen tools and three
+resources, and installers for Claude Code, Codex, Cursor and OpenCode
+that record a SHA-256 receipt per owned file or fragment</td>
+<td>A seventeen-phase sleep run on a dated sleep branch, each committing
+phase its own commit; sleep merge fast-forwards main after a
+discrimination gate over a generated fixture corpus</td>
+<td>Two-state lifecycle status taken from the path, supersession links
+in both directions, an as-of lens, tasks that propose rather than
+assert, and a merge step a person runs from the CLI</td>
+<td>The single scope filter: "[p]er-arm filters would let a scope apply
+to three arms and not the fourth, which surfaces as a scoped query
+returning a result from outside the scope. No type catches that leak",
+with a stated rule that anything narrowing one arm's candidates belongs
+in that arm and "must never enter this filter". The empty result that
+answers: when a named scope matches nothing, archivedMatches counts the
+archived rows the same scope matches, so an agent "can tell 'never
+existed' from 'archived'" and follow supersededBy to the replacement.
+And adversarial controls derived from the system's own anti-merge
+predicates, each validated against its own family rather than the
+disjunction</td>
+<td>Unmerged curation is not withheld from search. A successful sleep
+run leaves HEAD on its branch, every write door re-indexes HEAD, the
+runbook's cron re-indexes every ten minutes and a deep run re-indexes
+mid-run, so the agent can retrieve what a person has not yet reviewed,
+and an agent write in that window lands on the sleep branch. The merge
+gate measures a generated fixture corpus and does not read the branch it
+guards. The mutation record is git history. Scope narrows only what a
+caller names, and the session-start hook recalls across every workspace.
+Write-time dedup and conflict checks read active rows only, so a
+corrected claim can be written again unchallenged</td>
 </tr>
 <tr>
 <td><a href="../systems/memini/"><code>memini</code></a></td>
@@ -34102,7 +34088,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>97 of 749:</em> <a
+<p><em>96 of 749:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -34147,7 +34133,6 @@ href="../systems/loreai/"><code>loreai</code></a>, <a
 href="../systems/marm-memory/"><code>marm-memory</code></a>, <a
 href="../systems/memesh/"><code>memesh</code></a>, <a
 href="../systems/memex/"><code>memex</code></a>, <a
-href="../systems/memhtml/"><code>memhtml</code></a>, <a
 href="../systems/memorix/"><code>memorix</code></a>, <a
 href="../systems/memory-compiler/"><code>memory-compiler</code></a>, <a
 href="../systems/memory-garden/"><code>memory-garden</code></a>, <a
