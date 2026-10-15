@@ -4,25 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A retraction propagates a
-contamination penalty weighted by how tightly the neighbourhood coheres
-— dense narrative clusters get 1.5×, isolated engrams 0.5× — because
-misinformation persists as a coherent story.">
+    <meta name="description" content="A local TypeScript memory for
+coding agents whose retraction lowers neighbours' confidence by a
+cohesion-weighted penalty, and whose retracted flag every recall arm
+excludes.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="AgentWorkingMemory — Agent Memory Atlas">
-    <meta property="og:description" content="A retraction propagates a
-contamination penalty weighted by how tightly the neighbourhood coheres
-— dense narrative clusters get 1.5×, isolated engrams 0.5× — because
-misinformation persists as a coherent story.">
+    <meta property="og:description" content="A local TypeScript memory
+for coding agents whose retraction lowers neighbours' confidence by a
+cohesion-weighted penalty, and whose retracted flag every recall arm
+excludes.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AgentWorkingMemory — Agent Memory Atlas">
-    <meta name="twitter:description" content="A retraction propagates a
-contamination penalty weighted by how tightly the neighbourhood coheres
-— dense narrative clusters get 1.5×, isolated engrams 0.5× — because
-misinformation persists as a coherent story.">
+    <meta name="twitter:description" content="A local TypeScript memory
+for coding agents whose retraction lowers neighbours' confidence by a
+cohesion-weighted penalty, and whose retracted flag every recall arm
+excludes.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>AgentWorkingMemory — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +44,7 @@ misinformation persists as a coherent story.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "AgentWorkingMemory",
-      "description": "A retraction propagates a contamination penalty weighted by how tightly the neighbourhood coheres \u2014 dense narrative clusters get 1.5\u00d7, isolated engrams 0.5\u00d7 \u2014 because misinformation persists as a coherent story.",
+      "description": "A local TypeScript memory for coding agents whose retraction lowers neighbours' confidence by a cohesion-weighted penalty, and whose retracted flag every recall arm excludes.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,24 +102,24 @@ misinformation persists as a coherent story.">
           <p class="eyebrow">Retracting a fact should shake its whole
 story</p>
           <h1>AgentWorkingMemory</h1>
-          <p class="document-deck">A retraction propagates a
-contamination penalty weighted by how tightly the neighbourhood coheres
-— dense narrative clusters get 1.5×, isolated engrams 0.5× — because
-misinformation persists as a coherent story.</p>
+          <p class="document-deck">A local TypeScript memory for coding
+agents whose retraction lowers neighbours' confidence by a
+cohesion-weighted penalty, and whose retracted flag every recall arm
+excludes.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/CompleteIdeas/agent-working-memory">
               <span>Source</span>
               <strong>CompleteIdeas/agent-working-memory</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/CompleteIdeas/agent-working-memory/commit/6b04ba62ac50b3123ab69a3fda2679da9ae9e611" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">
+            <a class="meta-pill revision-pill" href="https://github.com/CompleteIdeas/agent-working-memory/commit/eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc" title="eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc">
               <span>Analyzed revision</span>
-              <code>6b04ba62…</code>
+              <code>eb56cb35…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/CompleteIdeas--agent-working-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +127,19 @@ misinformation persists as a coherent story.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>52,342
+lines of TypeScript in the tree; src/ is 25,474 lines in 82
+files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>302
+commits on master by one author under two name spellings, 21 March – 11
+October 2026; version 0.17.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>71
+vitest files with about 800 cases, plus standalone eval runners under
+tests/; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,415 +155,684 @@ misinformation persists as a coherent story.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>AgentWorkingMemory is a 45,000-line Apache-2.0 TypeScript memory
-service for coding agents — local SQLite or PGlite, local ONNX embedding
-models, an MCP server with 16 tools, no cloud and no API keys.</p>
-<p><strong>The mechanism worth the report is in
-<code>src/engine/retraction.ts</code></strong>, and it starts from a
-critique the file quotes against itself:</p>
+<p>AgentWorkingMemory (AWM) is a local, single-process memory service
+for coding agents whose distinctive mechanism is retraction. A wrong
+engram is flagged and excluded from every recall arm, a correction can
+take over its strong graph edges, and its neighbours lose confidence by
+a penalty scaled to how tightly their neighbourhood coheres. The weak
+side is the lexical arm on the default SQLite backend, which admits
+staged, archived and superseded rows and cuts its candidate window
+before the agent and retraction filters apply.</p>
+<p>It runs on SQLite by default, with PGlite or Postgres selected by
+environment, downloads three small ONNX models once, and needs no API
+key. Agents reach it through an MCP server and a Claude Code plugin
+whose hooks checkpoint on compaction and prime each prompt with recalled
+memories.</p>
+<p><strong>The retraction module starts from a critique it quotes
+against itself.</strong> The header of
+<code>src/engine/retraction.ts</code> records it:</p>
 <blockquote>
 <p>"You need explicit anti-salience for wrong info. Otherwise wrong
 memories persist and compound mistakes."</p>
 </blockquote>
-<p>The retraction path does four things: marks the engram retracted
-"(not deleted — audit trail)", creates an invalidation association,
-optionally writes a counter-engram with the correct information, and
-reduces the confidence of associated engrams — a contamination
-check.</p>
-<p><strong>The fourth step is where it gets interesting.</strong>
-Version 0.8.5 weights that contamination penalty by how coherent the
-retracted memory's neighbourhood is, and the docstring gives the
-reasoning and the citation:</p>
-<blockquote>
-<p>"The Continued Influence Effect (Carrillo et al., ICCM 2025) shows
-that misinformation persists in human cognition because it lives inside
-a <em>coherent narrative</em>, not as an isolated fact. Correcting one
-chunk doesn't displace the narrative unless the correction also
-propagates through the connected structure."</p>
-</blockquote>
-<p>So it computes a cohesion score over the 2-hop neighbourhood:</p>
-<ul>
-<li><strong>Dense narrative cluster</strong> (high internal-edge
-density, shared tags) → penalty amplified ~1.5×. "The whole cluster
-shares the wrong story."</li>
-<li><strong>Isolated engram</strong> (sparse edges, divergent tags) →
-penalty dampened ~0.5×. "No narrative to disrupt."</li>
-<li><strong>Cross-domain bridge</strong> (low cohesion across an edge) →
-the bridge weight is reduced but far-side neighbours are barely
-affected.</li>
-</ul>
-<p>And it bounds the cost in the same comment: "Cohesion is computed at
-retract time (no schema/consolidation changes). Cost: bounded by
-MAX_AFFECTED (20 nodes) × one batched
-<code>getAssociationsForBatch</code> call — typically 10-25ms."</p>
-<p>A published cognitive-science finding, an explicit translation into a
-graph operation, three named regimes with their multipliers, and a
-stated cost with a hard cap. Most systems in this atlas correct a fact
-and leave everything that was inferred from it untouched.</p>
-<p><strong>The second thing worth taking is a metric</strong> — section
-10's <code>discardRegret</code>.</p>
+<p>It then cites the Continued Influence Effect (Carrillo et al., ICCM
+2025) for the claim that misinformation persists as a coherent
+narrative, and translates that into one number.
+<code>computeNeighborhoodCohesion</code> walks the two-hop
+neighbourhood, capped at 20 engrams, and scores it as graph density
+times a tag-overlap factor
+(<code>src/engine/retraction.ts:217-310</code>). The contamination
+penalty on each neighbour is then multiplied by
+<code>0.5 + cohesion</code>, so a dense cluster with shared tags takes
+up to 1.5 times the base penalty and a sparse one half of it
+(<code>:333</code>).</p>
+<p>The docstring names a third regime, a cross-domain bridge whose
+weight is reduced while the far side is spared, and it has no code. The
+propagation writes confidence and no edge weight, and it applies one
+multiplier computed at the source (<code>:33-34</code> against
+<code>:319-363</code>).</p>
+<p><strong>The second thing worth taking is a metric</strong>, section
+10's <code>discardRegret</code>: writes the salience filter would have
+discarded are kept, tagged <code>low-salience</code>, and counted when
+something later reads them.</p>
+<p><strong>The project grades its own numbers.</strong>
+<code>docs/claims.md</code> lists every published figure with what
+produced it and whether a stranger can reproduce it, and opens its
+token-economics row with "it is the weakest claim on the page". Its
+retrieval caveat says the ranker "never considers staged, retracted or
+superseded rows", which the code supports for retracted rows only
+(section 6).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>Not everything written becomes memory. A write is scored for
-salience; weak signals go to a <strong>staging buffer</strong> —
-"modeled on hippocampal consolidation — provisional encoding that only
-persists if reactivated" — which periodically checks staged engrams for
-resonance with active memory, promotes the ones that resonate and
-discards the ones that never did.</p>
-<p>Active engrams accumulate Hebbian associations, decay, and can be
-superseded by concept match or retracted as wrong.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — salience decides whether a write reaches the active set or waits in staging for resonance, and a retraction propagates a cohesion penalty across the two-hop neighbourhood</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: salience decides whether a write reaches the active set or waits in staging for resonance, and a retraction propagates a cohesion penalty across the two-hop neighbourhood
+<p>A memory is an engram, and an engram's standing is three separate
+things: a <strong>stage</strong> (<code>active</code>,
+<code>staging</code>, <code>fading</code>, <code>archived</code>), a
+<strong>retracted</strong> flag, and a <code>superseded_by</code>
+pointer. Only the flag is a belief state. Stage records how established
+the engram is, and supersession records that it was replaced by
+something newer without being wrong.</p>
+<p><strong>Admission is scored, not decided.</strong> Every write gets a
+salience score and a disposition. <code>active</code> lands in recall.
+<code>staging</code> lands with a TTL and confidence 0.40, waiting for a
+sweep to decide whether it resonates with active memory.
+<code>discard</code> is kept as well, at confidence 0.25 and tagged
+<code>low-salience</code>, which is what makes discard regret measurable
+(<code>src/core/write-pipeline.ts:522-595</code>). An explicit
+<code>memory_class: canonical</code> skips the filter. So does content
+opening with an operator-configured stakeholder name followed by a verb
+such as "said", a detector that ships empty and is off until
+<code>AWM_FEEDBACK_NAMES</code> is set
+(<code>src/core/salience.ts</code>).</p>
+<p><strong>A repeated fact reinforces instead of duplicating.</strong> A
+write whose concept matches a healthy active engram raises that engram's
+confidence. A match that consolidation archived as a near-duplicate is
+reinforced and flipped back to <code>active</code>
+(<code>src/core/write-pipeline.ts:299-316</code>). When the caller names
+the engram a write replaces with <code>supersedes</code>, reinforcement
+is skipped and the new engram is forced to <code>active</code>, so the
+replacement cannot land weaker than the fact it retires
+(<code>:181</code>, <code>:325-340</code>).</p>
+<p><strong>A belief stops being one in two ways.</strong> Supersession,
+by id or by concept match, leaves the old engram recallable at 0.15 of
+its score. Retraction is for wrongness. The flag excludes the engram
+from recall and an <code>invalidation</code> edge links the correction
+to it. The correction inherits up to ten of the retracted engram's edges
+of weight 0.4 or more, at 0.7 of their strength, and the
+cohesion-weighted penalty spreads to the neighbours.</p>
+<p><strong>Forgetting is several mechanisms.</strong> Decay lowers
+activation with age and access. Consolidation archives the unused and
+fades the content of idle-but-accessed engrams to 150 characters, never
+an unfinished task's body
+(<code>src/engine/consolidation.ts:562</code>). The staging sweep and
+consolidation both hard-delete staged engrams that never resonated.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a write is scored into active, staging or a tagged near-discard; retraction flags the row, hands its edges to a correction and spreads a cohesion-scaled penalty; recall excludes the flag on both arms but reads stage only on the vector arm</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a write is scored into active, staging or a tagged near-discard; retraction flags the row, hands its edges to a correction and spreads a cohesion-scaled penalty; recall excludes the flag on both arms but reads stage only on the vector arm
 flowchart TD
-    W[&quot;memory_write&quot;] --&gt; SAL{&quot;salience threshold&quot;}
-    SAL --&gt;|below| ST[&quot;staging buffer&quot;]
-    ST --&gt; RES{&quot;resonance with active memory?&quot;}
-    RES --&gt;|yes| ACT[&quot;promoted to active&quot;]
-    RES --&gt;|&quot;expired, never resonated&quot;| DIS[&quot;discarded&quot;]
-    SAL --&gt;|above| ACT
-    ACT --&gt; HEB[&quot;Hebbian association strengthening&quot;]
-    NEW[&quot;write-and-supersede by concept match&quot;] --&gt; FAM[&quot;findActiveMatchByConcept:&lt;br/&gt;most recent active wins,&lt;br/&gt;excludes superseded, retracted,&lt;br/&gt;and non-active stage&quot;]
-    FAM --&gt; TX[&quot;new engram + supersede old,&lt;br/&gt;one SQL transaction&quot;]
-    R[&quot;agent finds a memory is wrong&quot;] --&gt; RET[&quot;retract&quot;]
-    RET --&gt; M1[&quot;engram.retracted = TRUE&lt;br/&gt;retracted_by, retracted_at&quot;]
-    RET --&gt; M2[&quot;invalidation association&quot;]
-    RET --&gt; M3[&quot;optional counter-engram&quot;]
-    RET --&gt; COH[&quot;cohesion over the 2-hop neighbourhood&lt;br/&gt;(≤ MAX_AFFECTED = 20)&quot;]
-    COH --&gt;|&quot;dense cluster, shared tags&quot;| P15[&quot;contamination penalty × ~1.5&quot;]
-    COH --&gt;|&quot;sparse, divergent tags&quot;| P05[&quot;penalty × ~0.5&quot;]
-    COH --&gt;|&quot;cross-domain bridge&quot;| PBR[&quot;bridge weight reduced,&lt;br/&gt;far side barely affected&quot;]
-    Q[&quot;search&quot;] --&gt; F[&quot;WHERE agent_id = $1 AND retracted = FALSE&quot;]
-    M1 -.-&gt;|&quot;invisible unless retracted: true&quot;| F</code></pre></details></figure>
+    W[&quot;memory_write&quot;] --&gt; SUP{&quot;supersedes named?&quot;}
+    SUP --&gt;|yes| FA[&quot;new engram forced active,&lt;br/&gt;named engram superseded&quot;]
+    SUP --&gt;|no| MATCH{&quot;same-concept match?&quot;}
+    MATCH --&gt;|&quot;healthy active or&lt;br/&gt;archived duplicate&quot;| REIN[&quot;reinforce;&lt;br/&gt;archived match revived to active&quot;]
+    MATCH --&gt;|no| SAL{&quot;salience disposition&quot;}
+    SAL --&gt;|active| ACT[&quot;stage = active&quot;]
+    SAL --&gt;|staging| STG[&quot;stage = staging,&lt;br/&gt;confidence 0.40, TTL&quot;]
+    SAL --&gt;|discard| LOW[&quot;kept active,&lt;br/&gt;confidence 0.25, tag low-salience&quot;]
+    STG --&gt; SWEEP{&quot;sweep: activate on&lt;br/&gt;the engram&#39;s own text&quot;}
+    SWEEP --&gt;|&quot;any result&quot;| ACT
+    SWEEP --&gt;|&quot;no result&quot;| DEL[&quot;DELETE FROM engrams&quot;]
+    R[&quot;memory_retract(engram_id, reason, correction?)&quot;] --&gt; FLAG[&quot;retracted = 1, retracted_at;&lt;br/&gt;reason dropped&quot;]
+    R --&gt; COR[&quot;correction engram;&lt;br/&gt;retracted_by = its id&quot;]
+    COR --&gt; INH[&quot;inherit up to 10 edges,&lt;br/&gt;weight x 0.7&quot;]
+    R --&gt; COH[&quot;cohesion of 2-hop neighbourhood,&lt;br/&gt;at most 20 engrams&quot;]
+    COH --&gt; PEN[&quot;neighbour confidence minus&lt;br/&gt;0.1 x edge weight x 0.5^hop x (0.5 + cohesion)&quot;]
+    Q[&quot;activate(agent_id)&quot;] --&gt; LEX[&quot;BM25 arm: agent_id and retracted&lt;br/&gt;filtered; any stage&quot;]
+    Q --&gt; VEC[&quot;vector arm: agent_id, retracted,&lt;br/&gt;stage active or fading&quot;]
+    LEX --&gt; RANK[&quot;score, graph boost, rerank;&lt;br/&gt;superseded x 0.15&quot;]
+    VEC --&gt; RANK
+    FLAG -.-&gt;|excluded| LEX
+    FLAG -.-&gt;|excluded| VEC</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<p><code>src/core</code> holds the write-side machinery —
+<p><code>src/core</code> holds the write side and the scoring helpers:
 <code>salience</code>, <code>write-pipeline</code>,
-<code>auto-tagger</code>, <code>entity-extract</code>,
 <code>embeddings</code>, <code>hebbian</code>, <code>decay</code>,
 <code>query-expander</code>, <code>reranker</code>,
-<code>lite-compress</code>, plus an ML worker so model inference does
-not block.</p>
-<p><code>src/engine</code> holds the epistemic machinery —
-<code>activation</code>, <code>confidence</code>,
+<code>token-budget</code>, <code>recall-telemetry</code>.
+<code>src/engine</code> holds the lifecycle: <code>activation</code>,
 <code>connections</code>, <code>consolidation</code> and its scheduler,
 <code>eviction</code>, <code>staging</code>, <code>retraction</code>,
-<code>eval</code>.</p>
-<p><code>src/storage</code> implements one <code>IEngramStore</code>
-interface over PGlite, SQLite and Postgres, with tables for
-<code>engrams</code>, <code>associations</code>, <code>agents</code>,
-<code>activation_events</code>, <code>staging_events</code>,
-<code>retrieval_feedback</code>, <code>episodes</code>,
-<code>conscious_state</code>, <code>entity_mentions</code> and
-<code>entity_aliases</code>.</p>
-<p>49 test files.</p>
+<code>eval</code>. <code>src/storage</code> implements one
+<code>IEngramStore</code> over <code>better-sqlite3</code> with FTS5,
+PGlite with pgvector and tsvector, and Postgres, chosen by
+<code>AWM_STORE_BACKEND</code> or by what is on disk
+(<code>src/storage/factory.ts:45-93</code>).</p>
+<p>The engram table carries everything; associations, episodes, entity
+mentions and aliases, checkpoints (<code>conscious_state</code>) and
+three event tables sit beside it. A coordination layer for multi-agent
+setups adds <code>coord_*</code> tables for agents, assignments, locks,
+mailboxes and decisions.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p><code>npm install -g agent-working-memory &amp;&amp; awm setup --global</code>,
+or the Claude Code plugin, which shares <code>~/.awm/memory.db</code>.
+Nothing else has to run. Three ONNX models download on first use: a
+bge-small embedder, a MiniLM cross-encoder and flan-t5-small for query
+expansion. Recall falls back to BM25 alone when the embedder is
+unavailable. No API key is needed to store or recall anything. The HTTP
+API binds to loopback and refuses a non-loopback bind without
+<code>AWM_API_KEY</code> (<code>src/index.ts:44-57</code>). The store is
+a single SQLite file, readable with any SQLite client.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><strong>Retract</strong> — <code>src/engine/retraction.ts</code> (the
-critique and the four steps <code>:4-14</code>, the Continued Influence
-Effect derivation <code>:16-37</code>, <code>NeighborhoodCohesion</code>
-<code>:42</code>).</p>
-<p><strong>Stage</strong> — <code>src/engine/staging.ts</code>
-(<code>StagingBuffer</code>, the periodic resonance check).</p>
-<p><strong>Supersede</strong> — the Form B atomic write-and-supersede
-path exercised by <code>tests/core/supersede-form-b.test.ts</code>.</p>
-<p><strong>Exclude</strong> — <code>src/storage/pglite.ts</code>
-(<code>AND retracted = FALSE</code> at <code>:329</code>,
-<code>:347</code>, <code>:370</code>, <code>:399</code>,
-<code>:509</code>, <code>:538</code>, <code>:565</code>,
-<code>:584</code>, <code>:672</code>, <code>:695</code>;
-<code>retractEngram</code> <code>:475</code>), and the same fourteen
-times in each of <code>src/storage/postgres.ts</code> and
-<code>src/storage/sqlite.ts</code>. The exception is
-<code>search</code>, the deterministic query documented as
-<em>"diagnostic / structural"</em> rather than cognitive: it opens on
-<code>agent_id</code> alone and appends the retracted clause only when
-the caller passes one (<code>pglite.ts:593-613</code>,
-<code>postgres.ts:692-695</code>, <code>sqlite.ts:879-882</code>). Three
-independent backends omit it in the same place, so it is a decision
-rather than a slip — but the HTTP search route passes
-<code>retracted</code> straight through
-(<code>src/api/routes.ts:525-539</code>), so a client that simply leaves
-the field out gets retracted engrams back from a public endpoint.</p>
-<p><strong>Measure</strong> — <code>src/engine/eval.ts</code> (the four
-dimensions <code>:4-12</code>, <code>discardRegret</code>
-<code>:93-94</code>).</p>
+<p><strong>Write</strong> — <code>memory_write</code>
+(<code>src/mcp.ts:234</code>) to <code>performWrite</code>
+(<code>src/core/write-pipeline.ts:167</code>): salience, the
+reinforcement branches R1, R1b, R2 and R3, then
+<code>createNewEngram</code> (<code>:520-600</code>).</p>
+<p><strong>Recall</strong> — <code>memory_recall</code>
+(<code>src/mcp.ts:398-448</code>) to
+<code>ActivationEngine.activate</code>
+(<code>src/engine/activation.ts</code>): workspace resolution
+<code>:228-230</code>, two BM25 passes <code>:315-317</code>, the vector
+arm <code>:379</code>, opt-in entity paths <code>:435-530</code>, graph
+walk <code>:932-937</code>, supersession penalty
+<code>:1140-1145</code>, confidence abstention after it.</p>
+<p><strong>Session start</strong> — <code>memory_restore</code>
+(<code>src/mcp.ts:769-931</code>): the checkpoint, the last-written
+engram by id <code>:801</code>, a recall over the last context
+<code>:815-826</code>, and consolidation when the agent was idle.</p>
+<p><strong>Prompt priming</strong> — <code>/hooks/prime</code> in
+<code>src/hooks/sidecar.ts:279-300</code>, wired to
+<code>activate</code> with the server's <code>AGENT_ID</code> at
+<code>src/mcp.ts:1375-1382</code>.</p>
+<p><strong>Retract</strong> — <code>memory_retract</code>
+(<code>src/mcp.ts:584-615</code>) and <code>POST /memory/retract</code>
+(<code>src/api/routes.ts:386-404</code>) to
+<code>RetractionEngine.retract</code>
+(<code>src/engine/retraction.ts:66-125</code>): the flag
+<code>:79</code>, the correction and its <code>invalidation</code> edge
+<code>:85-104</code>, <code>inheritNarrativeEdges</code>
+<code>:161-198</code>, <code>computeNeighborhoodCohesion</code>
+<code>:217-310</code>, <code>propagateConfidenceReduction</code>
+<code>:319-363</code>.</p>
+<p><strong>Supersede</strong> — <code>memory_supersede</code>
+(<code>src/mcp.ts:617-659</code>), the <code>supersedes</code> argument
+on <code>memory_write</code>, and Form B on
+<code>POST /memory/supersede</code>. Form B finds the newest active
+same-concept engram, then writes and supersedes inside
+<code>withTransaction</code> (<code>src/api/routes.ts:465-500</code>,
+<code>src/storage/sqlite.ts:1099-1124</code>).</p>
+<p><strong>Stage</strong> — <code>StagingBuffer.sweep</code>
+(<code>src/engine/staging.ts:46-73</code>) on a timer in both servers,
+and the staging sweep phase of consolidation
+(<code>src/engine/consolidation.ts:778-802</code>).</p>
+<p><strong>Measure</strong> — <code>EvalEngine.computeMetrics</code>
+(<code>src/engine/eval.ts:28-108</code>), surfaced by
+<code>memory_stats</code> and the HTTP metrics route.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>An engram carries a <code>concept</code> and <code>content</code>
-separately — the concept is what supersession matches on — plus
-<code>salience</code>, <code>confidence</code>, <code>tags</code>, an
-<code>accessCount</code>, a stage, and the retraction trio
+<p>An engram separates <code>concept</code> from <code>content</code>;
+supersession and reinforcement match on the concept, case-folded and
+trimmed. It carries <code>salience</code>, <code>confidence</code>,
+<code>tags</code>, <code>access_count</code>, <code>stage</code>,
+<code>memory_class</code>, <code>superseded_by</code>, task fields,
+<code>origin_class</code>, <code>writer_session</code>, and
 <code>retracted</code>, <code>retracted_by</code>,
 <code>retracted_at</code>.</p>
-<p>Associations are first-class rows strengthened by Hebbian
-co-activation, and retraction adds an <strong>invalidation</strong>
-association rather than removing edges, so the graph records that one
-engram contradicts another.</p>
-<p><code>v0.7.x</code> added optional metadata on writes —
-<code>project</code>, <code>topic</code>, <code>session_id</code> — and
-the release note is honest about what that costs: re-running
-<code>awm setup --global</code> "updates your CLAUDE.md with
-instructions for the agent to use them", i.e. the metadata is only as
-good as the agent's compliance with a prompt.</p>
+<p><code>retracted_by</code> is a pointer, not an actor.
+<code>retract</code> writes null, then overwrites it with the correction
+engram's id when the caller supplied correction text
+(<code>src/engine/retraction.ts:79</code>, <code>:104</code>). No MCP
+tool or HTTP route accepts the field; only <code>awm import</code>
+copies one from an import file (<code>src/cli.ts:575</code>,
+<code>:736</code>). The <code>reason</code> that
+<code>memory_retract</code> requires is passed into the engine and read
+by nothing, so why a memory was retracted is not stored.</p>
+<p><code>valid_from</code> and <code>valid_to</code> are caller-supplied
+ISO dates on <code>memory_write</code>, described as "temporal validity,
+not ingestion time" (<code>src/mcp.ts:282-285</code>). Recall output
+renders <code>[valid until …]</code>
+(<code>src/core/format-recall.ts:21-22</code>,
+<code>src/hooks/prime.ts:89</code>). No read path filters on either
+field, and nothing expires an engram whose <code>valid_to</code> has
+passed. The installed guidance tells the agent to set it "so the memory
+expires" (<code>src/adapters/common.ts:497-503</code>).</p>
+<p>Optional <code>project</code>, <code>topic</code>,
+<code>source</code> and <code>session_id</code> arguments become
+prefixed tags (<code>proj=</code>, <code>topic=</code>), so their
+quality depends on the agent supplying them. <code>client=</code> is
+stamped from <code>AWM_CLIENT</code>, set by the launcher rather than
+the caller (<code>src/core/write-pipeline.ts:537-552</code>).</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Activation-weighted search with query expansion, a reranker, and FTS5
-BM25 as the lexical arm. <code>agent_id = $1</code> is the first
-condition on every read, and separate memory pools per folder are
-documented, so a stored scope key reaches the query — the
-<code>scope_enforced</code> mark.</p>
-<p><code>retracted = FALSE</code> is the second condition, appended at
-seven query sites, with <code>includeRetracted</code> as the opt-in. A
-retracted engram is therefore invisible to normal recall and still
-recoverable by an explicit query, which is the right default pair.</p>
+<p><code>activate</code> gathers candidates from two arms and merges
+them. The <strong>lexical arm</strong> runs BM25 twice, once on the
+keyword-stripped query and once on the expanded one. The <strong>vector
+arm</strong> takes the top 50 or more by cosine above a floor of 0.40
+for targeted queries and 0.30 for exploratory ones. Scoring combines
+text match, vector match, an ACT-R-style decay term, a Hebbian term and
+confidence. A default-on graph walk adds a bounded boost to candidates
+already in the pool, and a cross-encoder reranks the top of the
+list.</p>
+<p><strong>By default, agent scope is in the SQL on both arms.</strong>
+Every recall path calls <code>activate</code> with <code>AGENT_ID</code>
+from the environment, and the lexical and vector queries filter
+<code>agent_id</code> (<code>src/storage/sqlite.ts:706</code>,
+<code>:914</code>, <code>:539</code>).</p>
+<p><strong>The model can lift that scope with one argument.</strong>
+<code>memory_recall</code> declares <code>workspace</code> as an
+optional tool parameter and resolves it as
+<code>params.workspace ?? AWM_WORKSPACE</code>
+(<code>src/mcp.ts:419</code>, <code>:435</code>). <code>activate</code>
+then widens the agent set to every name <code>coord_agents</code> lists
+under that workspace (<code>src/engine/activation.ts:228-230</code>,
+<code>src/storage/sqlite.ts:724-728</code>). Nothing checks that the
+calling agent belongs to the workspace it names, and agents register
+themselves into a workspace through the coordination routes. The
+parameter arrived in v0.7.0 (<a
+href="https://github.com/CompleteIdeas/agent-working-memory/commit/0f198b6d2741b3ddecc332be7973151ef8c1f583"><code class="commit-id" title="0f198b6d2741b3ddecc332be7973151ef8c1f583">0f198b6d…</code></a>).</p>
+<p><strong>The retracted flag is excluded on both arms and on every
+injection path.</strong> The same clauses carry
+<code>retracted = 0</code>, and the opt-in entity fetches and graph
+injection re-check it in the engine
+(<code>src/engine/activation.ts:459</code>, <code>:519</code>,
+<code>:1640</code>).</p>
+<p><strong>Stage is read only by the vector arm.</strong> The vector
+slim fetch takes <code>active</code> and <code>fading</code>
+(<code>src/storage/sqlite.ts:854-855</code>). The FTS5 index is
+maintained by triggers on every insert and update regardless of stage
+(<code>src/storage/sqlite.ts:254-263</code>), and neither BM25 query
+filters stage or <code>superseded_by</code>. Staged, archived and
+superseded engrams therefore enter the lexical arm, superseded ones
+down-ranked to 0.15. <code>memory_recall</code> exposes
+<code>include_staging</code>, default false, and passes it into the
+query object, where no engine code reads it. A comment in the write
+pipeline states the archived case outright: "archived != excluded from
+search".</p>
+<p><strong>On SQLite the lexical arm filters after its window.</strong>
+Both BM25 queries take the top <code>max(limit × 5, 50)</code> FTS
+matches first and apply <code>agent_id</code> and <code>retracted</code>
+to that window afterwards (<code>src/storage/sqlite.ts:699-709</code>,
+<code>:907-918</code>). The inline comment records a 567-fold speedup
+and accepts the cost for a "single agent dominant, low retracted rate"
+store. Another agent's rows and retracted rows matching the same words
+consume a caller's window, so on a shared database a LIMIT does not mean
+the same thing to every agent. PGlite and Postgres put both predicates
+in the WHERE clause before the LIMIT
+(<code>src/storage/pglite.ts:601-636</code>).</p>
+<p><strong>Two reads do not apply the flag.</strong> The store's
+<code>search</code>, documented as "Diagnostic search (deterministic,
+not cognitive)", adds the retracted clause only when the caller passes
+one (<code>src/storage/sqlite.ts:930-951</code>), and
+<code>POST /memory/search</code> passes the field through untouched
+(<code>src/api/routes.ts:508-539</code>). And
+<code>memory_restore</code> fetches the last-written engram by id and
+prints it under <strong>Last write</strong> without reading the flag
+(<code>src/mcp.ts:801</code>, <code>:891</code>). An engram written and
+then retracted in one session is the first thing the next session is
+shown.</p>
+<p><strong>Abstention distinguishes withheld from absent.</strong> When
+the shape of the score distribution falls below
+<code>require_confidence</code> (default 0.05), recall returns nothing
+and the reply says <code>RECALL ABSTAINED</code> with how many were
+withheld. The tool description argues the default from measured cost in
+both directions.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>The salience filter is the gate: below threshold goes to staging,
-which is periodically checked for resonance and either promoted or
-discarded. That is a genuinely different answer to "should I store this"
-than a confidence score — the decision is <em>deferred</em> and resolved
-by whether the rest of memory turns out to relate to it.</p>
-<p>Correction has two shapes. <strong>Supersession</strong> — Form B —
-finds "the most recent active engram with matching concept, write new
-engram, supersede old, all in one SQL transaction", with the match
-explicitly excluding "superseded + retracted + non-active stage".
-<strong>Retraction</strong> is for wrongness rather than obsolescence,
-and carries the contamination propagation.</p>
-<p>Nothing is keyed on the retracted <em>value</em>:
-<code>retracted</code> marks a row, and a later write of the same
-content is a new engram. The retraction records who and when, not
-what-must-never-return.</p>
+<p>Writes are synchronous and local: salience is a rule-based score, the
+embedding is computed in a worker, and nothing calls a hosted model.
+Onboarding is the one extraction step, and it produces a file rather
+than writes (section 8).</p>
+<p><strong>Correction has two shapes.</strong> Supersession is for
+obsolescence. By id it requires both engrams to exist and writes
+<code>superseded_by</code>, a <code>causal</code> edge, and the old
+engram's confidence times 0.4 floored at 0.2. By concept, Form B does
+the lookup and the write in one transaction, and the match excludes
+superseded, retracted and non-active engrams
+(<code>src/storage/sqlite.ts:1099-1124</code>). Retraction is for
+wrongness and carries the propagation in section 2.</p>
+<p><strong>Neither checks ownership.</strong>
+<code>memory_retract</code> and <code>memory_supersede</code> take an
+engram id, load it by id, and act on it without comparing its
+<code>agent_id</code> with the caller's
+(<code>src/engine/retraction.ts:73-79</code>,
+<code>src/mcp.ts:633-646</code>). In a shared store an agent can retract
+or supersede another agent's memory if it holds the id, and workspace
+recall returns ids.</p>
+<p><strong>Nothing is keyed on a retracted value.</strong> The flag
+marks a row. A later write of the same content is a new engram, and the
+concept match that would reinforce it skips retracted rows, so the wrong
+fact can be re-learned at full strength.</p>
+<p><strong>Staged engrams are judged against their own text.</strong>
+The sweep activates on the staged engram's concept and content and
+promotes it on any result (<code>src/engine/staging.ts:53-63</code>).
+The query is not told to exclude that engram, and the lexical arm admits
+staged rows, so the engram is a candidate for its own resonance check.
+Whether it clears <code>minScore: 0.3</code> against itself was not
+established; no committed test calls <code>sweep</code>.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write path blocks on salience, one BM25 novelty check and an
+embedding. Recall is local; the project's own profile puts the
+cross-encoder at 78% of a warm recall
+(<code>docs/recall-latency.md</code>), which is why <code>limit</code>
+defaults to 3 and sizes the rerank pool. The prompt hook injects up to
+eight compact results under a token budget on every prompt.
+Consolidation runs on idle, and on restore after more than five idle
+minutes, over the agent's whole active set.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p><code>npm install -g agent-working-memory &amp;&amp; awm setup --global</code>,
-then 16 MCP tools appear in Claude Code. Models download once (~200 MB)
-and everything runs locally. There are hooks, a CLI, recipes, and an
-onboarding pass —
-<code>awm onboard ./docs --repo . --project &lt;name&gt;</code> — that
-warm-starts the store from a project's existing documentation and
-produces a pack for review before it lands.</p>
-<p>The upgrade note is a small courtesy worth naming: "Your existing
-memory database is preserved — all upgrades are backward compatible. New
-features … are opt-in."</p>
+<p>The MCP server registers 19 tools: write, recall, feedback, retract,
+supersede, whoami, stats, checkpoint, restore, two onboarding tools, six
+task tools, and a compress and retrieve pair for tool output.
+<code>AWM_INCOGNITO=1</code> registers none. The agent decides when to
+write and recall. The plugin's <code>Stop</code> hook prints a reminder
+to do both, <code>PreCompact</code> and <code>SessionEnd</code>
+checkpoint, and <code>UserPromptSubmit</code> primes the prompt through
+the sidecar.</p>
+<p><code>onboard_scan</code> returns candidate memories from a project's
+docs to the agent, which saves the ones it keeps with
+<code>memory_write</code>. The CLI form, <code>awm onboard</code>,
+writes a pack and a review file for a person to edit before
+<code>awm import</code> (<code>src/cli.ts:860-873</code>). That is an
+import-time edit, not a state memories wait in.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>Trust state — awarded.</strong> <code>retracted</code> is a
-discrete field, set with <code>retracted_by</code> and
-<code>retracted_at</code>, and it withholds a memory from being treated
-as true without destroying it. It is composed into the SQL rather than
-applied after the rows come back, which is the part worth copying: a
-<code>LIMIT</code> then means the same thing to every caller. Two
-qualifications belong beside the award. The diagnostic
-<code>search</code> carries no default clause in any of the three
-backends and is reachable over HTTP, so "read on every search path" is
-true of the cognitive reads and not of that one. And
-<code>retracted_by</code> is whatever string the caller supplies — the
-engine's own retraction path passes <code>null</code>
-(<code>src/engine/retraction.ts:79</code>) — so the field records an
-assertion about the retractor, not a verified actor.</p>
-<p><strong>Scope enforced — awarded</strong>, per section 6.</p>
+discrete field that withholds an engram from being treated as true
+without deleting it, and both recall arms exclude it in SQL on all three
+backends. The two qualifications are the diagnostic <code>search</code>
+and <code>memory_restore</code>'s <strong>Last write</strong>, both in
+section 6.</p>
+<p><strong>Scope enforced — withheld.</strong> The default read is
+agent-scoped in SQL on both arms, and the agent can widen it by passing
+<code>workspace</code> to <code>memory_recall</code>, which reads every
+agent registered under the name it supplies with no membership check
+(section 6). That holds at
+<code class="commit-id" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">6b04ba62…</code> as well: the
+parameter at <code>src/mcp.ts:419</code>, its resolution at
+<code>:435</code>, the widening at
+<code>src/engine/activation.ts:208-209</code> and the membership query
+at <code>src/storage/sqlite.ts:673-677</code>. An isolation the caller
+can lift by an argument does not earn the mark, however the default
+reads. Writes are unchecked too: retract and supersede act across agents
+(section 7), and the HTTP API takes <code>agentId</code> from the
+request body behind an optional bearer token.</p>
 <p><strong>Negative eval — awarded</strong>, per section 10.</p>
+<p><strong>Audit log — withheld.</strong> Three production paths run
+<code>DELETE FROM engrams</code>: the staging sweep, consolidation's
+staging and forget phases, and eviction over the staging budget
+(<code>src/engine/staging.ts:67</code>,
+<code>src/engine/consolidation.ts:665</code>, <code>:800</code>,
+<code>src/engine/eviction.ts:48</code>). Retraction, supersession,
+fading and confidence changes are updates in place.
+<code>activation_events</code> and <code>retrieval_feedback</code>
+record reads. <code>staging_events</code> is created and read by
+<code>getStagingMetrics</code>, and <code>logStagingEvent</code>, its
+only writer, has no caller. The activity file <code>awm.log</code> is
+appended by some tools, among them supersede, write and recall, and not
+by retract or any delete. It lives beside the store rather than in
+it.</p>
+<p><strong>Bitemporal — withheld.</strong> <code>valid_from</code> and
+<code>valid_to</code> are set by the caller independently of
+<code>created_at</code>, so the valid-time axis can precede the row, and
+no read path queries either (section 5).</p>
+<p><strong>Tombstone — withheld</strong> (section 7). <strong>Human
+review — withheld</strong>: no memory waits in a state, and the agent
+holds <code>memory_write</code> (section 8).</p>
 <p><strong>The store used to live where an upgrade deletes it.</strong>
-This is the most consequential thing in the window since the first
-reading and it is not a capability question. <code>awm setup</code>
-defaulted <code>AWM_DB_PATH</code> to
-<code>&lt;packageRoot&gt;/data/memory.db</code> — inside the installed
-npm package. <code>npm install -g agent-working-memory@latest</code>
-renames that directory aside and deletes it, so an upgrade took every
-memory with it, and <code>npm uninstall -g</code> did the same without a
-word. It surfaced from a real machine as an <code>EBUSY</code> renaming
-<code>memory.db</code>, and the commit is right that the failure was the
-lucky outcome: a running process held the file open and npm aborted,
-where with the client closed the upgrade would have succeeded
-silently.</p>
-<p>Three parts of the fix are worth separating. The default is now
-<code>~/.awm/memory.db</code>, which the plugin and desktop launchers
-already used — the same product had two defaults depending on how it was
-installed and only one was safe, which is the shape of the bug rather
-than a detail of it. Re-running setup <em>rescues</em> rather than
-preserves: <code>isInsidePackage</code> matches a
-<code>node_modules</code> segment, and setup copies the store and its
-<code>-wal</code> and <code>-shm</code> sidecars to the safe path,
-repoints the config, prints a loud notice, and leaves the original where
-it is, so the rescue itself cannot destroy anything
-(<code>src/adapters/common.ts:29-31</code>, <code>:175-199</code>). And
-<code>awm doctor</code> fails on the condition, for the people who
-upgrade without re-running setup — which is the population most
-exposed.</p>
-<p>The reason it shipped is the part that generalises, and the commit
-says it plainly: every clean-room assertion passed
-<code>--db-path</code> explicitly, so nothing ever exercised the
-default. A suite that always configures the thing under test never tests
-the configuration most users run on. The container test now performs a
-setup with no <code>--db-path</code> and asserts the resulting path is
-outside <code>node_modules</code> and under the user's home.</p>
-<p><strong>Audit log — withheld, and the gap is specific.</strong> There
-are three event tables — <code>activation_events</code>,
-<code>staging_events</code> and <code>retrieval_feedback</code> — but
-two of them are the retrieval half the mark excludes, and the mutation
-that matters most writes to the engram row:
-<code>UPDATE engrams SET retracted = TRUE, retracted_by = $1, retracted_at = $2</code>.
-So the store knows a memory is retracted and by whom, and there is no
-append-only record of the sequence of retractions, supersessions and
-confidence adjustments. Given how much of this system's design is about
-correcting wrong beliefs, an event log of exactly those corrections is
-the missing half.</p>
-<p><strong>Tombstone, bitemporal, human review — no.</strong> The
-onboarding pack is reviewed by a person before it lands, which is close,
-but it is an import-time step rather than a standing adjudication
-surface for memory content.</p>
+Until 0.15.8, <code>awm setup</code> defaulted the database to
+<code>&lt;packageRoot&gt;/data/memory.db</code>, inside the installed
+package, which <code>npm install -g …@latest</code> replaces. The
+default is <code>~/.awm/memory.db</code>, the path the plugin and
+desktop launchers used. Re-running setup copies an in-package store and
+its <code>-wal</code> and <code>-shm</code> sidecars to the safe path
+and leaves the original in place
+(<code>src/adapters/common.ts:29-31</code>, <code>:180-200</code>). The
+fix commit gives the reason it shipped: every container assertion passed
+<code>--db-path</code> explicitly, so nothing exercised the default.</p>
 <p><strong>The contamination penalty is the risk to watch.</strong>
-Amplifying a confidence penalty across a dense cluster is the right
-<em>direction</em> and the multipliers — 1.5× and 0.5× — are asserted,
-not derived. Nothing in the tree measures whether a cluster penalised at
-1.5× was in fact wrong, and a false retraction propagates further
-precisely where memory is most interconnected.</p>
+Amplifying a penalty across a dense cluster is the right direction, and
+the 0.5 and 1.5 bounds are a formula choice, not a fit.
+<code>tests/engine/coherence-retraction.test.ts</code> asserts the
+ordering, that a coherent cluster loses more confidence than a loose
+one, and nothing measures whether the engrams it penalised were wrong. A
+mistaken retraction propagates furthest where memory is most connected,
+and the reason for it is not recorded.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>No paper of its own</strong>, but a cited one driving a
-mechanism, which is rarer. 49 test files.</p>
-<p><strong><code>tests/integration/memory-lifecycle.test.ts</code> earns
-the <code>negative_eval</code> mark</strong> with both polarities in one
-case:</p>
-<pre class="typescript"><code>it(&#39;excludes retracted by default in search&#39;, () =&gt; {
-  const e = store.createEngram({ … content: &#39;wrong info&#39; … });
-  store.retractEngram(e.id, null);
-  const without = store.search({ agentId: AGENT_ID, retracted: false });
-  expect(without.length).toBe(0);
-  const with_ = store.search({ agentId: AGENT_ID, retracted: true });
-  expect(with_.length).toBe(1);
-});</code></pre>
-<p>Retracted material must not be retrieved by default, <em>and</em>
-must still be retrievable when asked for. Testing both directions is
-what stops a future implementation satisfying the first assertion by
-deleting the row.</p>
-<p><strong><code>src/engine/eval.ts</code> measures the system on four
-dimensions</strong> — retrieval quality, connection quality, staging
-accuracy, memory health — and one of them is worth stealing
-outright:</p>
+<p><strong><code>tests/integration/memory-lifecycle.test.ts:190-232</code>
+earns <code>negative_eval</code></strong> with both polarities on one
+activation:</p>
+<pre class="typescript"><code>const foundRetracted = results.find(r =&gt; r.engram.id === wrong.id);
+expect(foundRetracted).toBeUndefined();
+const foundCorrection = results.find(r =&gt; r.engram.id === result.correctionId);
+expect(foundCorrection).toBeDefined();</code></pre>
+<p>The correction is the positive control: an activation that returned
+nothing fails the test.</p>
+<p>The case beside it,
+<code>'excludes retracted by default in search'</code>
+(<code>:343-357</code>), does not test the default. It passes
+<code>retracted: false</code> explicitly, and the default it names
+returns retracted rows (section 6).</p>
+<p>The agent-isolation case (<code>:384-406</code>) asserts that every
+result for agent A belongs to agent A, which an empty result satisfies.
+No committed test asserts that staged or archived engrams stay out of
+recall, or that a second agent's rows cannot crowd the SQLite
+window.</p>
+<p><strong><code>src/engine/eval.ts</code> measures four
+dimensions</strong>, and one is worth stealing:</p>
 <pre class="typescript"><code>discardRegret: activeEngrams.filter(e =&gt;
   e.tags.includes(&#39;low-salience&#39;) &amp;&amp; e.accessCount &gt; 0).length,</code></pre>
-<p><strong>Discard regret counts the memories the salience filter nearly
-threw away that turned out to be used.</strong> Every system in this
-atlas that filters on write has a false-negative rate and almost none of
-them measure it, because the discarded material is gone and
-unmeasurable. Tagging the near-misses instead of dropping them silently
-makes the filter's cost observable.</p>
-<p>And the honesty beside it: "Task impact (with/without memory) is
-measured externally via TaskTrial records" — the one thing the engine
-cannot measure about itself, stated rather than implied.</p>
-<p>No LoCoMo, LongMemEval or other public benchmark, and no committed
-results.</p>
-<p><strong>I ran nothing.</strong></p>
+<p>Discard regret counts the near-discards later accessed. It is the
+false-negative rate of a write filter, which most systems cannot see
+because the rejected material is gone. <code>memory_stats</code> reports
+it and nothing feeds it back. The staging-accuracy dimension beside it
+computes promotion precision from <code>staging_events</code>, which
+nothing writes, so it reports zero. The header defers task impact to
+<code>TaskTrial</code> records; <code>TaskTrial</code> is a type with no
+producer in the tree.</p>
+<p><strong>The benchmark documentation grades itself.</strong>
+<code>docs/claims.md</code> rates each published number Public, Method
+public, Maintainer only or Not reproducible. The headline retrieval
+figures run on a private store snapshot, and
+<code>npm run bench:public</code> runs the same runner and hold-out code
+over a synthetic corpus committed as
+<code>tests/realstore-eval/fixture-public.json</code>. LoCoMo and
+LongMemEval harnesses are in <code>tests/</code>. The project retired
+LoCoMo in 0.13.x on the argument that it rewards indiscriminate
+retention, which a salience filter is built to refuse.</p>
+<p><strong>I ran nothing.</strong> No suite, benchmark or eval runner
+was executed for this reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Propagate a retraction through the narrative, not just the
-fact.</strong> If your memories are connected, correcting one leaves
-everything inferred from it intact. Weighting the contamination penalty
-by neighbourhood cohesion — up where the cluster shares a story, down
-where the engram is isolated — is the right shape, and the Continued
-Influence Effect is the reason.</li>
-<li><strong>Bound the propagation and say so.</strong>
-<code>MAX_AFFECTED = 20</code>, one batched association fetch, 10–25 ms,
-computed at retract time with no schema change. A correction mechanism
-that can cascade is one you will disable in production unless it is
-capped.</li>
-<li><strong>Measure discard regret.</strong> Tag what your salience
-filter nearly rejected and count how often it is later accessed. It is
-the only way to see the cost of the filter you cannot otherwise
-observe.</li>
-<li><strong>Defer the keep/drop decision instead of making it at write
-time.</strong> A staging buffer that promotes on resonance and discards
-on expiry resolves "is this important" with evidence that did not exist
-when the write arrived.</li>
-<li><strong>Test the exclusion in both directions.</strong> Retracted
-must not appear by default, and must appear when explicitly requested.
-One assertion alone can be satisfied by deleting the row.</li>
-<li><strong>Separate concept from content.</strong> Supersession
-matching on a concept, with the write and the supersede in one SQL
-transaction, avoids the two-step that leaves both versions live under a
-crash.</li>
-<li><strong>Exclude superseded, retracted <em>and</em> non-active-stage
-from the match.</strong> All three are "not the current belief" for
-different reasons, and forgetting one makes supersession attach to the
-wrong row.</li>
-<li><strong>Quote the critique that motivated the module.</strong> "You
-need explicit anti-salience for wrong info" at the top of
-<code>retraction.ts</code> tells the next reader what the file is
-defending against.</li>
+<li><strong>Propagate a retraction past the fact.</strong> Lower the
+confidence of what was connected to it, and scale the penalty by how
+tightly that neighbourhood coheres; correcting one node leaves
+everything inferred from it intact.</li>
+<li><strong>Bound the propagation and say so.</strong> Twenty engrams,
+two hops, one batched fetch, computed at retract time with no schema
+change.</li>
+<li><strong>Let the correction take the wrong memory's place.</strong>
+Inheriting the retracted engram's strong edges puts the correction where
+recall used to reach the wrong fact.</li>
+<li><strong>Keep near-discards and count discard regret.</strong> Tag
+what the salience filter would have dropped and count how often it is
+later used.</li>
+<li><strong>Pair every must-not-retrieve assertion with a must-retrieve
+one</strong> on the same result, so an empty answer fails.</li>
+<li><strong>Let an explicit <code>supersedes</code> outrank
+inference.</strong> When the caller names the engram a write replaces,
+skip reinforcement and force the replacement active, or the correction
+lands weaker than the fact it retires.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Do not record a retraction only on the row.</strong>
-<code>retracted_by</code> and <code>retracted_at</code> say who and
-when; they do not give you the sequence of corrections, which is what
-you need when the question is "how did memory get into this state".</li>
-<li><strong>Do not ship asserted multipliers as if derived.</strong>
-1.5× and 0.5× are plausible and unmeasured, and they amplify the blast
-radius of a wrong retraction exactly where the graph is densest.</li>
-<li><strong>Do not rely on the agent to supply your scoping
-metadata.</strong> <code>project</code> and <code>topic</code> arrive
-because CLAUDE.md asks for them; recall quality then depends on prompt
-compliance.</li>
+<li><strong>Do not put a scope-widening argument on the agent's own
+tool.</strong> A <code>workspace</code> parameter the model may pass,
+resolved without a membership check, makes agent isolation a default the
+agent can turn off.</li>
+<li><strong>Do not filter after a shared LIMIT.</strong> A prefilter
+that cuts the index window before the tenant and status predicates
+trades correctness for speed on exactly the stores that have more than
+one tenant.</li>
+<li><strong>Do not let a stage exist on one arm only.</strong> If the
+vector arm reads stage and the lexical arm does not, staging is a
+ranking hint, and a recall flag that names it needs a reader.</li>
+<li><strong>Do not drop the reason for a correction.</strong> A required
+<code>reason</code> that nothing stores invites the agent to write one
+and leaves no record of it.</li>
+<li><strong>Do not let the session-start assembler bypass the recall
+predicates.</strong> A context block built by id skips every status
+filter the search path carries.</li>
+<li><strong>Do not ship a docstring regime the code does not
+implement.</strong> The cross-domain bridge reads as a third behaviour
+and is one multiplier.</li>
 </ul>
 <h3 id="fit">Fit</h3>
-<p>A good fit for a local-first coding agent where you want the memory
-to <em>narrow</em> over time rather than accumulate — salience
-filtering, staging, decay, eviction and retraction are a coherent set of
-forgetting mechanisms, which is unusual; most systems in this atlas
-implement one of the five.</p>
-<p><code>retraction.ts</code> is 366 lines and worth reading whatever
-you build. It is the clearest example in this corpus of taking a
-specific published finding about human memory and turning it into a
-bounded graph operation with the reasoning written down.</p>
+<p>A fit for one developer's local coding agent that should forget as
+well as remember: salience, staging, decay, fading, eviction and
+retraction form a coherent set of forgetting mechanisms. A shared
+database for several agents is a poor fit: any agent can widen its
+recall to a workspace it names, the SQLite candidate window is shared,
+and writes cross agents unchecked. Anyone who needs to explain later how
+memory reached its state should look elsewhere: deletes are hard and
+corrections are updates in place.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li><strong>Were the cohesion multipliers tuned?</strong> 1.5× and 0.5×
-are stated with a rationale and no measurement.</li>
-<li><strong>What happens to associations of a retracted engram?</strong>
-An invalidation association is added; whether the original edges are
-also weakened beyond the bridge case was not traced.</li>
-<li><strong>Does <code>discardRegret</code> feed back into the salience
-threshold?</strong> It is computed; whether anything acts on it was not
-established.</li>
-<li><strong>Are <code>TaskTrial</code> records produced
-anywhere?</strong> The eval header defers task impact to them and no
-producer was located.</li>
+<li><strong>Does a staged engram resonate with itself?</strong> The
+sweep's query admits the engram it is judging; whether its score clears
+0.3 against its own text, and so whether every staged engram is
+promoted, needs a run.</li>
+<li><strong>Were the cohesion bounds tuned?</strong> 0.5 and 1.5 come
+from the formula <code>0.5 + cohesion</code>; no measurement of either
+is in the tree.</li>
+<li><strong>How large is the SQLite window loss in practice?</strong> It
+depends on how many agents share a database and how many rows are
+retracted; nothing in the tree measures it.</li>
+<li><strong>Can associations cross agents?</strong> Hebbian
+strengthening links engrams co-activated in one recall, and workspace
+recall mixes agents. If such edges form, a retraction's penalty reaches
+another agent's engrams. Not traced.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
-<p><strong>Retraction</strong> — <code>src/engine/retraction.ts</code>
-(the quoted critique <code>:5-7</code>, the four steps
-<code>:9-14</code>, the Continued Influence Effect derivation and the
-three regimes <code>:16-33</code>, the cost bound <code>:34-37</code>,
-<code>NeighborhoodCohesion</code> <code>:42-44</code>)</p>
-<p><strong>Staging</strong> — <code>src/engine/staging.ts</code> (the
-hippocampal framing <code>:4-14</code>, <code>StagingBuffer</code>
-<code>:19</code>)</p>
-<p><strong>Evaluation</strong> — <code>src/engine/eval.ts</code> (the
-four dimensions and the external-task caveat <code>:3-13</code>,
-<code>discardRegret</code> <code>:93-94</code>, the health counters
-<code>:96-100</code>)</p>
-<p><strong>Storage and exclusion</strong> —
-<code>src/storage/pglite.ts</code> (<code>AND retracted = FALSE</code>
-<code>:326</code>, <code>:344</code>, <code>:367</code>,
-<code>:396</code>, <code>:506</code>, <code>:558</code>,
-<code>:577</code>; <code>retractEngram</code> <code>:475</code>),
-<code>src/storage/pglite-schema.ts</code> (<code>engrams</code>
-<code>:26</code>, <code>associations</code> <code>:98</code>,
-<code>activation_events</code> <code>:121</code>,
-<code>staging_events</code> <code>:132</code>,
-<code>retrieval_feedback</code> <code>:141</code>, <code>episodes</code>
-<code>:150</code>, <code>conscious_state</code> <code>:164</code>),
-<code>src/storage/sqlite.ts</code>,
-<code>src/storage/postgres.ts</code></p>
-<p><strong>Write side</strong> — <code>src/core/salience.ts</code>,
-<code>src/core/write-pipeline.ts</code>,
-<code>src/core/hebbian.ts</code>, <code>src/core/decay.ts</code>,
-<code>src/core/auto-tagger.ts</code>,
-<code>src/core/query-expander.ts</code>,
-<code>src/core/reranker.ts</code></p>
-<p><strong>Tests</strong> —
-<code>tests/integration/memory-lifecycle.test.ts</code> (the retraction
-exclusion case <code>:343-356</code>),
-<code>tests/core/supersede-form-b.test.ts</code> (the Form B contract
-<code>:3-17</code>),
-<code>tests/storage/pglite-engine-integration.test.ts</code>,
-<code>tests/integration/mcp-smoke.test.ts</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What to read it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/engine/retraction.ts:3-37</code></td>
+<td>The critique, the four steps, the Continued Influence Effect
+derivation and the cost bound</td>
+</tr>
+<tr>
+<td><code>src/engine/retraction.ts:66-125</code></td>
+<td><code>retract</code>: flag, correction, edge inheritance, cohesion,
+propagation</td>
+</tr>
+<tr>
+<td><code>src/engine/retraction.ts:217-363</code></td>
+<td>Cohesion score and the <code>0.5 + cohesion</code> multiplier</td>
+</tr>
+<tr>
+<td><code>src/engine/activation.ts:228-380</code></td>
+<td>Workspace resolution and the two candidate arms</td>
+</tr>
+<tr>
+<td><code>src/engine/activation.ts:1140-1145</code></td>
+<td>The supersession down-rank</td>
+</tr>
+<tr>
+<td><code>src/storage/sqlite.ts:683-739</code></td>
+<td>Multi-agent BM25 with its FTS prefilter, and workspace
+membership</td>
+</tr>
+<tr>
+<td><code>src/storage/sqlite.ts:845-951</code></td>
+<td>Vector slim fetch, single-agent BM25, and the diagnostic
+<code>search</code></td>
+</tr>
+<tr>
+<td><code>src/storage/sqlite.ts:254-263</code></td>
+<td>FTS5 triggers, maintained regardless of stage</td>
+</tr>
+<tr>
+<td><code>src/core/write-pipeline.ts:167-345</code></td>
+<td>Reinforcement branches and the <code>supersedes</code> gate</td>
+</tr>
+<tr>
+<td><code>src/engine/staging.ts:46-73</code></td>
+<td>The staging sweep and its hard delete</td>
+</tr>
+<tr>
+<td><code>src/engine/eval.ts:28-108</code></td>
+<td>Metrics, <code>discardRegret</code>, and the staging precision that
+reads an unwritten table</td>
+</tr>
+<tr>
+<td><code>src/mcp.ts:584-659</code></td>
+<td><code>memory_retract</code> and <code>memory_supersede</code></td>
+</tr>
+<tr>
+<td><code>src/mcp.ts:769-931</code></td>
+<td><code>memory_restore</code>, including <strong>Last
+write</strong></td>
+</tr>
+<tr>
+<td><code>src/adapters/common.ts:29-31</code>,
+<code>:180-200</code></td>
+<td>The in-package store rescue</td>
+</tr>
+<tr>
+<td><code>tests/integration/memory-lifecycle.test.ts:190-232</code></td>
+<td>The paired retraction case</td>
+</tr>
+<tr>
+<td><code>tests/engine/coherence-retraction.test.ts</code></td>
+<td>Cohesion ordering and edge inheritance</td>
+</tr>
+<tr>
+<td><code>tests/core/supersedes-dropped-on-reinforce.test.ts</code></td>
+<td>The <code>supersedes</code> gate and the forced-active
+replacement</td>
+</tr>
+<tr>
+<td><code>docs/claims.md</code></td>
+<td>Every published number with its reproducibility rating</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>; each returned the same at
+<code class="commit-id" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">6b04ba62…</code>.</p>
+<ul>
+<li><code>git grep -n -E 'logStagingEvent\(' -- src ':!src/storage'</code>
+— no match; the staging event table has no writer.</li>
+<li><code>git grep -n -E 'includeStaging' -- src/engine src/core</code>
+— no match; the recall flag has no reader.</li>
+<li><code>git grep -n -E 'retractEngram\(' -- src ':!src/storage'</code>
+— <code>src/engine/retraction.ts:79</code>, <code>:104</code> and the
+import path <code>src/cli.ts:575</code>, <code>:736</code>.</li>
+<li><code>git grep -n -E '\.reason\b' -- src/engine/retraction.ts</code>
+— no match; the retraction reason is never read.</li>
+<li><code>git grep -n -i 'bridge' -- src/engine/retraction.ts</code> —
+the docstring at <code>:33-34</code> only.</li>
+<li><code>git grep -n -E 'validTo|valid_to' -- src/engine</code> — no
+match; no lifecycle path reads the validity window.</li>
+<li><code>git grep -n -E 'TaskTrial'</code> — the type at
+<code>src/types/eval.ts:90</code> and the comment at
+<code>src/engine/eval.ts:12</code>.</li>
+<li><code>git grep -n -E 'target\.agentId|oldEngram\.agentId' -- src</code>
+— <code>src/api/routes.ts:454</code> (an activity touch) and
+<code>src/storage/sqlite.ts:1956</code>; neither is an ownership
+check.</li>
+<li><code>git grep -n -E 'DELETE FROM engrams' -- src</code> — one per
+backend, called from staging, consolidation and eviction.</li>
+<li><code>git grep -n -i -E 'tombstone|blocklist|denylist' -- src</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'approv' -- src/mcp.ts src/api/routes.ts src/storage</code>
+— no match.</li>
+<li><code>git grep -n -E 'sweep\(' -- '*.test.ts'</code> — no
+match.</li>
+<li><code>/usr/bin/grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' LICENSE NOTICE</code>
+— one hit, the NOTICE heading listing runtime model licences; no
+rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/CompleteIdeas/agent-working-memory/commit/eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc"><code class="commit-id" title="eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc">eb56cb35…</code></a>
+— 44 commits on, 0.15.8 to 0.17.0. <code>scope_enforced</code> is
+withdrawn, wrong at the old pin too: <code>memory_recall</code> takes a
+<code>workspace</code> argument that widens recall to every agent
+registered under it, unchecked (<a
+href="#9-reliability-safety-and-trust">section 9</a>).
+<code>trust_state</code> and <code>negative_eval</code> hold on
+byte-identical code. Overtaken: <code>supersedes</code> was dropped
+whenever reinforcement fired, archived duplicates could never be
+reinforced, fading cut unfinished task bodies, and the feedback detector
+shipped a staff name list (<a href="#2-mental-model">section 2</a>).
+Eight claims were wrong at the old pin and are listed in the appendix's
+Known Limitations. The first entry's commit link pointed at the second
+reading's commit. Screened from a full clone: one plugin manifest, one
+<code>prepublishOnly</code> script, 14 floating ranges under a lockfile,
+both manifests inside the cooldown, <code>AGENTS.md</code> read as data.
+Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/CompleteIdeas/agent-working-memory/commit/6b04ba62ac50b3123ab69a3fda2679da9ae9e611"><code class="commit-id" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">6b04ba62…</code></a>
 — <code>trust_state</code> re-tested at an unchanged pin. Every anchor
@@ -564,14 +845,15 @@ section 4 listed. The mark stands and is stronger than recorded — the
 clause appears fourteen times in each of the three backends, pglite,
 postgres and sqlite, which agree with one another, and it is composed
 into the SQL rather than applied to the rows afterwards, so a
-<code>LIMIT</code> means the same thing to every caller. The record said
-<em>every</em> read path appends it. One does not: <code>search</code>,
-documented as <em>diagnostic / structural</em> rather than cognitive,
-opens on <code>agent_id</code> alone and adds the retracted clause only
-when the caller supplies one (<code>pglite.ts:593-613</code>,
-<code>postgres.ts:692-695</code>, <code>sqlite.ts:879-882</code>). Three
-independent backends omit it in the same place, so it is a decision —
-but the HTTP search route passes <code>retracted</code> straight through
+<code>LIMIT</code> means the same thing to every caller.</p>
+<p>The record said <em>every</em> read path appends it. One does not:
+<code>search</code>, documented as <em>diagnostic / structural</em>
+rather than cognitive, opens on <code>agent_id</code> alone and adds the
+retracted clause only when the caller supplies one
+(<code>pglite.ts:593-613</code>, <code>postgres.ts:692-695</code>,
+<code>sqlite.ts:879-882</code>). Three independent backends omit it in
+the same place, so it is a decision — but the HTTP search route passes
+<code>retracted</code> straight through
 (<code>src/api/routes.ts:525-539</code>), so a client that leaves the
 field out gets retracted engrams back from a public endpoint. Second
 qualification: <code>retracted_by</code> is whatever string the caller
@@ -609,10 +891,10 @@ old; nothing was installed and no suite was run.</p>
 the previous pin, and <code>src/storage/pglite.ts</code> moved by
 fourteen lines. All three marks hold on the same code, re-anchored, and
 the report gains the <code>capability_evidence</code> block it was
-written before — including the observation that the negative case is
-paired: a retracted engram must not activate, asserted in the same
-populated result as a positive on the correction that replaced it, so an
-empty activation fails the test rather than passing it.</p>
+written before. That block includes the observation that the negative
+case is paired: a retracted engram must not activate, asserted in the
+same populated result as a positive on the correction that replaced it,
+so an empty activation fails the test rather than passing it.</p>
 <p>The reading's substance is elsewhere, and it is the benchmarks
 document. <code>docs/benchmarks.md</code> now carries a results table in
 which the project grades three of its own gauntlet runs
@@ -643,7 +925,7 @@ cut net tokens saved by 25%".
 <code>tests/engine/abstention-reporting.test.ts</code> is 137 new lines
 behind it.</p>
 <p><strong>2026-08-09</strong> — <a
-href="https://github.com/CompleteIdeas/agent-working-memory/commit/ed854014eae66d2960f50083f92dc9e04d2c93da"><code class="commit-id" title="f129a697982c81efd6d488152408a586d7f5f4b0">f129a697…</code></a>
+href="https://github.com/CompleteIdeas/agent-working-memory/commit/f129a697982c81efd6d488152408a586d7f5f4b0"><code class="commit-id" title="f129a697982c81efd6d488152408a586d7f5f4b0">f129a697…</code></a>
 — first reading. Screened before reading; the tree was read, never
 installed, and no test was run.</p>
         </article>

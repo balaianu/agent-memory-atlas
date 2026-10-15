@@ -1758,7 +1758,7 @@ href="https://github.com/Harshitk-cp/engram/commit/4a3d20487a370d0cca6eaaf97861a
 <li><a
 href="https://github.com/CompleteIdeas/agent-working-memory">CompleteIdeas/agent-working-memory</a>
 at <a
-href="https://github.com/CompleteIdeas/agent-working-memory/commit/6b04ba62ac50b3123ab69a3fda2679da9ae9e611"><code class="commit-id" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">6b04ba62…</code></a></li>
+href="https://github.com/CompleteIdeas/agent-working-memory/commit/eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc"><code class="commit-id" title="eb56cb353dae2e7f00c2e45b41d27ffc1f1198bc">eb56cb35…</code></a></li>
 <li><a
 href="https://github.com/rahilp/second-brain-cloudflare">rahilp/second-brain-cloudflare</a>
 at <a
@@ -17199,6 +17199,39 @@ status filter is <code>hard_filtered_claims</code>
 (<code>source/memory/retrieval.py:217</code>), and the mark holds on it.
 The scope mark rested on the query arm alone, the commands on their
 handlers and direct tests rather than a caller.</li>
+<li><strong>Eight published claims about <a
+href="../systems/agent-working-memory/">AgentWorkingMemory</a> were
+wrong at <a
+href="https://github.com/CompleteIdeas/agent-working-memory/commit/6b04ba62ac50b3123ab69a3fda2679da9ae9e611"><code class="commit-id" title="6b04ba62ac50b3123ab69a3fda2679da9ae9e611">6b04ba62…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code> on the agent-scoped default;
+<code>memory_recall</code> took an optional <code>workspace</code>
+argument from the model (<code>src/mcp.ts:419</code>, <code>:435</code>)
+that widened recall to every agent registered under the name supplied,
+with no membership check (<code>src/engine/activation.ts:208-209</code>,
+<code>src/storage/sqlite.ts:673-677</code>), so the mark is withdrawn.
+It described a third retraction regime, a cross-domain bridge whose
+weight is reduced while the far side is spared; that regime is a
+docstring, and the propagation applies one multiplier computed at the
+source and writes no edge weight
+(<code>src/engine/retraction.ts:33-34</code>, <code>:319-363</code>). It
+said <code>retracted_by</code> was a caller-supplied string the engine
+left null; the engine overwrites it with the correction engram's id
+(<code>:104</code>), and no tool or route accepts it. It said composing
+the predicates into SQL made a <code>LIMIT</code> mean the same thing to
+every caller; on the default SQLite backend both BM25 queries take their
+FTS window before <code>agent_id</code> and <code>retracted</code> apply
+(<code>src/storage/sqlite.ts:648-658</code>, <code>:856-866</code>). It
+quoted <code>'excludes retracted by default in search'</code> as testing
+the default; the case passes <code>retracted: false</code> explicitly
+(<code>tests/integration/memory-lifecycle.test.ts:352</code>). It
+counted <code>staging_events</code> among the event tables;
+<code>logStagingEvent</code>, its only writer, had no caller. It said
+there was no LoCoMo or LongMemEval harness and no committed result; both
+harnesses were under <code>tests/</code>, and
+<code>docs/benchmarks.md</code> carried results. And it gave 16 MCP
+tools and 49 test files where the tree registered 19 tools and held 68
+test files.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

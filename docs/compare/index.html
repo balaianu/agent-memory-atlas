@@ -963,31 +963,51 @@ still hardcoded empty at both write paths</td>
 <tr>
 <td><a
 href="../systems/agent-working-memory/"><code>agent-working-memory</code></a></td>
-<td>An engram with a concept, content, salience, confidence, tags and a
-stage</td>
-<td>PGlite, SQLite or Postgres behind one store interface, with FTS5
-BM25 and local ONNX embeddings</td>
-<td>Activation-weighted search with query expansion and a reranker,
-retracted rows excluded</td>
-<td>A salience-filtered pipeline; weak signals go to a staging buffer
-instead of active memory</td>
-<td>Atomic write-and-supersede by concept match; retraction marks rather
-than deletes</td>
-<td>agent_id is a WHERE clause on every read; separate memory pools per
-folder</td>
-<td>An MCP server with 16 tools, a CLI, hooks, and an onboarding pass
-over existing docs</td>
-<td>Staging resonance checks, Hebbian association strengthening, decay,
-eviction, consolidation</td>
-<td>retracted with retracted_by and retracted_at, composed into the SQL
-of every cognitive read in all three backends — and absent by default
-from the one search documented as diagnostic</td>
-<td>Coherence-weighted contamination propagation, derived from a cited
-cognitive-science result</td>
-<td>Retraction is recorded on the row, so there is no append-only record
-of what was retracted; <code>retracted_by</code> is a caller-supplied
-string and the engine path passes null; and the diagnostic search
-endpoint returns retracted engrams unless the caller asks it not to</td>
+<td>An engram: concept, content, salience, confidence, tags, a stage, a
+memory class, optional task fields, an optional caller-supplied validity
+window, and the retraction pair retracted and retracted_at</td>
+<td>SQLite by default, PGlite or Postgres by environment, behind one
+store interface; FTS5 or tsvector for the lexical arm and local ONNX
+embeddings for the vector arm</td>
+<td>Activation-weighted recall over a BM25 arm and a vector arm, a
+default-on graph boost, a cross-encoder reranker and a confidence-shaped
+abstention; superseded rows are down-ranked by 0.15 and retracted rows
+excluded</td>
+<td>A salience score sorts each write into active, staging, or
+kept-but-tagged low-salience; a same-concept match is reinforced instead
+of duplicated unless the caller names what the write supersedes</td>
+<td>Supersession by id or by concept match; retraction flags the row and
+optionally writes a correction that inherits its strong edges;
+consolidation and the staging sweep hard-delete expired staged and
+orphaned archived engrams</td>
+<td>agent_id from the server environment, applied in SQL on both recall
+arms by default; the model can pass a workspace name to memory_recall
+and widen recall to every agent registered under it, with no membership
+check</td>
+<td>An MCP server with 19 tools, a Claude Code plugin with five hooks, a
+localhost HTTP API, a CLI, and an onboarding scan that writes a pack a
+person edits before import</td>
+<td>A staging sweep on the staging TTL, consolidation on idle and on
+restore (decay, archive, fade, redundancy prune, forget), eviction over
+capacity, Hebbian strengthening after recall</td>
+<td>A retracted boolean excluded on both recall arms and every injection
+path; retracted_by points at the correction engram; the diagnostic
+search and the session-start Last write ignore the flag</td>
+<td>Retraction lowers the confidence of up to 20 graph neighbours by a
+penalty scaled 0.5 to 1.5 by the cohesion of the retracted engram's
+two-hop neighbourhood, derived from a cited cognitive-science result,
+and a correction inherits the retracted engram's strong edges.
+Near-discards are tagged rather than dropped, so discardRegret can count
+the ones later used</td>
+<td>The default SQLite lexical arm cuts its FTS window across all agents
+and retracted rows before filtering, so other agents' and retracted rows
+consume a caller's candidates. Staged, archived and superseded rows
+enter the lexical arm, and include_staging has no reader. No append-only
+mutation record; three production paths hard-delete engrams. The
+retraction reason is required and never stored. memory_restore prints a
+retracted last write. The agent can lift its own scope: a workspace
+argument on memory_recall widens recall to every agent registered under
+that name, with no membership check</td>
 </tr>
 <tr>
 <td><a
@@ -33525,7 +33545,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>329 of 749:</em> <a
+<p><em>328 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33541,8 +33561,6 @@ href="../systems/agent-memory-supabase/"><code>agent-memory-supabase</code></a>,
 href="../systems/agent-memory-techniques/"><code>agent-memory-techniques</code></a>,
 <a
 href="../systems/agent-memoryforge/"><code>agent-memoryforge</code></a>,
-<a
-href="../systems/agent-working-memory/"><code>agent-working-memory</code></a>,
 <a
 href="../systems/agentos-framerslab/"><code>agentos-framerslab</code></a>,
 <a href="../systems/agentrecall-x/"><code>agentrecall-x</code></a>, <a
