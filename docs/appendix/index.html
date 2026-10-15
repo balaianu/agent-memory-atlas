@@ -4117,11 +4117,11 @@ Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/yachen4ever/yacmemo">yachen4ever/yacmemo</a> at
 <a
-href="https://github.com/yachen4ever/yacmemo/commit/4a12be944cd78edca28354feb2af14a11542bd83"><code class="commit-id" title="4a12be944cd78edca28354feb2af14a11542bd83">4a12be94…</code></a>
-— read only, from a shallow clone; re-screened at this pin: no auto-run
-surfaces, two build-time execution points, two unpinned surfaces and six
-files inside the seven-day cooldown. Nothing was installed, built or
-run</li>
+href="https://github.com/yachen4ever/yacmemo/commit/66fb7866172d2a1f9742dbb318d6dd0671e8ee7b"><code class="commit-id" title="66fb7866172d2a1f9742dbb318d6dd0671e8ee7b">66fb7866…</code></a>
+— read only, from a full clone; re-screened at this pin: no auto-run
+surfaces, two build-time execution points, two unpinned surfaces and
+four files inside the seven-day cooldown. Nothing was installed, built
+or run</li>
 <li><a href="https://github.com/ali-ulu/levh">ali-ulu/levh</a> at <a
 href="https://github.com/ali-ulu/levh/commit/95dec5b41957347c07cfc6ab0abe14065ec438b5"><code class="commit-id" title="95dec5b41957347c07cfc6ab0abe14065ec438b5">95dec5b4…</code></a>
 — read only, from a full clone; ten files scanned, no auto-run surfaces,
@@ -16174,6 +16174,34 @@ no method tried; <code>src</code> held 12,755 lines and
 <code>tests</code> 48 <code>*.test.ts</code> files. The first three
 rested on the storage query and the field's signature rather than on the
 read path and the test suite.</li>
+<li><strong>Six published claims about <a
+href="../systems/yacmemo/">yacmemo</a> were wrong at <a
+href="https://github.com/yachen4ever/yacmemo/commit/4a12be944cd78edca28354feb2af14a11542bd83"><code class="commit-id" title="4a12be944cd78edca28354feb2af14a11542bd83">4a12be94…</code></a>,
+the pin they were made at, and are corrected.</strong> The
+<code>human_review</code> record said a person's dismissal silenced a
+collision's warning on every later search. <code>_index_note</code>
+deleted every collision row involving the note, dismissed ones included,
+and re-detected the pair as <code>open</code> under a new id on the next
+write or edit of either note, and <code>reindex</code> cleared them all
+(<code>yacmemo/store.py:1271</code>, <code>:1199</code>); the mark
+holds, because no agent path could set the status. It said the memory
+subsystem contained no generative model; the curator posted to a
+configured <code>chat/completions</code> endpoint
+(<code>yacmemo/curator.py:61</code>). It said nothing in the system
+approved a curator proposal;
+<code>POST /api/{user}/proposal/action</code> recorded a person's adopt
+or dismiss per item (<code>yacmemo/webui/app.py:302</code>,
+<code>yacmemo/store.py:1117</code>). Its summary and verdict said
+console saves and deletes left no <code>call_log</code> row and no
+before-image; <code>yacmemo/webui/app.py:179-192</code> logged both with
+a <code>before_hash</code>, as the report's own section 9 said. It said
+the store locked every public method; <code>_MUTATING</code> named
+seven, leaving <code>save</code> and <code>delete_note</code>, the
+console's write paths, unlocked (<code>yacmemo/store.py:96</code>). And
+section 4 and the file index cited an earlier pin's lines, such as
+<code>store.py:151-198</code> for a guard at <code>:182-222</code>. The
+first rested on the reader of the status rather than on what the
+re-index did to the row.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -20104,38 +20104,42 @@ earns its place too: <code>force=true</code> is counted in
 <code>guard_events</code>, and once forced writes in the last 24 hours
 cross a threshold a second flag becomes mandatory, so the bypass is
 possible, visible and self-limiting.</li>
-<li>Biggest risk: <strong>no in-store record covers every
-mutation.</strong> The complete log is git, which sits outside the store
-and can be rewritten by anyone holding the directory.
-<code>guard_events</code> holds refusals and forced bypasses only;
-<code>call_log</code> is written by the MCP tool wrapper, so a note
-saved or deleted through the web console produces no row in it, and what
-it does store is an argument summary rather than a before-image, trimmed
-to 20,000 rows.</li>
-<li>Most reusable component: <code>detectors.py</code> entire — 120
+<li>Biggest risk: <strong>no in-store record covers every mutation, and
+the audit tool crosses the identity boundary.</strong> The complete log
+is git, which sits outside the store and can be rewritten by anyone
+holding the directory. <code>guard_events</code> holds refusals and
+forced bypasses only, and <code>call_log</code> trims itself to the
+newest 20,000 rows and is not written by the console's archive, tag or
+disposition routes. <code>memory_audit</code> runs without the caller's
+identity and prints other identities' private paths with 60-character
+excerpts.</li>
+<li>Most reusable component: <code>detectors.py</code> entire — 146
 lines of string math with no model in it: the suffix patterns, the
 similarity function, the pairwise audit scan, an observation parser that
-excludes GFM checkboxes so checklists do not manufacture noise, and a
-dangling-link scan that skips citation-shaped targets.</li>
-<li>Maturity impression: MIT by <code>pyproject.toml</code> metadata
-with no licence file in the tree, version 0.2.1, 11,695 lines of Python
-with 146 test functions across fourteen files, a v1 suite kept under
-<code>legacy/</code>, eight documentation chapters, a Vue console and a
-systemd-timer curator. Documentation and interface in Chinese, code
-comments in English.</li>
+excludes GFM checkboxes and wiki-link bullets so checklists and link
+lists do not manufacture noise, and a dangling-link scan that skips
+citation-shaped targets.</li>
+<li>Maturity impression: MIT by <code>pyproject.toml</code> metadata and
+the README with no licence file in the tree, version 0.3.18, 18,995
+lines of Python with 351 test functions across 24 files, a v1 suite kept
+under <code>legacy/</code>, a test that checks the documented tool list
+against a live MCP handshake, ten documentation chapters with an English
+mirror, a Vue console and a systemd-timer curator. Documentation and
+interface in Chinese, code comments mixed.</li>
 <li>Study when: you are writing a de-duplication guard and want to see
 one that assumes an adversary, or you want a worked example of surfacing
 a contradiction instead of resolving it.</li>
-<li>Do not copy when: you need an audit trail inside the store, or scope
-as a predicate rather than a directory per user. Two marks, human review
-and negative eval. Human review: a collision's
-<code>open | resolved | dismissed</code> status is set only by the
-console's own route, and the search path reads it at its default so a
-person's verdict silences the warning for good. Negative eval arrived
-with v0.2.1: three cases in <code>scripts/eval_search.py</code> — a
-deleted note absent from every channel, a dismissed collision that must
-not warn again, and a second store that must not reach the first one's
-content.</li>
+<li>Do not copy when: you need an audit trail inside the store, or
+isolation between agents that do not trust each other — the identity
+token is a self-asserted header. Three marks, scope enforced, human
+review and negative eval. Scope enforced: one <code>visible</code>
+predicate filters search, read, list and the session context by agent
+and device, and <code>memory_audit</code> bypasses it. Human review: a
+collision's <code>open | resolved | dismissed</code> status is set only
+by console routes, survives re-indexing, and the search path reads it at
+its default. Negative eval: pytest cases assert that another identity's
+notes and archived notes stay out of a populated result, beside three
+cases in <code>scripts/eval_search.py</code>.</li>
 </ul>
 <h3 id="levh"><a href="../systems/levh/"><code>levh</code></a></h3>
 <ul>

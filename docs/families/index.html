@@ -6314,39 +6314,38 @@ on a hashed project id, and global recall — the MCP default and the only
 scope the per-turn hooks use — returns every project's pages.</p>
 <p><strong><a href="../systems/yacmemo/">yacmemo</a> writes the
 duplicate guard that anticipates its own evasion.</strong> A personal
-Markdown memory server, MIT by metadata at version 0.2.0 — 11,833 lines,
-4,764 of them Python, with 95 test functions and its documentation in
-Chinese — running one process per machine with an MCP mount per user, so
-any client joins by URL with nothing installed.
-<code>memory_write</code> refuses a near-duplicate title, and the
-comparison runs on a normalizer that first strips trailing dates,
-<code>-2</code>-style counters, <code>v1</code>, 更新 and （新）: the
-rename an agent would reach for to slip a second copy past the check is
-exactly the transformation it collapses. The refusal names the
-near-matches with their scores and tells the caller to edit instead. The
-override is the better half — <code>force=true</code> writes and records
-a <code>forced</code> event, but once forced writes in the last 24 hours
-cross a configured threshold a second flag becomes mandatory, under a
-comment reading "human-confirm semantics, deterministic and fully
-counted in guard_events" — so bypassing is possible, visible and
-self-limiting rather than free. The second stance is rarer still:
-nothing is hidden. No status, tier, score or expiry anywhere in the
-search path withholds a note; when two collide, both are returned and
-the hit carries a ⚠ naming the other and suggesting a merge, leaving the
-judgement to the reading model — which the design can afford because the
-memory subsystem contains no generative LLM at all, only one 0.6B
-embedding call. Two marks. A collision's
-<code>open | resolved | dismissed</code> status is set solely by the web
-console's own route, documented as a "human decision", and the search
-path reads <code>collisions_for(path)</code> at its default
-<code>open</code>, so a person's verdict silences the warning on every
-later hit. Three committed search cases assert absence: a deleted note
-from every channel, a dismissed collision from its warning, and one
-store's content from a second store. The record is where it thins — the
-only log covering every mutation is git, <code>guard_events</code> holds
-refusals and forced bypasses alone, and <code>call_log</code> is written
-by the MCP tool wrapper, so a note deleted in the console leaves no row
-in it.</p>
+Markdown memory server, MIT by metadata at version 0.3.18 — 18,995 lines
+of Python, 7,378 of them in the package, with 351 test functions and its
+documentation in Chinese with an English mirror — running one process
+per machine with an MCP mount per user, so any client joins by URL with
+nothing installed. <code>memory_write</code> creates only and refuses a
+near-duplicate title, and the comparison runs on a normalizer that first
+strips trailing dates, <code>-2</code>-style counters, <code>v1</code>,
+更新 and （新）: the rename an agent would reach for to slip a second
+copy past the check is exactly the transformation it collapses. The
+refusal names the near-matches with their scores and tells the caller to
+edit instead. The override is the better half — <code>force=true</code>
+writes and records a <code>forced</code> event, but once forced writes
+in the last 24 hours cross a configured threshold a second flag becomes
+mandatory, so bypassing is possible, visible and self-limiting rather
+than free. Contradictions are surfaced rather than resolved: when two
+notes collide, both are returned and the hit carries a ⚠ naming the
+other. Three marks. A collision's
+<code>open | resolved | dismissed</code> status is set solely by two
+web-console routes, kept through edits, moves and rebuilds by a
+suppression key on the pair's paths and texts, and read by the search
+path at its default <code>open</code>, so a person's verdict silences
+the warning for good. Inside each user's store, an identity token in the
+request header selects a private zone per agent and device, and one
+predicate, <code>visible</code>, filters search, read, list and the
+session context; <code>memory_audit</code> and the write guard's refusal
+bypass it and name other zones' paths. Committed pytest cases assert
+that another identity's notes and archived notes stay out of a populated
+result, beside the evaluation script's deleted-note and dismissed-pair
+cases. The record is where it thins — the only log covering every
+mutation is git, <code>guard_events</code> holds refusals and forced
+bypasses alone, and <code>call_log</code> trims itself to the newest
+20,000 rows.</p>
 <p><strong><a href="../systems/levh/">LEVH</a> separates the gate
 deciding no from the gate declining to decide, gives the second one a
 table, and hands the agent a flag that skips it.</strong> An

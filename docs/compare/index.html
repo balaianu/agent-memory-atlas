@@ -31618,62 +31618,60 @@ identity and its directory only filing, with Basic-Memory-style
 <code>- [category] text</code> observation lines parsed out of the
 body</td>
 <td>Markdown files as the sole truth; SQLite (metadata, FTS5 trigram,
-collisions, guard events) and LanceDB vectors are derived indexes under
-<code>.index/</code>, rebuildable and untracked</td>
-<td>FTS5 trigram and vector search fused by RRF, with a ⚠ warning
-attached to any hit that has an open collision</td>
-<td><code>memory_write(title, content, force, force_confirm)</code> —
-refused outright when a near-duplicate title exists, unless forced, and
-the force is itself rate-limited</td>
+collisions, guard events, audit dispositions and an execution timeline)
+and LanceDB vectors are derived indexes under <code>.index/</code>,
+rebuildable and untracked</td>
+<td>FTS5 trigram and vector search fused by RRF, filtered to the
+caller's identity, with archived notes dropped for MCP clients, settled
+curator proposals dropped for every caller, and a ⚠ warning attached to
+any hit that has an open collision</td>
+<td><code>memory_write(title, content, force, force_confirm)</code>
+creates only: an existing path is refused, a near-duplicate title is
+refused unless forced, and the force is itself rate-limited</td>
 <td><code>memory_edit</code> on a unique anchor,
-<code>memory_edit_section</code> by heading, move, and an explicit
-delete. Every one commits to git, so the memory repository is always
-clean and any deletion is recoverable</td>
-<td>A separate <code>Store(root=...)</code> and MCP mount per user —
-separate directories rather than a predicate</td>
+<code>memory_edit_section</code> by heading, move, archive and
+unarchive, and an explicit delete. Every one commits to git, so the
+memory repository is always clean and any deletion is recoverable</td>
+<td>A separate store root and MCP mount per user; inside it, a private
+zone per agent and device selected by a token in the request header and
+applied by one predicate on every MCP read</td>
 <td>One streamable-HTTP server that any MCP client joins by URL with
 nothing installed locally, plus a bundled Vue web console at
-<code>/ui/</code></td>
-<td>A weekly curator on a systemd timer that reviews quality and writes
-a proposal report, and an incremental observation-collision detector on
-the write path</td>
+<code>/ui/</code> behind an optional password</td>
+<td>A weekly LLM curator on a systemd timer that writes a proposal
+report, and an incremental observation-collision detector on the write
+path</td>
 <td>A deterministic duplicate guard with a counted override, collision
-warnings a person can dismiss, per-call usage logging, and git history
-over every mutation</td>
-<td>The duplicate guard is the best version of this idea in the corpus,
-because it anticipates the evasion. <code>normalize_title</code> strips
-trailing dates, <code>-2</code>-style counters, <code>v1</code>,
+warnings only a person can dismiss, per-call usage logging, and git
+history over every mutation</td>
+<td>The duplicate guard anticipates the evasion.
+<code>normalize_title</code> strips trailing dates, compact MMDD and
+YYYYMMDD stamps, <code>-2</code>-style counters, <code>v1</code>,
 <code>更新</code> and <code>（新）</code> before comparing, so the
 rename that would slip a second copy past a naive check is exactly what
-it collapses — and the refusal message names the near-matches with their
-scores and tells the caller to edit instead. The override ladder is
-better still: <code>force=true</code> is allowed, counted in
+it collapses, and the refusal names the near-matches with their scores
+and says to edit instead. The override ladder makes the bypass possible,
+visible and self-limiting: <code>force=true</code> is counted in
 <code>guard_events</code>, and once forced writes in the last 24 hours
-cross a configured threshold a second flag becomes mandatory, so
-bypassing is possible, visible and self-limiting rather than free. The
-design also refuses to hide: there is no status, tier or score anywhere
-in the search path that withholds a note, and a contradiction is
-surfaced beside its counterpart with a ⚠ rather than silently resolved.
-And there is no generative model in the memory subsystem at all — one
-0.6B embedding call — so the store's behaviour is string math a reader
-can follow</td>
-<td>No record covers every mutation. Git commits do — and git history is
+cross a configured threshold a second flag becomes mandatory. A person's
+verdict on a collision is stored, kept through edits, moves and
+rebuilds, and read by every search, and the agent's tools cannot set it.
+Identity scoping is one predicate shared by every MCP read rather than a
+filter copied into each</td>
+<td>No record covers every mutation. Git commits do, and git history is
 not an audit record this atlas credits, because it lives outside the
-store and anyone with the directory can rewrite it. Of the two SQLite
-records, <code>guard_events</code> holds only refusals and forced
-bypasses, and <code>call_log</code> now covers the web console and
-carries a <code>before_hash</code> — two of the three objections at the
-previous pin are closed. What remains is the one that decides the mark:
-<code>_trim</code> deletes every row beyond the newest 20,000, so the
-record is a bounded ring rather than append-only. The curator is
-proposal-only by design — "it has no write power over memories" — but
-nothing in the system approves or applies a proposal either: the WebUI
-lists the report files and a person carries out the work by hand, so the
-loop is closed outside the software. The duplicate guard is keyed on
-title similarity only, so the same fact under two genuinely different
-titles is two memories and the guard says nothing. Scope is one
-directory per user rather than a predicate, and MIT is declared in
-<code>pyproject.toml</code> with no licence file in the tree</td>
+store and anyone with the directory can rewrite it.
+<code>guard_events</code> holds refusals and forced bypasses only, and
+<code>call_log</code> trims itself to the newest 20,000 rows and is not
+written by the console's archive, tag or disposition routes. The
+identity token is a self-asserted header, and <code>memory_audit</code>
+prints other identities' private paths with 60-character excerpts. The
+agent can declare a curator proposal settled by writing a marker, after
+which every item a person did not dismiss is recorded as executed. The
+duplicate guard is keyed on title similarity only, so the same fact
+under two genuinely different titles is two memories. The console and
+the MCP endpoint have no authentication by default; the stated boundary
+is the home LAN</td>
 </tr>
 <tr>
 <td><a
@@ -32745,7 +32743,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>323 of 734:</em> <a
+<p><em>324 of 734:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33074,6 +33072,7 @@ href="../systems/vllm-semantic-router/"><code>vllm-semantic-router</code></a>,
 href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/wenlan/"><code>wenlan</code></a>, <a
 href="../systems/windieos/"><code>windieos</code></a>, <a
+href="../systems/yacmemo/"><code>yacmemo</code></a>, <a
 href="../systems/yantrik-mind/"><code>yantrik-mind</code></a>, <a
 href="../systems/yantrikdb/"><code>yantrikdb</code></a>, <a
 href="../systems/yantrikdb-hermes-plugin/"><code>yantrikdb-hermes-plugin</code></a>,
