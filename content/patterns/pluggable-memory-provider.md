@@ -164,9 +164,12 @@ one"* in its purest form: an erasure request reaching a well-built interface
 with nowhere to go, and a correction story that depends on a ranking property
 the contract cannot require.
 
+**[Resonant](../../systems/resonant/) mounts its provider by tool name, and nothing notices when the names move.** Two hooks post JSON-RPC `tools/call` to [Resonant Mind](../../systems/resonant-mind/), the same organisation's store: `mind_orient` and `mind_ground` once per session, and `mind_search`, `mind_surface`, `mind_spark` and `mind_thread` on every prompt (`packages/backend/src/services/hooks.ts:248-258`, `:1846-1851`). At Resonant Mind's pinned commit and at its 4 October 2026 head, the registry has renamed the first two to `ritual_*` and holds none of the last three. Each unknown name comes back as a JSON-RPC error that `callMindTool` returns as `null` without logging, and the request carries no credential although the server requires one. The agent can hold the same server's tools directly through `.mcp.json` with headers, so the provider works for the model and fails for the host. **Check the provider's `tools/list` against the names the host calls, at startup.**
+
 ## Tests to require
 
 - Delete a memory through the host and prove it is gone from the mounted provider, not just from the host's own store.
+- Start the host against the provider version it documents and assert every tool name the host calls is in that provider's tool list.
 - Mirror a host write into a provider, remove it at the host, and assert the mirrored copy is removed or explicitly marked orphaned.
 - Switch providers and verify the host does not silently serve stale context from the previous backend.
 - Issue a request under one scope and assert no provider call can return another scope's memory.

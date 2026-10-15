@@ -488,10 +488,31 @@ scores. That is this page's <em>"Deletion is the hard one"</em> in its
 purest form: an erasure request reaching a well-built interface with
 nowhere to go, and a correction story that depends on a ranking property
 the contract cannot require.</p>
+<p><strong><a href="../../systems/resonant/">Resonant</a> mounts its
+provider by tool name, and nothing notices when the names move.</strong>
+Two hooks post JSON-RPC <code>tools/call</code> to <a
+href="../../systems/resonant-mind/">Resonant Mind</a>, the same
+organisation's store: <code>mind_orient</code> and
+<code>mind_ground</code> once per session, and <code>mind_search</code>,
+<code>mind_surface</code>, <code>mind_spark</code> and
+<code>mind_thread</code> on every prompt
+(<code>packages/backend/src/services/hooks.ts:248-258</code>,
+<code>:1846-1851</code>). At Resonant Mind's pinned commit and at its 4
+October 2026 head, the registry has renamed the first two to
+<code>ritual_*</code> and holds none of the last three. Each unknown
+name comes back as a JSON-RPC error that <code>callMindTool</code>
+returns as <code>null</code> without logging, and the request carries no
+credential although the server requires one. The agent can hold the same
+server's tools directly through <code>.mcp.json</code> with headers, so
+the provider works for the model and fails for the host. <strong>Check
+the provider's <code>tools/list</code> against the names the host calls,
+at startup.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Delete a memory through the host and prove it is gone from the
 mounted provider, not just from the host's own store.</li>
+<li>Start the host against the provider version it documents and assert
+every tool name the host calls is in that provider's tool list.</li>
 <li>Mirror a host write into a provider, remove it at the host, and
 assert the mirrored copy is removed or explicitly marked orphaned.</li>
 <li>Switch providers and verify the host does not silently serve stale

@@ -400,6 +400,18 @@ session's next boundary. Two gaps remain. The pending file is unlinked
 before its operations are re-applied, so a failure in the repair round
 loses them behind an advanced watermark. No lock spans a distillation,
 so two boundary hooks close together process the same backlog.</p>
+<p><strong><a href="../../systems/resonant/">Resonant</a> advances its
+digest cursor on one path out of two.</strong> The Scribe keeps
+<code>(digest.last_thread_id, digest.last_sequence)</code> and, when the
+daily thread has rolled over, flushes the old thread's tail into the
+previous day's Markdown file before reading the new day
+(<code>packages/backend/src/services/digest.ts:202-213</code>). The
+flush writes no cursor. Only the main path does, and it returns early
+below five new messages (<code>:215-218</code>, <code>:267-268</code>).
+So until the new day reaches five, every 30-minute tick re-reads the
+same tail, pays for another Haiku call and appends the same block again.
+<strong>A side path that consumes input must advance the cursor itself,
+in the same step.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Crash before, during, and after each state mutation.</li>

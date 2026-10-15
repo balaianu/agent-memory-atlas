@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 734 reports.**
+**This page covers all 735 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -5692,6 +5692,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Codependent AI Source-Available License, 17,088 lines of TypeScript and 1,354 lines of SQL in 23 migrations, 32 commits on master by 2 contributors between 22 March and 19 September 2026. 85 Vitest cases in 18 files, 42 of them image handling; the only database test writes one observation, and no test reaches search, supersession or consolidation. No marks.
 - Study when: you want write-time supersession without an LLM in the loop, or a worked example of ordering statements for safe failure on a connection that cannot hold a transaction.
 - Do not copy when: corrections must hold on every read path, deletion must be reliable, more than one principal shares the store, or search has to work while the embedding provider is down.
+
+### [`resonant`](../systems/resonant/)
+
+- Best idea: **semantic recall with nothing to run.** MiniLM embeds each message in-process after insert, every vector sits in one contiguous array loaded at boot, and soft delete, regenerate and thread delete all evict the cached vector after their transaction commits, so a restart and a live process agree on what is searchable.
+- Biggest risk: **correction does not reach the derived layers.** `editMessage` replaces the text and the FTS trigger follows, but nothing re-embeds, so the message is found by what it used to say; deletes leave the Scribe's digest files and the handoff carry untouched.
+- Most reusable component: `packages/backend/src/services/vector-cache.ts` — geometric growth, swap-remove eviction and a filtered top-k scan over normalised vectors, with no dependency.
+- Second risk: **the Mind seam has drifted.** The hooks call `mind_orient`, `mind_ground`, `mind_surface`, `mind_spark` and `mind_thread`, which Resonant Mind's registry does not hold at `9a08410` or `dbee319`, send no credential, and turn every error into silence. Beside it, the digest's rollover flush repeats every 30 minutes until the new day has five messages, and `res search --thread` searches every thread.
+- Maturity impression: Apache-2.0, 26,857 lines of backend and 37,614 lines of frontend TypeScript, 89 commits on main under six author names between 18 March and 11 October 2026, v3.0.0. 103 Vitest cases in 6 files run in CI on Ubuntu and Windows; none reaches search, embedding, the digest or the handoff. No marks.
+- Study when: you want a single-user companion whose recall is a local, inspectable conversation archive with no embedding service, and a context assembler that injects rich state once per session.
+- Do not copy when: edits or deletions must change what is recalled, the archive mixes other people's messages with the owner's, or the memory provider's tool surface may change underneath the client.
 
 ### [`engram-nickcirv`](../systems/engram-nickcirv/)
 

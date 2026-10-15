@@ -203,6 +203,8 @@ columns does this pass have no input for, and what happens to them.
 
 **[Tigerless agent-memory](../../systems/tigerless-agent-memory/) runs the cursor version with two watermarks per session.** A boundary hook appends the raw increment to `archive/sessions/` and advances `consumed` (`adapters/capture.py:31-44`). The detached distiller advances `distilled` only after a batch's operations are applied, and an executor failure raises before that, so the batch is read again at the next boundary (`core/distill.py:54-97`). Operations refused twice wait in `.state/pending` for the session's next boundary. Two gaps remain. The pending file is unlinked before its operations are re-applied, so a failure in the repair round loses them behind an advanced watermark. No lock spans a distillation, so two boundary hooks close together process the same backlog.
 
+**[Resonant](../../systems/resonant/) advances its digest cursor on one path out of two.** The Scribe keeps `(digest.last_thread_id, digest.last_sequence)` and, when the daily thread has rolled over, flushes the old thread's tail into the previous day's Markdown file before reading the new day (`packages/backend/src/services/digest.ts:202-213`). The flush writes no cursor. Only the main path does, and it returns early below five new messages (`:215-218`, `:267-268`). So until the new day reaches five, every 30-minute tick re-reads the same tail, pays for another Haiku call and appends the same block again. **A side path that consumes input must advance the cursor itself, in the same step.**
+
 ## Tests to require
 
 - Crash before, during, and after each state mutation.

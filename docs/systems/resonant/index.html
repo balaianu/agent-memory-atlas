@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A self-hosted Claude companion
+keeping every conversation in SQLite with local embeddings, a daily
+model-written digest and carry, and an optional Resonant Mind client.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Resonant — Agent Memory Atlas">
+    <meta property="og:description" content="A self-hosted Claude
+companion keeping every conversation in SQLite with local embeddings, a
+daily model-written digest and carry, and an optional Resonant Mind
+client.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Resonant — Agent Memory Atlas">
+    <meta name="twitter:description" content="A self-hosted Claude
+companion keeping every conversation in SQLite with local embeddings, a
+daily model-written digest and carry, and an optional Resonant Mind
+client.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Resonant — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Resonant",
+      "description": "A self-hosted Claude companion keeping every conversation in SQLite with local embeddings, a daily model-written digest and carry, and an optional Resonant Mind client.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Self-hosted companion over a searchable
+conversation archive</p>
+          <h1>Resonant</h1>
+          <p class="document-deck">A self-hosted Claude companion
+keeping every conversation in SQLite with local embeddings, a daily
+model-written digest and carry, and an optional Resonant Mind
+client.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/nekyialabs/resonant">
+              <span>Source</span>
+              <strong>nekyialabs/resonant</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/nekyialabs/resonant/commit/4f59e10796eff2dfe0fdbbc18573c944c5bf03e8" title="4f59e10796eff2dfe0fdbbc18573c944c5bf03e8">
+              <span>Analyzed revision</span>
+              <code>4f59e107…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/nekyialabs--resonant" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>nekyialabs--resonant</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0,
+with a NOTICE crediting Codependent AI</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>26,857
+lines of TypeScript in 53 backend files and 37,614 in 57 frontend files,
+plus 376 lines of SQL in 2 migrations; the memory path is db.ts,
+hooks.ts, digest.ts, handoff.ts, embeddings.ts and vector-cache.ts,
+4,800 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>89
+commits on main under six author names, 18 March – 11 October 2026;
+v3.0.0 tagged 8 July 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>103
+Vitest cases in 6 files, 1,095 lines; none reaches search, embedding,
+the digest or the handoff</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Resonant is a self-hosted, single-user companion built on the Claude
+Agent SDK, and its memory is its own conversation archive. Every message
+lands in one SQLite file with a local MiniLM embedding beside it, and
+the model finds old conversations by meaning through a Bash CLI it is
+shown at session start. A Haiku pass digests the day every 30 minutes,
+and an opt-in Sonnet pass turns the previous day into a carry paragraph
+for the next. What is notable is that recall needs no service: embedding
+and search run in-process over a vector array loaded at boot, and every
+delete path evicts the vector after its transaction commits. What is
+weak is correction, and the seam with its own memory provider. An edited
+message keeps the embedding of its old text, and the hooks that call
+Resonant Mind name tools that store does not register.</p>
+<p>Resonant and <a href="../resonant-mind/">Resonant Mind</a> come from
+the same organisation, and Resonant neither embeds, vendors nor
+reimplements the Mind's store. It is an optional client. A URL in
+<code>integrations.mind_cloud.mcp_url</code>, or the first
+<code>.mcp.json</code> server whose name contains <code>mind</code>,
+receives JSON-RPC <code>tools/call</code> posts from two hooks
+(<code>packages/backend/src/services/hooks.ts:156-218</code>). The
+settings card puts the boundary in its own words: Resonant "is the
+window, never the container"
+(<code>packages/frontend/src/components/settings/MindSection.tsx:137-139</code>).
+Without a Mind every mechanism below works unchanged. With one, the
+Mind's observations are injected beside the archive and nothing
+reconciles the two.</p>
+<p>The client and the server have drifted. At the Resonant Mind commit
+the atlas pins, <code>9a08410</code>, and at its head of 4 October 2026,
+<code>dbee319</code>, the registry holds <code>mind_search</code> and
+holds <code>ritual_orient</code> and <code>ritual_ground</code> "renamed
+from mind_orient / mind_ground" (<code>src/mcp/registry.ts:77-82</code>
+there). The session prefetch calls <code>mind_orient</code> and
+<code>mind_ground</code>, and the per-prompt hook calls
+<code>mind_surface</code>, <code>mind_spark</code> and
+<code>mind_thread</code> beside <code>mind_search</code>
+(<code>hooks.ts:248-258</code>, <code>:1846-1851</code>). Each unknown
+name is a JSON-RPC error that <code>callMindTool</code> turns into
+<code>null</code> without a log line. The calls also send only a
+<code>Content-Type</code> header, while the Mind accepts a Bearer or
+Basic key or a secret connector path, so only a URL carrying that path
+is authorised at all.</p>
+<p>Resonant is Apache-2.0 with a NOTICE crediting Codependent AI. The
+Mind it is built to call carries a non-commercial source-available
+licence, so the pair as documented is not uniformly permissive. The
+repository moved from <code>codependentai/resonant</code> to
+<code>nekyialabs/resonant</code> at <code>f09255e</code>; the README's
+release badge names the old address.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>The memory is the transcript. A message is never a belief, a
+candidate or a fact: it is what someone said in a thread, stored the
+moment it was said, and everything else in the store is derived from it
+or written beside it. Writing is automatic, retrieval is the agent's
+choice through <code>res search</code>, and injection is the
+application's, through an orientation block the runtime prepends.</p>
+<p>A message moves through four states. It is <strong>live</strong> from
+insert. A person may <strong>edit</strong> it through the UI, which
+replaces <code>content</code> and copies the first original into
+<code>original_content</code> with <code>COALESCE</code>, so a second
+edit loses the first replacement
+(<code>packages/backend/src/services/db.ts:902-909</code>). A
+<strong>soft delete</strong> sets <code>deleted_at</code> and leaves the
+text in the row, and every read path filters on it. A <strong>hard
+delete</strong> removes the row, by regenerate, which deletes the stale
+companion turn and everything after it, or by deleting the thread.</p>
+<p>Five derived layers sit around the archive, and none of them follows
+a message through those states:</p>
+<ul>
+<li>the <strong>embedding</strong>, computed once after insert and never
+recomputed;</li>
+<li><strong>digest blocks</strong>, Markdown written by a Haiku "Scribe"
+and appended to a dated file, never revised;</li>
+<li>the <strong>carry</strong>, one key-value row holding a paragraph
+and the date it is valid for, overwritten each night;</li>
+<li><strong>presence and context slots</strong>
+(<code>context.companion.*</code>, <code>context.card.*</code>),
+overwritten in place by the agent or the user;</li>
+<li><strong><code>companion_actions</code></strong>, an append-only
+diary of what the agent did, never pruned.</li>
+</ul>
+<p>Correction belongs to the user. The edit and delete routes sit behind
+the session-cookie middleware
+(<code>packages/backend/src/routes/api.ts:1323</code>,
+<code>:2048-2090</code>), and the agent's CLI has no verb that edits or
+deletes a message. The agent runs with
+<code>permissionMode: 'bypassPermissions'</code> and <code>Bash</code>,
+though (<code>packages/backend/src/services/agent.ts:642-643</code>),
+and the write gate guards only the <code>Write</code> and
+<code>Edit</code> tools, so the database file is within its reach.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — Resonant's write-to-recall path, the edit that skips the vector, and the Mind hook that fails silently</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: Resonant&#39;s write-to-recall path, the edit that skips the vector, and the Mind hook that fails silently
+flowchart TD
+    M[&quot;message inserted (createMessage)&quot;] --&gt; E[&quot;embed after insert, fire-and-forget&quot;]
+    E --&gt; V[&quot;message_embeddings row and in-memory vector&quot;]
+    M --&gt; F[&quot;messages_fts row via trigger, if setup-fts ran&quot;]
+    ED[&quot;person edits message&quot;] --&gt; C[&quot;content replaced in place&quot;]
+    C --&gt; F
+    C -. &quot;no re-embed&quot; .-&gt; V
+    SD[&quot;soft delete or hard delete&quot;] --&gt; X[&quot;vector evicted after commit; FTS row dropped&quot;]
+    S[&quot;res search &#39;query&#39;&quot;] --&gt; V
+    V --&gt; R[&quot;top k by dot product, no threshold&quot;]
+    R --&gt; N[&quot;current text of match and two neighbours each side&quot;]
+    M --&gt; SC[&quot;Scribe every 30 min, five or more new messages&quot;]
+    SC --&gt; DG[&quot;data/digests/DATE.md, appended&quot;]
+    DG --&gt; H[&quot;handoff 00:10, opt-in&quot;]
+    H --&gt; CA[&quot;carry row for today&quot;]
+    H --&gt; OP[&quot;opener posted and embedded as a companion message&quot;]
+    CA --&gt; O[&quot;session orientation on today&#39;s daily&quot;]
+    P[&quot;user prompt of 10 or more characters&quot;] --&gt; MH[&quot;Mind hook posts tools/call by name&quot;]
+    MH --&gt; MR{&quot;name in Resonant Mind registry?&quot;}
+    MR -- &quot;mind_search only&quot; --&gt; INJ[&quot;Associative memory block&quot;]
+    MR -- &quot;orient, ground, surface, spark, thread&quot; --&gt; NULL[&quot;JSON-RPC error read as null, nothing logged&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Resonant is one Node.js process: an Express server with a WebSocket
+hub, a React frontend built with Vite, and a shared types package. The
+agent is the Claude Agent SDK's in-process <code>query()</code> loop
+with <code>claude-sonnet-4-6</code> as the default model, 30 turns at
+most, and session resume through <code>threads.current_session_id</code>
+(<code>agent.ts:638-674</code>). Everything durable is in
+<code>data/</code>: <code>resonant.db</code> under better-sqlite3,
+uploaded files, and the digest directory.</p>
+<p>Embeddings come from
+<code>sentence-transformers/all-MiniLM-L6-v2</code> through
+<code>@huggingface/transformers</code>, mean-pooled and normalised to
+384 dimensions, loaded lazily on first use with
+<code>revision: 'main'</code>
+(<code>packages/backend/src/services/embeddings.ts:6-38</code>).
+<code>loadVectorCache</code> reads every live embedding into one
+<code>Float32Array</code> at boot (<code>server.ts:63</code>,
+<code>vector-cache.ts:51-86</code>), and search never touches SQLite for
+vectors. The cache grows geometrically by a factor of 1.5 and removes by
+swap (<code>vector-cache.ts:35-48</code>, <code>:118-131</code>).
+Full-text search is an FTS5 table that
+<code>scripts/setup-fts.mjs</code> creates once, with insert, update and
+delete triggers on <code>messages</code>; without it, keyword search
+falls back to <code>LIKE</code> (<code>db.ts:1050-1170</code>).</p>
+<p>Background work runs inside the same process. The orchestrator starts
+the Scribe on a 30-minute interval
+(<code>packages/backend/src/services/orchestrator.ts:610-621</code>),
+the handoff runs on a croner schedule at <code>10 0 * * *</code> in the
+configured timezone
+(<code>packages/backend/src/services/handoff.ts:65</code>,
+<code>:548-561</code>), and an embedding backfill loop runs when the
+agent starts it through <code>res backfill start</code>. Loopback routes
+under <code>/api/internal/*</code> serve the CLI, guarded by a token
+file beside the database (<code>tools/res.mjs:33-47</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li><strong>What has to be running:</strong> Node 20 to 24 and the
+single process. No database server, no vector service, no queue.</li>
+<li><strong>Credentials:</strong> a Claude Code login or an Anthropic
+API key for the agent, the Scribe and the handoff. Storing and embedding
+a message need neither.</li>
+<li><strong>Offline:</strong> search and storage run locally once the
+MiniLM weights are cached. The first embedding downloads them from
+Hugging Face at a floating <code>main</code> revision.</li>
+<li><strong>First run:</strong> <code>npm install</code>, copy
+<code>resonant.example.yaml</code> and <code>.env.example</code>, set
+<code>APP_PASSWORD</code> (the server refuses to serve without one),
+<code>npm run build</code>, <code>npm start</code>. Keyword search needs
+<code>node scripts/setup-fts.mjs</code> once.</li>
+<li><strong>Repair by hand:</strong> plain SQLite and Markdown. Backups
+are the <code>data/</code> directory with its WAL sidecars plus four
+gitignored config files.</li>
+</ul>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> Messages enter from the WebSocket handler
+(<code>ws.ts:611</code>), the agent's reply
+(<code>agent.ts:1162</code>), Discord and Telegram
+(<code>discord/index.ts:264</code>, <code>telegram/index.ts:392</code>),
+autonomous wakes (<code>orchestrator.ts:1077</code>) and the handoff
+opener (<code>handoff.ts:451</code>). All go through
+<code>createMessage</code>, which takes <code>MAX(sequence)+1</code> for
+the thread, inserts, and for a non-system text message over 10
+characters calls <code>embedMessageAsync</code> without awaiting it
+(<code>db.ts:773-824</code>). <code>saveEmbedding</code> upserts the
+blob and updates the cache only if the message is live
+(<code>db.ts:1176-1202</code>).</p>
+<p><strong>Extraction.</strong> <code>runDigest</code> reads the daily
+thread's text messages after a
+<code>(digest.last_thread_id, digest.last_sequence)</code> bookmark,
+skips below five, sends them to <code>claude-haiku-4-5</code> with no
+tools and <code>persistSession: false</code>, and appends the reply to
+<code>data/digests/&lt;date&gt;.md</code>
+(<code>packages/backend/src/services/digest.ts:93-127</code>,
+<code>:182-274</code>). The prompt asks for topics, quotes, decisions,
+open items, ideas, dates, projects and an emotional arc.
+<code>runHandoff</code> reads the previous day's daily and its digest,
+asks <code>claude-sonnet-4-6</code> for an <code>opener</code> and a
+<code>carry</code> as one JSON object, stores the carry under
+<code>handoff_carry</code> with today's date, and posts the opener into
+today's daily (<code>handoff.ts:130-176</code>,
+<code>:395-470</code>).</p>
+<p><strong>Retrieval.</strong> <code>res search "query"</code> posts to
+<code>/api/internal/search-semantic</code>
+(<code>tools/res.mjs:304-319</code>). The route embeds the query, calls
+<code>searchVectors</code> with up to 50 results, then for each hit
+reads two messages either side with <code>getMessageContext</code> and
+looks up the SDK session it fell in (<code>api.ts:1147-1213</code>).
+<code>searchVectors</code> applies the optional filters in the loop and
+keeps a sorted top k (<code>vector-cache.ts:150-191</code>). The UI's
+<code>/api/search</code> calls <code>searchMessages</code>, FTS5 first
+and <code>LIKE</code> on any failure (<code>db.ts:1113-1170</code>).</p>
+<p><strong>Context assembly.</strong> On a session's first message
+<code>agent.ts</code> prepends
+<code>buildOrientationContext(ctx, 'session')</code> and
+<code>prefetchMindContext()</code> inside a <code>[Context]</code>
+block; every later turn gets the <code>'turn'</code> form, one
+<code>[env]</code> line (<code>agent.ts:707-736</code>). The session
+form carries the House Outlook digest, the carry, the delta since the
+thread's last turn, recent companion actions, life status, skills, the
+CLI reference, the context card, the companion's presence and recent
+reactions, each under a named cap (<code>hooks.ts:1313-1707</code>).
+<code>UserPromptSubmit</code> adds the Mind block per prompt
+(<code>hooks.ts:1812-1880</code>).</p>
+<p><strong>Update, delete, forget.</strong>
+<code>PATCH /api/messages/:id</code> calls <code>editMessage</code>
+(<code>api.ts:2048-2071</code>). <code>DELETE /api/messages/:id</code>
+calls <code>softDeleteMessage</code>, which evicts the cached vector and
+keeps the embedding row (<code>api.ts:2074-2090</code>,
+<code>db.ts:911-919</code>). Regenerate calls
+<code>deleteMessagesFrom</code>, and thread deletion calls
+<code>deleteThread</code>, which deletes triggers, timers, canvases,
+outbound rows, audit rows, session history, embeddings and messages in
+one transaction and evicts afterwards (<code>db.ts:605-646</code>,
+<code>:947-973</code>).</p>
+<p><strong>Schema.</strong>
+<code>packages/backend/migrations/001_init.sql</code> holds threads,
+messages, session history, the tool audit log, config and canvases;
+<code>db.ts:24-319</code> adds sections,
+<code>message_embeddings</code>, <code>companion_actions</code>, auth
+preferences and the usage log as idempotent migrations.</p>
+<p><strong>Tests.</strong> Section 10.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>messages</code> carries <code>thread_id</code>, a per-thread
+<code>sequence</code> with a unique index, <code>role</code> in
+<code>companion | user | system</code>, <code>content</code>,
+<code>content_type</code>, <code>platform</code>, JSON
+<code>metadata</code>, <code>reply_to_id</code>, <code>edited_at</code>,
+<code>deleted_at</code>, <code>original_content</code> and three
+delivery stamps (<code>001_init.sql:17-38</code>).
+<code>message_embeddings</code> is keyed by <code>message_id</code> with
+a foreign key, so a hard delete must remove the vector first, which both
+delete paths do (<code>db.ts:226-233</code>). Daily thread ids are
+<code>daily-YYYY-MM-DD</code> in the configured timezone.</p>
+<p>The other stores are thin. <code>config</code> is a key-value table
+holding the carry, the digest bookmark, presence slots, the context
+card, tone snapshots (<code>session.tone.&lt;thread&gt;</code>),
+per-thread last-turn stamps and every Mind cache key.
+<code>companion_actions</code> holds <code>kind</code>,
+<code>summary</code> and <code>created_at</code>
+(<code>db.ts:309-316</code>). Digests are files, outside the database
+and outside every delete path.</p>
+<p>Time is the write clock throughout. <code>created_at</code> is insert
+time and <code>edited_at</code> overwrites; nothing records when
+something said was true. There is no scope key on any row: the only
+partition is the thread, and nothing on the read path requires one.</p>
+<p>Command Center tables (<code>002_command_center.sql</code>) hold care
+entries, tasks, cycles, pets, lists, expenses and
+<code>scratchpad_notes</code> that the agent writes through
+<code>cc_*</code> MCP tools
+(<code>packages/backend/src/routes/cc-mcp.ts:22-140</code>). Their
+status line reaches orientation through <code>fetchLifeStatus</code>
+(<code>hooks.ts:271-290</code>). They are a planner the agent maintains,
+not a store it recalls from.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Recall is tool-mediated and purely semantic. The model is told in its
+session orientation that <code>res search "semantic query"</code>
+searches all threads by meaning and that <code>--thread</code>,
+<code>--role</code>, <code>--after</code> and <code>--before</code>
+narrow it (<code>hooks.ts:1558-1562</code>). There is no query
+rewriting, no lexical arm on the agent's path, no reranking and no
+similarity floor: <code>searchVectors</code> returns the top k by dot
+product whatever the scores (<code>vector-cache.ts:160-189</code>). The
+response reports similarity to three decimals, so the model can judge a
+weak match only by reading the number.</p>
+<p>The thread filter never arrives. The CLI builds its body key by
+stripping the dashes from the flag, so <code>--thread</code> becomes
+<code>thread</code> (<code>tools/res.mjs:309-315</code>); the route
+reads <code>threadId</code> (<code>api.ts:1150</code>). A thread-scoped
+search returns hits from every thread with no error, while
+<code>--role</code>, <code>--after</code> and <code>--before</code>
+match their keys and work.</p>
+<p>Each hit comes back with its current text and two live messages
+either side, cut at 500 characters (<code>api.ts:1167-1201</code>). The
+neighbours carry no role filter. A non-owner Discord message is stored
+as <code>role: 'system'</code> and never embedded
+(<code>discord/index.ts:262-277</code>, <code>db.ts:811-813</code>), but
+the companion's embedded reply beside it is, so a stranger's words reach
+the owner's recall as context around a match.</p>
+<p>Automatic injection is bounded and placed after the system prompt.
+The session block is prepended to the user's first message, and every
+later turn adds one <code>[env]</code> line, so the system prompt and
+<code>CLAUDE.md</code> identity stay unchanged between turns
+(<code>agent.ts:631-636</code>, <code>:734-736</code>). Section caps run
+from 400 to 1,200 characters and trim at a line boundary with a marker
+(<code>hooks.ts:232-240</code>). The Mind block adds up to about 1,550
+characters per prompt, cached for ten seconds on an identical prompt
+(<code>hooks.ts:261-262</code>, <code>:1859-1862</code>).</p>
+<p>The <code>/mind</code> room and the observatory read Mind caches that
+nothing in this tree writes. <code>mind.weather.latest</code>,
+<code>mind.night.latest</code> and <code>mind.surface.latest</code> are
+read by two routes and the <code>[env]</code> line
+(<code>api.ts:956-1015</code>, <code>hooks.ts:1346</code>). The frontend
+store names a proxy at
+<code>backend/src/routes/mind-observatory.ts</code> as landed, and that
+file is not in the tree. Both degrade to empty by design.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every message is a write. Insert is synchronous and the embedding is
+not: the message is visible and keyword-searchable at once, and
+semantically searchable 50 to 200 milliseconds later by the code's own
+estimate (<code>db.ts:750-768</code>). A failed embed is counted and
+logged at the first and every 25th failure, and the backfill reads
+messages with no embedding row through a <code>LEFT JOIN</code>, so a
+lost embed is recoverable (<code>db.ts:811-822</code>,
+<code>:1226-1243</code>).</p>
+<p>Edits are where the derived layers fall behind.
+<code>editMessage</code> updates <code>content</code> and the FTS
+trigger replaces the indexed text, but no path recomputes the vector
+(<code>db.ts:902-909</code>, <code>scripts/setup-fts.mjs:62-67</code>).
+<code>saveEmbedding</code> has two callers, the insert path and the
+backfill, and the backfill selects only messages without a vector. An
+edited message is therefore found by the meaning of what it used to say,
+and returned with what it says after the edit.</p>
+<p>The Scribe's daily rollover repeats itself. When the bookmark's
+thread differs from today's, <code>runDigest</code> flushes the old
+thread's tail into the previous day's file, then resets its local
+sequence and reads today's messages (<code>digest.ts:202-213</code>). If
+today has fewer than five, it returns before writing the bookmark
+(<code>digest.ts:215-218</code>, <code>:267-268</code>). The next tick,
+30 minutes on, sees the old thread id again and flushes the same tail
+again, with another Haiku call and another appended block, until today
+reaches five messages. The fix it ships in, <code>006bf3a</code>, made
+the bookmark thread-aware and added the flush.</p>
+<p>Model-written text enters as ordinary text. The handoff opener is a
+companion message with <code>metadata.source: 'handoff'</code>, embedded
+like any other (<code>handoff.ts:448-466</code>); search results carry
+no metadata, so recall cannot tell it from something the companion said.
+The handoff prompt forbids inventing moods or events and asks for less
+when the day was thin (<code>handoff.ts:180-215</code>), which is a
+request to the model, not a check.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<ul>
+<li><strong>Blocking:</strong> no LLM call sits on the turn's write
+path. The Scribe and handoff run on timers and skip while the
+interactive agent is busy.</li>
+<li><strong>Lag:</strong> a message is semantically retrievable within a
+fraction of a second; a digest block appears within 30 minutes once five
+messages accumulate.</li>
+<li><strong>Whole-store passes:</strong> none. The Scribe reads only the
+messages after its bookmark and the handoff reads one day.</li>
+<li><strong>Read path:</strong> the session block is bounded by its
+section caps; the per-turn cost is one line plus up to about 1,550
+characters of Mind text when a Mind answers. A search scans every vector
+in memory: 384 multiply-adds per message.</li>
+</ul>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The agent's memory affordances are a Bash CLI, not tools.
+<code>tools/res.mjs</code> wraps loopback HTTP calls and reads the live
+thread id from <code>.resonant-thread</code> in the agent's working
+directory, which <code>agent.ts</code> writes per turn
+(<code>tools/res.mjs:49-79</code>, <code>agent.ts:694-699</code>). The
+command list is printed once per session inside the orientation block
+(<code>hooks.ts:1548-1613</code>). <code>search</code> and
+<code>backfill</code> touch the archive; <code>orb</code>,
+<code>note</code>, <code>face</code> and <code>context</code> write
+presence slots; <code>routine</code>, <code>timer</code>,
+<code>impulse</code> and <code>watch</code> write the orchestrator's
+tables.</p>
+<p>MCP servers listed in <code>.mcp.json</code> are passed to the SDK
+with their headers and <code>strictMcpConfig: true</code>
+(<code>agent.ts:84-98</code>, <code>:664-668</code>). So the agent can
+hold Resonant Mind's full tool surface directly, authenticated, while
+the hooks reach the same server by URL alone: the <code>.mcp.json</code>
+fallback in <code>getMindMcpUrl</code> keeps <code>.url</code> and drops
+<code>.headers</code> (<code>hooks.ts:168-180</code>). A
+<code>PostToolUse</code> hook appends thread id, mode and time as
+context after any <code>mind_write</code> or <code>memory_write</code>
+call (<code>hooks.ts:1048-1058</code>).</p>
+<p>Three Mind switches exist and the hooks read none of them. The
+Preferences toggle <code>integrations.mind_cloud.enabled</code> is read
+and written only by the preferences route
+(<code>api.ts:1392-1394</code>, <code>:1484-1487</code>). The Settings
+card stores <code>mind.enabled</code>, <code>mind.url</code> and
+<code>mind.api_key</code> in the config table, and the backend reads
+<code>mind.enabled</code> only to gate the cache readers, and never
+reads <code>mind.url</code> or <code>mind.api_key</code>
+(<code>api.ts:3126</code>). The hooks run whenever a URL resolves. The
+<code>.mcp.json</code> fallback matches any server name containing
+<code>mind</code> (<code>hooks.ts:175</code>), and from then on each
+user prompt of ten characters or more is posted to it.</p>
+<p>Compaction is mostly avoided rather than handled: the interactive
+loop resumes one SDK session per thread, and session-mode context is
+injected once. When compaction does fire, <code>PreCompact</code> adds a
+system message with the channel, the thread and a keyword-derived
+emotional arc, plus the last persisted tone snapshot
+(<code>hooks.ts:1103-1150</code>, <code>:754-778</code>).
+<code>SessionStart</code> and <code>SessionEnd</code> hooks exist and
+are registered behind a constant <code>false</code>, because the V1 loop
+never fires them (<code>hooks.ts:1893-1915</code>).</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance.</strong> A message knows its thread, role,
+platform and, for Discord, the sender's ids in metadata. Digest blocks
+and the carry know only their date; neither records which messages it
+was written from. The handoff reads the digest under the heading
+"pre-summarized — lean on this" (<code>handoff.ts:228</code>), so an
+error in a Scribe block is carried into the next day's context.</p>
+<p><strong>Deletion.</strong> A soft delete removes a message from
+search immediately, and the text stays in the row, in
+<code>original_content</code> if edited, in any digest already written
+and in the carry. A thread delete hard-deletes rows and vectors and
+leaves the digest files, the carry and any Mind observations untouched;
+no path in <code>digest.ts</code> or <code>handoff.ts</code> removes a
+file. Forgetting stops at the SQLite boundary.</p>
+<p><strong>Injection.</strong> Everything the agent searches is
+conversation, some of it from Discord and Telegram users other than the
+owner. Their messages are excluded from embedding by role and included
+as neighbours, and nothing marks them as another speaker's words in the
+search output beyond <code>role: 'system'</code>.</p>
+<p><strong>Concurrency.</strong> better-sqlite3 is synchronous, so
+writes serialise in the one process. Sequence numbers come from
+<code>MAX(sequence)+1</code> with a unique index, safe in one process
+and racy across two. The cache mirrors the table by evicting after each
+delete commits, and <code>saveEmbedding</code> refuses to cache a
+soft-deleted message (<code>db.ts:1186-1201</code>).</p>
+<p><strong>Access.</strong> The server refuses to serve without a
+password, the CLI's routes need a loopback token, and Discord non-owner
+batches are deferred while the owner is active. The agent itself runs
+with permissions bypassed: a regex list blocks a handful of destructive
+shell patterns (<code>hooks.ts:61-73</code>), <code>DELETE FROM</code>
+is not among them, and the file write gate covers only the
+<code>Write</code> and <code>Edit</code> tools
+(<code>hooks.ts:898-1001</code>).</p>
+<p><strong>Uncertainty.</strong> None is represented. A digest's
+emotional arc, a carry paragraph and a verbatim quote enter context with
+the same standing.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I read the suite and ran nothing. Vitest runs on Ubuntu and Windows
+in CI after a build and typecheck
+(<code>.github/workflows/ci.yml</code>). The 103 cases cover trigger
+conditions (32), thread, message, reaction, canvas, timer and config
+CRUD (30), destructive-shell patterns, emotional markers and write
+prefixes (26), cron and wake-prompt parsing (9), identity rendering (2)
+and a frontend attachment helper (4).</p>
+<p>No case reaches retrieval. <code>db.test.ts</code> mocks both
+<code>embeddings.js</code> and <code>vector-cache.js</code>, and creates
+messages with the content <code>'short'</code> so the embed path never
+fires (<code>packages/backend/src/services/db.test.ts:3-13</code>,
+<code>:65-75</code>). The embedding case writes a vector twice and
+asserts nothing, ending on the comment "Should not throw"
+(<code>db.test.ts:393-406</code>). The thread-delete case asserts the
+thread, messages and canvas are gone, with no embedding to check.
+Digest, handoff, FTS, search and the Mind hooks have no test;
+<code>runDigest</code> appears in the suite only as a mock
+(<code>orchestrator.test.ts:17</code>).</p>
+<p>Tests I would want first:</p>
+<ul>
+<li>an edited message must not be returned for its old meaning;</li>
+<li>a <code>--thread</code> search must return no hit from another
+thread, beside a hit from the named one;</li>
+<li>a soft-deleted message must leave both search paths, with a live
+control present;</li>
+<li>the rollover must append the previous day's tail once across two
+ticks;</li>
+<li>each Mind tool name must exist in the registry of the Mind version
+the docs name.</li>
+</ul>
+<p>No paper or benchmark is committed; the search is in the
+appendix.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Keep the whole vector set in one contiguous array</strong>
+for a single-user store of tens of thousands of messages. A dot-product
+loop over 384-dimension vectors needs no index, no service and no
+warm-up beyond one boot read.</li>
+<li><strong>Evict from the cache after the commit, not before.</strong>
+If the transaction throws, the cache matches the unchanged table; a
+restart and a live process then agree on what is searchable.</li>
+<li><strong>Make the backfill select by absence.</strong> A
+<code>LEFT JOIN ... IS NULL</code> over messages and vectors turns every
+lost fire-and-forget embed into deferred work instead of a silent
+hole.</li>
+<li><strong>Inject the rich context once per session and a single line
+per turn.</strong> The system prompt stays fixed and mutable state is
+not restated into every turn.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Deriving a vector at insert and never again.</strong> Any
+edit path needs a re-embed, or the vector must be keyed on a content
+hash so a stale one is detectable.</li>
+<li><strong>A cursor advanced only on the main path.</strong> A flush
+that runs before a guard which can return early must advance the cursor
+itself, or it repeats on every tick.</li>
+<li><strong>Calling a provider by hard-coded tool names with no
+handshake.</strong> A <code>tools/list</code> at startup, checked
+against the names the hooks need, turns a rename upstream into one
+warning instead of permanent silence.</li>
+<li><strong>Building a CLI body from flag names.</strong> A key derived
+by string surgery diverges from the route's key without an error; name
+the wire field once.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Resonant suits one person who wants a companion that remembers
+conversations on their own machine and who will read what it writes
+about them. The archive is honest, local and cheap, and that alone
+covers most of what such a person means by memory. It does not suit
+anyone who needs a correction to hold: edits leave the old meaning
+searchable, deletes leave digests and the carry, and no state says a
+remembered thing turned out false. Anyone planning to pair it with
+Resonant Mind should expect to repair the hook names, or to rely on the
+agent calling the Mind's tools itself.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Which Mind server the hook names were written against; the code
+calls it "the reference app", and no such server is in this tree or in
+Resonant Mind at either pin read.</li>
+<li>Whether the "10-min sync" that the Settings card says fills the Mind
+caches exists in a deployment and was left out of the open-source
+cut.</li>
+<li>How large real archives get, and where the full scan and the
+boot-time load of every vector stop being acceptable.</li>
+<li>Whether users in practice run <code>setup-fts.mjs</code>; without
+it, edits and deletes are honoured by a <code>LIKE</code> query
+alone.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong>
+<code>packages/backend/migrations/001_init.sql</code>,
+<code>packages/backend/migrations/002_command_center.sql</code>,
+<code>packages/backend/src/services/db.ts</code>,
+<code>scripts/setup-fts.mjs</code>.</li>
+<li><strong>Write path:</strong>
+<code>packages/backend/src/services/db.ts</code>
+(<code>createMessage</code>, <code>embedMessageAsync</code>,
+<code>saveEmbedding</code>),
+<code>packages/backend/src/services/embeddings.ts</code>,
+<code>packages/backend/src/services/ws.ts</code>,
+<code>packages/backend/src/services/agent.ts</code>.</li>
+<li><strong>Extraction:</strong>
+<code>packages/backend/src/services/digest.ts</code>,
+<code>packages/backend/src/services/handoff.ts</code>.</li>
+<li><strong>Retrieval:</strong> <code>tools/res.mjs</code>,
+<code>packages/backend/src/routes/api.ts</code>
+(<code>/internal/search-semantic</code>, <code>/search</code>),
+<code>packages/backend/src/services/vector-cache.ts</code>.</li>
+<li><strong>Context assembly:</strong>
+<code>packages/backend/src/services/hooks.ts</code>
+(<code>buildOrientationContext</code>,
+<code>buildUserPromptSubmit</code>, <code>prefetchMindContext</code>,
+<code>buildPreCompact</code>),
+<code>packages/backend/src/services/agent.ts</code>.</li>
+<li><strong>Background:</strong>
+<code>packages/backend/src/services/orchestrator.ts</code>.</li>
+<li><strong>Mind client and UI:</strong>
+<code>packages/backend/src/services/hooks.ts:144-258</code>,
+<code>packages/frontend/src/components/settings/MindSection.tsx</code>,
+<code>packages/frontend/src/store/observatory.ts</code>.</li>
+<li><strong>Tests:</strong>
+<code>packages/backend/src/services/*.test.ts</code>,
+<code>packages/backend/src/identity/identity.test.ts</code>,
+<code>packages/frontend/src/components/Composer.test.ts</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the clone root at the pin unless a URL is given.</p>
+<pre class="sh"><code># Every writer of an embedding: the insert path and the two backfill loops, no edit path
+git grep -nE &quot;saveEmbedding\(|embedMessageAsync\(&quot; -- packages/backend/src &#39;:!*.test.ts&#39;
+
+# The CLI&#39;s search body keys versus the route&#39;s destructured keys
+git grep -nE &quot;flags = \[&#39;--thread&#39;|replace\(&#39;--&#39;, &#39;&#39;\)&quot; -- tools/res.mjs
+git grep -nE &quot;const \{ query, threadId, role, after, before&quot; -- packages/backend/src/routes/api.ts
+
+# No writer of the Mind cache keys the /mind room and [env] line read (empty)
+git grep -nE &quot;setConfig\([&#39;\&quot;\`]mind\.&quot; -- .
+
+# mind.api_key and mind.url have no backend reader beyond redaction
+git grep -nE &quot;mind\.api_key|mind_api_key|mind\.url&quot; -- packages/backend
+
+# The hooks never read mind_cloud.enabled (empty)
+git grep -nE &quot;mind_cloud\??\.enabled&quot; -- packages/backend/src/services
+
+# The Mind client sends no Authorization header (only Content-Type lines)
+git grep -nE &quot;Authorization|headers&quot; -- packages/backend/src/services/hooks.ts
+
+# The observatory proxy the frontend store names is absent from the backend
+git ls-files | /usr/bin/grep -iE &quot;observatory&quot;
+
+# No test reaches search, digest, handoff, edit or soft delete (one mock line)
+git grep -nE &quot;searchVectors|searchMessages|search-semantic|runDigest|runHandoff|getCarryFor|editMessage|softDeleteMessage&quot; -- &#39;*.test.ts&#39;
+
+# Neither digest.ts nor handoff.ts removes a file (empty)
+git grep -nE &quot;unlinkSync|rmSync|unlink\(&quot; -- packages/backend/src/services/digest.ts packages/backend/src/services/handoff.ts
+
+# Resonant does not vendor or depend on Resonant Mind (two UI hint strings only; 0 in the lockfile)
+git grep -niE &quot;resonant-mind|resonant_mind&quot; -- . &#39;:!package-lock.json&#39;
+/usr/bin/grep -c resonant-mind package-lock.json
+
+# No paper or citation (empty)
+git grep -niE &quot;arxiv|bibtex|@article|doi\.org|CITATION&quot; -- . &#39;:!package-lock.json&#39;
+
+# Resonant Mind&#39;s registry at the atlas pin and at its 4 October 2026 head
+curl -sf https://raw.githubusercontent.com/nekyialabs/resonant-mind/9a08410b538f9dc56119ee34e8de044aef867e51/src/mcp/registry.ts | /usr/bin/grep -nE &#39;^\s+(mind_|ritual_)[a-z_]+:&#39;
+curl -sf https://raw.githubusercontent.com/nekyialabs/resonant-mind/dbee319d2291450c61c6c484d1ec22a8e87338a3/src/mcp/registry.ts | /usr/bin/grep -nE &#39;^\s+(mind_|ritual_)[a-z_]+:&#39;
+curl -sf https://raw.githubusercontent.com/nekyialabs/resonant-mind/9a08410b538f9dc56119ee34e8de044aef867e51/src/mcp/protocol.ts | /usr/bin/grep -nE &#39;Unknown tool&#39;
+curl -sf https://raw.githubusercontent.com/nekyialabs/resonant-mind/9a08410b538f9dc56119ee34e8de044aef867e51/src/http/auth.ts | /usr/bin/grep -nE &#39;Bearer|Basic|MCP_CONNECTOR_SECRET&#39;</code></pre>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/nekyialabs/resonant/commit/4f59e10796eff2dfe0fdbbc18573c944c5bf03e8"><code class="commit-id" title="4f59e10796eff2dfe0fdbbc18573c944c5bf03e8">4f59e107…</code></a>
+— first reading, at the head of <code>main</code>, the merge of 11
+October 2026. Screened from a full clone before reading: no auto-run
+surface, no build-time execution point, nothing inside the cooldown, and
+three workspace manifests without a lockfile beside them against the
+root <code>package-lock.json</code>, unchanged for 98 days; no
+agent-instruction files. Resonant Mind's registry, protocol and auth
+files were fetched at <code>9a08410</code> and <code>dbee319</code> to
+check the client against the server. Nothing was installed, built or
+run. No marks.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 734 reports.</strong></p>
+<p><strong>This page covers all 735 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -26292,6 +26292,44 @@ connection that cannot hold a transaction.</li>
 <li>Do not copy when: corrections must hold on every read path, deletion
 must be reliable, more than one principal shares the store, or search
 has to work while the embedding provider is down.</li>
+</ul>
+<h3 id="resonant"><a
+href="../systems/resonant/"><code>resonant</code></a></h3>
+<ul>
+<li>Best idea: <strong>semantic recall with nothing to run.</strong>
+MiniLM embeds each message in-process after insert, every vector sits in
+one contiguous array loaded at boot, and soft delete, regenerate and
+thread delete all evict the cached vector after their transaction
+commits, so a restart and a live process agree on what is
+searchable.</li>
+<li>Biggest risk: <strong>correction does not reach the derived
+layers.</strong> <code>editMessage</code> replaces the text and the FTS
+trigger follows, but nothing re-embeds, so the message is found by what
+it used to say; deletes leave the Scribe's digest files and the handoff
+carry untouched.</li>
+<li>Most reusable component:
+<code>packages/backend/src/services/vector-cache.ts</code> — geometric
+growth, swap-remove eviction and a filtered top-k scan over normalised
+vectors, with no dependency.</li>
+<li>Second risk: <strong>the Mind seam has drifted.</strong> The hooks
+call <code>mind_orient</code>, <code>mind_ground</code>,
+<code>mind_surface</code>, <code>mind_spark</code> and
+<code>mind_thread</code>, which Resonant Mind's registry does not hold
+at <code>9a08410</code> or <code>dbee319</code>, send no credential, and
+turn every error into silence. Beside it, the digest's rollover flush
+repeats every 30 minutes until the new day has five messages, and
+<code>res search --thread</code> searches every thread.</li>
+<li>Maturity impression: Apache-2.0, 26,857 lines of backend and 37,614
+lines of frontend TypeScript, 89 commits on main under six author names
+between 18 March and 11 October 2026, v3.0.0. 103 Vitest cases in 6
+files run in CI on Ubuntu and Windows; none reaches search, embedding,
+the digest or the handoff. No marks.</li>
+<li>Study when: you want a single-user companion whose recall is a
+local, inspectable conversation archive with no embedding service, and a
+context assembler that injects rich state once per session.</li>
+<li>Do not copy when: edits or deletions must change what is recalled,
+the archive mixes other people's messages with the owner's, or the
+memory provider's tool surface may change underneath the client.</li>
 </ul>
 <h3 id="engram-nickcirv"><a
 href="../systems/engram-nickcirv/"><code>engram-nickcirv</code></a></h3>

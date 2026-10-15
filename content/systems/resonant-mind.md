@@ -228,6 +228,9 @@ and co-surfacing rows, and keeps the newest 20 versions per observation
 `src/mcp/registry.ts:76-139` and `:141` onward. Auth is one shared key, as
 Bearer or as Basic with the fixed client id `resonant-mind`, with an optional
 internal header and an optional secret connector path (`src/http/auth.ts:18-61`).
+[Resonant](../resonant/), the same organisation's companion, calls this server
+from two hooks by URL with no credential, under `mind_orient`, `mind_ground`
+and three names this registry does not hold; only `mind_search` matches.
 
 **Tests.** Section 10.
 

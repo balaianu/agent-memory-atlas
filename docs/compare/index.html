@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-734, generated from each report's frontmatter —
+735, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-734, generated from each report's frontmatter —
+735, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-734, generated from each report's frontmatter —
+735, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 734, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 735, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-734, generated from each report's frontmatter —
+735, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 734 systems by the seven mechanisms
+filters all 735 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -26034,6 +26034,57 @@ re-proposes rejected additions; similarity, not contradiction, retires
 the older row; no test reaches search or supersession</td>
 </tr>
 <tr>
+<td><a href="../systems/resonant/"><code>resonant</code></a></td>
+<td>A message row in a thread with a 384-dimension MiniLM embedding
+beside it. Around it: Scribe digest blocks in a dated Markdown file, one
+handoff carry paragraph, presence and context-card key-value slots, and
+a diary of the companion's own actions</td>
+<td>One SQLite file under data: messages, message_embeddings as float32
+blobs, an optional FTS5 table kept by triggers, a config key-value table
+and companion_actions. Digests are Markdown files under data/digests.
+Every vector is loaded into one process-memory array at boot</td>
+<td>res search embeds the query in-process and scans every cached vector
+by dot product with optional role and date filters, top k with no
+threshold, plus two neighbouring messages each side. The UI's keyword
+search uses FTS5 or LIKE. With a Mind URL set, each prompt also calls
+the remote Mind by tool name</td>
+<td>Every non-system text message over 10 characters is embedded
+fire-and-forget after insert, and a backfill picks up rows with no
+vector. A Haiku Scribe digests the daily thread every 30 minutes; an
+opt-in Sonnet handoff writes an opener and a carry at 00:10. The agent
+sets presence and context slots through the res CLI</td>
+<td>A person edits a message in place, keeping the first original text;
+the FTS trigger follows and the embedding keeps the old meaning. Soft
+delete hides a message from search; regenerate and thread delete remove
+rows and vectors. No delete reaches the digests, the carry or the
+Mind</td>
+<td>None: one user, one store. Role and date are optional filters the
+agent picks per search, the advertised thread filter is dropped between
+CLI and route, and Discord and Telegram threads with other people sit in
+the same archive</td>
+<td>An in-process Claude Agent SDK query loop with hooks: a session-mode
+orientation block prepended to the first message, a one-line env prefix
+per turn, and a res Bash CLI listed in that block for search, presence,
+timers and routines. MCP servers from .mcp.json reach the agent
+directly</td>
+<td>Scribe digest every 30 minutes on Haiku, an opt-in nightly handoff
+on Sonnet, an embedding backfill loop the agent can start, a keyword
+tone snapshot every 15 messages, and the orchestrator's routines and
+triggers</td>
+<td>None on the archive: a message is what was said. Digests and the
+carry are model-written and enter context with no provenance mark, and
+the handoff opener is stored and embedded as a companion message</td>
+<td>Fully local semantic recall with no embedding service; every delete
+path evicts the cached vector after its transaction commits; a
+thread-aware digest bookmark; a context assembler with named per-section
+caps; one Bash CLI the model is shown once per session</td>
+<td>An edited message keeps its pre-edit vector; the rollover flush
+re-appends the previous day's tail every 30 minutes until today has five
+new messages; every Mind tool name but mind_search is absent from
+Resonant Mind's registry and the calls carry no credential; no test
+reaches search</td>
+</tr>
+<tr>
 <td><a href="../systems/retrodict/"><code>retrodict</code></a></td>
 <td>A section of prose in <code>playbook.md</code>, written by the model
 for its own successor; beside it <code>log.txt</code> holds every board,
@@ -32317,7 +32368,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>66 of 734:</em> <a
+<p><em>66 of 735:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32387,7 +32438,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>190 of 734:</em> <a
+<p><em>190 of 735:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32585,7 +32636,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>122 of 734:</em> <a
+<p><em>122 of 735:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32715,7 +32766,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>324 of 734:</em> <a
+<p><em>324 of 735:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33055,7 +33106,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>253 of 734:</em> <a
+<p><em>253 of 735:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33318,7 +33369,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 734:</em> <a
+<p><em>96 of 735:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33418,7 +33469,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>451 of 734:</em> <a
+<p><em>451 of 735:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33903,7 +33954,7 @@ href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
 451 repositories of
-734 assert that particular material must
+735 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -33976,7 +34027,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 734 is the real figure for the second kind, and
+of 735 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not
