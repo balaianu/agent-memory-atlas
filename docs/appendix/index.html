@@ -1836,7 +1836,7 @@ reading missed a 1,425-case test suite and with it three marks, all of
 which predate that pin; the audit kept the three marks and corrected the
 prose and records beside them</li>
 <li><a href="https://github.com/djolex999/vir">djolex999/vir</a> at <a
-href="https://github.com/djolex999/vir/commit/d6347c6928ff20095433958e9446efff4d4ffe66"><code class="commit-id" title="d6347c6928ff20095433958e9446efff4d4ffe66">d6347c69…</code></a></li>
+href="https://github.com/djolex999/vir/commit/e4f180bc096f317c938ef947ef88795c92c16cd1"><code class="commit-id" title="e4f180bc096f317c938ef947ef88795c92c16cd1">e4f180bc…</code></a></li>
 <li><a
 href="https://github.com/growth-kinetics/diffmem">growth-kinetics/diffmem</a>
 at <a
@@ -17575,6 +17575,33 @@ Terminal-Bench 2.1 head-to-head. And it said there was no paper, where
 them about memory. The first two rested on what the filter and the
 columns could do rather than on what their callers passed, and the third
 on a search for the word the codebase uses.</li>
+<li><strong>Seven published claims about <a
+href="../systems/vir/">vir</a> were wrong at <a
+href="https://github.com/djolex999/vir/commit/d6347c6928ff20095433958e9446efff4d4ffe66"><code class="commit-id" title="d6347c6928ff20095433958e9446efff4d4ffe66">d6347c69…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The description, summary, verdict and homepage card quoted "243
+transcripts, about 20 mine" and "354 sessions". The README had replaced
+both on 2026-09-04 with 1,386 transcripts, 562 agent-internal runs
+skipped, 410 notes and 396 sessions, so the 92% figure the report drew
+had no source at the pin. The report withheld
+<code>negative_eval</code>, though
+<code>src/search/retriever.test.ts:390-425</code> asserted on a vault
+holding a live, a rejected and an archived note that only the live one
+entered the TF-IDF index; the case existed at every pin read. The
+<code>trust_state</code> record said a rejection withheld a note from
+every read. <code>listDistilled</code> carried no rejection gate
+(<code>src/state/db.ts:769-779</code>), so
+<code>vir_recent_notes</code>, the CLAUDE.md candidates, summaries and
+dedupe kept serving it, and the mark rested on the two search paths. The
+tombstone paragraph said nothing on the write path read
+<code>.rejected/</code>; <code>src/pipeline/writer.ts:109-113</code>
+left a rejected session's note in place on re-distillation, keyed on the
+session, so the withholding stands. Section 10 said nothing evaluated
+distillation quality, though <code>eval/distill/</code> held a blind,
+human-graded A/B of the distill prompt from 2026-09-15 with its results
+kept out of the tree. Section 3 counted 46 test files against 93, and
+section 5 said notes carried no status field while section 9 credited
+one.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

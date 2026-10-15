@@ -31757,40 +31757,51 @@ grounds that they stay small</td>
 </tr>
 <tr>
 <td><a href="../systems/vir/"><code>vir</code></a></td>
-<td>A typed markdown note — pattern, gotcha, decision or tool — in an
-Obsidian vault</td>
-<td>Plain markdown on disk plus a state database; embeddings in Ollama
-or a TF-IDF fallback</td>
-<td>Vector search over one space spanning sessions, clipped articles and
-PDFs, MMR-reranked for facet diversity, with a
-<code>verified: true</code> note taking a 0.2 score boost and
-<code>.rejected/</code> skipped outright; the MCP tool takes a
-<code>verified_only</code> flag that over-fetches five times the page so
-the filter can still fill it</td>
-<td>Transcripts filtered, classified with Haiku, distilled with Sonnet,
-written as notes</td>
-<td>Dedupe detection and merging; notes are files the user can edit or
-delete. <code>vir review</code> approves, edits or rejects a note — a
-rejection stamps <code>rejected_at</code> and moves the file to
-<code>.rejected/</code>, recoverable and never deleted</td>
-<td>One vault; transcripts are categorised by on-disk layout rather than
-scoped by key</td>
-<td>A CLI, a scheduled daemon, an MCP server, and a CLAUDE.md writer
-with markers</td>
-<td>A scheduled pass over new transcripts; an embedding sweep</td>
-<td>Two things, and only one of them reaches a read. A
-<code>confidence</code> float per distilled entry selects the top five
-per category at write time and gates a notification at 0.8; nothing
-consults it at query time. Beside it a human-set status:
-<code>verified: true</code> with a <code>reviewed_at</code>, or
-<code>rejected_at</code> with the file moved to a directory the
-retriever skips</td>
-<td>Three independent detectors for agent-internal transcripts, with a
-named trap; a review pass whose rejection is recoverable rather than a
-delete; a retriever that reports the rows it refused for a stale
-embedding model instead of dropping them silently</td>
-<td>Distillation is two LLM passes with no committed evaluation of what
-survives them</td>
+<td>A typed markdown note (pattern, gotcha, decision or tool) per
+session in an Obsidian vault, plus recurring rules mined across
+sessions, clipped articles, PDFs and composed topic pages</td>
+<td>Plain markdown on disk plus a SQLite state database holding note
+content, status columns, rules and embeddings; embeddings from Ollama or
+another provider, with a TF-IDF fallback</td>
+<td>Vector search over one pool of session notes, articles, PDFs, topic
+pages and accepted rules, MMR-reranked, with a 0.2 boost for a verified
+note; TF-IDF over the same files when no embedder answers. Rejected,
+pruned and archived notes and unaccepted rules are excluded; the MCP
+tools take a verified_only flag</td>
+<td>Transcripts filtered for provenance, scrubbed, classified by a small
+model, distilled by a larger one, deduplicated and written as notes; an
+opt-in connect pass proposes recurring rules from clusters of
+lessons</td>
+<td>Re-distillation rewrites a note in place and keeps its review
+fields. Review rejection and prune move a file to .rejected/ and stamp
+the row; restore reverses either. Dedupe merges into a winner and
+archives the loser. Nothing deletes a note except the writer replacing
+its own prior file</td>
+<td>One vault per user. Notes carry a project, which the query tools
+accept as an optional filter</td>
+<td>A CLI, a scheduled daemon, an MCP server of six read-only tools, a
+shipped agent skill, a JSON contract for an Obsidian plugin, and a
+writer for marked blocks in CLAUDE.md and AGENTS.md</td>
+<td>A scheduled pass over new Claude Code and Codex transcripts, an
+embedding self-heal sweep, and a desktop notification when a run
+errored</td>
+<td>A per-note verified or rejected verdict written by a person, with
+rejection carried into every serving query; a per-rule proposed,
+accepted or rejected status; a model audit whose reject verdicts move
+notes only on an explicit apply, marked rejected_by audit; a confidence
+float that selects for CLAUDE.md and ranks nothing</td>
+<td>Three independent detectors for agent-internal transcripts, each
+with a stated false-positive guard; a rule queue that a model fills and
+only a person drains; a rejected rule refused again by embedding
+similarity; rejection carried into every database read rather than
+inferred from a file's location; a retriever that counts rows refused
+for a stale embedding model</td>
+<td>Session notes take effect before review. The non-interactive review
+path has no actor check. Composed topic pages and project summaries keep
+text from notes rejected after they were generated, and topic pages are
+in the retrieval pool. The rule tombstone is skipped when embedding
+fails. Distillation fidelity has a committed harness and no committed
+result</td>
 </tr>
 <tr>
 <td><a
@@ -33202,7 +33213,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 749:</em> <a
+<p><em>68 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33268,6 +33279,7 @@ href="../systems/universal-memory-engine/"><code>universal-memory-engine</code><
 <a href="../systems/utopia/"><code>utopia</code></a>, <a
 href="../systems/velantrim-exocortex-crystal/"><code>velantrim-exocortex-crystal</code></a>,
 <a href="../systems/verel/"><code>verel</code></a>, <a
+href="../systems/vir/"><code>vir</code></a>, <a
 href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
@@ -34307,7 +34319,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>470 of 749:</em> <a
+<p><em>471 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34772,6 +34784,7 @@ href="../systems/velantrim-exocortex-crystal/"><code>velantrim-exocortex-crystal
 href="../systems/veracium/"><code>veracium</code></a>, <a
 href="../systems/verel/"><code>verel</code></a>, <a
 href="../systems/verimem/"><code>verimem</code></a>, <a
+href="../systems/vir/"><code>vir</code></a>, <a
 href="../systems/virtual-context/"><code>virtual-context</code></a>, <a
 href="../systems/vllm-semantic-router/"><code>vllm-semantic-router</code></a>,
 <a href="../systems/vortx-emem/"><code>vortx-emem</code></a>, <a
@@ -34811,7 +34824,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-470 repositories of
+471 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

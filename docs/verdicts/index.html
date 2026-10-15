@@ -8009,47 +8009,38 @@ system, adopted wholesale.</li>
 <h3 id="vir"><a href="../systems/vir/"><code>vir</code></a></h3>
 <ul>
 <li>Best idea: deciding which of your own transcripts are actually
-yours. Of 243 files on the author's machine "about 20 were sessions I
-actually drove" — the rest subagent runs, workflow phases and headless
-SDK agents — and vir detects all three with three independent
-mechanisms: on-disk layout, the first user line's
-<code>entrypoint</code>, and a per-line <code>isSidechain</code>
-backstop whose test says it is a backstop. Every transcript-mining
-memory system has this problem and this is the only careful treatment of
-it here.</li>
-<li>Biggest risk: two LLM passes stand between a transcript and a note,
-nothing measures whether the note is faithful, and the vault is designed
-to outlive the transcript — so an unfaithful distillation becomes
-permanent and unfalsifiable once Claude Code's ~30-day pruning window
-closes.</li>
-<li>Most reusable component: the rejected-signal notes.
+yours. On the author's machine 562 among 1,386 transcripts were subagent
+runs, workflow phases or sidechains, and vir detects them with three
+independent mechanisms: on-disk layout, the first user line's
+<code>entrypoint</code> or a Codex thread's <code>source</code>, and a
+per-line <code>isSidechain</code> backstop whose test says it is a
+backstop. Every transcript-mining memory system has this problem.</li>
+<li>Biggest risk: a session note serves from the moment it is written
+and review comes afterwards. The non-interactive
+<code>vir review --json --approve</code> has no actor check, and a topic
+page composed before a rejection keeps the rejected text in the
+retrieval pool. Distillation fidelity has a committed harness and no
+committed result, and the vault is designed to outlive the
+transcript.</li>
+<li>Most reusable component: the rule tombstone. A rule a person
+rejected keeps its embedding, and every later connect run skips a
+candidate within 0.85 cosine of it, so a rewording drawn from other
+sessions is not proposed again. Beside it, the rejected-signal notes:
 <code>promptSource</code> reads "sdk" even on desktop-launched human
-sessions (the C23 serbeval trap) and turn count would kill single-prompt
-autonomous runs — the two signals a reader would reach for first, ruled
-out with the reason. Beside them, a redaction rule whose comment names
-the innocent string it must not eat: <code>"risk-ant-…"</code> must
-survive.</li>
-<li>Maturity impression: 50 test files with nearly one per pipeline
-module, tests named for the behaviours they protect
-(<code>run.rewriteDryRun</code>, <code>run.retryBound</code>,
-<code>run.transcriptFilter</code>), a
-cheap-model-triage/expensive-model-distil split, a per-note review pass
-whose rejection is a move rather than a delete, and a retriever that
-reports the rows it refused for a superseded embedding model rather than
-dropping them; no paper and no benchmark, which the project states as a
-position rather than leaving as an omission; two of seven capability
+sessions (the C23 serbeval trap), and turn count would kill
+single-prompt autonomous runs.</li>
+<li>Maturity impression: vitest across nearly every module with tests
+named for the behaviours they protect, a retrieval and distill-prompt
+eval harness whose data a test keeps out of the repository, rejection
+carried into every database serving query, and a rule queue that only a
+person drains; no paper and no committed eval result; four capability
 marks.</li>
 <li>Study when: you mine an agent's own logs and have not checked how
 much of that history the user actually wrote.</li>
-<li>Do not copy when: you need <code>confidence</code> to do anything at
-query time — it selects the top five for <code>sync-claude</code> and
-gates a notification, and no read path consults it. The status that does
-reach a read is the human one: <code>vir review</code> stamps
-<code>verified: true</code> for a 0.2 boost, or <code>rejected_at</code>
-and a move into <code>.rejected/</code>, which the retriever skips.
-Nothing on the write path reads that directory, so re-running the
-pipeline over the same transcript re-derives a note a person already
-refused.</li>
+<li>Do not copy when: you need every memory held until a person has seen
+it. Only mined rules wait; a session note serves on write with a 0.2
+boost once verified, and <code>confidence</code> selects the top five
+for <code>sync-claude</code> and ranks nothing.</li>
 </ul>
 <h3 id="diffmem"><a
 href="../systems/diffmem/"><code>diffmem</code></a></h3>
