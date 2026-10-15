@@ -20474,17 +20474,19 @@ three ways for this file to hold vacuously". Tests beside it pin the
 side channels: a withheld record never costs a visible one its slot, a
 visible record's bytes do not move when its neighbour is withheld, and
 the page boundary does not shift.</li>
-<li>Biggest risk: <strong>the governance claim is a workflow convention,
-and the README says so first.</strong> "[T]here is no approval command
-and no approver field anywhere in this codebase, <strong>and nothing in
-the code checks that the merge happened</strong>" —
-<code>migrate apply</code> refuses an uncommitted migration, but a local
-commit on a local branch passes, "so it enforces the commit and not the
-merge". What is enforced is narrower and real: no MCP tool can write
-approved knowledge, and <code>system.capabilities</code> reports
-<code>writeTools: false</code>, so agents cannot approve because they
-cannot write. That humans approved rests on the team's pull-request
-discipline.</li>
+<li>Biggest risk: <strong>approval is a convention the code does not
+check, and an agent's proposal arrives labelled approved.</strong>
+"[T]here is no approval command and no approver field anywhere in this
+codebase, <strong>and nothing in the code checks that the merge
+happened</strong>" — <code>migrate apply</code> refuses an uncommitted
+migration, but a local commit on a local branch passes, "so it enforces
+the commit and not the merge". Three MCP tools draft proposals through a
+facade that cannot call <code>accept</code>, and each drafted migration
+carries <code>status: approved</code> and whatever trust level the
+caller names. The Claude Code plugin's <code>/theurian:propose</code>
+and <code>/theurian:migrate</code> grant <code>Bash(theurian:*)</code>,
+which its own text calls "a documented rule, not a server-side check",
+so the agent that drafts a proposal can also accept and apply it.</li>
 <li>Most reusable component: <code>application/visibility.py</code>'s
 placement argument — ask whether a row may be shown while the retrievers
 are read rather than after they are fused, because "[a]sking it late is
@@ -20492,16 +20494,17 @@ what made a withheld document able to occupy a candidate slot, and every
 number computed from those slots — <code>count</code>,
 <code>usedTokens</code>, <code>fusedScore</code>,
 <code>droppedForBudget</code> — move with it".</li>
-<li>Maturity impression: Apache-2.0, Python 3.13+, 313,168 lines with
-4,209 test functions across 244 files, ADRs, a threat model, a
-governance document, and comments that cite requirement ids and link the
-issues they closed — all at version 0.0.0 and self-labelled alpha.</li>
+<li>Maturity impression: Apache-2.0, Python 3.13+, ADRs, a threat model,
+security advisories fixed and recorded in the tree, a committed
+retrieval-evaluation baseline, and roughly 3.6 lines of tests for every
+line of source — at core version 0.5.3 and self-labelled alpha.</li>
 <li>Study when: you are writing a redaction or withholding path and have
 only tested that the content is absent, or you need a worked reason to
 ask the visibility question before ranking.</li>
-<li>Do not copy when: you want a memory an agent can write — by design
-it cannot. Five marks: trust state, scope enforced, bitemporal, audit
-log, negative eval.</li>
+<li>Do not copy when: you need the code to enforce who approves — here
+approval is a pull-request convention, and the shipped plugin grants the
+agent the commands that land a proposal. Five marks: trust state, scope
+enforced, bitemporal, audit log, negative eval.</li>
 </ul>
 <h3 id="yantrik-os"><a
 href="../systems/yantrik-os/"><code>yantrik-os</code></a></h3>

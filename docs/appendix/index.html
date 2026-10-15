@@ -4193,9 +4193,9 @@ surfaces and sixteen dependency files inside the seven-day cooldown.
 Nothing was installed, built or run</li>
 <li><a href="https://github.com/theurian/theurian">theurian/theurian</a>
 at <a
-href="https://github.com/theurian/theurian/commit/6c64a6baca90a57601730a8ea1d592519163efa2"><code class="commit-id" title="6c64a6baca90a57601730a8ea1d592519163efa2">6c64a6ba…</code></a>
-— read only, from a shallow clone; fourteen files scanned, no auto-run
-surfaces, seven build-time execution points, one unpinned surface and
+href="https://github.com/theurian/theurian/commit/6c3c282701bb20bb6c044c539b9dbe4619c34b46"><code class="commit-id" title="6c3c282701bb20bb6c044c539b9dbe4619c34b46">6c3c2827…</code></a>
+— read only, from a full clone; sixteen files scanned, no auto-run
+surfaces, eight build-time execution points, one unpinned surface and
 three dependency files inside the seven-day cooldown. Nothing was
 installed, built or run</li>
 <li><a
@@ -17114,6 +17114,29 @@ could edit a proposal; it listed, promoted and discarded
 (<code>brain/review_notes.py:98-108</code>). And the body anchored the
 inbox route at <code>brain/hestia.py:346</code>, where it sat at
 <code>:773</code>.</li>
+<li><strong>Three published claims about <a
+href="../systems/theurian/">Theurian</a> were wrong at <a
+href="https://github.com/theurian/theurian/commit/6c64a6baca90a57601730a8ea1d592519163efa2"><code class="commit-id" title="6c64a6baca90a57601730a8ea1d592519163efa2">6c64a6ba…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+every MCP tool was read-only and that <code>system.capabilities</code>
+reported <code>writeTools: false</code>. At that pin it reported
+<code>True</code>
+(<code>packages/theurian-core/src/theurian/mcp/tools.py:3324</code>)
+beside three registered proposal tools,
+<code>knowledge.proposeChange</code> first (<code>:3335</code>), whose
+drafts carried <code>status: approved</code>
+(<code>packages/theurian-core/src/theurian/application/proposal_service.py:4365</code>).
+The <code>False</code> reading was true of the first pin, <a
+href="https://github.com/theurian/theurian/commit/e5f3abe1a44099d5198aa5aa74c99dab05dc9922"><code class="commit-id" title="e5f3abe1a44099d5198aa5aa74c99dab05dc9922">e5f3abe1…</code></a>.
+It said each revision recorded its <code>source_commit</code>; the
+engine's only construction of a revision passed none
+(<code>packages/theurian-core/src/theurian/application/migration_engine.py:612-636</code>),
+so the column was always null. And its census of 313,168 lines and 4,209
+test functions at version 0.0.0 was measured at the first pin and read
+the workspace root's placeholder version, while the package was 0.4.0.
+The first was a reading of the first pin carried through a re-pin
+without re-reading the tool registry; the second rested on the column's
+declaration rather than its writers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

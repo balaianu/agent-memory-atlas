@@ -8898,17 +8898,16 @@ memory tools, the session brief and the per-prompt recall hook all read
 the whole store.</p>
 <p><strong><a href="../systems/theurian/">Theurian</a> proves a record's
 absence by building the corpus that never held it.</strong> An
-Apache-2.0 Python engineering-decision record served read-only to agents
-— 313,168 lines with 4,209 test functions across 244 files,
-self-labelled alpha — whose pitch is stopping an agent re-proposing what
-a team rejected. Its absence proof does not assert that a withheld row
-fails to appear; it builds three deployments and requires that the one
-withholding records answer every query in a battery identically, "on the
-wire, refusals included", to one that never held them — with a third
+Apache-2.0 Python engineering-decision record served to agents over MCP,
+self-labelled alpha, whose pitch is stopping an agent re-proposing what
+a team rejected. Its absence proofs do not assert that a withheld row
+fails to appear. One query is asked of a corpus holding the withheld
+record and of one that never held it, and the answers must match — for
+<code>review.search</code> "on the wire, refusals included" — with a
 control deployment present because without it "an equality is satisfied
 by a build that wrote nothing, a query that matched nothing and a corpus
 whose plant was unreachable — three ways for this file to hold
-vacuously". Beside it sit tests that a withheld record never costs a
+vacuously". Beside them sit tests that a withheld record never costs a
 visible one its slot, that a visible record's bytes do not move when its
 neighbour is withheld, and that the page boundary does not move: the
 side channels, not just the content. The same reasoning puts the
@@ -8919,13 +8918,13 @@ every number computed from those slots — <code>count</code>,
 <code>droppedForBudget</code> — move with it". A SQL validity filter was
 removed rather than repaired once found comparing ISO-8601 timestamps as
 text, which "silently disagreed" with the domain comparison across UTC
-offsets. Five marks. No human-review mark, and the README says why
-before a reader can find it: "there is no approval command and no
-approver field anywhere in this codebase, <strong>and nothing in the
-code checks that the merge happened</strong>" — what is enforced is that
-no MCP tool can write approved knowledge at all, so agents cannot
-approve; that humans did rests on the team's pull-request
-discipline.</p>
+offsets. Five marks. No human-review mark, and the README says why:
+"there is no approval command and no approver field anywhere in this
+codebase, <strong>and nothing in the code checks that the merge
+happened</strong>". Three MCP tools let an agent draft proposals, each
+written with <code>status: approved</code>, and the shipped Claude Code
+plugin grants the agent <code>Bash(theurian:*)</code>, which covers
+<code>propose accept</code> and <code>migrate apply</code>.</p>
 <p><strong><a href="../systems/chitta-field/">chitta-field</a> makes a
 veto an <code>Option</code> rather than a zero.</strong> An MIT Rust
 associative-memory substrate at version 2.7.12, the backing store for

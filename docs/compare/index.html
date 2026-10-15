@@ -30266,58 +30266,53 @@ another</td>
 <td><a href="../systems/theurian/"><code>theurian</code></a></td>
 <td>A knowledge item with an immutable revision chain — title, body,
 kind, namespace, status, trust level, sensitivity, owner, labels, scope
-paths, validity window, author and source commit</td>
-<td>SQLite over a knowledge directory of Markdown migrations, with a
-separately built published index</td>
-<td>Hybrid search over a built index, with status and sensitivity
-filtered before ranking and an optional <code>asOf</code> moment</td>
-<td>There is none at the agent surface: knowledge enters only through
-<code>migrate apply</code> over a human-authored migration file</td>
-<td>Revisions are immutable; a correction is a new revision. Sensitivity
-reclassification above a ceiling purges the published index</td>
-<td>A project bound on the request context and emitted on every
-canonical read, with tenant and ACL-group columns beside it</td>
-<td>A local read-only MCP daemon reporting
-<code>writeTools: false</code>, for any MCP client</td>
-<td>Index builds and purges; nothing writes knowledge</td>
+paths, validity window, author and source anchors</td>
+<td>SQLite derived from a directory of YAML migrations and Markdown
+bodies under each project's .theurian directory, with a separately built
+and published retrieval index</td>
+<td>Hybrid search over a published index — a word index, a trigram index
+and an optional hashed-trigram dense arm fused by reciprocal rank — with
+status and sensitivity asked before ranking and an optional asOf
+moment</td>
+<td>Migrations applied by the migrate apply CLI. Agents draft proposals
+through three MCP tools; a proposal lands only through propose accept
+and migrate apply, both CLI commands</td>
+<td>Revisions are immutable; a correction is a new revision. Deprecate,
+restore and sensitivity changes overwrite the item pointer and are
+recorded by their migration. A withdrawal purges the published
+index</td>
+<td>A per-project state file under the project root, and a project
+predicate on every canonical read; the project is a tool argument</td>
+<td>A local MCP daemon with seven read tools and three proposal tools
+reporting writeTools true, a Claude Code plugin of slash commands
+granting the theurian CLI, and Codex over streamable HTTP</td>
+<td>Index builds and withdrawal purges; nothing writes knowledge</td>
 <td>Status, trust level, sensitivity and a validity window returned
-beside every result, plus a content-identity gate that withholds a row
-whose body drifted from its revision's hash</td>
-<td>The absence proof is the strongest this atlas has read. Rather than
-assert that a withheld record does not appear, it builds three
-deployments and requires that the one withholding records answer every
-query in a battery identically — on the serialised wire response,
-refusals included — to one that never held them, with a third control
-deployment present because without it "an equality is satisfied by a
-build that wrote nothing, a query that matched nothing and a corpus
-whose plant was unreachable". Tests beside it pin that a withheld record
-never costs a visible one its slot, that a visible record's bytes do not
-move when its neighbour is withheld, and that the page boundary does not
-move — the side channels, not just the content. The same rigour shows in
-the visibility module, which asks "may this chunk be shown to this
-caller at all" before ranking rather than after, because asking late let
-a withheld row occupy a candidate slot and move <code>count</code>,
-<code>usedTokens</code>, <code>fusedScore</code> and
-<code>droppedForBudget</code> with it. And a SQL validity filter was
-removed rather than patched once it was found comparing ISO-8601
-timestamps as text, which "silently disagreed" with the domain
-comparison across UTC offsets</td>
-<td>The governance claim is a workflow convention, and the README says
-so before a reader can discover it: "there is no approval command and no
-approver field anywhere in this codebase, <strong>and nothing in the
-code checks that the merge happened</strong>" —
-<code>migrate apply</code> refuses an uncommitted migration by default,
-but "a local commit on a local branch passes, so it enforces the commit
-and not the merge", recorded as a residual against its own task id. What
-the code does guarantee is narrower and real: no MCP tool can write
-approved knowledge, and <code>system.capabilities</code> reports
-<code>writeTools: false</code>. So "agents never approve" holds because
-agents cannot write at all, while "humans approved this" rests on the
-team's pull-request discipline, not on Theurian. The second cost is
-size: 313,168 lines of Python and 4,209 test functions across 244 test
-files, at version 0.0.0 and self-labelled alpha, for a daemon that
-serves decisions read-only — and the absence-proof machinery that makes
-it trustworthy is a large part of why</td>
+beside every result, a deployment sensitivity ceiling, and a
+content-identity gate that withholds a row whose body drifted from its
+revision's hash</td>
+<td>The absence proofs test the side channels, not only the content. One
+query is asked of a corpus holding a withheld record and of one that
+never held it, and the answers must match field for field — counts,
+token use, fused scores, budget drops and page boundaries — with a
+positive control proving the fixture reaches the withheld row. The
+visibility question is asked while the retrievers are read, because
+asking late let a withheld row occupy a candidate slot and move every
+number computed from those slots. A SQL validity filter was removed
+rather than patched once it was found comparing ISO-8601 timestamps as
+text. Accepting a proposal replays the whole migration set against a
+throwaway store and refuses one that would readmit a retired item or
+lower a sensitivity</td>
+<td>Approval is a convention the code does not check, and the README
+says so: there is no approver field, and migrate apply refuses an
+uncommitted migration but accepts a local commit. An agent's proposal is
+written with status approved and whatever trust level the caller names,
+and the shipped Claude Code plugin grants the agent Bash(theurian:*),
+which covers propose accept and migrate apply; the plugin's own text
+calls that containment a documented rule, not a server-side check. The
+revision table's source_commit column has no writer. The project is
+chosen by the caller and there is one sensitivity ceiling per
+deployment, so the store separates projects, not people</td>
 </tr>
 <tr>
 <td><a href="../systems/thoughtdag/"><code>thoughtdag</code></a></td>

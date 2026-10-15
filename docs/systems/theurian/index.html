@@ -5,27 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="An engineering-decision record
-served read-only to agents, whose absence proof compares three
-deployments on the wire so a withheld row cannot be inferred from a
-count, a score or a page boundary — and which states in its own README
-that nothing in the code checks the review happened.">
+served to agents over MCP: withheld rows are proved invisible on the
+wire, and agent proposals arrive stamped approved.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Theurian — Agent Memory Atlas">
     <meta property="og:description" content="An engineering-decision
-record served read-only to agents, whose absence proof compares three
-deployments on the wire so a withheld row cannot be inferred from a
-count, a score or a page boundary — and which states in its own README
-that nothing in the code checks the review happened.">
+record served to agents over MCP: withheld rows are proved invisible on
+the wire, and agent proposals arrive stamped approved.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Theurian — Agent Memory Atlas">
     <meta name="twitter:description" content="An engineering-decision
-record served read-only to agents, whose absence proof compares three
-deployments on the wire so a withheld row cannot be inferred from a
-count, a score or a page boundary — and which states in its own README
-that nothing in the code checks the review happened.">
+record served to agents over MCP: withheld rows are proved invisible on
+the wire, and agent proposals arrive stamped approved.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Theurian — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ that nothing in the code checks the review happened.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Theurian",
-      "description": "An engineering-decision record served read-only to agents, whose absence proof compares three deployments on the wire so a withheld row cannot be inferred from a count, a score or a page boundary \u2014 and which states in its own README that nothing in the code checks the review happened.",
+      "description": "An engineering-decision record served to agents over MCP: withheld rows are proved invisible on the wire, and agent proposals arrive stamped approved.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -106,24 +100,22 @@ that nothing in the code checks the review happened.">
 like one that never held it</p>
           <h1>Theurian</h1>
           <p class="document-deck">An engineering-decision record served
-read-only to agents, whose absence proof compares three deployments on
-the wire so a withheld row cannot be inferred from a count, a score or a
-page boundary — and which states in its own README that nothing in the
-code checks the review happened.</p>
+to agents over MCP: withheld rows are proved invisible on the wire, and
+agent proposals arrive stamped approved.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/theurian/theurian">
               <span>Source</span>
               <strong>theurian/theurian</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/theurian/theurian/commit/6c64a6baca90a57601730a8ea1d592519163efa2" title="6c64a6baca90a57601730a8ea1d592519163efa2">
+            <a class="meta-pill revision-pill" href="https://github.com/theurian/theurian/commit/6c3c282701bb20bb6c044c539b9dbe4619c34b46" title="6c3c282701bb20bb6c044c539b9dbe4619c34b46">
               <span>Analyzed revision</span>
-              <code>6c64a6ba…</code>
+              <code>6c3c2827…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/theurian--theurian" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,19 @@ code checks the review happened.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>390,925
+lines of Python in 679 files; the core package's source is 80,828 lines
+in 179 files, and 293,647 lines are tests</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>396
+commits on main by 5 author names, Dependabot among them, 1 August – 14
+October 2026; core package 0.5.3, self-labelled alpha</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>6,015
+Python test functions in 411 files, 5,219 of them in 335 files under
+packages/theurian-core/tests; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,130 +151,120 @@ code checks the review happened.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Theurian is "the engineering record your AI agents consult" —
-Apache-2.0, Python 3.13+, self-labelled alpha at version 0.0.0, 313,168
-lines with 4,209 test functions across 244 test files, served to any MCP
-client by a local daemon. Its pitch is one sentence: "Stop your AI from
-re-proposing what your team rejected in March."</p>
-<p>The shape is deliberate and narrow. Knowledge enters only through a
-human-authored migration file applied with <code>migrate apply</code>;
-every MCP tool is read-only and <code>system.capabilities</code> reports
-<code>writeTools: false</code>, with a note beside it — "No write-intent
-tool exists. Approved knowledge changes only through a human-authored
-migration." Agents read, agents propose, agents never approve.</p>
-<p><strong>Then the README tells you the limit of that claim, before you
-can find it.</strong></p>
+<p>Theurian is a local record of engineering decisions served to agents
+over MCP. Knowledge enters only as a migration file applied by
+<code>theurian migrate apply</code>, and every read asks one
+status-and-sensitivity question before anything is ranked. Its absence
+proofs build the corpus that never held a withheld record and require
+the same answer on the wire. The weak side is approval: an agent's
+proposal is written with <code>status: approved</code>, and the shipped
+Claude Code plugin grants the agent the commands that land and apply
+it.</p>
+<p>It describes itself as "the engineering record your AI agents
+consult", and its pitch is one line: "Stop your AI from re-proposing
+what your team rejected in March."</p>
+<p><strong>Agents propose, and approval is a convention.</strong> Three
+MCP tools are write-intent — <code>knowledge.proposeChange</code>,
+<code>knowledge.generateMigrationDraft</code> and
+<code>review.generateKnowledgeCandidate</code> — and
+<code>system.capabilities</code> reports <code>writeTools: true</code>
+beside a note that no MCP tool writes approved knowledge
+(<code>packages/theurian-core/src/theurian/mcp/tools.py:3338</code>).
+That note is accurate: the tools hold a facade whose only methods are
+the two draft entries, so none can call <code>accept</code>. The README
+states what that leaves:</p>
 <blockquote>
 <p>"there is no approval command and no approver field anywhere in this
 codebase, <strong>and nothing in the code checks that the merge
 happened</strong>: <code>migrate apply</code> refuses an uncommitted
 migration by default (<code>--allow-uncommitted</code> restores the old
 behaviour), but a local commit on a local branch passes, so it enforces
-the commit and not the merge. The review is a workflow convention rather
-than a check Theurian makes (T-15's recorded residual)."</p>
+the commit and not the merge."</p>
 </blockquote>
-<p>That paragraph is why this report carries no human-review mark, and
-it is also the most creditable thing in the repository. The guarantee
-that does hold is narrower and genuinely enforced: an agent cannot write
-approved knowledge at all, so it cannot approve. Whether a human
-approved rests on the team's pull-request discipline. Most projects with
-this thesis would have stopped at "agents never approve".</p>
-<p><strong>The absence proof is the strongest in this corpus.</strong>
-Rather than assert that a withheld record does not come back,
-<code>test_review_search_tool_absence_proof.py</code> builds three
-deployments and demands indistinguishability:</p>
+<p>The drafted migration carries <code>status: approved</code> because
+"the file applies only once a human has merged it"
+(<code>application/proposal_service.py:4938-4958</code>), and the
+plugin's <code>/theurian:propose</code> and
+<code>/theurian:migrate</code> grant <code>Bash(theurian:*)</code>. That
+is why no human-review mark is claimed (<a
+href="#8-agent-integration">section 8</a>).</p>
+<p><strong>The absence proofs test side channels.</strong>
+<code>knowledge.search</code> is asked one query against a project whose
+index holds a withheld document and a control that never held it, and
+every published value must match. <code>review.search</code> gets the
+same treatment on the serialised response, across three deployments:</p>
 <blockquote>
 <p>"<em>a corpus that held the withheld records and a corpus that never
 did must answer identically</em> — and here, identically <strong>on the
 wire</strong>, refusals included."</p>
 </blockquote>
-<p>The three are <code>withholding</code>, <code>never_held</code>, and
-<code>control</code> — and the module explains why the third exists:</p>
-<blockquote>
-<p>"The <strong>positive control</strong>: every query the pair must
-answer identically returns the planted rows here. Without it, an
-equality is satisfied by a build that wrote nothing, a query that
-matched nothing and a corpus whose plant was unreachable — three ways
-for this file to hold vacuously" — with
-<code>test_the_battery_really_reaches_the_withheld_records</code> named
-as "what makes the reach a measured set rather than a hope."</p>
-</blockquote>
-<p>Beside it:
-<code>test_the_battery_really_reaches_the_withheld_records</code>,
-<code>test_a_withheld_record_never_costs_a_visible_one_its_slot_in_the_response</code>,
-<code>test_a_visible_records_bytes_do_not_move_when_its_neighbour_is_withheld</code>,
-and
-<code>test_the_page_boundary_bit_does_not_move_with_a_withheld_record</code>.
-The threat model being tested is not "does the secret appear" but "can
-its existence be inferred from a count, a score, a byte offset or a page
-break" — and the module's header names the family: "a value computed
-over rows a caller may not see is the family this project has met five
-times."</p>
-<p>That same insight drives the visibility module, which asks <em>may
-this be shown</em> while the retrievers are being read rather than after
-fusion:</p>
-<blockquote>
-<p>"Asking it late is what made a withheld document able to occupy a
-candidate slot, and every number computed from those slots —
-<code>count</code>, <code>usedTokens</code>, <code>fusedScore</code>,
-<code>droppedForBudget</code> — move with it."</p>
-</blockquote>
-<p>And the session rule beneath it: one read session per request,
-"because the whole point of one session per request is that two rows in
-one answer cannot be judged against two states."</p>
-<p><strong>A filter was deleted rather than fixed, and the reason is
-recorded.</strong> The store's SQL-side comparison of
-<code>valid_from</code>/<code>valid_to</code> against a bound moment
-compared them as SQLite TEXT — "a lexicographic ordering of the ISO-8601
-string rather than of the absolute instant it names" — and "silently
-disagreed with <code>ValidityPeriod.contains</code> whenever the two
-sides were authored in different UTC offsets". So it was removed, and
-the domain comparison is now the only one. A class of bug most codebases
-carry unknowingly, found, named, and resolved by removing the second
-answer rather than teaching it to agree.</p>
-<p>Five marks. World validity comes from the migration author
-(<code>validFrom</code>/<code>validTo</code>) and is read with an
-<code>asOf</code> moment, over an immutable revision chain carrying its
-migration, author, creation time and source commit — "Revisions are
-immutable (ADR-0006). There is no UPDATE path for this table in the
-store adapter; corrections append a new row." Status, trust level and
-sensitivity are stored and filtered before ranking. The project is bound
-on the request context and appears in every canonical read.</p>
-<p>The cost is proportion. A daemon that serves decisions read-only
-carries 313,168 lines and 4,209 tests — and reading the absence-proof
-machinery explains most of it. Whether that is over-built depends
-entirely on whether you believe the side-channel threat is real, and
-this project has made the most complete argument in the corpus that it
-is.</p>
+<p>The third deployment is the positive control. Without it, the module
+says, "an equality is satisfied by a build that wrote nothing, a query
+that matched nothing and a corpus whose plant was unreachable".</p>
+<p>The same reasoning places the visibility check before ranking. A SQL
+validity filter that compared ISO-8601 timestamps as text was deleted,
+leaving one comparison in Python. Accepting a proposal replays the whole
+migration set and refuses one that would readmit a retired item or lower
+a sensitivity.</p>
+<p>Five marks. Status is stored and the retired statuses are unreachable
+by any flag (trust state). Every canonical read is bound to one
+project's state file and predicate (scope enforced). An authored
+validity window is read with <code>asOf</code>, apart from the
+migration's creation and apply times (bitemporal). Applied migrations
+are frozen by checksum over an append-only revision table (audit log).
+Both search tools carry must-not-retrieve proofs with positive controls
+(negative evaluation).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>decision</strong> is a revision. Revisions do not change;
-corrections are new ones.</p>
-<p><strong>Approval</strong> is a merged pull request. Theurian records
-the result and does not witness the act.</p>
-<p>A <strong>withheld row</strong> must be invisible in every number,
-not just absent from the list.</p>
-<p><strong>Valid</strong> and <strong>recorded</strong> are different
-times, and <code>asOf</code> asks about the first.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the absence proof compares three deployments on the wire, because the control is what stops the equality holding vacuously; visibility is asked before ranking so a withheld row never occupies a slot</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the absence proof compares three deployments on the wire, because the control is what stops the equality holding vacuously; visibility is asked before ranking so a withheld row never occupies a slot
+<p>A <strong>decision</strong> is a knowledge item whose current
+revision a migration put there. Revisions are never edited; a correction
+is a new revision naming the one it expects to replace.</p>
+<p>An item's <strong>status</strong> is one of <code>draft</code>,
+<code>proposed</code>, <code>approved</code>, <code>deprecated</code>,
+<code>superseded</code> or <code>rejected</code>. Default retrieval
+returns <code>approved</code> only; <code>includeUnapproved</code> adds
+<code>draft</code> and <code>proposed</code>; nothing returns the three
+retired statuses, because "a rejected revision is where the secret that
+caused the rejection still lives"
+(<code>domain/enums.py:222-282</code>). <code>createItem</code> starts
+an item at <code>draft</code>, an <code>upsertRevision</code> lands its
+revision's status, <code>deprecateItem</code> retires it and
+<code>restoreItem</code> returns it to <code>approved</code>.</p>
+<p>A <strong>proposal</strong> is a draft migration in
+<code>.theurian/proposals/</code>, outside the store and outside every
+search. It becomes a decision when <code>propose accept</code> moves it
+into <code>.theurian/migrations/</code> and <code>migrate apply</code>
+runs it. The project intends a merged pull request between those two
+steps; the code checks for a commit.</p>
+<p>A <strong>withheld row</strong> must leave no trace in any number a
+caller is handed, not only be absent from the list.</p>
+<p><strong>Valid</strong> and <strong>recorded</strong> are separate:
+<code>validFrom</code>/<code>validTo</code> are what the migration
+author asserts, <code>createdAt</code> is when the migration was
+written, and <code>applied_at</code> is when this store applied it.
+<code>asOf</code> asks about the first.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — knowledge enters only through an applied migration; an agent's proposal is stamped approved and waits outside the store until accept and apply, CLI commands the plugin grants the agent; every read asks status and sensitivity before ranking, and absence is proved against a corpus that never held the row</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: knowledge enters only through an applied migration; an agent&#39;s proposal is stamped approved and waits outside the store until accept and apply, CLI commands the plugin grants the agent; every read asks status and sensitivity before ranking, and absence is proved against a corpus that never held the row
 flowchart TB
-    MIG[&quot;a human-authored migration file&quot;] --&gt; APP[&quot;migrate apply — refuses an&lt;br/&gt;uncommitted migration by default&quot;]
-    APP -.-&gt;|&quot;&#39;nothing in the code checks&lt;br/&gt;that the merge happened&#39; —&lt;br/&gt;a local commit on a local branch passes&quot;| RESID[&quot;T-15&#39;s recorded residual:&lt;br/&gt;review is a workflow convention&quot;]
-    APP --&gt; REV[(&quot;knowledge_revisions — immutable,&lt;br/&gt;no UPDATE path; a correction appends.&lt;br/&gt;migration_id · author · created_at ·&lt;br/&gt;source_commit · content_sha256&quot;)]
-    REV --&gt; COLS[&quot;status · trust_level · sensitivity&lt;br/&gt;valid_from · valid_to&quot;]
-    AGENT[&quot;any MCP client&quot;] --&gt; RO[&quot;read-only tools —&lt;br/&gt;system.capabilities: writeTools = false&quot;]
-    RO --&gt; CTX[&quot;RequestContext.project_id, emitted on&lt;br/&gt;every canonical read; the sensitivity&lt;br/&gt;ceiling a caller may shrink, never widen&quot;]
-    CTX --&gt; VIS{&quot;visibility — asked WHILE the&lt;br/&gt;retrievers are read, not after fusion&quot;}
-    VIS --&gt;|&quot;&#39;Asking it late is what made a withheld&lt;br/&gt;document occupy a candidate slot, and&lt;br/&gt;count, usedTokens, fusedScore and&lt;br/&gt;droppedForBudget move with it&#39;&quot;| RANK[&quot;rank the rows that survived&quot;]
-    VIS --&gt; GATE[&quot;content-identity gate: a row whose body&lt;br/&gt;drifted from its revision&#39;s hash is withheld&quot;]
-    RANK --&gt; ASOF{&quot;asOf given?&quot;}
-    ASOF --&gt;|&quot;yes&quot;| VALID[&quot;item.validity.contains(as_of) — in Python,&lt;br/&gt;because the SQL version compared ISO-8601&lt;br/&gt;as TEXT and &#39;silently disagreed&#39; across&lt;br/&gt;UTC offsets, so it was removed not fixed&quot;]
-    ASOF --&gt;|&quot;no&quot;| NOW[&quot;no validity bound&quot;]
-    VALID &amp; NOW --&gt; WIRE[&quot;the serialised response&quot;]
-    PROOF[&quot;absence proof: three deployments&quot;] --&gt; D1[&quot;withholding — the whole corpus,&lt;br/&gt;built while withholding the keys&quot;]
-    PROOF --&gt; D2[&quot;never_held — the corpus minus&lt;br/&gt;those records&quot;]
-    PROOF --&gt; D3[&quot;control — the whole corpus,&lt;br/&gt;withholding nothing&quot;]
-    D1 &lt;--&gt;|&quot;must answer identically ON THE WIRE,&lt;br/&gt;refusals included; no slot taken,&lt;br/&gt;no byte moved, no page boundary shifted&quot;| D2
-    D3 -.-&gt;|&quot;the positive control — without it the&lt;br/&gt;equality is satisfied by a build that wrote&lt;br/&gt;nothing, a query that matched nothing, and&lt;br/&gt;a plant that was unreachable&quot;| PROOF</code></pre></details></figure>
+    AG[&quot;MCP client: knowledge.proposeChange ·&lt;br/&gt;generateMigrationDraft ·&lt;br/&gt;review.generateKnowledgeCandidate&quot;] --&gt; FAC[&quot;DraftOnlyProposals —&lt;br/&gt;draft and draft_from_document only&quot;]
+    HUM[&quot;theurian propose · okf import (CLI)&quot;] --&gt; PS
+    FAC --&gt; PS[&quot;ProposalService: migration written with&lt;br/&gt;status approved and the caller&#39;s trustLevel;&lt;br/&gt;an omitted label inherits the item&#39;s&quot;]
+    PS --&gt; PROP[(&quot;.theurian/proposals/ —&lt;br/&gt;read by no search&quot;)]
+    PROP --&gt; ACC{&quot;propose accept (CLI): secret scan,&lt;br/&gt;dry replay of the whole set, no retired&lt;br/&gt;item readmitted, no sensitivity lowered&quot;}
+    ACC --&gt;|&quot;refused, nothing consumed&quot;| PROP
+    ACC --&gt;|&quot;files moved&quot;| MIG[(&quot;.theurian/migrations/&quot;)]
+    PLUG[&quot;Claude Code plugin: allowed-tools&lt;br/&gt;Bash(theurian:*) — &#39;a documented rule,&lt;br/&gt;not a server-side check&#39;&quot;] -.-&gt; ACC
+    PLUG -.-&gt; APPLY
+    MIG --&gt; APPLY{&quot;migrate apply (CLI): refuses an&lt;br/&gt;uncommitted file, accepts a local commit;&lt;br/&gt;an applied file edited or removed is fatal&quot;}
+    APPLY --&gt; REV[(&quot;knowledge_revisions — appended only:&lt;br/&gt;status · trust_level · sensitivity ·&lt;br/&gt;valid_from · valid_to · author · created_at&quot;)]
+    APPLY --&gt; ITEM[(&quot;knowledge_items — the pointer row;&lt;br/&gt;status, sensitivity, owner and validity&lt;br/&gt;overwritten by deprecate, restore, changeSensitivity&quot;)]
+    ITEM --&gt; GATE{&quot;may_surface and may_disclose,&lt;br/&gt;asked while the retrievers are read&quot;}
+    GATE --&gt;|&quot;deprecated · superseded · rejected&quot;| OUT[&quot;withheld — no flag surfaces it&quot;]
+    GATE --&gt;|&quot;draft · proposed, only with includeUnapproved;&lt;br/&gt;approved inside the deployment ceiling&quot;| RANK[&quot;fuse word, trigram and&lt;br/&gt;optional dense ranks&quot;]
+    RANK --&gt; HASH{&quot;body hashes to&lt;br/&gt;its revision&#39;s digest?&quot;}
+    HASH --&gt;|&quot;no, or cannot tell&quot;| OUT
+    HASH --&gt;|&quot;yes&quot;| ASOF{&quot;asOf given?&quot;}
+    ASOF --&gt;|&quot;yes: ValidityPeriod.contains&quot;| WIRE[&quot;serialised response&quot;]
+    ASOF --&gt;|&quot;no&quot;| WIRE
+    PROOF[&quot;absence proofs: a corpus withholding rows&lt;br/&gt;against one that never held them, plus a&lt;br/&gt;control that reaches the planted rows&quot;] -.-&gt;|&quot;must match field for field&quot;| WIRE</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -282,107 +276,294 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>domain/</code></td>
-<td>Knowledge, validity, enums, request context, store ports</td>
+<td>Items, revisions, validity, the status and sensitivity enums with
+<code>may_surface</code> and <code>may_disclose</code></td>
 </tr>
 <tr>
 <td><code>application/migration_engine.py</code></td>
-<td>The only write path</td>
+<td>Plans and applies migrations, freezes applied files by checksum</td>
 </tr>
 <tr>
-<td><code>application/visibility.py</code></td>
-<td>May this be shown, asked before ranking</td>
+<td><code>application/proposal_service.py</code>,
+<code>draft_only_proposals.py</code></td>
+<td>Drafting, the accept checks, the facade the MCP tools hold</td>
+</tr>
+<tr>
+<td><code>application/visibility.py</code>,
+<code>retrieval_service.py</code></td>
+<td>The visibility question and the ranking that asks it</td>
+</tr>
+<tr>
+<td><code>application/withdrawal_purge.py</code></td>
+<td>Rebuilds the published index when a row is withdrawn</td>
+</tr>
+<tr>
+<td><code>application/okf_import.py</code>,
+<code>okf_export.py</code></td>
+<td>Bundle interchange; import drafts proposals, export walks the status
+gate</td>
 </tr>
 <tr>
 <td><code>infrastructure/sqlite/</code></td>
-<td>The canonical store, the index, the query layer</td>
+<td>Canonical store, index store, purge, review search store</td>
 </tr>
 <tr>
 <td><code>mcp/tools.py</code>, <code>mcp/search.py</code></td>
-<td>The read-only surface and its <code>asOf</code></td>
+<td>Ten MCP tools, the published-index path and the substring
+fallback</td>
 </tr>
 <tr>
-<td><code>tests/integration/*absence_proof*</code></td>
-<td>Indistinguishability, proved twice</td>
+<td><code>plugins/claude-code</code>, <code>plugins/codex</code></td>
+<td>Slash commands, a session-start health check, Codex wiring</td>
+</tr>
+<tr>
+<td><code>tools/eval/</code></td>
+<td>The retrieval-evaluation harness and its committed baseline</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One Python 3.13 package and a loopback daemon behind a bearer token
+at mode 0600; no API key, no account, no network for the store. The
+embedder is deterministic hashed character trigrams, so the dense arm
+needs no model. The source of truth is plain YAML and Markdown under
+<code>.theurian/</code> in the repository, reviewable in a pull request.
+Everything in <code>.theurian/state/</code> is derived and rebuilt by
+<code>migrate apply</code> and <code>index build</code>, so a damaged
+store is repaired by deleting it, while a hand-edited applied migration
+stops the next apply.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>application/visibility.py:1-45</code> — where the question
-goes, and what asking it late costs.</p>
-<p><code>infrastructure/sqlite/store.py:514-522</code> — a filter
-removed rather than repaired, with the reason.</p>
-<p><code>infrastructure/sqlite/schema.py:207-266</code> — immutability,
-and a foreign key that lied.</p>
-<p><code>tests/integration/test_review_search_tool_absence_proof.py:1-30</code>
-— read this if you read nothing else.</p>
+<p><strong>Proposal.</strong> <code>knowledge.proposeChange</code> →
+<code>_draft_only_proposals</code> builds a
+<code>DraftOnlyProposals</code> around a caller-scoped item lookup
+(<code>mcp/tools.py:1909-1960</code>) →
+<code>ProposalService.draft</code> refuses a draft for a retired item
+(<code>proposal_service.py:4884</code>), inherits omitted labels from
+the item, and writes a migration with <code>status: approved</code>
+(<code>:4958</code>). <code>generateMigrationDraft</code> admits ten
+operation kinds and refuses <code>createItem</code> and
+<code>upsertRevision</code> (to <code>proposeChange</code>) and
+<code>changeSensitivity</code> and <code>restoreItem</code> (to the CLI)
+(<code>:340-380</code>).</p>
+<p><strong>Accept.</strong> <code>propose accept</code>
+(<code>cli/propose_commands.py:375</code>) scans everything it would
+land for secrets, replays the migration set with the proposal against a
+throwaway store, and refuses if <code>readmitted_items</code> or
+<code>lowered_sensitivities</code> is non-empty
+(<code>application/item_labels.py:99-157</code>) or a landed migration
+would overwrite what the proposal sets
+(<code>proposal_service.py:4713</code>).</p>
+<p><strong>Apply.</strong> <code>MigrationEngine.plan</code> compares
+each applied migration's checksum and refuses a removed one
+(<code>migration_engine.py:177-240</code>);
+<code>_apply_operation</code> dispatches the fourteen operation kinds
+(<code>:484-580</code>).</p>
+<p><strong>Search.</strong> <code>knowledge.search</code> →
+<code>hybrid_answer</code> locates the published index, standing aside a
+build whose purge failed or whose sensitivity flavour disagrees with the
+grant (<code>mcp/search.py:352-420</code>) →
+<code>RetrievalService.search</code> widens each retriever until
+<code>CANDIDATE_DEPTH</code> (50) rows survive
+<code>CanonicalVisibility.cleared</code>, then applies
+<code>at_moment</code> (<code>retrieval_service.py:232</code>,
+<code>:597</code>; <code>visibility.py:164-323</code>). With no usable
+index, <code>_scan</code> reads <code>list_items_by_status</code> over
+the statuses <code>may_surface</code> admits
+(<code>mcp/search.py:1026-1128</code>).</p>
+<p><strong>Withdrawal.</strong> A migration that retires an item,
+rejects a revision in place or reclassifies its sensitivity triggers
+<code>withdrawal_purge</code>, which writes a new index without the rows
+and swaps the pointer
+(<code>application/migration_engine.py:772-800</code>,
+<code>application/withdrawal_purge.py:1-30</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>An item with a revision chain. Each revision carries content and its
-SHA-256, kind, namespace, status, trust level, sensitivity, owner,
-tenant, ACL group, labels, scope paths, a validity window, an author and
-a source commit. The schema comments carry the archaeology — including
-the project-id defect where <code>PRAGMA foreign_key_check</code>
-reported a satisfied constraint over stranded rows, linked to its
-issue.</p>
+<p><code>knowledge_revisions</code> carries title, body, its SHA-256,
+kind, namespace, status, trust level, sensitivity, owner, tenant, ACL
+group, labels, scope paths, a validity window, author,
+<code>created_at</code> and <code>source_commit</code>
+(<code>infrastructure/sqlite/schema.py:242-266</code>).
+<code>created_at</code> is the migration file's <code>createdAt</code>
+(<code>migration_engine.py:661</code>). <code>source_commit</code> is
+declared, read and never written: the engine's one construction of a
+revision does not pass it (<code>:638-662</code>), so commit provenance
+lives in source anchors.</p>
+<p><code>knowledge_items</code> is the pointer, and the schema comment
+calls <code>current_revision_id</code> "the one thing that moves".
+<code>put_item</code> updates status, sensitivity, owner, trust level
+and the validity window on conflict as well
+(<code>store.py:1272-1283</code>), which <code>deprecateItem</code>,
+<code>restoreItem</code> and <code>changeSensitivity</code> use
+(<code>migration_engine.py:500-556</code>). An item's status history is
+therefore in its migrations, not in its revisions.</p>
+<p><code>tenant_id</code> and <code>acl_group</code> are NOT NULL with
+defaults <code>local</code> and <code>default</code>. No read filters on
+either; the tenant is compared once, against the grant, as a constant
+(<code>mcp/tools.py:1707</code>). There is no value-keyed rejection
+record: a <code>rejected</code> status sits on an item, and the accept
+floor is keyed on item ids.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Status and sensitivity filtered before ranking, an optional
-<code>asOf</code> applied through the domain validity object, and
-results returned with status, trust level, freshness and a source anchor
-so the caller can check the claim rather than take it. A
-reclassification above the sensitivity ceiling purges the published
-index rather than waiting for the next build.</p>
+<p>Two lexical arms and one vector arm are fused by reciprocal rank with
+<code>k = 60</code>: an FTS5 word index (<code>unicode61</code>), an
+FTS5 trigram index for CJK and partial words, and an optional dense arm
+over hashed character trigrams
+(<code>infrastructure/sqlite/index_schema.py:254-296</code>,
+<code>domain/ranking.py:220</code>). A RAPTOR summary forest is built
+only with <code>--raptor</code>. Results are trimmed to a 2,000-token
+default budget and report <code>droppedForBudget</code>.</p>
+<p>Visibility runs inside the depth loop. The module puts the reason in
+one line: "Asking it late is what made a withheld document able to
+occupy a candidate slot, and every number computed from those slots —
+<code>count</code>, <code>usedTokens</code>, <code>fusedScore</code>,
+<code>droppedForBudget</code> — move with it." Each request uses one
+read session, "because the whole point of one session per request is
+that two rows in one answer cannot be judged against two states"
+(<code>visibility.py:1-21</code>).</p>
+<p><code>asOf</code> is applied after the depth loop, not inside it, so
+a caller cannot use a chosen moment to tune how many rows the loop
+discards (<code>visibility.py:58-80</code>). It filters the current
+revision by its validity window; it does not return the revision that
+was current at that moment, and passing a state hash back to query an
+earlier state is not implemented (README, FR-R7).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p><code>migrate apply</code>, over a Markdown migration with front
-matter. The commit check is the only gate, and the README is explicit
-about what it does and does not prove.</p>
+<p>Nothing extracts memory. A person writes a migration, or runs
+<code>theurian propose</code>, or an agent calls a proposal tool; each
+produces files that <code>migrate apply</code> turns into rows. The
+write blocks on validation of the whole migration set and does not
+index: <code>index build</code> is a separate command. Agent proposals
+carry no <code>validFrom</code>, so their validity starts at apply time.
+Proposals generated from review threads and OKF imports are written at
+trust level <code>inferred</code>. <code>knowledge.proposeChange</code>
+accepts any <code>trustLevel</code> the caller passes,
+<code>authoritative</code> included.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>One local daemon, read-only, no API key, no data leaving the machine.
-The boundary is stated as a product position — "Theurian does not
-orchestrate, does not approve, does not enforce" — with the corollary
-that CI may block a pull request on what it reads, "and the thing that
-blocked is CI".</p>
+<p>The MCP surface is seven read tools — <code>knowledge.search</code>,
+<code>knowledge.get</code>, <code>knowledge.status</code>,
+<code>project.list</code>, <code>review.findings</code>,
+<code>review.search</code>, <code>system.capabilities</code> — and the
+three proposal tools. No MCP tool accepts or applies.</p>
+<p>The Claude Code plugin is slash commands and one
+<code>SessionStart</code> hook that probes the daemon and prints
+warnings; it injects no knowledge
+(<code>plugins/claude-code/scripts/session-start.sh:1-27</code>).
+<code>/theurian:propose</code> and <code>/theurian:migrate</code> both
+declare <code>allowed-tools: Bash(theurian:*)</code>, and the propose
+command says what that grants:</p>
+<blockquote>
+<p>"Containment here is a documented rule, not a server-side check.
+<code>allowed-tools</code> grants and removes nothing … so
+<code>Bash(theurian:*)</code> auto-approves <em>every</em>
+<code>theurian</code> invocation, <code>theurian migrate apply</code> (a
+canonical write) and <code>theurian propose accept</code> …
+included."</p>
+</blockquote>
+<p>Its rules tell the agent to run <code>accept</code> only "when the
+user has agreed" and never to run <code>migrate apply</code> for them.
+<code>/theurian:migrate</code> tells the agent to summarise pending
+migrations, ask the user to confirm, then run
+<code>theurian migrate apply --json</code>
+(<code>commands/migrate.md:20-26</code>). Neither CLI command checks for
+an interactive terminal or records who ran it. The agent that drafts a
+proposal can therefore accept, commit and apply it under the same grant,
+which is the reason the human-review mark is withheld.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The content-identity gate is worth naming separately: a row whose
-stored body no longer hashes to what its revision recorded is withheld
-rather than served, and a current revision the gate cannot hash is
-withheld too. Failing closed on an integrity check, in a system whose
-whole value is that the answer is the one the team approved.</p>
+<p>The content-identity gate re-reads each row that clears status and
+sensitivity and withholds it if the served body does not hash to its
+revision's digest, or if the digest cannot be computed: "a check that
+cannot be performed is not a check that passes"
+(<code>visibility.py:495-523</code>).</p>
+<p>A withdrawal purge runs after the write commits and builds a new
+index rather than editing the published one; a build whose purge failed
+is refused outright before any other gate
+(<code>mcp/search.py:410-420</code>). Sensitivity is a deployment
+ceiling, default <code>internal</code>, held in the operator's data
+directory rather than in the repository, because "a committed ceiling
+would make <em>raising</em> the ceiling a contributor-authored
+access-control change"
+(<code>application/authorization.py:1-30</code>).</p>
+<p>Proposal labels are guarded at three points: an omitted label is
+copied from the item, <code>accept</code> refuses a replay that readmits
+or loosens, and <code>migrate apply</code> reports every loosening as a
+<code>permissiveMoves</code> row. The trust level an agent declares is
+not guarded at any of them.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>4,209 test functions across 244 files, including two absence-proof
-modules — one at the store, one on the wire — and a note that the gap
-between them "is not rhetorical", listing the eight stages that sit
-between a store hit and a response, each of which "computes
-something".</p>
-<p>Nothing was built or run for this reading.</p>
+<p>I read the suites and the evaluation baseline; I ran nothing. Tests
+are about 3.6 lines for every line of shipped source, and the two
+<code>review.search</code> absence-proof modules are 2,390 of those
+lines.</p>
+<p><code>test_a_withheld_document_changes_nothing_a_caller_can_see</code>
+is the negative evaluation on <code>knowledge.search</code>: five
+parameter sets, two writing systems, <code>probe["count"] &gt; 0</code>
+so that two empty answers cannot pass, and an exact set of the two
+fields allowed to differ
+(<code>tests/integration/test_mcp_tools.py:6095</code>). Its positive
+control,
+<code>test_the_depth_probe_reaches_the_withheld_document_inside_the_candidate_depth</code>,
+proves the withheld document is in the index and ranks inside the depth
+read (<code>:5879</code>).</p>
+<p><code>test_review_search_tool_absence_proof.py</code> repeats the
+property at the <code>review.search</code> response. Its header lists
+the eight stages between a store hit and the wire and says "the gap
+between the two is not rhetorical". Beside the battery sit
+<code>test_a_withheld_record_never_costs_a_visible_one_its_slot_in_the_response</code>,
+<code>test_a_visible_records_bytes_do_not_move_when_its_neighbour_is_withheld</code>
+and
+<code>test_the_page_boundary_bit_does_not_move_with_a_withheld_record</code>
+(<code>:1046-1196</code>).</p>
+<p><code>tools/eval/</code> holds a frozen corpus of the project's own
+decision records — 33 items, 26 judged queries — and a committed
+baseline that a test regenerates and byte-compares. The baseline records
+Recall@1 of 0.629, Recall@10 of 0.955 and MRR of 0.824, with a
+superseded-knowledge error rate of 0.0. A RAPTOR arm on the same corpus
+moved Recall@1 by −0.148 and MRR by −0.098, and the forest stays opt-in.
+The baseline also records that with <code>includeUnapproved</code> most
+queries answer differently over the full and clean corpora, and files it
+as a channel of a request parameter on a one-principal core rather than
+a disclosure.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Prove absence by indistinguishability, not by assertion. Build the
-corpus that never held the record, and require the same answers. Then
-add the control that stops the equality holding because nothing happened
-at all.</p>
-<p>Test the side channels. A withheld row that still takes a candidate
-slot leaks through counts, scores, byte offsets and page boundaries —
-and those are the numbers a caller is handed without thinking about
-them.</p>
-<p>Ask the visibility question before ranking. Everything computed
-downstream inherits the answer, so asking late means computing over rows
-nobody may see.</p>
-<p>Delete the second comparison rather than teaching it to agree. Two
-validity checks that disagree across UTC offsets is one check too
-many.</p>
-<p>And write down what your governance does not check. "Nothing in the
-code checks that the merge happened" is the sentence that makes the rest
-of the claim trustworthy.</p>
+<h3 id="steal">Steal</h3>
+<p>Prove absence by comparison with the corpus that never held the
+record, on the response a caller receives, with a control that proves
+the fixture reaches the record. Assert the exact set of fields allowed
+to differ, so a field that stops moving is noticed too.</p>
+<p>Ask whether a row may be shown while candidates are gathered. Every
+count, score and budget figure downstream inherits the answer.</p>
+<p>Keep one comparison for each rule. Two validity checks that disagree
+across UTC offsets is one too many; deleting the SQL one was the
+fix.</p>
+<p>Replay the whole change set before accepting a change, and refuse on
+the end state: an item readmitted from a retired status, a sensitivity
+lowered, a later migration overwriting what this one sets.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Stamping a draft with the state it should earn. A proposal written as
+<code>approved</code> is one unchecked step from approved knowledge, and
+the label in the file says the review already happened.</p>
+<p>Granting the agent the command that lands its own proposal and
+relying on the command's prose to hold it back.</p>
+<p>Declaring provenance columns nothing writes.
+<code>source_commit</code> on every revision reads as an answer to
+"which commit was this decided at".</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a team that reviews design decisions in pull requests and
+wants agents to cite them with status and provenance, on one machine,
+with no model and no network. It assumes the team's merge discipline is
+the approval, and a reader who needs the code to enforce that should
+walk away or add a CI check that applies only from the default branch.
+It is not a memory an agent writes during work; it is a record people
+curate, and agents can propose to.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the merge check will ever be made. It is recorded as a
-residual against a task id, which suggests it is tracked rather than
-accepted.</p>
-<p>What the tenant and ACL-group columns do today. They are NOT NULL
-with defaults of <code>local</code> and <code>default</code>; whether
-any read path varies on them was not traced.</p>
-<p>How much of the tree the absence proof accounts for. It explains the
-care; the proportion was not measured.</p>
+<p>Whether the merge check will be made. T-15 records it as a residual,
+and the README says the review "is a workflow convention rather than a
+check Theurian makes".</p>
+<p>Whether <code>knowledge.proposeChange</code> is meant to accept
+<code>authoritative</code>. Review candidates and OKF imports are fixed
+at <code>inferred</code>; the direct proposal tool is not.</p>
+<p>Whether <code>source_commit</code> is meant to be filled from the
+migration's commit, or retired from the schema.</p>
+<p>What the tenant and ACL-group columns are for, given that no read
+filters on either and the tenant is checked as a constant.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -394,28 +575,139 @@ care; the proportion was not measured.</p>
 <tbody>
 <tr>
 <td><code>README.md</code></td>
-<td>A governance claim and its own disclaimer, in the same
-paragraph</td>
+<td>The governance claim and its own disclaimer</td>
 </tr>
 <tr>
-<td><code>packages/theurian-core/src/theurian/application/visibility.py:1-45</code></td>
-<td>Why the question is asked early</td>
+<td><code>packages/theurian-core/src/theurian/domain/enums.py:213-300</code></td>
+<td>The status gate, its call sites, and the sensitivity axis kept
+apart</td>
 </tr>
 <tr>
-<td><code>packages/theurian-core/src/theurian/infrastructure/sqlite/store.py:514-522</code></td>
-<td>A filter removed, and why</td>
+<td><code>packages/theurian-core/src/theurian/application/visibility.py:1-525</code></td>
+<td>Why the question is asked early, <code>at_moment</code>, the
+content-identity gate</td>
 </tr>
 <tr>
-<td><code>packages/theurian-core/src/theurian/infrastructure/sqlite/schema.py:207-266</code></td>
-<td>Immutable revisions, and a foreign key that lied</td>
+<td><code>packages/theurian-core/src/theurian/application/migration_engine.py:1-10</code>,
+<code>:177-240</code>, <code>:484-800</code></td>
+<td>Frozen migrations, the operation dispatch, the validity default, the
+purge trigger</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/infrastructure/sqlite/schema.py:207-300</code></td>
+<td>Immutable revisions, the mutable pointer, a foreign key that
+lied</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/infrastructure/sqlite/store.py:628-760</code></td>
+<td>The removed SQL validity filter, the status-filtered read</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/application/draft_only_proposals.py</code></td>
+<td>The facade the proposal tools hold</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/application/proposal_service.py:340-380</code>,
+<code>:4884-4975</code></td>
+<td>Admitted operation kinds, the retired-item refusal,
+<code>status: approved</code></td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/cli/propose_commands.py:375-470</code></td>
+<td>What <code>accept</code> checks before it moves files</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/src/theurian/mcp/tools.py:3187-3500</code></td>
+<td><code>system.capabilities</code> and the three proposal tools</td>
+</tr>
+<tr>
+<td><code>plugins/claude-code/commands/propose.md</code>,
+<code>migrate.md</code></td>
+<td>The <code>Bash(theurian:*)</code> grant and the instructions around
+it</td>
+</tr>
+<tr>
+<td><code>packages/theurian-core/tests/integration/test_mcp_tools.py:5879</code>,
+<code>:6095</code></td>
+<td>The <code>knowledge.search</code> absence proof and its control</td>
 </tr>
 <tr>
 <td><code>packages/theurian-core/tests/integration/test_review_search_tool_absence_proof.py</code></td>
-<td>Three deployments, one wire, no side channel</td>
+<td>Three deployments on the wire</td>
+</tr>
+<tr>
+<td><code>tools/eval/baseline/README.md</code></td>
+<td>The committed retrieval baseline and the RAPTOR comparison</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -nE '"writeTools": (True|False)' -- packages/theurian-core/src</code>
+— <code>mcp/tools.py:3338</code>, <code>True</code>; at
+<code class="commit-id" title="6c64a6baca90a57601730a8ea1d592519163efa2">6c64a6ba…</code>
+<code>:3324</code>, <code>True</code>; at
+<code class="commit-id" title="e5f3abe1a44099d5198aa5aa74c99dab05dc9922">e5f3abe1…</code>
+<code>:3003</code>, <code>False</code>.</li>
+<li><code>git grep -nE 'name="[a-z]+\.[a-zA-Z]+"' -- packages/theurian-core/src/theurian/mcp/tools.py</code>
+— ten tools; none accepts or applies.</li>
+<li><code>git grep -nE '"status": KnowledgeStatus\.APPROVED\.value' -- packages/theurian-core/src</code>
+— <code>application/proposal_service.py:4958</code> only.</li>
+<li><code>git grep -niE 'approver|def approve|command\("approve' -- packages/theurian-core/src</code>
+— no match.</li>
+<li><code>git grep -n 'isatty' -- packages/theurian-core/src</code> — no
+match.</li>
+<li><code>git grep -nE 'allowed-tools' -- plugins/claude-code/commands/propose.md plugins/claude-code/commands/migrate.md</code>
+— both grant <code>Bash(theurian:*)</code>.</li>
+<li><code>git grep -nE 'source_commit=' -- packages/theurian-core/src</code>
+— <code>domain/knowledge.py:254</code>, the factory forwarding its own
+argument, and <code>infrastructure/sqlite/store.py:1742</code>,
+deserialisation; the engine's construction at
+<code>migration_engine.py:638</code> passes none.</li>
+<li><code>git grep -nE 'KnowledgeRevision(\.create)?\(' -- packages/theurian-core/src</code>
+— <code>migration_engine.py:638</code> and <code>store.py:1716</code>
+only.</li>
+<li><code>git grep -nE 'WHERE[^"]*(tenant_id|acl_group)' -- packages/theurian-core/src</code>
+— no match.</li>
+<li><code>git grep -niE '(DELETE[[:space:]]+FROM|UPDATE[[:space:]]+[a-z_]+[[:space:]]+SET)' -- packages/theurian-core/src/theurian/infrastructure/sqlite/store.py</code>
+— projects, relations, aliases, evidence and specifications; none names
+<code>knowledge_revisions</code>.</li>
+<li><code>git grep -nliE 'tombstone|blocklist|denylist' -- packages/theurian-core/src</code>
+— FTS5 delete tombstones in the index code and prose elsewhere; no
+value-keyed rejection record.</li>
+<li><code>git grep -nliE 'openai|anthropic|chat/completions|messages\.create|litellm' -- packages/theurian-core/src</code>
+— <code>security/content_secrets.py</code> only, a credential-shape
+pattern; no model call on any write or read path.</li>
+<li><code>git grep -nE '"(SessionStart|UserPromptSubmit|PreToolUse|PostToolUse|Stop)"' -- plugins</code>
+— <code>plugins/claude-code/hooks/hooks.json:3</code>,
+<code>SessionStart</code> only, running the health-check script.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE NOTICE</code>
+— no match; the Apache-2.0 text carries no rider.</li>
+<li><code>git grep -niE 'arxiv' -- README.md docs NOTICE</code> —
+<code>NOTICE:28</code>, RAPTOR as a design influence; no paper of the
+project's own.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/theurian/theurian/commit/6c3c282701bb20bb6c044c539b9dbe4619c34b46"><code class="commit-id" title="6c3c282701bb20bb6c044c539b9dbe4619c34b46">6c3c2827…</code></a>
+— 76 commits on, core 0.4.0 to 0.5.3. No mark moved. Wrong at the
+previous pin: the report called every MCP tool read-only with
+<code>writeTools: false</code>, when three proposal tools had shipped in
+<a
+href="https://github.com/theurian/theurian/commit/e262b36e5b3302e68f2b6f3b55e39e664db24875"><code class="commit-id" title="e262b36e5b3302e68f2b6f3b55e39e664db24875">e262b36e…</code></a>;
+<code>human_review</code> stays withheld on the plugin's grant (<a
+href="#8-agent-integration">section 8</a>). Also wrong:
+<code>source_commit</code> has no writer, and the census described the
+first pin. Overtaken: a draft omitting a label re-labelled the item
+until <a
+href="https://github.com/theurian/theurian/commit/7007565d1489a4afc1116fefeaecd2e138fc7426"><code class="commit-id" title="7007565d1489a4afc1116fefeaecd2e138fc7426">7007565d…</code></a>;
+the accept floor, OKF interchange and an evaluation baseline arrived (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Screened from a
+full clone: sixteen files, no auto-run surfaces, eight build-time
+execution points, one unpinned surface, three dependency files inside
+the cooldown. Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/theurian/theurian/commit/6c64a6baca90a57601730a8ea1d592519163efa2"><code class="commit-id" title="6c64a6baca90a57601730a8ea1d592519163efa2">6c64a6ba…</code></a>
 — <code>trust_state</code> re-tested and the module the mark rests on is
@@ -429,8 +721,9 @@ design rather than inferred from the code. And it gives a second reason
 for the per-request read session that the record did not carry: <em>two
 rows in one answer cannot be judged against two states</em>. Filtering
 early keeps a withheld row out of a candidate slot; evaluating against
-one session keeps an answer from mixing judgements made at two moments.
-The two questions are also kept apart at the type level, which the
+one session keeps an answer from mixing judgements made at two
+moments.</p>
+<p>The two questions are also kept apart at the type level, which the
 record now names: <code>may_surface</code> takes a status and an
 include-unapproved flag (<code>domain/enums.py:222</code>),
 <code>may_disclose</code> takes a sensitivity and the set a caller may
@@ -438,7 +731,7 @@ see (<code>:252</code>), and the store read takes both vocabularies as
 frozensets rather than one blended argument. Screened again first;
 nothing was installed and no suite was run.</p>
 <p><strong>2026-09-16</strong> — <a
-href="https://github.com/theurian/theurian/commit/6c64a6baca90a57601730a8ea1d592519163efa2"><code class="commit-id" title="6c64a6baca90a57601730a8ea1d592519163efa2">6c64a6ba…</code></a>
+href="https://github.com/theurian/theurian/commit/e5f3abe1a44099d5198aa5aa74c99dab05dc9922"><code class="commit-id" title="e5f3abe1a44099d5198aa5aa74c99dab05dc9922">e5f3abe1…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before
 opening, from a shallow clone: fourteen files scanned, no auto-run
 surfaces, seven build-time execution points, one unpinned surface and
