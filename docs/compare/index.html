@@ -21066,66 +21066,68 @@ than every memory kind</td>
 <td><a href="../systems/neoth/"><code>neoth</code></a></td>
 <td>Five tiers plus an operator vault; the tier this report reads is a
 ground-truth fact — statement, source, scope, asserted and revoked
-timestamps, fact state, source weight, confidence, evidence, maturity
-and a confirmed count</td>
+timestamps, fact state, a source-count map, confidence, episode
+backlinks, maturity and a confirmed count. Beside it, a structured
+operator profile whose claims are extracted from conversation</td>
 <td>SQLite indexes beside a write-ahead log with a single-writer
-invariant, <code>O_APPEND</code>, <code>fdatasync</code> per flush, mode
-0600 and size- or age-based segment rotation</td>
-<td>Hybrid retrieval across the tiers, with ground truth surfaced ahead
-of any episodic row</td>
-<td>Ground-truth promotion is always explicit
-(<code>neoth groundtruth add</code>); episodic memory accrues through
-the daemon</td>
-<td>Revocation sets <code>revoked_at</code>; contradiction flags the
-lower-credibility side rather than deleting either; a forget sweep and
-consolidation touch episodic memory but never ground truth</td>
-<td>A <code>scope</code> column on ground truth, carried and not
-enforced on the recall path</td>
-<td>A local daemon with bridges, a GUI, a plugin SDK with a WASM
-sandbox, and origin-bound consent before any outbound provider
-route</td>
-<td>Decay, consolidation sweeps, drift detection, a compaction guard and
-an evaluation harness</td>
-<td>A decay-immune ground-truth table with its own scoring path, a
-six-value fact state gating recall, contradiction detection over
-operator facts, and consent markers the operator can audit with
-<code>ls</code></td>
+invariant, O_APPEND, fdatasync per flush, mode 0600 and segment rotation
+at 16 MiB or 24 hours</td>
+<td>Three lanes per prompt: verified, unrevoked ground truth matched by
+substring and prepended; region-routed episodic recall fused across
+semantic and episodic lanes; and pending contradictions touching the
+topic</td>
+<td>Operator-attested sources write verified facts; imports, crons and
+transcript feeds write candidates or raw rows that corroboration by
+distinct sources promotes; the opt-in consolidation sweep writes mature
+episodic clusters as candidates</td>
+<td>Revocation sets revoked_at; a polarity contradiction flags the
+lower-credibility side and a value divergence is recorded for the
+operator; topic forget deletes across the episodic, profile and graph
+tiers, revokes matching facts, and installs a never-recreate
+sentinel</td>
+<td>A scope column on ground truth that keys corroboration and
+contradiction peers; no scope predicate on any recall read</td>
+<td>A local daemon with chat, channel bridges, a GUI, a plugin SDK with
+a WASM sandbox, sub-agent personas and origin-bound consent before any
+outbound provider route</td>
+<td>Decay, opt-in consolidation and synthesis sweeps, an opt-in daily
+contradiction resolver, drift detection, a compaction guard and an
+evaluation harness</td>
+<td>A decay-immune ground-truth table with a six-value fact state gating
+every model-facing read, corroboration-based promotion, polarity-only
+automatic demotion, and a forget sentinel that profile extraction and
+peer gossip consult</td>
 <td>The ground-truth module is built against a failure it names in its
 own header: "[s]liding 'if importance ≥ 0.95 treat as fact' is the
-failure mode this module exists to prevent." A continuous importance
-score is not a trust state — something this atlas withholds marks over
-repeatedly — and the answer here is a separate table with its own
-scoring path, "no Hebbian decay, no FORGET_FLOOR sweep, no consolidation
-pass", explicit promotion, explicit revocation, and placement "in every
-recall hit BEFORE any episodic row so a stale Hebbian-decayed memory
-cannot overwrite an operator ground truth". The contradiction detector
-over those facts is pragmatic and careful: it splits a statement at the
-first copula into a subject and a value part, requires subject
-similarity above a threshold, and then fires on either a polarity
-difference (bilingual negation markers) or diverging value tokens — with
-the superset case explicitly excluded, so "nas at X" against "nas at X
-primary" is not flagged. It then flags the <em>lower-credibility</em>
-side by corroborating-source weight rather than by recency. Consent is
-equally concrete: every remote provider route is granted under a marker
-file, canonical-origin grant sets mean "endpoint A never authorizes
-endpoint B", loopback Ollama is treated as local while LAN and public
-endpoints are not, and the markers are files "so the operator [can]
-audit consent state with <code>ls ~/.neoth/consent/</code>"</td>
-<td>The scale is the first thing to weigh: 1,119,998 lines of Rust, of
-which <code>neothd</code> alone is 1,002,851 in one crate with a
-22,382-line chat module and 15,232 test functions — the memory subsystem
-this report reads is 52,353 of them, under five per cent.
-<code>scope</code> is a column on a ground-truth row and no scope
-predicate appears on the recall path, so it tags rather than isolates.
-The contradiction detector's always-available core is token-Jaccard over
-normalised statements with an optional semantic lift, so it is a textual
-comparison with a subject/value split rather than a claim-level one, and
-the thresholds are constants. And the write-ahead log is a durability
-mechanism — single writer, append-only, fdatasync, 0600, rotation —
-rather than a mutation record carrying an actor and an action, so a
-reader wanting to know who changed a fact and when has
-<code>asserted_at</code>, <code>revoked_at</code> and the contradiction
-ledger rather than a log of changes</td>
+failure mode this module exists to prevent." Facts get a separate table
+with "no Hebbian decay, no FORGET_FLOOR sweep, no consolidation pass", a
+six-value state that every model-facing read filters, and placement
+ahead of every episodic row. Who wrote a fact decides where it starts —
+an operator assertion is verified, an import or cron output a candidate,
+extracted bulk text raw — and only agreement between distinct sources
+lifts the rest. The contradiction detector splits a statement at the
+first copula, excludes a superset ("'nas at X' vs 'nas at X primary' is
+NOT flagged"), and hides a fact automatically only for a polarity flip,
+leaving "a legitimately multi-valued attribute (two meetings, two
+servers)" to the operator. A forgotten topic leaves a lowercased
+sentinel that profile extraction checks twice, once before the apply
+transaction and once inside it, and consent to a remote provider is a
+marker file an operator can audit with <code>ls</code></td>
+<td>The importance threshold the header rejects reaches the table
+anyway: the opt-in consolidation sweep writes any cluster spanning seven
+days with mean importance of at least 0.5 into ground truth, as a
+candidate, so the fact state rather than the separate table keeps it out
+of recall. The profile approval gate, default-on in configuration and
+announced by the init wizard, is never constructed outside tests: every
+production profile run passes no gate context and applies directly. The
+forget sentinel is not consulted by <code>groundtruth::insert</code>,
+document claims, bulk-text import or episodic ingest. The opt-in
+contradiction resolver supersedes the older fact by assertion time and
+closes genuine conflicts as <code>human_review</code>, which drops them
+from the pending-contradiction recall lane while both facts stay
+verified. <code>scope</code> keys corroboration but filters no recall
+read, and ground-truth mutations write no log frame: the WAL codes for
+them are emitted only by tests</td>
 </tr>
 <tr>
 <td><a href="../systems/neurakeep/"><code>neurakeep</code></a></td>
@@ -33283,7 +33285,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>68 of 749:</em> <a
+<p><em>69 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33314,6 +33316,7 @@ href="../systems/memsem/"><code>memsem</code></a>, <a
 href="../systems/mimir/"><code>mimir</code></a>, <a
 href="../systems/mira/"><code>mira</code></a>, <a
 href="../systems/mnemosyne/"><code>mnemosyne</code></a>, <a
+href="../systems/neoth/"><code>neoth</code></a>, <a
 href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/noosphere/"><code>noosphere</code></a>, <a
@@ -34392,7 +34395,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>476 of 749:</em> <a
+<p><em>477 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34707,6 +34710,7 @@ href="../systems/nano-brain/"><code>nano-brain</code></a>, <a
 href="../systems/nanoclaw/"><code>nanoclaw</code></a>, <a
 href="../systems/neko/"><code>neko</code></a>, <a
 href="../systems/neo-agent-brain/"><code>neo-agent-brain</code></a>, <a
+href="../systems/neoth/"><code>neoth</code></a>, <a
 href="../systems/neurakeep/"><code>neurakeep</code></a>, <a
 href="../systems/neuralmind/"><code>neuralmind</code></a>, <a
 href="../systems/neuron/"><code>neuron</code></a>, <a
@@ -34902,7 +34906,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-476 repositories of
+477 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

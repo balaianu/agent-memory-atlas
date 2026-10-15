@@ -4,27 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A local-first personal AI daemon
-whose operator-asserted ground truth lives in its own decay-immune table
-rather than above an importance threshold, surfaces before any episodic
-row, and drops out of recall when a contradiction flags it.">
+    <meta name="description" content="A local-first Rust AI daemon whose
+operator facts live in their own table, recall only when verified, and
+whose forgotten topics refuse re-extraction.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="NEOTH — Agent Memory Atlas">
-    <meta property="og:description" content="A local-first personal AI
-daemon whose operator-asserted ground truth lives in its own
-decay-immune table rather than above an importance threshold, surfaces
-before any episodic row, and drops out of recall when a contradiction
-flags it.">
+    <meta property="og:description" content="A local-first Rust AI
+daemon whose operator facts live in their own table, recall only when
+verified, and whose forgotten topics refuse re-extraction.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NEOTH — Agent Memory Atlas">
-    <meta name="twitter:description" content="A local-first personal AI
-daemon whose operator-asserted ground truth lives in its own
-decay-immune table rather than above an importance threshold, surfaces
-before any episodic row, and drops out of recall when a contradiction
-flags it.">
+    <meta name="twitter:description" content="A local-first Rust AI
+daemon whose operator facts live in their own table, recall only when
+verified, and whose forgotten topics refuse re-extraction.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>NEOTH — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -46,7 +41,7 @@ flags it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "NEOTH",
-      "description": "A local-first personal AI daemon whose operator-asserted ground truth lives in its own decay-immune table rather than above an importance threshold, surfaces before any episodic row, and drops out of recall when a contradiction flags it.",
+      "description": "A local-first Rust AI daemon whose operator facts live in their own table, recall only when verified, and whose forgotten topics refuse re-extraction.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -104,24 +99,23 @@ flags it.">
           <p class="eyebrow">A high importance score is not a fact, and
 the table says so</p>
           <h1>NEOTH</h1>
-          <p class="document-deck">A local-first personal AI daemon
-whose operator-asserted ground truth lives in its own decay-immune table
-rather than above an importance threshold, surfaces before any episodic
-row, and drops out of recall when a contradiction flags it.</p>
+          <p class="document-deck">A local-first Rust AI daemon whose
+operator facts live in their own table, recall only when verified, and
+whose forgotten topics refuse re-extraction.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/The-Geek-Freaks/NEOTH">
               <span>Source</span>
               <strong>The-Geek-Freaks/NEOTH</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/The-Geek-Freaks/NEOTH/commit/6a37557357b8758f5f826a9f7e655ddca0823110" title="6a37557357b8758f5f826a9f7e655ddca0823110">
+            <a class="meta-pill revision-pill" href="https://github.com/The-Geek-Freaks/NEOTH/commit/efdeaad9825789575cc793a18bc78be43de1e92c" title="efdeaad9825789575cc793a18bc78be43de1e92c">
               <span>Analyzed revision</span>
-              <code>6a375573…</code>
+              <code>efdeaad9…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/The-Geek-Freaks--NEOTH" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -129,7 +123,21 @@ row, and drops out of recall when a contradiction flags it.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+OR Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>1,659,898
+lines of tracked Rust in 1,753 files, 257,178 of them vendored under
+SRC/vendor; the daemon crate neothd is 1,286,361 lines and its memory
+module 61,628 in 74 files</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>4,077
+commits on main by one author name, 20 May – 15 October 2026; neothd
+version 1.0.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>18,249
+Rust test functions in neothd, 993 of them under src/memory; none run
+for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -145,104 +153,131 @@ row, and drops out of recall when a contradiction flags it.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>NEOTH is "[y]our private AI buddy" — a local-first personal AI daemon
-in Rust, dual MIT and Apache-2.0, 1,119,998 lines with 15,232 test
-functions in its daemon crate, offering "[o]ne memory. Three brain
-paths. Five memory tiers + your vault." It ships a GUI, bridges, a
-plugin SDK with a WASM sandbox, and a migration tool.</p>
-<p>The memory subsystem is 52,353 lines of that, and one module in it is
-built against a mistake this atlas withholds marks over again and again.
-Its header:</p>
+<p>NEOTH is a local-first personal AI daemon in Rust whose ground-truth
+module is built against a failure it names: an importance score mistaken
+for a fact. Operator facts live in their own table with a six-value
+state, and every read that reaches a model admits only verified,
+unrevoked rows. A forgotten topic leaves a sentinel that later profile
+extraction checks before it writes. Two things around the table are
+looser than its header says: a candidate becomes verified when distinct
+sources agree, with no command, and the contradiction detector hides a
+fact only when the two statements differ in polarity.</p>
+<p>It calls itself "[y]our private AI buddy" — "[o]ne memory. Three
+brain paths. Five memory tiers + your vault." — dual-licensed MIT and
+Apache-2.0, with a GUI, channel bridges, a plugin SDK with a WASM
+sandbox, sub-agent personas and a migration tool. The memory module this
+report reads is under five per cent of the daemon crate.</p>
+<p><strong>Ground truth is a table, not a threshold.</strong> The module
+header:</p>
 <blockquote>
 <p>"Sliding 'if importance ≥ 0.95 treat as fact' is the failure mode
 this module exists to prevent."</p>
 </blockquote>
-<p><strong>Ground truth is a table, not a threshold.</strong> Facts the
-operator stated explicitly live in <code>idx_groundtruth</code> with
-their own scoring path — "no Hebbian decay, no FORGET_FLOOR sweep, no
-consolidation pass" — promoted only by an explicit command and revoked
-by another. And they are placed rather than merely stored: surfaced "in
-every recall hit BEFORE any episodic row so a stale Hebbian-decayed
-memory cannot overwrite an operator ground truth."</p>
-<p>That is the correct structural answer to a problem most systems here
-solve with a number. An importance score is continuous, drifts with
-reinforcement, and offers no place to record that a person asserted
-something; a separate table with its own lifecycle does all three.</p>
-<p><strong>The state gates recall.</strong> <code>FactState</code> is
-<code>Raw | Candidate | Verified | Superseded | Contradicted | Deprecated</code>,
-and <code>surface_for_recall</code> emits
-<code>WHERE revoked_at IS NULL</code> plus
-<code>AND fact_state = 'verified'</code> unless a caller passes
-<code>include_unverified</code>. Narrow by default, widened by an
-argument, with revocation as a separate terminal condition — the shape
-this atlas marks.</p>
-<p><strong>Contradiction is what fills the withholding value, and it is
-carefully bounded.</strong> Two operator facts can disagree — the
-module's own examples are "the nas is at X" against "the nas is at Y",
-and "the vpn is up" against "the vpn is not up". The detector splits
-each statement at the first copula into a subject part and a value part,
-requires subject-Jaccard above a threshold, then fires on either a
-polarity difference — using bilingual English/German negation markers —
-or diverging value tokens. And the case it deliberately does not fire on
-is the one that matters:</p>
-<blockquote>
-<p>"a superset like 'nas at X' vs 'nas at X primary' is NOT flagged"</p>
-</blockquote>
-<p>A refinement is not a contradiction, and a detector that treats it as
-one produces a contradiction ledger nobody reads. When it does fire, it
-flags the <em>lower-credibility</em> fact — fewer corroborating sources
-by the store's source weight — rather than the older one, so recency
-does not decide.</p>
-<p><strong>Consent is a file the operator can list.</strong> Every
-remote provider route requires an explicit grant under
-<code>~/.neoth/consent/</code>, with canonical-origin grant sets so
-"endpoint A never authorizes endpoint B", in-process providers never
-gating, and Ollama treated as local on loopback but requiring the same
-origin-bound consent on LAN or public endpoints. The rationale for files
-over configuration is practical and good: markers "survive
-<code>neoth init</code> reconfigure passes that rewrite
-<code>freedom.yaml</code>, and they let the operator audit consent state
-with <code>ls ~/.neoth/consent/</code>."</p>
-<p>What to weigh. The scale is extraordinary — one crate of a million
-lines with a 22,382-line chat module — and the memory subsystem this
-report covers is under five per cent of it. <code>scope</code> is a
-column on a ground-truth row and no scope predicate appears on the
-recall path, so it tags rather than isolates. The contradiction core is
-token-Jaccard with an optional semantic lift, so it is a textual
-comparison with a structural split rather than a claim-level one, and
-its thresholds are constants. And the write-ahead log — single writer,
-<code>O_APPEND</code>, <code>fdatasync</code> per flush, mode 0600,
-rotation at 16 MiB or 24 hours — is a durability mechanism rather than a
-mutation record with an actor and an action, so the question "who
+<p>Facts live in <code>idx_groundtruth</code> with their own scoring
+path — "no Hebbian decay, no FORGET_FLOOR sweep, no consolidation pass"
+— and are surfaced "in every recall hit BEFORE any episodic row so a
+stale Hebbian-decayed memory cannot overwrite an operator ground truth."
+An importance score is continuous and drifts with reinforcement; a
+separate table with a lifecycle gives "the operator said so" a place to
+live.</p>
+<p><strong>Where a fact starts depends on who wrote it.</strong>
+<code>Source::initial_fact_state</code> makes operator-attested sources
+— onboarding, <code>neoth groundtruth add</code>, the ARP and nmap scans
+the operator runs, the curated self-knowledge overlay — verified on
+sight. Imports from other agents, OMI transcripts, session distillations
+and the synthesis and arXiv crons start as candidates. Bulk-text
+extraction and generated release prose start raw.</p>
+<p>Re-asserting the same statement in the same scope merges the source
+into a <code>{source: count}</code> map and pulls confidence halfway to
+1.0. A raw or candidate fact becomes verified once two distinct sources
+have asserted it and confidence reaches 0.85, which the third assertion
+supplies (<code>SRC/neothd/src/memory/groundtruth.rs:401-505</code>).
+The header's "Promotion is always explicit" describes the operator's
+path; corroboration promotes without one.</p>
+<p><strong>The threshold reaches the table, and the state stops
+it.</strong> The opt-in consolidation sweep clusters episodes by
+embedding and writes any cluster spanning at least seven days with mean
+importance of at least 0.5 into ground truth, as a
+<code>synthesis-cron</code> candidate in scope <code>meta</code> with
+episode backlinks
+(<code>SRC/neothd/src/memory/consolidation_sweep.rs:408-440</code>).
+That is an importance rule writing into the fact table. What keeps the
+result out of recall is the fact state, which is the stronger of the
+module's two defences.</p>
+<p><strong>Contradiction demotes only on a polarity flip.</strong> The
+detector splits each statement at the first copula into a subject and a
+value part, requires subject-Jaccard of at least 0.5, and then fires on
+either a polarity difference — bilingual English and German negation
+markers — or diverging value tokens, with a superset excluded: "a
+superset like 'nas at X' vs 'nas at X primary' is NOT flagged". Every
+pair goes into <code>idx_contradictions</code> as
+<code>pending</code>.</p>
+<p>Only a polarity flip ("the vpn is up" against "the vpn is not up")
+flags the lower-credibility side <code>Contradicted</code>, by
+distinct-source count, with ties going to the older row. A value
+divergence is "RECORDED in the ledger for the operator but the loser is
+NOT silently hidden", because it "could be a legitimately multi-valued
+attribute (two meetings, two servers)"
+(<code>SRC/neothd/src/memory/contradiction.rs:422-427</code>). The
+module header and the CLI help both say the lower-credibility side of
+every pair is flagged; the code and its test
+<code>value_divergence_is_recorded_but_never_auto_hides_a_fact</code>
+say otherwise.</p>
+<p><strong>A forgotten topic leaves a key.</strong>
+<code>neoth memory --forget &lt;topic&gt; --confirm</code> deletes
+matching rows across the episodic, profile and graph tiers, revokes
+matching facts, and in the same transaction writes
+<code>_tombstone.&lt;topic&gt;</code> into the profile redaction
+registry with <code>never_recreate = 1</code>. Profile extraction
+rejects any later claim whose field or value mentions the topic, before
+and again inside the apply transaction. Peer gossip and vault promotion
+consult the same sentinel.</p>
+<p>What to weigh. The approval gate on profile extraction is configured
+on by default and never called outside tests. The forget sentinel does
+not reach the ground-truth insert, document claims or new episodes.
+<code>scope</code> is a column that keys corroboration and filters no
+recall read. And ground-truth changes write no log frame, so "who
 changed this fact" is answered by <code>asserted_at</code>,
-<code>revoked_at</code> and the contradiction ledger rather than by a
-change log.</p>
+<code>revoked_at</code>, the source map and the contradiction
+ledger.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>fact</strong> is something the operator said, and it lives
-somewhere episodic memory cannot reach.</p>
-<p>A <strong>score</strong> is not a fact, and the table is the
-difference.</p>
-<p>A <strong>contradiction</strong> demotes the side with fewer sources,
-not the older one.</p>
-<p>A <strong>refinement</strong> is not a contradiction.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — ground truth has its own table and scoring path so no importance threshold can promote an episodic memory into a fact, and recall surfaces only verified, unrevoked rows</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: ground truth has its own table and scoring path so no importance threshold can promote an episodic memory into a fact, and recall surfaces only verified, unrevoked rows
+<p>A <strong>fact</strong> is a row in its own table, and the state on
+the row decides whether any model sees it.</p>
+<p>A <strong>source</strong> decides the starting state: the operator's
+word is verified, an import or a cron is a candidate, extracted prose is
+raw. <strong>Agreement</strong> between distinct sources is the only
+automatic way up.</p>
+<p>A <strong>contradiction</strong> is recorded every time; a fact is
+hidden automatically only when the other statement negates it.</p>
+<p>A <strong>forgotten topic</strong> is a key that profile extraction,
+peer gossip and vault promotion check before they write.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the writer's source sets a fact's starting state, corroboration by distinct sources is the only automatic promotion, polarity contradictions demote the weaker side, every model-facing read admits only verified unrevoked facts, and a forgotten topic leaves a sentinel that profile extraction checks before writing</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the writer&#39;s source sets a fact&#39;s starting state, corroboration by distinct sources is the only automatic promotion, polarity contradictions demote the weaker side, every model-facing read admits only verified unrevoked facts, and a forgotten topic leaves a sentinel that profile extraction checks before writing
 flowchart TB
-    OP[&quot;the operator: neoth groundtruth add&quot;] --&gt; GT[(&quot;idx_groundtruth — statement · source ·&lt;br/&gt;scope · asserted_at · revoked_at ·&lt;br/&gt;fact_state · source_weight · confidence ·&lt;br/&gt;evidence · maturity · confirmed_count&quot;)]
-    EPI[(&quot;episodic tiers&quot;)] --&gt; DECAY[&quot;Hebbian decay · FORGET_FLOOR sweep ·&lt;br/&gt;consolidation pass&quot;]
-    DECAY -.-&gt;|&quot;none of these touch ground truth —&lt;br/&gt;&#39;no Hebbian decay, no FORGET_FLOOR sweep,&lt;br/&gt;no consolidation pass&#39;&quot;| GT
-    THRESH[&quot;&#39;if importance &gt;= 0.95 treat as fact&#39;&quot;] -.-&gt;|&quot;&#39;the failure mode this module&lt;br/&gt;exists to prevent&#39;&quot;| GT
-    CD[&quot;contradiction detection over operator facts&quot;] --&gt; SPLIT[&quot;split each statement at the first copula:&lt;br/&gt;SUBJECT part · VALUE part&quot;]
-    SPLIT --&gt; S1{&quot;subject-Jaccard &gt;= threshold?&quot;}
-    S1 --&gt;|&quot;no&quot;| NONE[&quot;not a pair&quot;]
-    S1 --&gt;|&quot;yes&quot;| S2{&quot;polarity differs (bilingual negation markers)&lt;br/&gt;OR value tokens diverge?&quot;}
-    S2 --&gt;|&quot;value is a SUPERSET —&lt;br/&gt;&#39;nas at X&#39; vs &#39;nas at X primary&#39;&quot;| NOTFLAG[&quot;NOT flagged — a refinement&lt;br/&gt;is not a contradiction&quot;]
-    S2 --&gt;|&quot;yes&quot;| LEDGER[(&quot;idx_contradictions&quot;)]
-    LEDGER --&gt; DEMOTE[&quot;flag the LOWER-credibility fact&lt;br/&gt;(fewer corroborating sources by&lt;br/&gt;source_weight) as FactState::Contradicted&lt;br/&gt;— not the older one&quot;]
-    DEMOTE --&gt; GT
-    GT --&gt; RECALL{&quot;surface_for_recall&quot;}
-    RECALL --&gt;|&quot;default&quot;| NARROW[&quot;WHERE revoked_at IS NULL&lt;br/&gt;AND fact_state = &#39;verified&#39;&quot;]
-    RECALL --&gt;|&quot;include_unverified passed&quot;| WIDE[&quot;the caller widens deliberately&quot;]
-    NARROW --&gt; ORDER[&quot;surfaced BEFORE any episodic row,&lt;br/&gt;&#39;so a stale Hebbian-decayed memory cannot&lt;br/&gt;overwrite an operator ground truth&#39;&quot;]</code></pre></details></figure>
+    OPW[&quot;operator: groundtruth add · onboarding ·&lt;br/&gt;ARP and nmap scans · self-knowledge overlay&quot;] --&gt;|&quot;initial state&quot;| VER[&quot;Verified&quot;]
+    EXT[&quot;imports · OMI · session distillation ·&lt;br/&gt;synthesis and arXiv crons&quot;] --&gt;|&quot;initial state&quot;| CAND[&quot;Candidate&quot;]
+    RAW[&quot;bulk text · document claims ·&lt;br/&gt;generated release prose&quot;] --&gt;|&quot;initial state&quot;| RAWS[&quot;Raw&quot;]
+    SWEEP[&quot;opt-in consolidation sweep:&lt;br/&gt;cluster spans 7 days and&lt;br/&gt;mean importance at least 0.5&quot;] --&gt;|&quot;synthesis-cron, scope meta&quot;| CAND
+    RAWS --&gt;|&quot;external re-assertion&quot;| CAND
+    CAND --&gt;|&quot;2 distinct sources and&lt;br/&gt;confidence at least 0.85&quot;| VER
+    VER --&gt; GT[(&quot;idx_groundtruth —&lt;br/&gt;no decay, no forget-floor sweep,&lt;br/&gt;no consolidation pass&quot;)]
+    CAND --&gt; GT
+    RAWS --&gt; GT
+    GT --&gt; CD{&quot;insert-time detector,&lt;br/&gt;same scope, verified peers:&lt;br/&gt;subject-Jaccard at least 0.5&quot;}
+    CD --&gt;|&quot;value is a superset&quot;| NOFLAG[&quot;not a contradiction&quot;]
+    CD --&gt;|&quot;polarity flip&quot;| LOSE[&quot;ledger row pending ·&lt;br/&gt;fewer distinct sources →&lt;br/&gt;Contradicted (tie: older)&quot;]
+    CD --&gt;|&quot;value divergence&quot;| PEND[&quot;ledger row pending ·&lt;br/&gt;both facts stay Verified&quot;]
+    PEND -.-&gt;|&quot;opt-in daily resolver&quot;| CRON[&quot;near-identical or same subject:&lt;br/&gt;older fact Superseded ·&lt;br/&gt;otherwise decision human_review&quot;]
+    LOSE --&gt; GT
+    CRON --&gt; GT
+    GT --&gt; READ{&quot;model-facing reads:&lt;br/&gt;recall_groundtruth_like ·&lt;br/&gt;surface_for_recall(false)&quot;}
+    READ --&gt;|&quot;revoked_at IS NULL AND&lt;br/&gt;fact_state = verified&quot;| LANE[&quot;canonical lane, prepended ahead of&lt;br/&gt;episodic recall · session-start preload ·&lt;br/&gt;factual hemisphere · council facts&quot;]
+    GT -.-&gt;|&quot;no state predicate&quot;| INSP[&quot;operator reads: groundtruth list ·&lt;br/&gt;memory show · /memory view · OKF export&quot;]
+    FG[&quot;neoth memory --forget topic --confirm&quot;] --&gt; CASC[&quot;one transaction: delete episodic,&lt;br/&gt;profile and graph rows · revoke facts ·&lt;br/&gt;write _tombstone.topic never_recreate&quot;]
+    CASC --&gt; SENT[(&quot;idx_profile_redactions&quot;)]
+    SENT --&gt;|&quot;Stage 5 guard and apply-time recheck&quot;| PROF[&quot;profile claim mentioning topic: rejected&quot;]
+    SENT --&gt;|&quot;raw gossip boundary&quot;| PEER[&quot;peer frame mentioning topic: dropped&quot;]
+    SENT --&gt;|&quot;promote_restricted&quot;| VAULT[&quot;vault chunk mentioning topic: refused&quot;]
+    SENT -.-&gt;|&quot;not consulted&quot;| MISS[&quot;groundtruth insert · document claims ·&lt;br/&gt;bulk text · new episodes&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -254,25 +289,36 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>memory/groundtruth.rs</code></td>
-<td>The fact table, its states, and the recall gate</td>
+<td>The fact table, sources, states, corroboration, the recall read and
+the restricted-vault promotion</td>
+</tr>
+<tr>
+<td><code>cli/recall.rs</code></td>
+<td>The three-lane recall: verified facts, routed episodes, pending
+contradictions</td>
 </tr>
 <tr>
 <td><code>memory/contradiction.rs</code></td>
-<td>Subject/value split, polarity, the ledger, demotion</td>
+<td>Subject/value split, polarity, the ledger, demotion and the opt-in
+resolver</td>
 </tr>
 <tr>
-<td><code>memory/forget.rs</code>, <code>decay_task.rs</code>,
-<code>consolidation_sweep.rs</code></td>
-<td>The episodic lifecycle ground truth is exempt from</td>
+<td><code>memory/forget.rs</code></td>
+<td>Topic erasure across tiers and the anti-resurrection sentinel</td>
 </tr>
 <tr>
-<td><code>memory/drift.rs</code>, <code>compaction_guard.rs</code>,
-<code>eval_harness.rs</code></td>
-<td>Drift, compaction safety, evaluation</td>
+<td><code>profile/</code></td>
+<td>Profile extraction: claim guard, approval gate, apply</td>
 </tr>
 <tr>
-<td><code>wal/writer.rs</code></td>
-<td>Durability: one writer, append-only, fdatasync, 0600</td>
+<td><code>memory/consolidation_sweep.rs</code>,
+<code>decay_task.rs</code>, <code>consolidate.rs</code></td>
+<td>The episodic lifecycle, one of whose outputs is a candidate
+fact</td>
+</tr>
+<tr>
+<td><code>wal/writer.rs</code>, <code>wal/events.rs</code></td>
+<td>Durability, and the event-code registry</td>
 </tr>
 <tr>
 <td><code>consent.rs</code></td>
@@ -280,73 +326,273 @@ flowchart TB
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>A single-operator daemon with a chat CLI, a GUI and channel bridges.
+The consolidation sweep, the synthesis and arXiv crons and the
+contradiction resolver are each off by default and enabled in
+<code>freedom.yaml</code>
+(<code>SRC/neothd/src/config/automation.rs:1470-1480</code>,
+<code>SRC/neothd/src/daemon/contradiction_resolve_cron.rs:51-58</code>).
+Ground truth is managed at the CLI: <code>add</code>,
+<code>revoke</code>, <code>state</code>, <code>contradictions</code>,
+<code>resolve-contradiction</code>, <code>import-text</code>,
+<code>import-agent</code> and <code>import-infra</code>.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <p><code>SRC/neothd/src/memory/groundtruth.rs:1-14</code> — the failure
 mode, named, and the structural answer.</p>
-<p><code>SRC/neothd/src/memory/groundtruth.rs:635-653</code> — narrow by
-default, widened by an argument.</p>
-<p><code>SRC/neothd/src/memory/contradiction.rs:1-18</code> — what
-counts as a disagreement, and what does not.</p>
-<p><code>SRC/neothd/src/consent.rs:1-14</code> — grants as files, and
-why not configuration.</p>
+<p><code>SRC/neothd/src/memory/groundtruth.rs:111-145</code>,
+<code>:401-505</code> — starting states by source, and promotion by
+distinct-source corroboration.</p>
+<p><code>SRC/neothd/src/cli/recall.rs:1497-1511</code> — the verified,
+unrevoked read every recall lane uses.</p>
+<p><code>SRC/neothd/src/memory/contradiction.rs:404-485</code> — a pair
+is always recorded, and only a polarity flip hides a fact.</p>
+<p><code>SRC/neothd/src/memory/forget.rs:369-383</code>,
+<code>:704-752</code> — the sentinel, written in the erasure
+transaction, and the matchers that read it.</p>
+<p><code>SRC/neothd/src/profile/runner.rs:344-366</code>,
+<code>:394-427</code> — the claim guard that honours the sentinel, and
+the approval gate no production caller enables.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Five tiers plus a vault; the tier read here is ground truth, whose
-row carries a source constrained at insert time "so the audit trail
-stays clean", a scope, a source weight, a confidence, evidence, a
-maturity and a confirmed count. The confirmed count and source weight
-are what let contradiction demote by credibility rather than by
-recency.</p>
+<p>Five tiers plus a vault. A ground-truth row carries a statement; a
+source "constrained to this set at insert time so the audit trail stays
+clean"; a scope (<code>global</code>, <code>host:&lt;name&gt;</code>,
+<code>session:&lt;id&gt;</code> or a custom tag);
+<code>asserted_at</code> and <code>revoked_at</code>; and
+<code>fact_state</code>. It also holds <code>source_weight</code>, a
+JSON map of source to count; a confidence starting at 0.5;
+<code>evidence</code>, up to fifty episode ids validated against the
+three episodic tiers; a maturity label; and a confirmed count.</p>
+<p>The source map is what corroboration counts and what contradiction
+ranks by. Both timestamps are the write clock: there is no time at which
+a fact became true separate from when it was recorded.</p>
+<p>The profile is a separate store of claims, each a dotted field and a
+JSON value with a confidence, extracted from conversation by a model.
+Its redaction registry <code>idx_profile_redactions</code> holds
+exact-field redactions and the <code>_tombstone.&lt;topic&gt;</code>
+sentinels, both with <code>never_recreate</code>.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid retrieval across tiers with ground truth placed ahead of
-episodic rows. The ordering is the mechanism: a fact that merely scored
-higher would still be competing with decayed episodic memories on one
-scale, and this takes it off that scale entirely.</p>
+<p>Recall runs three lanes per prompt
+(<code>SRC/neothd/src/cli/recall.rs:1651-1700</code>). The canonical
+lane is <code>recall_groundtruth_like</code>: a case-insensitive
+substring match over verified, unrevoked statements, newest first,
+returned as rows of tier <code>groundtruth</code> and prepended rather
+than fused. The episodic lane is region-routed recall with late fusion
+across semantic and episodic results. The contradiction lane joins
+pending ledger rows touching the prompt to both statements, at most
+three.</p>
+<p>The same verified read feeds the session-start preload
+(<code>SRC/neothd/src/memory/session_start_recall.rs:521</code>), the
+factual hemisphere's memory fragment
+(<code>SRC/neothd/src/cli/chat.rs:12374</code>) and the council's
+factual assertions, through <code>surface_for_recall(..., false)</code>
+(<code>SRC/neothd/src/cli/chat.rs:15691</code>).</p>
+<p>The reads without a state predicate are operator-facing.
+<code>neoth groundtruth list</code> and <code>neoth memory show</code>
+call <code>surface_for_recall</code> widened unless asked to narrow, the
+OKF export widens it to a hundred thousand rows, and
+<code>/memory view</code> unions all four tiers with
+<code>revoked_at IS NULL</code> only
+(<code>SRC/neothd/src/slash/action_dispatch.rs:871-886</code>). No
+recall read applies <code>scope</code>.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Explicit promotion, explicit revocation, and a contradiction pass
-that writes a ledger row and a state rather than deleting either side.
-Nothing in the episodic lifecycle can promote into the fact table.</p>
+<p><code>groundtruth::insert</code> either creates a row in its source's
+starting state or corroborates an active row with the same statement and
+scope. Corroboration merges the source, bumps confidence by
+<code>(c + 1) / 2</code>, increments the confirmed count, and promotes a
+raw or candidate fact when the asserting source is operator-attested, or
+when two distinct sources and a post-bump confidence of 0.85 are both
+reached. A fact the operator moved to a terminal state keeps it. An
+insert that leaves the row verified ends with a best-effort
+contradiction scan against verified peers in the same scope, capped at
+five hundred newest.</p>
+<p><code>insert_with_evidence</code> wraps the same call and the episode
+backlinks in one savepoint; it is "the required write path for synthesis
+or consolidation output derived from episodic memory", and both use
+it.</p>
+<p><code>set_fact_state</code> and <code>revoke</code> are the
+operator's transitions. Dismissing a contradiction re-promotes either
+fact of the pair that is <code>Contradicted</code>, though the CLI help
+for <code>resolve-contradiction</code> says it "Does NOT change either
+fact's state" (<code>SRC/neothd/src/cli/groundtruth.rs:79</code>,
+<code>SRC/neothd/src/memory/contradiction.rs:918-950</code>).</p>
+<p><strong>Forget writes a key that outlives the rows.</strong>
+<code>forget_by_topic</code> escapes LIKE wildcards, opens one
+transaction, writes the sentinel first, then deletes matching rows
+across the hot, warm and cold episodic tiers, raw transcript turns,
+embeddings, profile claims and their pending and outbox rows, the graph,
+and the foreign gossip ledger, and revokes matching facts
+(<code>SRC/neothd/src/memory/forget.rs:339-615</code>). The sentinel is
+the topic, lowercased and trimmed; the matcher is a Unicode-lowercased
+substring test.</p>
+<p>Profile extraction loads every active never-recreate field before its
+Stage 5 guard (<code>SRC/neothd/src/profile/runner.rs:344-366</code>),
+and the guard rejects a delta whose claim names the topic in its field
+or anywhere in its value: "forgetting 'Berlin' cannot reappear under a
+different field"
+(<code>SRC/neothd/src/profile/claim_guard.rs:466-485</code>).
+<code>apply_delta</code> repeats the check inside the apply transaction
+and emits a <code>PROFILE_REDACT_BLOCKED</code> frame
+(<code>SRC/neothd/src/profile/apply.rs:180-205</code>). Lifting the
+sentinel is an operator act,
+<code>neoth profile unredact --id &lt;id&gt;</code>.</p>
+<p>The comment over <code>tombstoned_topic_in_text</code> says "EVERY
+ingest that can put text back into live recall" must consult it. The
+callers are profile extraction, the two gossip boundaries and
+<code>promote_restricted</code>. <code>groundtruth::insert</code>,
+document claims, bulk-text import, the Obsidian vault cron and episodic
+ingest write without it, so <code>neoth groundtruth add</code> of a
+sentence naming a forgotten topic lands verified.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A daemon with bridges, a GUI, a WASM plugin sandbox, and consent
-gating between the local system and any cloud provider. The consent
-design's endpoint-awareness — loopback Ollama local, LAN and public not
-— is the kind of distinction that is usually collapsed.</p>
+<p>A daemon with chat, channel bridges, a GUI and a WASM plugin sandbox.
+No tool on the slash-action, MCP or sub-agent surfaces writes ground
+truth or changes a fact's state; those verbs are CLI subcommands.
+Sub-agent personas list a <code>groundtruth_list</code> tool in their
+allowlists, and no handler of that name exists in the tree.</p>
+<p>Consent gates every remote provider route: "endpoint A never
+authorizes endpoint B", loopback Ollama is local while LAN and public
+endpoints need the same origin-bound grant, and the grants are marker
+files that "survive <code>neoth init</code> reconfigure passes that
+rewrite <code>freedom.yaml</code>" and let the operator "audit consent
+state with <code>ls ~/.neoth/consent/</code>".</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The trust story is the separation: operator facts in their own table,
-exempt from the decay and forgetting that govern everything else,
-ordered ahead of it, and withheld when contradicted. The gap is a change
-record — the WAL gives durability rather than accountability.</p>
+<p>The trust story is the state on the fact: every read that reaches a
+model filters it, and the writers of each withholding value sit on
+reachable paths.</p>
+<p><strong>The review gate on profile claims is configured and not
+wired.</strong> The approval gate parks an extracted profile delta in
+<code>idx_profile_pending</code> until the operator runs
+<code>neoth profile approve</code> or <code>decline</code>, or answers a
+terminal prompt. <code>require_approval</code> defaults to true
+(<code>SRC/neothd/src/config/ops.rs:1604-1610</code>) and the init
+wizard tells the operator "Profile-claim approval gate is ON by
+default." <code>run_pipeline</code> routes through the gate only when
+given a gate context, and every production caller passes
+<code>None</code>: the chat post-reply pipeline, both channel pipeline
+branches and <code>neoth profile run</code>
+(<code>SRC/neothd/src/cli/chat.rs:9115</code>,
+<code>SRC/neothd/src/cli/serve_pipeline.rs:5999</code>,
+<code>SRC/neothd/src/cli/profile.rs:3136</code>). The only constructions
+of the context are in the runner's test module. Profile claims are
+applied without review, and <code>human_review</code> is withheld.</p>
+<p><strong>The contradiction resolver's review queue removes the
+warning.</strong> The opt-in daily resolver supersedes the older fact
+when two statements are near-identical or share a subject, and otherwise
+closes the pair as <code>human_review</code>. The contradiction recall
+lane reads <code>decision = 'pending'</code>, so a conflict routed to
+review leaves the prompt's caution lane while both facts stay verified.
+The <code>--list --human-review</code> command the resolver's comment
+names is not a CLI flag; the rows appear under
+<code>contradictions --resolved</code>.</p>
+<p><strong>No mutation record for facts.</strong> The WAL is a
+durability mechanism — single writer, <code>O_APPEND</code>,
+<code>fdatasync</code> per flush, mode 0600, HMAC compaction markers,
+rotation at 16 MiB or 24 hours. Event codes
+<code>GROUNDTRUTH_ADDED</code>, <code>GROUNDTRUTH_REVOKED</code> and
+<code>GROUNDTRUTH_IMPORTED</code> are registered
+(<code>SRC/neothd/src/wal/events.rs:2196-2201</code>) and described by
+<code>neoth undo</code>, and the only code that emits them is the test
+module of <code>cli/cluster.rs</code>. <code>set_fact_state</code>
+writes no frame, and contradiction detections go to
+<code>tracing</code>. <code>--physical</code> forget rewrites sealed
+segments to zero matching payloads, so the log is also not immutable.
+<code>audit_log</code> is withheld.</p>
+<p><strong>Scope tags.</strong> <code>scope</code> decides which facts
+corroborate each other and which are compared for contradiction, and no
+recall read filters on it; for one operator's daemon that is coherent.
+The one account-scoped store in the tree, <code>context_graph</code>,
+says its account-context issuance "is deliberately unavailable", and no
+code outside the module names the type.</p>
+<p><strong>Validity is the write clock.</strong>
+<code>asserted_at</code> and <code>revoked_at</code> are both set at
+write time, and a graph relation is closed by stamping
+<code>valid_to</code> with the processing time
+(<code>SRC/neothd/src/memory/entities.rs:222-245</code>).
+<code>bitemporal</code> is withheld.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>15,232 test functions in the daemon crate, with an evaluation harness
-inside the memory module itself. Nothing was built or run for this
-reading.</p>
+<p>18,249 test functions in the daemon crate, 993 under
+<code>src/memory</code>, and an evaluation harness inside the memory
+module. I read the suites below; I built and ran nothing.</p>
+<p><code>query_three_lanes_excludes_unverified_facts_and_resolved_contradictions</code>
+is the negative evaluation
+(<code>SRC/neothd/src/cli/recall.rs:3288-3330</code>). It seeds a
+candidate fact ("the widget color is teal"), two verified facts on the
+same subject, and a dismissed contradiction between them, then runs the
+three-lane recall. It asserts the candidate is absent from the canonical
+lane, that a verified fact is present, and that the dismissed pair is
+absent from the contradiction lane. The positive assertion reads the
+same lane, so an empty retriever fails.</p>
+<p><code>external_source_starts_candidate_and_is_held_back_from_recall</code>
+(<code>SRC/neothd/src/memory/groundtruth.rs:1120-1138</code>) asserts an
+OMI fact is not surfaced by the default read and is returned by the
+inspection read.
+<code>end_to_end_negation_contradiction_auto_flags_loser_and_dismiss_restores</code>
+(<code>SRC/neothd/src/memory/contradiction.rs:1225-1274</code>) asserts
+the loser of a polarity flip leaves recall and returns when the operator
+dismisses the pair.
+<code>value_divergence_is_recorded_but_never_auto_hides_a_fact</code>
+(<code>:1419-1457</code>) asserts the opposite case: both standup times
+stay in recall.</p>
+<p>For the sentinel,
+<code>forget_topic_sentinel_rejects_topic_in_any_claim_value</code>
+rejects a claim whose nested value holds "BERLIN" under
+<code>_tombstone.berlin</code>, and
+<code>empty_or_unrelated_tombstone_does_not_block_claims</code> is its
+control (<code>SRC/neothd/src/profile/claim_guard.rs:835-870</code>);
+<code>apply_time_recheck_honours_forget_topic_sentinel</code>
+(<code>SRC/neothd/src/profile/apply.rs:783</code>) covers the second
+check. The approval gate's sixteen unit tests call it directly; none
+reaches it from a production caller, which is the gap section 9
+describes.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Do not let a threshold promote a memory into a fact. An importance
-score is continuous and drifts with reinforcement; if you want "the
-operator said so" to mean something, it needs a table, a lifecycle and a
-place in the ordering.</p>
-<p>Exempt facts from the sweeps explicitly. "No Hebbian decay, no
-FORGET_FLOOR sweep, no consolidation pass" is a sentence you should be
-able to write about your own fact store.</p>
-<p>Do not flag a refinement as a contradiction. "nas at X" against "nas
-at X primary" is the case that fills a contradiction ledger with noise,
-and excluding it is one condition.</p>
-<p>Demote by credibility, not recency. The newer statement is not the
-better supported one, and choosing by corroborating sources says which
-rule you are applying.</p>
-<p>And make consent something the operator can list. A marker file
-survives the reconfiguration that rewrites your config, and
-<code>ls</code> is an audit interface nobody has to build.</p>
+<h3 id="steal">Steal</h3>
+<p>Do not let a threshold promote a memory into a fact. Give "the
+operator said so" a table, a lifecycle and a place in the ordering, and
+exempt it from the sweeps explicitly.</p>
+<p>Let the writer set the starting state. Verified for the operator,
+candidate for an import or a cron, raw for extracted prose, with
+distinct-source agreement as the only automatic way up, is a small table
+that answers "why is this trusted".</p>
+<p>Hide automatically only what is unambiguous. A negation is a
+contradiction; two values for one attribute may both be true, so record
+the pair and leave both visible. Test both cases, as
+<code>value_divergence_is_recorded_but_never_auto_hides_a_fact</code>
+does.</p>
+<p>Write the forget key in the erasure transaction, and check it twice
+on the extraction path — once before the model's output is accepted and
+once inside the transaction that applies it.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Shipping a gate that no production caller constructs. A default of
+<code>require_approval: true</code>, a wizard announcement and sixteen
+unit tests read as a review step; passing <code>None</code> at every
+call site makes it decoration.</p>
+<p>Routing a genuine conflict to a review queue by removing it from the
+only read that warns the model about it.</p>
+<p>Writing a forget key and consulting it on some ingests. The comment
+names the rule; the ground-truth insert is the path that breaks it.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one operator's long-running assistant, where facts the
+operator states must outrank everything the system infers, and where the
+operator is at the CLI to resolve what the system will not. Walk away if
+you need several users isolated from each other, a change record for
+facts, or extracted profile claims held for review before they
+apply.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether scope is ever enforced. It is a column on every ground-truth
-row and no predicate on the recall path was found.</p>
-<p>What the other four tiers do with fact state. The gate read here is
-ground truth's; how the episodic tiers treat a contradicted subject was
-not traced.</p>
+<p>Whether the profile approval gate is meant to be wired in a later
+phase; the call sites say so in comments, and the configuration defaults
+it on.</p>
+<p>Whether the forget sentinel is meant to reach
+<code>groundtruth::insert</code>. The module's comment says every ingest
+must consult it.</p>
+<p>What the other four tiers do with a contradicted subject. The state
+gate read here is ground truth's; episodic rows that repeat a
+contradicted statement were not traced.</p>
 <p>Whether the semantic lift changes the contradiction rate. It is
-optional over the Jaccard core, and no comparison was found.</p>
+optional over the Jaccard core on the on-demand scan, and the
+insert-time path is Jaccard-only.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -358,24 +604,127 @@ optional over the Jaccard core, and no comparison was found.</p>
 <tbody>
 <tr>
 <td><code>SRC/neothd/src/memory/groundtruth.rs:1-14</code>,
-<code>:158-165</code></td>
+<code>:158-196</code></td>
 <td>A named failure mode and a six-value state</td>
 </tr>
 <tr>
-<td><code>SRC/neothd/src/memory/groundtruth.rs:635-653</code></td>
-<td>Narrow by default, widened on purpose</td>
+<td><code>SRC/neothd/src/memory/groundtruth.rs:111-145</code>,
+<code>:401-505</code></td>
+<td>Starting states by source; corroboration and promotion</td>
 </tr>
 <tr>
-<td><code>SRC/neothd/src/memory/contradiction.rs:1-18</code></td>
-<td>A disagreement, and a refinement that is not one</td>
+<td><code>SRC/neothd/src/memory/groundtruth.rs:631-658</code>,
+<code>:893-910</code></td>
+<td>The gated read; promotion refused for a forgotten topic</td>
 </tr>
 <tr>
-<td><code>SRC/neothd/src/consent.rs:1-14</code></td>
+<td><code>SRC/neothd/src/cli/recall.rs:1497-1511</code>,
+<code>:1651-1700</code></td>
+<td>The verified read and the three lanes</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/cli/recall.rs:3288-3330</code></td>
+<td>The must-not-retrieve case with its control</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/memory/contradiction.rs:1-37</code>,
+<code>:404-485</code></td>
+<td>What counts as a disagreement, and which ones hide a fact</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/memory/contradiction.rs:721-840</code></td>
+<td>The opt-in resolver: supersede the older, or close as
+human_review</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/memory/consolidation_sweep.rs:408-440</code></td>
+<td>An importance rule that writes a candidate fact</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/memory/forget.rs:339-615</code>,
+<code>:620-752</code></td>
+<td>The erasure cascade, the sentinel and its matchers</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/profile/claim_guard.rs:466-485</code>,
+<code>SRC/neothd/src/profile/apply.rs:180-205</code></td>
+<td>The two checks profile extraction makes</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/profile/approval_gate.rs:1-36</code>,
+<code>SRC/neothd/src/profile/runner.rs:394-427</code></td>
+<td>The review gate, and the condition no production caller meets</td>
+</tr>
+<tr>
+<td><code>SRC/neothd/src/consent.rs:1-18</code></td>
 <td>Grants as files an operator can audit with <code>ls</code></td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>; old-pin results were run against
+<code class="commit-id" title="6a37557357b8758f5f826a9f7e655ddca0823110">6a375573…</code> in the same
+clone.</p>
+<ul>
+<li><code>git grep -nE 'surface_for_recall\(' -- SRC</code> — production
+callers <code>cli/chat.rs:15691</code> (false),
+<code>cli/groundtruth.rs:523</code>, <code>cli/memory.rs:418</code>,
+<code>cli/okf.rs:239</code> and <code>memory/contradiction.rs:619</code>
+(widened or operator-selected); the rest are tests.</li>
+<li><code>git grep -nE 'FROM[[:space:]]+idx_groundtruth' -- SRC ':!SRC/vendor'</code>
+— 30 files; the model-facing reads are <code>cli/recall.rs:1505</code>
+(verified) and <code>slash/action_dispatch.rs:882</code>, an operator
+display.</li>
+<li><code>git grep -nE 'run_pipeline[(]' -- SRC/neothd/src ':!SRC/neothd/src/profile/runner.rs'</code>
+— four callers in <code>cli/chat.rs</code>, <code>cli/profile.rs</code>
+and <code>cli/serve_pipeline.rs</code>, each passing <code>None</code>
+for the gate context; the same four at the old pin.</li>
+<li><code>git grep -nE 'ApprovalGateContext *\{' -- SRC/neothd/src</code>
+— <code>profile/runner.rs:1074</code>, <code>:1135</code>,
+<code>:1181</code>, <code>:1233</code>, all after <code>mod tests</code>
+at <code>:603</code>.</li>
+<li><code>git grep -nE '(tombstoned_topic_in_text|redaction_blocks_claim|active_tombstone_topics)[(]' -- SRC/neothd/src ':!SRC/neothd/src/memory/forget.rs'</code>
+— <code>cluster/durable_sync.rs:2798</code>,
+<code>cluster/wal_sync.rs:879</code>,
+<code>memory/groundtruth.rs:901</code>,
+<code>profile/apply.rs:193</code>,
+<code>profile/claim_guard.rs:471</code>.</li>
+<li><code>git grep -nE 'EVENT_TYPE_GROUNDTRUTH_(ADDED|REVOKED|IMPORTED)' -- SRC/neothd/src</code>
+— emitters only in the test module of <code>cli/cluster.rs</code>;
+readers in <code>cli/undo.rs</code>,
+<code>cluster/foreign_indexer.rs</code> and
+<code>cluster/wal_sync.rs</code>.</li>
+<li><code>git grep -nE 'groundtruth_list' -- .</code> — the persona
+allowlists in <code>sub_agents/</code> and planning documents; no
+handler.</li>
+<li><code>git grep -niE 'valid_from|valid_to|valid_at|invalid_at|valid_until' -- SRC/neothd/src</code>
+— <code>memory/entities.rs</code> relation closure by processing time,
+skills, cluster membership and unrelated configuration; no fact validity
+time.</li>
+<li><code>git grep -nE '(channel|sender_id|operator_id|scope|account_id)[[:space:]]*(=|IS)[[:space:]]*\?' -- SRC/neothd/src/cli/recall.rs SRC/neothd/src/memory/regions.rs SRC/neothd/src/memory/region_router.rs SRC/neothd/src/memory/session_start_recall.rs</code>
+— no match.</li>
+<li><code>git grep -nE '^[[:space:]]*#\[(tokio::)?test' -- SRC/neothd | wc -l</code>
+— 18,249; 15,663 at the old pin.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE-MIT LICENSE-APACHE</code>
+— no match; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/The-Geek-Freaks/NEOTH/commit/efdeaad9825789575cc793a18bc78be43de1e92c"><code class="commit-id" title="efdeaad9825789575cc793a18bc78be43de1e92c">efdeaad9…</code></a>
+— 1,132 commits on; the ground-truth, contradiction, forget and
+profile-guard files are byte-identical to the previous pin. Two marks
+gained, both earned there: <code>negative_eval</code>, on a
+canonical-lane case with a verified control (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>), and
+<code>tombstone</code>, on the forget sentinel profile extraction
+consults (<a href="#7-write-mechanics">section 7</a>). Also wrong then:
+promotion was not only explicit, and a value divergence never hid a fact
+(<a href="#1-executive-summary">section 1</a>). Overtaken: the line and
+test counts, a document-claims writer, and per-domain consolidation.
+Screened from a full clone: 47 files, no auto-run surfaces, three build
+scripts, no unpinned surfaces, eight dependency files inside the
+cooldown. Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/The-Geek-Freaks/NEOTH/commit/6a37557357b8758f5f826a9f7e655ddca0823110"><code class="commit-id" title="6a37557357b8758f5f826a9f7e655ddca0823110">6a375573…</code></a>
 — <code>trust_state</code> re-tested against the narrowed line and every

@@ -126,7 +126,7 @@ belief.</p>
 <blockquote>
 <p><strong>Reported:</strong> a durable record keyed on the rejected
 <em>value</em> rather than on the row, and consulted on the write path,
-recurs across the corpus. 68 systems of
+recurs across the corpus. 69 systems of
 749 carry the mark, and <a
 href="#sorted-by-what-actually-stops-the-value">the table below</a>
 sorts the holders this page discusses by what actually stops the value.
@@ -291,7 +291,7 @@ near-miss, and the argument that the expensive half of the pattern is
 not the hard half.</li>
 </ul>
 <h3 id="every-instance">Every instance</h3>
-<p><strong>68 systems of
+<p><strong>69 systems of
 749 in the atlas carry the mark.</strong> The
 entries below are the ones whose mechanism this page discusses.</p>
 <p><a href="../../systems/verel/">Verel</a> uses rejected memory records
@@ -818,6 +818,19 @@ lesson that re-clusters under a different representative mints a new
 lineage; and what the codebase itself calls a tombstone, its
 node-suppression marker, is keyed on the row and lifted by the next
 upsert of the same node.</p>
+<p><strong><a href="../../systems/neoth/">NEOTH</a> keys its tombstone
+on an erased topic, and reach is the open half.</strong>
+<code>forget_by_topic</code> writes
+<code>_tombstone.&lt;topic&gt;</code>, lowercased, into the profile
+redaction registry with <code>never_recreate</code>, in the same
+transaction that deletes the topic's rows, and profile extraction
+rejects any claim naming the topic in its field or nested value — at its
+Stage 5 guard and again inside the apply transaction. Peer gossip and
+vault promotion check it too. The module's own comment says every ingest
+that can lift text into recall must consult it; the ground-truth insert,
+document claims and episodic ingest do not, so
+<code>neoth groundtruth add</code> of a sentence naming the topic lands
+verified.</p>
 <h3 id="sorted-by-what-actually-stops-the-value">Sorted by what actually
 stops the value</h3>
 <p>The mark covers four different mechanisms. The table sorts the

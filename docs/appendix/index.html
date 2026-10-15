@@ -4333,11 +4333,11 @@ built or run</li>
 <li><a
 href="https://github.com/The-Geek-Freaks/NEOTH">The-Geek-Freaks/NEOTH</a>
 at <a
-href="https://github.com/The-Geek-Freaks/NEOTH/commit/6a37557357b8758f5f826a9f7e655ddca0823110"><code class="commit-id" title="6a37557357b8758f5f826a9f7e655ddca0823110">6a375573…</code></a>
-— read only, from a shallow clone; thirty-four files scanned, no
-auto-run surfaces, two build-time execution points, no unpinned surfaces
-and twenty-eight dependency files inside the seven-day cooldown. Nothing
-was installed, built or run</li>
+href="https://github.com/The-Geek-Freaks/NEOTH/commit/efdeaad9825789575cc793a18bc78be43de1e92c"><code class="commit-id" title="efdeaad9825789575cc793a18bc78be43de1e92c">efdeaad9…</code></a>
+— read only, from a full clone; 47 files scanned, no auto-run surfaces,
+three build-time execution points, no unpinned surfaces and eight
+dependency files inside the seven-day cooldown. Nothing was installed,
+built or run</li>
 <li><a
 href="https://github.com/TRUE-BLUE-INDUSTRIES/hungry-hippa">TRUE-BLUE-INDUSTRIES/hungry-hippa</a>
 at <a
@@ -17951,6 +17951,29 @@ as awarded after its withdrawal on 2026-09-19. The marks were
 unaffected: <code>negative_eval</code> holds on
 <code>tests/test_memory_forgetting.py:195-260</code>, which runs the
 shipped query path.</li>
+<li><strong>Four published claims about <a
+href="../systems/neoth/">NEOTH</a> were wrong at <a
+href="https://github.com/The-Geek-Freaks/NEOTH/commit/6a37557357b8758f5f826a9f7e655ddca0823110"><code class="commit-id" title="6a37557357b8758f5f826a9f7e655ddca0823110">6a375573…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>negative_eval</code>, though
+<code>query_three_lanes_excludes_unverified_facts_and_resolved_contradictions</code>
+(<code>SRC/neothd/src/cli/recall.rs:3130</code>) asserted a candidate
+fact absent from the canonical recall lane beside verified facts that
+had to appear. It withheld <code>tombstone</code>, though
+<code>forget_by_topic</code> wrote a
+<code>_tombstone.&lt;topic&gt;</code> sentinel in its erasure
+transaction and profile extraction rejected any later claim naming the
+topic (<code>SRC/neothd/src/memory/forget.rs:369-383</code>,
+<code>SRC/neothd/src/profile/claim_guard.rs:466-485</code>). It said
+ground-truth promotion was only explicit; <code>insert</code> promoted a
+candidate to verified at two distinct sources and a confidence of 0.85,
+and the opt-in consolidation sweep wrote mature episodic clusters into
+the table (<code>SRC/neothd/src/memory/groundtruth.rs:451-459</code>,
+<code>SRC/neothd/src/memory/consolidation_sweep.rs:358</code>). And it
+said contradiction demoted the lower-credibility side of every detected
+pair; only a polarity flip did, and a value divergence was recorded for
+the operator with both facts left verified
+(<code>SRC/neothd/src/memory/contradiction.rs:422-427</code>).</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

@@ -521,6 +521,8 @@ first row's reason and time.
 
 [Stella](../../systems/stella/) puts the tombstone on its proposal loop and keys it on the wording. A rule or skill proposal mined from the agent's reflections carries the lineage `prp_<kind>_<slug>-<hash8>` over the cluster's representative text, `stella proposals ignore` appends a `Rejected` promotion event to a ledger whose update and delete are refused by SQLite triggers, and both halves of the next induction skip a lineage that folds to Rejected before the eligibility gate and before any file is written. A later Keep on the same lineage lifts it, and a test pins each direction. The key is exact wording, so a lesson that re-clusters under a different representative mints a new lineage; and what the codebase itself calls a tombstone, its node-suppression marker, is keyed on the row and lifted by the next upsert of the same node.
 
+**[NEOTH](../../systems/neoth/) keys its tombstone on an erased topic, and reach is the open half.** `forget_by_topic` writes `_tombstone.<topic>`, lowercased, into the profile redaction registry with `never_recreate`, in the same transaction that deletes the topic's rows, and profile extraction rejects any claim naming the topic in its field or nested value — at its Stage 5 guard and again inside the apply transaction. Peer gossip and vault promotion check it too. The module's own comment says every ingest that can lift text into recall must consult it; the ground-truth insert, document claims and episodic ingest do not, so `neoth groundtruth add` of a sentence naming the topic lands verified.
+
 ### Sorted by what actually stops the value
 
 The mark covers four different mechanisms. The table sorts the holders this page
