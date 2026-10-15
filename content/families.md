@@ -2522,21 +2522,20 @@ after a compaction because the eviction makes a re-read legitimate. See
 **agents-memory is the family's argument that a taxonomy can do the work
 ranking usually does.** Its store is markdown under `~/.agents/memory/` and
 `<repo>/.agents/memory/`, and its layout is published as a specification rather
-than implied: sixteen kinds mapping to sixteen destinations, with `abi/LAYOUT.md`
-stating *"One home per fact. Path encodes where it belongs. No dump files
-(`facts.md`, `MEMORY.md`)"* — an explicit refusal of the single-file memory most
-of this family ships. `abi/KINDS.md` attaches a mutability rule to each kind —
-inbox, sequential, revise in place, frozen — and the decision rule is the
-sharpest supersession statement in the markdown systems here: *"Revise present
-tense when the contract changes; new number when superseding."* Retrieval is a
-case-insensitive substring scan that returns `file.md:12` ids, and
-`delete_memory` accepts exactly that string, so a recalled line is something the
-agent can remove — the round trip most stores in this corpus cannot make. The
-same address is the weakness: the delete pops by line index, so one removal
-renumbers every id below it. And the mutability rule is not enforced —
-`add_memory` appends the bullet and then returns *"revise this file in place when
-facts change; do not only append bullets"*, which is advice attached to the write
-it describes as wrong. See [agents-memory](../systems/agents-memory/).
+than implied, with `abi/LAYOUT.md` stating *"One home per fact. Path encodes
+where it belongs. No dump files (`facts.md`, `MEMORY.md`)"* — an explicit
+refusal of the single-file memory most of this family ships, though the same
+specification routes a bare project write to `facts.md`. `abi/KINDS.md`
+attaches a mutability rule to each kind — inbox, sequential, revise in place,
+append-only, frozen — and the decision rule is the sharpest supersession
+statement in the markdown systems here: *"Revise present tense when the
+contract changes; new number when superseding."* Search returns
+`file.md:12#a1b2c3d4` ids and `delete_memory` accepts exactly that string,
+re-finding the line by its content hash when lines above it have gone, so a
+recalled line is something the agent can remove; an append to an existing
+revise-in-place file is refused with the call to make instead. The weakness is
+the boundary: the model chooses each search's project scope, and `project=*`
+reads every registered repository. See [agents-memory](../systems/agents-memory/).
 
 **Hatchdoor is the family's cleanest statement of what a document store buys and
 what it costs.** A self-hosted Rust binary over an Obsidian-style Markdown vault,

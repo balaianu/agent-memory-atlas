@@ -2786,14 +2786,15 @@ kept local — and found the task-status projection deleted</li>
 <li><a
 href="https://github.com/Lolaplex/agents-memory">Lolaplex/agents-memory</a>
 at <a
-href="https://github.com/Lolaplex/agents-memory/commit/a60babbb713f1c3818a3fdc85144a8bd1d5884d3"><code class="commit-id" title="a60babbb713f1c3818a3fdc85144a8bd1d5884d3">a60babbb…</code></a>
-— read only, at version 1.1.0 on a 103-commit history; no auto-run
-surface, no build-time execution, one dependency manifest inside the
-seven-day cooldown, and <code>AGENTS.md</code> and
-<code>CLAUDE.md</code> addressed to a reading agent, recorded as data.
-Nothing was installed and no test was run; the line-numbered id and the
-revise-in-place return string were read from <code>store.py</code>
-against the ABI it implements</li>
+href="https://github.com/Lolaplex/agents-memory/commit/f9149259e3097914fa4c4776b60cdbb12d85d0d6"><code class="commit-id" title="f9149259e3097914fa4c4776b60cdbb12d85d0d6">f9149259…</code></a>
+— read only, at version 1.2.0 on a 131-commit history, from a full
+clone; no auto-run surface, no build-time execution, nothing inside the
+seven-day cooldown, one unpinned manifest, and <code>AGENTS.md</code>
+and <code>CLAUDE.md</code> addressed to a reading agent, recorded as
+data. Nothing was installed and no test was run; the hash-anchored id,
+the scope argument and the rule guard were read from
+<code>store.py</code>, <code>index.py</code> and <code>rules.py</code>
+against the ABI they implement</li>
 <li><a
 href="https://github.com/ArihantDeva/heimdall">ArihantDeva/heimdall</a>
 at <a
@@ -17255,6 +17256,47 @@ ledger's redaction as leaving the record intact;
 <code>redact_payloads</code> rewrote ingest lines with
 <code>os.replace</code> (<code>src/temvera/store.py:169</code>). The two
 marks rested on what the gate checked rather than on which path called
+it.</li>
+<li><strong>Ten published claims about <a
+href="../systems/agents-memory/">agents-memory</a> were wrong at <a
+href="https://github.com/Lolaplex/agents-memory/commit/a60babbb713f1c3818a3fdc85144a8bd1d5884d3"><code class="commit-id" title="a60babbb713f1c3818a3fdc85144a8bd1d5884d3">a60babbb…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code> on the slug filter in
+<code>iter_project_memory_files</code>; the MCP
+<code>search_memory</code> defaulted <code>project</code> to empty,
+which read every registered repository's store
+(<code>src/agents_memory/store.py:2041</code>) with no project predicate
+on the ranked fill (<code>src/agents_memory/index.py:259-260</code>),
+and <code>read_memory_file</code>, <code>get_project_memories</code> and
+<code>get_related</code> took no scope, so the model chose the boundary
+per call and the mark is withdrawn. It awarded
+<code>negative_eval</code> on
+<code>tests/test_extract_filters.py</code>, which keeps material out of
+extractor output; no committed case at that pin asserted that anything
+stays out of a search. It said there was no index and no ranking;
+<code>search_memory</code> filled from an FTS5 BM25 index
+(<code>store.py:2088</code>, <code>index.py:224</code>). It said there
+was no deduplication, no secret scan at write time and no atomic writer;
+<code>_already_has_fact</code> skipped an exact repeat
+(<code>store.py:2341</code>), <code>add_memory</code> ran
+<code>scrub</code> (<code>:2404</code>), and <code>_write</code> wrote a
+temp file and <code>os.replace</code>d it (<code>:230-237</code>). It
+said nothing assembled a context block; <code>always_on_body</code>
+(<code>:1518</code>) wrote <code>USER.md</code> and
+<code>PROJECTS.md</code> into every host's always-on files. It credited
+<code>promote_bullet</code> with a receipt the model could read; the
+tool had left the MCP surface and its one caller discarded the flag
+(<code>:2776</code>). It said
+<code>tests/test_distill_benchmark.py</code> measured throughput; it
+asserted quality thresholds against a classifier defined in the test
+file (<code>:140</code>). And its census — 6,450 lines at version 1.0.0
+on one commit, <code>add_memory</code> at <code>:1872</code> in a
+<code>store.py</code> of about two thousand lines — described the first
+pin, while this one was 1.1.0 on 103 commits with
+<code>add_memory</code> at <code>:2393</code> in 3,302 lines. The index,
+secret-scan, atomic-write, receipt and census claims were true of the
+first pin and were carried through a re-pin unchecked; the scope mark
+rested on the slug branch rather than on the default that bypassed
 it.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a

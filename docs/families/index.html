@@ -5168,25 +5168,24 @@ href="../systems/openwolf/">OpenWolf</a>.</p>
 the work ranking usually does.</strong> Its store is markdown under
 <code>~/.agents/memory/</code> and
 <code>&lt;repo&gt;/.agents/memory/</code>, and its layout is published
-as a specification rather than implied: sixteen kinds mapping to sixteen
-destinations, with <code>abi/LAYOUT.md</code> stating <em>"One home per
-fact. Path encodes where it belongs. No dump files
-(<code>facts.md</code>, <code>MEMORY.md</code>)"</em> — an explicit
-refusal of the single-file memory most of this family ships.
-<code>abi/KINDS.md</code> attaches a mutability rule to each kind —
-inbox, sequential, revise in place, frozen — and the decision rule is
-the sharpest supersession statement in the markdown systems here:
-<em>"Revise present tense when the contract changes; new number when
-superseding."</em> Retrieval is a case-insensitive substring scan that
-returns <code>file.md:12</code> ids, and <code>delete_memory</code>
-accepts exactly that string, so a recalled line is something the agent
-can remove — the round trip most stores in this corpus cannot make. The
-same address is the weakness: the delete pops by line index, so one
-removal renumbers every id below it. And the mutability rule is not
-enforced — <code>add_memory</code> appends the bullet and then returns
-<em>"revise this file in place when facts change; do not only append
-bullets"</em>, which is advice attached to the write it describes as
-wrong. See <a href="../systems/agents-memory/">agents-memory</a>.</p>
+as a specification rather than implied, with <code>abi/LAYOUT.md</code>
+stating <em>"One home per fact. Path encodes where it belongs. No dump
+files (<code>facts.md</code>, <code>MEMORY.md</code>)"</em> — an
+explicit refusal of the single-file memory most of this family ships,
+though the same specification routes a bare project write to
+<code>facts.md</code>. <code>abi/KINDS.md</code> attaches a mutability
+rule to each kind — inbox, sequential, revise in place, append-only,
+frozen — and the decision rule is the sharpest supersession statement in
+the markdown systems here: <em>"Revise present tense when the contract
+changes; new number when superseding."</em> Search returns
+<code>file.md:12#a1b2c3d4</code> ids and <code>delete_memory</code>
+accepts exactly that string, re-finding the line by its content hash
+when lines above it have gone, so a recalled line is something the agent
+can remove; an append to an existing revise-in-place file is refused
+with the call to make instead. The weakness is the boundary: the model
+chooses each search's project scope, and <code>project=*</code> reads
+every registered repository. See <a
+href="../systems/agents-memory/">agents-memory</a>.</p>
 <p><strong>Hatchdoor is the family's cleanest statement of what a
 document store buys and what it costs.</strong> A self-hosted Rust
 binary over an Obsidian-style Markdown vault, serving a web UI and an
