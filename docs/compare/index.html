@@ -10332,61 +10332,61 @@ August</td>
 </tr>
 <tr>
 <td><a href="../systems/gaius/"><code>gaius</code></a></td>
-<td>A fact with a domain, a key and text, first and last seen times, a
-confirmation count, the agents, sessions and principals that produced
-it, a provenance record, a score, an outcome, a review state and a
-tombstone column</td>
-<td>One SQLite file with BM25 and sqlite-vec, fully offline — "[n]o API
-keys, no cloud"</td>
-<td>Keyword and optional semantic ranking over active, non-tombstoned
-facts, with pending facts carried at a 0.6x penalty and rejected ones
-excluded</td>
-<td>Extraction from Claude Code, Gemini CLI, Grok and Codex sessions,
-promoted into an inject-ready corpus without a person in the path</td>
-<td>Duplicates sharing a fact key are merged into the oldest row with
-counts summed and provenance unioned, the losers tombstoned and their
-embeddings dropped; the audit pass demotes and never deletes</td>
-<td><code>domain</code> is stored on every fact and filters most reads,
-but at least one path makes the clause conditional on the caller having
-supplied one</td>
-<td>A CLI, an MCP server, and hooks for the coding agents it extracts
-from</td>
-<td>Extract, promote and inject passes, a corpus audit that demotes, and
-a maturity pass over the ranked set</td>
-<td>A three-value review state, a confirmation count and provenance
-arrays unioned across agents and sessions, behavioural gates that refuse
-an action outright, and an enforcement pass that can only demote</td>
-<td>Two bounded mechanisms. The first is the enforcement pass, which
-states its own limits before it states its purpose:
-"<strong>DEMOTE-ONLY</strong> — never tombstones, never DELETEs",
-touching "ONLY <code>review_state</code>" so the field recording why a
-fact was believed survives the sweep, and reversible because "an
-operator flips <code>review_state</code> back to <code>auto</code> to
-undo". A sweep that cannot destroy is one an operator can afford to run
-unattended, which is the whole posture of the project. The second is
-that the gates prevent rather than advise: "[p]revents actions, not just
-recalls them — hard gates <code>exit:2</code> on force-push, unconfirmed
-live-trade, prod-delete." And the deduplication is careful in the
-direction that matters — merging rows that share a fact key keeps the
-oldest, sums the confirmation counts and unions the agents, sessions,
-principals and model families rather than picking one, so the evidence
-that several independent runs agreed is preserved instead of
-collapsed</td>
-<td>The scope predicate is not uniform. <code>domain</code> is stored on
-every fact and most reads carry <code>WHERE domain = ?</code>, but
-<code>maturity.py</code> builds the clause as
-<code>"AND domain = ?" if parsed.domain else ""</code>, so a caller that
-supplies no domain gets the whole corpus from that path — the pattern
-this atlas keeps finding, where the isolation holds on the paths
-somebody wrote carefully and lapses on the one that treated it as an
-option. <code>tombstoned_at</code> is a dedup marker rather than a
-tombstone in this atlas's sense: it retires a losing duplicate row, and
-nothing is keyed on a rejected value, so a fact demoted or rejected can
-be re-extracted from a later session and written back as new. And the
-project is candid that no person stands in the pipeline — "[r]uns
-unattended … no human in the hot path; correction is optional" — which
-is a coherent product decision and does mean the review state is usually
-written by the same machinery that wrote the fact</td>
+<td>A fact with a topic domain, a key, text, first and last seen times,
+a confirmation count, the agents, sessions, principals and model
+families that produced it, a provenance label, a score, an outcome, a
+six-value review state, a fact type and a tombstone column</td>
+<td>One SQLite file with an optional sqlite-vec table and an
+entity-triple graph beside the facts, fully offline — "[n]o API keys, no
+cloud"</td>
+<td>BM25 and TF-IDF computed in Python, blended with optional sqlite-vec
+cosine, over facts neither tombstoned nor rejected; pending, deferred
+and agent-reviewed facts rank at 0.6x. The domain filter is optional and
+the session hook passes none</td>
+<td>Mined from Claude Code, Grok, Codex, Ollama and PentAGI sessions
+straight into the corpus with no person in the path; Gemini harvests
+stage until promoted at the CLI; an MCP tool writes a fact directly</td>
+<td>Duplicates sharing a fact key merge into the oldest row with counts
+summed and provenance unioned, the losers tombstoned; an opt-in TTL
+tombstones stale live facts; the audit pass only demotes; no path
+deletes a fact row</td>
+<td>None enforced. The domain is a topic label that deduplication
+ignores; inject and search take it as an optional argument and the
+session hook passes none</td>
+<td>A CLI, an MCP server of seven tools including one that writes a
+fact, and a Claude Code plugin whose hooks inject at session start and,
+when enabled, per prompt</td>
+<td>Retire, harvest and ingest passes that extract and promote, a decay
+pass that rescores and can tombstone stale live facts, and a corpus
+audit that demotes when enforcement is switched on</td>
+<td>A six-value review state, an outcome a person's reject sets to
+rejected, a heuristic confidence and contradiction flag at write time,
+provenance arrays unioned across agents and sessions, and an environment
+and tty check on the verbs that write a human verdict</td>
+<td>Two bounded mechanisms. The enforcement pass states its limits
+before its purpose: "DEMOTE-ONLY — never tombstones, never DELETEs",
+touching "ONLY review_state" so the field recording why a fact was
+believed survives, and reversible because "an operator flips
+review_state back to 'auto' to undo". Withholding and demotion are
+separate: a person's reject removes a fact from every retrieval read and
+keeps the row, while pending, deferred and agent-reviewed facts stay
+retrievable at 0.6x. The merge of duplicates keeps the oldest row, sums
+confirmation counts and unions agents, sessions, principals and model
+families, so the evidence that several runs agreed survives the merge.
+The verbs that write a human verdict refuse four agent environment
+variables and a non-tty, and a test pins both refusals</td>
+<td>Rejection is keyed on a row. Session-mined facts take a key from the
+session stem and the text, so the same claim mined from a later session
+is a new row and injects at full weight; the MCP tool hashes the text
+another way again. The withholding predicate reads <code>outcome</code>,
+which the Claude shim fills with raw tool output, and the audit pass
+treats any non-null outcome as verified, so those facts are never
+demoted. The domain is a topic label rather than a scope. The audit's
+contradiction tier groups live rows by fact key, which the partial
+unique index makes impossible, and its test builds a table without that
+index. The README's hard gates that exit 2 on force-push ship as an
+example script in the docs; none of the plugin's hooks blocks a tool
+call</td>
 </tr>
 <tr>
 <td><a
@@ -34357,7 +34357,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>472 of 749:</em> <a
+<p><em>473 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34500,6 +34500,7 @@ href="../systems/flair/"><code>flair</code></a>, <a
 href="../systems/flatbread/"><code>flatbread</code></a>, <a
 href="../systems/flowly/"><code>flowly</code></a>, <a
 href="../systems/forgetful/"><code>forgetful</code></a>, <a
+href="../systems/gaius/"><code>gaius</code></a>, <a
 href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a>,
 <a href="../systems/gbrain/"><code>gbrain</code></a>, <a
 href="../systems/genome/"><code>genome</code></a>, <a
@@ -34863,7 +34864,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-472 repositories of
+473 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

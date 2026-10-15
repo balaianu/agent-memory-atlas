@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="An ops memory for coding agents
-that runs unattended by design, where a flagged fact is reclassified
-into a ranking penalty rather than removed, and behavioural gates exit
-non-zero on force-push and prod-delete.">
+    <meta name="description" content="An offline SQLite ops memory for
+coding agents that injects extracted facts unattended; a person's
+rejection withholds a fact and an audit pass only demotes.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="gaius — Agent Memory Atlas">
-    <meta property="og:description" content="An ops memory for coding
-agents that runs unattended by design, where a flagged fact is
-reclassified into a ranking penalty rather than removed, and behavioural
-gates exit non-zero on force-push and prod-delete.">
+    <meta property="og:description" content="An offline SQLite ops
+memory for coding agents that injects extracted facts unattended; a
+person's rejection withholds a fact and an audit pass only demotes.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="gaius — Agent Memory Atlas">
-    <meta name="twitter:description" content="An ops memory for coding
-agents that runs unattended by design, where a flagged fact is
-reclassified into a ranking penalty rather than removed, and behavioural
-gates exit non-zero on force-push and prod-delete.">
+    <meta name="twitter:description" content="An offline SQLite ops
+memory for coding agents that injects extracted facts unattended; a
+person's rejection withholds a fact and an audit pass only demotes.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>gaius — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ gates exit non-zero on force-push and prod-delete.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "gaius",
-      "description": "An ops memory for coding agents that runs unattended by design, where a flagged fact is reclassified into a ranking penalty rather than removed, and behavioural gates exit non-zero on force-push and prod-delete.",
+      "description": "An offline SQLite ops memory for coding agents that injects extracted facts unattended; a person's rejection withholds a fact and an audit pass only demotes.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,24 +99,23 @@ gates exit non-zero on force-push and prod-delete.">
           <p class="eyebrow">The enforcement pass can only demote, never
 tombstone and never delete</p>
           <h1>gaius</h1>
-          <p class="document-deck">An ops memory for coding agents that
-runs unattended by design, where a flagged fact is reclassified into a
-ranking penalty rather than removed, and behavioural gates exit non-zero
-on force-push and prod-delete.</p>
+          <p class="document-deck">An offline SQLite ops memory for
+coding agents that injects extracted facts unattended; a person's
+rejection withholds a fact and an audit pass only demotes.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/jkubo/gaius">
               <span>Source</span>
               <strong>jkubo/gaius</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/jkubo/gaius/commit/b720bdb6ba0f8d2b8e76f7e843493affad9cd329" title="b720bdb6ba0f8d2b8e76f7e843493affad9cd329">
+            <a class="meta-pill revision-pill" href="https://github.com/jkubo/gaius/commit/520c2eb12627e2c7eb886999b5377a20ee31a7b8" title="520c2eb12627e2c7eb886999b5377a20ee31a7b8">
               <span>Analyzed revision</span>
-              <code>b720bdb6…</code>
+              <code>520c2eb1…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/jkubo--gaius" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,20 @@ on force-push and prod-delete.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>29,823
+lines of Python in 80 files: the gaius package is 18,512 lines in 32
+modules and the tests 10,360 lines in 45 files, beside the 1,762-line
+mnemosyne script</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>48
+commits on main by 4 author names, one of them dependabot, 17 June – 8
+October 2026; version 0.2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>749
+test functions in 44 files, run in CI on Python 3.11 and 3.12 against
+MCP SDK 1 and 2; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,101 +152,122 @@ on force-push and prod-delete.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>gaius is an "[o]ps memory lifecycle manager for AI coding agents" —
-Apache-2.0, Python, 29,474 lines across 79 files, one SQLite file with
-BM25 and sqlite-vec and no network. It extracts facts from Claude Code,
-Gemini CLI, Grok and Codex sessions, "ranks them into an inject-ready
-corpus, enforces behavioral gates, and prevents you from breaking prod
-at 3am."</p>
-<p>Its three claims are stated as things other tools skip, and the first
-of them is unusual to advertise:</p>
+<p>gaius is an offline ops memory for coding agents: it mines facts from
+Claude Code, Grok, Codex and other agents' sessions into one SQLite file
+and injects them at the next session start with nobody approving them.
+Its two careful mechanisms are a person's rejection, which withholds a
+fact from every retrieval read while keeping the row, and an audit pass
+whose header bounds it to demotion. Its weak side is that the rejection
+is keyed on a row rather than on the value, the domain that looks like a
+scope is a topic label, and the hard gates its README advertises ship as
+an example script.</p>
+<p>It calls itself an "[o]ps memory lifecycle manager for AI coding
+agents", and the README states the posture first:</p>
 <blockquote>
 <p>"<strong>Runs unattended</strong> — extract → promote → inject with
 no human in the hot path; correction is optional."</p>
 </blockquote>
-<p>Most systems in this corpus imply a person somewhere and leave the
-reader to discover there isn't one. gaius says so on the first screen,
-which changes how the rest should be read.</p>
-<p><strong>The mechanism worth carrying is an enforcement pass that
-states its own limits before its purpose.</strong>
-<code>corpus_audit</code> reclassifies flagged facts from
-<code>auto</code> to <code>pending</code>, and the module header bounds
-it three ways:</p>
-<blockquote>
-<p>"• DEMOTE-ONLY — never tombstones, never DELETEs." "• Touches ONLY
-<code>review_state</code> — <code>confidence_source</code> is left
-untouched…" "• Reversible — an operator flips <code>review_state</code>
-back to <code>auto</code> to undo."</p>
-</blockquote>
-<p>The three values then do different work. A read filters
-<code>review_state != 'rejected'</code>, so a rejected fact keeps its
-row and leaves the corpus; a <code>pending</code> fact stays retrievable
-under "the ranker's 0.6x pending" penalty. Withholding and demotion are
-separate outcomes rather than one slider, which is the distinction this
-atlas most often finds collapsed.</p>
-<p>That same sentence is why this report does not carry
-<code>human_review</code>. A fact enters as <code>auto</code>, or as
-<code>pending</code> when its confidence is under 0.5 or it conflicts
-with another (<code>gaius/facts.py:540-548</code>), and both are
-retrievable — only <code>rejected</code> leaves the corpus, and only a
-person's later act writes it. So nothing is held back waiting for
-anyone, which the project says plainly of itself: it <em>"[r]uns
-unattended — extract → promote → inject with no human in the hot path;
-correction is optional."</em></p>
-<p>The review surface is nonetheless better built than most in this
-corpus, and deserves recording for what it is.
-<code>gaius/review.py:78</code> refuses outright off a terminal —
-<em>"gaius {action} requires a tty. Use <code>--report</code> for a
-read-only summary"</em> — so the adjudicating UI cannot be driven by a
-pipeline; the cluster-level flow promotes staged events with an explicit
-outcome (<code>confirmed</code>, <code>refuted</code>,
-<code>open_question</code>, or none) rather than a bare yes; and an
-individual confirmation writes <code>confidence_source='human'</code>
-(<code>:623</code>) so the origin of the number is recoverable
-afterwards.</p>
-<p><strong>The gates prevent rather than advise.</strong> "[H]ard gates
-<code>exit:2</code> on force-push, unconfirmed live-trade, prod-delete"
-— a non-zero exit rather than a warning in a log.</p>
-<p><strong>And the deduplication preserves the evidence it
-merges.</strong> Rows sharing a fact key are folded into the oldest,
-with confirmation counts summed and the agents, sessions, principals and
-model families unioned rather than picked — so the fact that several
-independent runs agreed survives the merge that removes the
-duplicates.</p>
-<p><strong>The gap is a familiar one.</strong> <code>domain</code> is on
-every fact and most reads carry <code>WHERE domain = ?</code>, but the
-maturity path builds the clause as
-<code>"AND domain = ?" if parsed.domain else ""</code> — the isolation
-holds where somebody wrote it carefully and lapses where it was treated
-as an option.</p>
+<p><strong>A rejection withholds and a demotion discounts.</strong>
+<code>gaius reject</code> and the quiz's <code>n</code> answer write
+<code>review_state='rejected', outcome='rejected'</code>
+(<code>gaius/review.py:649</code>, <code>:846</code>), and every
+retrieval read of facts selects
+<code>outcome IS NULL OR outcome != 'rejected'</code>
+(<code>gaius/landscape.py:1119</code>,
+<code>gaius/mcp_server.py:160</code>). The review state has six values.
+<code>auto</code> and <code>confirmed</code> rank at full weight;
+<code>pending</code>, <code>deferred</code> and
+<code>agent-reviewed</code> rank at 0.6x and stay injectable
+(<code>gaius/maturity.py:87-93</code>). A fact enters as
+<code>pending</code> when its heuristic confidence is under 0.5 or it
+conflicts with an existing one
+(<code>gaius/facts.py:537-545</code>).</p>
+<p><strong>The audit pass states what it may not do.</strong>
+<code>enforce_demote</code> reclassifies flagged facts from
+<code>auto</code> to <code>pending</code>, and its docstring opens with
+the bounds: "DEMOTE-ONLY — never tombstones, never DELETEs", "Touches
+ONLY review_state", "Reversible — an operator flips review_state back to
+'auto' to undo" (<code>gaius/corpus_audit.py:49-66</code>). It runs only
+behind <code>--enforce</code> or <code>CORPUS_AUDIT_ENFORCE</code>.</p>
+<p><strong>The verbs that write a human verdict refuse an
+agent.</strong> <code>require_human</code> exits 2 when any of four
+agent environment variables is set or stdin is not a tty
+(<code>gaius/review.py:63-81</code>), and <code>confirm</code>,
+<code>reject</code> and <code>quiz</code> call it. Its own docstring
+bounds the claim: "a determined agent can still forge this on a
+single-uid box." The machine verb, <code>agent-review</code>, can only
+lower a fact's rank.</p>
+<p><strong>The hard gates are injection priority, not a block.</strong>
+The README promises "hard gates <code>exit:2</code> on force-push,
+unconfirmed live-trade, prod-delete". In the tree, a hard gate is a
+feedback rule the injector selects deterministically
+(<code>gaius/landscape.py:994-998</code>), and
+<code>docs/hard-gates.md:171-172</code> says of the plugin's three
+hooks: "<strong>None of them block tool calls.</strong>" The
+<code>exit 2</code> hook is an example for the operator to write.</p>
+<p><strong>No review gate reaches the main paths.</strong> Gemini
+harvests stage to JSONL and wait for <code>gaius next</code>, but local
+Claude, Grok, Codex, Ollama and PentAGI sessions promote straight into
+the corpus, and the agent's <code>gaius_fact_add</code> tool writes a
+fact that injects at the next session. That is why no
+<code>human_review</code> mark is claimed.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>fact</strong> is extracted, promoted and injected without
-anyone approving it.</p>
-<p>A <strong>review state</strong> either withholds or discounts, and
-the two are not the same.</p>
-<p>An <strong>audit pass</strong> may demote and may not destroy.</p>
-<p>A <strong>gate</strong> exits non-zero; it does not warn.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — facts are extracted and promoted unattended, an audit pass may only demote a flagged fact into a ranking penalty, rejected facts leave the corpus while pending ones stay at a discount, and behavioural gates refuse an action with a non-zero exit</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: facts are extracted and promoted unattended, an audit pass may only demote a flagged fact into a ranking penalty, rejected facts leave the corpus while pending ones stay at a discount, and behavioural gates refuse an action with a non-zero exit
+<p>A <strong>fact</strong> is a short text with a key, a topic domain
+and the provenance of every run that produced it. It is injected because
+it exists; nothing has to approve it first.</p>
+<p>A fact's standing has two axes. The <strong>review state</strong>
+says how far to trust it in ranking. The <strong>outcome</strong>
+carries the one verdict that removes it from retrieval,
+<code>rejected</code>, beside <code>confirmed</code>,
+<code>refuted</code> and <code>open_question</code>, which only reweight
+it (<code>gaius/maturity.py:48-53</code>).</p>
+<p>How a fact stops being guidance, in order of how often each
+applies:</p>
+<ul>
+<li><strong>Discounted.</strong> Low confidence, a detected
+contradiction, a deferral, an agent review or the audit pass puts it at
+0.6x. It is injected all the same.</li>
+<li><strong>Rejected.</strong> A person at a terminal rejects it. The
+row stays and leaves every retrieval read. The same claim mined from a
+later session is a new row.</li>
+<li><strong>Merged.</strong> A duplicate sharing its fact key is folded
+into the oldest row and tombstoned.</li>
+<li><strong>Expired.</strong> With the live-TTL flag set, a
+<code>live</code> fact older than the TTL is tombstoned by the decay
+pass, with a reason, and restorable.</li>
+<li><strong>Never deleted.</strong> No path removes a fact row.</li>
+</ul>
+<p>The memory is treated as candidate evidence with a ranking discount.
+A person's verdict is the only thing that turns a fact off, and the
+project measures how rarely that happens: its own comment calls the
+human confirm verb "empirically DEAD", with one human confirmation among
+about 17,637 injectable facts on 21 July 2026
+(<code>gaius/maturity.py:72-75</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — facts are mined and promoted with no approval, discounted by review states, withheld only by a person's reject, merged or expired by tombstone, and never deleted</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: facts are mined and promoted with no approval, discounted by review states, withheld only by a person&#39;s reject, merged or expired by tombstone, and never deleted
 flowchart TB
-    SESS[&quot;Claude Code · Gemini CLI · Grok · Codex sessions&quot;] --&gt; EX[&quot;extract&quot;]
-    EX --&gt; PROMOTE[&quot;promote — no human in the hot path;&lt;br/&gt;&#39;correction is optional&#39;&quot;]
-    PROMOTE --&gt; F[(&quot;facts: domain · fact_key · fact_text ·&lt;br/&gt;confirmation_count · agents · sessions · principals ·&lt;br/&gt;provenance · score · outcome · review_state · tombstoned_at&quot;)]
-    DEDUP[&quot;rows sharing a fact_key&quot;] --&gt; MERGE[&quot;keep the OLDEST row, SUM the confirmation counts,&lt;br/&gt;UNION agents, sessions, principals, model families&quot;]
-    MERGE -.-&gt;|&quot;the evidence that several independent runs agreed&lt;br/&gt;survives the merge that removes the duplicates&quot;| F
-    MERGE --&gt; TOMB[&quot;losers get tombstoned_at, embeddings dropped&quot;]
-    TOMB -.-&gt;|&quot;a dedup marker, not a rejected-value record —&lt;br/&gt;nothing is keyed on the value, so a later session&lt;br/&gt;can re-extract it as new&quot;| NOTOMB[&quot;no tombstone mark&quot;]
-    AUDIT[&quot;corpus_audit: flag a fact&quot;] --&gt; DEMOTE[&quot;review_state: auto → pending&quot;]
-    DEMOTE -.-&gt;|&quot;DEMOTE-ONLY — never tombstones, never DELETEs;&lt;br/&gt;touches ONLY review_state, so confidence_source&lt;br/&gt;survives; reversible by an operator&quot;| SAFE[&quot;a sweep you can run unattended&quot;]
-    DEMOTE --&gt; F
-    OPER[&quot;an operator disagrees&quot;] --&gt; FLIP[&quot;flip review_state back to auto&quot;]
-    FLIP --&gt; F
-    F --&gt; READ{&quot;retrieval&quot;}
-    READ --&gt;|&quot;review_state = &#39;rejected&#39;&quot;| OUT1[&quot;excluded from the corpus —&lt;br/&gt;the row stays in the table&quot;]
-    READ --&gt;|&quot;review_state = &#39;pending&#39;&quot;| OUT2[&quot;retrieved at a 0.6x penalty&quot;]
-    READ --&gt;|&quot;review_state = &#39;auto&#39;&quot;| OUT3[&quot;ranked normally&quot;]
-    READ --&gt; DOM{&quot;WHERE domain = ?&quot;}
-    DOM -.-&gt;|&quot;most reads carry it; maturity builds the clause as&lt;br/&gt;&#39;AND domain = ?&#39; if parsed.domain else &#39;&#39; —&lt;br/&gt;so one path returns the whole corpus&quot;| NOSCOPE[&quot;no scope-enforced mark&quot;]
-    GATES[&quot;behavioural gates&quot;] -.-&gt;|&quot;exit:2 on force-push, unconfirmed live-trade,&lt;br/&gt;prod-delete — refuses the action rather than&lt;br/&gt;logging a warning about it&quot;| ACT[&quot;the action does not happen&quot;]</code></pre></details></figure>
+    SESS[&quot;Claude Code · Grok · Codex ·&lt;br/&gt;Ollama · PentAGI sessions&quot;] --&gt; MINE[&quot;retire: mine blocks;&lt;br/&gt;key = session stem + text&quot;]
+    GEM[&quot;Gemini CLI sessions&quot;] --&gt; HARV[&quot;harvest: stage JSONL&quot;]
+    HARV --&gt; NEXT{&quot;gaius next&lt;br/&gt;(interactive, not tty-gated)&quot;}
+    NEXT --&gt;|&quot;Y · k · c · x · ?&quot;| UP
+    NEXT --&gt;|&quot;n · s&quot;| HARV
+    AGENT[&quot;agent: gaius_fact_add&lt;br/&gt;(MCP tool)&quot;] --&gt; UP
+    MINE --&gt; UP{&quot;upsert_fact:&lt;br/&gt;live row with this key?&quot;}
+    UP --&gt;|&quot;yes&quot;| CORR[&quot;corroborate: count + 1,&lt;br/&gt;union agents · sessions ·&lt;br/&gt;principals · model families&quot;]
+    UP --&gt;|&quot;no&quot;| SCORE{&quot;confidence under 0.5&lt;br/&gt;or contradiction?&quot;}
+    SCORE --&gt;|&quot;no&quot;| AUTO[&quot;review_state = auto&quot;]
+    SCORE --&gt;|&quot;yes&quot;| PEND[&quot;review_state = pending&quot;]
+    AUTO --&gt; F[(&quot;facts&quot;)]
+    PEND --&gt; F
+    CORR --&gt; F
+    AUDIT[&quot;corpus-audit --enforce:&lt;br/&gt;DEMOTE-ONLY&quot;] -.-&gt;|&quot;auto → pending&quot;| F
+    AREV[&quot;agent-review · defer&quot;] -.-&gt;|&quot;→ agent-reviewed · deferred&quot;| F
+    HUMAN[&quot;reject · quiz n&lt;br/&gt;(require_human: env + tty)&quot;] --&gt;|&quot;review_state and&lt;br/&gt;outcome = rejected&quot;| F
+    DEDUP[&quot;init_db merge of&lt;br/&gt;duplicate live keys&quot;] -.-&gt;|&quot;losers: tombstoned_at&quot;| F
+    TTL[&quot;decay with live TTL&lt;br/&gt;(opt-in)&quot;] -.-&gt;|&quot;stale live facts:&lt;br/&gt;tombstoned_at + reason&quot;| F
+    F --&gt; READ{&quot;inject · gaius_search ·&lt;br/&gt;quiz pool · sync-memory&quot;}
+    READ --&gt;|&quot;tombstoned or&lt;br/&gt;outcome = rejected&quot;| OUT[&quot;withheld; the row stays&quot;]
+    READ --&gt;|&quot;pending · deferred ·&lt;br/&gt;agent-reviewed&quot;| DISC[&quot;ranked at 0.6x&quot;]
+    READ --&gt;|&quot;auto · confirmed&quot;| FULL[&quot;ranked at 1.0&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -249,95 +279,291 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>gaius/facts.py</code></td>
-<td>The schema, the dedup merge, and the read filters</td>
+<td>Schema and migrations, the one write path <code>upsert_fact</code>,
+confidence and contradiction checks, the duplicate merge</td>
 </tr>
 <tr>
-<td><code>gaius/corpus_audit.py</code></td>
-<td>The demote-only enforcement pass and its stated bounds</td>
+<td><code>gaius/retire.py</code></td>
+<td>Session mining for Claude Code and the event formats; Gemini harvest
+to staging</td>
 </tr>
 <tr>
-<td><code>gaius/concord.py</code></td>
-<td>Single-winner resource claims, enforced by a partial unique
-index</td>
+<td><code>gaius/review.py</code></td>
+<td>The human-only check, the verdict verbs, the staged-event review and
+the quiz</td>
+</tr>
+<tr>
+<td><code>gaius/landscape.py</code></td>
+<td><code>gaius inject</code>: memory-file and corpus selection,
+ranking, hard-gate priority, the token budget</td>
 </tr>
 <tr>
 <td><code>gaius/maturity.py</code></td>
-<td>The ranked-set pass, and the conditional domain clause</td>
+<td>Weight tables, <code>decay</code> with the opt-in live TTL,
+<code>governor</code> and other reports</td>
 </tr>
 <tr>
-<td><code>gaius/_core.py</code></td>
-<td>The command table, including a retired verb kept as a signpost</td>
+<td><code>gaius/corpus_audit.py</code></td>
+<td>The read-only audit and the demote-only enforcement pass</td>
 </tr>
 <tr>
-<td><code>hooks/</code>, <code>benchmarks/</code></td>
-<td>Agent integrations and measurement</td>
+<td><code>gaius/kg.py</code></td>
+<td>Entities and triples indexed from each new fact</td>
+</tr>
+<tr>
+<td><code>gaius/mcp_server.py</code></td>
+<td>Seven MCP tools over the same database</td>
+</tr>
+<tr>
+<td><code>gaius/concord.py</code></td>
+<td>Single-winner resource claims for concurrent agents, enforced by a
+partial unique index</td>
+</tr>
+<tr>
+<td><code>hooks/</code>, <code>.claude-plugin/</code>,
+<code>.mcp.json</code></td>
+<td>The Claude Code plugin: session-start and prompt injection, a
+post-edit health check, the MCP server</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One Python package and one SQLite file under <code>~/.gaius</code>,
+opened in WAL mode with a 15-second busy timeout because the stop hook,
+a nightly sync and a Kubernetes CronJob can write together
+(<code>gaius/facts.py:94-100</code>). No API key is needed to store
+anything. The <code>semantic</code> extra adds sentence-transformers and
+sqlite-vec; without it, semantic deduplication and vector ranking switch
+off and keyword ranking remains.</p>
+<p>The plugin's <code>.mcp.json</code> and its session-start fallback
+launch
+<code>gaius-memory @ git+https://github.com/jkubo/gaius@v0.2.0</code>
+through <code>uvx</code>, so an installed plugin runs the tag from 25
+August 2026. That tag's package differs from this pin only in
+<code>gaius/mcp_server.py</code>, the MCP SDK 2 adapter. The store is a
+plain SQLite file an operator can query and repair by hand.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>gaius/corpus_audit.py:53-62</code> — an enforcement pass that
-says what it may not do before saying what it does.</p>
-<p><code>gaius/facts.py:443</code> — the read filter that makes
-<code>rejected</code> mean something.</p>
-<p><code>gaius/facts.py:36-80</code> — a merge that unions the evidence
-rather than choosing among it.</p>
-<p><code>gaius/maturity.py:407</code> — the conditional scope
-clause.</p>
-<p><code>gaius/concord.py:154-158</code> — a partial unique index as
-"the atomic single-winner claim", where "the loser is told, never
-queued".</p>
+<p><strong>Write.</strong> Every writer ends in <code>upsert_fact</code>
+(<code>gaius/facts.py:468-601</code>). It looks for a live row with the
+same key, then a semantic duplicate above 0.92 cosine when sqlite-vec is
+present, and corroborates either one. Otherwise it scores confidence
+from hedge and observation patterns, runs the contradiction check, and
+inserts with
+<code>ON CONFLICT(fact_key) WHERE tombstoned_at IS NULL DO NOTHING</code>,
+so a writer that loses the race corroborates instead. A new fact is
+embedded and indexed into the graph inside a savepoint.</p>
+<p><strong>Mining.</strong> <code>_promote_mined_to_facts</code> keys
+each block on <code>sha256(f"{session_stem}:{block[:200]}")</code> and
+writes it as <code>auto-mined</code> at injection weight 0.7
+(<code>gaius/retire.py:285-355</code>). The Grok, Codex, Ollama and
+PentAGI paths stage the events and promote them in the same call
+(<code>gaius/retire.py:1416-1501</code>). <code>cmd_harvest</code>
+stages Gemini events and stops (<code>gaius/retire.py:1304</code>).</p>
+<p><strong>Injection.</strong> The session-start hook runs
+<code>gaius inject</code> with a corpus budget of 2,000 tokens and a
+skills budget of 1,500 (<code>hooks/session-start.sh:42-44</code>).
+<code>cmd_inject</code> selects
+<code>tombstoned_at IS NULL AND (outcome IS NULL OR outcome != 'rejected')</code>,
+drops facts carrying credential material, ranks, applies the
+review-state weight and fits the budget
+(<code>gaius/landscape.py:1119-1146</code>,
+<code>:1351-1360</code>).</p>
+<p><strong>Verdicts.</strong> <code>cmd_reject</code>,
+<code>cmd_confirm</code> and <code>cmd_quiz</code> call
+<code>require_human</code> first (<code>gaius/review.py:615</code>,
+<code>:640</code>, <code>:802</code>). <code>cmd_defer</code> and
+<code>cmd_agent_review</code> do not, and write only weighted states
+(<code>gaius/review.py:655-707</code>).</p>
+<p><strong>Audit.</strong> <code>cmd_corpus_audit</code> opens a
+read-only connection for its statistics and, behind the flag, a writable
+one for <code>enforce_demote</code>
+(<code>gaius/corpus_audit.py:154-185</code>).</p>
+<p><strong>Expiry.</strong> <code>cmd_decay</code> with the live TTL set
+tombstones stale <code>live</code> facts with a
+<code>tombstone_reason</code> beginning "live-ttl: last_seen age"
+(<code>gaius/maturity.py:615-670</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Facts keyed by domain and fact key, carrying the agents, sessions,
-principals and model families that produced them, a confirmation count,
-a provenance record, a score, an outcome, a review state and a tombstone
-column; sessions, domains, entities and triples beside them, with a
-separate claims table for resource coordination.</p>
+<p>The <code>facts</code> table carries the text and key, the topic
+domain, first and last seen, a confirmation count, JSON arrays of
+agents, sessions, principals, model families and model versions, a
+provenance label, a score, an outcome, a fact type, a heuristic
+confidence with its source, a review state, a conflict pointer, Leitner
+quiz columns and <code>tombstoned_at</code> with
+<code>tombstone_reason</code> (<code>gaius/facts.py:108-228</code>). A
+partial unique index allows one live row per fact key
+(<code>gaius/facts.py:239-247</code>).</p>
+<p><code>outcome</code> does two jobs. The review flows write
+<code>confirmed</code>, <code>refuted</code>, <code>open_question</code>
+and <code>rejected</code>; <code>retire --claude-shim</code> writes up
+to 2,000 characters of raw tool output into it
+(<code>gaius/parsers.py:74</code>,
+<code>gaius/retire.py:397-423</code>). Only <code>rejected</code>
+withholds.</p>
+<p><strong>No tombstone mark.</strong> A rejection is a state on a row,
+and a later write finds it only if the key matches. Infrastructure
+ingest keys on the lower-cased text (<code>gaius/ingest.py:112</code>),
+so a rejected Ansible fact re-ingested corroborates the rejected row and
+stays withheld. Session mining keys on the session stem and the text,
+and <code>gaius_fact_add</code> on a 32-character hash of the
+un-lowercased text (<code>gaius/mcp_server.py:384</code>). The same
+claim from a later session or from the agent is a new live row, unless
+sqlite-vec is installed and the semantic match lands on the rejected
+row. <code>tombstoned_at</code> has two writers, the duplicate merge and
+the live TTL; neither records a rejected value.</p>
+<p><strong>No bitemporal mark.</strong> Triples carry
+<code>valid_from</code> and <code>valid_to</code>. Insert-time indexing
+passes the write clock as <code>valid_from</code>
+(<code>gaius/facts.py:585-586</code>), a re-index passes the fact's
+<code>first_seen</code> (<code>gaius/kg.py:497</code>), and
+<code>valid_to</code> is set to the current time by the
+<code>kg invalidate</code> CLI (<code>gaius/kg.py:240-245</code>,
+<code>:522</code>). Valid time is a record or observation time.</p>
+<p><strong>No audit mark.</strong> The telemetry database logs prompts,
+injections, tool calls and gate events
+(<code>gaius/telemetry.py:42-140</code>). Corroboration, verdicts,
+demotion and tombstoning overwrite columns in place and write no
+event.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 with optional sqlite-vec semantic search over facts that are
-neither tombstoned nor rejected, with pending facts carried at a
-discount rather than dropped, ranked by a composite score.</p>
+<p><code>gaius inject</code> is the context assembler. Memory files from
+the configured memory directory go first, feedback rules before domain
+files, with hard gates exempt from the per-type count cap. Corpus facts
+follow, scored by BM25 and TF-IDF computed in Python, blended with
+sqlite-vec cosine when available, boosted by stored score and
+confirmations, and multiplied by the review-state weight
+(<code>gaius/landscape.py:1351-1360</code>). With
+<code>--session-dedup</code>, a per-session file suppresses entries
+shown in recent turns, with a shorter window for hard gates
+(<code>gaius/landscape.py:56-94</code>, <code>:564-566</code>).</p>
+<p><code>gaius_search</code> reads the same live, non-rejected set,
+scores keyword overlap and sqlite-vec cosine, and returns the first 300
+characters of each hit (<code>gaius/mcp_server.py:146-235</code>).
+<code>gaius_kg_query</code> and <code>gaius_kg_timeline</code> read
+triples with no join to the fact they came from, so relations extracted
+from a rejected fact stay reachable there
+(<code>gaius/mcp_server.py:239-316</code>).</p>
+<p><strong>No scope mark.</strong> <code>domain</code> is a topic such
+as storage or networking. Deduplication is "GLOBAL on fact_key" across
+domains (<code>gaius/facts.py:474-476</code>). The injector appends the
+domain clause only when <code>--domain</code> is passed
+(<code>gaius/landscape.py:1120-1123</code>), <code>gaius_search</code>
+takes <code>domain</code> as an optional argument from the model, and
+<code>governor</code> builds
+<code>"AND domain = ?" if parsed.domain else ""</code>
+(<code>gaius/maturity.py:407</code>). The session hook passes no domain.
+Facts carry no project, user or tenant column.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Extraction and promotion run unattended. Duplicates are merged rather
-than deduplicated destructively. The audit pass demotes. Behavioural
-gates sit in front of dangerous actions and exit non-zero rather than
-recording an opinion.</p>
+<p>Mining is a CLI pass over session files, run by hooks or a schedule;
+the agent does not block on it, and a mined fact is retrievable at the
+next injection. <code>gaius_fact_add</code> writes synchronously and its
+reply says the fact "[w]ill appear in future inject outputs". Extraction
+is pattern-based: no model call sits on the write path. Credential
+material is dropped at the mining boundary and again at injection.</p>
+<p>Each write reads every non-rejected fact in the domain for the
+contradiction check (<code>gaius/facts.py:442-465</code>), so write cost
+grows with the domain. The contradiction signal is five or more shared
+meaningful tokens plus an asymmetric operational-negation word such as
+"removed" or "deprecated"; on a hit both facts become
+<code>pending</code> at confidence 0.30. Injection is bounded by a token
+budget, 2,000 for the corpus and 1,500 for skills at session start.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A CLI, an MCP server and hooks for the agents whose sessions it
-reads, with an offline core and semantic and MCP extras.</p>
+<p>The MCP server registers seven tools: search, two graph reads, stats,
+session priming, skill recommendation and <code>gaius_fact_add</code>
+(<code>gaius/mcp_server.py:145-453</code>). No verdict verb is on it.
+The agent can reach the CLI through a shell: <code>defer</code> and
+<code>agent-review</code> are ungated, and <code>gaius next</code> reads
+its answers from stdin, so piped input promotes a staged cluster.</p>
+<p>The plugin registers SessionStart injection, UserPromptSubmit
+injection that is off unless <code>GAIUS_PROMPT_INJECT=1</code>, and a
+PostToolUse health check on edits inside the memory directory
+(<code>hooks/hooks.json</code>). A standalone install's hooks take
+precedence and the plugin yields to them.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The strong parts are the bounded sweep, the separation of withholding
-from demotion, the evidence-preserving merge and gates that refuse. The
-limits are a scope clause that one path treats as optional, a tombstone
-column that is a dedup marker rather than a rejected-value record, and a
-pipeline that by design does not wait for a person.</p>
+<p>The careful parts are the separation of withholding from demotion, a
+sweep that cannot destroy, a merge that keeps every agent and session
+that agreed, and the credential filter at two boundaries.</p>
+<p>Rejection protects the corpus once. The mined-fact key includes the
+session, so a rejected claim recurs at full weight when the next session
+repeats it.</p>
+<p>The audit's second tier selects fact keys with more than one live row
+(<code>gaius/corpus_audit.py:86-89</code>). <code>init_db</code> merges
+such rows and creates a partial unique index on every open, and
+<code>main()</code> calls <code>init_db</code> before every command, so
+that tier finds nothing on a production store. The audit's contradiction
+counters are zero for the same reason. The first tier, and the
+statistics, treat any non-null outcome other than <code>rejected</code>
+as verified (<code>gaius/corpus_audit.py:91-92</code>), so shim-imported
+facts carrying raw tool output are counted as outcome-verified and never
+demoted.</p>
+<p><code>require_human</code> stops the default agent path to a human
+verdict, by its own account not a determined one. The safety claim most
+likely to mislead a reader is the README's: an operator who installs the
+plugin for its force-push gate gets a rule in context and no block.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>A benchmarks directory sits beside the package, and the corpus audit
-is written to be run repeatedly and reversed, which is its own kind of
-check. There are no committed cases asserting that particular material
-must not be retrieved.</p>
+<p>749 test functions in 44 files, run in CI across two Python versions
+and both MCP SDK majors. I read the suites named here; I ran none.</p>
+<p><code>test_inject_excludes_credential_facts_and_keeps_clean_ones</code>
+is the negative evaluation
+(<code>tests/test_inject_credential_filter.py:70-87</code>). It seeds a
+credential-bearing fact and a clean one, injects with a task both match,
+and asserts the sentinel and the token absent while the clean marker is
+present. The comment beside the task flag says why: without it "the
+control test proves nothing". No committed case asserts a rejected fact
+absent from inject or search.</p>
+<p><code>tests/test_reject.py:59-88</code> pins both refusals of
+<code>reject</code> and that the row stays unrejected.
+<code>tests/test_corpus_enforce.py</code> covers the demote-only
+guarantees on a table it builds itself, without the partial unique
+index, which is how a contradiction tier that cannot fire in production
+has passing tests.</p>
+<p><code>benchmarks/bench_longmemeval.py</code> is the harness behind
+the README's LongMemEval-S table; no result file is committed. Its
+docstring cites the ranking at <code>_core.py:3488</code> and
+<code>:3502</code>, lines past the end of the 1,221-line
+<code>_core.py</code> at this pin.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Bound your enforcement pass in its own header, and bound it downward.
-"Never tombstones, never DELETEs" is what makes a sweep something an
-operator will actually let run.</p>
-<p>Keep withholding and demotion as different states. A single
-confidence number cannot express "do not use this" and "use this last"
-at the same time.</p>
-<p>Union your evidence when you merge. Summing confirmation counts and
-unioning the agents that produced a fact keeps the reason it was
-believed; picking a winner discards it.</p>
-<p>Write your scope clause unconditionally. The path that makes it
-optional is the path that returns somebody else's corpus.</p>
+<h3 id="steal">Steal</h3>
+<p>Bound a maintenance pass downward in its own header: what it may not
+touch, and how to undo it. "Never tombstones, never DELETEs" is what
+lets an operator run it unattended.</p>
+<p>Keep withholding and discounting as different states. A rejected fact
+leaves every read; a doubtful one ranks lower. One number cannot say
+both.</p>
+<p>Union provenance when merging duplicates: sum the counts and keep
+every agent, session and model family, so independent agreement survives
+deduplication.</p>
+<p>Make the human-verdict verbs refuse known agent environments and a
+non-tty, test both refusals, and give the machine its own verb that can
+only lower rank.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A rejection keyed on a row whose key includes the session. Key the
+verdict on the value, and check it on every write path.</p>
+<p>A status column shared with free text. A predicate that treats any
+non-null value as a verdict will count raw tool output as
+verification.</p>
+<p>A test fixture that builds its own schema. The production index made
+the contradiction tier unreachable, and the fixture's table did not have
+it.</p>
+<p>A README feature the tree ships as a documentation example.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one operator's coding-agent fleet on one machine, where
+recall matters more than correction and the operator accepts that facts
+inject unreviewed. It assumes someone will run <code>reject</code> when
+a bad fact surfaces, and that the same bad fact recurring from a later
+session is tolerable. Walk away if memory must be isolated per project
+or user, if a rejection must stand, or if the force-push gate is the
+reason for installing it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether the maturity path's optional domain clause is deliberate.
-Every other read carries the predicate, which makes the one that does
-not look like an oversight rather than a decision.</p>
-<p>Whether <code>rejected</code> should be keyed on the value. A
-rejected fact leaves the corpus and a later session can extract the same
-claim again, so the rejection protects the corpus once rather than
-standing.</p>
+<p>Whether rejection is meant to stand against re-extraction. The
+Ansible key makes it stand by accident; the session key defeats it.</p>
+<p>Whether the contradiction tier is meant for databases opened without
+<code>init_db</code>, such as a copy synced from another machine before
+its first open.</p>
+<p>Whether the README's <code>exit:2</code> line describes a private
+harness. The project's own hard-gates document says the shipped hooks do
+not block.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -348,24 +574,145 @@ standing.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>gaius/corpus_audit.py:53-62</code></td>
-<td>A pass that states its own ceiling first</td>
+<td><code>gaius/facts.py:36-82</code></td>
+<td>The duplicate merge that unions provenance</td>
 </tr>
 <tr>
-<td><code>gaius/facts.py:443</code></td>
-<td>Withholding and demotion as different states</td>
+<td><code>gaius/facts.py:239-247</code></td>
+<td>The partial unique index on live fact keys</td>
 </tr>
 <tr>
-<td><code>gaius/facts.py:36-80</code></td>
-<td>Merging duplicates without discarding the agreement</td>
+<td><code>gaius/facts.py:468-601</code></td>
+<td><code>upsert_fact</code>: corroboration, confidence, contradiction,
+the race-safe insert</td>
 </tr>
 <tr>
-<td><code>gaius/maturity.py:407</code></td>
-<td>The scope clause that became optional</td>
+<td><code>gaius/review.py:63-81</code></td>
+<td><code>require_human</code> and its stated limit</td>
+</tr>
+<tr>
+<td><code>gaius/review.py:631-707</code></td>
+<td>Reject, defer and agent-review</td>
+</tr>
+<tr>
+<td><code>gaius/landscape.py:1119-1146</code></td>
+<td>Inject candidate selection: the rejected filter and the credential
+filter</td>
+</tr>
+<tr>
+<td><code>gaius/landscape.py:1351-1360</code></td>
+<td>The review-state weight in ranking</td>
+</tr>
+<tr>
+<td><code>gaius/maturity.py:48-93</code></td>
+<td>Outcome and review-state weight tables</td>
+</tr>
+<tr>
+<td><code>gaius/maturity.py:615-670</code></td>
+<td>The opt-in live-TTL tombstone</td>
+</tr>
+<tr>
+<td><code>gaius/corpus_audit.py:49-110</code></td>
+<td>The demote-only pass and its two tiers</td>
+</tr>
+<tr>
+<td><code>gaius/retire.py:285-355</code></td>
+<td>Session mining and its session-keyed fact key</td>
+</tr>
+<tr>
+<td><code>gaius/mcp_server.py:145-406</code></td>
+<td>The MCP search, graph and write tools</td>
+</tr>
+<tr>
+<td><code>docs/hard-gates.md:169-195</code></td>
+<td>What the hard gates do, and the example blocking hook</td>
+</tr>
+<tr>
+<td><code>tests/test_inject_credential_filter.py:70-87</code></td>
+<td>The must-not-inject case with its control</td>
+</tr>
+<tr>
+<td><code>tests/test_corpus_enforce.py</code></td>
+<td>The audit tests and their own schema</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E "rejected" -- gaius ':!*.md'</code> — writers
+at <code>review.py:649</code> and <code>:846</code>; reads on
+<code>outcome</code> at <code>landscape.py:1119</code>,
+<code>mcp_server.py:160</code>, <code>:323</code>,
+<code>_core.py:714</code>, <code>review.py:723</code>,
+<code>maturity.py:414</code>, <code>:446</code>;
+<code>review_state != 'rejected'</code> only at
+<code>facts.py:443</code>.</li>
+<li><code>git grep -n -E "SET review_state|review_state ?= ?'" -- gaius ':!*.md'</code>
+— <code>auto</code>, <code>pending</code>, <code>confirmed</code>,
+<code>rejected</code>, <code>deferred</code> and
+<code>agent-reviewed</code> are written; six values.</li>
+<li><code>git grep -n -E "require_human\(|isatty" -- gaius</code> —
+<code>confirm</code>, <code>reject</code> and <code>quiz</code> in
+<code>review.py</code>, plus unrelated checks in <code>concord.py</code>
+and <code>spin.py</code>.</li>
+<li><code>git grep -n -E "_promote_event\(" -- gaius</code> —
+<code>review.py:362</code> and <code>:408</code>, both inside the
+interactive staged review.</li>
+<li><code>git grep -n -E "tombstoned_at ?=|tombstoned_at=" -- gaius</code>
+— <code>facts.py:75</code> (merge) and <code>maturity.py:668</code>
+(live TTL).</li>
+<li><code>git grep -n -E "DELETE FROM facts" -- .</code> — no
+match.</li>
+<li><code>git grep -n -E "fact_key ?=|\bfk ?=" -- gaius</code> — the key
+derivations: session stem plus text in <code>retire.py:325</code> and
+<code>:409</code>, lower-cased text in <code>ingest.py</code>, raw text
+at 32 characters in <code>mcp_server.py:384</code>.</li>
+<li><code>git grep -n -E "domain ?= ?\?|domain = '" -- gaius</code> —
+unconditional only in <code>facts.py:443</code>,
+<code>corpus_audit.py:323</code> and <code>skills.py:716</code>;
+conditional in <code>landscape.py:1123</code> and
+<code>maturity.py:407</code>.</li>
+<li><code>git grep -n -E "valid_from|valid_to" -- gaius/kg.py gaius/facts.py</code>
+and <code>git grep -n invalidate_triple -- .</code> —
+<code>valid_from</code> from the write clock or <code>first_seen</code>;
+<code>valid_to</code> from the CLI's clock.</li>
+<li><code>git grep -n -E "CREATE (VIRTUAL )?TABLE" -- gaius</code> — no
+table records fact mutations.</li>
+<li><code>git grep -n -E "GROUP BY fact_key HAVING" -- gaius</code> —
+the audit tier and counters at <code>corpus_audit.py:88</code>,
+<code>:133</code>, <code>:136</code>, <code>:188</code>, against the
+unique index at <code>facts.py:240</code>.</li>
+<li><code>git grep -n -E "push --force|push -f|force-push" -- gaius hooks .claude-plugin skills</code>
+— no match.</li>
+<li><code>git grep -n -E "sys\.exit\(2\)|exit 2" -- gaius hooks</code> —
+<code>concord.py:601</code>, <code>:727</code> and
+<code>review.py:77</code>, <code>:81</code> only.</li>
+<li><code>git grep -n -E "assert .* not in " -- tests</code> — the
+credential case at <code>test_inject_credential_filter.py:85-86</code>;
+the others assert about files, commands, skills and graph names.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs CHANGELOG.md</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the Apache-2.0 text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/jkubo/gaius/commit/520c2eb12627e2c7eb886999b5377a20ee31a7b8"><code class="commit-id" title="520c2eb12627e2c7eb886999b5377a20ee31a7b8">520c2eb1…</code></a>
+— 12 commits on, MCP SDK 2 support and dependency bumps; no memory path
+moved. <code>negative_eval</code> gained, earned at the first pin: the
+inject credential case asserts a fact absent beside a control that must
+appear (<a href="#10-tests-evals-and-benchmarks">section 10</a>). Also
+wrong then: the withholding read is on <code>outcome</code>, not
+<code>review_state</code>; the review state has six values, not three
+(<a href="#2-mental-model">section 2</a>); the hard gates ship as a
+documentation example, not code; <code>domain</code> is a topic label
+the injector and search make optional (<a
+href="#6-retrieval-mechanics">section 6</a>). Screened from a full
+clone: four auto-run surfaces, one build-time execution point, no
+unpinned surfaces, nothing inside the cooldown. Nothing was installed,
+built or run.</p>
 <p><strong>2026-09-19</strong> — audited at the unchanged pin <a
 href="https://github.com/jkubo/gaius/commit/b720bdb6ba0f8d2b8e76f7e843493affad9cd329"><code class="commit-id" title="b720bdb6ba0f8d2b8e76f7e843493affad9cd329">b720bdb6…</code></a>;
 nothing upstream moved, so the correction is ours.

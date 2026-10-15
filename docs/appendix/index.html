@@ -4514,11 +4514,11 @@ seven-day cooldown. <code>CLAUDE.md</code> is addressed to a reading
 agent and was recorded as data. Nothing was installed, built or run and
 no benchmark was reproduced. Apache-2.0</li>
 <li><a href="https://github.com/jkubo/gaius">jkubo/gaius</a> at <a
-href="https://github.com/jkubo/gaius/commit/b720bdb6ba0f8d2b8e76f7e843493affad9cd329"><code class="commit-id" title="b720bdb6ba0f8d2b8e76f7e843493affad9cd329">b720bdb6…</code></a>
+href="https://github.com/jkubo/gaius/commit/520c2eb12627e2c7eb886999b5377a20ee31a7b8"><code class="commit-id" title="520c2eb12627e2c7eb886999b5377a20ee31a7b8">520c2eb1…</code></a>
 — read only; four auto-run surfaces, one build-time execution point, no
-unpinned dependency surfaces and two dependency files inside the
-seven-day cooldown. Nothing was installed, built or run and no session
-transcript was extracted. Apache-2.0</li>
+unpinned dependency surfaces and no dependency file inside the seven-day
+cooldown. Nothing was installed, built or run and no session transcript
+was extracted. Apache-2.0</li>
 <li><a href="https://github.com/taeyun16/aidememo">taeyun16/aidememo</a>
 at <a
 href="https://github.com/taeyun16/aidememo/commit/21f7d1a848210e0e65414a2e46b46ec1b433b8e0"><code class="commit-id" title="21f7d1a848210e0e65414a2e46b46ec1b433b8e0">21f7d1a8…</code></a>
@@ -17760,6 +17760,33 @@ note is ever excluded. And it counted 1,686 test cases; the tree held
 1,496 <code>it</code> and <code>test</code> calls in 88 files. The first
 two rested on the constants' names and the README's framing rather than
 on the callers of each function.</li>
+<li><strong>Five published claims about <a
+href="../systems/gaius/">gaius</a> were wrong at <a
+href="https://github.com/jkubo/gaius/commit/b720bdb6ba0f8d2b8e76f7e843493affad9cd329"><code class="commit-id" title="b720bdb6ba0f8d2b8e76f7e843493affad9cd329">b720bdb6…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>negative_eval</code>, though
+<code>tests/test_inject_credential_filter.py:70-87</code> asserted a
+credential-bearing fact absent from inject output beside a clean fact
+that had to appear; the mark was earned. Its <code>trust_state</code>
+record said a read filtered <code>review_state != 'rejected'</code> at
+<code>gaius/facts.py:443</code>. That line is the write-time
+contradiction check; retrieval excluded
+<code>outcome = 'rejected'</code> (<code>gaius/landscape.py:1119</code>,
+<code>gaius/mcp_server.py:134</code>), which the reject verb writes
+alongside, so the mark stands on the other column. It called the review
+state three-valued; <code>auto</code>, <code>pending</code>,
+<code>confirmed</code>, <code>rejected</code>, <code>deferred</code> and
+<code>agent-reviewed</code> were all written
+(<code>gaius/maturity.py:87-93</code>, <code>gaius/review.py:669</code>,
+<code>:706</code>). It said the hard gates exit 2 on force-push,
+unconfirmed live-trade and prod-delete; no code in the tree did, and
+<code>docs/hard-gates.md:172</code> said the plugin's hooks block no
+tool call. And it said most reads carried <code>WHERE domain = ?</code>
+with one path making it optional; the injector and
+<code>gaius_search</code> applied the domain only when supplied
+(<code>gaius/landscape.py:1120-1123</code>), the session hook supplied
+none, and the domain was a topic label that deduplication ignored
+(<code>gaius/facts.py:474-476</code>).</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
