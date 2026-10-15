@@ -2847,7 +2847,7 @@ run</li>
 <li><a
 href="https://github.com/LinzeColin/AgentDatabase">LinzeColin/AgentDatabase</a>
 at <a
-href="https://github.com/LinzeColin/AgentDatabase/commit/8514923810b38b861aa308feca47f43df34f2a20"><code class="commit-id" title="8514923810b38b861aa308feca47f43df34f2a20">85149238…</code></a>
+href="https://github.com/LinzeColin/AgentDatabase/commit/e9acee95271d828167d90f0985aaad3c9cb9f7dd"><code class="commit-id" title="e9acee95271d828167d90f0985aaad3c9cb9f7dd">e9acee95…</code></a>
 — read only; one auto-run surface and a long tail of build-time
 execution points inside vendored skill reference material. Nothing was
 installed and no script was run. No licence file is present in the
@@ -17917,6 +17917,40 @@ asserted that list and query reads excluded a tombstoned record beside a
 surviving one. And its census, 287,058 lines over 1,563 files, was the
 first pin's; that tree held 299,410 lines in 1,652 JavaScript
 files.</li>
+<li><strong>Ten published claims about <a
+href="../systems/agentdatabase/">AgentDatabase</a> were wrong at <a
+href="https://github.com/LinzeColin/AgentDatabase/commit/8514923810b38b861aa308feca47f43df34f2a20"><code class="commit-id" title="8514923810b38b861aa308feca47f43df34f2a20">85149238…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The report called the admission matrix proof that a model's inference
+could never persist; the source type, actor type and authorization mode
+are envelope fields the writing agent supplies, matched as strings
+(<code>OpenAIDatabase/scripts/memory_mutation.py:243-256</code>), with
+references checked for form only (<code>:69-76</code>). It said the
+abstention reason priority lived in policy rather than code order;
+<code>retrieval_decision</code> branches in code
+(<code>OpenAIDatabase/scripts/memory_forgetting.py:256-271</code>) and
+<code>validate_policy</code> only compares the policy list with a
+literal (<code>:96-110</code>). It read the gold benchmark's 1.0 as a
+test of the store's pipeline; the scored ranker is <code>predict</code>
+inside <code>scripts/evaluate_memory_gold_benchmark.py:226-292</code>,
+which never calls <code>query_records</code>. It said
+<code>negative_triggers</code> were rendered into the agent's context;
+the boot view <code>AGENT_MEMORY.md</code> omits them
+(<code>scripts/memory.py:394-447</code>). It said there was no index
+beyond the active view; <code>agent-memory.json</code> carries a lexical
+routing index and every keyword query builds one in process
+(<code>scripts/memory.py:502-506</code>, <code>:1272</code>). It said
+the boot index mixed scopes; all six entries are
+<code>global:owner</code>. It called <code>data/memory/active/</code> a
+rendered active view; it is the 278-record legacy store the cutover
+read. It put the tree at 15,000-odd files where there were 23,937, and
+its recorded licence search at four vendored files where 58
+licence-named files exist, one outside <code>CodexSkills/</code>, none
+granting this repository. And section 9 listed <code>human_review</code>
+as awarded after its withdrawal on 2026-09-19. The marks were
+unaffected: <code>negative_eval</code> holds on
+<code>tests/test_memory_forgetting.py:195-260</code>, which runs the
+shipped query path.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

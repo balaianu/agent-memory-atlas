@@ -1014,41 +1014,63 @@ that name, with no membership check</td>
 <tr>
 <td><a
 href="../systems/agentdatabase/"><code>agentdatabase</code></a></td>
-<td>A canonical JSON record — statement, kind, status, scope,
-valid_time, recorded_time, source with an evidence hash, sensitivity,
-conflict, supersession, negative_triggers, and a content hash under a
-named canonicalization</td>
+<td>A canonical JSON record: statement, kind, status, scope, valid_time,
+recorded_time with an in-record transition list, source with an evidence
+hash, sensitivity, conflict, supersession, negative_triggers, and a
+content hash under a named canonicalization</td>
 <td>Sharded JSONL under <code>data/memory/records/</code> with a
-manifest, a boot-read <code>agent-memory.json</code> active index,
-per-run candidate files, and a human curation file. No database</td>
-<td>A CLI query over the shards with optional filters on id, key, kind,
+manifest, a generated boot view (<code>AGENT_MEMORY.md</code> and
+<code>agent-memory.json</code>) of the six active high-importance
+records, the pre-cutover legacy store under
+<code>data/memory/active/</code>, per-run candidate files and a human
+curation file. No database</td>
+<td>A CLI scan over the shards with optional filters on id, key, kind,
 scope, tag and keyword, active-only by default, plus
-<code>--as-of</code> and <code>--recorded-as-of</code> for the two time
-axes</td>
-<td><code>memory mutate</code> with an authorization envelope: add,
-update, retire, dispute, admitted or refused per source type, idempotent
-by transaction id, each transition appended in-record</td>
-<td>Retirement is <code>retrieval_exclusion_not_history_deletion</code>
-— status flips, validity closes, the record stays. Supersession and
-dispute fields exist and no live record uses them</td>
+<code>--as-of</code> and <code>--recorded-as-of</code>; a keyword query
+is prefiltered by an in-process lexical n-gram index, and the boot
+handshake carries a lexical routing index of public active records for
+agents reading over the GitHub API</td>
+<td><code>memory mutate</code> with an envelope: add, update, retire or
+dispute, admitted or refused by the source type the envelope declares,
+idempotent by transaction id, applied only on an
+<code>automation-c/memory-*</code> branch, each status change appended
+in-record</td>
+<td>Retirement is <code>retrieval_exclusion_not_history_deletion</code>:
+status flips, validity closes, the record stays. No verb promotes a
+candidate or resolves a dispute. Supersession and dispute fields exist
+and no live record uses them</td>
 <td><code>scope {type, key}</code> over global, project, task and
-conversation, with allowed scopes per source type — but the query filter
-is optional and defaults to unset</td>
-<td>A Python CLI, an agent context pack builder, a Codex skills
-registry, and a Cloudflare-deployed atlas view built from a derived
-public projection</td>
-<td>Automation C: a branch-and-PR settlement path with a required CI
-gate, no direct writes to the default branch, and a stated terminal
-state of zero open PRs and issues</td>
-<td>Status gates retrieval, confidence and importance are enumerated,
-and abstention is a first-class answer with a machine-readable reason
-code and missing-condition list</td>
-<td>A forgetting policy written as a validated JSON artifact; abstention
-with a reason priority; model inference refused persistence outright; a
-160-case gold set with abstention and forgetting categories</td>
-<td>The evaluated ranker scores 1.0 on all eight gold categories against
-a set the same repository generates, and the live store has never
-exercised supersession, dispute or a single transition</td>
+conversation, with allowed scopes per source type; the query filter is
+optional and defaults to unset. All six active records are
+<code>global:owner</code> and every conversation-scoped record is
+candidate or retired</td>
+<td>A Python CLI, generated boot files, an agent context pack built from
+keyword-signal recommendations, a Codex skills registry, and a Memory
+Atlas web view retired on 30 September 2026 with its code kept</td>
+<td>No daemon. CI workflows refresh a dynamic profile every third day
+and run the governance suite nightly; Automation C settles a mutation
+through one same-repository pull request with a required CI check and no
+direct write to the default branch</td>
+<td>Status gates the CLI query, the boot view and the routing index;
+confidence and importance are enumerated; abstention returns
+<code>UNKNOWN</code> with a reason code and missing conditions;
+admission is decided by a source type the envelope declares</td>
+<td>Abstention with a machine-readable reason and the conditions that
+would have permitted an answer; a disputed state that withdraws a claim
+without adjudicating it; transitions written into the record with a
+transaction id that doubles as the idempotency key; a record-time query
+that fails closed when history is missing; a gold-case schema with
+forbidden ids, hard negatives, required abstentions and a two-axis
+as-of</td>
+<td>The admission gate refuses an envelope that labels itself
+<code>model_inference</code> or <code>raw_import</code>, and the label
+is written by the agent converting a user command. Every live record
+entered through a one-time cutover the current policy would refuse, so
+no transition, supersession, dispute or negative trigger exists in the
+store, and a record-time query touching a retired import fails. The gold
+benchmark's 1.0 scores a ranker defined inside its evaluator. The agent
+context pack hands agents keyword-triggered statements outside the
+canonical store</td>
 </tr>
 <tr>
 <td><a

@@ -2042,8 +2042,10 @@ from a table of twenty topics where each target and its hard negative
 differ along scope, validity or status — precisely the three axes the
 evaluated algorithm filters on. The committed reports show <strong>1.0
 across all eight categories</strong> for
-<code>deterministic_eligible_scope_alias_ranker.v1</code>, with
-<code>llm_judge: null</code>, and the gold provenance block records
+<code>deterministic_eligible_scope_alias_ranker.v1</code>, a
+<code>predict</code> function defined inside the evaluator rather than
+the store's own query path, with <code>llm_judge: null</code>, and the
+gold provenance block records
 <code>human_approval_claimed: false</code>. A deterministic filter
 scoring perfectly against distractors built to differ only on what it
 filters has been asked whether it is connected, not whether it is

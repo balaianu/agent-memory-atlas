@@ -3577,27 +3577,28 @@ The store underneath is a separate Graft daemon whose C source the repository no
 vendors and whose binary it does not. See [Heimdall](../systems/heimdall/).
 
 **AgentDatabase is the family's clearest case of the policy being an artifact
-rather than a habit, and of what that costs when the store predates it.** Two
-JSON files carry decisions the rest of the corpus leaves in comments.
+rather than a habit, and of what that costs when the store predates it.**
 `memory-mutation-policy.json` maps every source type to an admission verdict per
 operation, and both `raw_import` and `model_inference` map to
-`reject_persistence` for add, update, retire and dispute alike — a model's own
-inference is inadmissible as durable memory by construction, which is a stronger
-guard than any review queue and needs no reviewer.
-`memory-forgetting-policy.json` sets `eligible_statuses` to `["active"]`, names
-retirement as `retrieval_exclusion_not_history_deletion`, and fixes the order in
-which an abstention explains itself. The read side matches: `retrieval_decision`
-returns `UNKNOWN` with a reason code and the `missing_conditions` that would have
-permitted an answer, so "I don't know" carries a diagnosis instead of arriving as
-an empty result set.
+`reject_persistence` for add, update, retire and dispute alike. The source type
+is a field of the envelope the writing agent assembles, so the matrix refuses an
+envelope that labels itself an inference and admits one that labels itself
+`explicit_user`; the trust sits in the host that converts a user's command.
+`memory-forgetting-policy.json` sets `eligible_statuses` to `["active"]` and
+names retirement as `retrieval_exclusion_not_history_deletion`, and the code
+checks every block against a literal, so the file documents the behaviour
+rather than configuring it. The read side matches: `retrieval_decision` returns
+`UNKNOWN` with a reason code chosen in a fixed order and the
+`missing_conditions` that would have permitted an answer, so "I don't know"
+carries a diagnosis instead of arriving as an empty result set.
 
 The cost is legible in the store's own data. All 198 live records entered as
-`raw_import` — the source the policy now refuses — and not one carries a
-transition, a supersession or a conflict, so the lifecycle is attested by tests
-and by a self-generated benchmark rather than by anything that has happened.
-That benchmark is the best-structured one in this atlas and reports 1.0 across
-all eight of its categories for a deterministic filter, against hard negatives
-built to differ on exactly the axes the filter checks. See
+`raw_import` through a one-time cutover, and not one carries a transition, a
+supersession or a conflict, so the lifecycle is attested by tests rather than by
+anything that has happened. The gold benchmark beside it is well structured and
+reports 1.0 across all eight of its categories for a ranker defined inside the
+evaluator, against hard negatives built to differ on exactly the axes that
+ranker filters; the store's own query path is not what it scores. See
 [AgentDatabase](../systems/agentdatabase/).
 
 **[Open Knowledge Format](../systems/open-knowledge-format/) is the family's format rather than a store, and it shows what trust looks like when a specification defines it and no consumer enforces it.** A bundle is a directory of markdown files with YAML frontmatter; `generated` names who wrote a concept and `verified` lists who confirmed it, kept apart *"because who wrote a concept need not be who confirmed it"*, and a consumer derives a tier — unverified, machine-confirmed, human-reviewed — from whether any verifier carries a `human:` prefix. `status` is draft, stable or deprecated; `stale_after` is an absolute instant so staleness is a comparison. Every one of those is, in the spec's words, *"advisory signals, not access control"*, and the tree has one consumer, a graph viewer that renders them as badges: nothing filters, ranks or refuses on any of them, so the report carries no mark. Two things are worth carrying anyway. The attested-computation contract puts the sanctioned SQL in the memory, lets an agent fill only declared parameters, and makes *did the sanctioned thing run* a canonicalised-text comparison — with the caveat that the shipped attester checks a receipt the executing agent assembled and never re-reads the job it names. And the separation of `generated` from `verified` is the right shape, undone by the write path: a regeneration keeps the human's signature on text the human never saw, because nothing compares the two timestamps.

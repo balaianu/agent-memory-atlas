@@ -9585,29 +9585,32 @@ vendors and whose binary it does not. See <a
 href="../systems/heimdall/">Heimdall</a>.</p>
 <p><strong>AgentDatabase is the family's clearest case of the policy
 being an artifact rather than a habit, and of what that costs when the
-store predates it.</strong> Two JSON files carry decisions the rest of
-the corpus leaves in comments. <code>memory-mutation-policy.json</code>
+store predates it.</strong> <code>memory-mutation-policy.json</code>
 maps every source type to an admission verdict per operation, and both
 <code>raw_import</code> and <code>model_inference</code> map to
 <code>reject_persistence</code> for add, update, retire and dispute
-alike — a model's own inference is inadmissible as durable memory by
-construction, which is a stronger guard than any review queue and needs
-no reviewer. <code>memory-forgetting-policy.json</code> sets
-<code>eligible_statuses</code> to <code>["active"]</code>, names
+alike. The source type is a field of the envelope the writing agent
+assembles, so the matrix refuses an envelope that labels itself an
+inference and admits one that labels itself <code>explicit_user</code>;
+the trust sits in the host that converts a user's command.
+<code>memory-forgetting-policy.json</code> sets
+<code>eligible_statuses</code> to <code>["active"]</code> and names
 retirement as <code>retrieval_exclusion_not_history_deletion</code>, and
-fixes the order in which an abstention explains itself. The read side
-matches: <code>retrieval_decision</code> returns <code>UNKNOWN</code>
-with a reason code and the <code>missing_conditions</code> that would
-have permitted an answer, so "I don't know" carries a diagnosis instead
-of arriving as an empty result set.</p>
+the code checks every block against a literal, so the file documents the
+behaviour rather than configuring it. The read side matches:
+<code>retrieval_decision</code> returns <code>UNKNOWN</code> with a
+reason code chosen in a fixed order and the
+<code>missing_conditions</code> that would have permitted an answer, so
+"I don't know" carries a diagnosis instead of arriving as an empty
+result set.</p>
 <p>The cost is legible in the store's own data. All 198 live records
-entered as <code>raw_import</code> — the source the policy now refuses —
-and not one carries a transition, a supersession or a conflict, so the
-lifecycle is attested by tests and by a self-generated benchmark rather
-than by anything that has happened. That benchmark is the
-best-structured one in this atlas and reports 1.0 across all eight of
-its categories for a deterministic filter, against hard negatives built
-to differ on exactly the axes the filter checks. See <a
+entered as <code>raw_import</code> through a one-time cutover, and not
+one carries a transition, a supersession or a conflict, so the lifecycle
+is attested by tests rather than by anything that has happened. The gold
+benchmark beside it is well structured and reports 1.0 across all eight
+of its categories for a ranker defined inside the evaluator, against
+hard negatives built to differ on exactly the axes that ranker filters;
+the store's own query path is not what it scores. See <a
 href="../systems/agentdatabase/">AgentDatabase</a>.</p>
 <p><strong><a href="../systems/open-knowledge-format/">Open Knowledge
 Format</a> is the family's format rather than a store, and it shows what
