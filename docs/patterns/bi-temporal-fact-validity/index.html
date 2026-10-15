@@ -474,6 +474,19 @@ pages without the predicate
 superseded claim drops out of search and arrives in a packed prompt. No
 skill writes either field, while the ingest skill's own supersession
 move, <code>lifecycle: archived</code>, filters nothing.</p>
+<p><a href="../../systems/aigent-os/">aigent-OS</a> has the reader and
+not the writer, and no record axis. <code>search-vault.js</code> parses
+a body line <code>Valid from X to Y</code> as whole UTC days and
+stable-sorts every chunk of an ended note below every current one,
+refusing to act on an unparseable or impossible date
+(<code>daemons/semantic-search/search-vault.js:123</code>,
+<code>:146-176</code>). The format is stated only in that file's
+comment, its tests and the eval fixtures. The README's link for the
+feature leads to a JSON facts ledger no script reads, and the
+<code>/supersede</code> skill corrects by strikethrough, which search
+ranks as before. The project's harness shows what the reader buys: its
+eight temporal cases all fail before the demotion landed and all pass
+after.</p>
 <h2 id="a-third-clock">A third clock</h2>
 <p>Two clocks answer <em>what was true</em> and <em>what did we
 believe</em>. The temporal database literature names a third, decision

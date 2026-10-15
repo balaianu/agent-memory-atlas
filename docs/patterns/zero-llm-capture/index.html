@@ -467,6 +467,17 @@ identity and no double-ingest across both paths
 file touched before anything else, so health reads an mtime rather than
 a self-report; the hook's own comment records that the version it was
 ported from wrote its heartbeat after <code>exit 0</code>.</p>
+<p><a href="../../systems/aigent-os/">aigent-OS</a> captures by regex on
+the operator's own words and makes the scan, not the match, the gate. A
+UserPromptSubmit hook strips tool output, code and tables from the
+prompt, matches seven explicit and five correction patterns, and appends
+each hit as an <code>unscanned</code> row
+(<code>daemons/memory-capture.sh:111-179</code>, <code>:272-279</code>).
+An injection guard then promotes a clean row to <code>staged</code> and
+marks a hostile one <code>blocked</code>, keeping its text as evidence
+(<code>daemons/memory-candidates-guard.mjs:55-92</code>). The queue file
+lives in an indexed vault directory and the search reads no status, so a
+blocked phrase is searchable after the next re-index.</p>
 <h2 id="implementation-checklist">Implementation checklist</h2>
 <ul>
 <li>Assign a stable event ID before acknowledging capture.</li>

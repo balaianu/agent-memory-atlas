@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 741 reports.**
+**This page covers all 742 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6706,6 +6706,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 15,722 lines of Python and 40 skills, 359 commits by 39 authors between 6 April and 12 October 2026. Two marks, `bitemporal` and `negative_eval`, the second on exact-list exclusion tests with positive controls. 1,165 pytest functions; the server suite skips in CI, and the README's agent study has no run logs in the tree.
 - Study when: you want a human-readable knowledge vault an agent builds and a person fixes by hand, with a concurrency-safe writer for the bookkeeping files and an as-of query over authored validity.
 - Do not copy when: agent writes must be reviewed before they count, a page's status must keep it out of answers, or several principals share one server.
+
+### [`aigent-os`](../systems/aigent-os/)
+
+- Best idea: **a capture row is born unscanned, and only a clean scan makes it promotable.** `memory-capture.sh` appends each regex-matched user phrase as `unscanned`, then runs `memory-candidates-guard.mjs`, which moves a clean row to `staged` and a hit to `blocked` without deleting the text; a scanner that crashed leaves rows visibly unscanned instead of silently promotable.
+- Biggest risk: **deletion never reaches the index.** `embed-vault.js` carries forward every entry whose path is not in the new embed set, so a note deleted from disk keeps answering `search-vault.js` after any full or incremental rebuild; the project's own recollection harness fails both cases that ask search to name such a dangling row at load.
+- Most reusable component: `daemons/memory-hygiene/budget.mjs` with `memory-budget-guard.mjs` — a PreToolUse gate that reconstructs the file an Edit or Write would leave, refuses growth past a per-file ceiling with the consolidation instruction attached, and always allows an edit that shrinks it.
+- Second risk: **correction formats that do not meet.** Search demotes a note carrying `Valid from X to Y`, a format stated only in the reader's comment; the `/supersede` skill writes strikethrough, which search ranks as before, and the README's link for the feature leads to a facts ledger no code reads.
+- Maturity impression: MIT, 33,061 lines outside test files, 286 commits between 7 July and 13 October 2026, latest pre-release v1.1.0-rc.1. 54 daemon test files run in CI; a preregistered retrieval harness with falsifier runs commits 19 result packets. One mark, `negative_eval`, on deny and supersession cases asserted beside returned controls.
+- Study when: you want a single-operator Markdown memory kept honest by write-time gates, an inert render of persisted text, and a retrieval harness built to show its own assertions can fail.
+- Do not copy when: forgetting must be guaranteed, a quarantined capture must stay out of search, or the agent must not apply its own review decisions.
 
 ### [`dsh-auto-memory`](../systems/dsh-auto-memory/)
 

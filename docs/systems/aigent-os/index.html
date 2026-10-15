@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Claude Code harness keeping
+memory as a git-synced Obsidian vault, searched by local embeddings,
+with regex-captured candidates gated by an injection scan.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="aigent-OS — Agent Memory Atlas">
+    <meta property="og:description" content="A Claude Code harness
+keeping memory as a git-synced Obsidian vault, searched by local
+embeddings, with regex-captured candidates gated by an injection scan.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="aigent-OS — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Claude Code harness
+keeping memory as a git-synced Obsidian vault, searched by local
+embeddings, with regex-captured candidates gated by an injection scan.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>aigent-OS — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "aigent-OS",
+      "description": "A Claude Code harness keeping memory as a git-synced Obsidian vault, searched by local embeddings, with regex-captured candidates gated by an injection scan.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A Claude Code harness with a git-synced
+vault and guarded capture</p>
+          <h1>aigent-OS</h1>
+          <p class="document-deck">A Claude Code harness keeping memory
+as a git-synced Obsidian vault, searched by local embeddings, with
+regex-captured candidates gated by an injection scan.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/wrg32786/aigent-os">
+              <span>Source</span>
+              <strong>wrg32786/aigent-os</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/wrg32786/aigent-os/commit/dd912104ccb176b10dffdc2212a0611003bd1b20" title="dd912104ccb176b10dffdc2212a0611003bd1b20">
+              <span>Analyzed revision</span>
+              <code>dd912104…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/wrg32786--aigent-os" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>wrg32786--aigent-os</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>33,061
+lines of JavaScript, shell, Python, TypeScript and PowerShell outside
+test files; vault search, capture, the candidate guard and memory
+hygiene are 2,169 of them</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>286
+commits under five author names, 7 July 2026 – 13 October 2026; releases
+v0.8.0 to the v1.1.0-rc.1 pre-release of 5 October 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>54
+daemon test files run in CI and 18 installer and hook tests; a
+preregistered retrieval harness over a 116-note fixture vault with 19
+committed result packets, run outside CI</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>aigent-OS is an MIT harness around one long-running Claude Code
+session. Its memory is an Obsidian-compatible Markdown vault the agent
+edits with its ordinary file tools, committed and pushed to git at each
+capsule cycle, and searched by a local MiniLM embedding script the agent
+runs through Bash. What is notable is the discipline around writes and
+around persisted text: a user's "remember that" phrase is staged as
+<code>unscanned</code> and only a clean injection scan makes it
+promotable, a PreToolUse hook refuses an edit that pushes an
+always-loaded file over its budget, and every search hit is rendered
+quoted and tagged as data. What is weak is the read side of forgetting:
+a deleted note keeps answering search, a candidate the scan blocked is
+embedded like any other note, and the supersession the search honours
+has no writer.</p>
+<p>The product's headline is Managed Auto-Refresh, not memory: before
+the context window fills, the agent writes a resume-ready capsule, one
+<code>/clear</code> runs, and the fresh session loads the capsule. That
+loop is context management and this report treats it as infrastructure.
+The vault, the staging queue and the search index outlive every session
+and are the memory under review.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>Deletion does not reach the index.</strong> A full
+<code>embed-vault.js</code> run keeps every carried-forward entry whose
+path is not in the new embed set
+(<code>daemons/semantic-search/embed-vault.js:259-262</code>,
+<code>:318</code>), so a note deleted from disk keeps its chunks and
+keeps being returned. The project's own harness records this: its two
+loudness cases, which ask search to name a deleted or phantom source
+when it loads the index, fail in every packet that ran them.</li>
+<li><strong>The blocked state withholds nothing from search.</strong>
+<code>MEMORY_CANDIDATES.md</code> lives in <code>vault/memory/</code>,
+an <code>INDEX</code> namespace, and nothing in
+<code>daemons/semantic-search/</code> reads a row's status. A hostile
+phrase the guard marked <code>blocked</code> is embedded on the next
+re-index.</li>
+<li><strong>Two supersession formats that never meet.</strong>
+<code>search-vault.js</code> demotes a note whose body carries
+<code>Valid from X to Y</code> once Y has passed. That format appears
+only in the reader's comment, its tests and the eval fixtures. The
+<code>/supersede</code> skill writes
+<code>~~old~~ *(superseded YYYY-MM-DD)*</code>, which search does not
+read.</li>
+<li><strong>The agent applies its own review.</strong>
+<code>/digest</code> asks the operator for promote, skip or supersede
+and then applies the answer with the agent's own <code>Edit</code> tool
+(<code>skills/digest/SKILL.md:5</code>, <code>:32-40</code>).</li>
+</ul>
+<p>One mark, <code>negative_eval</code>, earned on deny and supersession
+tests that assert a note's absence beside a returned control.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a Markdown file. It becomes a belief when the agent or
+the operator writes it into the vault, and it becomes retrievable when
+someone next runs <code>embed-vault.js</code>. There is no extraction
+model and no fact table on any path the hooks reach: the agent decides
+what to write and where, guided by <code>CLAUDE.md</code> and the
+skills.</p>
+<p><strong>One automatic input, and it is a queue.</strong> On every
+prompt, <code>caddy.sh</code> pipes the prompt to
+<code>memory-capture.sh</code> (<code>daemons/caddy.sh:111-112</code>).
+Seven tier-1 regexes (<code>remember that</code>,
+<code>from now on</code>, <code>new rule:</code> and others) and five
+tier-2 correction regexes match the operator's words after tool output,
+code and tables are stripped
+(<code>daemons/memory-capture.sh:111-179</code>). Each match is appended
+as a table row with status <code>unscanned</code>
+(<code>memory-capture.sh:272-279</code>). The script then runs the
+injection guard over the file, which moves a clean row to
+<code>staged</code> and a row matching any of nine threat patterns to
+<code>blocked</code>, with a marker in its note column
+(<code>daemons/memory-candidates-guard.mjs:52-53</code>,
+<code>:55-92</code>).</p>
+<p>The candidate states, and what reads them:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Written by</th>
+<th>Promotable by <code>/digest</code></th>
+<th>Searchable after re-index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unscanned</code></td>
+<td><code>memory-capture.sh</code></td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>staged</code></td>
+<td>the guard, on a clean scan</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>blocked</code></td>
+<td>the guard, on a hit</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>promoted</code>, <code>skipped</code>,
+<code>superseded</code></td>
+<td>the agent's <code>Edit</code> during <code>/digest</code></td>
+<td>—</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>/digest</code> filters <code>staged</code> rows, groups them by
+type and asks the operator one word per row
+(<code>skills/digest/SKILL.md:32-40</code>). The promotion itself is an
+agent edit into the suggested destination, a note under
+<code>concepts/</code>, <code>feedback/</code> or
+<code>memory/DECISION_LOG.md</code>
+(<code>memory-capture.sh:181-191</code>). Nothing in code clears a
+<code>blocked</code> row; a person or the agent edits the file.</p>
+<p><strong>A note stops counting in three ways, and only one reaches
+search.</strong> Deleting the file removes it from disk and not from the
+index. The <code>/supersede</code> skill strikes the old text through
+and appends the replacement with an OpenChronicle id
+(<code>skills/supersede/SKILL.md:39-45</code>); search ranks the struck
+text exactly as before. A body line
+<code>Valid from 2024-02-01 to 2026-01-31</code> demotes every chunk of
+that note below every chunk without an ended window
+(<code>daemons/semantic-search/search-vault.js:123</code>,
+<code>:146-176</code>). The demotion is a rank, not a filter:
+<code>--top 10</code> returns the ended note last.</p>
+<p><strong>Persisted text is data at every render.</strong> Search hits,
+capsule fields and candidate cells pass through
+<code>renderPersisted</code> or <code>inert</code>, which collapse line
+breaks, quote, bound and tag each value with its path and hash
+(<code>daemons/lifecycle-common.mjs:313-317</code>, <code>:343</code>).
+A hit whose namespace is not <code>INDEX</code> renders as
+<code>[REFUSED: …]</code> rather than as text
+(<code>search-vault.js:260-271</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a phrase or a note becomes searchable in aigent-OS, the three ways a note is meant to stop counting, and which of them the search honours</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a phrase or a note becomes searchable in aigent-OS, the three ways a note is meant to stop counting, and which of them the search honours
+flowchart TD
+    P[&quot;operator prompt:&lt;br/&gt;&#39;remember that X&#39;&quot;] --&gt; C[&quot;memory-capture.sh:&lt;br/&gt;row appended as unscanned&quot;]
+    C --&gt; G{&quot;injection guard:&lt;br/&gt;nine threat patterns&quot;}
+    G -- &quot;clean&quot; --&gt; S[&quot;staged&quot;]
+    G -- &quot;hit&quot; --&gt; B[&quot;blocked:&lt;br/&gt;text kept, marker added&quot;]
+    S --&gt; D{&quot;/digest:&lt;br/&gt;operator&#39;s word,&lt;br/&gt;agent&#39;s Edit&quot;}
+    D -- &quot;promote&quot; --&gt; N[&quot;vault note&quot;]
+    A[&quot;agent Write or Edit&quot;] --&gt; N
+    N --&gt; E[&quot;embed-vault.js, run by hand:&lt;br/&gt;every .md under INDEX namespaces&quot;]
+    B --&gt; E
+    S --&gt; E
+    E --&gt; I[(&quot;embeddings.json:&lt;br/&gt;500-char chunk, vector, path&quot;)]
+    I --&gt; Q[&quot;search-vault.js:&lt;br/&gt;deny and namespace filters,&lt;br/&gt;cosine, top 5&quot;]
+    N -- &quot;file deleted&quot; --&gt; DEL[&quot;entry carried forward:&lt;br/&gt;returned by search&quot;]
+    DEL --&gt; I
+    N -- &quot;/supersede&quot; --&gt; SS[&quot;struck through and dated:&lt;br/&gt;not read by search&quot;]
+    SS --&gt; E
+    N -- &quot;&#39;Valid from X to Y&#39;,&lt;br/&gt;no documented writer&quot; --&gt; V[&quot;demoted below&lt;br/&gt;current notes once Y passes&quot;]
+    V --&gt; Q</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>There is no server and no database. The install is a git checkout
+whose <code>install.sh</code> copies
+<code>.claude/settings.json.template</code> into a project's Claude Code
+settings with the root path substituted. Every memory behaviour is a
+hook script or a skill the agent follows. Node 18 or later, bash and
+Python 3 are required; on Windows, Git Bash.</p>
+<p>The pieces that touch memory:</p>
+<ul>
+<li><strong>The vault</strong> under <code>vault/</code>, with a memory
+root resolved by one module, <code>daemons/memory-root.cjs</code>
+(default <code>vault/memory</code>), which every reader and writer
+shares. Templates stamp <code>created:</code> in frontmatter
+(<code>vault/templates/*.md</code>).</li>
+<li><strong>The search index</strong>, <code>embeddings.json</code> in
+the memory root, gitignored (<code>.gitignore:42</code>).
+<code>embed-vault.js</code> builds it with
+<code>@xenova/transformers</code> and
+<code>Xenova/all-MiniLM-L6-v2</code>; the semantic-search directory has
+its own <code>package.json</code> and lockfile.</li>
+<li><strong>Hooks</strong> registered by the template:
+<code>sessionstart-reinject.mjs</code> and the resume verb on
+SessionStart, <code>caddy.sh</code> and the utterance journal on
+UserPromptSubmit, <code>memory-budget-guard.mjs</code> on PreToolUse for
+Edit and Write, <code>auto-capture.sh</code> on PostToolUse,
+<code>stop-capsule-writer.mjs</code> on Stop, and three scripts on
+SessionEnd (<code>.claude/settings.json.template</code>).</li>
+<li><strong>Runtime ledgers</strong> under
+<code>vault/memory/runtime/</code>: the nightly staging file
+<code>NIGHTLY_CAPTURE_CANDIDATES.jsonl</code>, and <code>LESSONS</code>,
+<code>BELIEF_STATE</code>, <code>PROCEDURES</code> and
+<code>STATE_EVENTS</code> JSONL files, which ship empty.</li>
+<li><strong>Vault sync</strong>, <code>daemons/vault-sync.mjs</code>,
+which stages only the memory tree, commits it as
+<code>vault sync:</code>, pushes and verifies the remote HEAD. It is a
+no-op without a remote.</li>
+<li><strong>An opt-in bridge</strong> to Hindsight and TypeSafe Jev,
+<code>daemons/memory-bridge.mjs</code>, which its own documentation
+describes as unverified against the live services
+(<code>docs/memory-bridge.md:3</code>).</li>
+</ul>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Everything runs locally. Storing a memory needs nothing beyond the
+file system, and no core memory path uses an API key. Search needs a
+one-time <code>npm install</code> in
+<code>daemons/semantic-search/</code> and a model download on first use;
+without it the vault works and search fails with an install hint. The
+store is human-readable and repairable by hand, which is the design's
+point. The index is the one artefact that is not: it holds plaintext
+excerpts and must be rebuilt, and a full rebuild does not remove what
+was deleted.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>caddy.sh</code> (UserPromptSubmit)
+calls <code>memory-capture.sh</code> with the prompt on stdin. The
+embedded Python strips tags, fences, inline code, JSON fragments and
+table lines (<code>memory-capture.sh:111-129</code>), matches the
+pattern table (<code>:149-179</code>), deduplicates against
+<code>staged</code> or <code>unscanned</code> rows from the last 24
+hours (<code>:205-234</code>), stops at a backlog of 50
+(<code>:237-239</code>), and appends <code>unscanned</code> rows under
+<code>## Candidates</code> (<code>:272-279</code>). It then runs
+<code>memory-candidates-guard.mjs --file</code> (<code>:346</code>); a
+guard that cannot run leaves the rows <code>unscanned</code> and logs
+<code>INJECTION_SCAN_DID_NOT_RUN</code> (<code>:361</code>).</p>
+<p><strong>Scan.</strong> <code>guardCandidatesText</code> parses each
+eight-cell row, scans the quoted phrase with <code>scanText</code> from
+<code>memory-hygiene/injection-scan.mjs</code>, sets
+<code>blocked</code> on a hit and <code>staged</code> on a clean
+<code>unscanned</code> row
+(<code>memory-candidates-guard.mjs:55-92</code>). The write is an atomic
+update with a lock (<code>memory-hygiene/atomic-state.cjs</code>). A
+file that exists and cannot be read is a failure rather than a clean
+pass over zero rows (<code>:95-118</code>).</p>
+<p><strong>Digest.</strong> <code>skills/digest/SKILL.md</code> is the
+only consumer of <code>staged</code>. It is an instruction to the agent,
+with <code>allowed-tools: Read, Edit, Grep</code>.</p>
+<p><strong>Index.</strong> <code>embed-vault.js</code> loads the
+namespace registry and the deny list before anything else and refuses to
+run if either is malformed (<code>embed-vault.js:63</code>,
+<code>:74</code>). It purges carried-forward entries whose path is no
+longer <code>INDEX</code> or is denied (<code>:211-230</code>), collects
+every <code>.md</code> under the <code>INDEX</code> directories
+(<code>:148-160</code>), and re-embeds either all of them or, with
+<code>--changed-only</code>, those whose mtime is newer than the last
+index time (<code>:247-251</code>). Each chunk of at most 1,800
+characters is embedded, and its first 500 characters are stored as
+<code>chunk</code> (<code>:287-302</code>). Entries for files outside
+the embed set are kept (<code>:259-262</code>) and merged with the new
+ones (<code>:318</code>).</p>
+<p><strong>Search.</strong> <code>search-vault.js</code> loads the
+index, drops denied paths and non-<code>INDEX</code> namespaces
+(<code>search-vault.js:206-212</code>), scores every remaining chunk by
+cosine, sorts, demotes ended windows (<code>:241</code>), keeps the best
+chunk per path up to <code>--top</code> (default 5), and renders each
+hit through <code>renderPersisted</code> with its disposition re-derived
+(<code>:260-271</code>). Output is a human block followed by JSON.</p>
+<p><strong>Session start.</strong>
+<code>sessionstart-reinject.mjs</code> prints a clock line, an identity
+line, the newest valid capsule's identity, up to five heat-ranked
+wikilinks from <code>HEAT_INDEX.json</code> and the latest
+<code>SESSION_LOG.md</code> heading
+(<code>daemons/sessionstart-reinject.mjs:13-20</code>,
+<code>:210-214</code>). No vault note body is injected automatically;
+the rest of orientation is the agent reading
+<code>ACTIVE_PRIORITIES.md</code> and <code>SESSION_LOG.md</code> as
+<code>CLAUDE.md</code> tells it to.</p>
+<p><strong>Size gate.</strong> <code>memory-budget-guard.mjs</code>
+reconstructs the file an Edit or Write would leave, allows any edit that
+shrinks it, and refuses one that keeps a governed file over budget
+(<code>daemons/memory-budget-guard.mjs:44-63</code>). The budgets are
+12,000 characters and 150 lines for <code>ACTIVE_PRIORITIES.md</code>,
+24,000 and 300 for <code>SESSION_LOG.md</code>, and 20,000 and 250 for
+<code>MEMORY_CANDIDATES.md</code>
+(<code>daemons/memory-hygiene/budget.mjs:23-45</code>).</p>
+<p><strong>Nightly.</strong> <code>daemons/nightly-pass.mjs</code>
+records eleven checkpoints of a model-run maintenance pass. Its digest
+leg only counts <code>staged</code> rows
+(<code>nightly-pass.mjs:210-213</code>, <code>:399-408</code>), and the
+skill states that the unattended digest <em>"never changes status"</em>
+(<code>skills/nightly/SKILL.md:135-136</code>).
+<code>nightly-ledger-stage.mjs</code> is the sole appender of nightly
+ledger candidates, which can only start <code>staged</code> and need a
+re-run green predicate receipt to claim mechanical evidence
+(<code>daemons/nightly-ledger-stage.mjs:111-145</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The unit is a Markdown file with optional YAML frontmatter
+(<code>title</code>, <code>tags</code>, <code>created</code>). Its
+identity is its vault-relative path. There is no id, no version, no
+confidence and no author field that any code reads.</p>
+<p><strong>Scope.</strong> None on a record. A namespace is a top-level
+vault directory declared <code>INDEX</code>, <code>SKIP</code> or
+<code>DENY</code> in <code>namespace-registry.json</code>, extendable by
+a gitignored local registry that may only add directories
+(<code>daemons/semantic-search/namespace-registry.mjs:1-8</code>). Both
+scripts refuse to run while an undeclared top-level directory exists.
+The deny list is a set of path prefixes in a gitignored
+<code>index-deny.json</code>. Both are physical partitions of one
+operator's vault, and nothing distinguishes users, projects or
+agents.</p>
+<p><strong>Time.</strong> The index entry carries <code>mtime</code>,
+overwritten on each re-embed. Notes made from templates carry an
+authored <code>created:</code> date that no code reads. The validity
+line is valid time in the body, read only by
+<code>search-vault.js</code>.</p>
+<p><strong>The facts ledger is declared and unread.</strong>
+<code>docs/temporal-fact-ledger.md</code> specifies
+<code>memory/facts/facts.jsonl</code> with <code>valid_from</code>,
+<code>valid_until</code>, <code>superseded_by</code> and
+<code>source</code>, and the README's "C2 temporal supersession" row
+links to that page. The repository ships one row in
+<code>memory/facts/facts.jsonl</code>. No script reads or writes the
+file. The only instruction to write it is step 6.5 of
+<code>skills/close/SKILL.md:227-229</code>, a skill whose frontmatter
+marks it deprecated, and it names
+<code>vault/memory/facts/facts.jsonl</code>, a different path.</p>
+<p><strong>Candidates</strong> are rows of an eight-column Markdown
+table: date, quoted phrase, type, confidence word, suggested
+destination, status, digested date, note
+(<code>memory-candidates-guard.mjs:45-46</code>).</p>
+<p><strong>Capsules</strong> are Markdown files in
+<code>capsules/</code> under the memory root with frontmatter
+<code>id</code>, <code>created_at</code>, <code>status</code>,
+<code>objective</code> and <code>next_valid_action</code>. The resume
+selector takes only <code>status: active</code> and treats
+<code>resumed</code>, <code>resolved</code>, <code>consumed</code> and
+<code>superseded</code> as spent (<code>lifecycle-common.mjs:92</code>,
+<code>:178-199</code>). Capsules sit in an <code>INDEX</code> namespace,
+so spent ones are embedded too.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is one vector arm with no lexical or graph component. The
+query is embedded with the same quantized MiniLM model, every chunk is
+scored by cosine in a JavaScript loop, and the list is sorted. There is
+no threshold: the top five come back whatever their score. The project's
+own harness measures the consequence. Its negative class asks twelve
+questions the corpus cannot answer and passes only when the top score is
+below 0.30; five pass, in both committed baselines
+(<code>evals/recollection/results/BASELINE.json</code>,
+<code>results/prereg-002-e1/BASELINE.json</code>).</p>
+<p><strong>Demotion.</strong> <code>endedWindowPaths</code> scans every
+row's stored chunk for <code>^Valid from (.+?)$</code>, parses
+<code>X to Y</code> as whole UTC days, and collects paths whose end has
+passed. <code>demoteSuperseded</code> then stable-sorts those paths
+below the rest (<code>search-vault.js:146-176</code>). An open window
+and a future end are never demoted. A date that does not parse,
+including an impossible day such as 2021-02-30, is reported on stderr
+and leaves the rank alone (<code>:140-160</code>). The line is read from
+the stored 500-character excerpt of each chunk, so a window written
+further into a long note is never seen.</p>
+<p><strong>Filters.</strong> Deny prefixes and namespace dispositions
+are applied again at query time, independent of the indexer, so a stale
+or hand-built index cannot return a denied path
+(<code>search-vault.js:52-62</code>, <code>:206-212</code>). Nothing
+filters on whether the file still exists.</p>
+<p><strong>Formatting and budget.</strong> Each hit is one line of at
+most 500 characters inside a
+<code>[persisted-data:vault-chunk &lt;path&gt; sha &lt;hash&gt; @ &lt;iso&gt;]</code>
+tag, after a framing line saying the content is data. The model sees
+only what the agent chooses to search for; nothing is injected per
+turn.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes are the agent's own <code>Write</code> and <code>Edit</code>
+calls, plus the capture hook. There is no model in any write path the
+hooks run, and no deduplication or consolidation of notes. The
+<code>/supersede</code> skill, run by the <code>mnemosyne</code>
+sub-agent, layers corrections with strikethrough rather than replacing
+text. <code>/compact-note</code> and the nightly context-hygiene leg
+archive before removing.</p>
+<p><strong>Injection handling</strong> is the most developed part of the
+write side. A captured phrase is JSON-quoted with <code>|</code> escaped
+so it cannot add a column or a line
+(<code>memory-capture.sh:69-71</code>), and the guard's nine patterns
+cover instruction override, role override, system-prompt exfiltration,
+pseudo-system blocks, covert channels, credential exfiltration, memory
+implants, forged authority and tool coercion
+(<code>daemons/memory-hygiene/threat-patterns.json</code>). The guard
+scans the phrase, not the vault: a note the agent writes directly is
+never scanned.</p>
+<p><strong>Deletion</strong> is a file delete. The index keeps the
+deleted note's chunks through any later full or incremental run, because
+neither path checks that a carried-forward entry still has a file.
+Deleting <code>embeddings.json</code> and rebuilding is the only
+complete removal, and no tool or skill says so.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Capture blocks the prompt for one Python run and one Node run inside
+the 2-second hook timeout, and fails open. The guard runs on every
+prompt that matched a pattern. A note the agent writes is on disk at
+once and is retrievable only after someone runs
+<code>embed-vault.js</code>, which no hook, nightly leg or skill step
+invokes, so the lag is unbounded. A full re-index re-embeds every note
+on CPU, about 30 seconds on a fresh vault by the skill's estimate
+(<code>skills/semantic-search/SKILL.md:28</code>). Search loads the
+whole index and the model per query. Per-turn injection is zero apart
+from session-start orientation, which is a few lines at the start of the
+session rather than inside a cached prefix.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The agent owns memory. It writes notes with the tools it uses for
+code, it runs search through Bash when a skill or <code>CLAUDE.md</code>
+suggests it, and it applies digest decisions. Hooks capture, guard and
+reorient; none of them retrieves a note body into context.</p>
+<p>The surfaces: a settings template of hooks, 73 skill directories
+under <code>skills/</code>, nine named sub-agents including a memory
+architect and a vault custodian (<code>vault/agents/Pantheon.md</code>),
+and a Claude Code plugin marketplace that ships two unrelated fleet
+plugins (<code>.claude-plugin/marketplace.json</code>). There is no MCP
+server. The capsule loop is the integration the project measures: it
+writes a rolling capsule on every Stop without blocking the turn,
+flushes it before compaction and at session end, and walks a cleared
+session through load, re-ground, act and acknowledge.</p>
+<p>Adapting the memory to another agent means porting the hooks; the
+scripts themselves are standalone Node and Python with no Claude
+dependency.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance</strong> is the vault path and, when synced, git
+history. A search hit carries its path and a content hash; a candidate
+row carries the date and the user's quoted phrase. Nothing records which
+session or agent wrote a note.</p>
+<p><strong>The trust boundary is rendering, not admission.</strong> The
+design assumes any persisted byte may be hostile and renders it inert at
+every output (<code>lifecycle-common.mjs:294-343</code>). That stops a
+stored note from forging structure in a generated procedure. It does not
+stop a false note from being believed, and nothing in the store says
+whether a note is believed.</p>
+<p><strong>Near-misses on the marks.</strong></p>
+<ul>
+<li><strong>Trust state, withheld.</strong> The candidate statuses are a
+scan-and-queue lifecycle, and the read path ignores them:
+<code>git grep</code> over <code>daemons/semantic-search/</code> finds
+no reference to <code>blocked</code>, <code>staged</code> or
+<code>unscanned</code>. Capsule status filters the resume selector, and
+a capsule is a checkpoint rather than a claim.</li>
+<li><strong>Bitemporal, withheld.</strong> The validity line is valid
+time separate from any write clock, and it reaches a read path. The line
+has no instructed writer, though: the README's link for the feature
+leads to the facts-ledger page, a different format no code reads, and
+the supersede skill writes strikethrough. Record time is an overwritten
+<code>mtime</code> and git history.</li>
+<li><strong>Human review, withheld.</strong> The operator decides each
+candidate, and the agent writes the decision with <code>Edit</code>, the
+same tool that could write any other value. <code>blocked</code> has no
+resolver at all.</li>
+<li><strong>Tombstone, withheld.</strong> A <code>skipped</code> row
+stays in the file, but capture deduplicates only against
+<code>staged</code> and <code>unscanned</code> rows from the last 24
+hours (<code>memory-capture.sh:205-234</code>), so the phrase is staged
+again the next time it is said.</li>
+<li><strong>Audit log, withheld.</strong> <code>auto-capture.sh</code>
+appends the time, tool and path of every <code>Edit</code> and
+<code>Write</code> to the day's note under
+<code>## Session Captures</code>
+(<code>hooks/auto-capture.sh:19-42</code>,
+<code>hooks/tool-tracker.js:85-99</code>). That is activity metadata in
+an editable note, with no content and no before or after.
+<code>STATE_EVENTS.jsonl</code> records mode changes.</li>
+</ul>
+<p><strong>Concurrency.</strong> Candidate writes go through a lock and
+atomic rename; the capsule writer serialises per session with a lock
+file. Vault notes have no lock; the agent's edits are serial within a
+session.</p>
+<p><strong>Privacy.</strong> The deny list is the one deletion-like
+guarantee, and it is enforced twice and tested. A prefix added later
+purges its entries on the next index run. The index otherwise holds
+plaintext excerpts of every indexed note, including those deleted from
+disk.</p>
+<p><strong>Sync.</strong> Git push at the end of a capsule cycle gives a
+full history and a rollback for the vault. It also means a deleted note
+persists in the remote's history.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I did not run any test. The CI workflow runs every
+<code>daemons/tests/*.test.mjs</code> with Node and the shell installer
+tests (<code>.github/workflows/ci.yml:72</code>, <code>:110</code>).</p>
+<p><strong>Memory-relevant tests, and whether each can
+fail.</strong></p>
+<ul>
+<li><code>semantic-search-deny.test.mjs</code> copies the real scripts
+into a sandbox with a stub embedder and asserts on what they print. Its
+search case builds a stale index whose denied chunk scores 1.0, asserts
+the canary text and the directory name are absent, and asserts the
+undenied note is present (<code>:152-163</code>, <code>:196-206</code>).
+The header states which deletion turns which case red. This case can
+fail in both directions.</li>
+<li><code>semantic-search-supersession.test.mjs</code> asserts the ended
+window is absent from the top 5 with the current note at rank 1, that
+nothing is dropped at <code>--top 10</code>, and that an unparseable
+date leaves the rank alone (<code>:95-105</code>,
+<code>:156-192</code>).</li>
+<li><code>memory-hygiene.test.mjs</code> asserts a guard that cannot
+read the file exits non-zero, that a clean row moves to
+<code>staged</code>, that a hostile row is blocked and stays blocked on
+a re-run, and that capture calls the guard (<code>:440-497</code>,
+<code>:682</code>).</li>
+<li><code>semantic-search-namespace-registry.test.mjs</code> covers the
+registry's fail-closed loading.</li>
+</ul>
+<p><strong>The recollection harness</strong> is the most careful
+retrieval evaluation in the tree.
+<code>evals/recollection/run-recollection.mjs</code> (3,249 lines)
+copies the shipped scripts into a sandbox, points them at a 116-note
+fixture vault, runs the real model, and scores 65 cases in ten classes.
+The corpus, overlay and fixture-registry hashes are frozen in
+<code>PREREG-001-COMPUTED.md</code>, and the runner refuses to score if
+they differ. Falsifier scenarios mutate the product in the sandbox and
+record which classes must go red. Nineteen result packets are committed,
+each naming its product commit and instrument hash.</p>
+<p>What the packets show, at product commit <code>cdb7022</code> and
+then <code>d3dd339</code>. Of the 24 positive cases, 23 hit in both. Of
+the 12 negative cases, five abstain in both. The eight temporal cases
+all fail before the demotion and all pass after it. The deny, skip,
+stale-index, undeclared and operator classes pass, and both loudness
+cases fail in both. Under mutation <code>E1A</code>, which removes the
+index-time filters, every deny case fails, so that class can fail.</p>
+<p>Limits. The harness is deliberately outside CI. The preregistration
+packets <code>PREREG-001</code> and <code>PREREG-002</code> are cited by
+hash and are not in the tree, so the thresholds can be read from the
+runner but not from the document that froze them. No case deletes a
+candidate's source or searches for a blocked candidate.</p>
+<p><strong>The companion paper.</strong> The README links <em>Governed
+Agent Organizations</em>, a Markdown paper in a separate repository,
+<code>wrg32786/governed-agent-organizations</code>, with an evidence
+cutoff of 19 August 2026. It is a position paper with six hypotheses;
+its one measurement is eleven Auto-Refresh transactions, each
+completing, on one Windows seat at commit <code>81dd47d</code>, and it
+makes no measured claim about memory retrieval. No arXiv identifier,
+<code>CITATION.cff</code> or BibTeX block is in this tree.
+<code>evals/README.md</code> describes three further JSON test sets as
+manual, with no results committed.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Born unscanned, promoted only by a clean scan.</strong> A
+staging row whose default status is "not yet checked" makes a crashed or
+missing scanner visible, where a default of "clean, demote on failure"
+reads the same as a scanner that never ran.</li>
+<li><strong>Size budgets enforced at write time, with the exit left
+open.</strong> Refusing the edit that grows an always-loaded file past
+its ceiling, while always allowing an edit that shrinks it, puts the
+prune where the context is.</li>
+<li><strong>Filter at index time and again at query time.</strong> Each
+check covers a path the other cannot reach, a hand-edited or stale index
+included, and the test file proves each one independently.</li>
+<li><strong>Falsifier runs committed beside baselines.</strong> A packet
+that records which classes the mutation was expected to turn red is the
+cheapest proof a retrieval assertion can fail.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>An incremental index that never asks whether a file still
+exists.</strong> Carry forward only entries whose source is still on
+disk, and test it with a deleted note and a positive control.</li>
+<li><strong>Two supersession conventions.</strong> If a skill corrects
+by strikethrough and the reader corrects by a validity line, they need
+to be one convention, documented where the writer reads it.</li>
+<li><strong>A queue inside the corpus it guards.</strong> A staging file
+stored in a searchable directory makes every quarantine state a label on
+searchable text; keep the queue out of the index, or filter on its
+status.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one person who wants a Claude Code session to keep running
+for days, who reads and edits the vault by hand, and who treats git as
+the undo. The memory is deliberately low-mechanism: the operator's
+discipline and the agent's file edits carry it, and the engineering
+effort sits in the session loop and the injection boundary. Walk away if
+memory must be corrected without a person rebuilding an index, if
+several people or projects share one install, or if forgetting must be
+guaranteed rather than asked for.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is the validity line meant to be written by the operator, by
+<code>/supersede</code>, or by a future skill, and is the facts ledger
+retired or pending?</li>
+<li>Should <code>embed-vault.js</code> drop entries whose source is
+gone, and is the loudness class's red meant to stand until it does?</li>
+<li>Is <code>MEMORY_CANDIDATES.md</code> meant to be searchable, blocked
+rows included?</li>
+<li>Who resolves a <code>blocked</code> row, and to what status?</li>
+<li>What do <code>PREREG-001</code> and <code>PREREG-002</code> state,
+and where are they published?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and roots:</strong>
+<code>daemons/memory-root.cjs</code>,
+<code>daemons/memory-root.sh</code>, <code>vault/templates/*.md</code>,
+<code>vault/memory/MEMORY_CANDIDATES.md</code>,
+<code>memory/facts/facts.jsonl</code>,
+<code>docs/temporal-fact-ledger.md</code>.</li>
+<li><strong>Capture and guard:</strong> <code>daemons/caddy.sh</code>,
+<code>daemons/memory-capture.sh</code>,
+<code>daemons/memory-candidates-guard.mjs</code>,
+<code>daemons/memory-hygiene/injection-scan.mjs</code>,
+<code>daemons/memory-hygiene/threat-patterns.json</code>,
+<code>daemons/memory-hygiene/atomic-state.cjs</code>.</li>
+<li><strong>Index and search:</strong>
+<code>daemons/semantic-search/embed-vault.js</code>,
+<code>search-vault.js</code>, <code>namespace-registry.mjs</code>,
+<code>namespace-registry.json</code>, <code>deny-list.mjs</code>,
+<code>skills/semantic-search/SKILL.md</code>.</li>
+<li><strong>Rendering:</strong>
+<code>daemons/lifecycle-common.mjs</code>,
+<code>daemons/memory-hygiene/resume-framing.mjs</code>.</li>
+<li><strong>Session lifecycle:</strong>
+<code>daemons/sessionstart-reinject.mjs</code>,
+<code>daemons/resume-verb.mjs</code>,
+<code>daemons/stop-capsule-writer.mjs</code>,
+<code>daemons/precompact-flush.mjs</code>,
+<code>daemons/sessionend-flush.mjs</code>,
+<code>daemons/userpromptsubmit-journal.mjs</code>,
+<code>.claude/settings.json.template</code>.</li>
+<li><strong>Budget and hygiene:</strong>
+<code>daemons/memory-budget-guard.mjs</code>,
+<code>daemons/memory-hygiene/budget.mjs</code>,
+<code>daemons/memory-heat/compute-heat.js</code>.</li>
+<li><strong>Skills:</strong> <code>skills/digest/SKILL.md</code>,
+<code>skills/supersede/SKILL.md</code>,
+<code>skills/close/SKILL.md</code>,
+<code>skills/nightly/SKILL.md</code>.</li>
+<li><strong>Nightly and sync:</strong>
+<code>daemons/nightly-pass.mjs</code>,
+<code>daemons/nightly-ledger-stage.mjs</code>,
+<code>daemons/nightly-ledger-review.mjs</code>,
+<code>daemons/nightly-contracts.mjs</code>,
+<code>daemons/vault-sync.mjs</code>.</li>
+<li><strong>Tests and evals:</strong>
+<code>daemons/tests/semantic-search-deny.test.mjs</code>,
+<code>semantic-search-supersession.test.mjs</code>,
+<code>memory-hygiene.test.mjs</code>,
+<code>semantic-search-namespace-registry.test.mjs</code>,
+<code>evals/recollection/run-recollection.mjs</code>,
+<code>evals/recollection/PREREG-001-COMPUTED.md</code>,
+<code>evals/recollection/cases/queries.json</code>,
+<code>evals/recollection/results/</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -i -E 'valid from' -- . ':!evals' ':!daemons/tests'</code>
+— <code>search-vault.js:94</code> and <code>:123</code> only; no skill,
+template, README or doc states the line's format.</li>
+<li><code>git grep -n -E 'facts\.jsonl' -- ':!*.md'</code> — only the
+ledger file itself; no script reads or writes it.</li>
+<li><code>git grep -n -E 'blocked|staged|unscanned' -- daemons/semantic-search</code>
+— no match; neither indexer nor search reads a candidate status.</li>
+<li><code>git grep -n -E 'existsSync|unlinkSync|rmSync' -- daemons/semantic-search/embed-vault.js</code>
+— the namespace directory, the index file and the memory directory; no
+per-entry source check.</li>
+<li><code>git grep -n -E 'embed-vault' -- ':!*.md' ':!daemons/tests' ':!evals' ':!daemons/semantic-search'</code>
+— a comment in <code>compute-heat.js</code> only; no hook, nightly leg
+or script runs the indexer.</li>
+<li><code>git grep -n -E "'(promoted|skipped)'|\"(promoted|skipped)\"" -- daemons hooks scripts</code>
+— nightly checkpoint statuses only; no code writes a candidate's
+<code>promoted</code> or <code>skipped</code>.</li>
+<li><code>git grep -n -E 'NIGHTLY_CAPTURE_CANDIDATES' -- daemons ':!daemons/tests'</code>
+— the stage writer and two counters; no status transition.</li>
+<li><code>git grep -n -i -E 'user_id|project_id|tenant|agent_id' -- daemons/semantic-search</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'audit|append' -- daemons/semantic-search daemons/memory-candidates-guard.mjs</code>
+— two comments; no mutation log.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org'</code>
+— <code>skills/deep-recon/agents/explorer.md</code> only, naming arXiv
+as a research source; no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/wrg32786/aigent-os/commit/dd912104ccb176b10dffdc2212a0611003bd1b20"><code class="commit-id" title="dd912104ccb176b10dffdc2212a0611003bd1b20">dd912104…</code></a>
+— first reading, at the head of <code>master</code>, a commit of 13
+October 2026, 84 commits past v1.1.0-rc.1. One mark,
+<code>negative_eval</code>. Screened before reading from a full clone:
+two auto-run surfaces, a <code>.claude-plugin/</code> marketplace naming
+two fleet plugins and the <code>hooks/</code> scripts a manifest can
+register, both read; hooks are otherwise registered only by a settings
+template the installer copies. No build-time execution point, nothing
+inside the cooldown, one floating range under a lockfile in
+<code>daemons/semantic-search/package.json</code>;
+<code>CLAUDE.md</code> treated as data. MIT with no rider. Read with
+<code>git grep</code> and <code>sed</code>; nothing installed, built or
+run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

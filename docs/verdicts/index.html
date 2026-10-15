@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 741 reports.</strong></p>
+<p><strong>This page covers all 742 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30692,6 +30692,46 @@ the bookkeeping files and an as-of query over authored validity.</li>
 <li>Do not copy when: agent writes must be reviewed before they count, a
 page's status must keep it out of answers, or several principals share
 one server.</li>
+</ul>
+<h3 id="aigent-os"><a
+href="../systems/aigent-os/"><code>aigent-os</code></a></h3>
+<ul>
+<li>Best idea: <strong>a capture row is born unscanned, and only a clean
+scan makes it promotable.</strong> <code>memory-capture.sh</code>
+appends each regex-matched user phrase as <code>unscanned</code>, then
+runs <code>memory-candidates-guard.mjs</code>, which moves a clean row
+to <code>staged</code> and a hit to <code>blocked</code> without
+deleting the text; a scanner that crashed leaves rows visibly unscanned
+instead of silently promotable.</li>
+<li>Biggest risk: <strong>deletion never reaches the index.</strong>
+<code>embed-vault.js</code> carries forward every entry whose path is
+not in the new embed set, so a note deleted from disk keeps answering
+<code>search-vault.js</code> after any full or incremental rebuild; the
+project's own recollection harness fails both cases that ask search to
+name such a dangling row at load.</li>
+<li>Most reusable component:
+<code>daemons/memory-hygiene/budget.mjs</code> with
+<code>memory-budget-guard.mjs</code> — a PreToolUse gate that
+reconstructs the file an Edit or Write would leave, refuses growth past
+a per-file ceiling with the consolidation instruction attached, and
+always allows an edit that shrinks it.</li>
+<li>Second risk: <strong>correction formats that do not meet.</strong>
+Search demotes a note carrying <code>Valid from X to Y</code>, a format
+stated only in the reader's comment; the <code>/supersede</code> skill
+writes strikethrough, which search ranks as before, and the README's
+link for the feature leads to a facts ledger no code reads.</li>
+<li>Maturity impression: MIT, 33,061 lines outside test files, 286
+commits between 7 July and 13 October 2026, latest pre-release
+v1.1.0-rc.1. 54 daemon test files run in CI; a preregistered retrieval
+harness with falsifier runs commits 19 result packets. One mark,
+<code>negative_eval</code>, on deny and supersession cases asserted
+beside returned controls.</li>
+<li>Study when: you want a single-operator Markdown memory kept honest
+by write-time gates, an inert render of persisted text, and a retrieval
+harness built to show its own assertions can fail.</li>
+<li>Do not copy when: forgetting must be guaranteed, a quarantined
+capture must stay out of search, or the agent must not apply its own
+review decisions.</li>
 </ul>
 <h3 id="dsh-auto-memory"><a
 href="../systems/dsh-auto-memory/"><code>dsh-auto-memory</code></a></h3>

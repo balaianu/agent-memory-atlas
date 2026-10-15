@@ -242,6 +242,8 @@ gains a closed copy and an open copy that both claim validity from the start.
 
 [obsidian-wiki](../../systems/obsidian-wiki/) is the pattern on a Markdown vault with one read path short. `valid_from` and `valid_until` are frontmatter a person or agent writes beside the stamped `created` and `updated`, and `graphrag.query` keeps only pages current at `as_of`, returning a historical hit's `superseded_by` so the model can follow it (`obsidian_wiki/graphrag.py:232-241`, `:626-631`). The structural intents see the whole graph on purpose, since deleting a page breaks the historical pages linking to it. The context pack loads pages without the predicate (`obsidian_wiki/context_pack.py:197-207`), so the same superseded claim drops out of search and arrives in a packed prompt. No skill writes either field, while the ingest skill's own supersession move, `lifecycle: archived`, filters nothing.
 
+[aigent-OS](../../systems/aigent-os/) has the reader and not the writer, and no record axis. `search-vault.js` parses a body line `Valid from X to Y` as whole UTC days and stable-sorts every chunk of an ended note below every current one, refusing to act on an unparseable or impossible date (`daemons/semantic-search/search-vault.js:123`, `:146-176`). The format is stated only in that file's comment, its tests and the eval fixtures. The README's link for the feature leads to a JSON facts ledger no script reads, and the `/supersede` skill corrects by strikethrough, which search ranks as before. The project's harness shows what the reader buys: its eight temporal cases all fail before the demotion landed and all pass after.
+
 ## A third clock
 
 Two clocks answer *what was true* and *what did we believe*. The temporal

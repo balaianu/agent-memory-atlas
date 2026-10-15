@@ -9,7 +9,7 @@ A finding is a place execution can happen, not an accusation. Most are ordinary.
 The point is that the surface is now written down instead of discovered by
 typing `npm install`.
 
-**Progress: 741 of 741 screened at the report's current pin.**
+**Progress: 742 of 742 screened at the report's current pin.**
 
 0 further record(s) describe a revision the report has since moved
 off, and 0 report(s) have no record at all.
@@ -17,7 +17,7 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 351 |
+| Repositories with an auto-run surface (`RUNS`) | 352 |
 | Repositories with a dependency surface inside the cooldown (`FRESH`) | 403 |
 | Repositories with build-time execution (`EXEC`) | 539 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
@@ -50,6 +50,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`ai-maestro`](../../content/systems/ai-maestro.md) | `.gitmodules`, `hooks/` |
 | [`ai-memory`](../../content/systems/ai-memory.md) | `hooks/` |
 | [`aidememo`](../../content/systems/aidememo.md) | `.claude-plugin/`, `.mcp.json` |
+| [`aigent-os`](../../content/systems/aigent-os.md) | `.claude-plugin/`, `hooks/` |
 | [`aimee`](../../content/systems/aimee.md) | `.claude/hooks/` |
 | [`aipass`](../../content/systems/aipass.md) | `.claude/hooks/`, `.claude/settings.json`, `.claude/settings.local.json` |
 | [`akb`](../../content/systems/akb.md) | `.claude-plugin/`, `.claude/settings.json`, `server.json` |

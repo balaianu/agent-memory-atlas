@@ -296,6 +296,8 @@ is the thing a deletion request has to survive.
 
 [brain-mcp](../../systems/brain-mcp/) captures at two independent entry points with no model on either, and reconciles them on one identity. A Claude Code Stop hook spools the lines added since the last turn and exits 0 on every path, and a 60-second poll-scan reads every origin by size and prefix hash; both call `ingest_chunk`, which appends to the lake, then the manifest, then DuckDB (`plugin/scripts/brain-stream-on-turn.sh`, `brain_mcp/recorder/drain.py:66-143`, `visit.py:92-198`). A delta overlapping what the scan took is trimmed, a gap is deferred to the scan, and a test asserts one file identity and no double-ingest across both paths (`tests/test_recorder_floor.py:158-174`). The heartbeat is a file touched before anything else, so health reads an mtime rather than a self-report; the hook's own comment records that the version it was ported from wrote its heartbeat after `exit 0`.
 
+[aigent-OS](../../systems/aigent-os/) captures by regex on the operator's own words and makes the scan, not the match, the gate. A UserPromptSubmit hook strips tool output, code and tables from the prompt, matches seven explicit and five correction patterns, and appends each hit as an `unscanned` row (`daemons/memory-capture.sh:111-179`, `:272-279`). An injection guard then promotes a clean row to `staged` and marks a hostile one `blocked`, keeping its text as evidence (`daemons/memory-candidates-guard.mjs:55-92`). The queue file lives in an indexed vault directory and the search reads no status, so a blocked phrase is searchable after the next re-index.
+
 ## Implementation checklist
 
 - Assign a stable event ID before acknowledging capture.
