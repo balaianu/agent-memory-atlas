@@ -5519,6 +5519,37 @@
       "status": "screened",
       "url": "https://github.com/arc-labs-ai/brain-db"
     },
+    "brain-mcp": {
+      "counts": {
+        "EXEC": 2,
+        "FLOAT": 1,
+        "RUNS": 1
+      },
+      "files_scanned": 6,
+      "findings": [
+        {
+          "detail": "MCP server manifest; declares a start command",
+          "kind": "RUNS",
+          "path": "server.json"
+        },
+        {
+          "detail": "check the default target before running bare `make`",
+          "kind": "EXEC",
+          "path": "Makefile"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        }
+      ],
+      "revision": "78d8a4fd7fbc879a0c75f431052af1b9b5618eaf",
+      "screened_at": "2026-10-15T04:03:59+00:00",
+      "slug": "brain-mcp",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/mordechaipotash/brain-mcp"
+    },
     "brain-md": {
       "counts": {
         "NOTE": 1

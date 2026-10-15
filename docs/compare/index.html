@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-736, generated from each report's frontmatter —
+737, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-736, generated from each report's frontmatter —
+737, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-736, generated from each report's frontmatter —
+737, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 736, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 737, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-736, generated from each report's frontmatter —
+737, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 736 systems by the seven mechanisms
+filters all 737 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -3850,6 +3850,55 @@ lands in a shared bucket instead of raising; memory, entity and relation
 rows carry no record-axis timestamps so an as-of query passes them
 through unfiltered; and this is a v0.1.0 pre-release whose specification
 is ahead of the tree in places</td>
+</tr>
+<tr>
+<td><a href="../systems/brain-mcp/"><code>brain-mcp</code></a></td>
+<td>One line of an agent's own transcript file, held byte-exact in an
+append-only per-session floor file and indexed as a message row with
+role, agent, session, event time, capture time, a human_authored flag
+and a subagent flag</td>
+<td>Plain files under ~/.brain: lake files per lane and session, a
+session-folder mirror, an append-only JSONL manifest of chunk hashes,
+and a DuckDB file that caches raw lines, a messages table and a BM25
+index, all re-derivable from the lake</td>
+<td>DuckDB full-text BM25 over the messages table with optional agent,
+role and date filters; harness-injected user text and subagent
+transcripts excluded by default; every hit returns file, line span and a
+sha256 computed from the floor at read time, and zero hits return an
+abstention naming the coverage</td>
+<td>Claude Code Stop, SessionEnd and PreCompact hooks spool line deltas
+and final snapshots; a 60-second scheduled record tick drains the spool,
+poll-scans Codex, Pi and Claude Code session folders, appends complete
+lines to the lake, and refreshes the index. No model is called</td>
+<td>Nothing is deleted. A rewritten origin opens a new generation and
+keeps the old, capped at five a day. redact replaces lake lines with a
+marker and logs the old span hash, and leaves the indexed text in
+DuckDB. restore writes a session back to the agent's directory, refusing
+to overwrite different bytes</td>
+<td>One corpus per machine and user. Agent, role and date are optional
+caller filters; no project or working-directory key reaches the messages
+table; brain_get reads any file under lake/</td>
+<td>Seven MCP tools over stdio: search, get, recent, sessions, health,
+capture status, backup. A CLI for record, install, health, backup,
+redact, restore, scan-secrets, migrate-v1 and doctor. A Claude Code
+plugin with the hooks and the server; nothing is injected into a
+prompt</td>
+<td>A LaunchAgent on macOS runs brain-mcp record every 60 seconds; Linux
+is left to a user-written systemd timer. Each tick that adds messages
+rebuilds the whole FTS index</td>
+<td>Provenance is byte-level: a citation re-hashes from the floor and
+brain_get verifies it against an expected sha; the manifest lets the
+receipt re-verify deleted origins; health reports unknown as unmeasured.
+Nothing judges whether recorded text is true</td>
+<td>Capture without a model at two entry points sharing one identity; an
+append-only floor with generation files instead of overwrite; citations
+checkable with sed and shasum; an abstention contract with coverage; a
+receipt and an all-or-nothing restore for sessions the agent
+deleted</td>
+<td>Redaction rewrites the lake but not the DuckDB text, so search keeps
+returning a redacted secret; a redacted session that grows again fails
+the lake integrity check; scan-secrets misses session-folder files;
+brain_backup copies the corpus to any path the model names</td>
 </tr>
 <tr>
 <td><a href="../systems/brain-md/"><code>brain-md</code></a></td>
@@ -32423,7 +32472,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>66 of 736:</em> <a
+<p><em>66 of 737:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32493,7 +32542,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>190 of 736:</em> <a
+<p><em>190 of 737:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32691,7 +32740,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>123 of 736:</em> <a
+<p><em>123 of 737:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32822,7 +32871,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>324 of 736:</em> <a
+<p><em>324 of 737:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33162,7 +33211,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>253 of 736:</em> <a
+<p><em>254 of 737:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33194,6 +33243,7 @@ href="../systems/autobot-ai/"><code>autobot-ai</code></a>, <a
 href="../systems/basemode/"><code>basemode</code></a>, <a
 href="../systems/bitterbot-desktop/"><code>bitterbot-desktop</code></a>,
 <a href="../systems/brain-db/"><code>brain-db</code></a>, <a
+href="../systems/brain-mcp/"><code>brain-mcp</code></a>, <a
 href="../systems/brain-md/"><code>brain-md</code></a>, <a
 href="../systems/brainapi/"><code>brainapi</code></a>, <a
 href="../systems/breadcrumbs/"><code>breadcrumbs</code></a>, <a
@@ -33425,7 +33475,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 736:</em> <a
+<p><em>96 of 737:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33525,7 +33575,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>452 of 736:</em> <a
+<p><em>453 of 737:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33584,6 +33634,7 @@ href="../systems/beads/"><code>beads</code></a>, <a
 href="../systems/beever-atlas/"><code>beever-atlas</code></a>, <a
 href="../systems/bitterbot-desktop/"><code>bitterbot-desktop</code></a>,
 <a href="../systems/brain-db/"><code>brain-db</code></a>, <a
+href="../systems/brain-mcp/"><code>brain-mcp</code></a>, <a
 href="../systems/brain-md/"><code>brain-md</code></a>, <a
 href="../systems/brainapi/"><code>brainapi</code></a>, <a
 href="../systems/breadcrumbs/"><code>breadcrumbs</code></a>, <a
@@ -34010,8 +34061,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-452 repositories of
-736 assert that particular material must
+453 repositories of
+737 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -34084,7 +34135,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 736 is the real figure for the second kind, and
+of 737 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 736
+    <meta name="description" content="The 737
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 736
+    <meta property="og:description" content="The 737
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-736 systems grouped by eight architectural
+737 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 736 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 737 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 736 systems
+          <p class="document-deck">The 737 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>736 systems do not fall into 182 categories. They
+<p>737 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -3967,6 +3967,7 @@ href="../systems/cloud-alter-ego/"><code>cloud-alter-ego</code></a>, <a
 href="../systems/tigerless-agent-memory/"><code>tigerless-agent-memory</code></a>,
 <a href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
+href="../systems/brain-mcp/"><code>brain-mcp</code></a>, <a
 href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
 background consolidation accountable rather than trusted.</strong> A
@@ -4035,6 +4036,23 @@ where the corpus lives. And no scope is applied by default:
 <code>project</code> and <code>source_agent</code> are stored and
 filterable, and the corpus spans every tool unless a caller narrows
 it.</p>
+<p><strong><a href="../systems/brain-mcp/">brain-mcp</a> keeps the
+transcript bytes as the record and makes every recall a citation or an
+abstention.</strong> An MIT Python recorder at version 2.1.1 copies
+Claude Code, Codex and Pi sessions byte-exact into append-only lake
+files before Claude Code's retention window deletes them. Stop and
+SessionEnd hooks and a 60-second poll-scan feed one ingest function
+under one file identity. A rewritten origin opens a new generation
+beside the old, capped at five a day, and a manifest logs every chunk's
+byte range and hash, which lets the receipt re-verify a session the
+agent deleted and <code>restore</code> put it back. Seven MCP tools
+search a DuckDB BM25 cache. Each hit carries a file, a line span and a
+sha256 recomputed from the floor, and an empty result names the lanes
+and dates searched. Text the harness injected under the user role is
+excluded by default, pinned by tests over a fixture that holds it. The
+destructive verb is where it breaks: <code>redact</code> rewrites the
+lake file and leaves the text in the index, so search keeps returning
+the secret. Two marks.</p>
 <p><strong>deja-vu inverts the family's starting condition: it does not
 record forward, it indexes backward.</strong> MIT, 1,742 commits from
 thirty-one authors in the two months to September 2026, 273,068 lines of

@@ -789,6 +789,20 @@ deletes a row. A plain insert, <code>graft delete</code>, the viewer's
 supersession, sync and expiry pruning write nothing, and the actor is a
 string the caller supplies, so the log explains every curation decision
 and none of the writes that bypass curation.</p>
+<p><strong><a href="../../systems/brain-mcp/">brain-mcp</a> logs every
+byte it writes into its floor, and shows what a log does not do by
+itself.</strong> Its manifest is a JSONL file opened
+<code>O_APPEND</code> by its only writer, and every write has a line:
+each captured chunk with its byte range and sha256, each blob with its
+whole-file hash, each redaction with the old span's hash and a reason
+(<code>brain_mcp/recorder/manifest.py:19-29</code>,
+<code>visit.py:134-151</code>, <code>cli.py:246-247</code>). The receipt
+replays it, re-hashing a deleted session's floor copy chunk by chunk, so
+a tampered copy reports unverified. The gap sits downstream of the log.
+The redaction event is recorded and nothing consults it, so the DuckDB
+index keeps the redacted text and search returns it; a test that
+searches for the removed value is what this pattern's audit would have
+needed beside it.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Mutation and audit event commit or roll back together.</li>

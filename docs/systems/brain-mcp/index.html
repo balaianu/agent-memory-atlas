@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local recorder copying Claude
+Code, Codex and Pi transcripts byte-exact into an append-only floor,
+with BM25 recall where every hit is cited or abstained.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="brain-mcp — Agent Memory Atlas">
+    <meta property="og:description" content="A local recorder copying
+Claude Code, Codex and Pi transcripts byte-exact into an append-only
+floor, with BM25 recall where every hit is cited or abstained.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="brain-mcp — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local recorder copying
+Claude Code, Codex and Pi transcripts byte-exact into an append-only
+floor, with BM25 recall where every hit is cited or abstained.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>brain-mcp — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "brain-mcp",
+      "description": "A local recorder copying Claude Code, Codex and Pi transcripts byte-exact into an append-only floor, with BM25 recall where every hit is cited or abstained.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Byte-exact transcript recorder with
+cited-or-abstain recall</p>
+          <h1>brain-mcp</h1>
+          <p class="document-deck">A local recorder copying Claude Code,
+Codex and Pi transcripts byte-exact into an append-only floor, with BM25
+recall where every hit is cited or abstained.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/mordechaipotash/brain-mcp">
+              <span>Source</span>
+              <strong>mordechaipotash/brain-mcp</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/mordechaipotash/brain-mcp/commit/78d8a4fd7fbc879a0c75f431052af1b9b5618eaf" title="78d8a4fd7fbc879a0c75f431052af1b9b5618eaf">
+              <span>Analyzed revision</span>
+              <code>78d8a4fd…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/mordechaipotash--brain-mcp" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>mordechaipotash--brain-mcp</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>2,468
+lines of Python in brain_mcp/recorder, the v2 product; 2,831 more in a
+v1 ingest package and config module that nothing in the recorder
+imports</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>78
+commits from 4 March to 4 October 2026, all but one by the author;
+version 2.1.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>55
+pytest functions in 8 files, run in CI on Ubuntu and macOS across Python
+3.11 to 3.13</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>brain-mcp is a local recorder for coding-agent transcripts that
+serves them back as citable recall. Claude Code deletes its own session
+files after a retention window, and the recorder copies them first,
+byte-exact, along with Codex and Pi sessions. Seven MCP tools then
+search the copies. The notable part is the evidence contract: every hit
+carries a file, a line span and a sha256 that re-hashes from the floor,
+and an empty result is an abstention that names what was searched. The
+weak part is the one destructive verb. <code>redact</code> rewrites the
+floor file and leaves the indexed text in DuckDB, so a redacted secret
+stays searchable.</p>
+<p>Memory here is the raw transcript, not anything extracted from it.
+There is no model in the write path, no summarisation and no injection
+into a prompt. The agent asks through <code>brain_search</code>,
+<code>brain_recent</code> or <code>brain_get</code>, and the server's
+own instructions tell it to present recall as the person's dated words
+with a citation, or to say it found nothing. That places it beside <a
+href="../pond/">pond</a> and <a href="../deja-vu/">deja-vu</a> among
+transcript archives. It differs from both in treating the floor of
+record as plain append-only files and the database as a disposable
+cache.</p>
+<p>The engineering is strongest on capture. Hooks and a 60-second
+poll-scanner feed one ingest function under one file identity, so a
+missed hook is caught by the scan and neither path double-ingests. A
+rewritten transcript opens a new generation file rather than
+overwriting. A runaway that rewrote one session thousands of times on
+the author's machine is answered by a cap of five generations a day and
+a <code>degraded</code> health verdict. Default search excludes text the
+harness injected under the user role, and two committed tests pin that
+exclusion against a fixture that holds the injected rows.</p>
+<p>It is weakest where the floor has to change. Redaction does not reach
+<code>floor.raw_lines</code> or <code>derived.messages</code>, and the
+record tick derives only new message ids. The README's claim that
+migrated v1 rows lose to floor-backed rows is not implemented. And
+<code>brain_backup</code>, an MCP tool, writes the whole corpus to a
+destination the model chooses.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is one line an agent wrote into its own transcript, at the
+moment the recorder copied it. Nothing in the system asserts that the
+line is true. The claim it makes is narrower and checkable: <em>these
+bytes were at this position in that file</em>. Recall is a pointer to
+those bytes plus an excerpt.</p>
+<p>A line enters the floor in one of two ways. A Claude Code Stop hook
+spools the lines added since the last turn, and a SessionEnd or
+PreCompact hook spools a whole-file snapshot. Independently, the
+scheduled scan reads every watched origin file, compares its size and a
+prefix hash against the recorded state, and consumes whatever complete
+lines are new. A torn trailing line waits for the next tick. Both paths
+end in <code>ingest_chunk</code>, which appends to the lake file, then
+the manifest, then DuckDB, in that order.</p>
+<p>A line never leaves the floor through the system. When an origin's
+prefix no longer matches what was recorded, the recorder treats it as a
+rewrite and copies the whole file into generation 2 beside generation 1.
+The index's live view reads only the newest generation, and message rows
+derived earlier from the older one stay in the table. When the agent
+deletes its file, the floor keeps the copy, and the next tick logs an
+<code>origin_gone</code> event after re-hashing the copy against the
+manifest.</p>
+<p>Two derived labels shape what recall returns.
+<code>human_authored</code> is computed in SQL from the line's flags and
+its text prefix: a slash-command wrapper, a task notification, a
+compaction summary or a system reminder under <code>role=user</code> is
+machine text. <code>is_subagent</code> marks sidechain lines and
+anything from a session's own folder. Both are excluded from default
+search and both come back with one flag. They classify who produced a
+line; they are not states a line moves through.</p>
+<p>The one exception to append-only is <code>redact</code>, a CLI verb
+that overwrites the chosen lines of a lake file with a marker and logs
+the old span's hash. It is meant for a credential pasted into a session.
+Its effect stops at the lake file.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a transcript line reaches the lake, the manifest and the search index, and the redaction that stops at the lake</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a transcript line reaches the lake, the manifest and the search index, and the redaction that stops at the lake
+flowchart TD
+  A[&quot;Agent writes its transcript&lt;br/&gt;~/.claude, ~/.codex, ~/.pi&quot;] --&gt; H[&quot;Stop / SessionEnd / PreCompact hook&lt;br/&gt;spools a line delta or snapshot&quot;]
+  A --&gt; S[&quot;60 s record tick: poll-scan&lt;br/&gt;size + prefix sha vs ingest_state&quot;]
+  H --&gt; D[&quot;drain_tick&lt;br/&gt;applies a delta only if it extends the session&quot;]
+  D --&gt; I[&quot;ingest_chunk&quot;]
+  S --&gt; I
+  S --&gt;|&quot;prefix differs&quot;| G[&quot;new generation file&lt;br/&gt;old generation kept&quot;]
+  G --&gt; I
+  I --&gt; L[&quot;lake/lane/session.jsonl&lt;br/&gt;append-only floor&quot;]
+  I --&gt; M[&quot;manifest.jsonl&lt;br/&gt;chunk byte range + sha256&quot;]
+  I --&gt; R[&quot;floor.raw_lines in DuckDB&quot;]
+  R --&gt; V[&quot;derived.v_messages_all&lt;br/&gt;human_authored, is_subagent&quot;]
+  V --&gt;|&quot;anti-join on msg_id&lt;br/&gt;new rows only&quot;| T[&quot;derived.messages + BM25 index&quot;]
+  T --&gt; Q[&quot;brain_search / brain_recent&lt;br/&gt;excerpt from indexed text&quot;]
+  L --&gt; C[&quot;citation sha256&lt;br/&gt;computed from the lake at read time&quot;]
+  C --&gt; Q
+  X[&quot;brain-mcp redact&quot;] --&gt;|&quot;rewrites lines&quot;| L
+  X --&gt;|&quot;logs old span sha&quot;| M
+  X -. &quot;never reaches&quot; .-&gt; T</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Everything runs on one machine as one Python package with two runtime
+dependencies, <code>mcp</code> and <code>duckdb</code>. The process
+shapes are a stdio MCP server (<code>brain-mcp serve</code>), a CLI, two
+bash hook scripts, and a scheduler entry that runs
+<code>brain-mcp record</code> every 60 seconds. There is no daemon. The
+scanner's docstring argues that a dead file-watcher "looks identical to
+a quiet day", so the recorder polls, and its whole state is the glob
+result plus <code>floor.ingest_state</code>
+(<code>brain_mcp/recorder/scanner.py:1-8</code>).</p>
+<p>The floor is a directory tree under <code>BRAIN_HOME</code>,
+<code>~/.brain</code> by default and <code>chmod 700</code> on creation
+(<code>brain_mcp/recorder/paths.py:73-82</code>). Line-oriented
+transcripts live at
+<code>lake/&lt;lane&gt;/&lt;session&gt;.jsonl</code>, later generations
+at <code>&lt;session&gt;.gN.jsonl</code>. Files inside a Claude Code
+session's folder are mirrored at the same relative path under
+<code>lake/cc_sessiondir/</code>, and non-line files there are captured
+whole as blobs (<code>brain_mcp/recorder/visit.py:294-343</code>). The
+manifest is one JSONL file. DuckDB holds <code>floor.files</code>,
+<code>floor.witnesses</code>, <code>floor.raw_lines</code> and
+<code>floor.ingest_state</code>
+(<code>brain_mcp/recorder/floor_db.py:20-83</code>), plus the
+<code>derived</code> schema and its FTS index.</p>
+<p>DuckDB allows one writer and refuses a read-only open while the
+writer holds the file. The code's answer is to open, write one batch and
+close, with six retries and a linear backoff on both sides
+(<code>brain_mcp/recorder/floor_db.py:98-134</code>). The retries total
+about four seconds, and the FTS rebuild is commented at about ten
+seconds at 74,000 rows (<code>brain_mcp/recorder/derived.py:5-7</code>).
+A search issued during a rebuild on a large floor can therefore raise
+rather than wait. This is read from the code and was not run.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p><code>pipx install brain-mcp</code>, then
+<code>brain-mcp install cc</code>, which writes two hooks into
+<code>~/.claude/settings.json</code>, prefetches DuckDB's
+<code>fts</code> extension, writes and loads a LaunchAgent on macOS, and
+runs one scan tick as proof of capture
+(<code>brain_mcp/recorder/cli.py:110-170</code>). Linux gets a printed
+instruction to write a systemd timer, and Windows is out of scope. No
+API key is needed, and nothing is sent anywhere except the one extension
+download, which the README states.</p>
+<p>Two install-path details matter. <code>cmd_install</code> points the
+hooks at
+<code>Path(__file__).resolve().parent.parent.parent / "plugin" / "scripts"</code>
+(<code>brain_mcp/recorder/cli.py:113</code>), which is the repository
+root in an editable install. <code>pyproject.toml</code> packages only
+<code>brain_mcp*</code> and declares no package data, so from a wheel
+that path names a directory outside the package. The scan would capture
+Claude Code sessions within a minute anyway, without the hooks. And the
+Claude Code plugin ships the hooks and the server but no scheduler,
+while <code>record</code> is the only caller of <code>drain_tick</code>,
+<code>scan_tick</code> and <code>derived.refresh</code> outside
+<code>install</code> (<code>brain_mcp/recorder/cli.py:32-45</code>). A
+plugin-only install spools and never drains until
+<code>brain-mcp record</code> runs. Neither was checked against a built
+wheel.</p>
+<p>The store is readable and repairable by hand. The lake is the agents'
+own JSONL, the manifest is JSONL, and deleting <code>brain.duckdb</code>
+loses nothing the next <code>record</code> cannot rebuild, except
+v1-migrated rows, which have no floor bytes.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture, hook side.</strong>
+<code>plugin/scripts/brain-stream-on-turn.sh</code> counts complete
+lines with <code>wc -l</code>, reads its offset from
+<code>offsets/cc_transcript/&lt;sid&gt;@&lt;project&gt;</code>, writes
+the delta to a dot-prefixed temp file, renames it into the spool, and
+only then advances the offset. A shrunk transcript resets the offset and
+ships the whole file. The heartbeat file is touched first, so health
+reads its mtime rather than a self-report. Every path exits 0, so a
+failure never blocks the agent.</p>
+<p><strong>Capture, drain.</strong> <code>drain_tick</code>
+(<code>brain_mcp/recorder/drain.py:66-143</code>) routes each spool file
+to a floor key and applies a delta only when it starts at or before the
+recorded line count. It skips the overlap, defers a gap for the scanner
+to fill, and unlinks the spool file only after <code>ingest_chunk</code>
+returns. Snapshots apply only their unseen tail.</p>
+<p><strong>Capture, scanner.</strong> <code>scan_tick</code>
+(<code>brain_mcp/recorder/scanner.py:67-146</code>) globs each lane and
+groups Claude Code files by session uuid. The recorded path keeps the
+bare key and any other path carrying the same uuid gets
+<code>&lt;uuid&gt;~&lt;project&gt;</code> (<code>:115-122</code>). A
+uuid at one new path whose recorded path is gone is a move, and updates
+<code>abs_path</code>. <code>visit_origin</code>
+(<code>brain_mcp/recorder/visit.py:234-291</code>) returns
+<code>unchanged</code> on equal size, recomputes the prefix hash over
+the recorded byte length, and either appends from the last offset or
+opens a new generation. Per-file errors are caught and counted
+(<code>scanner.py:136-141</code>).</p>
+<p><strong>Ingest.</strong> <code>ingest_chunk</code>
+(<code>visit.py:92-198</code>) splits off a torn trailing line, checks
+that the lake file's size equals the expected base offset, appends with
+<code>O_APPEND</code>, and writes the manifest line. It then inserts
+<code>floor.files</code>, <code>floor.raw_lines</code>,
+<code>floor.ingest_state</code> and a <code>floor.witnesses</code> row.
+Each raw line carries its own sha256, <code>event_time</code> from the
+line's <code>timestamp</code>, and <code>captured_at</code>. If the lake
+is longer than base plus chunk, it assumes a crash replay and skips the
+append; if it is shorter, it raises.</p>
+<p><strong>Derivation.</strong> <code>derived.refresh</code>
+(<code>brain_mcp/recorder/derived.py:206-228</code>) runs the dialect
+SQL, reshapes the table if its columns drifted, inserts view rows whose
+<code>msg_id</code> is not yet present, and rebuilds the FTS index if
+anything was added. The three dialect views and the union are at
+<code>:24-152</code>.</p>
+<p><strong>Retrieval.</strong> <code>api.search</code>
+(<code>brain_mcp/recorder/api.py:104-133</code>) calls
+<code>derived.search_fts</code> (<code>derived.py:262-292</code>), which
+applies <code>scope_filters</code> (<code>:231-259</code>) inside a
+subquery and filters BM25 rank outside it. <code>_citation</code>
+(<code>api.py:60-73</code>) re-reads the lake file and hashes the cited
+line on every call. <code>api.get</code> (<code>:138-160</code>) returns
+raw lines and compares them against <code>expect_sha256</code>.</p>
+<p><strong>Deletion receipt and restore.</strong>
+<code>notice_gone</code> (<code>api.py:375-391</code>) is the writer,
+run by <code>record</code>; <code>receipt</code> (<code>:394-428</code>)
+is the read-only half that <code>brain_health</code> calls.
+<code>restore</code> (<code>:433-514</code>) plans every file of a
+session, refuses the whole set on any conflict, writes through a temp
+file, and re-hashes after the write.</p>
+<p><strong>Redaction.</strong> <code>cmd_redact</code>
+(<code>brain_mcp/recorder/cli.py:227-251</code>) is the only in-place
+write to the floor, described in section 9.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>floor.raw_lines</code> is keyed
+<code>(file_id, witness_gen, byte_offset)</code> and carries
+<code>line_no</code>, <code>raw_line</code>, <code>line_sha256</code> of
+the original bytes, <code>n_bytes</code>, <code>utf8_replaced</code>,
+<code>lane</code>, <code>agent</code>, <code>event_time</code> and
+<code>captured_at</code>
+(<code>brain_mcp/recorder/floor_db.py:55-71</code>).
+<code>file_id</code> is <code>sha256(machine_id:lane:key)[:32]</code>,
+so two machines pushing to one floor do not collide
+(<code>brain_mcp/recorder/visit.py:38-45</code>,
+<code>machine.py:19-27</code>). <code>floor.witnesses</code> is an
+observation log of size and growth verdict per visit, and it is what the
+rewrite cap counts.</p>
+<p><code>derived.messages</code> has fourteen columns:
+<code>msg_id</code>, <code>agent</code>, <code>session_id</code>,
+<code>role</code>, <code>model</code>, <code>text</code>,
+<code>event_time</code>, <code>captured_at</code>, <code>file_id</code>,
+<code>witness_gen</code>, <code>line_no</code>,
+<code>human_authored</code>, <code>is_subagent</code> and
+<code>lake_file</code>, pinned by
+<code>tests/test_derived_agents.py:96-105</code>. The Claude Code view
+extracts <code>cwd</code> (<code>derived.py:40</code>) and the union
+does not carry it forward, so no project key reaches the table search
+reads.</p>
+<p>Scope is the machine and the user who owns <code>~/.brain</code>.
+Within it, the stored dimensions are agent (claude-code, codex, pi, or a
+v1 source), session, role and time. Time has two clocks:
+<code>event_time</code>, the line's own timestamp and nullable, and
+<code>captured_at</code>, never null. They answer <em>when was this
+said</em> and <em>when did the recorder hold it</em>, which is useful
+and is not a validity interval for a fact.</p>
+<p>There is no correction chain, no supersession and no status column.
+Versioning is the generation number on a file. A v1 import writes
+message rows with <code>witness_gen = 0</code> and no floor bytes, and
+<code>_citation</code> returns them marked <code>v1_derived</code> with
+no hash (<code>api.py:61-64</code>).</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is DuckDB's <code>match_bm25</code> over
+<code>derived.messages.text</code>, ordered by rank with an optional
+<code>min_rank</code>, or re-sorted by time when <code>order</code> is
+<code>time_asc</code> or <code>time_desc</code>. There is no vector arm,
+no reranker and no query rewriting. v1's embeddings and summaries were
+removed in 2.0.0b1, and the changelog gives the reason: a claim that
+cannot carry a line-span citation is not one the server makes.</p>
+<p>The default filter keeps rows that are either not
+<code>role=user</code> or are human-authored, and drops subagent rows
+(<code>derived.py:247-250</code>). <code>brain_recent</code> shares the
+same filter. <code>brain_sessions</code> drops subagent rows and counts
+only human-authored user turns (<code>api.py:190-209</code>).
+<code>agent</code>, <code>role</code>, <code>since</code> and
+<code>until</code> narrow further, and a bare date for
+<code>until</code> includes the whole day.</p>
+<p>The response shape is the contract. A hit is a 600-character excerpt,
+a rank and a citation. Zero hits return <code>abstained: true</code>,
+the rank threshold, the lanes and time range covered, the row count, and
+a hint that absence is evidence only about what was searched
+(<code>api.py:119-126</code>). Every response carries
+<code>measured_at</code>, an <code>instrument</code> string, and any
+agent directory present on disk but not watched.</p>
+<p>The excerpt and the citation come from different places. The excerpt
+is the indexed text in DuckDB; the citation's sha256 is recomputed from
+the lake file at read time. Normally they agree. After a redaction they
+disagree, and a caller that verifies with <code>brain_get</code> sees
+the marker while the excerpt shows the original. After a rewrite, rows
+from both generations stay indexed, so the same utterance can return
+twice with two citations.</p>
+<p>There is no token budget and nothing is injected, so over-recall
+costs the agent a longer tool result rather than a polluted prompt.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes are capture only, and they happen outside the agent's turn.
+The Stop hook copies a delta into the spool in the time it takes
+<code>wc</code>, <code>tail</code> and <code>mv</code> to run.
+Everything after that waits for the next <code>record</code> tick:
+drain, scan, refresh and receipt. With the scheduler installed, a line
+is retrievable between a few seconds and about a minute after the turn
+that wrote it, plus the time of the FTS rebuild.</p>
+<p>Deduplication is by identity and offset, not by content. Hook and
+scanner share <code>floor.ingest_state</code> per floor key, so a delta
+that a scan has covered is discarded and a gap is left for the scan,
+which <code>test_hook_and_scanner_share_one_identity</code> asserts
+(<code>tests/test_recorder_floor.py:158-174</code>).
+<code>derived.messages</code> dedups by <code>msg_id</code>, which
+embeds the generation, so a rewrite indexes the new generation's lines
+as new rows.</p>
+<p>Nothing is filtered on the way in. A secret pasted into a session is
+copied into the lake, into <code>raw_lines</code> and into
+<code>derived.messages</code>. <code>scan-secrets</code> exists to find
+it afterwards, and its docstring says why: a bytes-forever floor
+"replicates whatever it captured into every backup, forever"
+(<code>brain_mcp/recorder/secrets.py:1-3</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>No model is called on any path, so the write path costs file I/O and
+one DuckDB batch. The expensive step is the FTS index, which DuckDB does
+not maintain incrementally: <code>refresh</code> rebuilds it over the
+whole messages table on every tick that added a row
+(<code>derived.py:223-226</code>). During active work that is once a
+minute, over the whole corpus. The scanner reads last-seen sizes once
+per lane per tick rather than opening DuckDB per file. The changelog
+measures that at about 0.3 seconds for an unchanged tick over 3,046
+files.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>Seven MCP tools are registered, six annotated read-only
+(<code>brain_mcp/recorder/server.py:30-105</code>). The server's
+<code>instructions</code> tell the model that everything is cited or
+abstained and that an <code>unknown</code> health lane is never to be
+summarised as fine. The README carries a longer contract for the model:
+present recall as the person's own dated words, one claim per citation,
+and never fill an abstention with a guess.</p>
+<p>The agent's agency over memory is read-only with one exception.
+<code>brain_backup</code> copies <code>lake/</code> and
+<code>manifest/</code> to a <code>dest</code> argument, overwriting any
+file there whose size differs, then re-hashes a sample of eight files
+(<code>api.py:551-585</code>). The tool is not annotated read-only, and
+its docstring says it writes only outside the floor, which is true. It
+also means the model can copy every recorded session to any path the
+process can write.</p>
+<p><code>restore</code> is deliberately a CLI verb, because it writes
+into the agents' own directories. The README says no MCP tool writes
+outside the floor. For restore that holds, and <code>brain_backup</code>
+is the exception the sentence does not mention.</p>
+<p>Adapting it to another agent means adding a lane row and a dialect
+view. Codex and Pi lanes are scanner-only, and the hook contract is
+Claude Code's. The <code>human_authored</code> rules are tuned to the
+injection formats of Claude Code and Codex, and every Pi user row counts
+as human (<code>derived.py:148</code>).</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance is the strongest property.</strong> A citation can
+be checked with <code>sed -n 'A,Bp' file | shasum -a 256</code> and no
+database, which
+<code>test_sed_shasum_verifies_and_survives_append</code> runs and
+asserts stable under append
+(<code>tests/test_recorder_floor.py:100-123</code>). The manifest
+records every chunk's byte range and hash, so the receipt re-verifies a
+deleted origin's floor copy chunk by chunk, and a tampered copy reports
+<code>verified: false</code>
+(<code>tests/test_receipt_restore.py:49-61</code>). Health refuses to
+round <code>unknown</code> up to <code>fresh</code>, and a capped
+rewrite turns a lane <code>degraded</code> with a reason
+(<code>api.py:214-274</code>).</p>
+<p><strong>Redaction stops at the lake file.</strong>
+<code>cmd_redact</code> replaces lines A to B of a lake file with
+<code>{"redacted":true,"reason":...}</code> and appends the old span's
+sha256 to the manifest (<code>brain_mcp/recorder/cli.py:227-251</code>).
+It does not touch <code>floor.raw_lines.raw_line</code> or
+<code>derived.messages.text</code>, and its closing message tells the
+user to run <code>brain-mcp record</code>. <code>refresh</code> inserts
+only rows whose <code>msg_id</code> is absent
+(<code>derived.py:215-220</code>), and the redacted lines keep their
+ids. <code>brain_search</code> therefore keeps returning the secret as
+an excerpt, beside a citation whose hash matches the marker. No
+statement under <code>brain_mcp/recorder</code> updates or deletes
+either table outside the reshape migration, and no test searches after a
+redaction.</p>
+<p><strong>A redacted session that keeps growing would stop
+recording.</strong> This follows from the code and was not run.
+Redaction changes the lake file's length and leaves
+<code>ingest_state.last_offset</code> unchanged. The origin is
+untouched, so its prefix hash matches and the next visit appends at the
+old offset. <code>ingest_chunk</code> then finds the lake shorter than
+expected and raises. If the lake grew by more than the new chunk, it
+skips the append and writes manifest and index rows anyway
+(<code>brain_mcp/recorder/visit.py:116-125</code>). The scanner catches
+the error per file. <code>drain_tick</code> has no handler and
+<code>cmd_record</code> calls it first. A spooled delta for that session
+would then abort every tick for every lane, and the spool file stays to
+be retried (<code>drain.py:113-117</code>,
+<code>cli.py:38-40</code>).</p>
+<p><strong>The secret scanner sees part of the floor.</strong>
+<code>secrets.scan</code> globs <code>*.jsonl</code> at the top of each
+lane directory (<code>secrets.py:92</code>). Session-folder files live
+in nested directories under <code>lake/cc_sessiondir/</code>, and
+tool-result blobs are not <code>.jsonl</code>, so neither is scanned;
+the DuckDB copies are never scanned either. The changelog counts
+subagent transcripts as 72% of Claude Code's files on the author's
+machine.</p>
+<p><strong>v1 rows do not lose to floor rows.</strong> The README says
+floor-backed rows win over migrated v1 rows. <code>cmd_migrate_v1</code>
+inserts <code>v1:</code>-prefixed rows with an anti-join against other
+v1 ids only (<code>cli.py:259-273</code>). Nothing in the recorder
+compares a v1 row to a floor row, so both are searched.</p>
+<p><strong>Privacy and backup.</strong> The floor is
+<code>chmod 700</code>, nothing leaves the machine, and
+<code>uninstall</code> keeps the floor and says so. Backup is pure-add
+by size, so a backup taken before a redaction keeps the original, which
+the redact message states.</p>
+<p><strong>Uncertainty is represented as coverage, not belief.</strong>
+The system can say it searched these lanes over these dates and found
+nothing above the threshold. It has no way to say a recorded line was
+wrong, and does not try to.</p>
+<p><strong>The marks, and the near-misses.</strong></p>
+<p><code>audit_log</code> is awarded. <code>manifest.jsonl</code> is
+opened <code>O_APPEND</code> by its only writer
+(<code>brain_mcp/recorder/manifest.py:19-29</code>), and every write
+into the floor has a line. Each chunk carries its byte range and hash,
+each blob its whole-file hash, and each redaction the old span hash and
+reason; <code>restored</code>, <code>origin_gone</code> and
+<code>rewrite_capped</code> are events beside them. <a
+href="../pond/">pond</a> keeps a sync bookmark; this log records each
+mutation, and the receipt replays it.</p>
+<p><code>negative_eval</code> is awarded for two read-path cases on
+populated stores, each with a positive control.
+<code>test_role_user_returns_only_what_the_person_typed</code> asserts
+the exact list of <code>role=user</code> giraffe hits over a fixture
+holding seven injected giraffe rows.
+<code>test_injected_text_is_one_flag_away</code> retrieves all seven
+with <code>include_machine=True</code> from the same load
+(<code>tests/test_human_authored.py:31-49</code>).
+<code>test_subagent_text_is_out_of_default_search_and_in_on_request</code>
+asserts abstention and then, in the same body, a verified hit with the
+flag set (<code>tests/test_sessiondir.py:66-76</code>).</p>
+<p><code>scope_enforced</code> is withheld. The store is one corpus for
+one user, the <code>agent</code> filter is a caller's option with no
+default, no project key reaches <code>derived.messages</code>, and
+<code>brain_get</code> reads any file under <code>lake/</code>. There is
+no context assembler.</p>
+<p><code>trust_state</code> is withheld. <code>human_authored</code> is
+computed from text prefixes by the view on every refresh, and
+<code>verified</code> is computed per read. Neither is a stored state
+that a transition moves, which the <a
+href="../../methodology/atlas-rubric/#explicit-trust-state">rubric</a>
+asks for.</p>
+<p><code>bitemporal</code> is withheld. <code>event_time</code> is when
+a line was written and <code>captured_at</code> when it was copied;
+neither is the period a fact held.</p>
+<p><code>tombstone</code> is withheld. The redaction marker is keyed on
+file and line, and an origin rewrite would copy the redacted value into
+the next generation.</p>
+<p><code>human_review</code> is withheld. No recorded line waits for
+anyone, and redact and restore are CLI verbs that act at once.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>55 pytest functions in eight files run in CI on Ubuntu and macOS with
+Python 3.11 to 3.13 and <code>-W error::SyntaxWarning</code>
+(<code>.github/workflows/test.yml</code>). The shared <code>floor</code>
+fixture repoints every lane into a temp directory and refuses to run if
+any lane names the real home (<code>tests/conftest.py:13-58</code>). The
+changelog records that an earlier fixture scanned the developer's own
+<code>~/.claude</code>. CI installs <code>.[dev,legacy]</code>, and
+<code>pyproject.toml</code> declares no <code>legacy</code> extra.</p>
+<p>What is tested is capture and the evidence contract. The suite covers
+byte identity on first visit and after append, torn-line waiting, and a
+rewrite opening generation 2 with generation 1 kept. It covers the
+manifest's presence, citation stability under append, hook-drain
+reconciliation including gaps, and one identity across hook and scanner.
+It covers session-folder capture, the receipt including tampering, every
+restore rule, and two copies of one session over twenty ticks. It covers
+the injected-text and subagent exclusions, date windows, schema upgrades
+from 2.0.0 and from the b-series, and the secret scanner's
+discrimination in both directions. The changelog states for each release
+how many new tests fail against the previous one.</p>
+<p>What is not tested is the destructive path and its aftermath: search
+after <code>redact</code>, capture after <code>redact</code> on a
+growing session, <code>scan-secrets</code> over session-folder files,
+and a v1 row duplicating a floor row. Nothing exercises
+<code>brain_backup</code>, or a search racing an FTS rebuild.</p>
+<p>There is no retrieval-quality evaluation and no benchmark, and none
+is claimed. The changelog's figures, such as 41.1% of user rows being
+injected text across the author's 30 newest sessions, measure one
+installation with no committed corpus behind them. No paper is cited; an
+ADR from the v0.4.0 design mentions a planned arXiv paper for a protocol
+the 2.x rebuild removed.</p>
+<p>I read the tree and ran nothing, so no test outcome above was
+observed.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Keep the bytes, derive the rest.</strong> Store transcripts
+as append-only files with a hash manifest, and treat every database
+table as a cache you can delete. A schema change then costs a rebuild,
+not a migration of the only copy.</li>
+<li><strong>Two capture paths, one identity.</strong> A hook for latency
+and a poll-scan for completeness, reconciled on a shared per-file offset
+and prefix hash, make a dead hook visible as staleness rather than as a
+quiet day.</li>
+<li><strong>A rewrite opens a generation.</strong> When an origin's
+prefix stops matching, copy it whole beside the old copy, and cap how
+often that can happen per file per day, with the cap reported in
+health.</li>
+<li><strong>Cite or abstain, with coverage.</strong> Return a
+re-hashable pointer with every hit, and make an empty result an object
+naming the lanes, dates and threshold searched. It gives a model
+something true to say when it finds nothing.</li>
+<li><strong>Label injected text at read time.</strong> Classifying
+harness-injected user turns in a view, and filtering them by default
+behind an opt-in flag, keeps one copy and lets the rule change without
+re-ingesting.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A redaction that rewrites only the copy you think of as
+canonical.</strong> Every derived store that holds the text, here a
+raw-lines table, a messages table and an FTS index, has to be part of
+the redaction. A search for the redacted value has to be the test.</li>
+<li><strong>Offsets kept beside a file that a second verb can
+rewrite.</strong> If anything other than the appender changes the file,
+the appender's state has to change in the same operation, or the
+integrity check fires on the next write.</li>
+<li><strong>A scanner whose glob is narrower than the store.</strong> A
+non-recursive glob over a tree that gained nested lanes reports clean
+over the part it cannot see.</li>
+<li><strong>A backup tool on the model's surface with a free
+destination.</strong> Copying the whole corpus is a CLI decision. On the
+tool surface it is an exfiltration path for any instruction that reaches
+the model.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits one developer on a Mac who uses Claude Code, Codex or Pi,
+wants session history to survive the agent's cleanup, and wants recall
+they can audit line by line. It assumes no server, no model and no API
+key, and the operator cost is one LaunchAgent. It is the wrong choice if
+the requirement is memory that learns, consolidates or corrects itself,
+because nothing here is extracted or judged. It is also wrong where
+several projects or people must not see each other's history, or where a
+pasted credential must be removable the same day. For that case,
+deleting <code>brain.duckdb</code> after a redaction and running
+<code>record</code> rebuilds the index from the lake, which the code
+permits and does not document.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Does a wheel built from this commit contain
+<code>plugin/scripts</code>, so that <code>brain-mcp install cc</code>
+from PyPI writes hook paths that exist? Building the wheel would answer
+it.</li>
+<li>Does the separate <code>brain-marketplace</code> repository ship a
+scheduler with the plugin, or does a plugin-only install never drain its
+spool?</li>
+<li>After <code>redact</code>, does deleting <code>brain.duckdb</code>
+and running <code>record</code> produce an index without the secret? The
+code suggests so, since raw lines are re-read from the lake, but
+v1-migrated rows would be lost with the file.</li>
+<li>How long does an FTS rebuild take at the author's corpus size, and
+how often does a concurrent <code>brain_search</code> exhaust its four
+seconds of retries?</li>
+<li>The first commit in the history is dated 4 March 2026 and the GitHub
+metadata dates the repository to 10 January 2026. Was the history
+rewritten?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<p><strong>Storage and schema.</strong>
+<code>brain_mcp/recorder/floor_db.py</code> (schema, lanes, connection
+discipline), <code>brain_mcp/recorder/paths.py</code> (layout,
+generation naming), <code>brain_mcp/recorder/manifest.py</code>,
+<code>brain_mcp/recorder/machine.py</code>.</p>
+<p><strong>Write path.</strong>
+<code>plugin/scripts/brain-stream-on-turn.sh</code>,
+<code>plugin/scripts/brain-stream-on-sessionend.sh</code>,
+<code>plugin/hooks/hooks.json</code>,
+<code>brain_mcp/recorder/drain.py</code>,
+<code>brain_mcp/recorder/scanner.py</code>,
+<code>brain_mcp/recorder/visit.py</code>.</p>
+<p><strong>Derivation and retrieval.</strong>
+<code>brain_mcp/recorder/derived.py</code>,
+<code>brain_mcp/recorder/api.py</code> (search, get, recent,
+sessions).</p>
+<p><strong>Health, receipt, restore, backup.</strong>
+<code>brain_mcp/recorder/api.py:214-585</code>.</p>
+<p><strong>CLI and MCP.</strong> <code>brain_mcp/recorder/cli.py</code>,
+<code>brain_mcp/recorder/server.py</code>, <code>server.json</code>,
+<code>plugin/.mcp.json</code>.</p>
+<p><strong>Secrets.</strong>
+<code>brain_mcp/recorder/secrets.py</code>.</p>
+<p><strong>Unreached by the recorder.</strong>
+<code>brain_mcp/ingest/</code>, <code>brain_mcp/config.py</code>, and
+the <code>Makefile</code> targets for embed, summarize and the v1
+server.</p>
+<p><strong>Tests.</strong> <code>tests/conftest.py</code>,
+<code>tests/test_recorder_floor.py</code>,
+<code>tests/test_human_authored.py</code>,
+<code>tests/test_sessiondir.py</code>,
+<code>tests/test_receipt_restore.py</code>,
+<code>tests/test_duplicate_sessions.py</code>,
+<code>tests/test_derived_agents.py</code>,
+<code>tests/test_secrets_scan.py</code>.</p>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned commit.</p>
+<ul>
+<li><code>git grep -n -E "UPDATE|DELETE|DROP" -- brain_mcp/recorder</code>
+— no statement updates or deletes <code>floor.raw_lines</code> or the
+text of <code>derived.messages</code>; the hits are the reshape
+migration, <code>floor.files</code> path updates and the
+<code>ingest_state</code> upsert.</li>
+<li><code>git grep -n -E "redact" -- brain_mcp/recorder tests</code> —
+<code>cmd_redact</code>, restore's marker check and the secrets note;
+the one test redacts and then restores, and no test searches
+afterwards.</li>
+<li><code>git grep -n -E "manifest\.append" -- brain_mcp/recorder</code>
+and
+<code>git grep -n -E "write_bytes|os\.replace|shutil\.copy|unlink|rmtree" -- brain_mcp/recorder</code>
+— every write into the floor sits beside a manifest append; the other
+writes are restore targets, backup copies, settings, the plist and spool
+unlinks.</li>
+<li><code>git grep -n -E "try:|except" -- brain_mcp/recorder/drain.py brain_mcp/recorder/cli.py</code>
+— no handler in <code>drain.py</code>; the three in <code>cli.py</code>
+wrap the fts check, the prefetch and reading plugin hook files.</li>
+<li><code>git grep -n -E "cwd|project" -- brain_mcp/recorder/derived.py brain_mcp/recorder/api.py</code>
+— <code>cwd</code> is extracted in <code>dialects.v_cc</code> and used
+for the resume hint, and is absent from
+<code>derived.v_messages_all</code> and every filter.</li>
+<li><code>git grep -n -E "glob\(|rglob\(" -- brain_mcp/recorder/secrets.py</code>
+— one non-recursive <code>glob("*.jsonl")</code>.</li>
+<li><code>git grep -n -E "v1:|v1_derived" -- brain_mcp/recorder</code> —
+the import, its anti-join against v1 ids, and the citation branch; no
+comparison to floor rows.</li>
+<li><code>git grep -n -E "from \.\.?(ingest|config)|brain_mcp\.(ingest|config)" -- brain_mcp/recorder</code>
+— no output.</li>
+<li><code>git grep -n -E "drain_tick\(|scan_tick\(|refresh\(" -- brain_mcp plugin</code>
+— callers only in <code>cli.py</code>, in <code>record</code> and one
+scan in <code>install</code>.</li>
+<li><code>git grep -n -E "package-data|package_data|data-files|include-package-data|plugin|legacy" -- pyproject.toml</code>
+and
+<code>git ls-files | /usr/bin/grep -i -E "manifest\.in|setup\.(py|cfg)"</code>
+— no output from either.</li>
+<li><code>git grep -n -E "approve|review|pending" -- brain_mcp/recorder</code>
+— only the receipt's pending count.</li>
+<li><code>git grep -n -i -E "arxiv|bibtex|@article|@misc|citation\.cff|doi\.org"</code>
+— one hit, the ADR's planned paper.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/mordechaipotash/brain-mcp/commit/78d8a4fd7fbc879a0c75f431052af1b9b5618eaf"><code class="commit-id" title="78d8a4fd7fbc879a0c75f431052af1b9b5618eaf">78d8a4fd…</code></a>
+— first reading, at the head of <code>main</code>, version 2.1.1, a
+commit dated 4 October 2026. MIT, no rider. Screened from a full clone
+before reading: one auto-run surface (<code>server.json</code>, an MCP
+registry manifest naming <code>brain-mcp</code> on PyPI), two build-time
+execution points (<code>Makefile</code>,
+<code>tests/conftest.py</code>), and one unpinned manifest
+(<code>pyproject.toml</code>, no lockfile); none inside the cooldown.
+<code>plugin/hooks/hooks.json</code> registers Stop, SessionEnd and
+PreCompact hooks and fires only once installed as a plugin. Two marks,
+<code>audit_log</code> and <code>negative_eval</code>. Nothing was
+installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

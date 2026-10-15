@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 736 reports.</strong></p>
+<p><strong>This page covers all 737 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30528,6 +30528,48 @@ agents.</li>
 <li>Do not copy when: the memory must be defended against the agent
 writing it, a removed skill must stay removed, or several projects on
 one machine must not see each other's skills.</li>
+</ul>
+<h3 id="brain-mcp"><a
+href="../systems/brain-mcp/"><code>brain-mcp</code></a></h3>
+<ul>
+<li>Best idea: <strong>cite or abstain, and the citation is checkable
+without the database.</strong> Every hit returns a file, a line span and
+a sha256 recomputed from the append-only floor at read time.
+<code>brain_get</code> verifies against an expected hash and reports a
+mismatch rather than repairing it, and zero hits return
+<code>abstained: true</code> with the lanes, time range and row count
+searched. The server's instructions turn that into a rule for the model:
+say what was found, with its citation, or say nothing was found in what
+was measured.</li>
+<li>Biggest risk: <strong>redaction stops at the lake file.</strong>
+<code>brain-mcp redact</code> overwrites lines with a marker and logs
+the old hash, while <code>floor.raw_lines</code> and
+<code>derived.messages</code> keep the original text, because
+<code>refresh</code> inserts only message ids it has not seen. A
+redacted credential keeps returning as a search excerpt, beside a
+citation that hashes to the marker. Read from the code, the same rewrite
+leaves <code>ingest_state.last_offset</code> behind the lake file, so a
+redacted session that keeps growing fails the integrity check, and
+through the hook drain, which has no handler, aborts every record
+tick.</li>
+<li>Most reusable component: the two-path capture in
+<code>visit.py</code> and <code>drain.py</code>. A hook spools line
+deltas, a poll-scan reads origins by size and prefix hash, and both feed
+<code>ingest_chunk</code> under one identity; a gap defers to the scan,
+and a prefix mismatch opens a new generation file instead of
+overwriting, capped at five a day.</li>
+<li>Maturity impression: MIT, version 2.1.1, 2,468 lines of Python in
+the recorder after a rebuild that removed the v1 embedding and
+summarisation pipeline; 78 commits, all but one by the author; 55 pytest
+functions in CI on Ubuntu and macOS. The changelog states for each
+release how many new tests fail against the previous one. Two marks,
+<code>audit_log</code> and <code>negative_eval</code>.</li>
+<li>Study when: you want an agent's transcript history kept verbatim,
+searchable and citable, with no model in the loop.</li>
+<li>Do not copy when: a pasted secret must leave what the agent can
+retrieve, projects must not see each other's history, or the model
+should not hold a tool that copies the whole corpus to a path it
+chooses.</li>
 </ul>
 <h3 id="obsidian-wiki"><a
 href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a></h3>

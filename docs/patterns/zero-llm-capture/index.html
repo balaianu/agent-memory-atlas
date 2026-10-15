@@ -452,6 +452,21 @@ from being automatic: the destination is a machine-wide
 <code>.current-context</code> file reread at every write, so a hook
 firing for one session lands in whichever client another session last
 selected.</p>
+<p><a href="../../systems/brain-mcp/">brain-mcp</a> captures at two
+independent entry points with no model on either, and reconciles them on
+one identity. A Claude Code Stop hook spools the lines added since the
+last turn and exits 0 on every path, and a 60-second poll-scan reads
+every origin by size and prefix hash; both call
+<code>ingest_chunk</code>, which appends to the lake, then the manifest,
+then DuckDB (<code>plugin/scripts/brain-stream-on-turn.sh</code>,
+<code>brain_mcp/recorder/drain.py:66-143</code>,
+<code>visit.py:92-198</code>). A delta overlapping what the scan took is
+trimmed, a gap is deferred to the scan, and a test asserts one file
+identity and no double-ingest across both paths
+(<code>tests/test_recorder_floor.py:158-174</code>). The heartbeat is a
+file touched before anything else, so health reads an mtime rather than
+a self-report; the hook's own comment records that the version it was
+ported from wrote its heartbeat after <code>exit 0</code>.</p>
 <h2 id="implementation-checklist">Implementation checklist</h2>
 <ul>
 <li>Assign a stable event ID before acknowledging capture.</li>

@@ -520,6 +520,8 @@ report withholds `audit_log` on that ground.
 
 **[Graft](../../systems/graft/) audits one door and leaves the others open.** `maintenance_log` is appended inside the same `BEGIN IMMEDIATE` transaction as every `maintain resolve` transition and dismissal, each apply-safe purge writes its own `purge` row, and the `nodes` column is text with no foreign key, so a row outlives the node it names and records its removal. No statement updates or deletes a row. A plain insert, `graft delete`, the viewer's supersession, sync and expiry pruning write nothing, and the actor is a string the caller supplies, so the log explains every curation decision and none of the writes that bypass curation.
 
+**[brain-mcp](../../systems/brain-mcp/) logs every byte it writes into its floor, and shows what a log does not do by itself.** Its manifest is a JSONL file opened `O_APPEND` by its only writer, and every write has a line: each captured chunk with its byte range and sha256, each blob with its whole-file hash, each redaction with the old span's hash and a reason (`brain_mcp/recorder/manifest.py:19-29`, `visit.py:134-151`, `cli.py:246-247`). The receipt replays it, re-hashing a deleted session's floor copy chunk by chunk, so a tampered copy reports unverified. The gap sits downstream of the log. The redaction event is recorded and nothing consults it, so the DuckDB index keeps the redacted text and search returns it; a test that searches for the removed value is what this pattern's audit would have needed beside it.
+
 ## Tests to require
 
 - Mutation and audit event commit or roll back together.

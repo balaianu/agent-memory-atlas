@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 736 reports.**
+**This page covers all 737 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6668,6 +6668,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0 with a trademark NOTICE, 8,043 lines of Python in the package and 27 commits by one author, all dated 13 October 2026. Four marks, `trust_state`, `scope_enforced`, `audit_log` and `negative_eval`. CI runs 112 pytest functions on SQLite and pgvector; three benchmark runs are committed with per-session rows whose totals recompute.
 - Study when: you want procedural memory for coding agents promoted on observed, repeated success rather than on a model's judgement, with a bounded pointer and a capability mapping that carries skills between agents.
 - Do not copy when: the memory must be defended against the agent writing it, a removed skill must stay removed, or several projects on one machine must not see each other's skills.
+
+### [`brain-mcp`](../systems/brain-mcp/)
+
+- Best idea: **cite or abstain, and the citation is checkable without the database.** Every hit returns a file, a line span and a sha256 recomputed from the append-only floor at read time. `brain_get` verifies against an expected hash and reports a mismatch rather than repairing it, and zero hits return `abstained: true` with the lanes, time range and row count searched. The server's instructions turn that into a rule for the model: say what was found, with its citation, or say nothing was found in what was measured.
+- Biggest risk: **redaction stops at the lake file.** `brain-mcp redact` overwrites lines with a marker and logs the old hash, while `floor.raw_lines` and `derived.messages` keep the original text, because `refresh` inserts only message ids it has not seen. A redacted credential keeps returning as a search excerpt, beside a citation that hashes to the marker. Read from the code, the same rewrite leaves `ingest_state.last_offset` behind the lake file, so a redacted session that keeps growing fails the integrity check, and through the hook drain, which has no handler, aborts every record tick.
+- Most reusable component: the two-path capture in `visit.py` and `drain.py`. A hook spools line deltas, a poll-scan reads origins by size and prefix hash, and both feed `ingest_chunk` under one identity; a gap defers to the scan, and a prefix mismatch opens a new generation file instead of overwriting, capped at five a day.
+- Maturity impression: MIT, version 2.1.1, 2,468 lines of Python in the recorder after a rebuild that removed the v1 embedding and summarisation pipeline; 78 commits, all but one by the author; 55 pytest functions in CI on Ubuntu and macOS. The changelog states for each release how many new tests fail against the previous one. Two marks, `audit_log` and `negative_eval`.
+- Study when: you want an agent's transcript history kept verbatim, searchable and citable, with no model in the loop.
+- Do not copy when: a pasted secret must leave what the agent can retrieve, projects must not see each other's history, or the model should not hold a tool that copies the whole corpus to a path it chooses.
 
 ### [`obsidian-wiki`](../systems/obsidian-wiki/)
 

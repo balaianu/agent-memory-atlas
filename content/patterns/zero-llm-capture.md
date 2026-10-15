@@ -294,6 +294,8 @@ is the thing a deletion request has to survive.
 
 [Cloud Alter Ego](../../systems/cloud-alter-ego/) is capture with nothing after it. Two hooks write a line for every question and answer whatever the model does (`tools/auto_journal.py:129-186`), and the model's own summary line is an optional extra; the journal then reaches a later session only if the agent follows an instruction to read the newest file. The capture side also shows the scope hazard this pattern inherits from being automatic: the destination is a machine-wide `.current-context` file reread at every write, so a hook firing for one session lands in whichever client another session last selected.
 
+[brain-mcp](../../systems/brain-mcp/) captures at two independent entry points with no model on either, and reconciles them on one identity. A Claude Code Stop hook spools the lines added since the last turn and exits 0 on every path, and a 60-second poll-scan reads every origin by size and prefix hash; both call `ingest_chunk`, which appends to the lake, then the manifest, then DuckDB (`plugin/scripts/brain-stream-on-turn.sh`, `brain_mcp/recorder/drain.py:66-143`, `visit.py:92-198`). A delta overlapping what the scan took is trimmed, a gap is deferred to the scan, and a test asserts one file identity and no double-ingest across both paths (`tests/test_recorder_floor.py:158-174`). The heartbeat is a file touched before anything else, so health reads an mtime rather than a self-report; the hook's own comment records that the version it was ported from wrote its heartbeat after `exit 0`.
+
 ## Implementation checklist
 
 - Assign a stable event ID before acknowledging capture.
