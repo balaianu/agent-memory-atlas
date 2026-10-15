@@ -968,8 +968,10 @@ say what may not return. Its immune memory (`core/immune.py`) is the tombstone:
 a table of rejected claim patterns keyed on the normalized text, recorded by a
 curator or by the strict ingest path, and consulted before the truth gate by
 ingest, import and the review diagnosis, so a claim containing a recorded
-pattern is refused with the reason `Immune:` and only a force approval with a
-named actor and a reason gets past. The two tables have no edge between them,
+pattern is refused with the reason `Immune:`. A force approval with a named
+actor and a reason gets it past only as `CURATOR_OVERRIDE`, a status strict
+grounding refuses, and a curator's `immune forget` lifts the pattern under an
+audited event. The two tables have no edge between them,
 which is the first tradeoff on this list in its plainest form: erasing a claim
 for being wrong does not record it, and recording it does not erase it.
 

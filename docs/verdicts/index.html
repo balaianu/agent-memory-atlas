@@ -15344,24 +15344,25 @@ others, and rejects any missing field; thirty-nine tests say so.</li>
 one.</strong> Erasure writes a content hash that no write path reads,
 and the immune memory that does block a claim on a later write is a
 separate table a curator must populate, so an erased claim ingested
-again from its source is a new fact unless someone also recorded its
-pattern.</li>
+again from its source returns, under the same value-derived id, unless
+someone also recorded its pattern.</li>
 <li>Most reusable component: <code>core/review_decision_store.py</code>
 — a decision staged with its audit event and its canon-projection intent
 in one SQLite transaction under a compare-and-swap on the fact's
 revision, with a durable projection status when the graph fails and a
 drain that retries.</li>
-<li>Maturity impression: AGPL-3.0, 750 commits between April and August
-2026, version 0.3.0, 25,856 lines under <code>core/</code> with 2,041
-tests, a hash-chained audit log with a checkpoint, a capability matrix
-that lists what is not implemented, and a read-only MCP server; 5 of
-seven capability marks.</li>
+<li>Maturity impression: AGPL-3.0, 783 commits between April and October
+2026, version 0.3.0, 25,888 lines of Python under <code>core/</code>
+with 2,046 test functions, a hash-chained audit log with a checkpoint, a
+capability matrix that lists what is not implemented, and a read-only
+MCP server; five capability marks.</li>
 <li>Study when: your memory must answer where a fact came from and
 whether it may be said before what is relevant, or you want a review
 queue whose decisions cannot be lost to a graph outage.</li>
 <li>Do not copy when: you need a scope key, a validity interval, a
-conversational extractor, or semantic recall beyond an optional cosine
-leg.</li>
+conversational extractor, semantic recall beyond an optional cosine leg,
+or an HTTP reviewer whose credential the ingesting client does not
+hold.</li>
 </ul>
 <h3 id="forgetful"><a
 href="../systems/forgetful/"><code>forgetful</code></a></h3>

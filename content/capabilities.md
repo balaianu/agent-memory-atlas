@@ -238,7 +238,7 @@ nor graph channel; that is a gap in the review, not a system without retrieval.
 | --- | ---: | ---: | --- | --- | ---: | ---: |
 | Files on disk | 378 | 330 | | Lexical | 548 | 487 |
 | SQLite | 368 | 315 | | Vector | 483 | 414 |
-| Postgres | 142 | 123 | | Graph | 237 | 208 |
+| Postgres | 142 | 123 | | Graph | 238 | 209 |
 | Delegated to the adopter | 48 | 35 | | No arm named in the review | 86 | 59 |
 | Graph database | 44 | 40 | |  |  |  |
 | Chroma | 35 | 30 | |  |  |  |

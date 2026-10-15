@@ -9648,20 +9648,21 @@ because nothing compares the two timestamps.</p>
 <p><strong><a href="../systems/velantrim-exocortex-crystal/">Velantrim
 Crystal</a> is the family's admission kernel, and its rule is that
 discovery and authority are different code paths.</strong> A local-first
-Python store — AGPL, 750 commits since April 2026, 25,856 lines under
-<code>core/</code> with 2,041 tests — where a fact enters as
-<code>Observed</code>, a truth gate requires a source, refuses a world
-fact whose source is model output as an invariant no configuration
-reaches, and applies a confidence floor before <code>Validated</code>
-and the canon (<code>core/truth_gate.py:22-110</code>);
-<code>Contradicted</code>, <code>Deprecated</code> and
-<code>Collapsed</code> are terminal and block a read even against a
-stale graph copy, a <code>restricted</code> bit is deny-dominant, and
-<code>is_strict_canonical</code> lets only a <code>VERIFIED</code>,
+Python store — AGPL, 783 commits between April and October 2026, 25,888
+lines of Python under <code>core/</code> with 2,046 test functions —
+where a fact enters as <code>Observed</code>, a truth gate requires a
+source, refuses a world fact whose source is model output as an
+invariant no configuration reaches, and applies a fixed confidence floor
+of 0.05 before <code>Validated</code> and the canon
+(<code>core/truth_gate.py:23-91</code>). <code>Contradicted</code>,
+<code>Deprecated</code> and <code>Collapsed</code> are terminal and
+block a read even against a stale graph copy, a <code>restricted</code>
+bit is deny-dominant, and <code>is_strict_canonical</code> lets only a
+<code>VERIFIED</code>,
 <code>Validated</code>-or-<code>ImmutableCore</code>, unrestricted fact
 ground an answer or the query returns a reason code
-(<code>core/canonical_view.py:160-245</code>,
-<code>core/query_pipeline.py:254-300</code>). A curator queue approves,
+(<code>core/canonical_view.py:160-243</code>,
+<code>core/query_pipeline.py:254-356</code>). A curator queue approves,
 rejects to <code>Collapsed</code> or resolves a conflict under a
 compare-and-swap on the fact's revision with the audit event and the
 canon projection in one transaction, and the <code>audit_log</code> is a
@@ -9671,15 +9672,17 @@ claim patterns keyed on their normalized text, recorded by a curator
 from the CLI or by the ingest path itself in strict mode, and
 <code>ingest</code>, the importer and the review diagnosis screen every
 claim against it before the gate, so a recorded value is refused on
-sight and only a force approval with a named actor and a reason gets
-past; that earns <code>tombstone</code> beside <code>trust_state</code>,
-<code>audit_log</code>, <code>human_review</code> and
-<code>negative_eval</code>. Erasure is physical, cascades over
-<code>DERIVED_FROM</code> edges, refuses Ring Zero and writes a
-content-free receipt whose hash nothing consults, and it does not write
-to the immune memory; <code>bitemporal</code> and
+sight; a force approval admits it only as <code>CURATOR_OVERRIDE</code>,
+which strict grounding refuses. That earns <code>tombstone</code> beside
+<code>trust_state</code>, <code>audit_log</code>,
+<code>human_review</code> and <code>negative_eval</code>. Erasure is
+physical, cascades over <code>DERIVED_FROM</code> edges, refuses Ring
+Zero and writes a content-free receipt whose hash nothing consults, and
+it does not write to the immune memory; <code>bitemporal</code> and
 <code>scope_enforced</code> are withheld. A read-only stdio MCP server
-exposes six tools that never write.</p>
+exposes six tools that never write; the HTTP service maps one bearer
+token to one curator principal, so the token that ingests also
+approves.</p>
 <p><strong><a href="../systems/memory-garden/">Memory Garden</a> holds
 the family's strictest line on who may confirm a belief: only the person
 it is about.</strong> A retrospection agent over an Obsidian vault,

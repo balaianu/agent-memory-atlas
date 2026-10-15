@@ -31453,64 +31453,76 @@ href="../systems/velantrim-exocortex-crystal/"><code>velantrim-exocortex-crystal
 <code>epistemic_state</code>, <code>claim_type</code>,
 <code>source_status</code>, <code>significance</code>, a
 <code>restricted</code> bit and metadata — in an L1 SQLite table,
-projected as a node with edges, entities and mentions into an L3
-canonical graph, with evidence spans that bind a claim to a byte range
-of a source</td>
+projected with its <code>truth_status</code> as a node with edges,
+entities and mentions into an L3 canonical graph, with evidence spans
+that bind a claim to a byte range of a source</td>
 <td>SQLite for L1 facts, evidence spans, import and review sessions, the
 erasure log, the audit chain, the per-fact provenance chain and
-checkpoints; the L3 graph in SQLite by default with a Postgres/pgvector
-migration written and not authorized; files and receipts beside
-them</td>
-<td>A deterministic lexical candidate pass over the reader's
-propositions, a hybrid cosine-plus-lexical retrieve over admitted memory
-that blocks terminal and restricted facts and refuses to propagate
-through them, and a read-only <code>search</code>/<code>ask</code> path
-that answers only from VERIFIED, unrestricted canon or returns a named
-refusal</td>
+checkpoints; the L3 graph in on-disk SQLite unless the optional
+LadybugDB package is installed, with Neo4j selectable and a
+Postgres/pgvector migration written and not authorized; files and
+receipts beside them</td>
+<td>A bounded lexical pass when no embeddings are indexed; otherwise a
+hybrid cosine-plus-lexical retrieve over admitted memory with a graph
+walk that spreads activation along edges, blocks terminal and restricted
+facts and refuses to propagate through them; the public
+<code>search</code> and <code>query</code> paths resolve hits to canon,
+and <code>query</code> answers only from VERIFIED, evidenced,
+unrestricted canon or returns a named refusal</td>
 <td><code>ingest</code> classifies a claim, stores it as
 <code>Observed</code>, refuses it before the gate when it contains a
 recorded rejected pattern, and admits it through the truth gate — a
-source is required, model output can never be a world fact, and a
-confidence floor applies to world facts and interpretations — into
-<code>Validated</code> and the canon; a blocked fact stays
-<code>Observed</code> for the curator</td>
+source is required, model output can never be a world fact, and a fixed
+confidence floor of 0.05 applies to world facts and interpretations —
+into <code>Validated</code> and the canon; a blocked fact stays
+<code>Observed</code> for the curator. On HTTP an unprivileged caller is
+pinned to <code>USER_REPORTED</code> or <code>LLM_OUTPUT</code>, neither
+of which becomes VERIFIED</td>
 <td><code>transition_esm</code> moves a fact along a declared state
 matrix with a revision compare-and-swap; <code>erase_fact</code>
 physically removes a fact from L1, the graph, evidence and sessions,
 cascades over <code>DERIVED_FROM</code> edges when asked, refuses Ring
-Zero, and writes a content-free erasure receipt with a content hash that
-nothing consults on a later write; the rejected-value record is the
-separate <code>immune_memory</code> table, written by a curator or by
-the strict ingest path and read before the gate</td>
+Zero, and writes a content-free erasure receipt whose content hash no
+write path reads; the rejected-value record is the separate
+<code>immune_memory</code> table, written by a curator or by the strict
+ingest path and read before the gate</td>
 <td>One store per install; a <code>restricted</code> bit and a
 whole-session restriction implement a processing restriction per fact,
-not a partition by principal</td>
+not a partition by principal. Curator principals carry
+<code>fact:</code> scopes that authorize review writes, not reads</td>
 <td>A FastAPI service with <code>/ingest</code>, <code>/ask</code>,
 <code>/receipt</code>, <code>/verify-receipt</code>,
-<code>/evidence/{fact_id}</code> and the <code>/review/*</code> routes,
-a read-only stdio MCP server with six tools that never write, a CLI with
-ingest, ask, audit, review, erasure and session commands, and source
-adapters for PDF, EPUB, BibTeX, RDF, Wikidata and YAML</td>
+<code>/evidence/{fact_id}</code> and the <code>/review/*</code> routes
+behind one bearer token, a read-only stdio MCP server with six tools
+that never write, a CLI with ingest, ask, audit, review, erasure, immune
+and session commands, and source adapters for PDF, EPUB, BibTeX, RDF,
+Wikidata and YAML</td>
 <td>None on the memory; a curator runtime and a review session are
-explicit, the L3 outbox drains on the next access, and reindexing is a
-command</td>
-<td>Eight epistemic states and six truth statuses on the fact, a source
-status that names model output as such, a Ring Zero of immutable facts,
-a restricted bit that wins over every read, and an immune memory of
-rejected claim patterns that blocks a matching claim before the
-gate</td>
+explicit, the L3 outbox drains on the next access, reindexing is a
+command, and the <code>consolidate</code> decay pass has no caller</td>
+<td>Eight epistemic states and six truth statuses, a source status that
+names model output as such, a Ring Zero of immutable facts, a restricted
+bit that wins over every read, an immune memory of rejected claim
+patterns that blocks a matching claim before the gate, and a
+<code>CURATOR_OVERRIDE</code> status for force-approved facts that
+strict grounding refuses</td>
 <td>A truth gate whose one hard invariant cannot be configured away;
 canonical grounding as a pure predicate that fails closed on any missing
-field; a review that refuses to approve into a conflict; an audit chain
-with a checkpoint against suffix deletion; erasure that cascades over
-derived facts and is idempotent</td>
-<td>No scope key inside a store; erasure and rejection are separate
-records, so an erased claim re-ingested from the same source is a new
-fact unless a curator has recorded its pattern in the immune memory; the
-immune match is whole-token containment, so a paraphrase of a recorded
-pattern passes; the semantic reader, ANN index and NLI filter are
-declared not implemented, so retrieval is the bounded lexical and cosine
-path; the audit detail is content-free by convention</td>
+or inconsistent field; a review that refuses to approve into a conflict;
+an audit chain with a checkpoint against suffix deletion; erasure that
+cascades over derived facts and is idempotent; a force approval that
+admits a blocked claim without letting it ground a strict answer</td>
+<td>No scope key inside a store. Erasure and rejection are separate
+records: an erased claim re-ingested from a source returns under the
+same value-derived id unless a curator has recorded its pattern, and
+erasure leaves a recorded pattern as normalized plaintext in the immune
+table. The immune match is whole-token containment, so a paraphrase
+passes. The bundled HTTP service maps one bearer token to one curator
+principal, so a client trusted to ingest is trusted to approve;
+unauthenticated local mode makes every caller the synthetic admin.
+<code>source_status</code> is a declared label on the Python path. The
+audit detail is content-free by convention, and approve records the
+curator's free-text note and reason in it</td>
 </tr>
 <tr>
 <td><a href="../systems/velesdb/"><code>velesdb</code></a></td>
