@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A held-out evaluation that removes
-each query's text from its own host chunk before indexing, so lexical
-search cannot win by finding the question inside the answer.">
+    <meta name="description" content="A single cgo-free Go binary that
+indexes a project's documents into SQLite and serves cited BM25 hits
+over MCP, with a leakage-controlled held-out retrieval eval.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="mnemos — Agent Memory Atlas">
-    <meta property="og:description" content="A held-out evaluation that
-removes each query's text from its own host chunk before indexing, so
-lexical search cannot win by finding the question inside the answer.">
+    <meta property="og:description" content="A single cgo-free Go binary
+that indexes a project's documents into SQLite and serves cited BM25
+hits over MCP, with a leakage-controlled held-out retrieval eval.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="mnemos — Agent Memory Atlas">
-    <meta name="twitter:description" content="A held-out evaluation that
-removes each query's text from its own host chunk before indexing, so
-lexical search cannot win by finding the question inside the answer.">
+    <meta name="twitter:description" content="A single cgo-free Go
+binary that indexes a project's documents into SQLite and serves cited
+BM25 hits over MCP, with a leakage-controlled held-out retrieval eval.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>mnemos — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -41,7 +41,7 @@ lexical search cannot win by finding the question inside the answer.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "mnemos",
-      "description": "A held-out evaluation that removes each query's text from its own host chunk before indexing, so lexical search cannot win by finding the question inside the answer.",
+      "description": "A single cgo-free Go binary that indexes a project's documents into SQLite and serves cited BM25 hits over MCP, with a leakage-controlled held-out retrieval eval.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -99,23 +99,23 @@ lexical search cannot win by finding the question inside the answer.">
           <p class="eyebrow">Strip the query from the document before
 you test retrieval</p>
           <h1>mnemos</h1>
-          <p class="document-deck">A held-out evaluation that removes
-each query's text from its own host chunk before indexing, so lexical
-search cannot win by finding the question inside the answer.</p>
+          <p class="document-deck">A single cgo-free Go binary that
+indexes a project's documents into SQLite and serves cited BM25 hits
+over MCP, with a leakage-controlled held-out retrieval eval.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/arhuman/mnemos">
               <span>Source</span>
               <strong>arhuman/mnemos</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/arhuman/mnemos/commit/6e7b14f45bf18210196f0d8728f80c5e46929ac3" title="6e7b14f45bf18210196f0d8728f80c5e46929ac3">
+            <a class="meta-pill revision-pill" href="https://github.com/arhuman/mnemos/commit/8d8d65c6dfb5e74293770163fb3e868521e40610" title="8d8d65c6dfb5e74293770163fb3e868521e40610">
               <span>Analyzed revision</span>
-              <code>6e7b14f4…</code>
+              <code>8d8d65c6…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-17</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/arhuman--mnemos" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -123,7 +123,20 @@ search cannot win by finding the question inside the answer.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+for mnemos's own code; vendored example material such as the onpage-seo
+bundle stays under its own terms</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>36,380
+lines of Go in 259 files, 17,119 of them in 132 test files; 24 packages
+under internal/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>134
+commits on main by one author name and two dependency bots, 29 June – 11
+October 2026; past the v0.3.0 tag</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>680
+Go test functions in 132 files; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -139,362 +152,699 @@ search cannot win by finding the question inside the answer.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>mnemos gives a coding agent "a local, cited memory" of ADRs, design
-docs, notes, runbooks and source — "No vector database. No Ollama. No
-Python or Node service. Just one cgo-free Go binary", with every answer
-landing "on the exact <code>file#section</code> and line range".</p>
-<p><strong>Two things in it are worth taking, and both are about not
-fooling yourself.</strong></p>
-<p><strong>First, <code>internal/eval</code> is a held-out retrieval
-evaluation shipped as a package of the system</strong>, with the leakage
-control most self-built retrieval evals miss:</p>
-<blockquote>
-<p>"Derives example-query/expected-document pairs from a bundle, builds
-a held-out copy of the corpus <strong>with those queries stripped from
-their host chunks</strong>, ingests the copy into an ephemeral database,
-runs each query through the Retriever, and computes doc-level retrieval
-metrics <strong>against a versioned baseline</strong>."</p>
-</blockquote>
-<p>If you generate questions from your documents and then index those
-same documents, the question's wording is <em>inside</em> the chunk that
-should answer it, and a lexical retriever scores near-perfectly for a
-reason that has nothing to do with retrieval quality. Stripping the
-query text from its host chunk before indexing is the fix, and the AST
-used to do it is deliberately the same one ingestion uses — "it mirrors
-the parser configuration used by the ingest pipeline (CommonMark
-defaults) so the AST view of a document matches what ingestion
-sees."</p>
-<p>The metrics are <code>HitAt1</code>, <code>RecallAtK</code>,
-<code>MRRAtK</code>, <code>ExactChunk</code> and <code>N</code>,
-compared against a baseline JSON, and a missing baseline is
-"intentionally not an error; callers print without deltas" — so the
-first run works and every run after it shows movement.</p>
-<p><strong>Second, the secret scanner is built so its own findings
-cannot leak the secret:</strong></p>
-<blockquote>
-<p>"The matched substring is held on an unexported field so it cannot
-leak through serialization or an external caller: the remember tool
-reports only Rule names and never echoes the value back to the
-agent."</p>
-</blockquote>
-<p>A scanner that finds an AWS key and then hands the model a report
-containing the key has moved the secret into the context window it was
-protecting. Using Go's visibility rules as the enforcement — the field
-cannot be marshalled because it is unexported — is exactly the right
-mechanism, and this atlas has not seen another scanner do it.</p>
+<p>mnemos gives a coding agent a local, cited memory of a project's
+ADRs, design docs, runbooks and source: one cgo-free Go binary indexes
+the files into SQLite and returns BM25 hits that land on a
+<code>file#section</code> and a line range. Its strongest parts are a
+retrieval evaluation that cannot be won by leakage and a secret scanner
+whose finding cannot carry the secret. Its weak side is scope: the
+collection that partitions the index is a filter the calling model may
+omit.</p>
+<p><strong>The evaluation is a package of the system,
+<code>internal/eval</code>, with the leakage control most self-built
+retrieval evals miss.</strong> Its contract is to build a held-out copy
+of the corpus <em>"with those queries stripped from their host
+chunks"</em>, ingest it into an ephemeral database, and compare against
+a versioned baseline (<code>internal/eval/holdout.go:1-5</code>). A
+question generated from a document sits inside the chunk that answers
+it, so a lexical retriever scores near-perfectly for a reason unrelated
+to retrieval. Stripping it first is the fix, and the AST that strips it
+is the ingest pipeline's own configuration
+(<code>holdout.go:19-22</code>).</p>
+<p><strong>The secret scanner keeps the match on an unexported
+field</strong>, <em>"so it cannot leak through serialization or an
+external caller"</em> (<code>internal/security/secrets.go:8-12</code>).
+A scanner that reports the key it found has moved the secret into the
+context window it was protecting; Go's visibility rules make that
+impossible rather than discouraged. The scan runs on
+<code>remember</code> and <code>okfy</code>
+(<code>internal/memory/write.go:86</code>,
+<code>internal/ingest/okfy.go:89</code>) and on directory ingest while
+<code>[security].exclude_secrets</code> is on, which is the default
+(<code>internal/cli/encoding.go:24-26</code>,
+<code>internal/ingest/process.go:313-333</code>).</p>
+<p><strong>One mark, <code>negative_eval</code>.</strong> A server-side
+deny list removes named collections from search, context, list, related
+and read, and committed tests assert a denied collection never surfaces
+from a populated store beside a visible one that must (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>).
+<code>scope_enforced</code> is not awarded: <code>collection</code> is
+an optional argument on <code>mnemos.search</code>, an omitted one
+searches every collection, and <code>mnemos.read</code> takes a uri with
+no collection at all (<a href="#6-retrieval-mechanics">section
+6</a>).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>Files on disk are the memory. <code>mnemos ingest</code> chunks them
-into a SQLite index under <code>.mnemos/</code>,
-<code>mnemos search</code> returns chunks with their locations, and the
-agent reads the cited section rather than being handed a summary.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the secret scanner reports a rule name and keeps the matched value on an unexported field, and the eval strips each query's text from its host chunk before re-ingesting into an ephemeral database</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the secret scanner reports a rule name and keeps the matched value on an unexported field, and the eval strips each query&#39;s text from its host chunk before re-ingesting into an ephemeral database
+<p>A memory is a file. Whatever is on disk under the workspace's
+<code>kb/</code> root, or under an external tree registered read-only,
+is chunked into the index and returned as a citation; the agent reads
+the cited section rather than a summary. There is no extraction, no
+model in the write path and no belief state: an indexed document is
+retrievable, and the only questions are how high it ranks and whether a
+filter removes it.</p>
+<p>Four things move a document's standing.</p>
+<ul>
+<li><strong>Supersession demotes.</strong> A
+<code>superseded_by: &lt;uri&gt;</code> frontmatter key multiplies the
+document's score by 0.25 and attaches the replacement uri to every hit,
+resolved one hop and reported as unresolved when the target is not
+indexed (<code>internal/search/engine.go:182-199</code>,
+<code>internal/search/bm25.go:149-169</code>). ADR-0010 chose
+<em>"demote, never hide"</em>, so a superseded ADR returns and cites
+like any other. The key is plain frontmatter, and an agent that can
+write the file can write it.</li>
+<li><strong>The journal is a class excluded from ranked
+retrieval.</strong> A document whose declared type is
+<code>journal</code> is stamped <code>journal = 1</code> at ingest and
+filtered out of search, context and graph expansion; only
+<code>mnemos.search</code> and the CLI can opt back in with
+<code>include_journal</code>
+(<code>internal/storage/migrations/0006_journal.sql:15</code>,
+<code>bm25.go:118-120</code>). It stays readable by uri. A journal entry
+leaves review when <code>promoted_to</code> is stamped with the kb
+document that absorbed it, or with <code>none</code>
+(<code>internal/memory/journal.go:101</code>).</li>
+<li><strong>The deny list hides.</strong> Collections named in
+<code>[security].visibility.deny</code> are removed from every read
+surface, and a uri or chunk id in one returns the same not-found as an
+absent one (<code>internal/memory/service.go:83-92</code>,
+<code>internal/memory/read.go:68-74</code>).</li>
+<li><strong>Deletion is a file operation.</strong> <code>forget</code>
+removes the file and its index row; a directory ingest,
+<code>reindex --content</code> and the watcher evict documents whose
+file is gone (<code>internal/ingest/reconcile.go</code>).</li>
+</ul>
+<p>The model holds most of the verbs. With
+<code>[mcp].allow_write</code> on it can <code>remember</code> into any
+confined path, including over an authored document, and it holds
+<code>journal_promote</code>; with <code>allow_delete</code> it holds
+<code>forget</code> and <code>move</code>
+(<code>internal/mcp/server.go:92-106</code>). Nothing it writes is held
+for anyone else to admit.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — every write path reaches the index as a file, supersession and the journal flag change ranking or default visibility rather than truth, and the deny list is the one filter the caller cannot lift</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: every write path reaches the index as a file, supersession and the journal flag change ranking or default visibility rather than truth, and the deny list is the one filter the caller cannot lift
 flowchart TD
-    F[&quot;docs, ADRs, runbooks, source&quot;] --&gt; IN[&quot;mnemos ingest --collection X&quot;]
-    IN --&gt; SEC{&quot;SecretScanner&quot;}
-    SEC --&gt;|&quot;match&quot;| RPT[&quot;report Rule name only —&lt;br/&gt;matched value on an unexported field,&lt;br/&gt;never serialized to the agent&quot;]
-    SEC --&gt;|clean| CH[&quot;chunk by markdown structure&quot;]
-    CH --&gt; DB[&quot;SQLite: documents + chunks&lt;br/&gt;uri, collection, line range&quot;]
-    Q[&quot;mnemos search / MCP&quot;] --&gt; BM[&quot;BM25 over chunks&lt;br/&gt;WHERE d.collection = ?&quot;]
-    DB --&gt; BM
-    BM --&gt; CITE[&quot;result: file#section + line range&quot;]
-    E[&quot;mnemos eval&quot;] --&gt; PAIRS[&quot;derive query / expected-doc pairs&quot;]
-    PAIRS --&gt; STRIP[&quot;strip each query&#39;s text from its host chunk&lt;br/&gt;(same goldmark config as ingest)&quot;]
-    STRIP --&gt; EPH[&quot;ingest the held-out copy into an ephemeral DB&quot;]
-    EPH --&gt; RUN[&quot;run every query through the Retriever&quot;]
-    RUN --&gt; M[&quot;HitAt1, RecallAtK, MRRAtK, ExactChunk, N&quot;]
-    M --&gt; BASE[&quot;compare to versioned baseline JSON&lt;br/&gt;(missing baseline: print without deltas)&quot;]</code></pre></details></figure>
+    A[&quot;mnemos ingest / add / watch&lt;br/&gt;a directory or a registered origin&quot;] --&gt; S{&quot;SecretScanner&lt;br/&gt;while exclude_secrets is on&quot;}
+    R[&quot;mnemos.remember / okfy&lt;br/&gt;(allow_write)&quot;] --&gt; S2{&quot;SecretScanner&lt;br/&gt;always&quot;}
+    H[&quot;Stop hook: one entry per turn&lt;br/&gt;request, files touched, final text&quot;] --&gt; R
+    S --&gt;|&quot;match: skip file,&lt;br/&gt;log rule names only&quot;| X[&quot;not indexed&quot;]
+    S2 --&gt;|&quot;match: reject,&lt;br/&gt;rule names only&quot;| X
+    S --&gt;|clean| F[&quot;file on disk under kb/&lt;br/&gt;or a read-only origin&quot;]
+    S2 --&gt;|clean| F
+    F --&gt; IX[&quot;SQLite: documents + chunks + FTS5&lt;br/&gt;collection, frontmatter_json,&lt;br/&gt;journal flag from declared type&quot;]
+    IX --&gt; Q[&quot;search / context / recall hook&quot;]
+    Q --&gt; FL[&quot;WHERE journal = 0 unless include_journal&lt;br/&gt;AND collection NOT IN deny list&lt;br/&gt;AND collection = ? only if the caller passes one&quot;]
+    FL --&gt; SC[&quot;bm25 + heading boost&lt;br/&gt;x recency (off by default)&lt;br/&gt;x 0.25 when superseded_by is set&quot;]
+    SC --&gt; HIT[&quot;hit: uri, heading path, line range,&lt;br/&gt;superseded_by and whether it resolves&quot;]
+    IX --&gt; RD[&quot;read by uri or chunk_id&lt;br/&gt;deny list only; journal readable&quot;]
+    IX --&gt; JP[&quot;journal_pending: entries with no promoted_to&quot;]
+    JP --&gt; PR[&quot;agent writes the kb document with remember,&lt;br/&gt;then journal_promote stamps promoted_to&quot;]
+    PR --&gt; IX</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
-<p><code>internal/</code> is twenty focused packages:
-<code>ingest</code>, <code>chunk</code>, <code>parse</code>,
-<code>search</code>, <code>storage</code>, <code>embed</code>,
-<code>memory</code>, <code>okf</code>, <code>eval</code>,
-<code>security</code>, <code>browse</code>, <code>mcp</code>,
-<code>cli</code>, <code>app</code>, <code>config</code>,
-<code>doctor</code>, <code>model</code>, <code>workspace</code>,
-<code>testutil</code>, <code>version</code>.</p>
-<p>A <code>doctor</code> package and a
-<code>THIRD-PARTY-NOTICES.md</code> alongside a <code>SECURITY.md</code>
-and a <code>CODE_OF_CONDUCT.md</code> is unusually complete for a
-single-binary tool.</p>
-<p><strong>The distribution claim is the design constraint.</strong> One
-cgo-free Go binary means no Python, no Node, no model server, no vector
-database and no container — the whole system is
-<code>make install</code> and a TOML file. That rules out embeddings as
-the primary retrieval mechanism, which is why BM25 does the work, and it
-is a coherent trade rather than an omission.</p>
-<p>19,800 lines of Go and <strong>84 test files</strong> — the highest
-test-to-source ratio in this batch.</p>
+<p><code>internal/</code> holds 24 packages, from <code>ingest</code>,
+<code>chunk</code>, <code>parse</code>, <code>storage</code>,
+<code>search</code> and <code>embed</code> through <code>memory</code>,
+<code>mcp</code>, <code>cli</code>, <code>eval</code>,
+<code>security</code>, <code>doctor</code> and <code>tui</code>.
+<code>memory</code> is the verb layer that the CLI and the MCP server
+both call, so gating and option construction cannot drift between
+surfaces (<code>internal/memory/service.go:1-11</code>).</p>
+<p><strong>The distribution claim is the design constraint.</strong> The
+README promises <em>"No vector database. No Ollama. No Python or Node
+service. Just one cgo-free Go binary"</em>. The default build is lexical
+only: <code>internal/embed</code> compiles a no-op embedder unless the
+binary is built with <code>-tags embed</code>, which pulls in a pure-Go
+ONNX stack for all-MiniLM-L6-v2 and keeps <code>CGO_ENABLED=0</code>
+(<code>internal/embed/noop.go</code>,
+<code>docs/adr/0001-embeddings-cgo-free.md</code>). Vector search is
+then a brute-force scan over an <code>embeddings</code> table, fused
+with BM25 by reciprocal rank (<code>internal/search/hybrid.go:58</code>,
+<code>:239</code>).</p>
+<p><strong>One workspace, one database.</strong>
+<code>internal/workspace</code> resolves a single
+<code>MNEMOS_DIR</code> by precedence: <code>--config</code>,
+<code>--mnemos-dir</code>, <code>$MNEMOS_DIR</code>,
+<code>$CLAUDE_PROJECT_DIR</code>, the nearest <code>./.mnemos</code>
+walking up to the git root, and finally <code>~/.mnemos</code>
+(<code>internal/workspace/workspace.go:88-185</code>). Under
+<code>$CLAUDE_PROJECT_DIR</code> it fails closed rather than fall
+through to the global store. Config, <code>kb/</code>, the index
+database and models are fixed subpaths of the anchor. A second project
+is a second database; the global default is one database in which
+collections stand for projects.</p>
+<p><strong>Registered origins</strong> index an external tree in place
+under an operator-chosen prefix, recorded in an <code>origins</code>
+table, and every write verb refuses a uri under a registered prefix
+before the path guard runs
+(<code>internal/storage/migrations/0007_origins.sql</code>,
+<code>docs/adr/0013-registered-external-origins.md</code>).</p>
+<p>SQLite runs through <code>modernc.org/sqlite</code> with WAL,
+<code>foreign_keys</code> on every pooled connection and a single writer
+(<code>internal/storage/sqlite.go</code>,
+<code>docs/adr/0012-write-transaction-locking.md</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to be running. <code>make install</code> puts one binary
+in <code>$GOBIN</code>, <code>mnemos init</code> creates
+<code>.mnemos/</code> with <code>mnemos.toml</code>, <code>kb/</code>,
+the database and a models directory, and
+<code>mnemos add docs --collection myproject</code> copies and indexes a
+directory. No API key is needed to store or retrieve anything. The store
+is markdown a person can open, diff and repair, and the index is
+rebuildable from it, apart from the origin registrations, which
+<code>origin list --json</code> exports. <code>mnemos doctor</code>
+reports broken links, chunkless documents and missing files.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><strong>Evaluate</strong> — <code>internal/eval/holdout.go</code>
-(the package contract <code>:1-5</code>, the shared goldmark instance
-and why <code>:19-22</code>), <code>eval.go</code>,
-<code>metrics.go</code> (<code>Metrics</code> <code>:6-14</code>),
-<code>baseline.go</code> (<code>loadBaseline</code> and the missing-file
-decision <code>:12-25</code>), <code>coverage_test.go</code>,
-<code>buildretriever_noembed_test.go</code>.</p>
-<p><strong>Screen</strong> — <code>internal/security/secrets.go</code>
-(the package contract and the unexported-match rationale
-<code>:1-12</code>), <code>paths.go</code>.</p>
-<p><strong>Retrieve</strong> — <code>internal/search/bm25.go</code> (the
-collection predicate <code>:103</code>), <code>engine_test.go</code>,
-<code>bench_test.go</code>.</p>
-<p><strong>Cite</strong> — <code>internal/memory/write.go</code>,
-<code>read.go</code>, <code>internal/storage/documents.go</code>.</p>
+<p><strong>Capture and write.</strong>
+<code>internal/memory/write.go:62</code> (<code>Remember</code>: the
+<code>allow_write</code> gate <code>:66</code>, the secret scan
+<code>:86</code>, path confinement and <code>PrepareOKF</code>),
+<code>internal/memory/journal_entry.go:62</code>
+(<code>WriteJournalEntry</code>, through <code>Remember</code>),
+<code>internal/cli/hook.go</code> and <code>hook_transcript.go</code>
+(the Stop hook reads only the last turn),
+<code>internal/ingest/pipeline.go</code> and <code>process.go</code>
+(<code>scanSecrets</code> <code>:313-333</code>, the
+<code>ingested</code> event <code>:194</code>),
+<code>internal/ingest/reconcile.go</code> (eviction of documents whose
+file is gone).</p>
+<p><strong>Retrieve.</strong>
+<code>internal/search/bm25.go:101-129</code> (<code>filterClause</code>:
+collection, path prefix, file type, modified-since, journal and deny
+list), <code>bm25.go:143-177</code> (the FTS statement and the one-hop
+<code>superseded_by</code> join),
+<code>internal/search/engine.go:104-105</code> (the score composition)
+and <code>:182-199</code> (the 0.25 demotion),
+<code>internal/search/graph.go</code> (link expansion, which honours the
+deny list and the journal flag), <code>internal/search/hybrid.go</code>
+(vector arm and RRF).</p>
+<p><strong>Assemble context.</strong>
+<code>internal/memory/service.go:149</code>
+(<code>ContextWithOptions</code>: group by document, relevance cliff,
+char and token budgets), <code>internal/cli/hook.go:156</code>
+(<code>writeWorkingSet</code>, the session-start injection of open tasks
+and recent decisions) and <code>:261</code> (<code>hookRecall</code>, a
+lexical search on prompts that carry a recall cue or end in a question
+mark).</p>
+<p><strong>Read by address.</strong>
+<code>internal/memory/read.go:79</code> (<code>ReadChunk</code>),
+<code>:128</code> (<code>ReadDocumentOpts</code>), each checking
+<code>hiddenCollection</code> (<code>:68-74</code>);
+<code>internal/memory/related.go:56</code>.</p>
+<p><strong>Journal review.</strong>
+<code>internal/memory/journal.go:52</code>
+(<code>ListPendingJournal</code>), <code>:101</code>
+(<code>PromoteJournal</code>, refusing a second stamp and a target that
+is not an indexed, visible, non-journal document), <code>:222</code>
+(<code>PruneJournal</code>, CLI only, <code>--apply</code> behind
+<code>allow_delete</code>).</p>
+<p><strong>Evaluate.</strong> <code>internal/eval/holdout.go</code>,
+<code>eval.go</code>, <code>metrics.go:6-14</code>,
+<code>baseline.go:12-28</code>, <code>internal/cli/eval.go</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Documents and chunks in SQLite, addressed by <code>uri</code>,
-grouped by <code>collection</code>, with a section anchor and a line
-range so a result is a location rather than a blob.</p>
-<p>There is no status field, no confidence, no supersession pointer and
-no tombstone. The files are the memory and re-ingesting is the update
-path.</p>
-<p><strong>The consequence is worth stating because it cuts against the
-product's own pitch.</strong> The README's first complaint is that an
-agent "forgets why you rejected an architecture" — and a rejected ADR,
-indexed, reads exactly like an accepted one. mnemos will cite it
-faithfully, with the file and line, and nothing in the index says which
-way the decision went. Citation solves <em>where did this come
-from</em>; it does not solve <em>is this still the decision</em>. Many
-ADR conventions carry a <code>status: superseded</code> header, and
-reading it into a retrieval signal is the obvious next mechanism.</p>
+<p><code>documents</code> carries <code>id</code>, <code>uri</code>,
+<code>collection</code>, <code>content_hash</code>, <code>title</code>,
+<code>mime_type</code>, <code>size_bytes</code>,
+<code>modified_at</code>, <code>indexed_at</code>, the raw
+<code>frontmatter_json</code> and the <code>journal</code> flag;
+<code>chunks</code> carries the heading path, line range, tags and doc
+type, mirrored into an FTS5 table; <code>links</code> holds
+document-level edges; <code>embeddings</code> holds vectors keyed by
+chunk and model (<code>internal/storage/migrations/0001_init.sql</code>,
+<code>0002_embeddings.sql</code>, <code>0006_journal.sql</code>).</p>
+<p><strong>Frontmatter is schemaless except where code reads
+it.</strong> The keys a read path consults are
+<code>superseded_by</code> (ranking and the hit payload),
+<code>type</code> (the journal flag at ingest), a task
+<code>status</code> enum of backlog, todo, in_progress, done and
+cancelled (the list filter and the session-start working set), and a
+journal entry's <code>promoted_to</code> and <code>captured_at</code>
+(<code>internal/okfschema/okfschema.go:45</code>, <code>:60</code>,
+<code>internal/storage/documents.go:237</code>). None of them is an
+epistemic status: no key says a document is believed, disputed or
+rejected.</p>
+<p><strong>Temporal fields are file times.</strong>
+<code>modified_at</code> comes from the file, and
+<code>indexed_at</code> is the index write; recency ranking reads the
+first. Nothing records when the content became true.</p>
+<p><strong>The <code>events</code> table is not an audit trail.</strong>
+Its one producer appends an <code>ingested</code> row per document write
+(<code>internal/ingest/process.go:194</code>), and
+<code>document_id</code> references
+<code>documents(id) ON DELETE CASCADE</code>
+(<code>internal/storage/migrations/0003_events_document_id.sql:6</code>).
+Forgetting a document, or re-ingesting a uri under a new collection,
+deletes its events with it
+(<code>internal/storage/documents.go:69-73</code>,
+<code>:124-126</code>).</p>
+<p><strong>ADR-0008 proposes a trust model and states the gap in the
+project's own words.</strong> mnemos <em>"commits an agent-authored
+memory as ground truth the instant an agent asserts it"</em>, and
+<em>"the consequence is recall pollution"</em>. The ADR's status is
+<code>Proposed</code>, and no confidence, enforcement, provenance or
+reviewer key is read in <code>internal/parse</code>,
+<code>internal/memory</code>, <code>internal/okfschema</code> or
+<code>internal/storage</code>. ADR-0010's supersession pointer is the
+part of that direction that shipped.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 over chunks with <code>d.collection = ?</code> appended as a
-condition — a stored key reaching the query, so
-<code>scope_enforced</code> is earned — and the collection filter has
-both a unit test ("collection filter narrows results") and a benchmark
-comparing "an unfiltered scan and a collection-filtered one" over
-roughly 10,000 chunks. Benchmarking the filtered and unfiltered paths
-against each other is how you find out whether your scope predicate is
-also an index-usage bug.</p>
-<p>Lexical retrieval with no semantic fallback is the trade the
-single-binary constraint buys. For the stated corpus — ADRs, runbooks,
-design docs, source — the vocabulary is largely shared between question
-and document, which is the case where BM25 does well; it is the wrong
-tool when the user's words and the document's diverge.</p>
+<p>BM25 over chunks with column weights favouring heading path (2.0) and
+tags (1.5), plus a flat heading boost when a query term appears in the
+heading path (<code>internal/search/bm25.go:15-26</code>). Queries are
+tokenised into quoted barewords joined by implicit AND, which never
+raises an FTS5 syntax error and means a natural-language question with
+stopwords can return nothing (<code>bm25.go:40-52</code>). The score is
+then multiplied by a recency factor, off by default, and by 0.25 when
+<code>superseded_by</code> is set (<code>engine.go:104-105</code>).</p>
+<p><strong>The collection is a caller's filter, not a boundary.</strong>
+<code>filterClause</code> appends <code>d.collection = ?</code> only
+when the query carries one (<code>bm25.go:102-105</code>).
+<code>mnemos.search</code>, <code>mnemos.context</code> and
+<code>mnemos.list</code> each take <code>collection</code> as an
+optional argument from the model, and <code>mnemos.read</code> and
+<code>mnemos.related</code> take a uri or chunk id with no collection
+(<code>internal/mcp/tools_search.go:19</code>,
+<code>tools_read.go:16-17</code>, <code>tools_related.go:14</code>).
+<code>mnemos serve</code> binds none
+(<code>internal/cli/serve.go</code>). The recall hook and the
+session-start working set pass none either, and in the global
+<code>~/.mnemos</code> workspace the working set labels each line by
+collection because it spans projects
+(<code>internal/cli/hook.go:156-161</code>, <code>:439-441</code>). So
+the stored key partitions the index for a caller that asks, and confines
+no reader to a partition.</p>
+<p><strong>The deny list is the filter the caller cannot lift.</strong>
+<code>Service.Search</code> overwrites <code>ExcludeCollections</code>
+from config on every query (<code>internal/memory/service.go:85</code>),
+the read verbs return the not-found shape for a denied uri or chunk
+(<code>read.go:92</code>, <code>:144</code>), and list, related, graph
+expansion, <code>journal_pending</code>, the working set and
+similar-documents apply the same list
+(<code>internal/memory/list.go:38</code>, <code>related.go:67</code>,
+<code>:123</code>, <code>internal/search/graph.go:74-75</code>,
+<code>internal/memory/edit.go:149</code>). It hides a collection from
+every reader of the workspace, which is visibility rather than
+scope.</p>
+<p><strong>Supersession reaches the lexical and graph arms, not the
+vector arm.</strong> The lexical engine and graph expansion read
+<code>superseded_by</code> and apply the demotion
+(<code>engine.go:105</code>, <code>graph.go:189-214</code>). The vector
+arm's hydrate query selects no frontmatter
+(<code>internal/search/hybrid.go:164-168</code>), so in a semantic build
+a superseded document found by its vector carries no pointer and no
+demotion into the fusion; it loses only its lexical rank's share of the
+RRF score.</p>
+<p><strong>Context is bounded.</strong> <code>mnemos.context</code>
+groups to the best chunk per document, trims the low-relevance tail with
+a relevance cliff, and caps each block by characters or tokens
+(<code>internal/memory/service.go:110-134</code>). The recall hook
+injects at most three cited hits by default for prompts that carry a
+recall cue or end in a question mark, skipping prompts over 2,000
+characters (<code>internal/cli/hook.go:128</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Ingest a directory into a named collection. Content passes the
-<code>SecretScanner</code> before it is written — the package docstring
-calls the security package "the guardrails that keep mnemos local-first
-and secret-free: the SecretScanner that screens captured content before
-it is written, and the path/exclude rules that bound what the agent can
-touch".</p>
-<p>Screening at write time rather than read time is the correct side of
-the boundary, and pairing it with path rules that bound what may be read
-at all is the other half.</p>
+<p>Writes are files. <code>mnemos ingest</code> and <code>add</code>
+index a directory into a named collection; <code>watch</code> reindexes
+on change; <code>remember</code> writes an OKF markdown file under
+<code>kb/capture/</code> or a confined caller-chosen path and indexes it
+synchronously unless capture is deferred to a watcher; <code>okfy</code>
+converts an existing text file. There is no extraction and no model call
+on any write path.</p>
+<p><strong>Secret screening covers every write path, with one
+switch.</strong> <code>remember</code> and <code>okfy</code> scan
+unconditionally and refuse with rule names only. Directory ingest,
+<code>add</code>, <code>watch</code>, <code>reindex</code> and
+<code>migrate</code> scan when <code>exclude_secrets</code> is on and
+skip a matching file with a warning naming the rules
+(<code>internal/cli/encoding.go:19-29</code>). The same flag governs the
+path globs that keep <code>.env</code>, keys and <code>secrets/</code>
+out of the scan, so turning it off disables both at once, which the code
+comment states as the intent.</p>
+<p><strong>The journal is automatic capture with a narrow door.</strong>
+The Stop hook writes one entry per turn, copying the request, the files
+touched and the final assistant text verbatim, the request and the
+outcome each capped at 2,000 runes, through <code>Remember</code>, so
+the write gate and the secret scan apply
+(<code>internal/memory/journal_entry.go:19-30</code>, <code>:62</code>).
+A rerun for the same turn updates the entry, and an entry carrying
+<code>promoted_to</code> is left untouched. Journal content reaches
+citable retrieval only when the agent writes a kb document with
+<code>remember</code> and stamps the entry with
+<code>journal_promote</code>; nothing promotes automatically.</p>
+<p><strong>Deletion is reconciliation.</strong> A directory ingest and
+<code>reindex --content</code> reconcile the index against disk under a
+segment-aware uri prefix, so a deleted file stops being cited; the
+watcher prefix-evicts a removed directory
+(<code>internal/ingest/reconcile.go</code>,
+<code>internal/ingest/watcher.go</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write path is synchronous and local: a <code>remember</code> call
+scans, writes and indexes before returning. Nothing rereads the whole
+store on a schedule; the eval and <code>reindex</code> are commands. The
+recall hook runs the lexical engine only, so the prompt-submit path
+never loads the ONNX model, and its injection is capped by a token
+budget.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>An MCP server and a CLI from the same binary, a <code>skills/</code>
-directory, <code>mnemos init</code> writing <code>.mnemos.toml</code>
-and <code>.mnemos/</code>, and a <code>doctor</code> command. The
-README's 60-second path is clone, <code>make install</code>,
-<code>init</code>, <code>ingest</code>, <code>search</code>.</p>
+<p>An MCP server over stdio and a CLI from the same binary. Read tools
+are always registered: <code>search</code>, <code>read</code>,
+<code>context</code>, <code>list</code>, <code>related</code> and
+<code>journal_pending</code>. <code>remember</code>, <code>okfy</code>
+and <code>journal_promote</code> register only with
+<code>allow_write</code>, and <code>forget</code> and <code>move</code>
+only with <code>allow_delete</code>, so a disabled tool is absent from
+<code>tools/list</code>
+(<code>internal/mcp/server.go:63-106</code>).</p>
+<p><code>make install-skill</code> copies the <code>mnemos-okf</code>
+skill and merges three hooks into <code>~/.claude/settings.json</code>:
+<code>SessionStart</code> injects open tasks and recent decisions,
+<code>UserPromptSubmit</code> runs <code>mnemos hook recall</code>, and
+<code>Stop</code> runs <code>mnemos hook stop</code>
+(<code>skills/mnemos-okf/hooks/settings.example.json</code>). The README
+documents opencode and remote access over SSH as well.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>One mark: scope enforced</strong>, per section 6.</p>
-<p><strong>Trust state, tombstone, bitemporal, audit log, human review,
-negative eval — no.</strong> The system's answer to trust is provenance:
-every claim lands on a file and a line range, so a person can check it.
-That is a real answer to a different question from the one the other
-marks ask, and this report's section 5 names where it stops.</p>
-<p><strong>The secret scanner is the best-designed small component in
-this batch</strong>, per section 1, and the path/exclude rules that
-"bound what the agent can touch" are its companion.
-<code>internal/security/paths.go</code> with <code>paths_test.go</code>
-beside it means the boundary is tested, which is more than <a
-href="../diffmem/">DiffMem</a>'s comparable sandbox manages.</p>
-<p><strong>A trust model exists as a proposal and not as a
-field.</strong> ADR 0008, <em>Memory trust model (provenance, review,
-confidence, enforcement)</em>, carries the status <code>Proposed</code>
-and states the problem this report's section 5 identifies, in the
-project's own words: mnemos <em>"commits an agent-authored memory as
-ground truth the instant an agent asserts it"</em>, the only gate is a
-boolean <code>allow_write</code> capability, and <em>"the consequence is
-recall pollution"</em> — an index filling with <em>"agent guesses,
-superseded decisions, and one-off observations that are
-indistinguishable"</em>. A search of <code>internal/parse</code> and
-<code>internal/memory</code> for a confidence, enforcement, trust,
-provenance or reviewer field returns nothing, so this is a design
-document rather than a mechanism and no mark follows from it.</p>
-<p>Its rejected-alternatives section is the part worth reading whatever
-you build, because three of the five refusals are arguments this atlas
-keeps needing. A hand-set <code>confidence: 0.0-1.0</code> float is
-refused as <em>"fake precision no human or agent can calibrate"</em>,
-defensible only if machine-derived from corroboration count or recall
-hits. A human-approval gate in front of writes is refused because
-<em>"it produces an unbounded review backlog that gets abandoned, and
-hiding unreviewed memory just makes agents re-learn the same
-facts"</em>, with the alternative stated as a position: <em>"Trust is
-enforced at recall, not at capture."</em> And auto-promoting confidence
-when an agent re-asserts something is refused because <em>"it launders a
-repeated hallucination into a trusted fact"</em> — which is the cleanest
-formulation of that failure in the corpus.</p>
+<p><strong>One mark: <code>negative_eval</code></strong>, per section
+10.</p>
+<p><strong><code>scope_enforced</code> — no.</strong> The collection
+reaches the query as a WHERE clause, and the caller decides whether it
+does: omitted on <code>mnemos.search</code>, the search spans every
+collection, and the read tools never take one (<a
+href="#6-retrieval-mechanics">section 6</a>). Project separation is real
+and is a different mechanism, a database file per resolved workspace,
+with the global fallback joining projects in one index.</p>
+<p><strong>Trust state, tombstone, bitemporal, audit log, human review —
+no.</strong> Supersession demotes and is designed never to filter, and
+the journal flag is a write-time class that the caller may lift with
+<code>include_journal</code>, so neither is a status that withholds a
+memory. <code>forget</code> deletes the file and the row, and nothing
+records the rejected content to refuse it later.
+<code>modified_at</code> is the file clock. The <code>ingested</code>
+events cascade away with their document. The journal's review state is
+<code>promoted_to</code>, and the agent stamps it with its own
+<code>journal_promote</code> tool.</p>
+<p><strong>Provenance is the system's answer to trust</strong>, and it
+is a real one: every hit is a file and a line range a person can open.
+Its limit is the one the README opens on, an agent that <em>"forgets why
+you rejected an architecture"</em>. A rejected ADR without a
+<code>superseded_by</code> key cites as cleanly as an accepted one.</p>
+<p><strong>The write boundary is tested.</strong>
+<code>internal/security/paths.go</code> confines every caller-supplied
+path, with <code>paths_test.go</code> beside it, and registered origins
+are refused by an explicit check in front of that guard, which is more
+than <a href="../diffmem/">DiffMem</a>'s comparable sandbox manages.</p>
+<p><strong>The deny list covers the operator surfaces too.</strong> The
+edit family and <code>doctor</code> honour it from <a
+href="https://github.com/arhuman/mnemos/commit/43bcf145b2c85a67f86dd3293d94830e9cc678f4"><code class="commit-id" title="43bcf145b2c85a67f86dd3293d94830e9cc678f4">43bcf145…</code></a>,
+with <code>TestOpenForEditHidesDeniedCollection</code>,
+<code>TestEditFrontmatterHidesDeniedCollection</code> and
+<code>TestDiagnoseHidesDeniedCollection</code>
+(<code>internal/memory/visibility_test.go:164</code>, <code>:178</code>,
+<code>:205</code>). Before that commit those verbs, reached from the TUI
+and <code>mnemos doctor</code> rather than from MCP, read denied
+documents.</p>
+<p><strong>ADR-0008's rejected alternatives are the part to read
+whatever you build.</strong> A hand-set <code>confidence: 0.0-1.0</code>
+is refused as <em>"fake precision no human or agent can calibrate"</em>.
+A human-approval gate in front of writes is refused because <em>"it
+produces an unbounded review backlog that gets abandoned"</em>, with the
+position <em>"Trust is enforced at recall, not at capture."</em>
+Auto-promoting confidence on re-assertion is refused because <em>"it
+launders a repeated hallucination into a trusted fact"</em>.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p><strong>115 test files</strong> against 28,764 lines of Go, and —
-unusually — the evaluation is not a <code>benchmarks/</code> directory
-of scripts but <code>internal/eval</code>, a package of the system with
-its own tests (<code>eval_test.go</code>, <code>coverage_test.go</code>,
-<code>buildretriever_noembed_test.go</code>) and testdata.</p>
-<p>Four things it does right, in a corpus where self-built retrieval
-evals are usually one script and an optimistic number:</p>
+<p><strong>The negative cases are on a populated store, with a
+control.</strong> <code>newVisibilityFixture</code> ingests one
+<em>provisioning</em> document into each of two collections.
+<code>TestSearchHidesDeniedCollection</code> asserts no hit carries the
+denied collection and that the visible one ranks first;
+<code>TestSearchDenyIgnoresCallerCollection</code> asserts an empty
+result when the caller names the denied collection;
+<code>TestEmptyDenyShowsEverything</code> asserts both surface with an
+empty list (<code>internal/memory/visibility_test.go:48-60</code>,
+<code>:64-70</code>, <code>:94-104</code>). Context, list, read by uri
+and read by chunk id carry the same shape, the read cases asserting the
+refusal is byte-identical to an absent identifier.
+<code>TestJournalExcludedByDefault</code> asserts a journal entry
+matching the query stays out while the ADR is returned, and
+<code>TestJournalNotLaunderedThroughGraphExpansion</code> that link
+expansion does not bring it back
+(<code>internal/search/engine_test.go:559-570</code>,
+<code>:624</code>).</p>
+<p><code>TestSupersededDocumentIsDemotedNotHidden</code> pins the
+opposite decision: a superseded document must be returned, with a score
+above zero and below the current one
+(<code>engine_test.go:406-420</code>).</p>
+<p><strong>The held-out evaluation does four things right.</strong></p>
 <ul>
 <li><strong>Leakage control.</strong> The query text is stripped from
-its host chunk before the held-out corpus is indexed. Without this,
-generated-question evaluations measure string matching.</li>
-<li><strong>The same parser as production.</strong> The goldmark
-instance "mirrors the parser configuration used by the ingest pipeline…
-so the AST view of a document matches what ingestion sees" — an eval
-that chunks differently from the system is measuring a different
-system.</li>
-<li><strong>An ephemeral database.</strong> The held-out corpus is
-ingested fresh, so the evaluation cannot accidentally query the
-developer's real index.</li>
-<li><strong>A versioned baseline with graceful absence.</strong> Metrics
-compare against a baseline JSON; a missing file "is intentionally not an
-error: it returns <code>(nil, nil)</code> so callers print without
-deltas". The first run works, and every subsequent one shows the
-delta.</li>
+its host chunk before the held-out corpus is indexed.</li>
+<li><strong>The production parser.</strong> The goldmark instance
+<em>"mirrors the parser configuration used by the ingest pipeline"</em>
+(<code>holdout.go:19-22</code>); an eval that chunks differently
+measures a different system.</li>
+<li><strong>An ephemeral database</strong>, so the evaluation cannot
+read the developer's index.</li>
+<li><strong>A baseline whose absence is not an error.</strong>
+<code>loadBaseline</code> returns <code>(nil, nil)</code> on a missing
+file and callers print without deltas
+(<code>internal/eval/baseline.go:12-19</code>).</li>
 </ul>
-<p><code>ExactChunk</code> alongside the doc-level metrics is the right
-pair: retrieving the correct document and retrieving the correct
-<em>section</em> of it are different successes, and a citation-first
-product should care about the second.</p>
-<p><strong>The numbers are published and the baseline file is
-not</strong>, which is a narrower gap than it sounds. The README carries
-a doc-level table for the shipped <code>examples/git-recipes</code>
-bundle — lexical FTS5/bm25 at Hit@1 0.83, Recall@12 0.83, MRR@12 0.83
-against semantic-plus-hybrid at 1.00 across all three — and a second
-figure for the hard case: on <code>examples/onpage-seo</code>, whose
-held-out answers are JSON-LD and sitemap-XML blocks <em>"that share no
-keywords with their prose"</em>, lexical scores 0.00 and
-<code>--semantic</code> recovers Hit@1 0.57 and Recall@12 0.86. Each
-metric is defined in place, including that 0.83 is five of six, and the
-reproduce block states the sample sizes and refuses the word: <em>"N is
-6 and 7 respectively — smoke signals, not benchmarks."</em> Publishing a
-0.00 for your default retriever beside a caveat about your own sample
-size is the disclosure most projects decline to make.</p>
-<p>What is absent is the versioned baseline JSON the delta mechanism
-reads — the code is in <code>internal/eval/baseline.go</code> and no
-file is in the tree — so the numbers can be reproduced but a regression
-cannot be caught by the mechanism built for it.</p>
-<p><strong>A third eval mode measures what link expansion buys.</strong>
+<p><code>ExactChunk</code> sits beside the doc-level
+<code>HitAt1</code>, <code>RecallAtK</code> and <code>MRRAtK</code>
+(<code>metrics.go:6-14</code>). Retrieving the right document and the
+right section are different successes, and a citation product needs the
+second.</p>
+<p><strong>The numbers are published, with their sample sizes.</strong>
+For the shipped <code>examples/git-recipes</code> bundle the README
+gives lexical Hit@1, Recall@12 and MRR@12 all at 0.83, against 1.00 for
+semantic and hybrid. For <code>examples/onpage-seo</code>, whose
+held-out answers are JSON-LD and sitemap blocks sharing no keywords with
+their prose, lexical scores 0.00 and <code>--semantic</code> recovers
+Hit@1 0.57 and Recall@12 0.86. The reproduce block states <em>"N is 6
+and 7 respectively — smoke signals, not benchmarks."</em></p>
+<p><strong>The baseline the README calls committed is not in the
+tree.</strong> The README says <code>mnemos eval</code> reports
+<em>"against a committed baseline"</em>; <code>mnemos eval</code> reads
+<code>&lt;bundle&gt;/baseline.json</code> by default
+(<code>internal/cli/eval.go:68-71</code>), and <code>git ls-files</code>
+lists no baseline file under any bundle. The figures can be reproduced,
+and a regression cannot be caught by the mechanism built for it.</p>
+<p><strong>A graph mode measures what link expansion buys.</strong>
 <code>mnemos eval &lt;bundle&gt; --graph</code> reads a
-<code>cases.json</code> and compares link-neighborhood inclusion and
+<code>cases.json</code> and compares link-neighbourhood inclusion and
 <code>GraphRetriever</code> hit@K against plain lexical search, with
-<code>--graph-expansion</code> as the non-regression gate on the
-held-out metrics. The committed
-<code>examples/graph-answerability</code> bundle is a fictional
-platform-ops vault built so the trivial answer fails: in each case the
-lexical hit is a hub or overview document and the answer lives one link
-away in a detail document <em>"written with different vocabulary."</em>
-The bundle's own description then states a limitation against itself —
-the queries are keyword-style on purpose, because the default lexical
-retriever quotes each token and ANDs them, so a natural-language
-question with stopwords returns nothing, and <em>"that is itself part of
-the finding: injection's value is conditional on search finding the
-hub."</em> No numbers are published for this mode.</p>
-<p><strong>I ran nothing.</strong></p>
+<code>--graph-expansion</code> as a non-regression gate. The
+<code>examples/graph-answerability</code> bundle is built so the lexical
+hit is a hub document and the answer sits one link away <em>"written
+with different vocabulary"</em>. No figures are published for it.</p>
+<p><code>internal/search/bench_test.go</code> benchmarks the vector scan
+unfiltered and collection-filtered over corpus sizes around 10,000
+chunks (<code>:93-96</code>).</p>
+<p>I ran nothing.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Strip the query from its host chunk before indexing the
-held-out corpus.</strong> If you generate evaluation questions from your
-own documents, the question's wording sits inside the answer and your
-lexical retriever will look extraordinary for no reason.</li>
-<li><strong>Use the production parser in the evaluation.</strong> An
-eval that chunks differently from ingestion is measuring a system you do
-not ship.</li>
-<li><strong>Ingest the held-out copy into an ephemeral
-database</strong>, so the evaluation cannot read the real index.</li>
-<li><strong>Compare against a versioned baseline, and let a missing
-baseline be fine.</strong> Returning <code>(nil, nil)</code> and
-printing without deltas means the first run is not a special case.</li>
-<li><strong>Measure exact-chunk alongside doc-level hit rate.</strong>
-Right document, wrong section is a different failure and a citation
-product should see it.</li>
+<li><strong>Strip the query from its host chunk before indexing a
+held-out corpus.</strong> Questions generated from your documents
+otherwise sit inside their answers.</li>
+<li><strong>Run the evaluation through the production parser and an
+ephemeral database</strong>, so it measures the system you ship and
+never touches the real index.</li>
+<li><strong>Measure exact-chunk beside doc-level hit rate</strong> when
+the product is a citation.</li>
 <li><strong>Hold a scanner's match on an unexported field.</strong> The
-finding reports the rule name; the matched secret cannot be serialised
-out to the agent. Language visibility as the enforcement beats
-remembering not to log it.</li>
-<li><strong>Screen secrets on the write path</strong>, and pair it with
-path rules bounding what may be read at all — with a test file next to
-each.</li>
-<li><strong>Benchmark the scoped and unscoped query against each
-other.</strong> It tells you whether the scope predicate is using the
-index or scanning.</li>
-<li><strong>Let the distribution constraint pick the
-architecture.</strong> One cgo-free binary rules out an embedding
-server, so BM25 does the work — a coherent trade, stated as one.</li>
+finding reports the rule; the secret cannot be serialised to the agent
+or the log.</li>
+<li><strong>Make a hidden item indistinguishable from an absent
+one.</strong> The deny list returns the not-found shape for a denied
+uri, so read is no existence oracle, and a test pins the byte-identical
+error.</li>
+<li><strong>Key a retrieval exclusion on a stored class, not a
+path.</strong> The journal flag is set from the declared type, so a
+rename or a move cannot leak transcripts into cited results, and a test
+pins graph expansion to the same rule.</li>
+<li><strong>Carry the replacement with the stale hit.</strong> A
+superseded document that returns with the pointer to what replaced it in
+the same payload lets the agent correct itself without a second
+query.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Do not commit the harness without a baseline.</strong>
-Everything needed to produce a number is here and no number is, so the
-methodology cannot be checked against a result.</li>
-<li><strong>Do not treat citation as a substitute for status.</strong> A
-rejected ADR cites as cleanly as an accepted one, and the README's
-opening complaint is precisely about rejected architectures. ADR
-conventions already carry a <code>status</code> header; reading it into
-the retrieval signal is the missing step.</li>
+<li><strong>Do not call a caller's filter a scope.</strong> A collection
+the model may omit partitions nothing; bind the reader's partition on
+the server, the way the deny list is bound.</li>
+<li><strong>Do not let one retrieval arm skip a ranking rule the others
+apply.</strong> A demotion read in the lexical SQL and absent from the
+vector hydrate is a difference only a semantic build exposes.</li>
+<li><strong>Do not cascade an event log with the row it
+describes.</strong> An event that disappears with its document cannot
+answer what was there.</li>
+<li><strong>Do not document a baseline you do not commit.</strong></li>
 </ul>
 <h3 id="fit">Fit</h3>
-<p>The right choice when your memory really is your documents and you
-want an agent that quotes them with a line range instead of paraphrasing
-— and when adding a Python service or a vector database to the project
-is not acceptable. <code>make install</code> and a TOML file is the
-whole footprint.</p>
-<p>Read <code>internal/eval/holdout.go</code> and
-<code>internal/security/secrets.go</code> whatever you build. One is the
-cleanest statement of how to evaluate retrieval on your own corpus
-without cheating; the other is a scanner that cannot leak what it
-finds.</p>
+<p>The right choice when the memory is a project's documents and you
+want an agent that quotes them with a line range: one binary, a TOML
+file, markdown a person can edit, and no service to run. It is the wrong
+choice when the store must separate readers, or when agent-asserted
+facts need a status before they are trusted; the project's own ADR-0008
+names that gap and proposes, rather than ships, the answer.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li><strong>What does mnemos score with graph expansion on?</strong> The
-mode, the gate and a purpose-built case bundle are committed; no figure
-is.</li>
-<li><strong>Will the versioned baseline JSON ever be committed?</strong>
-<code>baseline.go</code> reads one and returns <code>(nil, nil)</code>
-when it is missing, so the delta machinery is dormant in every
-clone.</li>
-<li><strong>Is ADR <code>status</code> read at all?</strong> Nothing
-found treats a superseded document differently.</li>
-<li><strong>What does <code>internal/embed</code> do given the no-Ollama
-claim?</strong> An embedding package exists beside
-<code>buildretriever_noembed_test.go</code>; the default path was not
-traced.</li>
-<li><strong>What is OKF?</strong> The README names an "OKF knowledge
-base" and <code>internal/okf</code> implements it; the format was not
-examined.</li>
+<li><strong>Will a baseline file be committed for the shipped
+bundles?</strong> The delta machinery reads
+<code>&lt;bundle&gt;/baseline.json</code> and the tree holds none.</li>
+<li><strong>What does graph expansion score on its own bundle?</strong>
+The mode, the gate and the cases are committed; no figure is.</li>
+<li><strong>Will the vector arm read
+<code>superseded_by</code>?</strong> ADR-0010 requires the demotion on
+the graph path and says nothing of the vector path.</li>
+<li><strong>Will ADR-0008 ship beyond supersession?</strong> Its
+<code>review</code> and <code>enforcement</code> keys appear in no read
+path.</li>
+<li><strong>How large does a journal grow before pruning
+matters?</strong> One entry per turn, capped per section, with pruning
+manual and gated on <code>allow_delete</code>.</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
-<p><strong>Evaluation</strong> — <code>internal/eval/holdout.go</code>
-(the package contract <code>:1-5</code>, the shared goldmark instance
-and the parser-parity rationale <code>:19-22</code>),
-<code>internal/eval/metrics.go</code> (<code>Metrics</code>
-<code>:6-14</code>), <code>baseline.go</code> (<code>loadBaseline</code>
-and the missing-baseline decision <code>:12-25</code>),
-<code>eval.go</code>, <code>eval_test.go</code>,
-<code>coverage_test.go</code>,
-<code>buildretriever_noembed_test.go</code>, <code>testdata/</code></p>
-<p><strong>Security</strong> — <code>internal/security/secrets.go</code>
-(the package contract and the unexported-match rationale
-<code>:1-12</code>), <code>secrets_test.go</code>,
-<code>paths.go</code>, <code>paths_test.go</code></p>
-<p><strong>Retrieval</strong> — <code>internal/search/bm25.go</code>
-(<code>d.collection = ?</code> <code>:103</code>),
-<code>engine_test.go</code> (the collection-filter case
-<code>:139</code>), <code>bench_test.go</code> (the
-filtered-versus-unfiltered benchmark <code>:95</code>)</p>
-<p><strong>Storage and citation</strong> —
-<code>internal/storage/documents.go</code> (<code>:35</code>,
-<code>:120</code>), <code>internal/memory/write.go</code>
-(<code>:47</code>, <code>:155</code>), <code>read.go</code>,
-<code>internal/chunk/</code>, <code>internal/parse/</code></p>
-<p><strong>Surfaces</strong> — <code>internal/mcp/</code>,
-<code>internal/cli/</code>, <code>internal/doctor/</code>,
-<code>internal/browse/</code>, <code>skills/</code>,
-<code>cmd/</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What to read it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>internal/eval/holdout.go:1-22</code></td>
+<td>The held-out contract and the shared goldmark instance</td>
+</tr>
+<tr>
+<td><code>internal/eval/baseline.go:12-28</code></td>
+<td>The missing-baseline decision</td>
+</tr>
+<tr>
+<td><code>internal/eval/metrics.go:6-14</code></td>
+<td><code>Metrics</code>, including <code>ExactChunk</code></td>
+</tr>
+<tr>
+<td><code>internal/security/secrets.go:1-12</code></td>
+<td>The package contract and the unexported match</td>
+</tr>
+<tr>
+<td><code>internal/cli/encoding.go:19-29</code></td>
+<td>The ingest secret scan and the switch it shares</td>
+</tr>
+<tr>
+<td><code>internal/ingest/process.go:194</code>,
+<code>:313-333</code></td>
+<td>The ingested event and <code>scanSecrets</code></td>
+</tr>
+<tr>
+<td><code>internal/search/bm25.go:101-177</code></td>
+<td>Every filter, and the one-hop supersession join</td>
+</tr>
+<tr>
+<td><code>internal/search/engine.go:104-105</code>,
+<code>:182-199</code></td>
+<td>Score composition and the 0.25 demotion</td>
+</tr>
+<tr>
+<td><code>internal/search/hybrid.go:58-200</code></td>
+<td>The vector arm, which reads no frontmatter</td>
+</tr>
+<tr>
+<td><code>internal/memory/service.go:83-92</code></td>
+<td>The deny list applied on every search</td>
+</tr>
+<tr>
+<td><code>internal/memory/read.go:68-160</code></td>
+<td>Read by uri and chunk id, and the not-found shape</td>
+</tr>
+<tr>
+<td><code>internal/mcp/tools_search.go:17-27</code>,
+<code>tools_read.go:15-24</code></td>
+<td>The model's collection and address arguments</td>
+</tr>
+<tr>
+<td><code>internal/mcp/server.go:63-106</code></td>
+<td>Tool registration and the two gates</td>
+</tr>
+<tr>
+<td><code>internal/cli/hook.go:137-300</code></td>
+<td>The working set and the recall hook</td>
+</tr>
+<tr>
+<td><code>internal/memory/journal_entry.go:62</code>,
+<code>journal.go:101</code>, <code>:222</code></td>
+<td>Journal capture, promotion and pruning</td>
+</tr>
+<tr>
+<td><code>internal/storage/migrations/0003_events_document_id.sql</code></td>
+<td>The cascading event rows</td>
+</tr>
+<tr>
+<td><code>internal/memory/visibility_test.go:48-104</code></td>
+<td>The must-not-surface cases and their control</td>
+</tr>
+<tr>
+<td><code>internal/search/engine_test.go:406-420</code>,
+<code>:559-660</code></td>
+<td>Demotion pinned as not-hiding; the journal exclusions</td>
+</tr>
+<tr>
+<td><code>docs/adr/0008-memory-trust-model.md</code>, <code>0010</code>,
+<code>0011</code></td>
+<td>The proposed trust model, supersession and the journal tier</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'collection,omitempty' -- internal/mcp ':!*_test.go'</code>
+— search, context, list, okfy, remember and the related output; every
+collection argument is optional.</li>
+<li><code>git grep -n -i 'collection' -- internal/cli/serve.go</code> —
+no match; serve binds no collection.</li>
+<li><code>git grep -n -i -E '\b(confidence|enforcement|provenance|reviewer|trust)\b' -- internal/parse internal/memory internal/okfschema internal/storage ':!*_test.go'</code>
+— no match, here and at 6e7b14f.</li>
+<li><code>git grep -n -i -E 'tombstone|suppress|blocklist' -- '*.go' '*.sql' ':!*_test.go'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_until|effective_(from|at)|event_time|as_of|asof' -- '*.go' '*.sql' ':!*_test.go'</code>
+— no match.</li>
+<li><code>git grep -n -E 'AppendEvent\(' -- '*.go' ':!*_test.go'</code>
+— the definition and one caller,
+<code>internal/ingest/process.go:194</code>, type
+<code>ingested</code>.</li>
+<li><code>git grep -n -i 'supersed' -- internal/search/hybrid.go internal/search/rerank.go</code>
+— no match.</li>
+<li><code>git ls-files | grep -i baseline</code> —
+<code>internal/eval/baseline.go</code> only.</li>
+<li><code>git grep -n -E 'IncludeJournal' -- '*.go' ':!*_test.go'</code>
+— the CLI flag, the <code>mnemos.search</code> argument, the filter and
+graph expansion; <code>mnemos.context</code> has no such argument.</li>
+<li><code>git grep -n -E 'Scan\(' 6e7b14f45bf18210196f0d8728f80c5e46929ac3 -- internal/ingest ':!*_test.go'</code>
+— <code>internal/ingest/okfy.go:89</code> only; the ingest pipeline did
+not scan at that commit.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/arhuman/mnemos/commit/8d8d65c6dfb5e74293770163fb3e868521e40610"><code class="commit-id" title="8d8d65c6dfb5e74293770163fb3e868521e40610">8d8d65c6…</code></a>
+— 60 commits on, past v0.3.0. Marks move from
+<code>scope_enforced</code> to <code>negative_eval</code>, both wrong at
+6e7b14f: the collection was an omittable model argument and read took
+none (<a href="#6-retrieval-mechanics">section 6</a>), and deny-list
+must-not-surface tests with a control were committed (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Also wrong then:
+ingest secret-scanning, re-ingest eviction, "no status field", the
+census. Overtaken: supersession demotion, the journal tier, ingest
+scanning, reconcile on ingest, registered origins, the deny list on edit
+and doctor (<a href="#2-mental-model">section 2</a>). Screened from a
+full clone: no auto-run surface, one build-time execution path in the
+<code>Makefile</code>, <code>go.mod</code> inside the cooldown,
+<code>go.sum</code> present; MIT with a third-party note and no rider.
+Nothing was installed, built or run.</p>
 <p><strong>2026-09-17</strong> — <a
 href="https://github.com/arhuman/mnemos/commit/6e7b14f45bf18210196f0d8728f80c5e46929ac3"><code class="commit-id" title="6e7b14f45bf18210196f0d8728f80c5e46929ac3">6e7b14f4…</code></a>
 — re-pinned after 4 commits. All four anchored files are byte-identical
@@ -504,7 +854,7 @@ installed, built or run.</p>
 <p><strong>2026-09-10</strong> — <a
 href="https://github.com/arhuman/mnemos/commit/6e7b14f45bf18210196f0d8728f80c5e46929ac3"><code class="commit-id" title="6e7b14f45bf18210196f0d8728f80c5e46929ac3">6e7b14f4…</code></a>
 — read again, 40 commits and 138 files past the previous pin. The single
-mark holds and one published claim did not: section 10 said a reader
+mark holds and one published claim did not. Section 10 said a reader
 could not see what mnemos scores on its own evaluation, and the README
 carries doc-level figures for two shipped bundles —
 <code>git-recipes</code> at Hit@1 0.83 lexical against 1.00
@@ -512,19 +862,19 @@ semantic-hybrid, and <code>onpage-seo</code> at 0.00 lexical against
 Hit@1 0.57 semantic — with each metric defined, the sample sizes stated
 and the word benchmark refused. The versioned baseline JSON the delta
 mechanism reads is still absent from the tree, so that half of the claim
-stands and the open question was narrowed to it. A third eval mode
-arrived, <code>--graph</code> with a <code>--graph-expansion</code>
-non-regression gate, over a committed <code>graph-answerability</code>
-bundle built so the lexical hit is a hub document and the answer lives
-one link away in different vocabulary; the bundle states its own
-limitation, that keyword-style queries are required because the
-retriever ANDs quoted tokens. ADR 0008 proposes a trust model and names
-the recall-pollution problem in the project's own words, with no
-confidence, enforcement, provenance or reviewer field anywhere in
-<code>internal/parse</code> or <code>internal/memory</code> — a
-proposal, not a mechanism, and no mark follows. Test files went from 84
-to 115, and the tree from 19,800 lines to 28,764 of Go. Screened before
-reading: no auto-run surface, two dependency manifests inside the
+stands and the open question was narrowed to it.</p>
+<p>A third eval mode arrived, <code>--graph</code> with a
+<code>--graph-expansion</code> non-regression gate, over a committed
+<code>graph-answerability</code> bundle built so the lexical hit is a
+hub document and the answer lives one link away in different vocabulary;
+the bundle states its own limitation, that keyword-style queries are
+required because the retriever ANDs quoted tokens. ADR 0008 proposes a
+trust model and names the recall-pollution problem in the project's own
+words, with no confidence, enforcement, provenance or reviewer field
+anywhere in <code>internal/parse</code> or <code>internal/memory</code>
+— a proposal, not a mechanism, and no mark follows. Test files went from
+84 to 115, and the tree from 19,800 lines to 28,764 of Go. Screened
+before reading: no auto-run surface, two dependency manifests inside the
 seven-day cooldown, one build-time execution path in the
 <code>Makefile</code>, and no unpinned surface against a
 <code>go.sum</code>; nothing was installed, built or run.</p>

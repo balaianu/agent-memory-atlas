@@ -8137,29 +8137,33 @@ configuration as ingestion "so the AST view of a document matches what
 ingestion sees", ingesting into an ephemeral database, and comparing
 against a versioned baseline where a missing file is deliberately not an
 error.</li>
-<li>Biggest risk: citation is not status. The README's opening complaint
-is that an agent "forgets why you rejected an architecture", and a
-rejected ADR cites exactly as cleanly as an accepted one — nothing in
-the index says which way the decision went, though ADR conventions
-already carry a <code>status</code> header to read.</li>
+<li>Biggest risk: the collection that partitions the index is a filter,
+not a boundary. <code>mnemos.search</code> takes it as an optional
+argument and searches every collection without one,
+<code>mnemos.read</code> takes a uri with no collection, and the
+session-start and recall hooks pass none, so in the global
+<code>~/.mnemos</code> workspace, where collections stand for projects,
+nothing confines a reader to one. A rejected ADR with no
+<code>superseded_by</code> key cites as cleanly as an accepted one.</li>
 <li>Most reusable component: a secret scanner whose <code>Finding</code>
 holds the matched substring on an <strong>unexported</strong> field, "so
 it cannot leak through serialization or an external caller: the remember
 tool reports only Rule names and never echoes the value back to the
 agent". A scanner that hands the model the key it just found has moved
 the secret into the context it was protecting.</li>
-<li>Maturity impression: 28,764 lines of Go with 115 test files, one
-cgo-free binary with no Python, Node, vector database or model server, a
-<code>doctor</code> command, a benchmark comparing the scoped and
-unscoped query so the collection predicate's index usage is visible, and
-published retrieval figures for two shipped bundles with their sample
-sizes stated and the word benchmark declined.</li>
+<li>Maturity impression: 36,380 lines of Go with 132 test files and one
+cgo-free binary, with an optional pure-Go embedding build behind a tag.
+A server-side deny list carries must-not-surface tests and a control on
+search, context, list and read; supersession demotes rather than hides
+and carries the replacement in the hit; a journal tier is kept out of
+ranked retrieval by a stored flag; and the README publishes retrieval
+figures for two shipped bundles with their sample sizes stated.</li>
 <li>Study when: you are about to generate evaluation questions from the
 documents you are also indexing.</li>
-<li>Do not copy when: you need the delta rather than the number — the
-figures are in the README, and the versioned baseline JSON that
-<code>baseline.go</code> reads is absent from the tree, so the
-regression mechanism is dormant in every clone.</li>
+<li>Do not copy when: you need readers separated inside one store, since
+the collection is the caller's choice; or you need the delta rather than
+the number, since the README calls the eval baseline committed and no
+bundle holds one.</li>
 </ul>
 <h3 id="nocturne-memory"><a
 href="../systems/nocturne-memory/"><code>nocturne-memory</code></a></h3>

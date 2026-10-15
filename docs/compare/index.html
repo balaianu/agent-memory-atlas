@@ -20090,25 +20090,46 @@ unmeasured</td>
 </tr>
 <tr>
 <td><a href="../systems/mnemos/"><code>mnemos</code></a></td>
-<td>A chunk of a markdown document, addressed as file#section with a
-line range</td>
-<td>SQLite from a single cgo-free Go binary; no vector database and no
-external service</td>
-<td>BM25 over chunks, filtered by collection, returning citations rather
-than prose</td>
-<td>Ingest a directory into a collection; captured content is screened
-for secrets first</td>
-<td>Re-ingest; the files on disk are the source</td>
-<td>collection is a WHERE clause on the search and document queries</td>
-<td>An MCP server and a CLI, installed as one binary with no runtime
-dependencies</td>
-<td>None required — indexing is a command</td>
-<td>Nothing on a chunk; the answer carries its source location
-instead</td>
-<td>A held-out retrieval eval with leakage control and a versioned
-baseline, in-tree</td>
-<td>No mechanism marks a document stale; a rejected ADR reads like a
-current one</td>
+<td>A chunk of a markdown or source file, addressed as uri, heading path
+and line range; a document may name its replacement in superseded_by,
+and a journal document holds one captured session turn</td>
+<td>Markdown files under the workspace kb root, or external trees
+registered and indexed in place read-only, with a SQLite index (FTS5,
+optional vectors) from one cgo-free Go binary</td>
+<td>BM25 over chunks with a heading boost, optional recency decay and a
+0.25 multiplier on superseded documents; journal documents and
+deny-listed collections are filtered out. Hybrid vector search and 1-hop
+link expansion are opt-in</td>
+<td>Ingest or add a directory, remember a note, okfy a file, or capture
+each session turn into the journal from a Stop hook; file content is
+secret-scanned before indexing while exclude_secrets is on, the
+default</td>
+<td>Edit the file and re-ingest; a directory ingest or reindex evicts
+documents whose file is gone; forget and move are MCP tools behind
+allow_delete; reviewed journal entries are pruned by age from the
+CLI</td>
+<td>A collection key on every document, filtered only when the caller
+passes one; projects are separated by resolving a per-project database,
+and an operator deny list hides whole collections from every read</td>
+<td>An MCP server and a CLI in one binary, a Claude Code skill, and
+three hooks: a session-start working set, prompt-time recall and
+per-turn journal capture</td>
+<td>None required; an optional watcher reindexes on file changes and
+reconciles deletions</td>
+<td>No epistemic state. A superseded_by pointer demotes a document and
+travels with the hit; a journal entry's promoted_to is its review state,
+written by the agent's own tool</td>
+<td>A held-out retrieval eval that strips each query from its host
+chunk, parses with the ingest configuration and runs in an ephemeral
+database; a secret scanner whose finding cannot serialise the matched
+value; a server-side collection deny list with must-not-surface tests on
+search, context, list and read</td>
+<td>The collection filter is a model argument that, omitted, searches
+every collection, and read by uri takes no collection, so nothing
+confines a reader to one partition. Supersession demotes on the lexical
+and graph paths while the vector arm reads no superseded_by. The
+ingested-event rows cascade away with their document. The versioned
+baseline the eval compares against is not committed</td>
 </tr>
 <tr>
 <td><a
@@ -33551,7 +33572,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>327 of 749:</em> <a
+<p><em>326 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33755,7 +33776,6 @@ href="../systems/mira/"><code>mira</code></a>, <a
 href="../systems/mirix/"><code>mirix</code></a>, <a
 href="../systems/mnemora/"><code>mnemora</code></a>, <a
 href="../systems/mnemory/"><code>mnemory</code></a>, <a
-href="../systems/mnemos/"><code>mnemos</code></a>, <a
 href="../systems/mnemosyne/"><code>mnemosyne</code></a>, <a
 href="../systems/mnesio/"><code>mnesio</code></a>, <a
 href="../systems/mobius/"><code>mobius</code></a>, <a
@@ -34258,7 +34278,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>469 of 749:</em> <a
+<p><em>470 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34555,6 +34575,7 @@ href="../systems/mnemon/"><code>mnemon</code></a>, <a
 href="../systems/mnemonic/"><code>mnemonic</code></a>, <a
 href="../systems/mnemopi/"><code>mnemopi</code></a>, <a
 href="../systems/mnemora/"><code>mnemora</code></a>, <a
+href="../systems/mnemos/"><code>mnemos</code></a>, <a
 href="../systems/mnemosyne/"><code>mnemosyne</code></a>, <a
 href="../systems/mnemosyne-nabzx/"><code>mnemosyne-nabzx</code></a>, <a
 href="../systems/mnestic/"><code>mnestic</code></a>, <a
@@ -34761,7 +34782,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-469 repositories of
+470 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -115,7 +115,7 @@ backfill, context injection, consolidation check, onboarding, handoff clearing),
 The storage claim is worth noting for what it rules out: "SQLite database with
 full-text search (FTS5, BM25 ranking, **zero external dependencies**)". No
 embedding model, no vector store, no service — the same constraint
-[mnemos](../mnemos/) accepts, and the same consequence: lexical retrieval only.
+[mnemos](../mnemos/) accepts in its default build, and the same consequence there: lexical retrieval only.
 
 `get-token-insights` is a separate concern bolted to the same data — turns,
 tool calls, session metrics, hook executions and an import log, with an HTML
