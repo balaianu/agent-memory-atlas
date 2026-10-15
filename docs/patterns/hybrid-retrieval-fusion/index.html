@@ -397,7 +397,10 @@ go?</strong> Its fusion is one Postgres statement — an FTS CTE ranked by
 predicate
 <code>bot_name = $5 AND ((scope = 'personal' AND user_id = $1) OR scope = 'shared')</code>
 is written into <strong>both</strong> CTEs rather than wrapped around
-the join.</p>
+the join. On an instance that authenticates the predicate becomes
+<code>bot_name = $5 AND user_id = $1</code>, and the no-embedding
+fallback carries the same branch, because a fix applied to one search
+function is inert on the path that takes the other.</p>
 <p>The difference is not correctness, it is recall, and it falls on the
 caller with the fewest permissions. Filter after the fusion and each arm
 still spends its 30 candidate slots on whatever ranks highest globally,

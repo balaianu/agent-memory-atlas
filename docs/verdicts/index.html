@@ -12584,9 +12584,11 @@ fused query.</strong> <code>searchMemoriesHybrid</code> is one statement
 <code>FULL OUTER</code> and scored <code>1/(60+rank)</code> per arm —
 and
 <code>bot_name = $5 AND ((scope = 'personal' AND user_id = $1) OR scope = 'shared')</code>
-is written into both. A filter applied after the fusion would let each
-arm spend its candidate budget on rows the caller may not see, which
-costs recall to exactly the caller with the narrowest permissions.</li>
+is written into both, narrowed to
+<code>bot_name = $5 AND user_id = $1</code> when the instance
+authenticates. A filter applied after the fusion would let each arm
+spend its candidate budget on rows the caller may not see, which costs
+recall to exactly the caller with the narrowest permissions.</li>
 <li>Second idea: <strong>it measures its own retrieval and persists the
 per-query breakdown.</strong> hit@k, recall@k and reciprocal rank per
 query, aggregated to hit-rate, recall@k and MRR across three targets,
@@ -12603,17 +12605,19 @@ so the number says the pipeline is wired, not that recall is good.</li>
 <li>Biggest risk: <strong>a model assigns the access-control label,
 once, and nothing can change it.</strong> One background Haiku call
 decides <code>worth_remembering</code> and simultaneously classifies the
-memory <code>personal</code> or <code>shared</code>, where
-<code>shared</code> makes the row retrievable by every user of that bot.
-<code>src/db/memories.ts</code> contains no <code>DELETE</code> and no
-content <code>UPDATE</code>, so a misclassified personal fact is visible
-workspace-wide and no command in the tree moves it back. Extraction also
-runs on every exchange with no dedup, while injection takes five
+memory <code>personal</code> or <code>shared</code>; on an
+unauthenticated instance <code>shared</code> makes the row retrievable
+by every user of that bot. Nothing in the tree edits or rescopes a
+memory, and the only delete is a cascade from deleting the whole
+conversation topic, which refuses the main topic. A misclassified
+personal fact stays visible bot-wide until its topic goes. Extraction
+also runs on every exchange with no dedup, while injection takes five
 rows.</li>
-<li>Maturity impression: MIT, 623 commits since 7 February 2026,
-~241,000 lines of TypeScript, 285 test files, 65 migrations, Postgres
-with pgvector and local 384-dim embeddings, Telegram/Slack/web on one
-pipeline, three model backends, watchers, scheduling, goals and a
+<li>Maturity impression: MIT, 851 commits from 7 February to 13 October
+2026 by one author, ~523,000 lines of TypeScript, 664 test and spec
+files, 75 migrations, Postgres with pgvector and local 384-dim
+embeddings, Telegram/Slack/web on one pipeline, four model connectors,
+watchers, scheduling, goals, an auth layer with three modes and a
 dashboard. Four marks — and they split by tier, which is the finding:
 <code>scope_enforced</code> and <code>negative_eval</code> on the
 extracted memories, <code>trust_state</code> and

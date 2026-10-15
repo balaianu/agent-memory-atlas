@@ -198,7 +198,10 @@ statement — an FTS CTE ranked by `ts_rank`, a vector CTE ranked by
 `embedding <=> $3`, each `LIMIT 30`, joined `FULL OUTER` on id and scored
 `1.0/(60 + f.rank) + 1.0/(60 + v.rank)` — and the scope predicate
 `bot_name = $5 AND ((scope = 'personal' AND user_id = $1) OR scope = 'shared')`
-is written into **both** CTEs rather than wrapped around the join.
+is written into **both** CTEs rather than wrapped around the join. On an
+instance that authenticates the predicate becomes `bot_name = $5 AND user_id = $1`,
+and the no-embedding fallback carries the same branch, because a fix applied to
+one search function is inert on the path that takes the other.
 
 The difference is not correctness, it is recall, and it falls on the caller with
 the fewest permissions. Filter after the fusion and each arm still spends its 30

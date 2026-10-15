@@ -891,18 +891,19 @@ nothing measures the prompt. What it does have is the caller naming its own
 watcher, not the risk.** It keeps two durable tiers in one Postgres database.
 Extracted memories are written by a background Haiku call that decides
 `worth_remembering` and, in the same breath, classifies the row `personal` or
-`shared` — an access-control label assigned by a language model — after which
-`src/db/memories.ts` offers no delete and no content update. Drafted wiki pages
-go through `wiki_proposals` with a status of `draft|approved|applied|rejected|
-stale|error`, a dashboard queue where a person approves or rejects, and an
-apply-time compare-and-swap that refuses with `stale` unless
-`sha256(current) === proposal.baseHash`. Same repository, same week's
-engineering; the tier a human was already looking at got the state machine, and
-the tier that writes about people behind their back got nothing. It is also one
-of the few systems in this atlas that scores its own retrieval — hit@k, recall@k
-and MRR over a committed golden set, persisted per run with the per-query
-breakdown — with the caveat that the memory target is three synthetic rows and
-three queries written so the lexical arm can match them. See
+`shared` — an access-control label assigned by a language model. Nothing edits
+or rescopes the row afterwards, and it leaves only when the user deletes the
+whole conversation topic it came from. Drafted wiki pages go through
+`wiki_proposals` with a status of `draft|approved|applied|rejected|stale|error`,
+a dashboard queue where a person approves or rejects, and an apply-time
+compare-and-swap that refuses with `stale` unless
+`sha256(current) === proposal.baseHash`. The tier a human was already looking
+at got the state machine, and the tier that writes about people behind their
+back got no review. On an instance that authenticates, `shared` reads narrow to
+the owner's own rows. It also scores its own retrieval — hit@k, recall@k and MRR
+over a committed golden set, persisted per run with the per-query breakdown —
+with the caveat that the memory target is three synthetic rows and three
+queries written so the lexical arm can match them. See
 [Muninn](../systems/muninn/).
 
 **Hestia is the family's only system where background extraction cannot write.**

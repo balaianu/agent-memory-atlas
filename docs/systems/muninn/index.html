@@ -5,27 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="A self-hosted multi-bot assistant
-whose extracted memories are written by a model with no review and no
-delete, beside a wiki tier where every drafted page waits in an approval
-queue behind a compare-and-swap — and a committed golden-set eval that
-scores the retrieval both of them depend on.">
+whose model-extracted memories have no review, edit or per-row delete,
+beside wiki drafts that wait for approval behind a hash check.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Muninn — Agent Memory Atlas">
     <meta property="og:description" content="A self-hosted multi-bot
-assistant whose extracted memories are written by a model with no review
-and no delete, beside a wiki tier where every drafted page waits in an
-approval queue behind a compare-and-swap — and a committed golden-set
-eval that scores the retrieval both of them depend on.">
+assistant whose model-extracted memories have no review, edit or per-row
+delete, beside wiki drafts that wait for approval behind a hash check.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Muninn — Agent Memory Atlas">
     <meta name="twitter:description" content="A self-hosted multi-bot
-assistant whose extracted memories are written by a model with no review
-and no delete, beside a wiki tier where every drafted page waits in an
-approval queue behind a compare-and-swap — and a committed golden-set
-eval that scores the retrieval both of them depend on.">
+assistant whose model-extracted memories have no review, edit or per-row
+delete, beside wiki drafts that wait for approval behind a hash check.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Muninn — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ eval that scores the retrieval both of them depend on.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Muninn",
-      "description": "A self-hosted multi-bot assistant whose extracted memories are written by a model with no review and no delete, beside a wiki tier where every drafted page waits in an approval queue behind a compare-and-swap \u2014 and a committed golden-set eval that scores the retrieval both of them depend on.",
+      "description": "A self-hosted multi-bot assistant whose model-extracted memories have no review, edit or per-row delete, beside wiki drafts that wait for approval behind a hash check.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,24 +99,22 @@ eval that scores the retrieval both of them depend on.">
           <p class="eyebrow">Two tiers, one reviewed</p>
           <h1>Muninn</h1>
           <p class="document-deck">A self-hosted multi-bot assistant
-whose extracted memories are written by a model with no review and no
-delete, beside a wiki tier where every drafted page waits in an approval
-queue behind a compare-and-swap — and a committed golden-set eval that
-scores the retrieval both of them depend on.</p>
+whose model-extracted memories have no review, edit or per-row delete,
+beside wiki drafts that wait for approval behind a hash check.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/RuneLind/muninn">
               <span>Source</span>
               <strong>RuneLind/muninn</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/RuneLind/muninn/commit/b95d5044b7acc585773390142bec2b59b2785c39" title="b95d5044b7acc585773390142bec2b59b2785c39">
+            <a class="meta-pill revision-pill" href="https://github.com/RuneLind/muninn/commit/34c9e0b52ed1fe4559dce4867e2aaeeac87db408" title="34c9e0b52ed1fe4559dce4867e2aaeeac87db408">
               <span>Analyzed revision</span>
-              <code>b95d5044…</code>
+              <code>34c9e0b5…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/RuneLind--muninn" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -130,7 +122,20 @@ scores the retrieval both of them depend on.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>522,845
+lines of TypeScript in 1,485 files, 259,482 of them in 664 test and spec
+files; the memory store module is 575 lines and the extractor
+103</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>851
+commits on main by one author under two name spellings, 7 February – 13
+October 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>576
+unit test files under src/, 82 Playwright specs under e2e/ and six more
+under db/ and scripts/; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -146,124 +151,142 @@ scores the retrieval both of them depend on.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Muninn is a self-hosted assistant platform: several bots in one Node
-process, each with its own persona, MCP tools and conversation history,
-reachable from Telegram, Slack and a web chat, backed by one Postgres
-database with pgvector. MIT, 623 commits since 7 February 2026, roughly
-241,000 lines of TypeScript across 285 test files, 65 migrations, and a
-dashboard with more than ten pages. No paper, no citation file.</p>
-<p>It holds durable knowledge in two tiers, and <strong>the interesting
-thing is that they were built to opposite standards.</strong></p>
+<p>Muninn is a self-hosted assistant platform that keeps durable
+knowledge in two tiers built to opposite standards. Extracted memories
+are written by a background model call with no review, cannot be edited
+or rescoped, and leave only when the whole conversation topic they came
+from is deleted. Drafted wiki pages wait in an approval queue, and
+applying one is a compare-and-swap against a hash of the file the draft
+was written from.</p>
+<p>Several bots run in one Node process, each with its own persona, MCP
+tools and conversation history, reachable from Telegram, Slack and a web
+chat, backed by one Postgres database with pgvector. There is no paper
+and no citation file.</p>
 <p>The <strong>memory tier</strong> is automatic. After every exchange,
 <code>extractMemoryAsync</code> fires a background Haiku call with a
-fixed prompt — <em>"decide if it contains information worth remembering
-for future conversations"</em> — which returns
+fixed prompt that asks it to <em>"decide if it contains information
+worth remembering for future conversations"</em>. It returns
 <code>worth_remembering</code>, a one-sentence summary, tags, and a
 scope of <code>personal</code> or <code>shared</code>. If the flag is
 true and a summary came back, the summary is embedded and the row is
 inserted. There is no queue, no confirmation, no status field and no
-threshold. There is also, in the whole of
-<code>src/db/memories.ts</code>, no <code>DELETE</code> and no
-<code>UPDATE</code> of content: once a model has decided something about
-you is worth keeping, nothing in this repository can take it back.</p>
-<p>The <strong>wiki tier</strong> is deliberate, and every control the
-memory tier lacks is present there. The gardener harvests documents,
-clusters them, drafts a full Markdown page, and writes it to
-<code>wiki_proposals</code> with a status of <code>draft</code>. A
-person approves or rejects it in the dashboard. Applying it is a
-compare-and-swap: <code>apply.ts</code> refuses with <code>stale</code>
-unless <code>sha256(current) === proposal.baseHash</code>, because
-<em>"the target file must be exactly as it was at draft time"</em>. A
-partial unique index over <code>status IN ('draft','approved')</code>
-prevents two live proposals for the same topic, <code>resolved_at</code>
-records when it stopped being open, and every applied page appends a
-reverse-chronological entry to the wiki's own <code>log.md</code>.</p>
-<p>The third thing worth the report is that <strong>Muninn measures its
-own retrieval</strong>, which almost nothing in this atlas does.
+threshold. <code>src/db/memories.ts</code> contains no
+<code>DELETE</code> and no <code>UPDATE</code> of content or scope.</p>
+<p>The <strong>wiki tier</strong> is deliberate for the pages the
+gardener drafts. It harvests documents, clusters them, drafts a full
+Markdown page, and writes it to <code>wiki_proposals</code> with a
+status of <code>draft</code>. A person approves or rejects it in the
+dashboard. Applying it refuses with <code>stale</code> unless
+<code>sha256(current) === proposal.baseHash</code>, and every apply
+appends an entry to the wiki's own <code>log.md</code>.</p>
+<p><strong>Muninn measures its own retrieval.</strong>
 <code>src/benchmarks/retrieval.ts</code> computes hit@k, recall@k and
-reciprocal rank per query and aggregates them to hit-rate, recall@k and
-MRR across three targets; <code>benchmark_retrieval_runs</code> persists
-each run with the aggregate metrics <em>and</em> the per-query
-breakdown, <em>"so a regression can be traced back to the individual
-query that moved."</em> The caveats are real and stated below, but the
-shape is the one the atlas's benchmarks page keeps asking for.</p>
-<p>The risk is the asymmetry. The tier a model writes without asking is
-the one with no review, no correction and no deletion; the tier a model
-drafts and a person reads is the one with a state machine, a queue and a
-concurrency check. That is backwards from where the risk actually sits —
-a drafted page is visible before it lands, and an extracted memory is
-not visible until it has already been injected into a prompt.</p>
+reciprocal rank per query and aggregates them across three targets, and
+<code>benchmark_retrieval_runs</code> persists each run with the
+per-query breakdown, <em>"so a regression can be traced back to the
+individual query that moved."</em> The memory target is three synthetic
+rows, which section 10 weighs.</p>
+<p>The risk is the asymmetry. The tier a model writes without asking has
+no review and no correction; the tier a model drafts and a person reads
+has a state machine, a queue and a concurrency check. A drafted page is
+visible before it lands, while an extracted memory is not visible until
+it has been injected into a prompt.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A durable claim in Muninn becomes a belief along one of two paths,
-and they have different numbers of gates.</p>
+<p>A durable claim becomes a belief along one of two paths, and they
+have different numbers of gates.</p>
 <p>Down the memory path there is one gate and a model holds it. The
-extraction prompt draws the line in prose — <em>"Worth remembering:
-facts about the user, preferences, decisions, project details… NOT worth
-remembering: greetings, thanks, simple factual lookups, small talk"</em>
-— and the same call also assigns the scope that will decide who can
-retrieve the result, on a definition of <code>shared</code> as
-<em>"general knowledge useful to anyone — company processes, team
-decisions, technical standards"</em>. Everything downstream trusts that
-classification. Nothing re-examines it, and no state records that it was
-ever provisional. A memory stops being a belief only if the Postgres row
-is deleted by hand.</p>
-<p>Down the wiki path there are three gates and two of them are not the
-model's. The drafter proposes; a person approves or rejects; and the
-filesystem itself gets a veto at apply time, because a target file that
-changed since drafting sends the proposal to <code>stale</code> rather
-than overwriting the change. The third gate is the unusual one — it is
-not about whether the claim is true but about whether the world it was
-written against still exists.</p>
-<p>The honest summary is that Muninn knows how to govern a write and
-applies that knowledge to the write a human was already watching.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — two durable tiers built to opposite standards — an extracted memory passes one model-held gate and is never correctable afterwards, while a drafted wiki page waits for a person and then for a hash check against the file it was written from</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
-%% caption: two durable tiers built to opposite standards — an extracted memory passes one model-held gate and is never correctable afterwards, while a drafted wiki page waits for a person and then for a hash check against the file it was written from
+extraction prompt draws the line in prose, from <em>"Worth remembering:
+facts about the user, preferences, decisions, project details…"</em> to
+<em>"NOT worth remembering: greetings, thanks, simple factual lookups,
+small talk"</em>.</p>
+<p>The same call assigns the scope that decides who can retrieve the
+result. It defines <code>shared</code> as <em>"General knowledge useful
+to anyone — company processes, team decisions, technical standards,
+organizational facts."</em> Anything the model does not label
+<code>shared</code> exactly is stored <code>personal</code>
+(<code>src/memory/extractor.ts:92</code>), so a malformed answer fails
+narrow.</p>
+<p>Nothing re-examines that classification and no state records that it
+was ever provisional. A memory stops being a belief one way: a user
+deletes a non-main conversation topic, and
+<code>cascadeDeleteThread</code> deletes every memory whose source
+message sat in it, then the messages, then the thread
+(<code>src/db/threads.ts:349</code>). That is deletion by provenance,
+not correction. One wrong memory cannot be removed without the
+conversation around it. A memory from the main topic, or one saved with
+no source message, has no path out.</p>
+<p>What <code>shared</code> means depends on the instance. On an
+<code>off</code> instance a <code>shared</code> row reaches every user
+of that bot. On an instance that authenticates
+(<code>MUNINN_AUTH=local</code> or <code>entra</code>),
+<code>sharedMemoryReadsAllowed()</code> returns false and both search
+functions narrow to the reader's own rows, so a colleague's
+<code>shared</code> memory never enters another colleague's prompt
+(<code>src/auth/policy.ts:122</code>).</p>
+<p>Down the wiki path there are three gates for a drafted page, and two
+of them are not the model's. The drafter proposes; a person approves or
+rejects; and the filesystem gets a veto at apply time, because a target
+file that changed since drafting sends the proposal to
+<code>stale</code> rather than overwriting the change. The third gate
+asks whether the world the draft was written against still exists. The
+wiki also takes pages that agent sessions write directly, stamped with
+the session ids that produced them, and those never pass the queue.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — two durable tiers — an extracted memory passes one model-held gate and leaves only with its whole topic, while a drafted wiki page waits for a person and then for a hash check against the file it was written from</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
+%% caption: two durable tiers — an extracted memory passes one model-held gate and leaves only with its whole topic, while a drafted wiki page waits for a person and then for a hash check against the file it was written from
     EX[&quot;every exchange&quot;] --&gt; HAIKU[&quot;extractMemoryAsync&lt;br/&gt;Haiku: worth_remembering?&lt;br/&gt;summary, tags, scope&quot;]
     HAIKU --&gt;|&quot;false, or no summary&quot;| DROP[&quot;dropped, traced&quot;]
     HAIKU --&gt;|&quot;true&quot;| EMB[&quot;embed the summary&quot;]
-    EMB --&gt; MEM[(&quot;memories&lt;br/&gt;no status, no delete, no update&quot;)]
+    REM[&quot;wiki Remember button&lt;br/&gt;Haiku distils one Q&amp;A turn&quot;] --&gt; EMB
+    EMB --&gt; MEM[(&quot;memories&lt;br/&gt;no status, no update&quot;)]
     MEM --&gt; HYB[&quot;searchMemoriesHybrid&lt;br/&gt;FTS CTE + vector CTE, RRF&lt;br/&gt;scope predicate inside both&quot;]
-    HYB --&gt; PROMPT[&quot;system prompt, top 5&quot;]
+    AUTH{&quot;instance&lt;br/&gt;authenticates?&quot;} --&gt;|&quot;no: personal OR shared&quot;| HYB
+    AUTH --&gt;|&quot;yes: own rows only&quot;| HYB
+    HYB --&gt; PROMPT[&quot;user-turn context, top 5&quot;]
+    DEL[&quot;/deltopic or thread DELETE&quot;] --&gt;|&quot;memories of that topic,&lt;br/&gt;then messages, then thread&quot;| MEM
 
-    DOCS[&quot;harvested documents&quot;] --&gt; DRAFT[&quot;gardener drafts a page&lt;br/&gt;baseHash = sha256(target)&quot;]
+    DOCS[&quot;harvested documents&quot;] --&gt; DRAFT[&quot;fenced drafter, no tools&lt;br/&gt;baseHash = sha256(target)&quot;]
     DRAFT --&gt; PROP[(&quot;wiki_proposals&lt;br/&gt;draft | approved | applied&lt;br/&gt;rejected | stale | error&quot;)]
     PROP --&gt; HUMAN[&quot;dashboard: approve / reject&quot;]
     HUMAN --&gt;|&quot;approved&quot;| APPLY{&quot;sha256(current)&lt;br/&gt;== baseHash?&quot;}
     APPLY --&gt;|&quot;no&quot;| STALE[&quot;stale — nothing written&quot;]
-    APPLY --&gt;|&quot;yes&quot;| WIKI[(&quot;wiki page + log.md entry&quot;)]</code></pre></details></figure>
+    APPLY --&gt;|&quot;yes&quot;| WIKI[(&quot;wiki page + log.md entry&quot;)]
+    SESS[&quot;agent sessions&quot;] --&gt;|&quot;direct write, stamped&quot;| WIKI</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <p>One Node process runs every bot. Postgres with pgvector is the only
 datastore: <code>memories</code>, <code>messages</code>,
 <code>threads</code>, <code>goals</code>, <code>scheduled_tasks</code>,
-<code>watchers</code>, <code>traces</code>, <code>wiki_proposals</code>
-and about two dozen more, over 65 migrations with an
-<code>init.sql</code> for fresh deploys and a schema-drift guard between
-them. Embeddings are local — Transformers.js at 384 dimensions — so the
-vector arm costs no API call. Extraction and goal detection use Haiku
-through a shared <code>runHaikuExtraction</code> wrapper that traces
-every call and records cost in <code>haiku_usage</code>.</p>
+<code>watchers</code>, <code>traces</code>,
+<code>prompt_snapshots</code>, <code>wiki_proposals</code>,
+<code>wiki_answers</code> and about two dozen more, over 75 migration
+files with an <code>init.sql</code> for fresh deploys and a schema-drift
+guard between them. Embeddings are local — Transformers.js at 384
+dimensions — so the vector arm costs no API call. Extraction and goal
+detection use Haiku through a shared <code>runHaikuExtraction</code>
+wrapper that traces every call and records cost in
+<code>haiku_usage</code>.</p>
 <p>Standing this up means Postgres with the <code>vector</code>
 extension, a model credential per bot, and whatever channel tokens you
 want. The gardener wants a document source to harvest and a directory to
-write the wiki into. Everything else — voice, watchers, the browser
-extensions — is optional and off unless configured.</p>
-<p>The operational cost worth naming is that memory is on the critical
-path of every turn: <code>prompt-builder.ts</code> awaits
-<code>searchMemoriesHybrid</code> after the parallel history and
-embedding fetches, and logs the split — <code>db</code>,
-<code>embed</code>, <code>search</code> — on every build, which is a
-good habit and the only per-turn memory latency measurement in this
-corpus that ships turned on.</p>
+write the wiki into. <code>MUNINN_AUTH</code> selects <code>off</code>,
+<code>local</code> (one pinned identity behind a shared secret) or
+<code>entra</code> (per-request token introspection with a default-deny
+route zone model), and the choice changes who may read a
+<code>shared</code> memory.</p>
+<p>Memory is on the critical path of every turn:
+<code>prompt-builder.ts</code> awaits <code>searchMemoriesHybrid</code>
+after the parallel history and embedding fetches, and logs the split —
+<code>db</code>, <code>embed</code>, <code>search</code> — on every
+build.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <p><strong>Extraction</strong> — <code>src/memory/extractor.ts</code>.
 One prompt, one Haiku call, fire and forget. The result gate carries a
 fixed defect in a comment: <em>"A memory worth keeping must have a
 summary, but tags are optional — gating on <code>!result.tags</code>
-silently dropped keepable memories whenever Haiku omitted the field.
-Default to <code>[]</code> instead."</em> A missing embedding does not
-block the write; it warns that the row <em>"will not appear in semantic
-search"</em> and saves anyway.</p>
+silently dropped keepable memories whenever Haiku omitted the
+field."</em> A missing embedding does not block the write; it warns that
+the row <em>"will not appear in semantic search"</em> and saves
+anyway.</p>
 <p><strong>Storage</strong> — <code>db/init.sql</code>.
 <code>memories</code> carries <code>search_vector TSVECTOR</code> and
 <code>embedding vector(384)</code>, a GIN index on the first and an HNSW
@@ -275,20 +298,27 @@ so the lexical index cannot drift from the row.</p>
 CTE ranked by <code>ts_rank</code> and a <code>vec</code> CTE ranked by
 <code>embedding &lt;=&gt; $3</code>, each capped at 30, joined
 <code>FULL OUTER</code> on id and scored
-<code>1.0/(60 + f.rank) + 1.0/(60 + v.rank)</code>. Textbook
-reciprocal-rank fusion, in the database, with the scope predicate
-written into both CTEs.</p>
+<code>1.0/(60 + f.rank) + 1.0/(60 + v.rank)</code>, with the scope
+predicate in both CTEs.</p>
 <p><strong>Injection</strong> — <code>src/ai/prompt-builder.ts</code>.
-Top 5 memories, formatted and pushed onto the system prompt after the
-persona and the user identity, alongside active goals, scheduled tasks
-and recent alerts.</p>
+The top five memories, with active goals, scheduled tasks and recent
+alerts, go into a <code>&lt;context&gt;</code> block in the user turn
+after the history. The system prompt holds only what is stable per user
+and bot, so the per-turn context does not invalidate the cached
+prefix.</p>
+<p><strong>Deletion</strong> — <code>src/db/threads.ts</code>,
+<code>cascadeDeleteThread</code>. Memories first, because the foreign
+key from <code>memories.source_message_id</code> to
+<code>messages</code> has no <code>ON DELETE</code> clause, then
+messages, then the thread. It is reached from <code>/deltopic</code> on
+Telegram and Slack and from the thread <code>DELETE</code> routes on the
+web chat and the dashboard, and refuses the <code>main</code> topic.</p>
 <p><strong>Drafting and applying</strong> — <code>src/gardener/</code>.
 <code>harvest</code>, <code>cluster</code>, <code>draft</code>,
 <code>triage</code>, <code>wire</code>, <code>retire</code>,
 <code>apply</code>, each with a test file beside it.
 <code>runner.ts</code> computes <code>baseHash</code> only when the
-target already exists, with the reason in a comment: otherwise
-<em>"apply would always report it stale."</em></p>
+target exists, <em>"or apply would always report it stale."</em></p>
 <p><strong>Measuring</strong> — <code>src/benchmarks/retrieval.ts</code>
 and <code>retrieval-fixtures.ts</code>, run by
 <code>scripts/retrieval-eval.ts</code>, persisted by migration 053.</p>
@@ -300,216 +330,224 @@ and <code>retrieval-fixtures.ts</code>, run by
 model's one-sentence distillation; both feed the tsvector, only the
 summary is embedded. <code>source_message_id</code> references
 <code>messages(id)</code>, so a memory can be traced to the turn that
-produced it, which is more provenance than most extraction-based stores
-in this atlas keep.</p>
+produced it, and that reference is what the topic delete follows.</p>
 <p><code>scope</code> is
 <code>CHECK (scope IN ('personal', 'shared'))</code> and it is the only
 classification on the row. There is no confidence, no status, no
 validity interval, no <code>updated_at</code> and no
 <code>deleted_at</code>. <code>created_at</code> is record time and
 event time at once, which is why <code>bitemporal</code> is withheld:
-there is only one axis, and no read path accepts an as-of parameter.</p>
-<p>A wiki proposal is the richer record: <code>topic_key</code> as
-<em>"stable slug for dedup across runs"</em>, <code>kind</code> of
-concept/entity/source/synthesis, <code>mode</code> of create or update,
+there is one axis, and no read path accepts an as-of parameter.</p>
+<p>A wiki proposal is the richer record: <code>topic_key</code> as a
+stable slug for dedup across runs, <code>kind</code> of concept, entity,
+source, synthesis or lint, <code>mode</code> of create or update,
 <code>target_path</code>, <code>base_hash</code>, the full
-<code>draft</code> body including frontmatter, <code>source_docs</code>
-as JSONB, a <code>rationale</code>, and <code>status</code> with
-<code>resolved_at</code>. A drafted page therefore carries what produced
-it, what it would replace, and what the world looked like when it was
-written. The extracted memory carries a foreign key and a timestamp.</p>
+<code>draft</code> body, <code>source_docs</code> as JSONB, a
+<code>rationale</code>, a <code>group_key</code> that ties together the
+rows of one lint finding, and <code>status</code> with
+<code>resolved_at</code>. A drafted page carries what produced it, what
+it would replace, and what the world looked like when it was written.
+The extracted memory carries a foreign key and a timestamp.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
 <p>Reciprocal-rank fusion with <code>k = 60</code>, both arms capped at
 30 candidates, the fused list cut to the caller's limit — 5 for a chat
-turn, 8 for a scheduled briefing. An optional
+turn and for wiki saved notes, 8 for a scheduled briefing. An optional
 <code>tags &amp;&amp; $n::text[]</code> overlap filter is spliced into
-both CTEs with a comment explaining the per-branch parameter indexing
-and noting that when omitted <em>"the SQL is byte-identical to the
-pre-tags query"</em>.</p>
+both CTEs; when omitted <em>"the SQL is byte-identical to the pre-tags
+query"</em>.</p>
 <p><strong>The scope predicate is inside each arm rather than wrapped
-around the join, and that is the detail worth copying.</strong> A filter
-applied after a fusion would let one arm spend its 30 candidate slots on
-rows the other arm may not return, quietly shrinking recall for the
-caller who is allowed to see least. Written into both CTEs, each arm's
-budget is spent inside the boundary.</p>
+around the join.</strong> A filter applied after a fusion would let one
+arm spend its 30 candidate slots on rows the other arm may not return,
+shrinking recall for the caller who is allowed to see least. Written
+into both CTEs, each arm's budget is spent inside the boundary.</p>
+<p>The auth-mode branch is applied in both search functions, and the
+file says why. <code>searchMemories</code> is the no-embedding fallback
+that <code>searchMemoriesHybrid</code> delegates to, <em>"so a fix
+applied to only one of them is inert on exactly the path that happens to
+be taken. That split is this repo's documented recurring failure
+class."</em> The fallback has no tags parameter, so a tag-filtered
+caller loses its tag filter there. The wiki saved-notes lookup returns
+nothing on a null embedding rather than inject untagged chat memories
+under its label
+(<code>src/dashboard/routes/wiki-routes.ts:754-775</code>).</p>
 <p>The lexical arm uses <code>plainto_tsquery</code>, which is
-AND-semantics: every content word in a query must match. That makes the
-arm precise and brittle, and the eval fixtures say so out loud — the
-golden queries are worded so <em>"EVERY content word in a query must
-stem-match the fixture's summary/content/tags text"</em>, which is a
-constraint on the benchmark that comes straight from a constraint on the
+AND-semantics: every content word in a query must match. The eval
+fixtures say so — the golden queries are worded so every content word
+<em>"must stem-match the fixture's summary/content/tags text"</em>, a
+constraint on the benchmark that comes from a constraint on the
 retriever.</p>
-<p>Failure behaviour is asymmetric in the right direction. A row saved
-without an embedding is excluded from the <code>vec</code> CTE by
-<code>embedding IS NOT NULL</code> and still reachable through FTS;
-<code>getMemoriesWithoutEmbeddings</code> exists to find and backfill
-them. The system degrades to one arm rather than to none.</p>
+<p>A row saved without an embedding is excluded from the
+<code>vec</code> CTE by <code>embedding IS NOT NULL</code> and is
+reachable through FTS; <code>getMemoriesWithoutEmbeddings</code> finds
+such rows for <code>scripts/backfill-embeddings.ts</code>. The system
+degrades to one arm rather than to none.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p><strong>Writes do not block the reply.</strong>
 <code>extractMemoryAsync</code> returns <code>void</code> and the Haiku
-call resolves later, so the user's turn is never waiting on the memory
-decision. The lag before a memory is retrievable is one background model
-call plus one embedding — seconds — and there is no batching, no
+call resolves later. The lag before a memory is retrievable is one
+background model call plus one embedding, and there is no batching, no
 debounce and no consolidation pass. Nothing rewrites the store.</p>
-<p><strong>There is no correction path of any kind for a
-memory.</strong> No update of content, no supersession pointer, no
-expiry, no archival, and no delete — the module that owns the table
-exposes save, search, list, count and an embedding backfill, and nothing
-else. Two consequences follow that a reader should weigh before adopting
-this. A fact the model got wrong stays in the index and keeps being
-fused into prompts at whatever rank it earns. And because extraction
-runs on <em>every</em> exchange with no dedup against what is already
-stored, a subject the user returns to repeatedly accumulates
+<p><strong>A second writer is a person's button.</strong>
+<code>POST /api/wiki/remember</code> distils a wiki Ask or Explain turn
+into one fact through Haiku, tags it <code>wiki-note</code> and the
+wiki's name, and saves it <code>personal</code> for the wiki's synthesis
+bot's mapped default user, refusing with 409 when no mapping exists
+(<code>src/dashboard/routes/wiki-routes.ts:3137-3240</code>). It saves
+no <code>source_message_id</code>, so no topic delete reaches it.</p>
+<p><strong>The memory tier has no per-row correction.</strong> No update
+of content or scope, no supersession pointer, no expiry and no archival;
+the module that owns the table exposes save, search, list, count and an
+embedding backfill. A fact the model got wrong stays in the index until
+its topic is deleted. Extraction runs on every exchange with no dedup
+against what is stored, so a subject the user returns to accumulates
 near-duplicate rows that compete for the same five slots.</p>
+<p>Deleting a topic does not reach every copy. Every chat turn's
+assembled prompt is saved to <code>prompt_snapshots</code>
+(<code>src/core/prompt-assembly.ts:71</code>), including the
+<code>&lt;context&gt;</code> block the memories were rendered into. That
+table is cleared by a retention sweeper on a configurable chat window,
+not by the cascade (<code>cleanupOldSnapshots</code>,
+<code>src/db/prompt-snapshots.ts:170</code>).</p>
 <p><strong>The wiki write is the governed one</strong>, and its guard is
 a compare-and-swap rather than a lock: draft, record
 <code>sha256(target)</code>, and refuse at apply time if the file moved.
-<code>apply.ts</code> also degrades deliberately — a failed
-<code>log.md</code> append is a warning, not a rollback, because <em>"a
-log-write hiccup must not undo the page write — the page is the source
-of truth."</em> That is the right precedence and it is worth noting that
-it makes the log lossy by design.</p>
+<code>apply.ts</code> degrades deliberately — a failed
+<code>log.md</code> append is a warning, not a rollback, because a
+log-write hiccup must not undo the page write, <em>"the page is the
+source of truth."</em> That makes the log lossy by design.</p>
+<p>A lint group applies several rows inside one write section and stops
+at the first row that is not applied. Rows written before the stop stay
+written, with no rollback, and the route reports the boundary for the
+reviewer.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Memory reaches the model as text in the system prompt, not as a tool.
+<p>Memory reaches the model as text in the user turn, not as a tool.
 There is no <code>remember</code> tool and no memory MCP server, so a
 model cannot query the store mid-turn, cannot decline a memory it thinks
-is wrong, and cannot record that it was wrong. Each bot gets its own MCP
-tools for everything else.</p>
+is wrong, and cannot record that it was wrong. The three MCP servers in
+the tree are a research tool, a peer-messaging server and a Serena
+proxy.</p>
 <p>The retrieval is per bot <em>and</em> per user: <code>bot_name</code>
 is a first-class column on <code>memories</code> with its own composite
 indexes, so two bots in the same process sharing one database do not
 share personal memory, and <code>shared</code> scope is scoped to a bot
 as well. <code>bot_default_user</code> and <code>role_overrides</code>
 handle the identity edges.</p>
-<p>The dashboard exposes memory read-only — a memories panel, a per-user
-breakdown with personal and shared counts and recent tags, and a search.
-The one place a person can change what the system believes is the
-gardener queue, which is about wiki pages.</p>
+<p>The dashboard displays memory — a recent list, a per-user breakdown
+with personal and shared counts, and a search — and changes it in two
+ways: the wiki Remember button and the thread delete. The gardener queue
+is the place a person decides what the wiki believes.</p>
 <h3 id="choosing-the-scope-key-and-writing-down-why">Choosing the scope
 key, and writing down why</h3>
 <p><code>src/db/user-identities.ts</code> maps an Entra session onto a
-<code>users</code> row, and it is the clearest statement in this corpus
-of a question most scoped stores never answer out loud: <em>which claim
-is safe to key on.</em></p>
-<p>The answer is one claim and the reasoning is in the file.
+<code>users</code> row and states which claim is safe to key on.
 <code>oid</code> is used because it is <em>"the only claim immutable for
-a person within a tenant."</em> <code>NAVident</code> is explicitly
-refused as a key — it <em>"is re-issued when someone leaves and a new
-hire takes the ident"</em>, so <em>"keying on it would eventually
-resolve two different humans to one account"</em> — and is kept as a
-mutable refreshed column used only to mint a readable id the first time.
-<code>tenant</code> is <em>"provenance, never a check"</em>, written
-verbatim and deliberately not compared against the token's own
-<code>tid</code>.</p>
-<p>This matters to <code>scope_enforced</code> in a way the mark itself
-cannot express. The mark certifies that a stored key reaches the query;
-it says nothing about whether the key identifies who it claims to. A
-boundary keyed on a recycled employee number is enforced exactly as
-diligently as one keyed on an immutable subject id, and leaks anyway,
-one resignation at a time. Every scoped store in this atlas has made
-this choice; this is one of the few that records it.</p>
+a person within a tenant."</em> <code>NAVident</code> is refused as a
+key because it is re-issued when someone leaves and a new hire takes it,
+and is kept as a mutable column used only to mint a readable id.
+<code>tenant</code> is <em>"provenance, never a check"</em>.</p>
+<p>The <code>scope_enforced</code> mark certifies that a stored key
+reaches the query; it says nothing about whether the key identifies who
+it claims to. A boundary keyed on a recycled employee number is enforced
+as diligently as one keyed on an immutable subject id, and leaks one
+resignation at a time. This file records the choice.</p>
 <h3 id="a-dashboard-read-path-scoped-by-argument">A dashboard read path,
 scoped by argument</h3>
-<p><code>dashboardSearchMemories</code> arrived with a dashboard
-redesign and takes <code>botName</code> and <code>scope</code> as
-optional parameters, threading them into
+<p><code>dashboardSearchMemories</code> takes <code>botName</code> and
+<code>scope</code> as optional parameters, threading them into
 <code>buildSearchFilters</code>.
-<code>getMemoriesByUser(botName?)</code> has the same shape: with a bot
-name it filters <code>WHERE m.bot_name = $1</code>, without one it does
-not. The route at
-<code>src/dashboard/routes/memsearch-routes.ts:33</code> passes both
-through from the request.</p>
-<p>That is a different arrangement from the one the mark rests on.
-<code>searchMemories</code> takes <code>userId</code> as a mandatory
+<code>getMemoriesByUser(botName?)</code> and
+<code>getRecentMemories(limit, botName?)</code> have the same shape:
+with a bot name they filter <code>bot_name</code>, without one they do
+not. The routes in
+<code>src/dashboard/routes/memsearch-routes.ts:33</code> and
+<code>data-routes.ts:121-142</code> pass both through from the
+request.</p>
+<p><code>searchMemories</code> takes <code>userId</code> as a mandatory
 first positional argument, so the per-user predicate cannot be omitted
-by forgetting a parameter; the dashboard path's predicates can be. An
-operator console that can see across bots is a defensible product
-decision — the point is that the two surfaces enforce by different
-means, and only one is structural.</p>
-<p>The file says as much about itself. The comment above the
-<code>shared</code> branch notes it is a <strong>cross-user
-read</strong>, narrowed in <code>searchMemories</code> <em>"AND in
-<code>searchMemoriesHybrid</code> below: this function is the
-no-embedding fallback the hybrid one delegates to, so a fix applied to
-only one of them is inert on exactly the path that happens to be taken.
-That split is this repo's documented recurring failure class."</em> A
-project that names its own recurring failure class, in the file where it
-recurs, is doing something most of this corpus does not.</p>
+by forgetting a parameter; the operator paths' predicates can be. Under
+<code>entra</code> those collection routes are outside the user zone and
+need an admin role, while <code>/api/memories/user/:userId</code> is in
+it and passes <code>requireOwnUser</code> first. Under <code>off</code>
+they answer any request that reaches the port.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><strong>Scope — awarded</strong>, per section 6, and it is enforced
-in the place that is easy to get wrong.</p>
-<p><strong>Human review — awarded, on the wiki tier.</strong> The
-asymmetry in the routes is deliberate and correct: reject is
-<em>"deliberately NOT guarded — it flips a DB status and mutates no
-wiki"</em>, while approve is a compare-and-swap with a comment naming
-the failure it prevents. A review surface that guards the direction
-which touches the filesystem, and stays out of the way of the direction
-that does not, has thought about what the guard is for.</p>
-<p>The approval card grew a correction worth naming, because it is a
-failure mode specific to review surfaces rather than to this one. The
-gate card renders a <em>"Wiring on approve"</em> preview — what the
-apply step will do if the reviewer says yes — and it computed the index
-line for every reviewable row. The apply step does not:
-<code>runWireStage</code> writes an index entry only when
-<code>proposal.mode === "create"</code>, because a page was catalogued
-when it was created, so every update card promised a line that approval
-would never write. The fix reads mode first (<code>indexSkipFor</code>,
-<code>src/dashboard/routes/wiki-gardener-routes.ts:759-767</code>,
-applied at <code>:1231</code>) and suppresses the line rather than the
-label, with the reason in the docstring. The general point: a preview
-that is computed independently of the action it previews is a second
-implementation of that action, and it will drift from the first one.
-What made this one recoverable is that the preview and the apply step
-are both in the repository and both tested; a review surface whose
-promise lives only in a template has no way to notice.</p>
-<p><strong>Provenance arrived on the wiki tier, and muninn deliberately
-did not become its second writer.</strong> A stamped page now carries
-four frontmatter keys — the agent sessions that produced it, a backfill
-date, Jira keys and pull requests (<code>src/wiki/provenance.ts</code>)
-— and the module states outright that <em>"muninn never WRITES these
-keys"</em>: one line-upsert implementation exists, in a sibling project,
-and muninn's own Link Jira action shells out to that CLI rather than
-grow a second writer, because <em>"two writers of one frontmatter line
-lose each other's appends."</em> That is the same interlock reasoning as
-the page-write lock beside it, applied to a field rather than a file.
-The cross-repo contract is handled honestly too: the stamp's shape is
-checked in on both sides byte for byte, each suite pins the half it
-owns, and one opportunistic test diffs the two when a sibling checkout
-happens to be present and skips otherwise — a machine without the
-sibling repository must not go red over a file it does not have.</p>
+<p><strong>Scope — awarded.</strong> The predicate runs on all four read
+paths that put memory in front of a model, inside both fusion arms, and
+narrows by auth mode in both search functions (section 6).</p>
+<p><strong>Human review — awarded, on the wiki tier.</strong> A drafted
+page waits as <code>draft</code> until a person approves or rejects it,
+and only the dashboard routes call the approve functions. The drafters
+run with no tools, the shipped bot's harness settings allow no shell,
+and no MCP tool or skill names a proposal. Reject is <em>"deliberately
+NOT guarded — it flips a DB status and mutates no wiki"</em>, while
+approve is a compare-and-swap with a comment naming the regression it
+pins: <em>"approve 403s, row stuck in <code>approved</code>
+forever"</em>. The guarded direction is the one that touches the
+filesystem.</p>
+<p>Who the reviewer is depends on the mode. Under <code>entra</code> the
+gardener routes fall outside the user zone and need an admin role. Under
+<code>off</code> the dashboard is an <em>"auth-less loopback"</em> whose
+own comment calls its bounds <em>"containment of accidents, not defence
+against a hostile author"</em>. An origin guard refuses cross-site side
+effects in every mode, and the gate's write verbs answer 415 to anything
+that is not JSON. The queue covers the gardener's drafts; pages agent
+sessions write into the wiki directly do not pass it.</p>
+<p>The approval card's <em>"Wiring on approve"</em> preview reads mode
+before it promises an index line, because <code>runWireStage</code>
+writes one only on <code>create</code> (<code>indexSkipFor</code>,
+<code>src/dashboard/routes/wiki-gardener-routes.ts:860</code>, applied
+at <code>:1366</code>). A preview computed independently of the action
+it previews is a second implementation of that action and drifts from
+the first; here both are in the repository and both are tested.</p>
+<p><strong>Provenance on the wiki tier has one writer by
+design.</strong> A stamped page carries four frontmatter keys — the
+agent sessions that produced it, a backfill date, Jira keys and pull
+requests — and <code>src/wiki/provenance.ts</code> states that
+<em>"muninn never WRITES these keys"</em>. The one line-upsert lives in
+a sibling project, and muninn shells out to it rather than grow a second
+writer, because two writers of one frontmatter line lose each other's
+appends. Each repository pins its own copy of the stamp's shape.</p>
 <p><strong>Trust state — awarded, on the same tier and no
 other.</strong> <code>draft → approved → applied</code>, with
 <code>rejected</code> and <code>stale</code> as terminal states and
-<code>resolved_at</code> recording the transition, is
-candidate/verified/rejected with an extra state for "the world moved".
-The <code>memories</code> table has no status column, which is the whole
-finding: the mark describes the tier where a human was already in the
-loop.</p>
-<p><strong>Tombstone, bi-temporal, audit log — no.</strong> There is no
-rejected-value record and nothing to build one from, since nothing is
-ever rejected. <code>created_at</code> is one axis. And
-<code>activity_log</code> is a message log — its <code>type</code> is
-CHECK-constrained to <code>message_in</code>, <code>message_out</code>,
-<code>error</code>, <code>system</code>, <code>slack_channel_post</code>
-— so it records conversation traffic and not memory mutations. The
-nearest thing to an audit of durable knowledge is the wiki's
-<code>log.md</code>, which is a Markdown file the apply step appends to
-and treats as droppable.</p>
+<code>resolved_at</code> recording the transition, is candidate,
+verified and rejected with an extra state for "the world moved". The
+<code>memories</code> table has no status column, which is the finding:
+the mark describes the tier where a human was already in the loop.</p>
+<p><strong>Tombstone — withheld, with a near miss.</strong> A rejected
+proposal's <code>topic_key</code> joins a skip set the gardener's
+clusterer consults, but only for seven days
+(<code>getRecentlyRejectedTopicKeys</code>,
+<code>src/db/wiki-proposals.ts:497</code>;
+<code>rejectedSkipDays: 7</code>). Older rejections reach the cluster
+prompt as a hint and the topic becomes re-proposable. It is keyed on a
+model-chosen topic label rather than on the rejected content, and it
+expires by design: <em>"A rejection is a verdict on one draft, not a
+permanent verdict on the topic."</em> Nothing rejects a memory
+value.</p>
+<p><strong>Bi-temporal, audit log — withheld.</strong>
+<code>created_at</code> is one axis. <code>activity_log</code> is a feed
+whose <code>type</code> is CHECK-constrained to <code>message_in</code>,
+<code>message_out</code>, <code>error</code>, <code>system</code> and
+<code>slack_channel_post</code>; the Remember route and the
+<code>entra</code> admin-access audit push <code>system</code> rows to
+it, and the extractor and the topic delete push none. The nearest record
+of durable knowledge is the wiki's <code>log.md</code>, a Markdown file
+the apply step treats as droppable.</p>
 <p><strong>The privacy shape follows from the extraction
-prompt.</strong> A model is asked to classify each exchange as
-<code>personal</code> or <code>shared</code>, and a <code>shared</code>
-classification makes the row retrievable by every user of that bot. That
-decision is made once, by a model, with no confirmation and no way to
-revise it afterwards — a misclassified personal fact is visible to the
-whole workspace and there is no command that moves it back. For a system
-whose README describes Slack and Telegram deployments with multiple
-users, this is the failure worth guarding first, and the guard would be
-small: the scope column already exists and an update statement would be
-the whole fix.</p>
+prompt.</strong> A model classifies each exchange as
+<code>personal</code> or <code>shared</code>, and on an <code>off</code>
+instance a <code>shared</code> classification makes the row retrievable
+by every user of that bot. The decision is made once, by a model, with
+no confirmation, and no command rescopes it. A misclassified personal
+fact is visible to every user of the bot until its topic is deleted. On
+an authenticating instance the read is narrowed to the owner, which
+closes the cross-user path by giving up shared memory between
+colleagues.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>285 test files. No paper and no citation file. I ran nothing.</p>
+<p>No paper and no citation file. I ran nothing: no install, no
+Postgres, no suite.</p>
 <p><strong>The retrieval eval is the part that distinguishes this
 repository.</strong> <code>computeQueryMetrics</code> produces
 <code>hitAtK</code>, <code>recallAtK = matched/expected</code> and
@@ -517,198 +555,168 @@ repository.</strong> <code>computeQueryMetrics</code> produces
 <code>aggregateMetrics</code> means them into hit-rate, recall@k and
 MRR, overall and per target. <code>runRetrievalEval</code> runs three
 targets — a knowledge base, <code>memories</code>, and research
-citations — and migration 053 persists every run: started and finished
-timestamps, a status enum, the target filter, the query count, the
-aggregate <code>metrics</code> JSONB and the <code>per_query</code>
-JSONB. The migration comment is unusually candid about its own status:
-<em>"Intentionally NOT added to <code>db/init.sql</code>: like
-<code>benchmark_runs</code> this is experimental tooling that fresh
-deploys don't carry… Migration-only is the whole truth for this
-table."</em></p>
-<p>Three design decisions in the fixtures are worth lifting. The memory
+citations — and migration 053 persists every run with timestamps, a
+status enum, the target filter, the query count, the aggregate
+<code>metrics</code> JSONB and the <code>per_query</code> JSONB. The
+migration states its own status: <em>"Migration-only is the whole truth
+for this table."</em></p>
+<p>Three fixture decisions carry over to any golden set. The memory
 fixtures carry <strong>fixed UUIDs</strong> because
-<code>saveMemory</code> mints random ones and <em>"the golden set can
-name them as <code>expected_doc_ids</code>"</em>. Seeding
-<strong>refuses a non-<code>*_test</code> database</strong> unless
+<code>saveMemory</code> mints random ones and the golden set must name
+them as <code>expected_doc_ids</code>. Seeding <strong>refuses a
+non-<code>*_test</code> database</strong> unless
 <code>--allow-live-seed</code> is passed. And when the fixtures are
 absent the memory target is <strong>skipped rather than scored as a
-miss</strong> — an eval that would otherwise report a setup failure as a
-retrieval failure, which is the specific way a golden set starts
-lying.</p>
-<p><strong>And the honest limits, which the repository half states
-itself.</strong> The memory target is three synthetic fixtures and three
-golden queries. The queries are written so every content word
-stem-matches the fixture text, because the FTS arm is AND-semantics — so
-the lexical arm is being asked a question constructed to be answerable.
-A golden set built to satisfy the retriever it tests measures that the
-plumbing is connected, not that recall is good. That is a real thing to
-measure and it is not the thing the metric names suggest. The
-knowledge-base and research targets point at <em>"real Jira/Confluence
-docs that already live in the running knowledge base"</em>, so those
-rows are not reproducible outside the author's deployment, and no
-committed result exists for any target.</p>
-<p>The memory unit tests carry the mark: a personal memory for one user
-and another for a second user with the same query term, a search as the
-first user, and an assertion that every row returned belongs to them —
-with the shared-scope case directly beneath it as the positive
-control.</p>
-<h2 id="11-patterns-worth-stealing">11. Patterns Worth Stealing</h2>
+miss</strong> (<code>hasSeededMemoryFixtures</code>), so a setup failure
+does not report as a retrieval failure.</p>
+<p><strong>The limits, which the repository half states itself.</strong>
+The memory target is three synthetic fixtures and three golden queries,
+written so every content word stem-matches the fixture text because the
+FTS arm is AND-semantics. A golden set built to satisfy the retriever it
+tests measures that the plumbing is connected, not that recall is good.
+The knowledge-base and research targets point at docs that <em>"already
+live in the running knowledge base"</em>, so those rows are not
+reproducible outside the author's deployment, and no committed result
+exists for any target.</p>
+<p>The memory unit tests carry the mark.
+<code>acceptance 11 - shared memories do not cross identities</code>
+(<code>src/db/memories.test.ts:120-171</code>) seeds one
+<code>shared</code> row owned by another user and asserts, on the same
+seed, that an <code>off</code> instance returns it and an authenticating
+one does not. The negative half runs through both search functions and
+through the vector arm, which ranks every row and so is the arm a
+missing predicate would leak through. The older personal-scope test at
+<code>:71</code> asserts with <code>every</code> and would pass on an
+empty result.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <p><strong>Put the scope predicate inside every arm of a fused query,
 not around the join.</strong> Two CTEs each capped at 30 and filtered
-independently means the candidate budget is spent inside the boundary.
-Filtering after the fusion silently costs recall to exactly the caller
-with the narrowest permissions.</p>
+independently means the candidate budget is spent inside the
+boundary.</p>
+<p><strong>Apply an access fix in every function the read can reach, and
+test each one.</strong> The no-embedding fallback is a second
+implementation of the search, and the acceptance 11 cases assert the
+narrowing through both functions and both arms.</p>
 <p><strong>Score your retrieval against a named golden set and persist
 the per-query breakdown.</strong> Aggregates tell you something
 regressed; the per-query JSONB tells you which query moved. Migration
-053 is forty lines and it is the difference between a benchmark and a
-dashboard number.</p>
+053 is forty lines.</p>
 <p><strong>Skip a target whose fixtures are missing rather than scoring
-it zero.</strong> <code>hasSeededMemoryFixtures</code> is the guard, and
-without it an empty database reports as a retrieval failure — the exact
-way a benchmark starts reporting the harness instead of the system.</p>
-<p><strong>Refuse to seed fixtures into a database whose name does not
-end in <code>_test</code>.</strong> One string check, and the failure it
-prevents is synthetic rows in a user's real memory.</p>
+it zero, and refuse to seed fixtures into a database whose name does not
+end in <code>_test</code>.</strong> Two small checks, each closing a way
+an eval starts reporting the harness.</p>
 <p><strong>Compare-and-swap against a hash of the file you drafted
 from.</strong> <code>baseHash</code> at draft time,
 <code>sha256(current)</code> at apply time, <code>stale</code> when they
-differ. Any system whose agent proposes an edit to something a human can
-also edit needs this, and almost none of them have it.</p>
+differ. Any agent that proposes an edit to something a human can also
+edit needs this.</p>
 <p><strong>Guard the direction that mutates and leave the other
 alone.</strong> Approve is a CAS; reject <em>"flips a DB status and
-mutates no wiki"</em> and is unguarded. Symmetric guards on asymmetric
-operations are friction without safety.</p>
+mutates no wiki"</em> and is unguarded.</p>
 <p><strong>Log the per-turn memory latency split.</strong>
 <code>db</code>, <code>embed</code>, <code>search</code>, on every
-prompt build, in the normal log line. It is the only shipped measurement
-of memory's cost on the critical path in this corpus.</p>
+prompt build, in the normal log line.</p>
 <h3 id="avoid">Avoid</h3>
 <p><strong>Do not let one model call be the only gate on a durable write
 about a person.</strong> <code>worth_remembering</code> and the
 personal/shared classification are decided together, once, by a small
-model, and both are unappealable. The scope half of that decision is an
-access-control decision made by a language model.</p>
-<p><strong>Do not ship a store with no delete.</strong>
-<code>src/db/memories.ts</code> has no <code>DELETE</code> and no
-content <code>UPDATE</code>. Everything else in the design assumes the
-extraction was right.</p>
+model, and neither can be appealed. The scope half is an access-control
+decision.</p>
+<p><strong>Do not make deletion a side effect of deleting a
+conversation.</strong> The topic delete is the only exit, so removing
+one wrong memory costs the topic, and a memory from the main topic or
+from the Remember button has no exit at all.</p>
 <p><strong>Do not extract on every exchange without
 deduplicating.</strong> Nothing compares a candidate against what is
-already stored, and the retrieval budget is five rows.</p>
+stored, and the injection budget is five rows.</p>
 <p><strong>Do not read a golden set's metrics as recall quality when the
-queries were written to match.</strong> The number is real; what it
-measures is that the pipeline is wired.</p>
+queries were written to match.</strong> Three queries move the metric in
+thirds, and what it measures is that the pipeline is wired.</p>
+<p><strong>Do not leave the eval's tables out of a fresh
+deploy.</strong> <code>benchmark_retrieval_runs</code> is migration-only
+and outside the drift guard, so a fresh deploy cannot run the eval the
+repository's best measurement lives in.</p>
 <h3 id="fit">Fit</h3>
 <p>This suits one person or a small team self-hosting an assistant they
 trust, on hardware they own, who want hybrid retrieval that works
-without an embedding API and are willing to correct the store with
-<code>psql</code>. It is a lot of working software — three chat
-platforms, three model backends, watchers, scheduling, goals, a wiki
-gardener and a dashboard — and the parts are wired together with more
-care than the size suggests.</p>
+without an embedding API and will correct the store with
+<code>psql</code>. It is a large, carefully wired system — three chat
+platforms, four model connectors, watchers, scheduling, goals, a wiki
+gardener and a dashboard.</p>
 <p>It fits badly wherever a memory about a person has to be correctable
-by that person, and worse wherever <code>shared</code> means what it
-says. The gap is not depth of engineering — the wiki tier proves the
-engineering is there — it is that the governance was built for the tier
-a human was already watching. A team adopting this should treat "add
-delete and rescope to the memory tier" as the first patch, not a later
-one.</p>
-<h2 id="12-antipatterns--risks">12. Antipatterns / Risks</h2>
-<ul>
-<li><strong>A model assigns the access-control label.</strong>
-<code>scope</code> decides who can retrieve a row and is set by the same
-Haiku call that decides whether to store it, from a prose definition.
-There is no confirmation, no review, and no command that changes it
-afterwards.</li>
-<li><strong>No deletion, at all.</strong> A wrong memory, a duplicate
-memory, and a memory that should never have been shared are all
-permanent as far as this codebase is concerned.</li>
-<li><strong>Duplicates compete for the injection budget.</strong>
-Extraction runs per exchange with no dedup, retrieval injects five rows,
-and a recurring topic produces near-identical summaries that can occupy
-several of them.</li>
-<li><strong>A memory saved without an embedding is silently
-half-indexed.</strong> The warning says it <em>"will not appear in
-semantic search"</em>, the row is saved, and nothing retries
-automatically — <code>getMemoriesWithoutEmbeddings</code> exists but
-must be invoked.</li>
-<li><strong>The eval's memory target is three rows.</strong> Any figure
-computed over three queries moves in thirds, and the aggregate metric
-names — recall@k, MRR — carry an authority the sample size does
-not.</li>
-<li><strong><code>log.md</code> is a lossy record by design.</strong>
-The apply step degrades a failed log append to a warning, correctly
-prioritising the page write, which means the wiki's history has gaps
-that nothing records.</li>
-<li><strong>The benchmark tables are migration-only and excluded from
-the drift guard.</strong> Stated deliberately, and it means a fresh
-deploy cannot run the eval that the repository's best measurement lives
-in.</li>
-</ul>
-<h2 id="13-build-vs-borrow-takeaways">13. Build-vs-Borrow Takeaways</h2>
-<p>Borrow the fusion SQL — it is one statement, it needs no service, and
-the scope placement inside both CTEs is the part to copy exactly. Borrow
-the eval scaffold: fixed fixture ids, a test-database guard,
-skip-when-absent, and per-query persistence are four small decisions
-that together make a golden set worth trusting.</p>
-<p>Borrow the gardener's apply contract for any agent that edits files a
-human also edits. <code>baseHash</code> plus <code>stale</code> is
-fifteen lines and it is the difference between an agent that proposes
-and an agent that overwrites.</p>
-<p>Do not borrow the memory lifecycle. The absence of delete is not a
-young-project gap here — the same repository built a six-state review
-queue for its other tier — it is a choice about which writes deserved
-governance, and it went the wrong way.</p>
-<h2 id="14-open-questions">14. Open Questions</h2>
+by that person, and on an unauthenticated multi-user instance wherever
+<code>shared</code> means what it says. The wiki tier shows the
+governance engineering exists; it was built for the tier a human was
+already watching. Borrow the fusion SQL, the eval scaffold and the
+gardener's apply contract; do not borrow the memory lifecycle, and treat
+"add delete and rescope to the memory tier" as the first patch.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
 <li>Why did the review machinery stop at the wiki? The proposal table,
 the status enum and the dashboard queue would transfer to extracted
 memories with little change, and the extraction path is the one with no
 human in it.</li>
-<li>What does the retrieval eval score today? No run output is
+<li>What does the retrieval eval score on a live store? No run output is
 committed, so the numbers exist only in whatever database the author
 runs.</li>
 <li>Does anything reconcile a <code>shared</code> memory that was
-misclassified? No path was found, and the column is not exposed for
-update anywhere in the tree.</li>
-<li><code>source_message_id</code> is a foreign key to
-<code>messages</code>. If a message is deleted, is the memory it
-produced still traceable, and does anything cascade?</li>
+misclassified on an <code>off</code> instance? No path was found, and
+the column has no update anywhere in the tree.</li>
+<li>Is the main topic's permanence intended? <code>deleteThread</code>
+refuses <code>main</code>, and a user who never switches topic
+accumulates memories nothing in the tree removes.</li>
 </ul>
-<h2 id="15-appendix-file-index">15. Appendix: File Index</h2>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Path</th>
-<th>What it holds</th>
+<th>What to read it for</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>src/memory/extractor.ts</code></td>
-<td>The extraction prompt, the <code>worth_remembering</code> gate, and
-the tags-optional fix</td>
+<td>The extraction prompt, the <code>worth_remembering</code> gate, the
+tags-optional fix, the narrow scope default</td>
 </tr>
 <tr>
-<td><code>src/db/memories.ts</code></td>
-<td>Save, both search arms, the RRF statement, and the absent
-delete</td>
+<td><code>src/db/memories.ts:49-185</code></td>
+<td>Both search functions, the RRF statement, the auth-mode branch in
+each</td>
 </tr>
 <tr>
-<td><code>src/db/memories.test.ts</code></td>
-<td>The cross-user negative case and its shared-scope positive
-control</td>
+<td><code>src/db/memories.test.ts:120-171</code></td>
+<td>The cross-identity negative cases and their positive control on one
+seed</td>
+</tr>
+<tr>
+<td><code>src/auth/policy.ts:105-124</code></td>
+<td><code>sharedMemoryReadsAllowed</code> and why the read narrows</td>
+</tr>
+<tr>
+<td><code>src/db/threads.ts:345-421</code></td>
+<td>The topic delete and its memories-first cascade</td>
+</tr>
+<tr>
+<td><code>src/core/topic-commands.ts:54-75</code></td>
+<td><code>/deltopic</code>, shared by Telegram and Slack</td>
+</tr>
+<tr>
+<td><code>src/dashboard/routes/wiki-routes.ts:754-775</code>,
+<code>:3137-3240</code></td>
+<td>The wiki saved-notes read and the Remember write</td>
+</tr>
+<tr>
+<td><code>src/ai/prompt-builder.ts</code></td>
+<td>Top-5 injection into the user turn and the latency split</td>
 </tr>
 <tr>
 <td><code>db/init.sql</code></td>
 <td><code>memories</code>, <code>wiki_proposals</code>,
-<code>activity_log</code>, and the tsvector trigger</td>
-</tr>
-<tr>
-<td><code>db/migrations/008-memory-scope.sql</code></td>
-<td>The personal/shared column</td>
+<code>activity_log</code>, <code>prompt_snapshots</code>, the tsvector
+trigger</td>
 </tr>
 <tr>
 <td><code>db/migrations/053-benchmark-retrieval-runs.sql</code></td>
@@ -716,41 +724,97 @@ control</td>
 migration-only</td>
 </tr>
 <tr>
-<td><code>src/benchmarks/retrieval.ts</code></td>
-<td>hit@k, recall@k, reciprocal rank, and the aggregation</td>
-</tr>
-<tr>
-<td><code>src/benchmarks/retrieval-fixtures.ts</code></td>
-<td>Fixed-id fixtures, the golden queries, the test-database guard,
+<td><code>src/benchmarks/retrieval.ts</code>,
+<code>retrieval-fixtures.ts</code></td>
+<td>The metrics, fixed-id fixtures, the test-database guard,
 skip-when-absent</td>
 </tr>
 <tr>
-<td><code>src/ai/prompt-builder.ts</code></td>
-<td>Top-5 injection and the per-turn latency split</td>
-</tr>
-<tr>
 <td><code>src/gardener/apply.ts</code></td>
-<td>The <code>baseHash</code> compare-and-swap and the
+<td>The <code>baseHash</code> compare-and-swap, the group apply and the
 <code>log.md</code> degradation</td>
 </tr>
 <tr>
 <td><code>src/gardener/runner.ts</code></td>
-<td>Where <code>baseHash</code> is computed, and why only for existing
-targets</td>
+<td>Where <code>baseHash</code> is computed, and the rejected-topic skip
+set in use</td>
 </tr>
 <tr>
 <td><code>src/db/wiki-proposals.ts</code></td>
-<td>The status enum and the partial unique index over live
-proposals</td>
+<td>The status enum, the CAS transitions, the rejection skip set</td>
 </tr>
 <tr>
 <td><code>src/dashboard/routes/wiki-gardener-routes.ts</code></td>
-<td>The approve/reject surface and the guarded-versus-unguarded
-asymmetry</td>
+<td>The approve/reject surface, the guarded-versus-unguarded asymmetry,
+the wiring preview</td>
+</tr>
+<tr>
+<td><code>src/auth/zones.ts</code></td>
+<td>The default-deny route zones that put the gardener gate behind an
+admin role</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>/usr/bin/git grep</code>, and at
+<code class="commit-id" title="b95d5044b7acc585773390142bec2b59b2785c39">b95d5044…</code> for
+comparison.</p>
+<ul>
+<li><code>git grep -nE 'DELETE FROM memories|UPDATE memories' -- . ':!*.test.ts' ':!*.md'</code>
+— <code>src/db/threads.ts:358</code> (the topic cascade),
+<code>src/db/memories.ts:194</code> (embedding only) and
+<code>src/benchmarks/retrieval-fixtures.ts:124</code> (fixture reseed);
+the same at both pins.</li>
+<li><code>git grep -nE 'cascadeDeleteThread|deleteThread(ById)?\(' -- . ':!*.test.ts'</code>
+— the cascade, <code>src/core/topic-commands.ts:68</code>,
+<code>src/chat/routes.ts:498</code>,
+<code>src/dashboard/routes/data-routes.ts:241</code>.</li>
+<li><code>git grep -nE '\bsaveMemory\(' -- src ':!*.test.ts'</code> —
+<code>src/memory/extractor.ts:84</code> and
+<code>src/dashboard/routes/wiki-routes.ts:3210</code>.</li>
+<li><code>git grep -nE 'searchMemories|searchMemoriesHybrid|getMemoriesForUser|getRecentMemories|getMemoriesByUser|dashboardSearchMemories' -- src scripts ':!*.test.ts' ':!src/db/memories.ts'</code>
+— the four model-facing readers, the eval, the backfill script and the
+dashboard routes.</li>
+<li><code>git grep -nE 'new McpServer' -- . ':!*.test.ts'</code> —
+<code>src/research</code>, <code>src/hivemind</code>,
+<code>src/serena</code>; none registers a proposal verb.</li>
+<li><code>git grep -nE 'approveWikiProposal(Group)?\(' -- . ':!*.test.ts'</code>
+— the two route bindings in <code>wiki-gardener-routes.ts</code> and the
+definitions.</li>
+<li><code>git grep -niE 'approve|wiki/proposals' -- .claude bots</code>
+— no match.</li>
+<li><code>git grep -nE "status: \"(approved|applied)\"" -- src scripts ':!*.test.ts'</code>
+— route result shapes only; every insert passes <code>draft</code> or
+omits status.</li>
+<li><code>git grep -niE 'valid_from|valid_until|validFrom|as_of' -- src db ':!*.test.ts'</code>
+— no match.</li>
+<li><code>git grep -nE "status = 'rejected'" -- src ':!*.test.ts' ':!*.md'</code>
+— the reject writers and the three skip-set reads in
+<code>wiki-proposals.ts</code>.</li>
+<li><code>git grep -niE 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs</code>
+— no match; no paper.</li>
+<li><code>git grep -niE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/RuneLind/muninn/commit/34c9e0b52ed1fe4559dce4867e2aaeeac87db408"><code class="commit-id" title="34c9e0b52ed1fe4559dce4867e2aaeeac87db408">34c9e0b5…</code></a>
+— 124 commits on; <code>src/db/memories.ts</code>, the extractor and the
+memory tests are byte-identical. All four marks hold at both pins. Wrong
+at the previous pin: memories were deletable through the topic cascade
+(<a href="#7-write-mechanics">section 7</a>); <code>shared</code> reads
+were narrowed on authenticating instances (<a
+href="#2-mental-model">section 2</a>); the dashboard wrote memories
+through Remember; the <code>negative_eval</code> record cited a test
+that passes on an empty result, where acceptance 11 holds the paired
+cases (<a href="#10-tests-evals-and-benchmarks">section 10</a>); and the
+review gate needed an admin role under <code>entra</code>. Overtaken:
+memory context moved from the system prompt to the user turn, write
+verbs refuse cross-site and non-JSON requests, drafters run with no
+tools, and lint fixes join the queue. Screened from a full clone: one
+auto-run hook, <code>package.json</code> inside the cooldown, fourteen
+floating ranges under a lockfile. Nothing was installed or run.</p>
 <p><strong>2026-09-19</strong> — re-pinned to <a
 href="https://github.com/RuneLind/muninn/commit/b95d5044b7acc585773390142bec2b59b2785c39"><code class="commit-id" title="b95d5044b7acc585773390142bec2b59b2785c39">b95d5044…</code></a>.
 All four marks stand. <code>human_review</code> was producer-tested
@@ -776,13 +840,14 @@ files, so <code>trust_state</code>, <code>scope_enforced</code> and
 The report's standing finding is unchanged:
 <code>src/db/memories.ts</code> still exposes no delete of any kind, so
 the extracted tier is still written by a model with no review and no way
-to remove a row. The one anchor that moved is the gardener route, and
-the change there is written up in section 9 — the approval card's
-preview promised an index line on updates that the apply step never
-writes. A new wiki-provenance layer landed beside it, also in section 9.
-Re-screened at this commit: one auto-run surface, no build-time
-execution, one floating version, one manifest inside the cooldown.
-Nothing was installed, no Postgres was started and no test was run.</p>
+to remove a row.</p>
+<p>The one anchor that moved is the gardener route, and the change there
+is written up in section 9 — the approval card's preview promised an
+index line on updates that the apply step never writes. A new
+wiki-provenance layer landed beside it, also in section 9. Re-screened
+at this commit: one auto-run surface, no build-time execution, one
+floating version, one manifest inside the cooldown. Nothing was
+installed, no Postgres was started and no test was run.</p>
 <p><strong>2026-09-13</strong> — <a
 href="https://github.com/RuneLind/muninn/commit/d30b087c728d6b1cd1fb1c9f8b3dbd2dd509a736"><code class="commit-id" title="d30b087c728d6b1cd1fb1c9f8b3dbd2dd509a736">d30b087c…</code></a>
 — 90 commits and about 128,000 added lines, most of it a YouTube

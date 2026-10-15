@@ -19993,41 +19993,46 @@ survives until a model summarises it away</td>
 </tr>
 <tr>
 <td><a href="../systems/muninn/"><code>muninn</code></a></td>
-<td>A <code>memories</code> row — content, a one-sentence summary, tags,
-a <code>tsvector</code>, a 384-dim embedding, a scope of personal or
-shared, and the message it came from; separately a
+<td>A <code>memories</code> row — the raw exchange, a one-sentence
+summary, tags, a <code>tsvector</code>, a 384-dim embedding, a scope of
+personal or shared, and the message it came from; separately a
 <code>wiki_proposals</code> row holding a full drafted page and its
 status</td>
-<td>One Postgres database with pgvector and an HNSW index, 65
-migrations, plus a Markdown wiki on disk that the gardener writes</td>
+<td>One Postgres database with pgvector and an HNSW index, 75 migration
+files, plus a Markdown wiki on disk that the gardener and agent sessions
+write</td>
 <td>Reciprocal-rank fusion in one SQL statement — an FTS CTE and a
-vector CTE, each limited to 30, joined FULL OUTER and scored
-<code>1/(60+rank)</code> per arm</td>
-<td>A background Haiku call per exchange decides
-<code>worth_remembering</code> and returns summary, tags and scope; the
-memory is embedded and inserted without a gate. Wiki pages go through a
-drafter and wait for approval</td>
-<td>Nothing for memories — no update, no delete, no supersession, no
-expiry. Wiki proposals resolve to applied, rejected or stale, and a
-retire path exists for pages</td>
-<td><code>bot_name</code> plus
-<code>(scope='personal' AND user_id) OR scope='shared'</code>, applied
+vector CTE, each limited to 30, joined FULL OUTER and scored 1/(60+rank)
+per arm</td>
+<td>A background Haiku call per exchange decides worth_remembering and
+returns summary, tags and scope; the memory is embedded and inserted
+without a gate. A wiki Remember button distils a Q&amp;A turn into a
+personal memory. Wiki drafts wait for approval</td>
+<td>No update of content or scope and no per-row delete. Deleting a
+non-main topic deletes the memories its messages produced. Wiki
+proposals resolve to applied, rejected or stale, and a retire path
+exists for pages</td>
+<td>bot_name plus (scope='personal' AND user_id) OR scope='shared',
+narrowed to user_id alone when the instance authenticates, applied
 inside both arms of the hybrid query</td>
-<td>Telegram, Slack and web chat over one pipeline; Claude CLI, Copilot
-SDK or any OpenAI-compatible endpoint per bot; MCP tools per bot; a
-dashboard with a memory panel and a gardener review queue</td>
+<td>Telegram, Slack and web chat over one pipeline; Claude CLI, Claude
+Agent SDK, Copilot SDK or an OpenAI-compatible endpoint per bot; MCP
+tools per bot; a dashboard with a memory panel and a gardener review
+queue</td>
 <td>Extraction per exchange, goal and task detection, proactive watchers
 with quiet hours and dedup, a wiki gardener that harvests, drafts,
-triages and retires</td>
+triages and retires, and a weekly wiki linter that proposes fixes into
+the same queue</td>
 <td>A six-value status on a drafted wiki page and nothing at all on an
 extracted memory</td>
 <td>A committed golden-set retrieval eval with recall@k, hit-rate and
 MRR, persisted per run with a per-query breakdown; a compare-and-swap on
 the file a proposal was drafted against; scope applied inside both
-fusion arms</td>
+fusion arms and narrowed by auth mode in both search functions</td>
 <td>The automatic tier is the ungoverned one — a model decides what is
-worth remembering and the row it writes can never be corrected,
-contradicted or removed by anything in the tree</td>
+worth remembering and who may read it, and the row can be removed only
+by deleting the whole topic it came from; main-topic memories cannot be
+removed by anything in the tree</td>
 </tr>
 <tr>
 <td><a href="../systems/muninndb/"><code>muninndb</code></a></td>

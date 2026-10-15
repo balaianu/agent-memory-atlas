@@ -26894,20 +26894,26 @@
         "AGENT": 1,
         "FLOAT": 1,
         "FRESH": 1,
+        "NOTE": 2,
         "RUNS": 1
       },
-      "files_scanned": 4,
+      "files_scanned": 5,
       "findings": [
         {
-          "detail": "agent harness hooks (SessionStart / PreToolUse / Stop) — mentions PreToolUse, command, hooks",
+          "detail": "agent harness hooks (SessionStart / PreToolUse / Stop) — mentions PreToolUse, command, hooks; launches a package fetched at run time (npx)",
           "kind": "RUNS",
           "path": ".claude/settings.json"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "package.json"
         }
       ],
-      "revision": "b95d5044b7acc585773390142bec2b59b2785c39",
-      "screened_at": "2026-09-19T00:00:00+00:00",
+      "revision": "34c9e0b52ed1fe4559dce4867e2aaeeac87db408",
+      "screened_at": "2026-10-15T02:46:15+00:00",
       "slug": "muninn",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/RuneLind/muninn"
     },
