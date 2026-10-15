@@ -4023,9 +4023,9 @@ nothing inside the dependency cooldown, and the <code>CLAUDE.md</code>
 and <code>AGENTS.md</code> read as data. Nothing was installed, built or
 run</li>
 <li><a href="https://github.com/sageox/ox">sageox/ox</a> at <a
-href="https://github.com/sageox/ox/commit/02f4f406a4b973fa4adda9df62725904cc1859d9"><code class="commit-id" title="02f4f406a4b973fa4adda9df62725904cc1859d9">02f4f406…</code></a>
-— read only, from a shallow clone; twenty files scanned, three auto-run
-surfaces, one build-time execution point, one unpinned surface, five
+href="https://github.com/sageox/ox/commit/304ab68a822b561e5ec96c41f74acd17444160a4"><code class="commit-id" title="304ab68a822b561e5ec96c41f74acd17444160a4">304ab68a…</code></a>
+— read only, from a full clone; 27 files scanned, four auto-run
+surfaces, one build-time execution point, one unpinned surface, seven
 dependency files inside the seven-day cooldown, and the
 <code>CLAUDE.md</code> and <code>AGENTS.md</code> read as data. Nothing
 was installed, built or run</li>
@@ -17973,6 +17973,40 @@ said contradiction demoted the lower-credibility side of every detected
 pair; only a polarity flip did, and a value divergence was recorded for
 the operator with both facts left verified
 (<code>SRC/neothd/src/memory/contradiction.rs:422-427</code>).</li>
+<li><strong>Four published claims about <a href="../systems/ox/">SageOx
+CLI</a> were wrong at <a
+href="https://github.com/sageox/ox/commit/02f4f406a4b973fa4adda9df62725904cc1859d9"><code class="commit-id" title="02f4f406a4b973fa4adda9df62725904cc1859d9">02f4f406…</code></a>,
+the pin they were made at, and are corrected.</strong> The report put
+<code>MEMORY.md</code> and <code>memory/</code> in the ledger beside
+<code>sessions/</code> and <code>data/</code>, one ledger per team; they
+were in the team-context checkout
+(<code>cmd/ox/agent_prime.go:2215</code> reads
+<code>teamDir/MEMORY.md</code>, <code>cmd/ox/memory_put.go:116</code>
+writes observations under <code>tc.Path</code>), and the ledger was per
+project repository (<code>internal/ledger/ledger.go:86</code>). Its
+headline said a memory conflict falls to the LLM tier; the resolver was
+wired only to the ledger pull
+(<code>internal/daemon/sync.go:1361</code>) and the ledger push hook
+(<code>cmd/ox/session_upload.go:533</code>), only when
+<code>OX_LLM_MERGE_BIN</code> named a binary, the team-context pull
+(<code>internal/daemon/sync_team.go:507</code>) passed none, and
+<code>MEMORY.md</code> and <code>memory/</code> were hard-denied
+(<code>internal/manifest/auto_resolve.go:45-46</code>). It said there
+was no retrieval and nothing ranked; <code>handlePrompt</code>
+(<code>cmd/ox/agent_hook.go:479</code>) injected up to four hits from
+<code>ledgersearch.Search</code>, a term-frequency ranking, and
+<code>ox conversation topic</code> hid atoms with a
+<code>valid_to</code>
+(<code>internal/conversation/read/topic.go:99</code>). And it said CI
+was disabled, quoting a README comment;
+<code>.github/workflows/ci.yml</code> ran on push and pull request
+beside a leftover <code>ci.yml.disabled</code>. It also gave the marker
+check as <code>strings.Contains</code>, which was only a fast path
+before a line-prefix scan
+(<code>internal/ledger/automerge/automerge.go:251-261</code>). The first
+two followed the word "ledger" across two repositories, the third read
+the priming path and not the prompt hook, and the fourth took a comment
+as evidence.</li>
 <li><strong>Four published claims about <a
 href="../systems/memini/">memini</a> were wrong at <a
 href="https://github.com/eleboucher/memini/commit/452ff2299c185530c7010cb164d83cce8006f78a"><code class="commit-id" title="452ff2299c185530c7010cb164d83cce8006f78a">452ff229…</code></a>,

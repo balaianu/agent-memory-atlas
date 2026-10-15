@@ -4,29 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A Go CLI whose team memory is a
-git repository shared by humans and agents, where a pull that halts on
-conflicts is resolved in three tiers — git's union driver, accept-theirs
-confined to regenerable artifacts, then a bounded LLM whose only
-post-condition is that no conflict markers remain.">
+    <meta name="description" content="A Go CLI for human-agent teams
+whose memory lives in server-distilled git repositories; an opt-in LLM
+merge tier must keep every conflicted line.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="SageOx CLI — Agent Memory Atlas">
-    <meta property="og:description" content="A Go CLI whose team memory
-is a git repository shared by humans and agents, where a pull that halts
-on conflicts is resolved in three tiers — git's union driver,
-accept-theirs confined to regenerable artifacts, then a bounded LLM
-whose only post-condition is that no conflict markers remain.">
+    <meta property="og:description" content="A Go CLI for human-agent
+teams whose memory lives in server-distilled git repositories; an opt-in
+LLM merge tier must keep every conflicted line.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SageOx
 CLI — Agent Memory Atlas">
-    <meta name="twitter:description" content="A Go CLI whose team memory
-is a git repository shared by humans and agents, where a pull that halts
-on conflicts is resolved in three tiers — git's union driver,
-accept-theirs confined to regenerable artifacts, then a bounded LLM
-whose only post-condition is that no conflict markers remain.">
+    <meta name="twitter:description" content="A Go CLI for human-agent
+teams whose memory lives in server-distilled git repositories; an opt-in
+LLM merge tier must keep every conflicted line.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>SageOx CLI — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -48,7 +42,7 @@ whose only post-condition is that no conflict markers remain.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "SageOx CLI",
-      "description": "A Go CLI whose team memory is a git repository shared by humans and agents, where a pull that halts on conflicts is resolved in three tiers \u2014 git's union driver, accept-theirs confined to regenerable artifacts, then a bounded LLM whose only post-condition is that no conflict markers remain.",
+      "description": "A Go CLI for human-agent teams whose memory lives in server-distilled git repositories; an opt-in LLM merge tier must keep every conflicted line.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,28 +97,26 @@ whose only post-condition is that no conflict markers remain.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">When two agents' memories conflict, tier
-three is an LLM</p>
+          <p class="eyebrow">The LLM merge must keep every line, and
+team memory never reaches it</p>
           <h1>SageOx CLI</h1>
-          <p class="document-deck">A Go CLI whose team memory is a git
-repository shared by humans and agents, where a pull that halts on
-conflicts is resolved in three tiers — git's union driver, accept-theirs
-confined to regenerable artifacts, then a bounded LLM whose only
-post-condition is that no conflict markers remain.</p>
+          <p class="document-deck">A Go CLI for human-agent teams whose
+memory lives in server-distilled git repositories; an opt-in LLM merge
+tier must keep every conflicted line.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/sageox/ox">
               <span>Source</span>
               <strong>sageox/ox</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/sageox/ox/commit/02f4f406a4b973fa4adda9df62725904cc1859d9" title="02f4f406a4b973fa4adda9df62725904cc1859d9">
+            <a class="meta-pill revision-pill" href="https://github.com/sageox/ox/commit/304ab68a822b561e5ec96c41f74acd17444160a4" title="304ab68a822b561e5ec96c41f74acd17444160a4">
               <span>Analyzed revision</span>
-              <code>02f4f406…</code>
+              <code>304ab68a…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/sageox--ox" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -132,7 +124,20 @@ post-condition is that no conflict markers remain.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>835,974
+lines of Go in 3,098 files, 494,310 of them in 1,794 test files; the
+memory-facing packages read here (ledger, automerge, ledgersearch,
+conversation, facts, plan) are a small part of it</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,243
+commits on main by 29 author names, 16 February – 15 October 2026; 22
+commits past v0.23.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>14,213
+Go test functions in 1,794 files, 49 of them in the automerge and
+ledgersearch packages; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -148,93 +153,80 @@ post-condition is that no conflict markers remain.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>SageOx CLI is "[t]he hivemind for human-agent teams" — MIT, Go,
-651,919 lines across 1,337 test files, shipping an <code>ox</code>
-binary and a Claude plugin.</p>
-<p>Its team memory is a git repository. The cloud provisions it, the CLI
-clones it sparsely, and it holds <code>MEMORY.md</code> plus
+<p>SageOx CLI keeps a team's memory in git repositories the SageOx
+server provisions and fills, and it is careful about the one place where
+two writers can collide: a rebase that halts. Its accept-theirs rule is
+confined to artifacts it can regenerate, and the comment justifying that
+rule carries its own evidence. Its last-resort LLM merge must keep every
+line from both sides or be refused. The team's memory never reaches that
+merge, because it is written so that it cannot conflict.</p>
+<p>There are two repositories, and the difference matters. The
+<strong>team context</strong>, one per team, holds
+<code>MEMORY.md</code>, the summary directories
 <code>memory/daily/</code>, <code>memory/weekly/</code> and
-<code>memory/monthly/</code> alongside <code>sessions/</code> and
-<code>data/</code>. Agents write observations with
-<code>ox memory put</code>; a daemon syncs them; the server distils them
-into the summaries that later get read.</p>
-<p>Two design choices are worth the visit and one is worth knowing
-before you trust it.</p>
-<p>The first is how memory reaches an agent. Priming does not inject it.
-It hands over <code>MEMORY.md</code> and then a catalogue — "Recent:
-memory/daily/ (12 files — what happened recently)", "Patterns:
-memory/weekly/", "Trends: memory/monthly/" — under a heading called
-Progressive Disclosure, and leaves the agent to open what it wants with
-ordinary file tools. In a corpus where nearly every system either
-retrieves-and-injects or injects whole, advertising the shelf and
-letting the reader choose is a genuinely different answer, and it costs
-nothing at prompt time.</p>
-<p>The second is the comment on <code>DefaultResolveRules</code>, which
-is the best piece of writing in this repository and possibly the best
-documented engineering judgement in this atlas. It explains why
-<code>sessions/</code> auto-resolves on conflict: <code>meta.json</code>
-is written by both the cloud summarizer and the local CLI, so with no
-rule "the rebase halts, nothing can resolve it, the abort restores the
-pre-rebase state, and the next attempt fails identically — a
-deterministic wedge that never escalates and never self-heals." Then the
-evidence: "One ledger sat 341 ahead / 1055 behind for 13 days with 281
-such conflicts." Then the justification, artifact by artifact, each with
-its canonical source named elsewhere, and the trade stated outright: "An
-imperfect summary beats a ledger that can never sync again." Then a
-SAFETY paragraph about pointer-wins ordering that ends "Do not weaken
-that guard", and a NOTE explaining why the rule is scoped to the ledger
-rather than added to the shared defaults.</p>
-<p>Crucially, the paths that auto-resolve are <code>data/</code> and
-<code>sessions/</code> — the regenerable ones. The memory directories
-are not on that list. That is the right call, and it is what makes the
-third thing matter.</p>
-<p>A conflict that is <em>not</em> under a safe prefix falls to tier
-three: <code>internal/ledger/automerge</code> runs an LLM —
-<code>claude</code>, <code>gemini</code> or <code>codex</code>, or an
-explicit absolute path, restricted by an allowlist with the argv[0]
-substitution attack spelled out in the comment — on the conflicted file,
-with a 60-second per-file deadline, and asks it to merge.</p>
-<p>The system prompt is careful: "Preserve user intent on both sides;
-when in doubt prefer including more content over deleting. Remove all
-conflict markers from your output."</p>
-<p>The verification is that the conflict markers are gone.</p>
-<p>That is the whole post-condition. A model that resolves the conflict
-by keeping one side and discarding the other, or by paraphrasing both
-into something neither person wrote, produces a file with no conflict
-markers and is staged and committed. For source code that is a familiar
-risk with a familiar remedy — someone reviews the diff. For a team's
-shared memory, the thing being silently rewritten is the record of what
-the team decided.</p>
+<code>memory/monthly/</code>, the pending observations, and recorded
+discussions. The <strong>ledger</strong>, one per project repository,
+holds session records, murmurs and plans. Agents write observations; the
+server distils them into the summaries; agents read
+<code>MEMORY.md</code> at session start and the summary directories on
+demand.</p>
+<p>Three mechanisms are worth the visit.</p>
+<p>Priming injects <code>MEMORY.md</code> and then advertises the rest —
+"Recent: memory/daily/ (12 files — what happened recently)" — under a
+heading called Progressive Disclosure, leaving the agent to open what it
+wants with ordinary file tools.</p>
+<p>On a prompt that reads like a recall question, a hook runs a local
+search over the ledger and injects up to four hits, inside a
+100-millisecond budget, and a lint test pins that hook to the local path
+for privacy reasons the comment spells out.</p>
+<p>And the LLM merge tier checks content, not only syntax. It counts
+every non-blank line of each conflict side, refuses a merge that loses
+one, and parses JSON, TOML and YAML output for duplicate keys. A
+conflict where both sides rewrote the same line cannot pass, and the
+code says that is deliberate: "the conflict is left for a person rather
+than resolved by discarding someone's record."</p>
+<p>What it cannot show is the memory policy itself. The summaries an
+agent reads are written by
+<code>POST /api/v1/teams/{id}/memory/distill</code>, and the discussion
+distillations by a server pipeline; this repository is the client of
+both.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>An <strong>observation</strong> is what an agent records in the
-moment: <code>{"content": "..."}</code>, capped at 20KB.</p>
-<p>A <strong>fact</strong> is what extraction produces: a headline, an
-optional summary and rationale, a <code>who</code>, a source type and
-reference, a timestamp, and a category from a closed list.</p>
-<p>The <strong>ledger</strong> is a git repository shared by the team's
-humans and agents.</p>
-<p>A <strong>sync</strong> is <code>git pull --rebase</code>, and when
-it halts, the three tiers decide what the team remembers.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the accept-theirs tier is deliberately confined to regenerable artifacts, so a conflict in memory content falls through to an LLM whose only post-condition is the absence of conflict markers</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the accept-theirs tier is deliberately confined to regenerable artifacts, so a conflict in memory content falls through to an LLM whose only post-condition is the absence of conflict markers
+moment: <code>{"content": "..."}</code>, capped at 20,480 bytes. Each
+put, single or batch, writes its observations as <code>Fact</code> lines
+into a new file of its own.</p>
+<p>A <strong>summary</strong> is what the server distils from
+observations: <code>MEMORY.md</code> and the files under
+<code>memory/daily</code>, <code>weekly</code> and <code>monthly</code>.
+Nothing in this repository writes one.</p>
+<p>A <strong>discussion atom</strong> is one claim the server extracted
+from a recorded conversation, with a confidence, a quote, citation URIs
+and a validity interval. The CLI folds a sidecar of edits over the atoms
+and hides the ones a rejection closed.</p>
+<p>A <strong>ledger record</strong> is a session, a murmur, a plan or a
+plan's review feedback. These are what the per-prompt recall
+searches.</p>
+<p>A <strong>sync</strong> is <code>git pull --rebase</code> on each
+checkout, and when it halts, the tiers decide what survives.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — memory lives in the team context, where entries are written to unique paths and summaries come from the server; the opt-in LLM merge tier is wired only to the ledger, and refuses any output that loses a conflicted line</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: memory lives in the team context, where entries are written to unique paths and summaries come from the server; the opt-in LLM merge tier is wired only to the ledger, and refuses any output that loses a conflicted line
 flowchart TB
-    A[&quot;agent&quot;] --&gt;|&quot;ox memory put&quot;| OBS[(&quot;.observations/ — local JSONL,&lt;br/&gt;20KB cap per observation&quot;)]
-    OBS --&gt;|&quot;daemon sync&quot;| LED[(&quot;team ledger — a git repo,&lt;br/&gt;cloned sparsely from a&lt;br/&gt;server-provided URL&quot;)]
-    LED --&gt; MEM[&quot;MEMORY.md&lt;br/&gt;memory/daily · weekly · monthly&lt;br/&gt;sessions/ · data/&quot;]
-    OBS --&gt;|&quot;POST /api/v1/teams/{id}/memory/distill&quot;| CLOUD[&quot;SageOx API —&lt;br/&gt;server-side LLM distillation.&lt;br/&gt;The local pipeline that did this&lt;br/&gt;was removed 2026-09-09&quot;]
-    CLOUD --&gt; MEM
-    MEM --&gt; PRIME[&quot;agent prime: MEMORY.md +&lt;br/&gt;a CATALOGUE with file counts —&lt;br/&gt;&#39;Progressive Disclosure&#39;.&lt;br/&gt;Content is not injected&quot;]
-    SYNC[&quot;git pull --rebase halts&lt;br/&gt;on conflicts&quot;] --&gt; T1{&quot;tier 1 — union driver&lt;br/&gt;(paths declaring merge=union)&quot;}
-    T1 --&gt;|&quot;markers gone&quot;| STAGE[&quot;stage&quot;]
-    T1 --&gt;|&quot;unresolved&quot;| T2{&quot;tier 2 — accept-theirs,&lt;br/&gt;only if ALL remaining paths are&lt;br/&gt;under SafePrefixes&quot;}
-    SAFE[&quot;SafePrefixes = data/ + sessions/ —&lt;br/&gt;regenerable artifacts, each with its&lt;br/&gt;canonical source named elsewhere.&lt;br/&gt;memory/ is NOT among them&quot;] -.-&gt; T2
-    T2 --&gt;|&quot;resolved&quot;| STAGE
-    T2 --&gt;|&quot;a memory path conflicts&quot;| T3{&quot;tier 3 — LLM merge&quot;}
-    T3 --&gt; BOUND[&quot;bounded: allowlist claude | gemini | codex&lt;br/&gt;or an absolute path; 60s per file&quot;]
-    BOUND --&gt; PROMPT[&quot;&#39;Preserve user intent on both sides;&lt;br/&gt;when in doubt prefer including more&lt;br/&gt;content over deleting&#39;&quot;]
-    PROMPT --&gt; CHECK{&quot;post-condition&quot;}
-    CHECK --&gt;|&quot;no &#39;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&#39; remains&quot;| STAGE
-    CHECK -.-&gt;|&quot;nothing checks that content&lt;br/&gt;survived — a silent drop or&lt;br/&gt;rewrite passes&quot;| RISK[&quot;the record of what the&lt;br/&gt;team decided, rewritten&quot;]
-    STAGE --&gt; CONT[&quot;git rebase --continue&lt;br/&gt;(only once ALL conflicts staged)&quot;]</code></pre></details></figure>
+    A[&quot;agent&quot;] --&gt;|&quot;ox memory put&quot;| OBS[&quot;team context:&lt;br/&gt;memory/.observations/date/uuid.jsonl&lt;br/&gt;one new file per put,&lt;br/&gt;committed under the repo lock&quot;]
+    OBS --&gt;|&quot;ox memory distill&lt;br/&gt;POST .../memory/distill&quot;| SRV[&quot;SageOx server —&lt;br/&gt;distillation policy&lt;br/&gt;not in this repository&quot;]
+    SRV --&gt; TC[(&quot;team context checkout&lt;br/&gt;MEMORY.md · memory/daily · weekly · monthly&lt;br/&gt;discussions/ distilled atoms&quot;)]
+    TC --&gt; PRIME[&quot;session start: MEMORY.md injected&lt;br/&gt;up to 200 lines, summary dirs&lt;br/&gt;advertised by file count&quot;]
+    TC --&gt; CONV[&quot;ox conversation topic:&lt;br/&gt;atoms with valid_to hidden&lt;br/&gt;unless --include-superseded&quot;]
+    LED[(&quot;ledger checkout, per project&lt;br/&gt;sessions/ · data/murmurs · data/plans&quot;)] --&gt; RECALL[&quot;UserPromptSubmit hook:&lt;br/&gt;recall-shaped prompt → ox query --local&lt;br/&gt;term-frequency search, 90 days,&lt;br/&gt;up to 4 hits injected&quot;]
+    TCPULL[&quot;team-context pull halts&quot;] --&gt; TCT{&quot;union paths, then&lt;br/&gt;accept-theirs outside the hard-deny list&lt;br/&gt;(MEMORY.md, memory/, discussions/)&quot;}
+    TCT --&gt;|&quot;unresolved&quot;| ABORT[&quot;rebase aborted —&lt;br/&gt;no LLM tier on this repo&quot;]
+    LPULL[&quot;ledger pull or push halts&quot;] --&gt; T1{&quot;tier 1 — union&quot;}
+    T1 --&gt;|&quot;unresolved&quot;| T2{&quot;tier 2 — accept-theirs,&lt;br/&gt;only if every path is under&lt;br/&gt;data/ or sessions/&quot;}
+    T2 --&gt;|&quot;a path outside them&quot;| GATE{&quot;OX_LLM_MERGE_BIN or&lt;br/&gt;OX_DAEMON_LLM_MERGE_BIN set?&quot;}
+    GATE --&gt;|&quot;no&quot;| ABORT
+    GATE --&gt;|&quot;yes&quot;| T3[&quot;tier 3 — allowlisted claude | gemini | codex,&lt;br/&gt;plan mode, 60s and 50KB per file&quot;]
+    T3 --&gt; POST{&quot;post-conditions:&lt;br/&gt;no markers · no conflicted line dropped ·&lt;br/&gt;JSON/TOML/YAML parses, no duplicate key&quot;}
+    POST --&gt;|&quot;pass&quot;| STAGE[&quot;stage; rebase --continue&lt;br/&gt;step by step&quot;]
+    POST --&gt;|&quot;fail&quot;| ABORT
+    POST -.-&gt;|&quot;lines ADDED are not counted&quot;| GAP[&quot;a merge that keeps both sides&lt;br/&gt;and inserts a line passes&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -246,185 +238,280 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>internal/ledger/</code></td>
-<td>The git-backed team ledger: clone, sparse checkout, sync, push</td>
+<td>The project ledger: clone, sparse checkout, resolve rules, push</td>
 </tr>
 <tr>
 <td><code>internal/ledger/automerge/</code></td>
-<td>The three conflict tiers and the LLM binary allowlist</td>
+<td>The three conflict tiers, the binary allowlist and the content
+post-conditions</td>
+</tr>
+<tr>
+<td><code>internal/manifest/auto_resolve.go</code></td>
+<td>Resolve rules for team contexts and the hard-deny list</td>
+</tr>
+<tr>
+<td><code>internal/daemon/</code></td>
+<td>Pulls both checkouts; wires the LLM tier into the ledger pull
+only</td>
+</tr>
+<tr>
+<td><code>internal/ledgersearch/</code></td>
+<td>Local term-frequency search over sessions, murmurs, plans and
+feedback</td>
+</tr>
+<tr>
+<td><code>cmd/ox/agent_hook_recall.go</code></td>
+<td>The per-prompt recall injection</td>
+</tr>
+<tr>
+<td><code>internal/conversation/</code></td>
+<td>Read-only access to recorded discussions and their distilled
+atoms</td>
+</tr>
+<tr>
+<td><code>internal/plan/</code></td>
+<td>Plans, their lifecycle event log and prior-art search</td>
 </tr>
 <tr>
 <td><code>internal/facts/</code></td>
-<td>The unified <code>Fact</code> schema and its JSONL reader and
-writer</td>
+<td>The <code>Fact</code> schema and its JSONL reader and writer</td>
 </tr>
 <tr>
-<td><code>cmd/ox/memory_put.go</code></td>
-<td>Local observation capture</td>
-</tr>
-<tr>
-<td><code>cmd/ox/memory_distill.go</code></td>
-<td>The call to the server's distillation endpoint</td>
+<td><code>cmd/ox/memory_put.go</code>,
+<code>memory_distill.go</code></td>
+<td>Observation capture and the call to the server's distillation</td>
 </tr>
 <tr>
 <td><code>cmd/ox/agent_prime.go</code></td>
 <td>What an agent is told about memory at session start</td>
 </tr>
-<tr>
-<td><code>internal/manifest/</code></td>
-<td>Sparse-checkout paths and the resolve rules</td>
-</tr>
-<tr>
-<td><code>docs/specs/team-memory-journal.md</code></td>
-<td>The superseded local pipeline, kept as history</td>
-</tr>
 </tbody>
 </table></div>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>internal/ledger/ledger.go:36-71</code>. Read the comment, not
-just the rule. It is forty lines of engineering judgement with its
-evidence attached, and it is the reason to read this project.</p>
-<p>Then <code>internal/ledger/automerge/automerge.go:1-20</code> for the
-tiers, and <code>llm.go:22</code> for the prompt that decides a
-merge.</p>
-<p>Then <code>cmd/ox/agent_prime.go:2313-2328</code> for progressive
-disclosure.</p>
+<p><code>internal/ledger/ledger.go:36-67</code>. Read the comment, not
+just the rule.</p>
+<p>Then <code>internal/ledger/automerge/llm.go:86-223</code> for the
+merge and its three post-conditions, and <code>llm_test.go:199</code>
+for the table that pins them, including the cases that must be
+refused.</p>
+<p>Then the wiring that decides which repository the tier serves:
+<code>internal/daemon/sync.go:1449-1461</code> passes
+<code>LLMResolver</code> to the ledger pull and
+<code>internal/daemon/sync_team.go:673</code> passes none to the
+team-context pull.</p>
+<p>Then <code>cmd/ox/agent_hook.go:510-517</code> and
+<code>agent_hook_recall.go:72-104</code> for the recall injection, and
+<code>internal/ledgersearch/ledgersearch.go:117-178</code> for what it
+searches.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>The <code>Fact</code> is well shaped for citation:
-<code>SourceRef</code> is "the stable canonical identifier",
-<code>SourceURL</code> is "the human-clickable URL for drill-down",
-<code>SourceTitle</code> is "a short human label for citations", and the
-comment notes that older files lacking the last two are still valid
-because "the citation pipeline degrades gracefully (link omitted, label
-derived from other fields)". <code>Who</code> carries the author. A file
-header records a schema version, the source type, a recorded-at, an
-optional source hash and the query window that produced it.</p>
-<p>What the model does not carry is any epistemic state.
-<code>Category</code> is
-<code>decision | learning | open_question | action_item | context | ship | blocker | direction_change</code>
-— a taxonomy of what kind of thing was said, decided at write time.
-Nothing marks a fact as disputed, superseded, corrected or withdrawn,
-and <code>WriteFacts</code> opens the file with <code>os.Create</code>,
-which truncates: a rewrite replaces the file rather than appending to
-it. The history is git's, which is real but is the repository's history
-rather than the memory's own record — and after an LLM merge, the git
-history shows a resolution commit, not what each side originally
-said.</p>
-<p>That is why this report carries no marks. Every mechanism the atlas
-asks about is either absent or delegated: no stored status filtering a
-read, no validity interval, no value-keyed rejection, no scope predicate
-— the team boundary is a separate repository — no append-only mutation
-record of its own, no human review step over memory, and no committed
-must-not-retrieve assertion.</p>
+<p>The <code>Fact</code> is shaped for citation: <code>SourceRef</code>
+is "the stable canonical identifier", <code>SourceURL</code> is "the
+human-clickable URL for drill-down" and <code>SourceTitle</code> is "a
+short human label for citations". A file header records a schema
+version, a source type, a recorded-at, an optional source hash and a
+query window. <code>Category</code> lists eight genres, from
+<code>decision</code> to <code>direction_change</code>, and nothing in
+this repository sets it: the one writer, <code>writeObservation</code>,
+fills <code>Headline</code>, <code>SourceType</code> and
+<code>Timestamp</code>, with the timestamp taken from the write
+clock.</p>
+<p>No fact carries an epistemic state, and nothing in this repository
+rewrites one. Each <code>ox memory put</code> and each session-end
+auto-observation creates a new file named by a UUIDv7, written whole
+inside <code>.git/</code> and renamed into place.</p>
+<p>Discussion atoms are the richer unit, and the CLI only reads them. An
+atom has a kind, a signal, text, a quote, citation URIs, a confidence,
+and <code>valid_from</code>, <code>valid_to</code> and
+<code>superseded_by</code>. An <code>edits.jsonl</code> sidecar can
+edit, add or reject atoms; <code>Project</code> folds it in, and a
+reject sets <code>valid_to</code> to the edit's timestamp.
+<code>ox conversation topic</code> hides atoms with a
+<code>valid_to</code> unless <code>--include-superseded</code> is
+passed, and <code>ox conversation topics</code> counts only current
+ones. Nothing in this repository writes the base file or the sidecars —
+the edit fold's comments name an editor whose "production sidecars" it
+has observed — and the projection comment states that "[d]raft and
+finalized are served identically — status is point-in-time metadata,
+with no gating."</p>
+<p>Plans carry a status (<code>approved</code>, <code>superseded</code>,
+<code>abandoned</code>, <code>realized</code> and others) and an
+<code>events.jsonl</code> that <code>AppendEvent</code> extends under a
+file lock. The events record lifecycle and provenance, not content: a
+revision overwrites <code>plan.md</code> and appends an event naming the
+revision. <code>ox plan approve</code> takes "the same action a
+reviewer's Approve button" takes, from any shell, and no read path waits
+for it.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>There is none to speak of, deliberately. <code>MEMORY.md</code> is
-the always-present document; everything else is a file tree the agent
-may open. For a team whose agents already have file tools, that is a
-defensible answer and it makes the memory auditable by
-<code>git log</code> and readable by a human without the CLI.</p>
-<p>The cost is that nothing ranks. An agent that does not go looking
-does not find the weekly summary, and the priming text is the only thing
-nudging it.</p>
+<p>Three read paths reach an agent.</p>
+<p><strong>Session start.</strong> <code>loadTeamMemory</code> reads
+<code>MEMORY.md</code> from the team context with
+<code>ReadFirstLines(..., MaxInlineContextLines)</code>, which is 200,
+despite the function comment's "always fully inlined".
+<code>SOUL.md</code>, <code>TEAM.md</code> and the observation guide are
+given as paths. The summary directories are given as file counts. For a
+team whose agents have file tools, this costs a line of prompt per
+directory and leaves the choice to the agent.</p>
+<p><strong>Each prompt.</strong> <code>handlePrompt</code> calls
+<code>emitLocalRecallPreamble</code> before anything else. If the prompt
+is at least 20 characters, does not start with an action verb, and
+matches a recall pattern such as "how did we" or "has anyone", it shells
+out to <code>ox query --local</code> and writes up to four hits inside a
+<code>&lt;system-reminder&gt;</code>. The search is
+<code>ledgersearch.Search</code>: AND-matched terms, a
+density-normalised term-frequency score, ties broken by recency, over
+sessions and plans from the last 90 days and murmurs from the last
+seven. It reads the ledger, not the team context, so the distilled
+summaries are not among the candidates. The comment on the shell-out is
+marked load-bearing and a lint test pins it: a remote query here "would
+transit every keystroke the user typed into their agent."</p>
+<p><strong>On request.</strong> <code>ox query</code> sends the query to
+the server's search, scoped by team and repository ids taken from
+project config unless <code>--team</code> or <code>--repo</code> is
+passed. <code>ox conversation</code> reads discussions from the local
+checkout after a membership check. Plan prior-art search reuses
+<code>ledgersearch</code>.</p>
+<p>None of these read paths consults a plan's lifecycle status.
+<code>scanPlans</code> reads <code>plan.md</code> and
+<code>meta.json</code> for text and dates, and
+<code>internal/plan/priorart.go</code> has no status reference, so a
+plan marked <code>superseded</code> by <code>ox plan supersede</code>
+resurfaces as prior art beside the plan that replaced it.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p><code>ox memory put</code> accepts a JSON object or JSONL batch on
-the command line, from a file, or on stdin, caps each observation at
-20,480 bytes ("~5000 tokens"), and writes into
-<code>.observations</code> for the daemon to sync. Priming instructs the
-agent to use it as a standing behaviour: "Proactively record
-observations throughout this session … Record decisions, discoveries,
-questions, and notable events as they happen — don't wait to be
-asked."</p>
-<p>Distillation is the other half and it is not here.
-<code>ox memory distill</code> posts the pending observations and a date
-range to <code>/api/v1/teams/{teamID}/memory/distill</code> and receives
-a summary — the comment calls it "server-side LLM distillation". The
-command also refuses to run for a human, printing an explanation
-instead, because "[m]emory distillation is an automated process run by
-AI coworkers."</p>
-<p>So the policy that decides what a team remembers — what gets
-summarised, what is dropped, how contradictions between two agents'
-observations are settled — runs on a server whose code is not in this
-repository. The local pipeline that once did it was removed:
+<p><code>ox memory put</code> accepts a JSON object or a JSONL batch,
+caps each observation at 20,480 bytes ("~5000 tokens"), writes it to
+<code>memory/.observations/&lt;date&gt;/&lt;uuid&gt;.jsonl</code> in the
+team context, and commits under the repo lock that the daemon's pull and
+<code>ox import</code> also hold. A put that finds the lock busy leaves
+the file for the next put's commit. Priming tells the agent to do this
+unprompted: "Proactively record observations throughout this
+session".</p>
+<p><code>ox memory distill</code> refuses to run for a human, and for an
+agent posts the pending observations and their date range to the API.
+Nothing local writes the summaries; they arrive in the team context by
+the daemon's pull. The local pipeline that once did this work is gone:
 <code>docs/specs/team-memory-journal.md</code> is headed
-"<strong>Superseded — 2026-09-09:</strong> <code>ox distill</code> and
-its entire <code>history</code> command tree have been removed", and the
-surviving references to <code>memory/daily/</code> in Go are a file
-count for priming and a sparse-checkout path.</p>
+"<strong>Superseded — 2026-09-09:</strong>".</p>
+<p>No path in this repository writes <code>MEMORY.md</code> or the
+summary directories. The hard-deny list's comment says agents write them
+"via <code>ox remember</code>", and no such command is registered.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A Claude plugin plus the CLI, with agent priming, session upload and
-a daemon. The daemon is where the LLM resolver runs
-(<code>internal/daemon/llm_resolver.go</code>), which means the merge
-decision happens in the background rather than in front of whoever
-caused the conflict.</p>
+<p>Hooks for Claude Code, Gemini CLI, OpenCode, Codex, Cursor and others
+call <code>ox agent hook &lt;event&gt;</code>; the Claude plugin and
+<code>.claude/settings.json</code> wire SessionStart, UserPromptSubmit,
+PreCompact, PostToolUse, Stop and SessionEnd. PreCompact re-primes. The
+daemon pulls the team context and the ledger on their own intervals and,
+when configured, resolves ledger conflicts with the LLM tier in the
+background rather than in front of whoever caused them.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The LLM binary allowlist is the trust mechanism done well.
-<code>claude</code>, <code>gemini</code> and <code>codex</code> as bare
-names, or an explicit absolute path — "relative paths with a slash are
-refused outright" — with the reasoning recorded: an attacker who can
-write a binary earlier on <code>PATH</code> could otherwise "redirect to
-/tmp/evil", while an absolute path is trusted because "the operator
-already chose where to point this binary." A test file exists solely for
-the allowlist.</p>
-<p>Each tier is conservative in the right direction: "a tier that can't
-safely resolve every remaining conflicted path returns control to the
-next tier", and the resolver "only calls
-<code>git rebase --continue</code> once all conflicts have been staged."
-The accept-theirs tier fires only when <em>every</em> remaining conflict
-is under a safe prefix, so one memory file in the set sends the whole
-batch to the next tier rather than resolving the rest quietly.</p>
-<p>The gap is the post-condition on tier three, and it is worth stating
-precisely because the rest of the design is careful enough that it
-stands out. The check is
-<code>strings.Contains(data, "&lt;&lt;&lt;&lt;&lt;&lt;&lt;")</code>.
-That confirms the file is syntactically clean. It cannot confirm that
-both sides' content survived, and the instruction that it should is a
-sentence in a system prompt. A cheap improvement exists: the tier
-already has both sides of the conflict, so a post-merge check that every
-non-marker line from either side appears in the output — or a count of
-lines dropped, logged and thresholded — would turn the prompt's intent
-into something enforced.</p>
+<p><strong>Where conflicts can happen.</strong> Observations cannot
+conflict, because each put writes a new path;
+<code>internal/kb/mergeattrs.go</code> says so for "session, history,
+murmur, or memory entry paths". <code>MEMORY.md</code>,
+<code>memory/</code> and <code>discussions/</code> sit on the
+team-context hard-deny list, so no manifest rule can make them
+accept-theirs. And the team-context pull is given no LLM resolver. A
+conflict there aborts the rebase and is surfaced.</p>
+<p><strong>The ledger's tiers.</strong> The ledger auto-resolves
+<code>data/</code> and <code>sessions/</code>, with the reasoning
+written out beside the rule: <code>meta.json</code> is written by the
+cloud summariser and the CLI, so with no rule "the next attempt fails
+identically — a deterministic wedge that never escalates and never
+self-heals. One ledger sat 341 ahead / 1055 behind for 13 days with 281
+such conflicts." Accept-theirs fires only when every remaining path is
+under a safe prefix, after a pointer-wins guard the SAFETY note forbids
+weakening.</p>
+<p><strong>The LLM tier.</strong> It runs only when
+<code>OX_LLM_MERGE_BIN</code> or <code>OX_DAEMON_LLM_MERGE_BIN</code>
+names a binary. The binary is <code>claude</code>, <code>gemini</code>
+or <code>codex</code> by bare name, or an absolute path — "relative
+paths with a slash are refused outright" — because a config-sourced name
+could "redirect to /tmp/evil". <code>claude</code> runs in plan mode so
+a prompt-injected conflict body cannot execute tools. The prompt's
+delimiters carry a per-call nonce. Symlinks are refused, files over 50KB
+are refused, and each file has 60 seconds.</p>
+<p><strong>The post-conditions.</strong> After the marker scan,
+<code>requiredLines</code> counts every normalised non-blank line
+outside the hunks and, per hunk, the larger of each side's count;
+<code>droppedLines</code> refuses output missing any of them. A diff3
+base section may be dropped. <code>validateStructured</code> parses
+<code>.json</code>, <code>.toml</code> and <code>.yaml</code> output and
+<code>rejectDuplicateJSONKeys</code> refuses a JSON union holding both
+values of one key. The comment states the intent plainly: "a merge that
+silently drops or paraphrases one side's lines is refused instead of
+committed."</p>
+<p>The check is a multiset of lines kept. It does not bound what is
+added, so a merge that keeps both sides and inserts a line neither side
+wrote — a reconciling sentence, a wrong date — is staged. Normalisation
+strips whitespace and a trailing comma, which is what lets a JSON union
+pass; it also means a line whose meaning lives in its indentation can
+move between YAML parents unnoticed whenever the result parses.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>1,337 test files, including dedicated coverage for the allowlist,
-sparse clone, the murmur paths, github sync and the automerge tiers. The
-memory commands have put, write, integration and observation-roundtrip
-tests.</p>
-<p>The README is candid about what is not running: a comment in the
-badge block reads "CI badge intentionally omitted: ci.yml is currently
-disabled (ci.yml.disabled). Only docs.yml and smoke-test.yml are active,
-and neither is a build signal." Saying so in the file where a badge
-would otherwise imply otherwise is the honest choice.</p>
-<p>No test asserts anything about what the LLM merge tier preserves.</p>
+<p>The automerge package has a test file for the allowlist alone and a
+twenty-one-case table,
+<code>TestMergeOneWithLLM_ContentPreservation</code>, whose header names
+the failure it prevents: "a model keeps one side (or paraphrases both)
+and the lossy result is staged". It asserts that dropping either side,
+paraphrasing both, rewriting one line on both sides, collapsing a
+repeated line, dropping context outside the hunk and keeping both values
+of a key are refused, and that reordering, a JSON comma and a discarded
+diff3 base pass.</p>
+<p><code>ledgersearch</code> has AND-semantics, ranking, limit and
+age-cutoff tests. <code>TestSearch_AgeCutoff</code> and
+<code>TestSearch_PlanAgeCutoff</code> assert that an old record is not
+returned, from a store holding only that record.
+<code>TestAgentPrime_BulletinPostBodyNeverReachesPrime</code> asserts a
+bulletin post's body never appears in prime output while its pointer
+does. That is a must-not-appear case about an assembled preamble, not a
+retrieval result.</p>
+<p><code>ci.yml</code> runs on push and pull request, and
+<code>evals.yml</code> runs agent-behaviour evals daily and on dispatch.
+I ran nothing.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Copy the comment on <code>DefaultResolveRules</code> as a form. Name
-the failure, quantify it, justify the scope one item at a time, state
-the trade in a sentence, mark the safety constraint, and explain what
-you deliberately did <em>not</em> do. A rule documented that way
-survives the next refactor because its reasoning is checkable.</p>
-<p>Confine automatic conflict resolution to artifacts you can
-regenerate, and name the canonical source of each one where the rule
-lives. <code>data/</code> and <code>sessions/</code> qualify; a record
-of what someone decided does not.</p>
-<p>If an LLM resolves merges in a shared memory, give the tier a
-post-condition about content, not only about syntax. You have both sides
-in hand at that point; checking that neither vanished is cheap, and the
-absence of conflict markers is not evidence that a merge preserved
-anything.</p>
-<p>Consider progressive disclosure for team-scale memory. Advertising
-<code>memory/weekly/ (7 files — weekly themes)</code> costs a line of
-prompt and lets the agent decide; injecting the same content costs the
-context window every turn whether it is relevant or not.</p>
+<h3 id="steal">Steal</h3>
+<p>Write the comment the way <code>DefaultResolveRules</code> is
+written. Name the failure, quantify it, justify the scope one artifact
+at a time by naming each one's canonical source, state the trade, mark
+the safety constraint, and say what you deliberately did not do.</p>
+<p>Give an LLM merge a content post-condition. Counting lines per
+conflict side, keeping the larger count per hunk, is a few dozen lines
+and turns the prompt's "preserve both sides" into a refusal. Make the
+unmergeable case fail loudly: two rewrites of one line go to a
+person.</p>
+<p>Write memory so it cannot conflict. A new file per write, named by a
+time-ordered UUID, removes the merge problem for the part of memory
+agents write most often.</p>
+<p>Keep a per-prompt recall local, and pin the reason in a test.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Checking only what a merge kept. Count what it added too, or bound
+the output length against the inputs; a reconciling sentence nobody
+wrote is the plausible failure of a model asked to merge two
+records.</p>
+<p>A lifecycle status that the retriever never reads.
+<code>superseded</code> and <code>abandoned</code> exist on plans and
+gate only re-saving; prior art returns them.</p>
+<p>Comments that describe the code they sit above incorrectly. "Always
+fully inlined" above a 200-line cap, and <code>ox remember</code> in a
+list of writers, are the claims a reader takes from the file.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits a team that lives in git and wants agents to share a
+record without a database, and is willing to let a hosted service write
+the summaries. Walk away if the consolidation policy must be inspectable
+or self-hosted, or if a superseded plan must stop surfacing.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <p>What the server's distillation does with contradictory observations
-from two agents. The request carries only observations and a date range;
-the policy is not in this repository.</p>
-<p>Whether the LLM merge tier ever fires on memory paths in practice, or
-whether those conflicts abort. The tier ordering allows it; nothing in
-the tree records how often it happens.</p>
-<p>Whether a fact can be retracted. Nothing in the schema or the CLI
-surface suggests a mechanism, and <code>WriteFacts</code> rewriting the
-file whole means a removal leaves no trace in the format itself.</p>
+from two agents. The request carries only observation text, timestamps
+and a date range.</p>
+<p>Whether the line-preservation check ever refuses in practice, and
+what happens to the ledger then; the code logs
+<code>automerge.llm.dropped_content</code> and aborts, which on a shared
+artifact is the wedge the resolve-rules comment describes.</p>
+<p>Who writes discussion <code>edits.jsonl</code> and
+<code>finalize.jsonl</code>, and under what authority. The comment names
+an editor UI; the actor field is a free string, and finalizing does not
+gate what is served.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -435,36 +522,131 @@ file whole means a removal leaves no trace in the format itself.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>internal/ledger/ledger.go:36-71</code></td>
-<td>Forty lines of documented judgement, with the evidence</td>
+<td><code>internal/ledger/ledger.go:36-67</code></td>
+<td>The documented resolve rule, with its evidence</td>
 </tr>
 <tr>
-<td><code>internal/ledger/automerge/automerge.go</code></td>
-<td>The three tiers, and where each one stops</td>
+<td><code>internal/ledger/automerge/automerge.go:1-20</code>,
+<code>:148-200</code></td>
+<td>The tiers, step by step</td>
 </tr>
 <tr>
-<td><code>internal/ledger/automerge/llm.go</code></td>
-<td>The allowlist, its threat model, and the merge prompt</td>
+<td><code>internal/ledger/automerge/llm.go:86-260</code></td>
+<td>The merge, the line count and the structured-output checks</td>
+</tr>
+<tr>
+<td><code>internal/ledger/automerge/llm_test.go:199</code></td>
+<td>The content-preservation table</td>
+</tr>
+<tr>
+<td><code>internal/daemon/sync.go:1449-1461</code>,
+<code>sync_team.go:673-684</code></td>
+<td>Which pull gets the LLM tier</td>
+</tr>
+<tr>
+<td><code>internal/daemon/llm_resolver.go:28-33</code></td>
+<td>The environment variables that enable it</td>
+</tr>
+<tr>
+<td><code>internal/manifest/auto_resolve.go:20-48</code></td>
+<td>The hard-deny list and its stale <code>ox remember</code></td>
+</tr>
+<tr>
+<td><code>internal/kb/mergeattrs.go:40-73</code></td>
+<td>Union paths, and why memory entries need none</td>
+</tr>
+<tr>
+<td><code>cmd/ox/agent_hook_recall.go:72-104</code>,
+<code>:160-230</code></td>
+<td>The recall injection and its local-only rationale</td>
+</tr>
+<tr>
+<td><code>internal/ledgersearch/ledgersearch.go:1-26</code>,
+<code>:117-178</code></td>
+<td>What the recall searches and how it ranks</td>
+</tr>
+<tr>
+<td><code>internal/conversation/format/projection.go:17-160</code></td>
+<td>The edit fold, the valid_to filter, and no status gating</td>
+</tr>
+<tr>
+<td><code>internal/plan/events.go:1-160</code></td>
+<td>The plan lifecycle log</td>
+</tr>
+<tr>
+<td><code>cmd/ox/memory_put.go:125-201</code></td>
+<td>One file per observation, committed under the lock</td>
+</tr>
+<tr>
+<td><code>cmd/ox/agent_prime.go:2633-2655</code>,
+<code>:2919-2933</code></td>
+<td>MEMORY.md inlined to 200 lines; progressive disclosure</td>
 </tr>
 <tr>
 <td><code>internal/facts/types.go</code></td>
-<td>A citation-shaped fact with no epistemic state</td>
-</tr>
-<tr>
-<td><code>cmd/ox/memory_put.go</code></td>
-<td>The observation cap and the local-then-sync path</td>
-</tr>
-<tr>
-<td><code>cmd/ox/agent_prime.go</code></td>
-<td>Progressive disclosure instead of injection</td>
-</tr>
-<tr>
-<td><code>docs/specs/team-memory-journal.md</code></td>
-<td>The local pipeline that was removed, kept as history</td>
+<td>A citation-shaped fact with no state</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>git grep</code> at the tree root, at both
+<code class="commit-id" title="02f4f406a4b973fa4adda9df62725904cc1859d9">02f4f406…</code> and
+<code class="commit-id" title="304ab68a822b561e5ec96c41f74acd17444160a4">304ab68a…</code>; results are the
+same at both except where noted.</p>
+<ul>
+<li><code>git grep -n 'LLMResolver:' -- '*.go' ':!*_test.go'</code> —
+one hit, the ledger pull in <code>internal/daemon/sync.go</code> (line
+1361 at the first pin, 1459 at the second); the team-context pull sets
+none.</li>
+<li><code>git grep -n 'automerge.New(' -- '*.go' ':!*_test.go'</code> —
+<code>cmd/ox/session_upload.go</code> (the ledger push hook) and
+<code>internal/daemon/llm_resolver.go</code>, plus a comment.</li>
+<li><code>git grep -n 'droppedLines\|validateStructured' -- internal/ledger/automerge</code>
+— no match at the first pin; the definitions and calls in
+<code>llm.go</code> at the second.</li>
+<li><code>git grep -n -E 'EditsFileName|FinalizeFileName' -- '*.go' ':!*_test.go'</code>
+— only the declarations and loaders in
+<code>internal/conversation/format/distillation.go</code>; no
+writer.</li>
+<li><code>git grep -n -E 'ValidFrom[[:space:]]*=' -- '*.go' ':!*_test.go'</code>
+— <code>projection.go:123-125</code>, set from the edit's timestamp, and
+a view copy in <code>read/topic.go:134</code>.</li>
+<li><code>git grep -n -i -E 'status|supersed|retract|disput|withdraw' -- internal/facts ':!*_test.go'</code>
+— no match.</li>
+<li><code>git grep -n -E 'Category:' -- '*.go' ':!*_test.go'</code> —
+only settings categories in <code>cmd/ox/config_settings.go</code>; no
+fact category is set.</li>
+<li><code>git grep -n -i 'status' -- internal/ledgersearch/ledgersearch.go internal/plan/priorart.go</code>
+— only a plan-feedback item's status, read as search text.</li>
+<li><code>git grep -n -i -E 'blocklist|denylist|suppress|rejected_?values?|forget' -- internal/facts internal/ledgersearch internal/conversation cmd/ox/memory_put.go cmd/ox/memory_distill.go ':!*_test.go'</code>
+— no match; no value-keyed rejection.</li>
+<li><code>git grep -n -E 'Use:[[:space:]]+"remember' -- '*.go'</code> —
+no match; <code>ox remember</code> appears only in the hard-deny
+comment.</li>
+<li><code>git grep -n -E 'MEMORY\.md' -- '*.go' ':!*_test.go'</code> —
+readers, validators and the deny list; no writer.</li>
+<li><code>git grep -n -i -E '(must not|should not|must never|never) (be )?(appear|surface|return|leak|retriev|include|show)' -- '*_test.go'</code>
+— prime, session-capture and redaction cases; none asserts a ledger
+search or recall result excludes a record from a store that also returns
+another.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/sageox/ox/commit/304ab68a822b561e5ec96c41f74acd17444160a4"><code class="commit-id" title="304ab68a822b561e5ec96c41f74acd17444160a4">304ab68a…</code></a>
+— 242 commits on, v0.15.0 to v0.23.0. Overtaken: <a
+href="https://github.com/sageox/ox/commit/a02dec578f445d250510136b7ecb8f129fc7f883"><code class="commit-id" title="a02dec578f445d250510136b7ecb8f129fc7f883">a02dec57…</code></a>
+made the LLM merge refuse output that drops a conflicted line or
+duplicates a key (<a href="#9-reliability-safety-and-trust">section
+9</a>), and observations commit under the repo lock. Wrong at the first
+pin: memory lived in the team context, not the ledger, and the LLM tier
+never served it; retrieval existed (<a
+href="#6-retrieval-mechanics">section 6</a>); CI ran. No marks change.
+Screened from a full clone: 27 files, four auto-run surfaces, one
+build-time execution point, one unpinned surface, seven dependency files
+inside the cooldown, <code>AGENTS.md</code> and <code>CLAUDE.md</code>
+read as data. Nothing was installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/sageox/ox/commit/02f4f406a4b973fa4adda9df62725904cc1859d9"><code class="commit-id" title="02f4f406a4b973fa4adda9df62725904cc1859d9">02f4f406…</code></a>
 — first reading, at a commit dated 15 September 2026. Screened before

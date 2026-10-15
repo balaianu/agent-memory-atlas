@@ -19326,56 +19326,41 @@ behind it.</li>
 <h3 id="ox"><a href="../systems/ox/"><code>ox</code></a></h3>
 <ul>
 <li>Best idea: <strong>a documented judgement, with its evidence
-attached.</strong> The comment on <code>DefaultResolveRules</code>
-explains why <code>sessions/</code> auto-resolves:
-<code>meta.json</code> is written by both the cloud summarizer and the
-local CLI, so with no rule "the rebase halts, nothing can resolve it,
-the abort restores the pre-rebase state, and the next attempt fails
+attached.</strong> The comment on the ledger's
+<code>DefaultResolveRules</code> explains why <code>sessions/</code>
+auto-resolves: <code>meta.json</code> is written by both the cloud
+summarizer and the local CLI, so with no rule "the next attempt fails
 identically — a deterministic wedge that never escalates and never
 self-heals." Then the evidence — "[o]ne ledger sat 341 ahead / 1055
 behind for 13 days with 281 such conflicts" — then a justification per
-artifact naming each one's canonical source elsewhere, then the trade in
-one sentence: "[a]n imperfect summary beats a ledger that can never sync
-again." Then a SAFETY note ending "[d]o not weaken that guard", and a
-NOTE on why the rule is scoped to the ledger rather than the shared
-defaults. Copy the form. Beside it, priming advertises the memory tree
-with file counts instead of injecting it — <code>MEMORY.md</code> plus
-"Recent: memory/daily/ (N files)" under a Progressive Disclosure heading
-— which costs a line of prompt and lets the agent choose.</li>
-<li>Biggest risk: <strong>the LLM merge tier's post-condition is
-syntactic.</strong> A conflict not under a safe prefix — and memory
-content is deliberately not a safe prefix — falls to an LLM invoked on
-the conflicted file. The tier is bounded properly: an allowlist of
-<code>claude</code>, <code>gemini</code>, <code>codex</code> or an
-explicit absolute path, with the argv[0] substitution attack spelled out
-in the comment, and a sixty-second per-file deadline. The prompt asks it
-to "[p]reserve user intent on both sides; when in doubt prefer including
-more content over deleting." The check is that
-<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> no longer appears. Nothing
-verifies that both sides' content survived, so a merge that keeps one
-agent's observations and discards the other's, or paraphrases both into
-something neither wrote, is staged and committed — and what is being
-rewritten is the record of what the team decided. The tier already holds
-both sides; a dropped-line count would turn the prompt's intent into an
-enforcement.</li>
-<li>Most reusable component: the LLM binary allowlist — bare names
-restricted to three, relative paths with a slash "refused outright",
-absolute paths trusted because "the operator already chose where to
-point this binary", and a test file for the allowlist alone.</li>
-<li>Maturity impression: MIT, Go, 651,919 lines across 1,337 test files,
-shipping a CLI and a Claude plugin. Distillation — the step producing
-the summaries agents read — is a POST to the SageOx API, so that policy
-is not inspectable here; the local pipeline that did it was removed on 9
-September 2026, with its spec kept and headed "superseded". The README
-omits a CI badge and says why in a comment: <code>ci.yml</code> is
-disabled and neither active workflow is a build signal.</li>
+artifact naming each one's canonical source, the trade in one sentence,
+and a SAFETY note ending "[d]o not weaken that guard". Beside it, memory
+is written so it cannot conflict: each put writes a new UUID-named file,
+and <code>MEMORY.md</code> and <code>memory/</code> are hard-denied from
+accept-theirs.</li>
+<li>Biggest risk: <strong>the memory policy runs on the server.</strong>
+The summaries agents read are written by
+<code>POST /api/v1/teams/{id}/memory/distill</code> and the discussion
+distillations by a server pipeline; nothing in this repository writes
+<code>MEMORY.md</code> or <code>memory/daily</code>. Locally, recall and
+plan prior-art search read plans without their lifecycle status, so a
+plan marked <code>superseded</code> resurfaces beside its successor, and
+the LLM merge tier, which refuses any output dropping a conflicted line,
+does not count lines added.</li>
+<li>Most reusable component: the merge post-condition — per conflict
+side, count every normalised non-blank line, keep the larger count per
+hunk, refuse output missing any, parse JSON, TOML and YAML for duplicate
+keys — with a twenty-one-case test table that pins the refusals.</li>
+<li>Maturity impression: MIT, Go, 835,974 lines of Go with 1,794 test
+files, shipping a CLI, agent hooks and a Claude plugin.
+<code>ci.yml</code> runs on push and pull request and
+<code>evals.yml</code> runs agent-behaviour evals daily. The per-prompt
+recall is pinned to local search by a lint test on its comment.</li>
 <li>Study when: you are storing team memory in git and need a conflict
-policy, or you want to see progressive disclosure used instead of
-injection.</li>
-<li>Do not copy when: you need the memory itself to carry state — facts
-here have write-time categories and no way to be superseded or
-withdrawn, and <code>WriteFacts</code> truncates rather than appends. No
-marks.</li>
+policy, or want an LLM merge that has to prove it kept both sides.</li>
+<li>Do not copy when: you need the consolidation policy in your own code
+— here it is behind an API — or a superseded record must stop surfacing.
+No marks.</li>
 </ul>
 <h3 id="maximem-synap-sdk"><a
 href="../systems/maximem-synap-sdk/"><code>maximem-synap-sdk</code></a></h3>

@@ -296,7 +296,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`osiris`](../../content/systems/osiris.md) | `.claude/settings.json`, `.githooks/`, `.mcp.json` |
 | [`ouroboros-agent-os`](../../content/systems/ouroboros-agent-os.md) | `.claude-plugin/`, `.claude/settings.json`, `.mcp.json`, `hooks/`, `hooks/hooks.json` |
 | [`ownmem`](../../content/systems/ownmem.md) | `.claude-plugin/` |
-| [`ox`](../../content/systems/ox.md) | `.claude-plugin/`, `.claude/settings.json`, `.opencode/` |
+| [`ox`](../../content/systems/ox.md) | `.claude-plugin/`, `.claude/settings.json`, `.gemini/settings.json`, `.opencode/` |
 | [`papez`](../../content/systems/papez.md) | `server.json` |
 | [`particles`](../../content/systems/particles.md) | `hooks/`, `server.json` |
 | [`pensyve`](../../content/systems/pensyve.md) | `.claude-plugin/`, `server.json`, `smithery.yaml` |

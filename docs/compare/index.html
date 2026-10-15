@@ -24519,61 +24519,64 @@ ranking feature, not a boundary</td>
 </tr>
 <tr>
 <td><a href="../systems/ox/"><code>ox</code></a></td>
-<td>An observation — a JSON object with a <code>content</code> field,
-capped at 20,480 bytes — and, after extraction, a <code>Fact</code>
-carrying a headline, summary, rationale, who, source type, source ref,
-source URL, source title, timestamp and category</td>
-<td>A git repository per team, provisioned by the cloud and cloned
-sparsely, holding <code>MEMORY.md</code>, <code>memory/daily/</code>,
-<code>memory/weekly/</code>, <code>memory/monthly/</code>,
-<code>sessions/</code> and <code>data/</code>; observations land locally
-under <code>.observations</code> first</td>
-<td>None of its own. Priming hands an agent <code>MEMORY.md</code> and a
-catalogue of what else exists, and the agent reads the checkout with
-ordinary file tools</td>
-<td><code>ox memory put</code> writes an observation locally as JSON or
-JSONL; a daemon syncs it; fact JSONL files carry a versioned header with
-a source hash and a query window</td>
-<td>Git. A fact file is rewritten whole by <code>WriteFacts</code>;
-history lives in the repository rather than in the format</td>
-<td>One ledger repository per team, cloned from a server-provided URL —
-a separate repo, not a predicate; <code>ErrNoRemoteURL</code> states
-that "ledgers must be cloned from cloud"</td>
-<td>A CLI and a Claude plugin for human-agent teams, with agent priming,
-session upload, and a daemon that pulls, merges and pushes</td>
-<td>A daemon syncing the ledger, an LLM conflict resolver behind it, and
-server-side distillation of observations into summaries</td>
-<td>An LLM binary allowlist for the merge resolver, safe and deny
-prefixes confining the accept-theirs tier to regenerable artifacts, and
-a pointer-wins guard that must precede the positional rule</td>
-<td>The auto-resolve rule is documented better than almost anything in
-this corpus: the comment names the failure it fixes ("a deterministic
-wedge that never escalates and never self-heals"), quantifies it —
-"[o]ne ledger sat 341 ahead / 1055 behind for 13 days with 281 such
-conflicts" — justifies the scope one artifact at a time by naming each
-one's canonical source elsewhere, states the trade ("[a]n imperfect
-summary beats a ledger that can never sync again"), carries a SAFETY
-note ending "[d]o not weaken that guard", and explains why the rule is
-scoped to the ledger rather than added to the shared defaults. The LLM
-resolver restricts argv[0] to an allowlist with the substitution attack
-spelled out. Priming advertises the memory tree with file counts instead
-of injecting it, leaving the agent to read what it needs</td>
-<td>The LLM merge tier's only post-condition is that no conflict markers
-remain in the file. Its system prompt asks the model to "[p]reserve user
-intent on both sides; when in doubt prefer including more content over
-deleting", but nothing checks that it did — a merge that silently drops
-or rewrites one side's recorded observations passes the marker scan.
-Distillation, the step that turns observations into the summaries agents
-actually read, is <code>POST /api/v1/teams/{id}/memory/distill</code>
-against the SageOx API, so the consolidation policy is not inspectable
-from this repository; the local pipeline that used to do it was removed
-on 9 September 2026 and its spec is marked superseded. The
-<code>Fact</code> categories — decision, learning, open_question,
-action_item, context, ship, blocker, direction_change — are write-time
-genres, not an epistemic status: nothing marks a fact disputed,
-superseded or withdrawn, and <code>WriteFacts</code> truncates and
-rewrites the file rather than appending. CI is disabled, which the
-README says in a comment rather than hiding</td>
+<td>Several, in two repositories. In the team context: MEMORY.md, the
+server-written daily, weekly and monthly summaries, and observations,
+written as Fact JSONL, one new file per put. In the project ledger:
+session records, murmurs, plans with an events log, and plan feedback.
+Recorded discussions carry server-distilled atoms with valid_from,
+valid_to and superseded_by</td>
+<td>Two git checkouts provisioned by the SageOx server: a team context
+per team holding MEMORY.md, SOUL.md, TEAM.md, memory/ and discussions/,
+and a sparse ledger per project repository holding sessions/ and
+data/</td>
+<td>MEMORY.md injected at session start up to 200 lines, with the
+summary directories advertised by file count. On a prompt that looks
+like recall, a hook injects up to four hits from an in-memory
+term-frequency search over the ledger's sessions, murmurs, plans and
+plan feedback from the last 90 days. ox query sends the query to the
+server's search by default</td>
+<td>ox memory put writes its observations to a new UUID-named file under
+memory/.observations and commits it under the team-context repo lock; ox
+memory distill posts pending observations to the SageOx API, which
+writes the summaries</td>
+<td>Nothing in this repository rewrites a memory entry. Each put writes
+a new file; the summaries and discussion distillations are
+server-written; a plan revision overwrites plan.md and appends a
+lifecycle event; git keeps the history</td>
+<td>Separate checkouts: one team context per team, one ledger per
+project repository, and a server-side team-membership check before
+discussions are read. ox query passes caller-supplied team and repo ids
+to the server, whose filter is not in this repository</td>
+<td>A CLI with hooks for Claude Code, Gemini CLI, Codex, Cursor,
+OpenCode and others, a Claude plugin, agent priming, session upload, and
+a daemon that pulls and pushes both repositories</td>
+<td>A daemon syncing both checkouts and, when an environment variable
+names an LLM binary, running a tiered conflict resolver on ledger pulls;
+server-side distillation of observations and discussions</td>
+<td>An LLM binary allowlist; a merge post-condition that refuses output
+missing any conflicted line or holding a duplicate key; a hard-deny list
+keeping MEMORY.md and memory/ out of accept-theirs; a lint test pinning
+the recall hook to local-only search; secret redaction before session
+upload</td>
+<td>The comment on the ledger's DefaultResolveRules is engineering
+judgement written to be checked: it names the failure (a deterministic
+wedge that never escalates and never self-heals), quantifies it (341
+ahead and 1,055 behind for 13 days with 281 conflicts), names the
+canonical source of each auto-resolved artifact, and ends its SAFETY
+note with do not weaken that guard. The LLM merge tier counts every
+non-blank line on either conflict side and refuses output that drops
+one, and a conflict where both sides rewrote the same line is left for a
+person. Memory entries are conflict-free by construction: every put
+writes a new UUID-named file</td>
+<td>Distillation, the step that writes the summaries agents read, runs
+on the SageOx server, so what a team remembers is decided outside this
+repository. The merge post-condition counts lines kept and not lines
+added, so a merge that keeps both sides and inserts a sentence neither
+wrote passes. Recall and prior-art search read plans without their
+lifecycle status, so a superseded or abandoned plan resurfaces beside
+the live one. Discussion atoms honour a rejection on read, but the
+rejection is written by the server, and draft and finalized
+distillations are served identically</td>
 </tr>
 <tr>
 <td><a href="../systems/palazzo/"><code>palazzo</code></a></td>

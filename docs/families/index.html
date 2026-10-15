@@ -2527,37 +2527,31 @@ read answers what the graph believed rather than when a fact held. Three
 marks: the canonical status that gates injection, an append-only audit
 table that survives a full reindex, and must-not-retrieve cases on
 closed belief edges and expired skill variants.</p>
-<p><strong><a href="../systems/ox/">SageOx CLI</a> makes a team's memory
-a git repository, and when two agents' records conflict the third tier
-is an LLM.</strong> An MIT Go CLI for human-agent teams — 651,919 lines
-across 1,337 test files — whose ledger is a git repo the cloud
-provisions and the CLI clones sparsely, holding <code>MEMORY.md</code>
-beside <code>memory/daily</code>, <code>weekly</code> and
-<code>monthly</code>. Priming does not inject any of it: an agent gets
-<code>MEMORY.md</code> and a catalogue with file counts under a heading
-called Progressive Disclosure, then reads what it wants with ordinary
-file tools — a different answer from retrieve-and-inject, and free at
-prompt time. Its auto-resolve rule is the best-documented engineering
-judgement in this corpus: the comment names the failure ("a
-deterministic wedge that never escalates and never self-heals"),
-quantifies it — "[o]ne ledger sat 341 ahead / 1055 behind for 13 days
-with 281 such conflicts" — justifies the scope one artifact at a time by
-naming each one's canonical source elsewhere, states the trade ("[a]n
-imperfect summary beats a ledger that can never sync again"), and ends
-its SAFETY note "[d]o not weaken that guard". The paths it lets
-accept-theirs resolve are <code>data/</code> and <code>sessions/</code>,
-the regenerable ones; memory content is deliberately not among them,
-which means a memory conflict falls to tier three — an LLM, restricted
-to <code>claude</code>, <code>gemini</code> or <code>codex</code> by an
-allowlist whose argv[0] substitution threat is spelled out, bounded at
-sixty seconds a file, and asked to "[p]reserve user intent on both
-sides". Its only post-condition is that no conflict markers remain, so a
-merge that drops or paraphrases one side's record passes. Distillation —
-the step that turns observations into the summaries agents read — is a
-POST to the SageOx API; the local pipeline that did it was removed on 9
-September 2026 and its spec is marked superseded. Fact categories are
-write-time genres, nothing marks a fact superseded or withdrawn, and
-<code>WriteFacts</code> truncates rather than appends. No marks.</p>
+<p><strong><a href="../systems/ox/">SageOx CLI</a> keeps a team's memory
+in git repositories the server fills, and writes it so that it cannot
+conflict.</strong> An MIT Go CLI for human-agent teams with two
+checkouts: a team context per team holding <code>MEMORY.md</code>, the
+server-written <code>memory/daily</code>, <code>weekly</code> and
+<code>monthly</code> summaries, pending observations and recorded
+discussions, and a sparse ledger per project repository holding
+sessions, murmurs and plans. Each put writes a new UUID-named file, so
+memory entries cannot collide, and <code>MEMORY.md</code> and
+<code>memory/</code> sit on a hard-deny list that keeps them out of
+accept-theirs; the team-context pull has no LLM tier. Priming injects
+<code>MEMORY.md</code> up to 200 lines and advertises the summary
+directories by file count under a heading called Progressive Disclosure,
+and on a recall-shaped prompt a hook injects up to four hits from a
+local term-frequency search over the ledger, pinned local by a lint
+test. The ledger's auto-resolve rule carries its evidence in the comment
+— "[o]ne ledger sat 341 ahead / 1055 behind for 13 days with 281 such
+conflicts" — and its opt-in LLM merge tier refuses any output that drops
+a line from either conflict side or keeps both values of a key, leaving
+a same-line rewrite for a person. It does not count lines added, so a
+merge that inserts a sentence neither side wrote passes. Distillation,
+the step that writes the summaries agents read, is a POST to the SageOx
+API; plans carry <code>superseded</code> and <code>abandoned</code>
+states that no retrieval reads; discussion atoms honour a server-written
+rejection on read. No marks.</p>
 <p><strong><a href="../systems/syke/">Syke</a> brackets every
 unsupervised LLM rewrite of its graph, and the one number that would
 bound the damage is computed and unread.</strong> An AGPL-3.0 local
