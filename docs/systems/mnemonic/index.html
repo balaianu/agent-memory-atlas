@@ -4,27 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A markdown-and-git memory server
-whose project-scoped recall reports the count of weak global matches it
-suppressed and whether it had to widen — and where omitting the scope
-argument is the stricter path, because an explicit scope runs ungated.">
+    <meta name="description" content="A markdown-and-git MCP memory
+whose recall reports how many weak global matches it suppressed, and
+where a superseded note ranks unchanged until deleted.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="mnemonic — Agent Memory Atlas">
-    <meta property="og:description" content="A markdown-and-git memory
-server whose project-scoped recall reports the count of weak global
-matches it suppressed and whether it had to widen — and where omitting
-the scope argument is the stricter path, because an explicit scope runs
-ungated.">
+    <meta property="og:description" content="A markdown-and-git MCP
+memory whose recall reports how many weak global matches it suppressed,
+and where a superseded note ranks unchanged until deleted.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="mnemonic — Agent Memory Atlas">
-    <meta name="twitter:description" content="A markdown-and-git memory
-server whose project-scoped recall reports the count of weak global
-matches it suppressed and whether it had to widen — and where omitting
-the scope argument is the stricter path, because an explicit scope runs
-ungated.">
+    <meta name="twitter:description" content="A markdown-and-git MCP
+memory whose recall reports how many weak global matches it suppressed,
+and where a superseded note ranks unchanged until deleted.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>mnemonic — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -46,7 +41,7 @@ ungated.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "mnemonic",
-      "description": "A markdown-and-git memory server whose project-scoped recall reports the count of weak global matches it suppressed and whether it had to widen \u2014 and where omitting the scope argument is the stricter path, because an explicit scope runs ungated.",
+      "description": "A markdown-and-git MCP memory whose recall reports how many weak global matches it suppressed, and where a superseded note ranks unchanged until deleted.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,25 +98,23 @@ ungated.">
         <div class="document-hero-inner">
           <p class="eyebrow">The recall says how much it held back</p>
           <h1>mnemonic</h1>
-          <p class="document-deck">A markdown-and-git memory server
-whose project-scoped recall reports the count of weak global matches it
-suppressed and whether it had to widen — and where omitting the scope
-argument is the stricter path, because an explicit scope runs
-ungated.</p>
+          <p class="document-deck">A markdown-and-git MCP memory whose
+recall reports how many weak global matches it suppressed, and where a
+superseded note ranks unchanged until deleted.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/danielmarbach/mnemonic">
               <span>Source</span>
               <strong>danielmarbach/mnemonic</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/danielmarbach/mnemonic/commit/5fc9a5f5be70d25304b45c1af0b83b50d20b4590" title="5fc9a5f5be70d25304b45c1af0b83b50d20b4590">
+            <a class="meta-pill revision-pill" href="https://github.com/danielmarbach/mnemonic/commit/dbac069d3a346075457ec8b090bee5c548adbce6" title="dbac069d3a346075457ec8b090bee5c548adbce6">
               <span>Analyzed revision</span>
-              <code>5fc9a5f5…</code>
+              <code>dbac069d…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/danielmarbach--mnemonic" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -129,7 +122,20 @@ ungated.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>66,559
+lines of TypeScript in 206 files, 27,911 of them in 100 files under
+src/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>837
+commits by 8 author names, among them renovate[bot] and Copilot, 7 March
+– 11 October 2026; version 1.0.0-rc.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,584
+it/test cases in 101 test files, including MCP integration tests against
+a fake embedding server and a recall-quality eval with a recorded
+baseline; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -145,98 +151,104 @@ ungated.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>mnemonic is "[a] local MCP memory server backed by plain markdown
-files, synced via git. No database." Apache-2.0, TypeScript, version
-0.45.0, 62,345 lines with 1,686 test cases across eighty-eight test
-files. Memories are markdown with YAML frontmatter in a
-<code>.mnemonic/</code> directory committed alongside the code;
-embeddings are computed locally and gitignored; <code>remember</code>,
-<code>update</code> and <code>consolidate</code> each produce a semantic
-git commit, so the decision log travels in the same history as the work
-it describes.</p>
-<p>The thing worth taking from it is one line in the recall
-response.</p>
+<p>mnemonic is a local MCP memory server that stores notes as markdown
+with YAML frontmatter in git-backed vaults and commits every write. Its
+recall reports how many weak global matches it held back and whether it
+had to widen, and tests assert both directions. Nothing in it is
+epistemic. Marking a note superseded does not lower its rank and stamps
+it as freshly updated, and the evidence line printed on it says the
+opposite of what its structured flag says.</p>
 <p><strong>The recall reports what it held back.</strong> Alongside the
-ranked matches it returns <code>suppressedGlobalCount</code> — weak
-global matches the project gate withheld — and
-<code>widenedScope</code>, set when the gate lifted because the admitted
-pool came back empty. The response text says it in words too: "weak
-global matches suppressed".</p>
-<p>A retrieval that silently drops candidates below a threshold is the
-norm here, and it produces a specific confusion for whoever is reading
-the results: nothing distinguishes <em>nothing matched</em> from
-<em>something matched and I decided against it</em>. Two counts fix
-that, and the tests assert them in both directions — in one case an
-off-topic global note is absent while the in-project note is present,
-<code>suppressedGlobalCount</code> is above zero and
-<code>widenedScope</code> is undefined; in the other, after the gate
-lifts, <code>widenedScope</code> is <code>true</code> and
-<code>suppressedGlobalCount</code> is undefined. That pairing — a
-must-not-retrieve assertion with its positive control on the line above,
-through the real tool surface — is the mark.</p>
+ranked matches it returns <code>suppressedGlobalCount</code>, the weak
+global matches the project gate withheld, and <code>widenedScope</code>,
+set when the gate lifted because the admitted pool came back empty. The
+text says it too: "weak global matches suppressed — pass scope: 'all' to
+include them" (<code>src/tools/recall.ts:781-794</code>). A retrieval
+that silently drops candidates below a threshold leaves its reader
+unable to tell <em>nothing matched</em> from <em>something matched and
+was held back</em>. Two fields the filter already knew remove that
+ambiguity.</p>
 <p><strong>The scope argument runs the opposite way from the obvious
-one.</strong> The gate is:</p>
-<pre class="ts"><code>const gateActive = scope === undefined &amp;&amp; project !== undefined;</code></pre>
-<p>with the comment "[e]xplicit scopes run fully ungated." Omitting
-<code>scope</code> is the <em>stricter</em> path, because that is when
-the derived project scope applies and weak global matches are held back;
-passing a scope removes the gating. For a single-user local tool that is
-a defensible relevance decision, and it is worth naming because in most
-systems in this corpus an omitted scope is the permissive case. It is
-not an access boundary: nothing separates one caller from another, and a
-note in a shared <code>.mnemonic/</code> directory is readable by anyone
-with the repository — which is the point of committing it.</p>
-<p><strong>Confidence is derived, and the derivation is in the
-open.</strong> <code>provenance.ts</code> computes it from git history
-signals with every weight and threshold as a named constant: role
-weights (a summary counts more than a reference), a log-scaled
-centrality bonus with a ceiling, a permanence bonus, a recency term over
-a ninety-day window, plus fallbacks keyed on days and centrality when
-the signals are thin. Half-lives differ by kind — thirty days for
-temporary work, forty-five for temporary context, a year for permanent
-core — and a superseded note gets its own, shorter one.</p>
-<p>That last choice is the one to weigh. Supersession here <em>steepens
-a decay curve</em> rather than withholding the superseded note, so the
-older answer keeps coming back, ranked lower, until it decays out. Set
-against the systems in this corpus that mark a superseded memory and
-exclude it, this trades a guarantee for a gradient — deliberate, given
-that everything else is a gradient too, and the thing to know if you
-expected "superseded" to mean "no longer returned".</p>
-<p>One mark. <code>NoteLifecycle</code> is
-<code>temporary | permanent</code>, a retention genre rather than a
-belief state; the write record is git, which this atlas does not credit
-as an audit log because it lives outside the store and can be rewritten;
-and there is no tenancy to enforce.</p>
+one.</strong> The gate is
+<code>const gateActive = scope === undefined &amp;&amp; project !== undefined;</code>,
+under the comment "Explicit scopes run fully ungated"
+(<code>src/tools/recall.ts:215-219</code>). Omitting <code>scope</code>
+is the stricter path. Passing <code>project</code> filters to the
+current project and attached vaults, <code>global</code> to the main
+vault, and <code>all</code> returns everything. The model supplies both
+<code>scope</code> and <code>cwd</code>, and the main vault is appended
+to every search order (<code>src/vault.ts:239-263</code>), so this is
+relevance, not isolation.</p>
+<p><strong>Supersession is a graph fact that does not lower recall
+rank.</strong> <code>relate(fromId, toId, "supersedes")</code> writes
+the edge on the superseded note
+(<code>src/tools/relate.ts:46-50</code>). Recall ranks that note through
+the same channels as any other, and the edge spreads activation with the
+same 0.8 multiplier as <code>related-to</code>
+(<code>src/recall.ts:657-672</code>). The thirty-day half-life a
+superseded note receives in <code>provenance.ts</code> is read by
+<code>project_memory_summary</code>, to suggest pruning, and by
+consolidation evidence — not by recall. Writing the edge also sets the
+old note's <code>updatedAt</code> to the current time
+(<code>src/tools/relate.ts:418-423</code>,
+<code>src/tools/consolidate-helpers.ts:323-327</code>), so its decay
+clock restarts and its recency term rises at the moment it is
+superseded. It leaves recall when someone deletes it, through
+<code>forget</code> or <code>consolidate</code> with
+<code>prune-superseded</code> in delete mode.</p>
+<p>One mark, <code>negative_eval</code>. Lifecycle is
+<code>temporary | permanent</code>, a retention genre; importance is a
+ranking prior; confidence is computed for display after the results are
+chosen. The write record is git history, outside the store, and
+<code>forget</code> deletes the file from the working tree.</p>
 <p>The exit story is stated as a feature and the format makes it true:
 "[i]f you stop using mnemonic, your notes remain plain markdown with
-YAML frontmatter. The knowledge you gather stays independent and remains
-yours." For a memory system, being uninstallable without loss is a real
-property, and one very few here can claim.</p>
+YAML frontmatter."</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>note</strong> is a markdown file your repository
-carries.</p>
-<p>The <strong>project</strong> is where recall starts;
-<strong>global</strong> is where it looks next, and reluctantly.</p>
-<p>A <strong>suppressed match</strong> is a number in the response, not
-a silence.</p>
-<p><strong>Superseded</strong> means it fades faster, not that it stops
-coming back.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — omitting the scope argument is the stricter path — that is when the project gate applies — and whatever the gate withholds or widens is reported back in the response</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: omitting the scope argument is the stricter path — that is when the project gate applies — and whatever the gate withholds or widens is reported back in the response
+<p>A <strong>note</strong> is a markdown file in a vault: the project
+vault inside the repository, or the main vault for global notes. It is
+ground truth as written; nothing marks it as candidate, inferred or
+verified.</p>
+<p>The <strong>project</strong> comes from the git remote of the
+<code>cwd</code> the caller passes, normalised to a slug such as
+<code>github-com-acme-myapp</code>. It decides where recall starts and
+which global notes must clear a higher bar.</p>
+<p>A note has no status. Its lifecycle says how long it is expected to
+matter, its role says what kind of artefact it is, and
+<code>importance</code> and <code>alwaysLoad</code> raise its rank. None
+of these withholds it.</p>
+<p><strong>Superseded</strong> is an edge stored on the old note,
+written with a fresh <code>updatedAt</code>. It changes three things: a
+compact-evidence flag on the old note's recall result, a thirty-day
+half-life that puts the note on a prune list in
+<code>project_memory_summary</code> thirty days after that stamp, and
+eligibility for <code>prune-superseded</code>. It does not lower
+rank.</p>
+<p>A note <strong>dies</strong> by deletion only. <code>forget</code>
+removes the file and the inbound edges; delete-mode consolidation
+removes merged sources; <code>prune-superseded</code> removes notes
+carrying a <code>supersedes</code> edge. Each is a git commit, so the
+text survives in history and not in the store.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a note is admitted on write and leaves recall only when a tool deletes it; supersession adds a flag and a prune suggestion, and the project gate decides which weak global matches are held back and says how many</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a note is admitted on write and leaves recall only when a tool deletes it; supersession adds a flag and a prune suggestion, and the project gate decides which weak global matches are held back and says how many
 flowchart TB
-    W[&quot;remember · update · consolidate&quot;] --&gt; MD[(&quot;markdown + YAML frontmatter&lt;br/&gt;in .mnemonic/, committed to the repo&quot;)]
-    W --&gt; GIT[&quot;a semantic git commit per write —&lt;br/&gt;the decision log travels with the code&quot;]
-    MD --&gt; EMB[&quot;embeddings computed locally,&lt;br/&gt;gitignored&quot;]
-    Q[&quot;recall(query, cwd, scope?)&quot;] --&gt; GATE{&quot;gateActive =&lt;br/&gt;scope === undefined&lt;br/&gt;AND project !== undefined&quot;}
-    GATE --&gt;|&quot;scope omitted, project resolved&quot;| DERIVED[&quot;derived project scope:&lt;br/&gt;weak global matches held back&quot;]
-    GATE --&gt;|&quot;scope given&quot;| UNGATED[&quot;&#39;Explicit scopes run fully ungated&#39; —&lt;br/&gt;passing a scope REMOVES the gating&quot;]
-    DERIVED --&gt; POOL{&quot;admitted pool empty?&quot;}
-    POOL --&gt;|&quot;no&quot;| REPORT1[&quot;results + suppressedGlobalCount &gt; 0&lt;br/&gt;+ text: &#39;weak global matches suppressed&#39;&quot;]
-    POOL --&gt;|&quot;yes&quot;| WIDEN[&quot;gate lifts&quot;]
-    WIDEN --&gt; REPORT2[&quot;results + widenedScope = true,&lt;br/&gt;suppressedGlobalCount undefined&quot;]
-    UNGATED --&gt; ALL[&quot;everything ranked, nothing gated&quot;]
-    REPORT1 &amp; REPORT2 &amp; ALL --&gt; RANK[&quot;hybrid: semantic + exact match +&lt;br/&gt;one-hop relationship previews,&lt;br/&gt;optional score decomposition&quot;]
-    PROV[&quot;confidence derived from git signals:&lt;br/&gt;role weight · log-scaled centrality (capped) ·&lt;br/&gt;permanence · recency over 90 days ·&lt;br/&gt;named fallbacks when signals are thin&quot;] --&gt; RANK
-    SUP[&quot;a &#39;supersedes&#39; relationship&quot;] -.-&gt;|&quot;shortens the decay half-life —&lt;br/&gt;the superseded note keeps returning,&lt;br/&gt;ranked lower, until it fades&quot;| RANK</code></pre></details></figure>
+    W[&quot;remember · update · relate&lt;br/&gt;(model-called MCP tools)&quot;] --&gt; NOTE[(&quot;note: markdown + YAML frontmatter&lt;br/&gt;lifecycle temporary or permanent,&lt;br/&gt;role, importance, alwaysLoad, relatedTo&quot;)]
+    W --&gt; GIT[&quot;one git commit per write,&lt;br/&gt;in the vault it touched&quot;]
+    REL[&quot;relate(new, old, &#39;supersedes&#39;)&quot;] --&gt; EDGE[&quot;edge stored on the OLD note:&lt;br/&gt;{ id: new, type: supersedes },&lt;br/&gt;and its updatedAt set to now&quot;]
+    EDGE --&gt; NOTE
+    Q[&quot;recall(query, cwd?, scope?)&quot;] --&gt; GATE{&quot;gateActive =&lt;br/&gt;scope === undefined&lt;br/&gt;AND project resolved&quot;}
+    GATE --&gt;|&quot;yes&quot;| BAR[&quot;unassociated main-vault semantic match&lt;br/&gt;below minSimilarity + 0.15 → held back,&lt;br/&gt;unless alwaysLoad or a lexical hit&quot;]
+    GATE --&gt;|&quot;explicit scope&quot;| AS[&quot;scope honoured as given:&lt;br/&gt;project · global · all&quot;]
+    BAR --&gt; POOL{&quot;admitted pool empty?&quot;}
+    POOL --&gt;|&quot;no&quot;| R1[&quot;results + suppressedGlobalCount&lt;br/&gt;+ &#39;weak global matches suppressed&#39;&quot;]
+    POOL --&gt;|&quot;yes&quot;| R2[&quot;gate lifts: results + widenedScope = true&quot;]
+    NOTE --&gt; RANK[&quot;RRF over semantic · lexical · graph ·&lt;br/&gt;identifier · full-text, plus bounded priors&quot;]
+    AS --&gt; RANK
+    R1 &amp; R2 --&gt; RANK
+    EDGE -.-&gt;|&quot;no rank change; compact evidence&lt;br/&gt;flags superseded: true&quot;| RANK
+    EDGE --&gt; SUM[&quot;project_memory_summary:&lt;br/&gt;30-day half-life from that stamp →&lt;br/&gt;&#39;prune candidate&#39; warning&quot;]
+    SUM --&gt; PRUNE[&quot;consolidate prune-superseded&lt;br/&gt;(requires delete mode)&quot;]
+    F[&quot;forget(id)&quot;] --&gt; DEL[&quot;file deleted, inbound edges stripped,&lt;br/&gt;git commit — gone from recall&quot;]
+    PRUNE --&gt; DEL</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -248,108 +260,249 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>src/tools/recall.ts</code></td>
-<td>The recall tool, the gate, and the diagnostics it returns</td>
+<td>The recall tool: vault order, the derived gate, channel collection,
+the lift, diagnostics and rendering</td>
+</tr>
+<tr>
+<td><code>src/recall.ts</code></td>
+<td>Gate predicate, metadata priors, hybrid score, graph spreading,
+result selection</td>
+</tr>
+<tr>
+<td><code>src/tools/recall-helpers.ts</code></td>
+<td>Lexical, identifier and full-text candidate collection; coverage
+diagnostics</td>
 </tr>
 <tr>
 <td><code>src/provenance.ts</code></td>
-<td>Derived confidence and decay half-lives, constants named</td>
-</tr>
-<tr>
-<td><code>src/structured-content.ts</code></td>
-<td>The note schema and its typed relationships</td>
+<td>Signal strength, confidence tiers and decay half-lives, every
+constant named</td>
 </tr>
 <tr>
 <td><code>src/storage.ts</code>, <code>src/vault.ts</code></td>
-<td>Files, frontmatter, and the vault layout</td>
+<td>Note files, frontmatter, vault discovery and search order</td>
 </tr>
 <tr>
-<td><code>src/document-*.ts</code></td>
+<td><code>src/tools/relate.ts</code>, <code>src/tools/forget.ts</code>,
+<code>src/tools/consolidate*.ts</code></td>
+<td>Edges, deletion, merge and prune</td>
+</tr>
+<tr>
+<td><code>src/document-sync.ts</code>,
+<code>src/document-recall.ts</code></td>
 <td>Read-only document sources from other repositories</td>
 </tr>
 <tr>
-<td><code>src/tools/consolidate-helpers.ts</code></td>
-<td>Consolidation</td>
+<td><code>src/toolset.ts</code>,
+<code>src/server-instructions.ts</code></td>
+<td>The <code>full</code> and <code>core</code> toolsets and the
+instructions sent at initialize</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One Node process speaking MCP over stdio, installed from npm as
+<code>@danielmarbach/mnemonic-mcp</code> or from a Homebrew formula.
+Nothing else must run to store a note. Embeddings default to Ollama with
+<code>nomic-embed-text-v2-moe</code> on a localhost or private-network
+URL, with OpenAI and Gemini as configured alternatives
+(<code>src/embeddings.ts:87-89</code>, <code>:111-125</code>). When the
+query embedding fails, recall skips the semantic channel and keeps the
+lexical, identifier, full-text and document channels
+(<code>src/tools/recall.ts:221-226</code>).</p>
+<p>The store is human-readable and repairable by hand: one markdown file
+per note, with embeddings and projections in gitignored directories that
+rebuild. A project vault's <code>.gitignore</code> is committed so
+collaborators ignore embeddings too
+(<code>src/vault.ts:463-470</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/tools/recall.ts:199-205</code> — the gate, and the comment
-that inverts the expectation.</p>
-<p><code>src/provenance.ts:8-42</code> — every weight, threshold and
-half-life, named.</p>
-<p><code>tests/recall-scope-gating.integration.test.ts:86-95</code> —
-the assertion pair, and the disclosure beside it.</p>
+<p><strong>Write.</strong> <code>remember</code>
+(<code>src/tools/remember.ts</code>) resolves the project from
+<code>cwd</code>, checks the saved write-scope policy, writes the file
+with <code>updatedAt: now</code>, embeds it, commits, and may push. A
+policy conflict elicits a choice from the user on clients that support
+it, and <code>scopePolicyOverride: true</code> skips the guard.</p>
+<p><strong>Retrieval.</strong> <code>src/tools/recall.ts:227</code>
+takes the vault order, scores semantic candidates per vault
+(<code>:394-496</code>), applies the explicit scope filter
+(<code>:428-436</code>) and the derived gate (<code>:438-446</code>),
+runs lexical reranking and graph spreading (<code>:551-561</code>),
+merges the independent lexical channel (<code>:620-651</code>),
+partitions gated candidates (<code>:662-664</code>) and lifts on an
+empty pool (<code>:755-761</code>).</p>
+<p><strong>Scoring.</strong> <code>computeHybridScore</code> sums
+reciprocal-rank contributions from five channels with
+<code>RRF_K = 60</code>, then adds clamped priors for semantic
+confidence, project, recency, metadata and canonical notes
+(<code>src/recall.ts:312-362</code>).</p>
+<p><strong>Delete and prune.</strong> <code>forget</code>
+(<code>src/tools/forget.ts:123-137</code>);
+<code>handleDeleteMode</code>
+(<code>src/tools/consolidate-helpers.ts:285-301</code>);
+<code>pruneSuperseded</code>, refused unless the mode is
+<code>delete</code>
+(<code>src/tools/consolidate-helpers.ts:1208-1257</code>,
+<code>:1404</code>).</p>
+<p><strong>Tests.</strong>
+<code>tests/recall-scope-gating.integration.test.ts:42-273</code>;
+<code>tests/recall-eval.integration.test.ts:16-35</code> with
+<code>tests/fixtures/recall-eval/queries.json</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Frontmatter carries a role — <code>summary</code>,
-<code>decision</code>, <code>plan</code>, <code>research</code>,
-<code>review</code>, <code>context</code>, <code>reference</code> — a
-lifecycle of temporary or permanent, tags, and typed relationships:
-<code>related-to</code>, <code>explains</code>, <code>example-of</code>,
-<code>supersedes</code>, <code>derives-from</code>,
-<code>follows</code>. The relationship vocabulary being closed, and
-<code>supersedes</code> being one of six rather than a status column, is
-what makes supersession a graph fact here rather than a lifecycle
-state.</p>
+<p><code>NoteMetadata</code> carries <code>id</code>,
+<code>title</code>, <code>tags</code>, <code>lifecycle</code>,
+<code>role</code>, <code>importance</code>, <code>alwaysLoad</code>,
+<code>project</code>, <code>projectName</code>, <code>relatedTo</code>,
+<code>createdAt</code>, <code>updatedAt</code> and
+<code>memoryVersion</code> (<code>src/storage.ts:75-92</code>). Roles
+are <code>summary</code>, <code>decision</code>, <code>plan</code>,
+<code>research</code>, <code>review</code>, <code>context</code> and
+<code>reference</code>; importance is <code>high | normal | low</code>
+(<code>src/storage.ts:39-42</code>).</p>
+<p>Relationships are a closed set of six: <code>related-to</code>,
+<code>explains</code>, <code>example-of</code>, <code>supersedes</code>,
+<code>derives-from</code>, <code>follows</code>. Direction is stored
+differently by type. <code>related-to</code> is symmetric, the other
+forward types live on <code>fromId</code>, and <code>supersedes</code>
+is passive, stored on the superseded note
+(<code>src/tools/relate.ts:37-51</code>).</p>
+<p>Both timestamps are the write clock. <code>relate</code> also sets
+<code>updatedAt: now</code> on the note it edits
+(<code>src/tools/relate.ts:418-423</code>), so adding an edge refreshes
+the recency that signal strength, the temporal-query boost and the
+freshness band read. For <code>supersedes</code> the edited note is the
+superseded one.</p>
+<p>Project identity is a slug of the git remote. Pre-1.0 vaults stored
+HTTPS remotes as <code>https-github-com-…</code>; the
+<code>normalize-project-ids</code> migration rewrites those, and reads
+accept both forms before it runs.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid semantic and exact matching — the README is specific that
-exact matters for "names, identifiers, phrases, error codes, and
-versions", which is the case pure embeddings handle worst — with one-hop
-relationship previews on the top results and an optional score
-decomposition, so a ranking can be explained rather than only
-produced.</p>
+<p>Five channels fuse by reciprocal rank: semantic similarity over
+stored embeddings, a lexical channel over compact projections, graph
+spreading from the top five entry points along typed edges, an
+exact-identifier channel that matches <code>camelCase</code>,
+<code>SCREAMING_SNAKE</code> and <code>kebab-case</code> spellings of
+one name, and a full-text channel that ranks notes containing nearly all
+distinctive query words anywhere in the body
+(<code>src/recall.ts:312-362</code>).</p>
+<p>The derived gate applies only to semantic candidates from the main
+vault that belong to no current project and are not
+<code>alwaysLoad</code>. Its bar is
+<code>minSimilarity + GLOBAL_BAR_DELTA</code>, 0.45 at the default,
+below the 0.5 spreading gate, so at the default a held-back note cannot
+seed graph expansion (<code>src/recall.ts:124-150</code>). A lexical or
+identifier hit clears the bar
+(<code>src/tools/recall.ts:646-647</code>).</p>
+<p><code>detail: "brief"</code>, the default, shows each note's summary
+and the passage that best matches the query, and lists the ids to pass
+to <code>get</code> for full bodies. With
+<code>evidence: "compact"</code> each result carries its channels, rank
+band, freshness band, supersession flag and a score decomposition into
+RRF and each prior (<code>src/tools/recall.ts:954-1000</code>).</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Three tools, one commit each. Because the store is the working tree,
-a write is visible in <code>git diff</code> before it is committed and
-in the history afterwards, which is a stronger inspection story than
-most databases offer, and is not an audit log in the sense this atlas
-uses: history outside the store can be rewritten.</p>
+<p><code>remember</code>, <code>update</code>, <code>relate</code>,
+<code>unrelate</code>, <code>consolidate</code>,
+<code>move_memory</code> and <code>forget</code> each commit in the
+vault they touched, and may push. A write to a protected branch is
+blocked, elicited, or allowed per project policy;
+<code>allowProtectedBranch: true</code> is a one-time override on the
+tool call.</p>
+<p>Because the store is a working tree, a write is visible in
+<code>git diff</code> before it is committed and in <code>git log</code>
+after. That history lives outside the store: a <code>forget</code>
+removes the file, and the text survives only in commits.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A local MCP server over a Node process, with document sources that
-index another repository's markdown read-only alongside your own notes —
-so a dependency's docs become recallable without being editable.
-Screening flags three auto-run surfaces in the distribution, which is
-what an MCP server installed into a client looks like and is worth
-reading before installing.</p>
+<p>A local MCP server registering up to twenty-eight tools.
+<code>MNEMONIC_TOOLSET=core</code> narrows it to nine:
+<code>recall</code>, <code>get</code>, <code>remember</code>,
+<code>update</code>, <code>relate</code>, <code>list</code>,
+<code>sync</code>, <code>project_memory_summary</code> and
+<code>consolidate</code> (<code>src/toolset.ts:5-15</code>). The
+instructions sent at initialize tell the model to pass <code>cwd</code>,
+to recall before writing, and to call <code>get</code> before quoting
+(<code>src/server-instructions.ts</code>).</p>
+<p>Document sources index another repository's markdown read-only
+alongside the notes. <code>sync</code> re-indexes one when the attached
+branch's commit, or the extractor, chunker or embedding identity,
+differs from the manifest (<code>src/document-sync.ts:79-103</code>,
+<code>src/tools/sync.ts:241</code>). Recall reloads the last persisted
+generation at its indexed commit and does not re-index
+(<code>src/document-lazy-load.ts:234-330</code>).</p>
+<p>Screening flags three auto-run surfaces: a devcontainer whose
+<code>postCreateCommand</code> pipes the Ollama installer to
+<code>sh</code> and runs <code>npm ci</code>, Copilot instructions, and
+an OpenCode bundle that registers a local MCP server.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The disclosure of suppression is the trust mechanism, and it is aimed
-at the right party: the model or person reading the results, who
-otherwise cannot tell a gate from an empty store.</p>
-<p>What is absent is any epistemic state. Nothing marks where a note
-came from beyond its role, nothing separates what a person decided from
-what a model summarised, and supersession is a gradient.</p>
+<p>The disclosure of suppression is the trust mechanism, aimed at the
+party that needs it: whoever reads the results and otherwise cannot tell
+a gate from an empty store.</p>
+<p>The supersession disclosure is inverted in text. On a superseded note
+the structured evidence is <code>superseded: true</code> with
+<code>supersededBy</code> set
+(<code>src/tools/recall.ts:951-983</code>). The text formatter renders
+the same flag as "supersedes 1 note"
+(<code>src/helpers/index.ts:126-134</code>), which tells a model the
+obsolete note is the replacement. No test asserts that string.</p>
+<p>Confidence is display, not ranking.
+<code>computeSignalStrength</code> adds a role weight, a log-scaled
+relationship count capped at 0.15, a permanence bonus and a recency term
+over ninety days from frontmatter <code>updatedAt</code>
+(<code>src/provenance.ts:153-173</code>). Git contributes only
+<code>recentlyChanged</code>, a five-day flag. Both are computed inside
+the rendering loop over results already selected
+(<code>src/tools/recall.ts:850-887</code>).</p>
+<p>What is absent is any epistemic state. Nothing separates what a
+person decided from what a model summarised, and no note state withholds
+a note from recall; only deletion removes one.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>1,686 test cases across eighty-eight files, including integration
-tests that drive the real MCP tool against a local embedding server.
-Nothing was installed or run for this reading.</p>
+<p>The mark rests on
+<code>tests/recall-scope-gating.integration.test.ts</code>, which drives
+the real MCP tools against a fake embedding server. The derived-default
+case asserts the in-project note present and the off-topic global note
+absent on the next line, the suppression text,
+<code>suppressedGlobalCount &gt; 0</code> and <code>widenedScope</code>
+undefined (<code>:87-94</code>). The lift case asserts the inverse
+(<code>:262-268</code>), and an explicit <code>scope: "all"</code> case
+asserts the global note returns ungated (<code>:172-219</code>).</p>
+<p><code>tests/recall-eval.integration.test.ts</code> runs forty-seven
+fixture queries through recall and fails on any per-kind drop below
+<code>baseline.json</code> in MRR@10, S@1 or S@5. Its one
+<code>supersession</code> query asserts only that the replacement
+outranks the v1 note
+(<code>tests/fixtures/recall-eval/queries.json:284-290</code>,
+<code>scripts/eval-recall.mjs:217-220</code>). The superseded note may
+appear, and the check passes if it is absent.</p>
+<p>Nothing was installed or run for this reading.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Return the count of what you suppressed. Two fields — how many you
-held back, and whether you had to widen — turn an ambiguous empty-ish
-result into a legible one, and they cost nothing to compute because the
-filter already knew.</p>
-<p>Check which direction your scope argument runs. Here omitting it is
-stricter; elsewhere omitting it is permissive. Either is defensible and
-only one of them is what your caller assumed.</p>
-<p>Name every constant in a derived score. <code>provenance.ts</code> is
-readable precisely because the role weights, the centrality cap, the
-recency window and the fallback thresholds are all constants with names
-rather than numbers inline.</p>
-<p>And decide whether superseded means <em>ranked lower</em> or <em>not
-returned</em>. A shorter half-life is a real answer; so is exclusion;
-silently choosing the first while a reader assumes the second is where
-the surprise lives.</p>
+<h3 id="steal">Steal</h3>
+<p>Return the count of what you suppressed and whether you widened. Two
+fields turn an ambiguous result into a legible one, and they cost
+nothing because the filter already knew.</p>
+<p>Name every constant in a score, and expose the decomposition. A
+ranking a caller can take apart is one a maintainer can tune.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A supersession signal rendered as a sentence that reverses its own
+flag. If the edge is passive, generate the text from the structured
+field and test the string.</p>
+<p>A decay curve that never reaches the ranker, restarted by the write
+that marks the note obsolete. Either apply it in recall, or date it from
+the supersession without refreshing <code>updatedAt</code>.</p>
+<h3 id="fit">Fit</h3>
+<p>A single developer or a small team who want memory committed beside
+the code, readable without the tool, with a recall that explains itself.
+It is not a fit where an old answer must stop being returned before
+someone deletes it, or where one caller must not read another's
+notes.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether a superseded note is ever excluded. The half-life shortens
-and a maintenance hint can suggest pruning; no read path was found that
-withholds it.</p>
-<p>What the document-source indexing does about staleness. External
-repositories are indexed read-only, and how a changed upstream is
-noticed was not traced.</p>
-<p>How confidence behaves in a shallow clone. Every signal is derived
-from git history, and the fallbacks are keyed on days and
-centrality.</p>
+<p>How the gate behaves for notes in the main vault that carry this
+project's id. They count as current-project and are exempt; whether that
+is the intended reach of "global" was not traced through
+<code>move_memory</code>.</p>
+<p>What a model does with the inverted "supersedes 1 note" line in
+practice. The structured field is right; the text is what most clients
+show.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -360,24 +513,103 @@ centrality.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>src/tools/recall.ts:199-205</code></td>
+<td><code>src/tools/recall.ts:215-219</code></td>
 <td>A gate that an explicit argument turns off</td>
 </tr>
 <tr>
-<td><code>src/tools/recall.ts:111</code></td>
-<td>The diagnostics the tool promises to return</td>
+<td><code>src/tools/recall.ts:755-794</code></td>
+<td>The lift, the notices, and the suppression count</td>
 </tr>
 <tr>
-<td><code>src/provenance.ts:8-42</code></td>
-<td>A derived confidence with nothing hidden in a literal</td>
+<td><code>src/recall.ts:124-166</code></td>
+<td>The global bar and the partition</td>
 </tr>
 <tr>
-<td><code>tests/recall-scope-gating.integration.test.ts:86-95</code></td>
+<td><code>src/recall.ts:312-362</code></td>
+<td>Five-channel RRF with clamped priors</td>
+</tr>
+<tr>
+<td><code>src/provenance.ts:8-40</code>, <code>:153-275</code></td>
+<td>Signal strength, confidence and decay, constants named</td>
+</tr>
+<tr>
+<td><code>src/tools/project-memory-summary.ts:105-151</code></td>
+<td>The only recall-adjacent reader of the superseded half-life</td>
+</tr>
+<tr>
+<td><code>src/helpers/index.ts:126-134</code></td>
+<td>The evidence line that inverts supersession</td>
+</tr>
+<tr>
+<td><code>src/tools/relate.ts:37-51</code></td>
+<td>The passive <code>supersedes</code> convention</td>
+</tr>
+<tr>
+<td><code>src/tools/forget.ts:123-137</code></td>
+<td>Deletion and edge cleanup</td>
+</tr>
+<tr>
+<td><code>src/tools/consolidate-helpers.ts:1208-1257</code></td>
+<td>Prune-superseded, delete mode only</td>
+</tr>
+<tr>
+<td><code>src/vault.ts:239-263</code></td>
+<td>The search order, main vault always last</td>
+</tr>
+<tr>
+<td><code>tests/recall-scope-gating.integration.test.ts:42-99</code></td>
 <td>Absence, its control, and the disclosure</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the clone at the pin, with
+<code>P=dbac069d3a346075457ec8b090bee5c548adbce6</code>.</p>
+<ul>
+<li>Readers of the decay half-life, none in recall:
+<code>git grep -n -E 'computeDecayInfo' "${P}" -- src</code></li>
+<li>Every supersede reference outside the schema:
+<code>git grep -n -i -E 'supersed' "${P}" -- src | grep -v structured-content.ts</code></li>
+<li>Decay or freshness on the ranking path:
+<code>git grep -n -i -E 'decay|halfLife|freshness|staleness' "${P}" -- src/recall.ts src/tools/recall-helpers.ts src/tools/recall.ts</code></li>
+<li>Value-keyed rejection, none:
+<code>git grep -n -i -E 'tombstone|blocklist|denylist|rejected[_ -]?value|do[_ -]not[_ -](store|remember)' "${P}" -- src</code></li>
+<li>A second clock, none:
+<code>git grep -n -E 'validFrom|valid_from|validAt|validUntil|validTo|effectiveFrom|occurredAt|eventTime|asOf|as_of' "${P}" -- src</code>
+(the only hits are <code>validAttachments</code> in
+<code>src/config.ts</code>)</li>
+<li>An in-store mutation log, none:
+<code>git grep -n -i -E 'audit|appendFile|\.jsonl|journal|event[_ -]?log' "${P}" -- src</code></li>
+<li>A status field on a note, none:
+<code>git grep -n -E '(status|verified|disputed|retracted|quarantin|unverified|contested)[[:space:]]*[:?]' "${P}" -- src/storage.ts src/structured-content.ts</code>
+(the hits are the embedding write status
+<code>written | skipped</code>)</li>
+<li>A review queue:
+<code>git grep -n -i -E 'approv|pending[_ -]?review|review[_ -]?queue|elicit' "${P}" -- src</code>
+(elicitation covers write scope, vault choice and protected-branch
+consent only)</li>
+<li>A test of the supersede hint string, none:
+<code>git grep -n -E 'supersedes [0-9]+ note' "${P}" -- tests</code></li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/danielmarbach/mnemonic/commit/dbac069d3a346075457ec8b090bee5c548adbce6"><code class="commit-id" title="dbac069d3a346075457ec8b090bee5c548adbce6">dbac069d…</code></a>
+— 79 commits on, version 0.45.0 to 1.0.0-rc.1. Overtaken: identifier and
+full-text fusion channels, brief recall output, a <code>core</code>
+toolset, canonical project ids, a recall-quality eval (<a
+href="#6-retrieval-mechanics">section 6</a>). Wrong at the first pin and
+unchanged since: supersession was said to rank a note lower until it
+decays, when the half-life reaches no ranker (<a
+href="#2-mental-model">section 2</a>); confidence was said to come from
+git history, when it reads frontmatter after selection (<a
+href="#9-reliability-safety-and-trust">section 9</a>);
+<code>forget</code> and <code>prune-superseded</code> went unnamed. The
+inverted supersede hint was present then too. The earlier test-case
+figure did not reproduce. Marks unchanged. Screened from a full clone:
+nine files, three auto-run surfaces, one build-time execution point, one
+unpinned surface, two inside the cooldown; <code>AGENT.md</code> and
+<code>CLAUDE.md</code> read as data. Nothing was installed, built or
+run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/danielmarbach/mnemonic/commit/5fc9a5f5be70d25304b45c1af0b83b50d20b4590"><code class="commit-id" title="5fc9a5f5be70d25304b45c1af0b83b50d20b4590">5fc9a5f5…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

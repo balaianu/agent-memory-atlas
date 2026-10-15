@@ -20809,26 +20809,29 @@ candidates below a threshold leaves its reader unable to distinguish
 "nothing matched" from "something matched and I decided against it"; two
 fields the filter already knew fix that.</li>
 <li>Biggest risk: <strong>the scope argument runs opposite to the
-expectation, and supersession only steepens a curve.</strong>
+expectation, and supersession never reaches the ranker.</strong>
 <code>gateActive = scope === undefined &amp;&amp; project !== undefined</code>,
 with the comment "[e]xplicit scopes run fully ungated" — omitting the
 scope is the stricter path and passing one removes the gating, which is
 a relevance heuristic rather than a boundary. And
-<code>supersedes</code> is one of six relationship types whose effect is
-a shorter decay half-life, so a superseded note keeps coming back,
-ranked lower, until it fades — defensible, and not what a reader
-assuming "superseded means no longer returned" will expect.</li>
+<code>supersedes</code> is written on the old note with a fresh
+<code>updatedAt</code>: its thirty-day half-life feeds a prune
+suggestion in <code>project_memory_summary</code> and nothing in recall,
+so a superseded note ranks as before until <code>forget</code> or
+<code>prune-superseded</code> deletes it, and its evidence line reads
+"supersedes 1 note", the inverse of its structured
+<code>superseded: true</code>.</li>
 <li>Most reusable component: <code>provenance.ts</code> — a derived
 confidence with nothing hidden in an inline literal: role weights, a
 log-scaled centrality bonus with a ceiling, a permanence bonus, a
 ninety-day recency window, and named fallbacks keyed on days and
 centrality when the signals are thin.</li>
-<li>Maturity impression: Apache-2.0, version 0.45.0, 62,345 lines of
-TypeScript with 1,686 test cases across eighty-eight files, integration
-tests driving the real MCP tool against a local embedding server, and
-read-only document sources that index another repository's markdown.
-Screening flags three auto-run surfaces, as an MCP server installed into
-a client will.</li>
+<li>Maturity impression: Apache-2.0, version 1.0.0-rc.1, 66,559 lines of
+TypeScript with 1,584 test cases across 101 files, integration tests
+driving the real MCP tool against a fake embedding server, a
+recall-quality eval held to a recorded baseline, and read-only document
+sources that index another repository's markdown. Screening flags three
+auto-run surfaces, as an MCP server installed into a client will.</li>
 <li>Study when: your retrieval filters candidates and returns no account
 of it, or you want a memory whose exit story is that the notes stay
 plain markdown you already have.</li>

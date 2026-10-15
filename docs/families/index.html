@@ -6519,28 +6519,32 @@ older one by <code>legacy_observation_id</code> and
 record from a read or supersedes a claim.</p>
 <p><strong><a href="../systems/mnemonic/">mnemonic</a> hands back the
 count of what its recall held out.</strong> An Apache-2.0 TypeScript MCP
-memory server at version 0.45.0 — 62,345 lines with 1,686 test cases —
-storing notes as markdown with YAML frontmatter committed into the
-repository, with local gitignored embeddings, no database, and a
-semantic git commit per write. Alongside the ranked matches its recall
-returns <code>suppressedGlobalCount</code>, the weak global matches the
-project gate withheld, and <code>widenedScope</code>, set when the gate
-lifted because the admitted pool came back empty — with the response
-text carrying "weak global matches suppressed" in words. A retrieval
-that silently drops candidates below a threshold leaves its reader
-unable to tell "nothing matched" from "something matched and I decided
-against it"; two counts fix that, and the tests assert them in both
-directions through the real tool. One mark, for the pairing that does
-it: an off-topic global note asserted absent while the in-project note
-is asserted present on the line above. The scope argument runs opposite
-to the usual:
+memory server at version 1.0.0-rc.1 — 66,559 lines with 1,584 test cases
+— storing notes as markdown with YAML frontmatter in git-backed vaults,
+one inside the repository and one for global notes, with local
+gitignored embeddings, no database, and a git commit per write.
+Alongside the ranked matches its recall returns
+<code>suppressedGlobalCount</code>, the weak global matches the project
+gate withheld, and <code>widenedScope</code>, set when the gate lifted
+because the admitted pool came back empty — with the response text
+carrying "weak global matches suppressed" in words. A retrieval that
+silently drops candidates below a threshold leaves its reader unable to
+tell "nothing matched" from "something matched and I decided against
+it"; two counts fix that, and the tests assert them in both directions
+through the real tool. One mark, for the pairing that does it: an
+off-topic global note asserted absent while the in-project note is
+asserted present on the line above. The scope argument runs opposite to
+the usual:
 <code>gateActive = scope === undefined &amp;&amp; project !== undefined</code>,
 under the comment "[e]xplicit scopes run fully ungated" — omitting the
 scope is the stricter path, and passing one removes the gating, which is
-a relevance heuristic rather than a boundary. Confidence is derived from
-git signals with every weight, threshold and half-life a named constant,
-and supersession steepens a decay curve rather than withholding: a
-superseded note keeps returning, ranked lower, until it fades.</p>
+a relevance heuristic rather than a boundary. Supersession never reaches
+the ranker. The edge is written on the old note with a fresh
+<code>updatedAt</code>, its thirty-day half-life feeds only a prune
+suggestion, and the evidence line printed on it reads "supersedes 1
+note", the inverse of its structured flag; a superseded note leaves
+recall when <code>forget</code> or <code>prune-superseded</code> deletes
+it.</p>
 <p><strong><a href="../systems/nougenshards/">NouGenShards</a> writes
 the argument against its own guards into their docstrings.</strong> A
 source-available Python memory at version 1.3.1 whose first act is

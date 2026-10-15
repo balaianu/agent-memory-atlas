@@ -4274,8 +4274,8 @@ run</li>
 <li><a
 href="https://github.com/danielmarbach/mnemonic">danielmarbach/mnemonic</a>
 at <a
-href="https://github.com/danielmarbach/mnemonic/commit/5fc9a5f5be70d25304b45c1af0b83b50d20b4590"><code class="commit-id" title="5fc9a5f5be70d25304b45c1af0b83b50d20b4590">5fc9a5f5…</code></a>
-— read only, from a shallow clone; nine files scanned, three auto-run
+href="https://github.com/danielmarbach/mnemonic/commit/dbac069d3a346075457ec8b090bee5c548adbce6"><code class="commit-id" title="dbac069d3a346075457ec8b090bee5c548adbce6">dbac069d…</code></a>
+— read only, from a full clone; nine files scanned, three auto-run
 surfaces, one build-time execution point, one unpinned surface and two
 dependency files inside the seven-day cooldown. Nothing was installed,
 built or run</li>
@@ -17734,6 +17734,32 @@ reconciliation stamp as the 2026-06-21 refresh; the file read
 once, where three artifacts carried it. The verdict entry and the
 families paragraph kept the first pin's counts, a five-check validator
 and an Apache-2.0 licence. No mark changes.</li>
+<li><strong>Four published claims about <a
+href="../systems/mnemonic/">mnemonic</a> were wrong at <a
+href="https://github.com/danielmarbach/mnemonic/commit/5fc9a5f5be70d25304b45c1af0b83b50d20b4590"><code class="commit-id" title="5fc9a5f5be70d25304b45c1af0b83b50d20b4590">5fc9a5f5…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+supersession shortened a note's decay half-life so that it kept
+returning "ranked lower, until it fades". <code>computeDecayInfo</code>
+had two callers, <code>project_memory_summary</code> and consolidation
+evidence (<code>src/tools/project-memory-summary.ts:112</code>,
+<code>src/tools/consolidate-helpers.ts:679</code>), and none on the
+recall path, so a superseded note ranked as before. Writing the edge
+also set its <code>updatedAt</code> to the current time
+(<code>src/tools/relate.ts:423</code>,
+<code>src/tools/consolidate-helpers.ts:323-327</code>). It said
+confidence was derived from git history signals and drew it feeding the
+ranker; <code>computeSignalStrength</code> read frontmatter role,
+lifecycle, <code>updatedAt</code> and relationship count
+(<code>src/provenance.ts:153-173</code>), git supplied only a five-day
+<code>recentlyChanged</code> flag, and both were computed for results
+already selected (<code>src/tools/recall.ts:817-852</code>). Its update
+and delete description named no deletion, though <code>forget</code> and
+<code>consolidate</code> with <code>prune-superseded</code> both deleted
+notes, which also answered its open question of whether a superseded
+note is ever excluded. And it counted 1,686 test cases; the tree held
+1,496 <code>it</code> and <code>test</code> calls in 88 files. The first
+two rested on the constants' names and the README's framing rather than
+on the callers of each function.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
