@@ -412,6 +412,21 @@ So until the new day reaches five, every 30-minute tick re-reads the
 same tail, pays for another Haiku call and appends the same block again.
 <strong>A side path that consumes input must advance the cursor itself,
 in the same step.</strong></p>
+<p><strong><a href="../../systems/remembra/">Remembra</a> runs a
+background pass that fails on every item and reports nothing
+done.</strong> The sleep-time worker is on by default every six hours,
+and its dedup pass calls
+<code>self.qdrant.search(embedding=..., threshold=...)</code> against a
+method whose parameters are <code>query_vector</code> and
+<code>score_threshold</code>
+(<code>src/remembra/services/sleep_time.py:345-350</code>,
+<code>src/remembra/storage/qdrant.py:454-466</code>). Each
+<code>TypeError</code> is caught per memory and logged at debug, so the
+report says zero duplicates merged. The tests use a fake whose
+<code>search(self, **_)</code> accepts anything, and a real-store test
+asserts every point survives the default run, which holds because the
+search raises. <strong>A per-item except needs a failure count in the
+run report, or a dead pass reads as an idle one.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Crash before, during, and after each state mutation.</li>

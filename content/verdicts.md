@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 738 reports.**
+**This page covers all 739 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6668,6 +6668,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0 with a trademark NOTICE, 8,043 lines of Python in the package and 27 commits by one author, all dated 13 October 2026. Four marks, `trust_state`, `scope_enforced`, `audit_log` and `negative_eval`. CI runs 112 pytest functions on SQLite and pgvector; three benchmark runs are committed with per-session rows whose totals recompute.
 - Study when: you want procedural memory for coding agents promoted on observed, repeated success rather than on a model's judgement, with a bounded pointer and a capability mapping that carries skills between agents.
 - Do not copy when: the memory must be defended against the agent writing it, a removed skill must stay removed, or several projects on one machine must not see each other's skills.
+
+### [`remembra`](../systems/remembra/)
+
+- Best idea: **one eligibility gate for every recall arm, read from the row of record.** `_row_eligible` re-checks each semantic, keyword, graph, recency and filter-only candidate against SQLite for user, project, expiry, supersession, source-record status and scope, so a stale Qdrant payload cannot leak a retired row.
+- Biggest risk: **the background consolidation never runs and nothing says so.** `_dedup_pass` passes `embedding=` and `threshold=` to a `QdrantStore.search` that takes `query_vector` and `score_threshold`; the `TypeError` is logged at debug for every memory, and the suite's fake accepts `**_` while its consolidator returns a label the real one never emits.
+- Most reusable component: `src/remembra/services/memory.py` — `_row_eligible`, `_store_single_fact` and `_rollback_store` — with `tests/test_ret_scoping_filters.py:47-73` as the expired-memory case to copy, run against real SQLite and an in-process Qdrant.
+- Second risk: **trust is recorded and not enforced.** `metadata.verified=false` has no reader, the `flag` conflict strategy keeps both memories live, resolving a conflict changes neither memory, and a memory's `valid_from` is the write clock.
+- Maturity impression: MIT, 143,057 lines of Python in `src/remembra` of which the memory core is 20,959, and 1,031 commits by one author between 1 March and 11 October 2026. 314 pytest files. Four marks: `bitemporal` on relationship edges, `scope_enforced`, `audit_log` with id-only rows, and `negative_eval`. The one committed LoCoMo result is invalid by the README's own account.
+- Study when: you want a self-hosted Mem0-shaped API with scoped recall, supersession that keeps history, provenance to the source text, or git-grounded handoffs between coding agents of different vendors.
+- Do not copy when: corrections must be reviewed before they take effect, a forgotten value must stay forgotten, or the background merge is part of the reason to adopt it.
 
 ### [`brain-mcp`](../systems/brain-mcp/)
 

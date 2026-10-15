@@ -445,6 +445,20 @@ writer — only <code>memory_import</code> sets it, and the boundary tests
 set it by raw SQL. It passes Helm's diagnostic on the end of the
 interval and on restore, and the whitepaper lists
 <code>expired_at</code> as roadmap.</p>
+<p><a href="../../systems/remembra/">Remembra</a> has both clocks on its
+graph edges and one clock on its memories. The entity prompt asks for
+the dates a relationship started and ended,
+<code>_process_entities_for_memory</code> stores them beside
+<code>created_at</code>, and the relationship-search route and the
+<code>relationships_at</code> MCP tool filter with
+<code>is_valid_at(as_of)</code>
+(<code>src/remembra/services/memory.py:1782-1799</code>,
+<code>src/remembra/storage/database.py:3128-3203</code>). A memory row's
+<code>valid_from</code> is set to the store's clock on both write paths,
+and <code>valid_to</code> to the moment a newer memory superseded it, so
+its as-of recall is a record-time query under a valid-time name. The
+helpers that would close a contradicted <code>WORKS_AT</code> edge have
+no caller, and the edge filter never reads <code>created_at</code>.</p>
 <p><a href="../../systems/obsidian-wiki/">obsidian-wiki</a> is the
 pattern on a Markdown vault with one read path short.
 <code>valid_from</code> and <code>valid_until</code> are frontmatter a

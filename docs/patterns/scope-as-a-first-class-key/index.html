@@ -1351,6 +1351,19 @@ therefore rewrites <code>agent_id</code> and removes the row from the
 first agent's recall — the read filter holds while the identity it
 guards moves, which is why the page asks for scope at the front of the
 key and for dedupe inside the boundary.</p>
+<p><strong><a href="../../systems/remembra/">Remembra</a> pushes the key
+into the vector store as an optimisation and decides it once, from the
+row of record.</strong> Qdrant receives user, project and expiry
+filters, but every candidate from the semantic, keyword, graph and
+recency arms is re-read from SQLite and passed through
+<code>_row_eligible</code>, which checks user, project, expiry,
+supersession, source-record status and scope prefix
+(<code>src/remembra/services/memory.py:1893-1931</code>). The relay
+brief and handoff queries put both keys in SQL. The one search that
+would have crossed projects is the sleep-time dedup, which passes no
+<code>project_id</code> and raises before it runs. <strong>When two
+stores hold the key, filter in the fast one and decide in the
+authoritative one.</strong></p>
 <p><strong><a href="../../systems/fluctlightdb/">FluctlightDB</a>
 filters on the key after the work is done, then hands the result to
 lanes that never saw it.</strong> <code>activate_scoped</code> truncates

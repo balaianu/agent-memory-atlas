@@ -205,6 +205,8 @@ columns does this pass have no input for, and what happens to them.
 
 **[Resonant](../../systems/resonant/) advances its digest cursor on one path out of two.** The Scribe keeps `(digest.last_thread_id, digest.last_sequence)` and, when the daily thread has rolled over, flushes the old thread's tail into the previous day's Markdown file before reading the new day (`packages/backend/src/services/digest.ts:202-213`). The flush writes no cursor. Only the main path does, and it returns early below five new messages (`:215-218`, `:267-268`). So until the new day reaches five, every 30-minute tick re-reads the same tail, pays for another Haiku call and appends the same block again. **A side path that consumes input must advance the cursor itself, in the same step.**
 
+**[Remembra](../../systems/remembra/) runs a background pass that fails on every item and reports nothing done.** The sleep-time worker is on by default every six hours, and its dedup pass calls `self.qdrant.search(embedding=..., threshold=...)` against a method whose parameters are `query_vector` and `score_threshold` (`src/remembra/services/sleep_time.py:345-350`, `src/remembra/storage/qdrant.py:454-466`). Each `TypeError` is caught per memory and logged at debug, so the report says zero duplicates merged. The tests use a fake whose `search(self, **_)` accepts anything, and a real-store test asserts every point survives the default run, which holds because the search raises. **A per-item except needs a failure count in the run report, or a dead pass reads as an idle one.**
+
 ## Tests to require
 
 - Crash before, during, and after each state mutation.

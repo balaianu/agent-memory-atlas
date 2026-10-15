@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 738 reports.</strong></p>
+<p><strong>This page covers all 739 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30528,6 +30528,48 @@ agents.</li>
 <li>Do not copy when: the memory must be defended against the agent
 writing it, a removed skill must stay removed, or several projects on
 one machine must not see each other's skills.</li>
+</ul>
+<h3 id="remembra"><a
+href="../systems/remembra/"><code>remembra</code></a></h3>
+<ul>
+<li>Best idea: <strong>one eligibility gate for every recall arm, read
+from the row of record.</strong> <code>_row_eligible</code> re-checks
+each semantic, keyword, graph, recency and filter-only candidate against
+SQLite for user, project, expiry, supersession, source-record status and
+scope, so a stale Qdrant payload cannot leak a retired row.</li>
+<li>Biggest risk: <strong>the background consolidation never runs and
+nothing says so.</strong> <code>_dedup_pass</code> passes
+<code>embedding=</code> and <code>threshold=</code> to a
+<code>QdrantStore.search</code> that takes <code>query_vector</code> and
+<code>score_threshold</code>; the <code>TypeError</code> is logged at
+debug for every memory, and the suite's fake accepts <code>**_</code>
+while its consolidator returns a label the real one never emits.</li>
+<li>Most reusable component:
+<code>src/remembra/services/memory.py</code> —
+<code>_row_eligible</code>, <code>_store_single_fact</code> and
+<code>_rollback_store</code> — with
+<code>tests/test_ret_scoping_filters.py:47-73</code> as the
+expired-memory case to copy, run against real SQLite and an in-process
+Qdrant.</li>
+<li>Second risk: <strong>trust is recorded and not enforced.</strong>
+<code>metadata.verified=false</code> has no reader, the
+<code>flag</code> conflict strategy keeps both memories live, resolving
+a conflict changes neither memory, and a memory's
+<code>valid_from</code> is the write clock.</li>
+<li>Maturity impression: MIT, 143,057 lines of Python in
+<code>src/remembra</code> of which the memory core is 20,959, and 1,031
+commits by one author between 1 March and 11 October 2026. 314 pytest
+files. Four marks: <code>bitemporal</code> on relationship edges,
+<code>scope_enforced</code>, <code>audit_log</code> with id-only rows,
+and <code>negative_eval</code>. The one committed LoCoMo result is
+invalid by the README's own account.</li>
+<li>Study when: you want a self-hosted Mem0-shaped API with scoped
+recall, supersession that keeps history, provenance to the source text,
+or git-grounded handoffs between coding agents of different
+vendors.</li>
+<li>Do not copy when: corrections must be reviewed before they take
+effect, a forgotten value must stay forgotten, or the background merge
+is part of the reason to adopt it.</li>
 </ul>
 <h3 id="brain-mcp"><a
 href="../systems/brain-mcp/"><code>brain-mcp</code></a></h3>

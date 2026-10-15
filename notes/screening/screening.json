@@ -36422,6 +36422,54 @@
       "status": "screened",
       "url": "https://github.com/tinhien11/remem-mcp"
     },
+    "remembra": {
+      "counts": {
+        "EXEC": 3,
+        "FLOAT": 6,
+        "FRESH": 1,
+        "NOTE": 5,
+        "RUNS": 2
+      },
+      "files_scanned": 25,
+      "findings": [
+        {
+          "detail": "hook scripts a plugin manifest can register — 2 entr(ies): pre-commit, pre-push",
+          "kind": "RUNS",
+          "path": "hooks/"
+        },
+        {
+          "detail": "MCP server manifest; declares a start command; launches a package fetched at run time (uvx)",
+          "kind": "RUNS",
+          "path": "server.json"
+        },
+        {
+          "detail": "changed 3 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "uv.lock"
+        },
+        {
+          "detail": "npm lifecycle `prepublishOnly`: npm run build",
+          "kind": "EXEC",
+          "path": "sdk/typescript/package.json"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/conftest.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
+          "path": "tests/crew/abuse/conftest.py"
+        }
+      ],
+      "revision": "49ae5f546ef9488e744b12b36e0f6a8d3db6ed69",
+      "screened_at": "2026-10-15T04:18:24+00:00",
+      "slug": "remembra",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/remembra-ai/remembra"
+    },
     "rememora": {
       "counts": {
         "AGENT": 2,

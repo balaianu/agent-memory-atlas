@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="FastAPI memory server over SQLite
+and Qdrant: grounded fact extraction with supersession, one row gate on
+every recall path, and git-built handoffs between coding agents.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Remembra — Agent Memory Atlas">
+    <meta property="og:description" content="FastAPI memory server over
+SQLite and Qdrant: grounded fact extraction with supersession, one row
+gate on every recall path, and git-built handoffs between coding
+agents.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Remembra — Agent Memory Atlas">
+    <meta name="twitter:description" content="FastAPI memory server over
+SQLite and Qdrant: grounded fact extraction with supersession, one row
+gate on every recall path, and git-built handoffs between coding
+agents.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Remembra — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Remembra",
+      "description": "FastAPI memory server over SQLite and Qdrant: grounded fact extraction with supersession, one row gate on every recall path, and git-built handoffs between coding agents.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A hosted memory API whose headline product
+is git-built handoffs between coding agents</p>
+          <h1>Remembra</h1>
+          <p class="document-deck">FastAPI memory server over SQLite and
+Qdrant: grounded fact extraction with supersession, one row gate on
+every recall path, and git-built handoffs between coding agents.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/remembra-ai/remembra">
+              <span>Source</span>
+              <strong>remembra-ai/remembra</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/remembra-ai/remembra/commit/49ae5f546ef9488e744b12b36e0f6a8d3db6ed69" title="49ae5f546ef9488e744b12b36e0f6a8d3db6ed69">
+              <span>Analyzed revision</span>
+              <code>49ae5f54…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/remembra-ai--remembra" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>remembra-ai--remembra</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>143,057
+lines of Python in src/remembra; the memory core (services, storage,
+retrieval, extraction) is 20,959 of them, Crew coordination 34,715 and
+the relay client 19,151; a 62,934-line React dashboard</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,031
+commits on main by one author, 1 March 2026 – 11 October
+2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>314
+pytest files in 110,233 lines under tests/, including a retrieval
+harness over real SQLite and in-process Qdrant; a LoCoMo runner whose
+one committed result the project marks invalid</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Remembra is a self-hostable memory server for agents, a FastAPI
+process over SQLite and Qdrant with a hosted cloud in front of it. A
+store runs LLM extraction into atomic facts, drops facts its source text
+does not support, and decides per fact whether to add it, skip it as a
+duplicate, or supersede an older memory. Its README leads with Relay:
+session hooks that build a handoff from git and the agent's transcript
+when a coding session ends, and inject a brief into the next session of
+any vendor.</p>
+<p>What is notable is the discipline on the main paths. Every recall arm
+hands its candidates to one function that re-checks the SQLite row for
+user, project, expiry, supersession, scope and source-record status.
+Supersession marks rather than deletes and is undone if the store fails
+part-way. What is weak sits at the edges of that discipline. The
+sleep-time dedup pass, enabled by default, calls the vector store with
+keyword names it does not accept and logs the failure at debug level, so
+it does nothing. A grounding verdict is written into metadata and read
+by nothing.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The background dedup pass is dead, and its tests cannot see
+it.</strong> <code>_dedup_pass</code> calls
+<code>self.qdrant.search(embedding=..., threshold=...)</code>, while
+<code>QdrantStore.search</code> takes <code>query_vector</code> and
+<code>score_threshold</code>
+(<code>src/remembra/services/sleep_time.py:345-350</code>,
+<code>src/remembra/storage/qdrant.py:454-466</code>). The
+<code>TypeError</code> lands in an <code>except</code> that logs at
+debug. The suite's fake accepts <code>**_</code>, and its consolidator
+returns <code>UPDATE</code>, a label the production consolidator never
+emits.</li>
+<li><strong>Valid time is real on edges and the write clock on
+memories.</strong> Entity relationships carry dates the extractor read
+from the text, queryable as of a point in time. A memory row's
+<code>valid_from</code> is always <code>now</code> and its
+<code>valid_to</code> is the moment a newer memory superseded it.</li>
+<li><strong>The trust signals label and do not gate.</strong>
+<code>metadata.verified</code> is written only under the non-default
+<code>grounding_action=flag</code> and no reader exists. A
+<code>flag</code> conflict strategy keeps both memories live. The
+injection score withholds handoff text below a threshold, a
+ranking-style number rather than a state.</li>
+<li><strong>The committed benchmark is invalid by the project's own
+account.</strong> The March 2026 LoCoMo run scored a wrong date as
+correct. The README says the judge counted every INCORRECT verdict as
+correct, and commit <code>a19fb29f</code> fixed the runner without a new
+run.</li>
+</ul>
+<p>Four marks: <code>bitemporal</code> on relationship edges,
+<code>scope_enforced</code>, <code>audit_log</code> and
+<code>negative_eval</code>. <code>trust_state</code>,
+<code>human_review</code> and <code>tombstone</code> are withheld, for
+reasons given in sections 5, 7 and 9.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is one atomic fact. When extraction derives facts from a
+store request, the request's verbatim text becomes a separate source
+record (<code>memory_type='source'</code>) that recall never returns,
+and each fact carries a <code>metadata.source_id</code> receipt pointing
+at it (<code>src/remembra/services/memory.py:591-653</code>,
+<code>:862-969</code>). A relay handoff is a memory too, stored
+atomically with <code>memory_type='handoff'</code> and a
+<code>relay</code> metadata block.</p>
+<p>A fact becomes a belief by surviving two gates on the write path. The
+first is grounding: content-word overlap between the fact and its source
+must reach <code>fact_verification_threshold</code> (0.5), and under the
+default <code>grounding_action='drop'</code> a fact below it is not
+stored (<code>src/remembra/services/memory.py:1355-1381</code>). If
+every derived fact fails, the verbatim content is stored instead. The
+second is consolidation. Candidates are live memories of the same user,
+project and visibility bucket, and the decider returns <code>ADD</code>,
+<code>NOOP</code> or <code>SUPERSEDE</code>. A supersession under
+confidence 0.7, or against a pinned memory, is downgraded to
+<code>ADD</code>
+(<code>src/remembra/services/memory.py:1212-1250</code>).</p>
+<p>A memory stops being a belief in four ways. Supersession sets
+<code>superseded_by</code>, <code>superseded_at</code> and
+<code>valid_to</code> on the old row, which then drops out of recall
+unless <code>include_superseded</code> or <code>as_of</code> is passed
+(<code>src/remembra/storage/database.py:1556-1582</code>). Expiry hides
+a row at read time. Forget deletes it outright. Under the
+<code>flag</code> conflict strategy nothing stops being a belief: the
+new fact links <code>conflicts_with</code> and both stay live
+(<code>src/remembra/services/memory.py:1466-1472</code>).</p>
+<p>Who moves memories between states: the store pipeline on every write,
+the caller through supersede, PATCH and forget, and a background worker
+that is meant to merge duplicates. Memory is treated as ground truth
+once stored; no state on a row withholds it from being acted on.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a store request becomes facts, how supersession and conflict flags are written, and the dedup pass that never runs</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a store request becomes facts, how supersession and conflict flags are written, and the dedup pass that never runs
+flowchart TD
+    A[&quot;store request&quot;] --&gt; B{&quot;extraction derives facts?&quot;}
+    B -- &quot;yes&quot; --&gt; S[&quot;verbatim source record, never recalled&quot;]
+    B -- &quot;no&quot; --&gt; F
+    S --&gt; F[&quot;each fact&quot;]
+    F --&gt; G{&quot;overlap with source &gt;= 0.5?&quot;}
+    G -- &quot;no, drop mode (default)&quot; --&gt; X[&quot;dropped, listed in response&quot;]
+    G -- &quot;no, flag mode&quot; --&gt; V[&quot;stored with verified=false, read by nothing&quot;]
+    G -- &quot;yes&quot; --&gt; C[&quot;candidates: same user, project, visibility, live&quot;]
+    V --&gt; C
+    C --&gt; D{&quot;decision&quot;}
+    D -- &quot;NOOP&quot; --&gt; N[&quot;nothing stored&quot;]
+    D -- &quot;ADD&quot; --&gt; R[&quot;row + FTS + vector&quot;]
+    D -- &quot;SUPERSEDE, conf &gt;= 0.7, not pinned&quot; --&gt; Q{&quot;conflict strategy&quot;}
+    Q -- &quot;update or version&quot; --&gt; M[&quot;old row: superseded_by, valid_to = new valid_from&quot;]
+    Q -- &quot;flag&quot; --&gt; K[&quot;both live, conflict OPEN&quot;]
+    M --&gt; R
+    K --&gt; R
+    R --&gt; E[&quot;recall: every arm through _row_eligible&quot;]
+    E --&gt; O[&quot;user, project, expiry, superseded, source, scope&quot;]
+    W[&quot;sleep-time dedup, every 6 h&quot;] -.-&gt;|&quot;TypeError at qdrant.search, logged at debug&quot;| Z[&quot;no merge, no delete&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>One Python package, <code>src/remembra</code>, runs as a FastAPI
+server (<code>src/remembra/main.py</code>). SQLite through
+<code>aiosqlite</code> holds memory rows, an FTS5 table, entities,
+relationships, conflicts, the audit log, accounts and billing state
+(<code>src/remembra/storage/database.py</code>). Qdrant holds one point
+per memory with a payload carrying user, project, expiry, scope prefixes
+and validity fields, optionally encrypted
+(<code>src/remembra/storage/qdrant.py:35-103</code>). Embeddings come
+from OpenAI by default, or Azure, Cohere, Ollama, Voyage or Jina.
+Extraction, consolidation and entity resolution call an LLM; a
+cross-encoder reranker loads <code>ms-marco-MiniLM-L-6-v2</code> when
+enabled.</p>
+<p>Around the core sit an MCP server whose tools wrap a REST client
+(<code>src/remembra/mcp/server.py</code>), Python and TypeScript SDKs, a
+React dashboard, and <code>remembra-relay</code>, a CLI that installs
+session hooks for five coding agents, plus Cursor behind
+<code>--include-unverified</code> (<code>src/remembra/relay/</code>).
+Crew mode adds a separate SQLite database of claims, zones, tasks and a
+hash-chained event log for coordinating agents in one repository
+(<code>src/remembra/crew/</code>). It is the largest subsystem and is
+coordination state rather than memory.</p>
+<p>Background work runs in process: an enrichment queue for entity
+resolution, a pending-embedding retry worker, and a sleep-time worker
+scheduled every six hours when <code>sleep_time_enabled</code> is true,
+which it is by default (<code>src/remembra/config.py:695-706</code>,
+<code>src/remembra/main.py:446-470</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The quickstart compose file starts Remembra, Qdrant and Ollama with
+authentication off and local embeddings, so it runs offline with no API
+key. When the extraction call fails, the store keeps the text as
+fallback facts and marks them for the reprocess job. Production builds
+use <code>Dockerfile.cloud</code>. The relay client installs with
+<code>pipx</code> and needs a Remembra API key and server URL. The
+SQLite file is inspectable by hand; the vectors are not, and
+<code>storage/reconcile.py</code> and <code>storage/reindex.py</code>
+exist to repair drift between the two stores.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>POST /api/v1/memories</code>
+sanitizes the content, resolves the project, and calls
+<code>MemoryService.store</code>
+(<code>src/remembra/api/v1/memories.py:294-424</code>).
+<code>store</code> sets one time budget, and on any hard failure
+<code>_rollback_store</code> unmarks supersessions and deletes the rows,
+FTS entries and vectors it created
+(<code>src/remembra/services/memory.py:702-778</code>). With
+<code>async_enrichment</code> on, the source record is acknowledged
+first and facts are extracted in a background task.</p>
+<p><strong>Extraction and grounding.</strong>
+<code>_extract_and_store_facts</code> runs
+<code>extractor.extract_detailed</code> within the budget and falls back
+to the verbatim content
+(<code>src/remembra/services/memory.py:862-969</code>).
+<code>_store_single_fact</code> grounds, embeds, finds candidates,
+decides, and writes the row and FTS entry in one SQLite transaction
+before upserting the vector
+(<code>src/remembra/services/memory.py:1322-1599</code>).</p>
+<p><strong>Consolidation.</strong>
+<code>_consolidation_candidates</code> searches Qdrant with user and
+project filters, then drops rows of another user, project, visibility,
+space or team, superseded rows, source records and expired rows
+(<code>src/remembra/services/memory.py:1144-1197</code>).
+<code>_decide</code> short-circuits an exact duplicate, then asks the
+LLM consolidator or, in Jev enforce mode, an external classifier
+(<code>src/remembra/services/memory.py:1601-1680</code>).</p>
+<p><strong>Retrieval.</strong> <code>recall</code> embeds the query and
+runs the semantic, keyword, recent-pool and graph arms, re-checking each
+candidate with <code>_row_eligible</code>
+(<code>src/remembra/services/memory.py:1893-1931</code>,
+<code>:1999-2263</code>). It then dedupes status memories per key,
+scores unscored hits by cosine, reranks, ranks, drops near-duplicates,
+and builds context from exactly the returned set.</p>
+<p><strong>Context injection.</strong> Recall's context goes through
+<code>ContextOptimizer</code>, capped at 4,000 tokens by default and 800
+in slim mode. The relay brief is assembled by
+<code>RelayService.brief</code> from the newest substantive handoff,
+recent handoffs, the inbox and linked projects, scrubbed and policed
+(<code>src/remembra/services/relay.py:1181-1279</code>).</p>
+<p><strong>Correction and deletion.</strong> <code>supersede</code>
+creates a new memory and marks the old
+(<code>src/remembra/services/memory.py:2728-2858</code>).
+<code>update</code> rewrites a row in place and re-embeds it
+(<code>:2596-2726</code>). <code>forget</code> deletes by id, entity,
+project or account from Qdrant, FTS and SQLite
+(<code>:2860-2971</code>).</p>
+<p><strong>Relay.</strong> <code>RelayService.close_session</code>
+redacts secrets, renders the handoff, stores it with
+<code>skip_extraction=True</code> and
+<code>source='agent_generated'</code>, and supersedes the earlier
+handoff for the same <code>(agent_id, session_id)</code>
+(<code>src/remembra/services/relay.py:503-742</code>).</p>
+<p><strong>Background.</strong>
+<code>SleepTimeWorker._consolidate_user</code> runs dedup, entity
+resolution, importance rescoring, decay cleanup and community detection
+(<code>src/remembra/services/sleep_time.py:196-237</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The <code>memories</code> table began with user, project, content,
+facts, metadata, timestamps, expiry and access counters, and migrations
+added provenance (<code>source</code>, <code>trust_score</code>,
+<code>checksum</code>), visibility (<code>visibility</code>,
+<code>space_id</code>, <code>team_id</code>), <code>memory_type</code>,
+<code>scope</code>, <code>supersedes</code>, <code>contradicts</code>,
+<code>importance</code>, <code>pinned</code>,
+<code>superseded_by</code>, <code>superseded_at</code>,
+<code>valid_from</code> and <code>valid_to</code>
+(<code>src/remembra/storage/database.py:644-667</code>,
+<code>:1063-1096</code>, <code>:270-285</code>).
+<code>archived_memories</code> is a cold tier with an archive reason;
+<code>memory_feedback</code> holds helpful and unhelpful signals the
+ranker can weight.</p>
+<p><strong>Validity.</strong> Migration 3 calls itself <em>"bi-temporal,
+minimal"</em> and defines <code>valid_from</code> as when the fact
+became true. Both write paths set it to the store's own clock
+(<code>src/remembra/services/memory.py:1487</code>, <code>:1077</code>),
+and <code>mark_memory_superseded</code> sets <code>valid_to</code> to
+the new memory's <code>valid_from</code>. No store request field carries
+a different date, so on memory rows valid time and record time are the
+same clock.</p>
+<p><strong>Relationships</strong> carry the second clock
+(<code>src/remembra/storage/database.py:772-797</code>). The entity
+prompt asks the model to extract when a relationship started and ended,
+with examples like <em>"Alice used to work at Meta from 2019 to
+2022"</em> (<code>src/remembra/extraction/entities.py:84-94</code>). The
+dates reach the row through <code>_process_entities_for_memory</code>,
+and <code>created_at</code> stays the recording time
+(<code>src/remembra/services/memory.py:1782-1799</code>).
+<code>get_entity_relationships</code> filters with
+<code>is_valid_at(as_of)</code>, served by
+<code>GET /api/v1/entities/relationship-search</code> and the
+<code>relationships_at</code> MCP tool. That is what earns
+<code>bitemporal</code>, and only for edges.</p>
+<p>The edge model has two unwired pieces.
+<code>supersede_relationship</code> and
+<code>find_contradicting_relationships</code>, which would close a
+<code>WORKS_AT</code> edge when a new one appears, have no caller in
+<code>src</code>. A later "now works at Google" leaves the Meta edge
+current unless the sentence stated an end date. The as-of filter also
+never reads <code>created_at</code>, so the system cannot answer what it
+believed on a past date.</p>
+<p><strong>Scope.</strong> <code>user_id</code> and
+<code>project_id</code> are columns on memories, FTS rows, entities and
+pending embeddings, and fields in the Qdrant payload. <code>scope</code>
+is a colon-separated prefix matched on the read path. Visibility and
+spaces add sharing: a memory shared into a space is readable by space
+members, and <code>recall_across_spaces</code> scores those rows with no
+user filter by design
+(<code>src/remembra/services/memory.py:2480-2594</code>).</p>
+<p><strong>Trust fields.</strong> <code>trust_score</code> is the
+sanitizer's injection score at write time.
+<code>metadata.verified</code> and <code>grounding_score</code> record
+the grounding verdict when a fact was kept despite failing.
+<code>memory_conflicts</code> has <code>open</code>,
+<code>resolved</code> and <code>dismissed</code>, but that status
+belongs to the conflict record, not to either memory
+(<code>src/remembra/extraction/conflicts.py:105-131</code>). None of
+these is a discrete state on the memory that withholds it, which is why
+<code>trust_state</code> is withheld.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>The semantic arm pushes user, project, expiry and plaintext metadata
+filters into Qdrant and pages until it has twice the requested limit of
+eligible rows or exhausts a cap
+(<code>src/remembra/services/memory.py:1959-1993</code>). The keyword
+arm queries FTS5 with the same user and project and excludes superseded
+rows in SQL. The graph arm runs only when a project is given, matching
+entity names as whole words with guards against one-letter and untyped
+acronym entities. A query classified as <code>debug</code> intent also
+pulls the newest rows into the pool, so "what was I just working on"
+finds a handoff phrased differently.</p>
+<p><code>_row_eligible</code> is the decision point. It rejects another
+user, another project when one is set, an excluded id, a source record,
+an expired row, a superseded row unless asked, a row outside the scope
+prefix, and a metadata mismatch. Under <code>as_of</code> it applies the
+validity window instead
+(<code>src/remembra/services/memory.py:1893-1931</code>). Its docstring
+calls it the <em>"single source-of-truth gate for every recall
+path"</em>, and the four arms call it.</p>
+<p>Ranking has four presets. <code>balanced</code> weights semantic
+similarity at 0.6, recency 0.15, entity overlap 0.15 and keyword 0.1;
+<code>debug</code> moves recency to 0.45
+(<code>src/remembra/retrieval/ranking.py:26-100</code>). An intent
+router picks the mode from rules and optionally an LLM. Status memories
+keep only the newest value per <code>status_key</code>, and results
+above a similarity threshold to a higher-ranked result are dropped as
+near-duplicates.</p>
+<p>Failure modes the code anticipates: an embedding outage degrades
+recall to keyword and graph and says so
+(<code>degraded='keyword_only'</code>); a reranker threshold can delete
+candidates below an absolute logit. One it does not address is the
+cross-project default: an unrestricted key that omits
+<code>project_id</code> gets every project's memories, and the handoff
+queries drop their project clause the same way when none is resolved
+(<code>src/remembra/services/agent_session.py:309-313</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes happen on the hot path through the API, the SDKs and MCP
+<code>store_memory</code>, through <code>ingest_conversation</code>,
+which extracts from a transcript and calls <code>store_fact</code>, and
+through relay closes. The extractor returns atomic facts; the grounding
+check is a deterministic content-word overlap, optionally overridden by
+the Jev classifier in enforce mode. Consolidation never rewrites an
+existing memory: the old one is marked, the new fact is stored verbatim
+as extracted.</p>
+<p>Corrections from a caller go through two different verbs.
+<code>supersede</code> keeps history. <code>update</code>, which the MCP
+<code>update_memory</code> tool calls through <code>PATCH</code>,
+overwrites content in place and re-links entities, and the tool's
+docstring steers status values to <code>store_status</code> instead
+because that keeps history. Forget is a hard delete and leaves nothing
+keyed on the value, so the same sentence stored again is extracted and
+stored again. That is why <code>tombstone</code> is withheld.</p>
+<p>The sleep-time worker's dedup pass is the one place written to
+rewrite and delete. <code>_dedup_pass</code> embeds each recent ordinary
+note, searches for neighbours, and on <code>UPDATE</code> would
+overwrite the kept memory's content and hard-delete the other, on
+<code>NOOP</code> delete the current one
+(<code>src/remembra/services/sleep_time.py:315-400</code>,
+<code>:638-666</code>). Three things stop it. The search call passes
+<code>embedding=</code> and <code>threshold=</code> to a method whose
+parameters are <code>query_vector</code> and
+<code>score_threshold</code>, so every call raises
+<code>TypeError</code>. The handler logs at debug and moves on. And
+<code>ConsolidationAction.UPDATE</code> is a legacy label the
+consolidator normalises to <code>SUPERSEDE</code>
+(<code>src/remembra/extraction/consolidator.py:78-92</code>). Had the
+call worked, it also passed no <code>project_id</code>, so it would have
+merged across projects.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The default store blocks on one extraction call, one embedding per
+fact and a consolidation call per fact with candidates, within
+<code>store_time_budget_seconds</code>. A memory is retrievable as soon
+as the call returns, by keyword at once and by vector unless the
+embedding was deferred to the retry queue. With
+<code>async_enrichment</code> the call returns after one embed of the
+source record, and facts appear when the background task finishes. Relay
+handoffs cost one embedding and no LLM call. Entity resolution runs
+after the response. The sleep-time worker reads at most 500 memories per
+user changed in the last 24 hours or since its last run, not the whole
+store. On the read path the relay brief is capped near 6,000 characters
+and recall context at 4,000 tokens.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP server exposes <code>store_memory</code>,
+<code>recall_memories</code>, <code>forget_memories</code>,
+<code>update_memory</code>, <code>list_memories</code>,
+<code>timeline</code>, <code>relationships_at</code>,
+<code>search_entities</code>, <code>store_status</code>,
+<code>session_brief</code>, <code>close_session</code>, an inbox, spaces
+and the Crew tools (<code>src/remembra/mcp/server.py:302-2235</code>).
+Every tool calls the REST API with the configured key, so the server's
+scoping and audit apply. Read results are wrapped in an untrusted-data
+block that stored content cannot close
+(<code>src/remembra/mcp/server.py:223-231</code>).</p>
+<p>Relay is the automatic half. Hooks for Claude Code, Codex, Gemini
+CLI, Qwen Code and Kimi Code run <code>remembra-relay brief</code> at
+session start and <code>remembra-relay close</code> at the end
+(<code>src/remembra/relay/adapters/</code>). The close reads branch,
+commits, changed files and unpushed commits from git and, for Claude
+Code and Codex, test runs from the transcript. It sends facts marked
+<code>relay-cli:git+transcript</code>; a close through MCP
+<code>close_session</code> is recorded as <code>agent-declared</code>.
+The brief checks the agent's summary against the facts and says when it
+contradicts them. A project is identified by its git remote, so one
+repository on two machines shares a trail.</p>
+<p>Adapting this to another agent means writing an adapter in
+<code>src/remembra/relay/adapters/</code> or calling the two MCP tools;
+the memory API is an ordinary REST service.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance.</strong> The source record and
+<code>source_id</code> receipt make every derived fact traceable to the
+exact text it came from, the strongest provenance mechanism in the tree.
+Handoffs record whether facts came from git, from git and the
+transcript, or from the agent's declaration, and whether the agent's
+identity was proven by a scoped key.</p>
+<p><strong>Injection.</strong> Content passes a sanitizer that scores
+it; at brief time <code>assess_text</code> takes the lower of the stored
+and current score, and a handoff below the threshold has its text
+replaced with a withheld note naming the id
+(<code>src/remembra/relay/handoff.py:703-730</code>,
+<code>:1600-1638</code>). That is a filter on a float computed per read,
+not a stored state.</p>
+<p><strong>Grounding verdicts.</strong> Under
+<code>grounding_action='flag'</code> a fact failing the overlap check is
+stored with <code>verified=false</code>. <code>git grep</code> finds no
+reader of the key in <code>src</code>. The
+<code>fact_verification_threshold</code> description says
+below-threshold facts <em>"are stored but flagged verified=false"</em>,
+which is true only in the non-default mode; by default they are
+dropped.</p>
+<p><strong>Conflicts.</strong> Each consolidation supersession writes a
+<code>memory_conflicts</code> row, <code>resolved</code> under
+<code>update</code> and <code>version</code>, <code>open</code> under
+<code>flag</code>. Resolving or dismissing one updates the conflict
+record and changes neither memory
+(<code>src/remembra/extraction/conflicts.py:236-288</code>). Nothing
+waits on the queue and no MCP tool names it, so it is a log a person can
+read, not a review gate. That is why <code>human_review</code> is
+withheld.</p>
+<p><strong>Audit.</strong> <code>audit_log</code> is append-only in
+practice: one insert path, no <code>UPDATE</code> or <code>DELETE</code>
+in <code>src</code>, and account erasure deletes only the erased
+account's rows before writing a receipt
+(<code>src/remembra/storage/database.py:3563-3593</code>,
+<code>src/remembra/account/erasure.py:253-262</code>,
+<code>:605-620</code>). Coverage is the generic memory and ingest routes
+plus decay deletions. Relay closes, status upserts and checkpoints write
+no row. Rows hold ids, not content.</p>
+<p><strong>Consistency.</strong> SQLite is the source of truth and is
+written first in one transaction with the FTS entry and any
+pending-embedding job; the vector follows. Every recall candidate is
+re-read from SQLite, so a stale Qdrant payload cannot leak an expired or
+superseded row. Entity creation runs under a per-user
+<code>asyncio.Lock</code>, which holds within one process.</p>
+<p><strong>Deletion.</strong> Forget removes the Qdrant point, the FTS
+row and the SQLite row, and an entity forget removes entities no
+remaining memory mentions. Forgetting one derived fact leaves its source
+record, which recall never returns and which holds the same text.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is large: 314 test files, many driving the HTTP app through
+a security harness or <code>MemoryService</code> through
+<code>tests/_ret_harness.py</code>, which uses a temp SQLite file and
+Qdrant's in-process engine with a controllable fake embedder. The
+retrieval cases there are written to fail. The expired-memory regression
+asserts the semantic result equals exactly the live memory, then checks
+FTS, raw vector search and filter-only recall separately
+(<code>tests/test_ret_scoping_filters.py:47-73</code>). The project case
+asserts the result is exactly the same-project memory while a same-named
+entity exists in another project (<code>:143-163</code>). The
+filter-only case asserts a retired memory is absent and its live
+replacement returned (<code>:303-320</code>). These earn
+<code>negative_eval</code>.</p>
+<p>Two tests pass without exercising what they name.
+<code>tests/test_supersession_recall.py</code> tests
+<code>filter_active_memory_ids</code>, which no product path calls. The
+sleep-time suite's <code>FakeQdrant.search(self, **_)</code> accepts any
+keyword, so the dedup tests pass on a call the real store rejects
+(<code>tests/test_sleep_time_retention.py:52-53</code>,
+<code>:269-283</code>). The real-store case at <code>:300-345</code>
+gives three rows one embedding and a consolidator that answers
+<code>UPDATE</code>, then asserts every point survives the default run.
+That assertion holds because the dedup search raises.</p>
+<p>The LoCoMo runner is committed with one result file from 7 March
+2026: a single conversation, 199 questions, 76.38% overall, every
+non-adversarial question correct and every adversarial one wrong. The
+overall figure recomputes from the per-question rows (152 correct). The
+first row's prediction is raw recall context naming 2 October 2023
+against a gold answer of 7 May 2023, scored correct. README line 271 and
+<code>docs/benchmarks.md</code> call the run invalid, and commit
+<code>a19fb29f</code> fixed the verdict parser on 16 July 2026. The
+fidelity benchmark's table cites a run whose per-item results were
+removed with the corpus they came from. No paper accompanies the
+project; the only arXiv reference is to Mem0's paper in
+<code>ARCHITECTURE.md</code>.</p>
+<p>Missing tests worth having: a forgotten memory absent from recall, a
+<code>verified=false</code> fact's treatment, a cross-project
+relationship as-of query, and the sleep-time pass against the real
+<code>QdrantStore</code>.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>One eligibility function for every retrieval arm, reading
+the row of record.</strong> Pushing filters into the vector store is an
+optimisation; the decision is made once, from SQLite, for semantic,
+keyword, graph and recency candidates alike.</li>
+<li><strong>A journal for the store, rolled back as a unit.</strong>
+Record every row created and every supersession made during one request,
+and undo them in reverse on failure, so a half-finished store leaves
+neither orphan vectors nor retired memories without a successor.</li>
+<li><strong>Keep the verbatim source beside every derived fact.</strong>
+A receipt id on each fact turns extraction drift from invisible into
+checkable.</li>
+<li><strong>Build the handoff from evidence, and grade the agent's
+summary against it.</strong> Git and the transcript say what was
+committed and pushed; the summary is shown as unverified or
+contradicted, never as the record.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Test fakes that accept any keyword.</strong>
+<code>search(self, **_)</code> cannot catch a renamed parameter; a fake
+should share the real signature, or one test should run the path against
+the real adapter.</li>
+<li><strong>A broad except at debug level around the body of a
+background loop.</strong> A pass that fails on every item and reports
+zero work looks the same as a pass with nothing to do.</li>
+<li><strong>A trust field with no reader.</strong> A
+<code>verified=false</code> that nothing filters or labels reads as a
+safeguard in the docs and changes no answer.</li>
+<li><strong>Calling write time "valid from".</strong> If no input can
+carry a different date, the second clock is the first one renamed.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Remembra suits a team that wants a Mem0-shaped service it can host,
+with stronger guarantees on the paths that run on every request: scoped
+recall, supersession with history, and provenance to the source text.
+Relay is the better-built product and the reason to look; a team running
+several coding agents across machines gets git-grounded handoffs without
+adopting the memory API's extraction pipeline at all. Walk away if
+corrections must be reviewable before they take effect, or if the
+background consolidation is part of why you would adopt it. Operators
+carry an LLM bill on every memory store outside Relay, two stores to
+keep in sync, and a 143,000-line codebase maintained by one author.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether the hosted service runs with <code>sleep_time_enabled</code>
+and what its logs show at debug level for
+<code>dedup_memory_failed</code>.</li>
+<li>How often the extractor returns relationship dates on real input,
+and how many current edges a stale <code>WORKS_AT</code> leaves
+behind.</li>
+<li>Whether any deployment sets <code>grounding_action=flag</code>, and
+what a reader of the dashboard sees for an unverified fact.</li>
+<li>The recall quality of the fixed LoCoMo runner, which has not been
+run.</li>
+<li>How Crew mode's hash-chained event log relates to memory correction,
+if at all; it was read only far enough to place it outside memory.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong>
+<code>src/remembra/storage/database.py</code>,
+<code>src/remembra/storage/qdrant.py</code>,
+<code>src/remembra/models/memory.py</code>,
+<code>src/remembra/extraction/conflicts.py</code></li>
+<li><strong>Write path:</strong>
+<code>src/remembra/services/memory.py</code> (<code>store</code>,
+<code>_extract_and_store_facts</code>, <code>_store_single_fact</code>,
+<code>_decide</code>),
+<code>src/remembra/extraction/consolidator.py</code>,
+<code>src/remembra/extraction/entities.py</code></li>
+<li><strong>Retrieval:</strong>
+<code>src/remembra/services/memory.py</code> (<code>recall</code>,
+<code>_row_eligible</code>, <code>_semantic_candidates</code>),
+<code>src/remembra/retrieval/ranking.py</code>,
+<code>src/remembra/retrieval/graph.py</code>,
+<code>src/remembra/retrieval/intent.py</code></li>
+<li><strong>Context and relay:</strong>
+<code>src/remembra/services/relay.py</code>,
+<code>src/remembra/services/agent_session.py</code>,
+<code>src/remembra/relay/handoff.py</code></li>
+<li><strong>Background:</strong>
+<code>src/remembra/services/sleep_time.py</code>,
+<code>src/remembra/services/reprocess.py</code>,
+<code>src/remembra/storage/pending_embeddings.py</code></li>
+<li><strong>API and MCP:</strong>
+<code>src/remembra/api/v1/memories.py</code>,
+<code>src/remembra/api/v1/entities.py</code>,
+<code>src/remembra/mcp/server.py</code>,
+<code>src/remembra/auth/middleware.py</code>,
+<code>src/remembra/security/audit.py</code></li>
+<li><strong>Tests and benchmarks:</strong>
+<code>tests/_ret_harness.py</code>,
+<code>tests/test_ret_scoping_filters.py</code>,
+<code>tests/test_sleep_time_retention.py</code>,
+<code>tests/test_supersession_recall.py</code>,
+<code>tests/test_extraction_hardening.py</code>,
+<code>benchmarks/locomo_runner.py</code>,
+<code>benchmarks/results_20260307_040346.json</code></li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the repository root at the pinned commit.</p>
+<pre class="sh"><code># tombstone withheld: no value-keyed rejection record outside Crew&#39;s event-log pruning
+git grep -n -i -E &#39;tombstone&#39; -- src &#39;:!src/remembra/crew&#39;
+# returns only a comment in src/remembra/account/erasure.py:437
+
+# verified has a writer and no reader
+git grep -n -E &quot;\[.verified.\]|get\(.verified.\)&quot; -- src
+# returns src/remembra/services/memory.py:1433 (the writer) and an unrelated OAuth email check
+
+# relationship contradiction helpers have no caller
+git grep -n -E &#39;supersede_relationship|find_contradicting_relationships&#39; -- src
+# returns only the two definitions in src/remembra/storage/database.py
+
+# the function tests/test_supersession_recall.py exercises has no product caller
+git grep -n -E &#39;filter_active_memory_ids&#39; -- src
+# returns only the definition at src/remembra/storage/database.py:1594
+
+# nothing rewrites or deletes an audit row
+git grep -n -i -E &#39;(DELETE FROM|UPDATE) audit_log&#39; -- src
+# returns nothing; erasure deletes the account&#39;s rows through a TableRule
+
+# memory valid_from is the store clock
+git grep -n -E &#39;valid_from=&#39; -- src/remembra/services/memory.py
+# returns valid_from=now at :1077 and :1487, and two readers
+
+# the three qdrant.search callers; sleep_time passes embedding= and threshold=
+git grep -n -E &#39;qdrant\.search\(&#39; -- src
+
+# no conflict verb on the MCP surface
+git grep -n -i -E &#39;conflict&#39; -- src/remembra/mcp/server.py
+# returns nothing
+
+# relay close and agent-session routes write no audit row
+git grep -n -i -E &#39;audit&#39; -- src/remembra/services/relay.py src/remembra/api/v1/agent_session.py
+# returns nothing</code></pre>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/remembra-ai/remembra/commit/49ae5f546ef9488e744b12b36e0f6a8d3db6ed69"><code class="commit-id" title="49ae5f546ef9488e744b12b36e0f6a8d3db6ed69">49ae5f54…</code></a>
+— first reading, at the head of <code>main</code>, a commit dated 11
+October 2026. MIT with no rider. Screened from a full clone before
+reading: two auto-run surfaces (<code>hooks/</code> holding inert
+pre-commit and pre-push payloads, and <code>server.json</code>, an MCP
+registry manifest launching a PyPI package through <code>uvx</code>),
+three build-time execution points
+(<code>sdk/typescript/package.json</code> <code>prepublishOnly</code>,
+two <code>conftest.py</code> files), <code>uv.lock</code> inside the
+seven-day cooldown, and six unpinned surfaces. Nothing was installed,
+built or run; the LoCoMo summary was recomputed from its committed
+per-question rows.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>
