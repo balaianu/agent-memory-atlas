@@ -4402,15 +4402,15 @@ started. MIT</li>
 <li><a
 href="https://github.com/aureliocpr-ctrl/verimem">aureliocpr-ctrl/verimem</a>
 at <a
-href="https://github.com/aureliocpr-ctrl/verimem/commit/068baf45bcbe3c578ad530ed8c02287de3c60b77"><code class="commit-id" title="068baf45bcbe3c578ad530ed8c02287de3c60b77">068baf45…</code></a>
-— read only; five auto-run surfaces, two build-time execution points,
-two unpinned dependency surfaces and two dependency files inside the
-seven-day cooldown. <code>CLAUDE.md</code> is addressed to a reading
-agent and was recorded as data. Nothing was installed, built or run, no
-judge model was fetched, and the benchmark figures in the report are the
-project's own measurements rather than reproductions. Dual-licensed
-AGPL-3.0 with a paid commercial option, and the licensing file carries
-no rider restricting analysis</li>
+href="https://github.com/aureliocpr-ctrl/verimem/commit/2635d28d6bba4674760804b9e7ed36966bab4ae5"><code class="commit-id" title="2635d28d6bba4674760804b9e7ed36966bab4ae5">2635d28d…</code></a>
+— read only; five auto-run surfaces, three build-time execution points
+and two unpinned dependency surfaces, nothing inside the seven-day
+cooldown. <code>CLAUDE.md</code> is addressed to a reading agent and was
+recorded as data. Nothing was installed, built or run, no judge model
+was fetched, and the benchmark figures in the report are the project's
+own measurements rather than reproductions. Dual-licensed AGPL-3.0 with
+a paid commercial option, and the licensing file carries no rider
+restricting analysis</li>
 <li><a
 href="https://github.com/thedatasense/anatid">thedatasense/anatid</a> at
 <a
@@ -16801,6 +16801,32 @@ tests; there were 101 vitest cases and 29 benchmarks. And it withheld
 a populated preference stays out of a <code>fact</code> listing beside a
 positive control. The first two rested on the threshold function and the
 version table rather than on their callers.</li>
+<li><strong>Four published claims about <a
+href="../systems/verimem/">Verimem</a> were wrong at <a
+href="https://github.com/aureliocpr-ctrl/verimem/commit/068baf45bcbe3c578ad530ed8c02287de3c60b77"><code class="commit-id" title="068baf45bcbe3c578ad530ed8c02287de3c60b77">068baf45…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+withheld <code>bitemporal</code>, saying <code>search_facts</code> took
+a single <code>as_of</code> over record time. The clause was
+<code>COALESCE(asserted_at, created_at) &lt;= ?</code>
+(<code>verimem/semantic.py:5444</code>), the schema documented
+<code>asserted_at</code> as the event time distinct from
+<code>created_at</code> (<code>:764-773</code>), and
+<code>recall_as_of</code> (<code>verimem/temporal_context.py:254</code>)
+composed it with supersession, so the mark was earned. It said no
+committed must-not-retrieve case existed;
+<code>tests/test_recall_include_orphaned_coldpath.py:28-41</code> stored
+a visible and a quarantined fact and asserted only the visible one came
+back, then that <code>include_orphaned=True</code> returned the other.
+It said the scope helpers were imported by <code>verimem/cli.py</code>;
+the MCP fact tools imported them too
+(<code>verimem/mcp_server.py:13011</code>, <code>:14446</code>), with
+the scope taken from optional tool arguments. And its anchors for recall
+and the restore (<code>verimem/semantic.py:4016-4026</code>,
+<code>:5695-5701</code>) and its 130,388-line count came from the first
+reading's commit; at this pin those functions sat at <code>:4040</code>
+and <code>:5719-5725</code>, and the package held 126,812 lines. The
+first rested on the parameter name rather than the clause, the second on
+a search that stopped at the negative-bundle suites.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

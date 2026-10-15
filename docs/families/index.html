@@ -9983,24 +9983,25 @@ and appends a receipt, and nothing on the ingest path reads those
 receipts back, so an erased value can return as a new belief.</p>
 <p><strong><a href="../systems/verimem/">Verimem</a> argues that a
 tamper-evident chain must not remember what it deleted.</strong> An
-AGPL-3.0 Python memory at version 0.7.7 — 130,388 lines in the core
-package with 1,694 test files on SQLite — where every write passes an
-admission gate and "a claim the source <strong>openly
-contradicts</strong> does not come back as truth". Its mutation audit
-appends one row per destructive operation "INSIDE THE SAME TRANSACTION
-as the mutation itself", hash-chained, and <code>record_mutation</code>
-"never swallows" so a failure to record propagates instead of leaving an
-unrecorded deletion. The content rule is the part to read: the row
-carries the action and never the material, because "storing WHAT was
-deleted — even as a hash, brute-forceable on short text — inside an
-immutable chain makes GDPR Art.17 erasure a logical contradiction", so
-the chain proves "THAT/WHO/WHEN/WHICH-RECORD, not what the record said".
-Its status vocabulary withholds rather than ranks — the BM25 clause is
+AGPL-3.0 Python memory at version 0.7.7.dev0 — 129,569 lines in the core
+package with 1,766 test files on SQLite — where every write passes an
+admission gate. Its mutation audit appends one row per destructive
+operation "INSIDE THE SAME TRANSACTION as the mutation itself",
+hash-chained, and <code>record_mutation</code> "never swallows" so a
+failure to record propagates instead of leaving an unrecorded deletion.
+The content rule is the part to read: the row carries the action and
+never the material, because "storing WHAT was deleted — even as a hash,
+brute-forceable on short text — inside an immutable chain makes GDPR
+Art.17 erasure a logical contradiction", so the chain proves
+"THAT/WHO/WHEN/WHICH-RECORD, not what the record said". Its status
+vocabulary withholds rather than ranks — the BM25 clause is
 <code>status NOT IN ('orphaned', 'quarantined', 'user_belief')</code>
-and every route back is a keyword a caller had to type. Scope is where
-it stops: multi-tenancy is a topic-string prefix whose <code>LIKE</code>
-narrow is assembled in the CLI rather than inside recall, so isolation
-holds on one path and depends on the caller everywhere else.</p>
+and every route back is a keyword a caller had to type. It keeps an
+event time beside the record time and reads both. The gap is the agent's
+own surface: two MCP write tools record no writer label, so the rule
+that a writer cannot release its own quarantine misses them, and scope
+is an argument the agent may omit. Four marks: trust state, bitemporal,
+mutation audit, negative eval.</p>
 <p><strong><a href="../systems/anatid/">anatid</a> turns the
 scope-predicate problem this page keeps reporting into a build
 failure.</strong> An MIT Python memory at version 0.4.3 — 36,813 lines

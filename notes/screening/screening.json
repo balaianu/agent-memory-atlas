@@ -46375,12 +46375,11 @@
     "verimem": {
       "counts": {
         "AGENT": 1,
-        "EXEC": 2,
+        "EXEC": 3,
         "FLOAT": 2,
-        "FRESH": 2,
         "RUNS": 5
       },
-      "files_scanned": 13,
+      "files_scanned": 14,
       "findings": [
         {
           "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 2 entr(ies): marketplace.json, plugin.json",
@@ -46403,19 +46402,9 @@
           "path": "hooks/"
         },
         {
-          "detail": "MCP server manifest; declares a start command",
+          "detail": "MCP server manifest; declares a start command; launches a package fetched at run time (uvx)",
           "kind": "RUNS",
           "path": "server.json"
-        },
-        {
-          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "pyproject.toml"
-        },
-        {
-          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "sdk/typescript/package.json"
         },
         {
           "detail": "check the default target before running bare `make`",
@@ -46425,11 +46414,16 @@
         {
           "detail": "executes on pytest collection, before any test runs",
           "kind": "EXEC",
+          "path": "accettazione/conftest.py"
+        },
+        {
+          "detail": "executes on pytest collection, before any test runs",
+          "kind": "EXEC",
           "path": "tests/conftest.py"
         }
       ],
-      "revision": "068baf45bcbe3c578ad530ed8c02287de3c60b77",
-      "screened_at": "2026-09-19T00:00:00+00:00",
+      "revision": "2635d28d6bba4674760804b9e7ed36966bab4ae5",
+      "screened_at": "2026-10-15T06:00:51+00:00",
       "slug": "verimem",
       "source": "reused-clone",
       "status": "screened",

@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="An AGPL Python memory whose writes
-pass an admission gate, whose recall SQL drops three stored statuses,
-and whose hash-chained mutation log is deliberately action-only so that
-erasure and immutability are not in contradiction.">
+pass an admission gate, whose recall drops three stored statuses, and
+whose mutation chain records deletions but never content.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Verimem — Agent Memory Atlas">
     <meta property="og:description" content="An AGPL Python memory whose
-writes pass an admission gate, whose recall SQL drops three stored
-statuses, and whose hash-chained mutation log is deliberately
-action-only so that erasure and immutability are not in contradiction.">
+writes pass an admission gate, whose recall drops three stored statuses,
+and whose mutation chain records deletions but never content.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Verimem — Agent Memory Atlas">
     <meta name="twitter:description" content="An AGPL Python memory
-whose writes pass an admission gate, whose recall SQL drops three stored
-statuses, and whose hash-chained mutation log is deliberately
-action-only so that erasure and immutability are not in contradiction.">
+whose writes pass an admission gate, whose recall drops three stored
+statuses, and whose mutation chain records deletions but never
+content.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Verimem — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +42,7 @@ action-only so that erasure and immutability are not in contradiction.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Verimem",
-      "description": "An AGPL Python memory whose writes pass an admission gate, whose recall SQL drops three stored statuses, and whose hash-chained mutation log is deliberately action-only so that erasure and immutability are not in contradiction.",
+      "description": "An AGPL Python memory whose writes pass an admission gate, whose recall drops three stored statuses, and whose mutation chain records deletions but never content.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,23 +101,22 @@ action-only so that erasure and immutability are not in contradiction.">
 deleted and never what it said</p>
           <h1>Verimem</h1>
           <p class="document-deck">An AGPL Python memory whose writes
-pass an admission gate, whose recall SQL drops three stored statuses,
-and whose hash-chained mutation log is deliberately action-only so that
-erasure and immutability are not in contradiction.</p>
+pass an admission gate, whose recall drops three stored statuses, and
+whose mutation chain records deletions but never content.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/aureliocpr-ctrl/verimem">
               <span>Source</span>
               <strong>aureliocpr-ctrl/verimem</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/aureliocpr-ctrl/verimem/commit/068baf45bcbe3c578ad530ed8c02287de3c60b77" title="068baf45bcbe3c578ad530ed8c02287de3c60b77">
+            <a class="meta-pill revision-pill" href="https://github.com/aureliocpr-ctrl/verimem/commit/2635d28d6bba4674760804b9e7ed36966bab4ae5" title="2635d28d6bba4674760804b9e7ed36966bab4ae5">
               <span>Analyzed revision</span>
-              <code>068baf45…</code>
+              <code>2635d28d…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/aureliocpr-ctrl--verimem" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +124,22 @@ erasure and immutability are not in contradiction.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>AGPL-3.0,
+with a paid commercial licence offered; 0.3.x and earlier were released
+under MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>129,569
+lines of Python in 396 modules under verimem/, beside 1,766 test files
+and eight acceptance rows</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>4,705
+commits on main under four author names, almost all one developer's, 4
+July to 30 September 2026; version 0.7.7.dev0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>9,024
+test functions in 1,766 files under tests/, plus acceptance rows run
+against the installed wheel in CI; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,10 +155,18 @@ erasure and immutability are not in contradiction.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Verimem is "<strong>[v]erified memory for AI agents</strong>" —
-AGPL-3.0 with a commercial option, Python, version 0.7.7, 130,388 lines
-in the core package with 1,694 test files, on SQLite. Its promise is a
-conjunction:</p>
+<p>Verimem is a SQLite memory for agents whose writes pass an admission
+gate with a local judge model, whose recall SQL withholds three stored
+statuses, and whose hash-chained mutation log refuses to remember what
+it deleted. It also keeps an event time beside the record time and reads
+both. The weak side is the agent's own tool surface: two MCP write doors
+mint facts with no writer label, so the rule that a writer cannot
+release its own quarantine does not reach them, and scope is an argument
+the agent may leave out.</p>
+<p>It describes itself as "<strong>[v]erified memory for AI
+agents</strong>", in Python, dual-licensed AGPL-3.0 with a paid
+commercial option, with versions 0.3.x and earlier released under MIT.
+Its promise is a conjunction:</p>
 <blockquote>
 <p>"Every write passes an admission gate, every read carries provenance,
 and a claim the source <strong>openly contradicts</strong> does not come
@@ -171,89 +191,89 @@ decisions are attributed to "two independent adversarial reviews
 (GLM-5.2 + deepseek, convergent findings)", with the finding ids each
 one answers.</p>
 <p><strong>The status vocabulary withholds rather than ranks.</strong>
-The gate classifies a write into a closed set —
-<code>user_belief</code>, <code>quarantined</code>,
-<code>orphaned</code>, <code>legacy_unverified</code>,
-<code>provisional</code>, <code>model_claim</code> — and the ranking SQL
-carries
+The store accepts a closed set — <code>verified</code>,
+<code>model_claim</code>, <code>provisional</code>,
+<code>legacy_unverified</code>, <code>orphaned</code>,
+<code>quarantined</code>, <code>user_belief</code> — and the curated
+view carries
 <code>status NOT IN ('orphaned', 'quarantined', 'user_belief')</code>.
-Every route back to the withheld material is an explicitly named opt-in
-on <code>recall</code>: <code>include_superseded</code>,
+Every route back to the withheld material is a named opt-in on
+<code>recall</code>: <code>include_superseded</code>,
 <code>include_orphaned</code>, <code>include_beliefs</code>,
-<code>min_status</code>. The atlas has read two systems this week whose
-epistemic vocabulary only sorted the results; this one drops them.</p>
-<p><strong>The route back out of quarantine is one the agent holds,
-which is why no review mark follows.</strong> The re-admission machinery
-is careful and it is worth describing on its own terms:
-<code>restore_fact</code> flips a quarantined fact back to a named
-status with a reason and reports whether a quarantined row actually
-existed, it refuses orphaned and superseded rows, and
-<code>verimem facts requalify-quarantined</code> reports what it would
-re-admit unless <code>--apply</code> is passed. The queue behind it is
-measured deliberately, under a comment that names the failure this atlas
-keeps finding elsewhere — <em>"A queue nobody measures is a queue nobody
-drains, and 'held for review' quietly turns into 'silently
-dropped'"</em> — and the module publishes its own shortfall under a
-DECLARED LIMIT heading.</p>
-<p>None of that is an actor check. <code>hippo_quarantine_restore</code>
-is a declared MCP tool (<code>verimem/mcp_server.py:3615-3635</code>,
-handled at <code>:15046-15089</code>) whose description is <em>"Rescue a
-wrongly-blocked fact: un-quarantine <code>fact_id</code> back into live
-recall"</em>, so the producing agent can lift its own quarantine. The
-guards it does apply are content guards, not actor guards: a superseded
-fact is refused, and the proposition and topic are re-screened for
-prompt injection so an exfiltration payload stays quarantined even when
-its id is passed — good, and orthogonal to who is asking. On the CLI
-side, <code>--apply</code> is the caller's boolean and
-<code>--principal</code> defaults to <code>$VERIMEM_ACTOR</code>, an
-environment string nothing verifies. Two marks, then:
-<code>trust_state</code> and <code>audit_log</code>.</p>
+<code>min_status</code>. The session-start banner and the proactive
+briefing apply the same three exclusions before they put recent facts
+into a prompt, and committed tests assert the exclusion on a populated
+store with a positive control beside it.</p>
+<p><strong>Time has two axes.</strong> The schema documents
+<code>asserted_at</code> as the event time, when the fact was said or
+was true, and sets it apart from <code>created_at</code>, the
+transaction time at which the store learned it. Callers supply it, and
+NULL means unknown rather than the write clock.
+<code>recall_as_of</code> returns what was asserted by an instant and
+not yet superseded by it, which answers "what did we believe then about
+then".</p>
+<p><strong>The route out of quarantine checks a label, and two write
+doors carry none.</strong>
+<code>SemanticMemory.libera_dalla_quarantena</code> refuses when the
+requesting principal equals the stored <code>writer_principal</code>,
+and the MCP server stamps <code>mcp:unbound</code> on its main writes
+and on every restore request, so a fact written through
+<code>hippo_remember</code> cannot be released through
+<code>hippo_quarantine_restore</code>. The code comments credit the rule
+to this atlas ("Atlas, 29/09"). The refusal runs only when both labels
+are non-empty (<code>verimem/semantic.py:5826</code>).
+<code>hippo_transcript_promote</code> and
+<code>hippo_ingest_conversation</code> build their facts without a
+writer label, both can store a fact as <code>quarantined</code>, and the
+restore tool then releases it to the agent that wrote it. The README
+states the other limit itself: "These are labels, not authenticated
+identities." Four marks: <code>trust_state</code>,
+<code>bitemporal</code>, <code>audit_log</code>,
+<code>negative_eval</code>.</p>
 <p><strong>The project corrects its own documentation in
-public.</strong> The README's first box used to say the gate was off
-until a warmup command was run. It now carries the correction, the
+public.</strong> The README's first box carries a correction, the
 version the old claim was true of, the function that was reachable only
 from <code>warmup</code>, the test that "records the measurement and the
 fix", and the admission that matters: "<em>The fix shipped; the text did
 not follow it. Corrected here.</em>"</p>
-<p><strong>The gap is scope.</strong> Multi-tenancy is "a ZERO-SCHEMA
-topic prefix" —
-<code>user:&lt;u&gt;/agent:&lt;a&gt;/run:&lt;r&gt;/&lt;base-topic&gt;</code>
-— and the functions that turn it into a
-<code>topic LIKE '&lt;prefix&gt;%'</code> narrow are imported by
-<code>verimem/cli.py</code>, not applied inside the store. The isolation
-is real on the command-line path and is the caller's responsibility
-elsewhere, which is why the mark is withheld.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A <strong>status</strong> is a stored verdict, and three of them keep
-a fact out of recall.</p>
-<p>A <strong>widening</strong> is a named keyword you had to type.</p>
+<p>A <strong>fact</strong> is a proposition with a status, and the
+status decides whether an agent is handed it.</p>
+<p>A <strong>status</strong> is a stored verdict. <code>orphaned</code>,
+<code>quarantined</code> and <code>user_belief</code> keep a fact out of
+recall and out of both context assemblers.</p>
+<p>A <strong>widening</strong> is a named keyword the caller had to
+type.</p>
+<p>A <strong>quarantine</strong> is reversible, and only quarantine is:
+a restore refuses an orphaned or superseded row.</p>
+<p>A <strong>release</strong> is refused to the principal the store
+recorded as the writer, and granted when the store recorded none.</p>
+<p>An <strong>event time</strong> is when the fact was said or true; the
+<strong>record time</strong> is when the store learned it; a
+<strong>supersession</strong> retires a fact in record time.</p>
 <p>An <strong>audit row</strong> proves that a deletion happened and
 cannot tell you what was deleted.</p>
-<p>A <strong>quarantine</strong> is reversible, and only quarantine
-is.</p>
-<p>A <strong>declared limit</strong> is a gap the module publishes about
-itself.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — writes pass an admission gate that assigns a status from a closed vocabulary, the ranking SQL drops three of those statuses unless a named keyword opts them back in, and every destructive operation appends an action-only row to a hash-chained table in the same transaction</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: writes pass an admission gate that assigns a status from a closed vocabulary, the ranking SQL drops three of those statuses unless a named keyword opts them back in, and every destructive operation appends an action-only row to a hash-chained table in the same transaction
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — writes pass an admission gate that assigns a status from a closed vocabulary, recall drops three statuses unless a named keyword opts them back in, a release from quarantine is refused only when the writer label matches, and every destructive operation appends an action-only row to a hash-chained table in the same transaction</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: writes pass an admission gate that assigns a status from a closed vocabulary, recall drops three statuses unless a named keyword opts them back in, a release from quarantine is refused only when the writer label matches, and every destructive operation appends an action-only row to a hash-chained table in the same transaction
 flowchart TB
-    W[&quot;remember --source&quot;] --&gt; GATE{&quot;anti_confab_gate:&lt;br/&gt;off, fast or full&quot;}
-    GATE --&gt;|&quot;fast: L1 substring detectors&quot;| J[&quot;local judge model,&lt;br/&gt;711 MB, fetched once, then ~0.2 s offline&quot;]
-    GATE --&gt;|&quot;full: + validate_claim over semantic memory&quot;| J
-    J --&gt; ST[&quot;status assigned from a closed vocabulary:&lt;br/&gt;model_claim · user_belief · quarantined ·&lt;br/&gt;orphaned · legacy_unverified · provisional&quot;]
-    ST --&gt; DB[(&quot;SQLite facts store&quot;)]
-    DB --&gt; RANK[&quot;BM25 / semantic recall&quot;]
-    RANK --&gt; FILTER[&quot;status NOT IN (&#39;orphaned&#39;, &#39;quarantined&#39;, &#39;user_belief&#39;)&quot;]
+    W[&quot;hippo_remember · SDK add · gateway&quot;] --&gt; GATE{&quot;admission gate:&lt;br/&gt;off, fast or full,&lt;br/&gt;then the local judge&quot;}
+    T[&quot;hippo_transcript_promote ·&lt;br/&gt;hippo_ingest_conversation&quot;] --&gt; GATE2{&quot;judged against&lt;br/&gt;the turn or the dialogue&quot;}
+    GATE --&gt; ST[&quot;status from a closed vocabulary&lt;br/&gt;writer_principal stamped,&lt;br/&gt;e.g. mcp:unbound&quot;]
+    GATE2 --&gt; ST2[&quot;status may be quarantined&lt;br/&gt;writer_principal left NULL&quot;]
+    ST --&gt; DB[(&quot;SQLite facts:&lt;br/&gt;asserted_at = event time&lt;br/&gt;created_at = record time&lt;br/&gt;valid_until · superseded_at&quot;)]
+    ST2 --&gt; DB
+    DB --&gt; RANK[&quot;BM25 / semantic recall,&lt;br/&gt;session-start banner, briefing&quot;]
+    RANK --&gt; FILTER[&quot;status NOT IN&lt;br/&gt;(&#39;orphaned&#39;, &#39;quarantined&#39;, &#39;user_belief&#39;)&quot;]
     FILTER --&gt; OUT[&quot;what the agent is handed&quot;]
-    FILTER -.-&gt;|&quot;every way back in is a named keyword:&lt;br/&gt;include_superseded · include_orphaned ·&lt;br/&gt;include_beliefs · min_status&quot;| OPT[&quot;widening is opt-in, never the default&quot;]
-    QUEUE[&quot;borderline writes held for review&quot;] --&gt; DEPTH[&quot;depth reported on the write that ADDS to the queue&quot;]
-    DEPTH -.-&gt;|&quot;&#39;a queue nobody measures is a queue nobody drains,&lt;br/&gt;and held-for-review quietly turns into silently dropped&#39;&quot;| HONEST[&quot;neither admitted nor honestly refused&lt;br/&gt;is the one outcome it cannot afford&quot;]
-    OPER[&quot;an operator runs&lt;br/&gt;verimem facts requalify-quarantined&quot;] --&gt; DRY{&quot;--apply passed?&quot;}
-    DRY --&gt;|&quot;no, the default&quot;| REPORT[&quot;a report of what would be re-admitted&quot;]
-    DRY --&gt;|&quot;yes&quot;| RESTORE[&quot;restore_fact: quarantined → named status, with a reason&quot;]
-    RESTORE -.-&gt;|&quot;only quarantined rows are restorable —&lt;br/&gt;never silently un-orphans or un-supersedes&quot;| NARROW[&quot;the reverse is deliberately narrow&quot;]
-    DEL[&quot;delete · purge · forget · supersede · reset&quot;] --&gt; AUD[(&quot;audit_mutations — principal, action,&lt;br/&gt;resource_id, ts, outcome; hash-chained&quot;)]
-    DEL -.-&gt;|&quot;appended INSIDE THE SAME TRANSACTION,&lt;br/&gt;and record_mutation never swallows&quot;| FC[&quot;fail-closed: no unrecorded deletion&quot;]
-    AUD -.-&gt;|&quot;ACTION-ONLY, never content: storing what was deleted&lt;br/&gt;even as a hash &#39;makes GDPR Art.17 erasure&lt;br/&gt;a logical contradiction&#39;&quot;| WHY[&quot;the chain proves THAT / WHO / WHEN /&lt;br/&gt;WHICH-RECORD, not what the record said&quot;]
-    SCOPE[&quot;user:alice/agent:pentester/run:7/topic&quot;] -.-&gt;|&quot;zero-schema: the scope lives in the topic string,&lt;br/&gt;and the LIKE-prefix narrow is assembled in cli.py&lt;br/&gt;rather than inside the store&quot;| NOSCOPE[&quot;no scope-enforced mark&quot;]</code></pre></details></figure>
+    FILTER -.-&gt;|&quot;include_superseded · include_orphaned ·&lt;br/&gt;include_beliefs · min_status&quot;| OPT[&quot;widening is a typed keyword&quot;]
+    DB --&gt; ASOF[&quot;recall_as_of(when):&lt;br/&gt;asserted by when,&lt;br/&gt;not superseded by when&quot;]
+    REQ[&quot;hippo_quarantine_restore&lt;br/&gt;requested_by = mcp:unbound&quot;] --&gt; CHK{&quot;requested_by and writer_principal&lt;br/&gt;both set and equal?&quot;}
+    CHK --&gt;|&quot;yes: self_release refused&quot;| HELD[&quot;stays quarantined;&lt;br/&gt;a person runs verimem facts release&quot;]
+    CHK --&gt;|&quot;no, including a NULL writer&quot;| SCREEN{&quot;superseded, or the injection&lt;br/&gt;screen trips?&quot;}
+    SCREEN --&gt;|&quot;no&quot;| BACK[&quot;status → model_claim:&lt;br/&gt;back in live recall&quot;]
+    SCREEN --&gt;|&quot;yes&quot;| HELD2[&quot;refused with a reason&quot;]
+    DEL[&quot;delete · purge · forget · supersede · reset&quot;] --&gt; AUD[(&quot;audit_mutations:&lt;br/&gt;principal, action, resource_id,&lt;br/&gt;ts, outcome; hash-chained&quot;)]
+    DEL -.-&gt;|&quot;same transaction;&lt;br/&gt;record_mutation never swallows&quot;| FC[&quot;no unrecorded deletion&quot;]
+    AUD -.-&gt;|&quot;action-only, never content&quot;| WHY[&quot;proves THAT / WHO / WHEN /&lt;br/&gt;WHICH-RECORD, not what it said&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -264,20 +284,22 @@ flowchart TB
 </thead>
 <tbody>
 <tr>
-<td><code>verimem/admission_gate.py</code></td>
-<td>The status vocabulary and what earns each one</td>
+<td><code>verimem/admission_gate.py</code>,
+<code>verimem/anti_confab_gate.py</code></td>
+<td>The validation tiers, and what earns each status</td>
 </tr>
 <tr>
-<td><code>verimem/anti_confab_gate.py</code></td>
-<td>Three validation tiers, run before a fact is persisted</td>
+<td><code>verimem/semantic.py</code></td>
+<td>The fact store: schema, recall, keyword search, quarantine and
+release</td>
 </tr>
 <tr>
 <td><code>verimem/bm25_rank.py</code></td>
 <td>The clause that keeps three statuses out of ranked recall</td>
 </tr>
 <tr>
-<td><code>verimem/semantic.py</code></td>
-<td>Recall, its opt-in widenings, and the reversible restore</td>
+<td><code>verimem/temporal_context.py</code></td>
+<td>Time-travel recall over event time and supersession</td>
 </tr>
 <tr>
 <td><code>verimem/mutation_audit.py</code></td>
@@ -288,90 +310,181 @@ flowchart TB
 <td>Queue depth, and a declared limit about measuring it</td>
 </tr>
 <tr>
-<td><code>verimem/scope.py</code>, <code>agent_scope.py</code></td>
+<td><code>verimem/mcp_server.py</code></td>
+<td>The agent's tool surface, and the label it stamps</td>
+</tr>
+<tr>
+<td><code>verimem/gateway.py</code></td>
+<td>A REST gateway with one database file per API key</td>
+</tr>
+<tr>
+<td><code>verimem/scope.py</code>,
+<code>verimem/agent_scope.py</code></td>
 <td>Topic-prefix multi-tenancy, and its accepted caveat</td>
+</tr>
+<tr>
+<td><code>hooks/hippo_session_start.py</code></td>
+<td>The banner that puts recent facts into a new session</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Everything runs locally on SQLite. The first gated write fetches the
+judge model — 711 MB by the README's figure — and the README measures a
+cold first call at 85.7 seconds before explaining how to move that cost
+to <code>verimem warmup</code>. A shared daemon can hold the judge for
+several writers; without it a CLI write is "judged in process in ~22 s",
+the README's own measurement with the model installed. No API key is
+needed to store a fact. The MCP server is registered as
+<code>io.github.aureliocpr-ctrl/verimem</code> and launched with
+<code>uvx</code>; the gateway is a FastAPI app served by
+<code>verimem gateway serve</code>, binding loopback by default.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <p><code>verimem/mutation_audit.py:1-25</code> — the whole argument for
 what an audit chain must not contain.</p>
-<p><code>verimem/bm25_rank.py:26</code>, <code>:42</code> — five words
-of SQL doing the withholding.</p>
-<p><code>verimem/semantic.py:4016-4026</code> — a recall signature where
+<p><code>verimem/bm25_rank.py:25-26</code>, <code>:42</code> — the
+withholding clause, with and without retired rows.</p>
+<p><code>verimem/semantic.py:4077-4090</code> — a recall signature where
 every widening is named.</p>
-<p><code>verimem/semantic.py:5695-5701</code> — an un-quarantine that
+<p><code>verimem/semantic.py:761-770</code> and
+<code>verimem/temporal_context.py:276-289</code> — event time beside
+record time, and the read that composes them.</p>
+<p><code>verimem/semantic.py:5796-5849</code> — the release from
+quarantine, with its three refusals and the condition that the writer
+label be present.</p>
+<p><code>verimem/semantic.py:5764-5770</code> — an un-quarantine that
 refuses to un-orphan.</p>
 <p><code>verimem/review_queue.py:1-16</code> — why an unmeasured queue
 is a dishonest abstention.</p>
 <p><code>verimem/scope.py:1-14</code> — the scope convention, and the
 collision it accepts.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>A fact carries a proposition, a status from the gate's vocabulary, a
-writer role, grounding evidence and trust signals; episodes carry task
-traces, skills and outcomes beside them. Statuses are the load-bearing
-field: they decide whether the fact is in the live view, and the
-transitions between them are what the mutation chain records.</p>
+<p>A fact carries a proposition, a status from the closed vocabulary, a
+writer role and a <code>writer_principal</code>, grounding evidence
+(<code>grounding_score</code> and <code>grounding_span</code>), a
+confidence tier, and three times: <code>created_at</code> for when the
+store learned it, <code>asserted_at</code> for when it was said or true,
+and an optional <code>valid_until</code>. A retirement sets
+<code>superseded_by</code> and <code>superseded_at</code>. Episodes
+carry task traces, skills and outcomes beside the facts.</p>
+<p>The writer label is stamped by the surface, never read from tool
+arguments: the MCP server's comment calls a client-supplied value "a
+spoof attempt". The SDK stamps <code>sdk:local</code>, the CLI
+<code>cli:local</code> plus an optional <code>VERIMEM_ACTOR</code>
+suffix, and MCP <code>mcp:unbound</code>. Facts that the
+transcript-promotion and conversation-ingest paths build carry no
+label.</p>
+<p>Ids differ by door. MCP's <code>hippo_remember</code> derives the id
+from a hash of the proposition and topic, and the upsert leaves
+<code>superseded_by</code> untouched, so an identical re-assertion lands
+on the retired row. The SDK and the extraction paths mint random
+ids.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 and semantic recall over the guarded view, with the status
+<p>BM25 and semantic recall over the curated view, with the status
 filter compiled into both the appended predicate and a standalone filter
-string so the two cannot drift. <code>search_facts</code> accepts a
-single <code>as_of</code> over record time and counts how many rows that
-constraint excluded, which is a real point-in-time read over one axis
-rather than two.</p>
+string so the two cannot drift. The cold-encode fallback delegates to
+<code>search_facts</code> and forwards the opt-ins. A set of analysis
+and cleanup tools reads <code>list_facts()</code> without the filter on
+purpose; the briefing passes <code>hide_low_trust=True</code>.</p>
+<p><code>search_facts(as_of=...)</code> puts
+<code>COALESCE(asserted_at, created_at) &lt;= ?</code> into the SQL and
+counts how many rows that excluded, and <code>recall_as_of</code> keeps
+the facts asserted by the instant and not yet superseded by it. The
+SDK's <code>search</code> defaults <code>as_of="auto"</code>, routing a
+query with a retrospective anchor to the time-travel path.</p>
+<p>Scope is applied when asked for. <code>hippo_facts_recall</code>,
+<code>hippo_facts_search</code> and <code>hippo_facts_list</code> read
+<code>user_id</code>, <code>agent_id</code> and <code>run_id</code> from
+the tool arguments, narrow by <code>topic LIKE '&lt;prefix&gt;%'</code>
+and post-filter with <code>matches_scope</code>. Without those arguments
+the read is unscoped, and a docstring in the server says a multi-tenant
+deployment "must NOT treat scope as a hard security boundary". The
+session-start banner reads the eight most recent facts with the status
+filter and no scope predicate.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p><code>validate="fast"</code> is the default tier: pure substring
 detectors, "cold execution &lt;&lt; 1 ms". <code>full</code> adds claim
 validation against the agent's semantic memory at a measured mean of
 about 13 ms. <code>off</code> exists and is labelled what it is —
-"[p]ure escape hatch for migrations, replays, deliberate writes." The
-first gated write on a fresh install fetches the judge model itself,
-which the README measures at 85.7 seconds and explains how to move
-rather than avoid.</p>
+"[p]ure escape hatch for migrations, replays, deliberate writes." Behind
+the detectors a local NLI judge scores the claim against the supplied
+source; a write it does not support is stored <code>quarantined</code>
+rather than dropped, and the receipt says which layer held it and
+why.</p>
+<p>The write path is synchronous. Conversation ingest extracts atomic
+facts with the agent's own LLM and judges each one against the dialogue;
+transcript promotion judges an agent-supplied proposition against the
+verbatim turn.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A CLI, an MCP server registered as
-<code>io.github.aureliocpr-ctrl/verimem</code>, an SDK client exposing
-<code>search(query, as_of="auto")</code>, a gateway, Docker compose
-files and hook and slash-command bundles.</p>
+<p>A CLI, an MCP server exposing every tool unless
+<code>ENGRAM_MCP_TOOLS_PREFIX</code> narrows it, an SDK client, a REST
+gateway whose module docstring derives the tenant from the presented key
+and never from a request field, Docker compose files, a Claude Code
+plugin manifest and hook bundles. The gateway's restore route, the SDK's
+<code>Memory.restore</code> and the bulk
+<code>verimem facts requalify-quarantined --apply</code> carry no writer
+comparison; the commit that added the rule says the SDK and HTTP
+restores "stay outside this request".</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The strong parts are the fail-closed audit, the withholding statuses,
-the reversible-but-narrow restore, and a documentation habit that
-publishes corrections and limits rather than quietly fixing them. The
-weak parts are scope living in a string and assembled outside the store,
-a single time axis, and no value-keyed record of a rejected claim.</p>
+<p>The strong parts are the fail-closed audit, the withholding statuses
+applied to every read that feeds a prompt, the reversible-but-narrow
+restore, and a documentation habit that publishes corrections and limits
+rather than quietly fixing them.</p>
+<p>The weak parts sit on the agent's own surface. The writer-label rule
+covers the MCP writes that stamp a label and none of the ones that do
+not, so the quarantine an agent's transcript promotion or conversation
+ingest produces is a quarantine the same agent can lift. Scope is an
+optional argument. A single release from quarantine leaves the audit
+chain untouched: <code>restore_fact</code> emits observability and flow
+events, while the bulk requalify path records a <code>restore</code>
+row. Nothing is keyed on a rejected value.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>1,694 test files, of which 284 touch the quarantine path, plus
-benchmark directories and a <code>docs/stato-reale/banchi/</code> tree
-the README cites figure by figure. The negative-bundle suites are about
-skill pairs that predict failure rather than about material that must
-not be retrieved, so the committed must-not-retrieve case this design
-would support does not appear to exist yet.</p>
+<p>9,024 test functions in 1,766 files, with 322 files touching
+quarantine, plus an acceptance job that installs the wheel in a clean
+virtualenv, runs <code>verimem warmup</code>, and checks eight promises
+from the user's side with no skips. Row 8 writes the README's
+confabulation example from the SDK and asserts the held sentence comes
+back from none of the SDK, the CLI and the MCP recall tool while the
+supported one comes back from all three. The unit suite carries the
+must-not-retrieve cases on the cold path, the belief opt-in and the
+briefing, each with a positive control.
+<code>docs/stato-reale/banchi/</code> holds the benchmark scripts the
+README cites. I ran none of it.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Decide what your audit chain is allowed to contain before you build
 it. An immutable record of content is a second copy you cannot delete,
-and the argument in <code>mutation_audit.py</code> is the clearest
-statement of that trade in this corpus.</p>
+and the argument in <code>mutation_audit.py</code> states that trade in
+four lines.</p>
 <p>Write the audit row inside the mutation's transaction and let a
-failure propagate. An audit that can fail silently is an audit that is
-wrong exactly when it matters.</p>
+failure propagate. An audit that can fail silently is wrong exactly when
+it matters.</p>
 <p>Name every widening. A recall signature where
 <code>include_orphaned</code> has to be typed is one where the default
-is defensible and the exception is visible in the caller's code.</p>
-<p>Publish the limit. <code>DECLARED LIMIT</code> as a heading, with the
-reason the coarse measure was chosen, is better than a precise number
-nobody computes.</p>
+is defensible and the exception is visible in the caller's code. Apply
+the same filter to whatever assembles context at session start.</p>
+<p>Keep event time in its own nullable column and let NULL mean unknown.
+The schema comment records why: storing the event time in
+<code>created_at</code> hid most of a back-dated store from recall.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A self-release rule that compares two labels and passes when one is
+missing. Every door that writes has to stamp the label, or the rule
+needs to refuse when the writer is unknown.</p>
+<h3 id="fit">Fit</h3>
+<p>A single-operator deployment that wants to know why it believes
+something, and can keep the agent's MCP surface narrowed with
+<code>ENGRAM_MCP_TOOLS_PREFIX</code>. Not a multi-tenant library where
+the tenant boundary has to hold against the caller.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
+<p>Whether the release rule should refuse an unlabelled writer, or the
+promotion and ingest paths should stamp the surface label as
+<code>hippo_remember</code> does.</p>
 <p>Whether scope should move into the store. Everything else here is
-enforced where it cannot be forgotten; the topic prefix is assembled by
-the CLI, and a library consumer that skips it gets every tenant's
-facts.</p>
-<p>Whether the gate's status vocabulary wants a second time axis behind
-it. A fact that was true and stopped being true is currently handled by
-supersession over record time, which cannot answer what was true last
-quarter.</p>
+enforced where it cannot be forgotten; scope depends on the caller
+passing it, and the session-start banner does not.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -386,12 +499,41 @@ quarter.</p>
 <td>What an immutable chain must not be allowed to remember</td>
 </tr>
 <tr>
-<td><code>verimem/bm25_rank.py:26</code>, <code>:42</code></td>
+<td><code>verimem/bm25_rank.py:25-26</code>, <code>:42</code></td>
 <td>A status filter written twice so it cannot drift</td>
 </tr>
 <tr>
-<td><code>verimem/semantic.py:4016-4026</code></td>
+<td><code>verimem/semantic.py:4077-4090</code></td>
 <td>Widening as a named keyword rather than a default</td>
+</tr>
+<tr>
+<td><code>verimem/semantic.py:761-770</code>, <code>:5489</code></td>
+<td>Event time, and the as-of clause that reads it</td>
+</tr>
+<tr>
+<td><code>verimem/temporal_context.py:276-289</code></td>
+<td>Time travel over event time and supersession</td>
+</tr>
+<tr>
+<td><code>verimem/semantic.py:5796-5849</code></td>
+<td>The release from quarantine and its refusals</td>
+</tr>
+<tr>
+<td><code>verimem/mcp_server.py:997</code>, <code>:3632-3655</code>,
+<code>:8553-8578</code>, <code>:8580-8602</code>,
+<code>:15220-15231</code></td>
+<td>The stamped label, the restore tool, and the two doors that leave
+the label empty</td>
+</tr>
+<tr>
+<td><code>verimem/transcript_promote.py:95-125</code>,
+<code>verimem/conversation_ingest.py:520-548</code></td>
+<td>Facts built without <code>writer_principal</code>, stored
+<code>quarantined</code> when the judge declines</td>
+</tr>
+<tr>
+<td><code>hooks/hippo_session_start.py:63-96</code></td>
+<td>The banner's status filter, and its missing scope predicate</td>
 </tr>
 <tr>
 <td><code>verimem/review_queue.py:1-16</code></td>
@@ -402,26 +544,76 @@ quarter.</p>
 <td>Multi-tenancy as a string convention, with its collision
 declared</td>
 </tr>
+<tr>
+<td><code>tests/test_recall_include_orphaned_coldpath.py</code>,
+<code>tests/test_include_beliefs.py</code>,
+<code>tests/test_briefing_no_low_trust_facts.py</code></td>
+<td>Must-not-retrieve cases with positive controls</td>
+</tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run in the checkout at the pin with <code>git grep -n -E</code>, over
+the whole tree.</p>
+<ul>
+<li>Writers of the self-release label:
+<code>writer_principal|_MCP_PRINCIPAL\s*=</code> over
+<code>verimem/*.py</code>. <code>_build_fact</code> is called twice in
+the MCP server, both stamped; <code>transcript_promote.py</code> and
+<code>conversation_ingest.py</code> construct <code>Fact(...)</code>
+with no <code>writer_principal</code>, and the dataclass default is
+<code>None</code> (<code>verimem/semantic.py:1664</code>).</li>
+<li>Other routes out of quarantine:
+<code>restore_fact\(|libera_dalla_quarantena\(|requalif</code> and
+<code>UPDATE facts</code> followed by <code>status</code>. Callers are
+the release method, the CLI, the gateway and SDK restore, source-trust
+rehabilitation of rows it demoted itself, and the CLI-only bulk
+requalify. No MCP tool reaches requalify.</li>
+<li>Value-keyed rejection:
+<code>tombstone|audit.revealed|denylist|blocklist|forgotten_</code> and
+every <code>CREATE TABLE IF NOT EXISTS</code> name.
+<code>mark_false</code> in <code>verimem/source_trust.py</code> records
+an audited-false (key, value) pair used only to score collusion between
+sources; no write path consults it.</li>
+<li>Mutations of the audit table:
+<code>(UPDATE|DELETE FROM|DROP TABLE|TRUNCATE)\s+(IF EXISTS\s+)?audit_mutations</code>
+outside <code>tests/</code> returns nothing at this pin.</li>
+<li>Scope on context assembly: <code>user_id|agent_id|scope</code> in
+<code>hooks/hippo_session_start.py</code> returns nothing.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/aureliocpr-ctrl/verimem/commit/2635d28d6bba4674760804b9e7ed36966bab4ae5"><code class="commit-id" title="2635d28d6bba4674760804b9e7ed36966bab4ae5">2635d28d…</code></a>,
+95 commits on. <strong><code>bitemporal</code> and
+<code>negative_eval</code> are added; both were present at the previous
+pin</strong> — the event-time column, its as-of clause and the
+must-not-retrieve tests are there unchanged, and the appendix's Known
+Limitations records the error. <a
+href="https://github.com/aureliocpr-ctrl/verimem/commit/cfd538d12ccd2415beb3426a3c805d70bbbf582d"><code class="commit-id" title="cfd538d12ccd2415beb3426a3c805d70bbbf582d">cfd538d1…</code></a>
+added the rule that a writer cannot release its own quarantine;
+<code>human_review</code> stays withheld because two MCP write doors
+leave the label empty (section 1). The scope reason is restated: the MCP
+fact tools apply scope when asked, and the banner never does. Screened
+first: five auto-run surfaces, three build-time execution points,
+nothing in the cooldown, no licence rider. Nothing installed or run.</p>
 <p><strong>2026-09-19</strong> — re-pinned to <a
 href="https://github.com/aureliocpr-ctrl/verimem/commit/068baf45bcbe3c578ad530ed8c02287de3c60b77"><code class="commit-id" title="068baf45bcbe3c578ad530ed8c02287de3c60b77">068baf45…</code></a>,
 20 commits and 135 files on. <strong><code>human_review</code> is
 withdrawn; two marks stand.</strong> The re-admission path is unchanged
 and is still described in section 1, because the thinking behind it is
 good — a reversible quarantine, a restore that refuses orphaned and
-superseded rows, a dry-run default on the requalify command, and a queue
-whose depth is measured under a comment naming exactly the failure mode
+superseded rows, and a dry-run default on the requalify command. Its
+queue depth is measured under a comment naming exactly the failure mode
 this atlas keeps finding: <em>"A queue nobody measures is a queue nobody
-drains."</em> What the mark needs is that the producer cannot clear it,
-and here it can. <code>hippo_quarantine_restore</code> is one of the
-declared MCP tools and its own description is <em>"Rescue a
-wrongly-blocked fact: un-quarantine <code>fact_id</code> back into live
-recall"</em>. Its guards are content guards — superseded refused,
-proposition and topic re-screened for injection — which are worth having
-and say nothing about who is asking. The CLI path adds two more of the
-shapes the rubric names: <code>--apply</code> is a caller boolean, and
+drains."</em></p>
+<p>What the mark needs is that the producer cannot clear it, and here it
+can. <code>hippo_quarantine_restore</code> is one of the declared MCP
+tools and its own description is <em>"Rescue a wrongly-blocked fact:
+un-quarantine <code>fact_id</code> back into live recall"</em>. Its
+guards are content guards — superseded refused, proposition and topic
+re-screened for injection — which are worth having and say nothing about
+who is asking. The CLI path adds two more of the shapes the rubric
+names: <code>--apply</code> is a caller boolean, and
 <code>--principal</code> defaults to <code>$VERIMEM_ACTOR</code>, an
 environment string nothing verifies. <code>trust_state</code> and
 <code>audit_log</code> re-verified. Screened again first; nothing
