@@ -2261,11 +2261,12 @@ were recorded as data; one of their claims names a directory,
 <code>include/animus_kernel/store/</code>, that is not in the tree.
 Apache-2.0</li>
 <li><a href="https://github.com/AreevAI/areev">AreevAI/areev</a> at <a
-href="https://github.com/AreevAI/areev/commit/5b6b29f3924ae02ecc2a366d7dbf16d56a7f77d6"><code class="commit-id" title="5b6b29f3924ae02ecc2a366d7dbf16d56a7f77d6">5b6b29f3…</code></a>
-— read only, from a full clone; one auto-run surface, two build-time
-execution points, three unpinned dependency surfaces and thirty
-dependency files inside the seven-day cooldown. <code>AGENTS.md</code>
-and <code>CLAUDE.md</code> are addressed to a reading agent and were
+href="https://github.com/AreevAI/areev/commit/34f0163c829364f8bc9f06feb6d237adcf4180b0"><code class="commit-id" title="34f0163c829364f8bc9f06feb6d237adcf4180b0">34f0163c…</code></a>
+— read only, from a full clone; one committed git hook that runs only if
+<code>core.hooksPath</code> points at it, two build-time execution
+points, three unpinned dependency surfaces and no dependency file inside
+the seven-day cooldown. <code>AGENTS.md</code> and
+<code>CLAUDE.md</code> are addressed to a reading agent and were
 recorded as data. Nothing was installed, built or run and no benchmark
 was reproduced. Dual MIT or Apache-2.0</li>
 <li><a
@@ -17863,6 +17864,33 @@ did not cite: the create-only receipt each apply publishes
 (<code>contextos/kernel.py:4198</code>, <code>:4384</code>). The claim
 rested on the writer the session loop uses rather than on every writer
 the path policy admits.</li>
+<li><strong>Seven published claims about <a
+href="../systems/areev/">Areev</a> were wrong at <a
+href="https://github.com/AreevAI/areev/commit/5b6b29f3924ae02ecc2a366d7dbf16d56a7f77d6"><code class="commit-id" title="5b6b29f3924ae02ecc2a366d7dbf16d56a7f77d6">5b6b29f3…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>human_review</code> on a self-approval block; that block
+records a trigger only for model and external findings
+(<code>crates/areev-loop/src/engine.rs:437</code>), so the MCP
+<code>areev_recommendations</code> tool approved and applied builtin
+findings as <code>agent:mcp</code>, as
+<code>crates/areev-cli/tests/mcp_smoke.rs:717</code> asserted. The MCP
+<code>areev_cal</code> tool also ran <code>APPROVE</code> as the session
+principal, <code>user:local</code> on a default server, recorded as a
+human. It said no <code>UPDATE oplog</code> existed;
+<code>crates/areev-store/src/lib.rs:2272</code> and
+<code>pg.rs:151</code> backfilled the <code>ns</code> column. It said
+the conformance kit ran against the reference substrate; its
+<code>Backend</code> had two implementations, the embedded store and
+Postgres, and fifteen case modules, not eleven. It said
+<code>verify_run.py</code> and
+<code>tests/golden/reproducibility.txt</code> were gone; both were in
+<code>crates/areev-bench/</code>. It said CAL, the MCP tools and the
+store applied a <code>-0.3</code> penalty; the penalty is applied only
+inside <code>areev-context</code>. It called the loop's Observation
+audit grains append-only; <code>forget</code> refused only Tier-2 authz
+records. And its store line anchors were from an earlier pin. The first
+rested on the MCP handler's literal actor rather than on who records the
+trigger.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

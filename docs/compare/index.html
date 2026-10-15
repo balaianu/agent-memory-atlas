@@ -2792,49 +2792,47 @@ of seven platforms</td>
 and Event to Skill, Recommendation and Trigger — content-addressed,
 carrying two validity intervals, provenance, a verification status and a
 supersession pointer</td>
-<td>A content-addressed store over SQLite or Postgres, with attachments
-in a CAS and an append-only op log carrying a hybrid logical clock</td>
+<td>A content-addressed store over an embedded SQLite-compatible engine
+or Postgres, with attachments in a CAS and an append-only op log
+carrying a hybrid logical clock</td>
 <td>CAL, one query language over hybrid recall — vector, BM25, graph
-traversal by relation and direction — with <code>entity_at</code> taking
-a world or knowledge time axis</td>
+traversal by relation and direction — with entity_at taking a world or
+knowledge time axis, and an optional decision-model reranker</td>
 <td>Grains are added, superseded with a justification and an
 authorisation list, or forgotten; the learning loop proposes changes
-from recorded history, citing evidence by hash, and an optional model
-leg proposes from a closed vocabulary — a fact, a query rewrite,
-allowlisted plan-threshold edits, or new tool source — that can never
-auto-apply</td>
+from recorded history citing evidence by hash, and an optional model leg
+proposes from a closed vocabulary that never auto-applies</td>
 <td>Supersession keeps history and closes the record-time interval in
-the same write; <code>forget</code> erases from the hot store, clears
-the FTS text and the CAS bytes, and writes a replicating tombstone to
-the op log</td>
-<td>Namespace on every grain and every read predicate, with grant grains
-in the file and credentials host-side, failing closed when no grant
-exists</td>
+the same write; forget erases from the hot store, clears the FTS text
+and the CAS bytes, and writes a replicating op-log record</td>
+<td>Namespace on every grain and every store read predicate, with grant
+grains in the file checked by the facade on every gated read, and
+credentials host-side; the owner session is the implicit superuser</td>
 <td>A CLI, an MCP server, JS and Python bindings, an HTTP server, a
-sandbox and a conformance kit third-party substrates can run</td>
-<td>None by default — the project states there is no daemon and
-everything runs when you run it; the learning loop is invoked</td>
-<td><code>verification_status</code> of unverified / verified /
-contested / retracted, kept apart from a <code>confidence</code> float
-and classified once; caller-authored; <code>retracted</code> is withheld
-from context assembly by default and disclosed to an opt-in audit read
-and to the DSAR, while the store, CAL and the MCP tools still return it
-as a ranking penalty; <code>contested</code> is a demotion, never a
+workflow runtime whose plans declare their memory reads, a sandbox and a
+conformance kit</td>
+<td>None — the project runs no daemon; hooks, cron, CI or the host
+invoke the loop and the triggers</td>
+<td>verification_status of unverified / verified / contested /
+retracted, kept apart from a confidence float and classified once;
+extraction stamps unverified or verified, and retracted is
+caller-authored; retracted is withheld from context assembly in every
+rendering mode and disclosed to an opt-in audit read and to the DSAR,
+while the store, CAL, the MCP tools, declared run reads and the bindings
+return it with no penalty; contested is a demotion, never a
 withholding</td>
 <td>World and knowledge time as a query parameter, a review record with
 a mandatory reason and a hash chain, a deletion that clears the text and
 the attachment bytes and replicates, a conformance kit that runs the
-same negative cases against more than one backend and pins recall as a
-pure read, and committed benchmark runs whose manifests carry a SHA-256
-of every transcript</td>
-<td><code>retract</code> means a demotion in the trait and an erasure in
-the real substrate, and no conformance case covers the divergence; the
-withholding lives in one crate that two CLI commands reach, so CAL
-<code>ASSEMBLE</code> and every MCP recall tool still hand a retracted
-grain to a model; the content hash a value-level tombstone would need is
-not consulted on re-add, blocked on a stated compliance question; and
-the fresh dependency surface means none of this was built or run
-here</td>
+same negative cases against two storage engines and pins recall as a
+pure read, and a decision-model seam whose probabilities may reorder but
+never approve</td>
+<td>The MCP tool surface approves and applies builtin findings as
+agent:mcp, and its areev_cal tool approves any recommendation as the
+owner session, recorded as a human; retract means a demotion in the
+trait and an erasure in the real substrate; the withholding lives in one
+crate that two CLI commands reach; the content hash a value-level
+tombstone would need is not consulted on re-add</td>
 </tr>
 <tr>
 <td><a href="../systems/argo/"><code>argo</code></a></td>
@@ -34283,10 +34281,9 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 749:</em> <a
+<p><em>95 of 749:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
-href="../systems/areev/"><code>areev</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
 href="../systems/auto-company/"><code>auto-company</code></a>, <a
 href="../systems/breadcrumbs/"><code>breadcrumbs</code></a>, <a

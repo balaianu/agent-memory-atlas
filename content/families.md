@@ -3355,19 +3355,16 @@ different things depending on which substrate answers — the `OmsSubstrate` tra
 and its in-memory reference implementation set `verification_status = retracted`,
 while the adapter over the real store rejects that mapping in a comment,
 *"the honest mapping for undoing an engine-created ADD is a tombstone of that
-grain"*, and calls `forget`. So a loop rollback erases on a real deployment, and
-the status is caller-authored in practice: the reference substrate is the only
-automatic writer of `"retracted"` in the tree. Where the status does appear it is
-applied as `-0.3` on a clamped priority score, so a grain marked retracted ranks
-lower and still reaches the model, and that is why `trust_state` is withheld here
-despite a four-value status held apart from a confidence float — the same shape as
-the mark [NexusMem](../systems/nexusmem/) lost, in a much larger system. No case
-in the conformance kit exercises `retract`, so the one verb whose two backends
-disagree is the one the multi-backend suite does not cover. What it does govern is unusual: `entity_at` takes a *world* or
+grain"*, and calls `forget`. A caller-set `retracted` status is withheld by the
+context assembler in every rendering mode and returned at full rank by the store,
+CAL `ASSEMBLE`, the MCP recall tools and the bindings, none of which reads the
+field. What it governs well is unusual: `entity_at` takes a *world* or
 *knowledge* axis so "what was true" and "what did we believe" are two answerable
-questions, and every review transition writes an immutable Observation grain,
-hash-chained to its predecessor, carrying the actor, the observer type and a
-`because` field that is a `String` rather than an `Option`. **Verel**
+questions, and every review transition writes an Observation grain, hash-chained
+to its predecessor, carrying the actor, the observer type and a `because` field
+that is a `String` rather than an `Option`. Who may make that transition is the
+weak half: the MCP server's own tools approve and apply builtin findings as
+`agent:mcp`, and its CAL tool approves as the owner session, recorded as a human. **Verel**
 separates confidence, retrieval strength, and verification state, carries
 rejected values forward, and fences recall as untrusted data. **RainBox** adds
 governed atomic correction, lattice-aware conflict detection, and rejected-value

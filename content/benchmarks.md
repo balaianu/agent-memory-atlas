@@ -2542,8 +2542,9 @@ rubric as *"a confidence number answers 'how sure' and gets used for ranking; a
 state answers 'may this be acted on' and gets used for filtering."* It is applied
 from code inspection, and it costs a mark wherever a status is spent as a
 number — [NexusMem](../systems/nexusmem/) multiplies a `rejected` node's score by
-`0.3`, [Areev](../systems/areev/) adds `-0.3` to a clamped priority, and neither
-filters on the field. The reasonable objection is that the difference is a matter
+`0.3` and never filters on the field, and [Areev](../systems/areev/) withholds a
+retracted grain only in its context assembler, while its store, query language
+and MCP tools return it at full rank. The reasonable objection is that the difference is a matter
 of degree: a large enough penalty is a filter.
 
 *Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents*

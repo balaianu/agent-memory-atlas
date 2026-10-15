@@ -13733,97 +13733,67 @@ whose two values are documented as the two questions —
 <code>valid_from</code>/<code>valid_to</code>, <code>Knowledge</code> is
 <em>"What did the agent know at T"</em>, walking the supersession chain
 — and both spellings parse from the wire in every binding. Most
-bi-temporal systems here store two timestamps and query one.</li>
+bi-temporal systems store two timestamps and query one.</li>
 <li>Second idea: <strong>the reason is required by the type.</strong>
-Every recommendation transition writes an immutable Observation grain
-hash-chained to its predecessor, carrying the from and to status, a
-host-asserted actor like <code>user:alice</code>, an observer type, and
-a <code>because: String</code> — not an <code>Option</code> — capped at
-500 characters. The transition table is enforced, and the one path that
-skips a person is named as it is allowed: <code>Pending → Applied</code>
-needs <code>by_policy</code>, <em>"the auto-apply actor, the only one
-permitted the reasonless pending → applied jump."</em></li>
-<li>Third idea: <strong>the code writes down what a tombstone has to
-clear.</strong> <code>forget</code> erases the row, clears the free-text
-index — <em>"a tombstone that leaves the text findable is not a
-tombstone"</em> — reclaims the content-addressed attachment bytes —
-<em>"a tombstone that leaves the attachment bytes on disk is not a
-tombstone"</em> — and writes an op-log record <code>import_bundle</code>
-replays, so an erasure replicates instead of diverging replicas. Those
-are the two failure modes this atlas finds most often, named in the code
-that avoids them.</li>
-<li>Biggest risk: <strong>one verb, two meanings, and no case covering
-the difference.</strong> The <code>OmsSubstrate</code> trait documents
-<code>retract</code> as a non-destructive
-<em>"<code>verification_status = retracted</code>"</em> and the
-in-memory reference substrate implements it; the adapter over the real
-store rejects that mapping in a comment — <em>"the honest mapping for
-undoing an engine-created ADD is a tombstone of that grain"</em> — and
-calls <code>forget</code>. A rollback erases on a real deployment and
-demotes in tests, and none of the ten conformance case modules mentions
-<code>retract</code>, so the one operation whose backends disagree is
-the one the multi-backend kit does not exercise.</li>
-<li>Second risk: <strong>a status that withholds at one door and ranks
-at the others.</strong> <code>verification_status</code> is
-<code>unverified / verified / contested / retracted</code>, held apart
-from a <code>confidence</code> float, classified once in
-<code>Trust</code>, and withheld by the context assembler by default —
-from the body and from the Knowledge Update section — under an opt-in
-for audit reads; the store keeps returning it because the DSAR selector
-is shared with erasure. That earns <code>trust_state</code>. But the
-assembler is reached by two CLI commands, and CAL <code>ASSEMBLE</code>,
-every MCP recall tool, the bindings and the HTTP server hand the same
-grain to a model with <code>-0.3</code> on its priority, so the
-guarantee holds on the path an agent is least likely to call.</li>
-<li>Third risk: <strong>the key a refusal needs is computed and not
-consulted.</strong> The store is content-addressed, so the hash is a
-function of the content and every <code>OP_FORGET</code> row already
-holds one. Nothing checks it on write. Three comments in the store name
-the scenario — <em>"a forget + re-add of identical content can move this
-hash to a NEW seq"</em> — and each solves the concurrency half of it
-under a row lock, so the case is anticipated carefully and the question
-of whether the re-assertion should be allowed is never put.
-<code>tombstone</code> withheld one lookup short.</li>
-<li>Maturity impression: MIT OR Apache-2.0, 208,493 lines of Rust across
-306 files, 635 commits since 16 August 2026, a fuzz target and a
-<code>deny.toml</code>. Six marks, all re-tested at this pin. The
-published benchmark records — transcripts, manifests and the
-verification script — are no longer in this repository, and the
-repository the README says they moved to is not publicly reachable, so
-the figures the project reports can no longer be checked against the
-runs behind them. Two artifacts are the ones to copy. The conformance
-kit: every case takes <code>b: &amp;dyn Backend</code> and reports
-<code>b.name()</code>, so the same assertions run against the real
-store, Postgres and an in-memory reference substrate — <em>"engine CI
-runs the full suite against it with zero Areev, so the portability claim
-stays testable."</em> And the committed benchmark evidence:
-<code>crates/areev-bench/results/</code> publishes per-question
-transcripts under every headline number because <em>"the category has a
-history of unreproducible claims; we publish the receipts"</em>, each
-run directory carrying a manifest with the command, the git rev and a
-SHA-256 of every file — and a hand-written note, preserved across
-regeneration, in which three published runs declare themselves not
-comparable to a re-run because the scorer moved after they ran.</li>
+Every recommendation transition writes an Observation grain hash-chained
+to its predecessor, carrying the from and to status, the actor, an
+observer type, and a <code>because: String</code> — not an
+<code>Option</code> — capped at 500 characters. The transition table is
+enforced, and the one path that skips a review is named as it is
+allowed: <code>Pending → Applied</code> needs <code>by_policy</code>,
+<em>"the auto-apply actor, the only one permitted the reasonless
+<code>pending → applied</code> jump."</em></li>
+<li>Third idea: <strong>a decision model may score, never
+approve.</strong> The decision-backend seam answers typed questions with
+probabilities; <em>"only code omits, gates, approves or applies"</em>,
+an uncalibrated answer never omits, and a recommendation a model judged
+carries <code>judged_by</code> and never auto-applies.</li>
+<li>Biggest risk: <strong>the agent's own tools clear the review
+queue.</strong> <code>Engine::review</code> refuses the creator and, for
+model and external findings only, the principal that triggered the run.
+Builtin findings record <code>engine:&lt;analyzer&gt;</code> and no
+trigger, so the MCP <code>areev_recommendations</code> tool approves and
+applies them as <code>agent:mcp</code>, and a committed smoke test
+asserts it. The MCP <code>areev_cal</code> tool runs
+<code>APPROVE … BECAUSE</code> as the session principal, which on a
+default <code>areev serve --mcp</code> is the owner
+<code>user:local</code>, recorded as a human.</li>
+<li>Second risk: <strong>a status that withholds at one door.</strong>
+<code>verification_status</code> is classified once in
+<code>Trust</code> and withheld by the context assembler in every
+rendering mode, under an opt-in for audit reads; the store returns it
+because the DSAR selector is shared with erasure. CAL
+<code>ASSEMBLE</code>, the MCP recall tools, declared run reads, the
+bindings and the HTTP server never read the field, so a retracted grain
+reaches a model at full rank on the paths an agent calls.</li>
+<li>Third risk: <strong>one verb, two meanings.</strong> The
+<code>OmsSubstrate</code> trait documents <code>retract</code> as a
+non-destructive status change and the reference substrate implements it;
+the adapter over the real store calls <code>forget</code>. The
+conformance kit runs against the embedded store and Postgres, not the
+reference substrate, and no case calls <code>retract</code>.</li>
+<li>Maturity impression: MIT OR Apache-2.0, 257,978 lines of Rust, 767
+commits since 16 August 2026, 3,366 test functions under
+<code>crates/</code>, a fuzz target and a <code>deny.toml</code>. Five
+marks. The benchmark harness and its verification script are in the
+tree; the run records they verify point at a repository that is not
+publicly reachable, so the published figures cannot be checked against
+their transcripts.</li>
 <li>The negative cases are non-vacuous by construction:
 <code>forget_clears_head_row</code> asserts the head exists
 <strong>before</strong> the forget and then four different absences
 after it, and <code>forget_new_head_does_not_resurrect_old</code>
 forgets the newer version, asserts the predecessor is not resurrected,
 and asserts <code>get(&amp;h1)</code> still succeeds — <em>"old blob is
-still readable, just not live"</em> — which is the
-withheld-versus-deleted distinction this atlas usually has to draw
-itself.</li>
+still readable, just not live"</em>.</li>
 <li>Study when: you have written <code>superseded_by</code> into a
 schema and not yet decided what a retraction is as distinct from it.
 Supersede, retract and forget are three verbs here with three different
-read-path consequences, and the vocabulary is worth taking on its
-own.</li>
-<li>Do not copy when: you read six marks as a summary. What is governed
-extremely well is the <em>process</em> by which memory changes — who
-proposed, who approved, on what evidence, how to undo. The missing mark
-is about belief, and the one that was earned holds at the assembler and
-nowhere before it: a retracted memory still reaches the model through
-CAL and the MCP tools.</li>
+read-path consequences.</li>
+<li>Do not copy when: you need a review gate that binds by default. The
+record of who decided is strong; the rule on who may decide binds only
+when the host binds a principal without review scopes, and the default
+MCP server does not.</li>
 </ul>
 <h3 id="hatchdoor"><a
 href="../systems/hatchdoor/"><code>hatchdoor</code></a></h3>

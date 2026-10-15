@@ -3201,11 +3201,12 @@ gets used for ranking; a state answers 'may this be acted on' and gets
 used for filtering."</em> It is applied from code inspection, and it
 costs a mark wherever a status is spent as a number — <a
 href="../systems/nexusmem/">NexusMem</a> multiplies a
-<code>rejected</code> node's score by <code>0.3</code>, <a
-href="../systems/areev/">Areev</a> adds <code>-0.3</code> to a clamped
-priority, and neither filters on the field. The reasonable objection is
-that the difference is a matter of degree: a large enough penalty is a
-filter.</p>
+<code>rejected</code> node's score by <code>0.3</code> and never filters
+on the field, and <a href="../systems/areev/">Areev</a> withholds a
+retracted grain only in its context assembler, while its store, query
+language and MCP tools return it at full rank. The reasonable objection
+is that the difference is a matter of degree: a large enough penalty is
+a filter.</p>
 <p><em>Safety Does Not Compose: Non-Decaying Loop State for Autonomous
 LLM Agents</em> (<a
 href="https://arxiv.org/abs/2608.27141">arXiv:2608.27141</a>, 27 August
