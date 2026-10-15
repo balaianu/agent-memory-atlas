@@ -20591,9 +20591,9 @@
         "FLOAT": 1,
         "FRESH": 1,
         "NOTE": 3,
-        "RUNS": 3
+        "RUNS": 4
       },
-      "files_scanned": 8,
+      "files_scanned": 9,
       "findings": [
         {
           "detail": "Claude Code plugin manifest; the marketplace entry a harness installs from — 2 entr(ies): marketplace.json, plugin.json",
@@ -20601,9 +20601,14 @@
           "path": ".claude-plugin/"
         },
         {
-          "detail": "MCP servers auto-started by a harness — mentions command",
+          "detail": "MCP servers auto-started by a harness — mentions command; launches a package fetched at run time (npx)",
           "kind": "RUNS",
           "path": ".mcp.json"
+        },
+        {
+          "detail": "MCP servers auto-started by VS Code — mentions command; launches a package fetched at run time (npx)",
+          "kind": "RUNS",
+          "path": ".vscode/mcp.json"
         },
         {
           "detail": "MCP server manifest; declares a start command",
@@ -20611,7 +20616,7 @@
           "path": "server.json"
         },
         {
-          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 2 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "package-lock.json"
         },
@@ -20621,10 +20626,10 @@
           "path": "package.json"
         }
       ],
-      "revision": "5955730d50f0e1d999b28007271205d3e6c0dc37",
-      "screened_at": "2026-09-16T03:46:07+00:00",
+      "revision": "7f7f064d31f348dcc7f074e11c291a3f9ed5e046",
+      "screened_at": "2026-10-15T05:54:12+00:00",
       "slug": "longterm-memory-mcp",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/MarcelRoozekrans/LongtermMemory-MCP"
     },

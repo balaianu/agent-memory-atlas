@@ -19963,45 +19963,44 @@ can read.</strong> <code>DECAY_CONFIG</code> gives a half-life per
 memory type — ephemeral 10 days, task 30, conversation 45, general 60,
 preference 90, fact 120 — a floor per type so nothing decays to nothing,
 and a protected-tag set of <code>core</code>, <code>identity</code> and
-<code>pinned</code> that exempts a memory from decay entirely;
-<code>computeDecay</code> is four lines of exponential, rounded to the
-nearest half and clamped up to the floor. Most decay in this corpus is
-an untuned constant or a model spread across three files. Beside it sits
-a write-amplification decision made deliberately rather than discovered:
-decay and reinforcement are recomputed on every access and persisted
-only past a named threshold — <code>shouldWriteDecay</code> at a drop of
-0.5, and a reinforcement accumulator banking 0.1 per access that writes
-back at 0.5 and caps at 10 — which is load-bearing because
-<code>sql.js</code> exports and rewrites the entire database file on
-each persist.</li>
-<li>Biggest risk: <strong>nothing here is epistemic.</strong>
+<code>pinned</code> that exempts a memory from decay entirely.
+<code>computeDecay</code> is exponential on idle days, rounded to the
+nearest half and clamped up to the floor, and reinforcement banks 0.1
+per access until it moves importance at 0.5.</li>
+<li>Biggest risk: <strong>every read rewrites the shared database file,
+and processes overwrite each other.</strong> The half-point threshold
+guards only the <code>importance</code> column.
+<code>applyDecayAndReinforcement</code> writes the accumulator and
+<code>last_accessed</code> and exports the whole SQLite file on every
+unprotected access, and <code>search_memory</code> runs it for every
+candidate above the similarity threshold before the limit. Each server
+process loads the file once and writes its own copy back with no lock,
+while the default path is shared by every client, so a search in one
+session erases what another saved since it started. A schema version
+mismatch in either direction drops the memories table, by design and
+under test, and the plugin launches an unpinned
+<code>npx -y</code>.</li>
+<li>Also risky: <strong>nothing here is epistemic.</strong>
 <code>memory_type</code> is a genre chosen at write time and
-<code>importance</code> is a continuous weight; neither withholds
-anything from retrieval. There is no status, no provenance beyond a free
-JSON metadata blob, no supersession, no validity interval and no record
-of what changed. Dedup is an exact content hash, so the same fact
-phrased differently is two rows that can then disagree with nothing to
-reconcile them. Deletion is a hard delete, and
-<code>delete_all_memories</code> is described in the README as
-irreversible with no confirmation in the tool contract.</li>
+<code>importance</code> a weight the semantic search does not read;
+there is no status, provenance, supersession, validity interval or
+change record, and <code>update_memory</code> overwrites in place. Dedup
+is an exact content hash. Decay below the half-point step is discarded,
+because the access that skipped it resets the idle clock.</li>
 <li>Most reusable component: <code>decay.ts</code> in full — sixty-five
 lines holding the half-life table, the floors, the protected tags and
-both write-back thresholds. Naming the threshold
-(<code>writebackStep</code>) is what lets the next reader see the trade
-instead of rediscovering it.</li>
+both thresholds, every constant named.</li>
 <li>Maturity impression: MIT, version 1.4.4, 2,763 lines of TypeScript
-with 109 tests across unit, integration and benchmark suites — including
-a schema-migration test against a versioned <code>schema_meta</code>,
-which is more discipline than a 508-line store usually gets, and
-benchmarks for the decay path that runs on every access. Fully local by
-design: SQLite through a WASM build, MiniLM embeddings in process, no
-API key anywhere, installed by <code>npx</code>, with a companion Claude
-Code skill that ships the prompt-side half.</li>
-<li>Study when: you need a forgetting policy you can hand to a user, or
-an example of deciding when a computed value earns a write.</li>
-<li>Do not copy when: two statements of the same fact must be reconciled
-— exact-hash dedup does not see them, and nothing else here does either.
-No marks.</li>
+with 101 vitest cases and 29 benchmarks, run in CI on Linux and Windows.
+No test counts the writes an access produces, and the schema tests
+assert the wipe. Fully local after a one-time model download, installed
+by <code>npx</code> or as a Claude Code plugin whose skill tells the
+model to recall and save silently.</li>
+<li>Study when: you need a forgetting policy you can hand to a
+user.</li>
+<li>Do not copy when: two clients may share the store, a release may
+change the schema, or reads must not write — the storage layer fails all
+three. One mark: negative eval.</li>
 </ul>
 <h3 id="agent-memory-guard"><a
 href="../systems/agent-memory-guard/"><code>agent-memory-guard</code></a></h3>

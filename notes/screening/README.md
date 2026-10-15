@@ -194,7 +194,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`llm-wiki-memory`](../../content/systems/llm-wiki-memory.md) | `.cursor/rules/` |
 | [`lobu`](../../content/systems/lobu.md) | `.claude-plugin/`, `.claude/hooks/`, `.claude/settings.json`, `.gitmodules`, `server.json` |
 | [`local-memory-mcp`](../../content/systems/local-memory-mcp.md) | `server.json` |
-| [`longterm-memory-mcp`](../../content/systems/longterm-memory-mcp.md) | `.claude-plugin/`, `.mcp.json`, `server.json` |
+| [`longterm-memory-mcp`](../../content/systems/longterm-memory-mcp.md) | `.claude-plugin/`, `.mcp.json`, `.vscode/mcp.json`, `server.json` |
 | [`lorekit`](../../content/systems/lorekit.md) | `.claude-plugin/` |
 | [`loreweave`](../../content/systems/loreweave.md) | `server.json` |
 | [`lossless-context-mcp`](../../content/systems/lossless-context-mcp.md) | `hooks/`, `server.json` |

@@ -4,31 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A small, fully local MCP memory
-server — SQLite through a WASM build, MiniLM embeddings in process, no
-API key anywhere — whose forgetting is a six-row half-life table with
-per-type floors and protected tags, and whose decay and reinforcement
-are recomputed on each access but persisted only when the change crosses
-half a point.">
+    <meta name="description" content="A local TypeScript MCP memory
+server: SQLite through WASM, a per-type half-life decay table, and a
+whole-file database rewrite on every read.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="LongtermMemory-MCP — Agent Memory Atlas">
-    <meta property="og:description" content="A small, fully local MCP
-memory server — SQLite through a WASM build, MiniLM embeddings in
-process, no API key anywhere — whose forgetting is a six-row half-life
-table with per-type floors and protected tags, and whose decay and
-reinforcement are recomputed on each access but persisted only when the
-change crosses half a point.">
+    <meta property="og:description" content="A local TypeScript MCP
+memory server: SQLite through WASM, a per-type half-life decay table,
+and a whole-file database rewrite on every read.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="LongtermMemory-MCP — Agent Memory Atlas">
-    <meta name="twitter:description" content="A small, fully local MCP
-memory server — SQLite through a WASM build, MiniLM embeddings in
-process, no API key anywhere — whose forgetting is a six-row half-life
-table with per-type floors and protected tags, and whose decay and
-reinforcement are recomputed on each access but persisted only when the
-change crosses half a point.">
+    <meta name="twitter:description" content="A local TypeScript MCP
+memory server: SQLite through WASM, a per-type half-life decay table,
+and a whole-file database rewrite on every read.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>LongtermMemory-MCP — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -50,7 +41,7 @@ change crosses half a point.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "LongtermMemory-MCP",
-      "description": "A small, fully local MCP memory server \u2014 SQLite through a WASM build, MiniLM embeddings in process, no API key anywhere \u2014 whose forgetting is a six-row half-life table with per-type floors and protected tags, and whose decay and reinforcement are recomputed on each access but persisted only when the change crosses half a point.",
+      "description": "A local TypeScript MCP memory server: SQLite through WASM, a per-type half-life decay table, and a whole-file database rewrite on every read.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,29 +96,26 @@ change crosses half a point.">
     <main>
       <section class="document-hero">
         <div class="document-hero-inner">
-          <p class="eyebrow">Decay is computed on every read and written
-only past a threshold</p>
+          <p class="eyebrow">A decay table a user can read, and a
+database file rewritten on every read</p>
           <h1>LongtermMemory-MCP</h1>
-          <p class="document-deck">A small, fully local MCP memory
-server — SQLite through a WASM build, MiniLM embeddings in process, no
-API key anywhere — whose forgetting is a six-row half-life table with
-per-type floors and protected tags, and whose decay and reinforcement
-are recomputed on each access but persisted only when the change crosses
-half a point.</p>
+          <p class="document-deck">A local TypeScript MCP memory server:
+SQLite through WASM, a per-type half-life decay table, and a whole-file
+database rewrite on every read.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP">
               <span>Source</span>
               <strong>MarcelRoozekrans/LongtermMemory-MCP</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/5955730d50f0e1d999b28007271205d3e6c0dc37" title="5955730d50f0e1d999b28007271205d3e6c0dc37">
+            <a class="meta-pill revision-pill" href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/7f7f064d31f348dcc7f074e11c291a3f9ed5e046" title="7f7f064d31f348dcc7f074e11c291a3f9ed5e046">
               <span>Analyzed revision</span>
-              <code>5955730d…</code>
+              <code>7f7f064d…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/MarcelRoozekrans--LongtermMemory-MCP" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -135,7 +123,23 @@ half a point.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>2,763
+lines of TypeScript in 18 files: 1,286 in seven files under src/, 508 of
+them the memory store; 1,477 in tests, benchmarks and the vitest
+config</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>229
+commits on main, 25 February – 13 October 2026, under five author names,
+four of them bots; the last source change 26 March, everything after it
+dependency updates, a tsconfig fix and release tooling; version
+1.4.4</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>101
+vitest cases in six files and 29 benchmarks in three, run in CI on Linux
+and Windows under Node 20 and 22; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -151,77 +155,94 @@ half a point.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>LongtermMemory-MCP is "[a] fully local MCP server that gives AI
-agents persistent, semantic long-term memory — <strong>without any cloud
-dependencies</strong>" — MIT, TypeScript, version 1.4.4, 2,763 lines
-with 109 tests. It states its lineage and its difference in one table:
-inspired by <code>mcp-mem0</code>, but SQLite via <code>sql.js</code>
-WASM instead of Postgres, <code>all-MiniLM-L6-v2</code> in process
-instead of the OpenAI embeddings API, cosine in memory instead of a
-cloud vector database, and no LLM dependency at all. Installation is
-<code>npx</code>.</p>
-<p>It is a small subject and this is a short report, which is the
-proportionate response. Two things in it are worth taking.</p>
-<p>The first is that the forgetting model fits on a screen and says what
-it means. <code>DECAY_CONFIG</code> is a half-life per memory type —
+<p>LongtermMemory-MCP is a fully local MCP memory server in TypeScript
+whose forgetting policy is a six-row half-life table with floors and
+protected tags. Its storage contradicts the economy the policy is built
+for. Every read of an unprotected memory exports and rewrites the entire
+SQLite file, once per search candidate, and two server processes on the
+default shared file silently overwrite each other.</p>
+<p>It states its lineage in a comparison table: inspired by
+<code>mcp-mem0</code>, but SQLite through a <code>sql.js</code> WASM
+build instead of Postgres, <code>all-MiniLM-L6-v2</code> in process
+instead of an embeddings API, cosine in memory instead of a vector
+database, and no LLM at all. It is installed by <code>npx</code>, or as
+a Claude Code plugin that adds a companion skill.</p>
+<p><strong>The decay policy is the part to take.</strong>
+<code>DECAY_CONFIG</code> holds a half-life per memory type —
 <code>ephemeral</code> 10 days, <code>task</code> 30,
 <code>conversation</code> 45, <code>general</code> 60,
-<code>preference</code> 90, <code>fact</code> 120 — with a floor per
-type so nothing decays to zero, and a protected-tag set of
-<code>core</code>, <code>identity</code> and <code>pinned</code> that
-exempts a memory from decay entirely. <code>computeDecay</code> is four
-lines of exponential, rounded to the nearest half point and clamped to
-the floor.</p>
-<p>Most decay in this corpus is either a constant nobody tuned or a
-model spread across three files. This is a table a user could read and
-reason about, and the differentiation is sensible on its face: a stated
-preference should outlive a task by three months.</p>
-<p>The second is the write-amplification decision, made deliberately.
-Decay and reinforcement are both <em>computed</em> on access and
-<em>persisted</em> only when the change is large enough:
-<code>shouldWriteDecay</code> returns true only at a drop of half a
-point or more, and reinforcement accumulates 0.1 per access into a
-running total that writes back at 0.5 and caps importance at 10. So
-reading a memory a dozen times adjusts its standing without producing a
-dozen writes, and the threshold is a named constant rather than an
-accident.</p>
-<p>For a store that exports and rewrites the entire SQLite file on each
-persist — which is what <code>sql.js</code> requires — that decision is
-load-bearing rather than cosmetic.</p>
-<p>What is not here is anything epistemic, and the report carries no
-marks for that reason. <code>memory_type</code> is a genre chosen at
-write time, <code>importance</code> is a continuous weight, and neither
-withholds anything from a reader. There is no status, no provenance
-beyond a free JSON metadata blob, no supersession, no validity interval
-and no record of what changed. Deletion is deletion:
-<code>delete_all_memories</code> is described in the README as
-irreversible, and the tool contract carries no confirmation step.</p>
+<code>preference</code> 90, <code>fact</code> 120 — a floor per type,
+and the protected tags <code>core</code>, <code>identity</code> and
+<code>pinned</code>. <code>computeDecay</code> is exponential on days
+since last access, rounded to the nearest half point and clamped up to
+the floor. A user can read the table, argue with it and change one
+number.</p>
+<p><strong>The write threshold governs a column, not the write.</strong>
+<code>shouldWriteDecay</code> lets a decay reach <code>importance</code>
+only when it drops half a point, and reinforcement banks 0.1 per access
+until 0.5. But the same function unconditionally writes the accumulator
+into <code>metadata</code>, writes <code>last_accessed</code>, and calls
+<code>persist()</code>, which exports the database and writes the whole
+file (<code>src/memory-store.ts:438-456</code>). <code>search</code>
+runs it for every row above the similarity threshold before slicing to
+the limit (<code>:209-216</code>).</p>
+<p><strong>Two processes, one file, last writer wins.</strong>
+<code>init()</code> reads the file once (<code>:47-49</code>); nothing
+reads it again, and nothing locks it. The README's default is "every
+project and every MCP client shares the same memory pool", and a stdio
+MCP server is one process per client session. A search in one session
+therefore writes back a copy that lacks whatever another session saved
+since it started.</p>
+<p><strong>The schema version discards rather than migrates.</strong> On
+open, a file with no <code>schema_meta</code> table, or with any version
+other than the code's, has its <code>memories</code> table dropped and
+recreated (<code>:67-95</code>). The design note says "preserving data
+across schema upgrades is not required", and
+<code>schema-migration.test.ts</code> asserts the wipe. With an unpinned
+<code>npx -y</code> launch, a future version bump would empty the shared
+file for whichever client opens it second, in either direction.</p>
+<p>Nothing here is epistemic. <code>memory_type</code> is a genre chosen
+at write time, <code>importance</code> is a continuous weight that the
+semantic search does not read, and there is no status, provenance,
+supersession, validity interval or change record. The one mark is
+<code>negative_eval</code>, on a type-filter exclusion test (section
+10).</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>memory</strong> is content, an embedding, a type, some
-tags, and an importance between 1 and 10.</p>
-<p><strong>Decay</strong> lowers importance by a half-life chosen by
-type, unless a tag protects it or the floor stops it.</p>
-<p><strong>Access</strong> raises it, slowly, and neither movement is
-written until it is worth writing.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — decay and reinforcement are recomputed on every access and persisted only when the change crosses half a point, so a read-heavy workload does not rewrite the database each time</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: decay and reinforcement are recomputed on every access and persisted only when the change crosses half a point, so a read-heavy workload does not rewrite the database each time
+tags, an importance between 1 and 10, and a free metadata object.</p>
+<p><strong>Decay</strong> lowers importance by the type's half-life on
+the days since the last access, unless a tag protects it or the floor
+stops it.</p>
+<p><strong>Access</strong> raises it by a banked tenth, and resets the
+idle clock whether or not the decay was written.</p>
+<p><strong>Persisting</strong> means exporting the whole in-memory
+database and writing it over the file, which happens on every save,
+update, delete and unprotected read.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — every unprotected read writes the accumulator and last_accessed and rewrites the whole database file; the half-point threshold decides only whether importance changes</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: every unprotected read writes the accumulator and last_accessed and rewrites the whole database file; the half-point threshold decides only whether importance changes
 flowchart TB
-    SAVE[&quot;save_memory&quot;] --&gt; HASH{&quot;content_hash already present?&quot;}
+    SAVE[&quot;save_memory&quot;] --&gt; HASH{&quot;content_hash&lt;br/&gt;already present?&quot;}
     HASH --&gt;|&quot;yes&quot;| DUP[&quot;throws, naming the&lt;br/&gt;existing memory&#39;s id&quot;]
-    HASH --&gt;|&quot;no&quot;| EMB[&quot;all-MiniLM-L6-v2, in process&quot;]
-    EMB --&gt; DB[(&quot;SQLite via sql.js WASM —&lt;br/&gt;id · content · content_hash ·&lt;br/&gt;metadata · embedding · tags ·&lt;br/&gt;importance 1–10 · memory_type ·&lt;br/&gt;created · updated · last_accessed&quot;)]
-    Q[&quot;search_memory&quot;] --&gt; COS[&quot;cosine similarity in process&quot;]
-    DB --&gt; COS
-    COS --&gt; ACC[&quot;on access&quot;]
-    ACC --&gt; D[&quot;computeDecay(importance, daysIdle, type):&lt;br/&gt;importance × 0.5^(daysIdle / halfLife),&lt;br/&gt;rounded to the nearest half,&lt;br/&gt;clamped up to the type&#39;s floor&quot;]
-    TBL[&quot;half-life per type:&lt;br/&gt;ephemeral 10 · task 30 ·&lt;br/&gt;conversation 45 · general 60 ·&lt;br/&gt;preference 90 · fact 120&lt;br/&gt;floors: 1 · 1 · 2 · 1 · 2 · 3&quot;] -.-&gt; D
-    PROT[&quot;shouldProtect: tags core ·&lt;br/&gt;identity · pinned never decay&quot;] -.-&gt; D
-    ACC --&gt; R[&quot;computeReinforcement:&lt;br/&gt;bank 0.1 per access&quot;]
+    HASH --&gt;|&quot;no&quot;| EMB[&quot;all-MiniLM-L6-v2,&lt;br/&gt;in process&quot;]
+    EMB --&gt; MEM[(&quot;in-memory sql.js database,&lt;br/&gt;loaded from the file once at start&quot;)]
+    Q[&quot;search_memory&quot;] --&gt; COS[&quot;cosine over every row&#39;s embedding&quot;]
+    MEM --&gt; COS
+    COS --&gt; CAND[&quot;every row with score &gt;= threshold&lt;br/&gt;(default 0.3), before the limit&quot;]
+    G[&quot;getById, and update_memory&lt;br/&gt;which calls it first&quot;] --&gt; PROT
+    CAND --&gt; PROT{&quot;tag core, identity&lt;br/&gt;or pinned?&quot;}
+    PROT --&gt;|&quot;yes&quot;| RET[&quot;returned unchanged,&lt;br/&gt;nothing written&quot;]
+    PROT --&gt;|&quot;no&quot;| D[&quot;computeDecay: importance x 0.5^(idleDays / halfLife),&lt;br/&gt;rounded to the half, clamped to the floor&quot;]
     D --&gt; W1{&quot;drop &gt;= 0.5?&quot;}
+    W1 --&gt;|&quot;yes&quot;| IMP[&quot;UPDATE importance&quot;]
+    W1 --&gt;|&quot;no&quot;| R
+    IMP --&gt; R[&quot;computeReinforcement:&lt;br/&gt;accumulator + 0.1&quot;]
     R --&gt; W2{&quot;accumulator &gt;= 0.5?&quot;}
-    W1 --&gt;|&quot;no&quot;| SKIP1[&quot;no write&quot;]
-    W2 --&gt;|&quot;no&quot;| SKIP2[&quot;no write&quot;]
-    W1 --&gt;|&quot;yes&quot;| WRITE[&quot;persist — exports and rewrites&lt;br/&gt;the whole database file&quot;]
-    W2 --&gt;|&quot;yes&quot;| WRITE</code></pre></details></figure>
+    W2 --&gt;|&quot;yes&quot;| RIMP[&quot;UPDATE importance and metadata,&lt;br/&gt;accumulator reset to 0&quot;]
+    W2 --&gt;|&quot;no&quot;| RMETA[&quot;UPDATE metadata&lt;br/&gt;with the new accumulator&quot;]
+    RIMP --&gt; LA[&quot;UPDATE last_accessed = now&quot;]
+    RMETA --&gt; LA
+    LA --&gt; P[&quot;persist(): export the whole database,&lt;br/&gt;writeFileSync over the file&quot;]
+    P --&gt; FILE[(&quot;~/.longterm-memory-mcp/memories.db,&lt;br/&gt;shared by every client process,&lt;br/&gt;no lock, never read again&quot;)]
+    FILE -.-&gt;|&quot;read once by init()&quot;| MEM</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -233,115 +254,242 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>src/memory-store.ts</code></td>
-<td>The schema, the indexes, dedup, and the persist</td>
+<td>Schema and version check, dedup, the five reads, decay and
+reinforcement on access, persist, backup trigger</td>
 </tr>
 <tr>
 <td><code>src/decay.ts</code></td>
-<td>The half-life table, the floors, the protected tags, both write-back
+<td>The half-life table, the floors, the protected tags, both
 thresholds</td>
 </tr>
 <tr>
 <td><code>src/embeddings.ts</code></td>
-<td>MiniLM in process</td>
+<td>MiniLM through <code>@xenova/transformers</code>, and cosine</td>
 </tr>
 <tr>
 <td><code>src/server.ts</code></td>
-<td>The MCP tool surface</td>
+<td>Eleven MCP tools</td>
 </tr>
 <tr>
 <td><code>src/backup.ts</code></td>
-<td>A manual backup that exports JSON beside the database</td>
+<td>A database copy plus JSON export, ten kept</td>
 </tr>
 <tr>
-<td><code>skills/long-term-memory</code></td>
-<td>The companion skill that teaches the model to use it</td>
+<td><code>src/index.ts</code></td>
+<td>Paths from <code>MEMORY_DB_PATH</code> and
+<code>MEMORY_BACKUP_PATH</code>, stdio transport</td>
+</tr>
+<tr>
+<td><code>skills/long-term-memory/SKILL.md</code></td>
+<td>The companion skill: when to recall, when to save, how to
+format</td>
 </tr>
 <tr>
 <td><code>tests/</code></td>
-<td>Unit, integration and benchmark suites, including a schema-migration
-test</td>
+<td>Unit, integration and benchmark suites</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The plugin's <code>.mcp.json</code> and <code>.vscode/mcp.json</code>
+both launch <code>npx -y longterm-memory-mcp</code> with no version, so
+an installed plugin runs whatever the npm registry serves at launch
+rather than the code at this commit. The embedding model, about 30 MB
+quantized, is downloaded on first use and cached; after that nothing
+leaves the machine. There is no API key anywhere.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>src/decay.ts</code> in full. Sixty-five lines containing the
-whole forgetting model and both write-back thresholds.</p>
-<p><code>src/memory-store.ts:140-152</code> for dedup, and
-<code>:66-96</code> for the schema version check.</p>
+<p><code>src/decay.ts</code> in full: sixty-five lines holding the whole
+forgetting policy and both thresholds.</p>
+<p><code>src/memory-store.ts:422-459</code>,
+<code>applyDecayAndReinforcement</code>, read beside
+<code>:191-217</code>, <code>search</code>. The pair is where the
+threshold design and the write behaviour part company.</p>
+<p><code>src/memory-store.ts:36-56</code> and <code>:124-128</code>: one
+read of the file at start, one whole-file write per persist.</p>
+<p><code>src/memory-store.ts:58-95</code> with
+<code>docs/plans/2026-03-09-schema-migration-design.md</code> and
+<code>tests/unit/schema-migration.test.ts</code>: the version check, its
+stated intent, and the test that holds it.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Eleven columns and five indexes, with <code>schema_meta</code>
-holding a version that is compared on open and a
-<code>schema-migration.test.ts</code> covering the path. For a project
-this size, versioning the file format before anyone has asked is the
-right instinct — the database lives in a user's home directory and will
-outlive several releases.</p>
-<p><code>metadata</code> is a free JSON blob, which is where provenance
-would go if there were any. Nothing in the tool contract asks a caller
-to say where a memory came from.</p>
+<p>Eleven columns and five indexes, in one <code>memories</code> table
+beside a one-row <code>schema_meta</code>. <code>metadata</code> is free
+JSON from the caller, and it doubles as the store's own state:
+<code>reinforcement_accum</code> is written into it on every unprotected
+access (<code>:439-450</code>). The value is returned to the agent in
+<code>search_memory</code> and <code>get_all_memories</code> output. An
+<code>update_memory</code> that passes <code>metadata</code> replaces
+the object and resets the accumulator with it.</p>
+<p><code>schema_meta</code> holds version 1, and
+<code>initializeSchema</code> compares it on open. A missing table or
+any other value drops <code>memories</code> and recreates it empty
+(<code>:67-75</code>, <code>:89-94</code>). No backup is taken first.
+The snapshots in <code>backups/</code> survive the wipe, so recovery is
+possible by hand from the newest one.</p>
+<p>Provenance, if a caller supplies any, goes in <code>metadata</code>.
+The tool contract does not ask for it.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Cosine over MiniLM embeddings computed in process, with
-<code>search_by_type</code>, <code>search_by_tags</code> and
-<code>search_by_date_range</code> as filters. Importance weights nothing
-at retrieval time that was traced here — it governs decay rather than
-ranking — so a memory decayed to its floor is returned like any
-other.</p>
+<p>Five reads, and they treat importance differently.</p>
+<p><code>search</code> embeds the query, reads every row, parses every
+stored embedding from JSON, keeps rows whose cosine clears the
+threshold, runs decay and reinforcement on each, and sorts by cosine
+alone (<code>:191-217</code>). Importance does not affect the ranking,
+so a memory decayed to its floor ranks exactly as it did at full
+strength.</p>
+<p><code>searchByType</code> and <code>searchByTags</code> order by
+stored <code>importance DESC</code> (<code>:298</code>,
+<code>:320</code>), and neither applies decay, so the order is by
+importance as last written. A memory that has not been read in months
+keeps its saved importance in these listings. <code>searchByTags</code>
+matches with <code>LIKE '%"tag"%'</code> over the JSON array.
+<code>searchByDateRange</code> filters <code>created_at</code>, the
+record time, and <code>getAll</code> orders by it.</p>
+<p><code>getById</code> applies decay and reinforcement, so
+<code>update_memory</code>, which calls it first, also counts as an
+access.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Exact-content dedup: the hash is computed, a matching row is looked
-up, and a collision throws an error naming the existing id. Throwing
-rather than silently returning the existing memory is the friendlier
-choice for an agent caller, which can then decide whether to update
-it.</p>
-<p>It is also exact. The same fact in different words is two rows, and
-once they exist nothing reconciles them — no supersession, no
-contradiction detection, and importance decay treats them independently.
-For a personal store that is a tolerable amount of drift; it is the
-first thing that would need attention if the store grew.</p>
+<p><code>save</code> computes a SHA-256 of the exact content, looks for
+a matching row, and throws
+<code>Duplicate content detected (existing memory: &lt;id&gt;)</code> on
+a hit (<code>:141-151</code>). The companion skill tells the model to
+take that id to <code>update_memory</code>. The same check runs on an
+update that changes content. The same fact in other words is a second
+row, and nothing reconciles the two.</p>
+<p><code>update</code> overwrites every column in place with no prior
+version kept (<code>:278-282</code>). <code>delete</code> and
+<code>deleteAll</code> are SQL deletes followed by a persist.</p>
+<p><strong>Decay below the step is forgiven, not banked.</strong>
+<code>computeDecay</code> measures idle days from
+<code>last_accessed</code>, and every unprotected access resets
+<code>last_accessed</code> whether or not the decay was written
+(<code>:455</code>). A <code>general</code> memory at importance 5 needs
+about four and a half idle days before its decay rounds down by half a
+point. Read more often than that, it never decays, and gains a banked
+tenth on every read. Reinforcement is the opposite: its accumulator
+persists across accesses. The README's "Protected and frequently
+accessed memories resist decay" is true, and this asymmetry is the
+reason.</p>
+<p>The README also says "Higher importance decays more slowly". In
+<code>computeDecay</code> importance is a multiplier and the half-life
+comes from the type alone, so every importance loses the same fraction
+per half-life.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>An MCP server started by <code>npx</code>, plus a Claude Code plugin
-that installs both the server and "a companion skill that teaches Claude
-how to use memory effectively". Shipping the prompt-side half beside the
-server is worth noting — a memory tool with no guidance about when to
-call it tends not to be called.</p>
+<p>Eleven tools: <code>save_memory</code>, <code>search_memory</code>,
+<code>get_all_memories</code>, <code>update_memory</code>,
+<code>search_by_type</code>, <code>search_by_tags</code>,
+<code>search_by_date_range</code>, <code>delete_memory</code>,
+<code>delete_all_memories</code>, <code>memory_stats</code> and
+<code>create_backup</code>. Both delete tools are on the agent's
+surface. Their descriptions ask the model to delete only on the user's
+explicit request, and nothing checks it.</p>
+<p>The companion skill drives the loop. At session start the model calls
+<code>search_memory</code> twice, once with the project name and task
+keywords and once with <code>"preference workflow"</code>. After a
+debugging, design, planning, review or testing task it searches for a
+duplicate, then saves or updates. Memories are written as
+<code>[{category}] [{project}] {insight}</code> with the project as a
+tag too. That prefix is the only project boundary, and it reaches
+retrieval as words in an embedding, not as a filter.</p>
+<p>The skill also tells the model to keep memory invisible: "Integrate
+silently", "Never surface raw memory content to the user", and on
+failure "Do not mention that memory is unavailable". A user has no
+prompt-level signal of what was recalled or saved.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The trust surface is small and honestly small. There is no scope, no
-authentication and no audit, because there is one local database and one
-user. The safety-relevant facts are that
-<code>delete_all_memories</code> is irreversible and that the whole
-database is exported and rewritten on each persist, so a crash mid-write
-is a question the backup tool exists to answer rather than one the store
-handles.</p>
+<p><strong>Concurrency.</strong> Each server process holds a private
+copy of the database and writes the whole of it on every persist. With
+the default shared path, any two concurrently running clients lose
+writes to each other, and a read is enough to cause it.
+<code>MEMORY_DB_PATH</code> per client avoids it by giving each client
+its own file.</p>
+<p><strong>Crash safety.</strong> <code>persist()</code> is a
+<code>writeFileSync</code> over the live file, with no temporary file
+and rename. A crash mid-write leaves a partial file that the next
+<code>init()</code> will try to open.</p>
+<p><strong>Deletion.</strong> Deletion is a hard delete from the live
+file. The automatic backup copies the database and writes a JSON export
+on the first save in each process, then every 24 hours or when the count
+reaches a multiple of 100, and keeps the ten newest
+(<code>src/backup.ts:60-84</code>). A deleted memory therefore persists
+on disk until ten later snapshots have been taken.
+<code>delete_all_memories</code> triggers no backup of its own.</p>
+<p><strong>Schema.</strong> The version check protects the code from a
+file it cannot read by emptying the file's memories, and it does so on a
+mismatch in either direction.</p>
+<p>There is no scope, authentication or audit, because the design is one
+local user. The risks above are what that design leaves to the
+deployment.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>109 tests across unit suites for the store, decay, embeddings, backup
-and schema migration, an integration test that drives the MCP server,
-and three benchmark files — cosine similarity, decay and the store.
-Benchmarking the decay path is unusual and sensible for a component that
-runs on every access.</p>
+<p>101 vitest cases across six files — the store, decay, embeddings,
+backup, the schema check and an MCP integration suite driven through an
+in-memory client — and 29 benchmarks across cosine, decay and the store.
+CI runs build and test on Ubuntu and Windows under Node 20 and 22. I did
+not run them.</p>
+<p>The decay tests assert the threshold functions in isolation. No test
+asserts how many writes an access produces: <code>fs</code> is mocked in
+the store and integration suites, and no assertion inspects
+<code>writeFileSync</code>. The schema tests assert that a mismatched or
+missing version wipes the data
+(<code>tests/unit/schema-migration.test.ts:42-74</code>), and one
+asserts that a matching version keeps it.</p>
+<p><code>negative_eval</code> is awarded on the type facet. The
+integration case saves a <code>fact</code> and a <code>preference</code>
+through <code>save_memory</code>, calls <code>search_by_type</code> for
+<code>fact</code>, and asserts exactly one result of type
+<code>fact</code>
+(<code>tests/integration/mcp-server.test.ts:222-240</code>). The
+populated preference must stay out, beside a positive control in the
+same output. The unit case seeds two facts and a preference and asserts
+two results, every one a fact
+(<code>tests/unit/memory-store.test.ts:279-287</code>).</p>
+<p>The facet is one the caller chooses, and the SQL predicate is the
+only thing that can exclude a row, since the listing has no relevance
+step. No case asserts an exclusion from <code>search_memory</code>, the
+read the companion skill uses at session start, and no case concerns a
+corrected value or a scope boundary.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Put the decay policy in one table. Six half-lives and six floors,
-with the type names beside them, is something a user can read, argue
-with and tune. A decay constant buried in a scoring function is none of
-those.</p>
-<p>Decide when a computed value gets written. Recomputing decay on read
-is cheap; persisting it on read is not, and the difference is one
-threshold constant. Name it — <code>writebackStep</code> — so the next
-person can see the trade rather than rediscover it.</p>
-<p>Give protected tags to the things that must not fade.
-<code>core</code>, <code>identity</code>, <code>pinned</code> is a short
-list, and having it means the decay model can be aggressive everywhere
-else.</p>
-<p>And version the schema before anyone needs a migration. A user's
-database outlives releases, and the test is cheaper to write while there
-is only one version.</p>
+<h3 id="steal">Steal</h3>
+<p>Put the decay policy in one table. Six half-lives and six floors with
+the type names beside them is something a user can read and tune. A
+constant inside a scoring function is neither.</p>
+<p>Give protected tags to what must not fade. A short exempt list lets
+the decay model be aggressive everywhere else.</p>
+<p>Throw on a duplicate with the colliding id. The caller learns what to
+update instead of receiving a silent no-op.</p>
+<h3 id="avoid">Avoid</h3>
+<p>A write threshold that guards one column while the same function
+writes two others. If a read must not write, make the read path free of
+writes and batch the bookkeeping, and assert the write count in a
+test.</p>
+<p>Reinforcing every candidate above a similarity threshold. The rows a
+search touched are not the rows the agent saw; reinforce what was
+returned.</p>
+<p>A single-file store loaded once per process and written back whole,
+behind a default that shares it across clients. Either lock and reload,
+or give each client its own file by default.</p>
+<p>A version check that drops the table. If the format must change, back
+up first and refuse to open a higher version rather than wiping it.</p>
+<p>Resetting the idle clock on an access that did not apply the decay.
+Bank the remainder, or decay from the last write rather than the last
+read.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one person running one client at a time who wants recall
+without a service, an API key or a model. Walk away if two sessions may
+run at once against the default file, if a release could change the
+schema under a store you care about, or if a corrected or deleted memory
+must be accountable.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether importance influences ranking. It governs decay; whether a
-decayed memory is down-weighted at retrieval was not established from
-the search path read here.</p>
-<p>What happens to two memories stating the same fact differently.
-Exact-hash dedup does not catch it, and nothing else in the tree
-reconciles them.</p>
+<p>Whether the shared default path and the per-process copy were weighed
+together. The README promotes sharing across clients, and nothing in the
+tree discusses concurrent processes.</p>
+<p>Whether the per-candidate reinforcement in <code>search</code> is
+intended. The README says "Every time a memory is accessed via search,
+its importance increases", which matches the code only if a candidate
+counts as accessed.</p>
+<p>What happens to the shared file when <code>SCHEMA_VERSION</code>
+first moves to 2. The design note accepts data loss; it does not discuss
+clients pinned to different versions through the npx cache.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -353,27 +501,128 @@ reconciles them.</p>
 <tbody>
 <tr>
 <td><code>src/decay.ts</code></td>
-<td>The whole forgetting model, and both write-back thresholds</td>
+<td>The whole forgetting policy, and both thresholds</td>
 </tr>
 <tr>
-<td><code>src/memory-store.ts:140-152</code></td>
+<td><code>src/memory-store.ts:422-459</code></td>
+<td>Decay and reinforcement on access, and the unconditional writes and
+persist</td>
+</tr>
+<tr>
+<td><code>src/memory-store.ts:191-217</code></td>
+<td>Search: every row, cosine-only ranking, decay on every candidate
+before the limit</td>
+</tr>
+<tr>
+<td><code>src/memory-store.ts:36-56</code>, <code>:124-128</code></td>
+<td>One file read at start, one whole-file write per persist</td>
+</tr>
+<tr>
+<td><code>src/memory-store.ts:58-95</code></td>
+<td>The schema version check that drops the table</td>
+</tr>
+<tr>
+<td><code>src/memory-store.ts:141-151</code></td>
 <td>Dedup that throws with the id it collided with</td>
 </tr>
 <tr>
-<td><code>src/memory-store.ts:66-96</code></td>
-<td>A versioned schema checked on open</td>
+<td><code>src/memory-store.ts:295-351</code></td>
+<td>Type, tag and date listings; importance order without decay</td>
 </tr>
 <tr>
-<td><code>tests/unit/schema-migration.test.ts</code></td>
-<td>The migration path, tested early</td>
+<td><code>src/backup.ts:22-84</code></td>
+<td>Snapshot, JSON export, ten kept, the auto-backup rule</td>
 </tr>
 <tr>
-<td><code>README.md</code></td>
-<td>A comparison table that states its own lineage</td>
+<td><code>src/server.ts</code></td>
+<td>The eleven tools, both deletes included</td>
+</tr>
+<tr>
+<td><code>skills/long-term-memory/SKILL.md</code></td>
+<td>Silent recall and save, and the project prefix</td>
+</tr>
+<tr>
+<td><code>docs/plans/2026-03-09-schema-migration-design.md</code></td>
+<td>Wipe-on-mismatch as the stated decision</td>
+</tr>
+<tr>
+<td><code>tests/integration/mcp-server.test.ts:222-240</code></td>
+<td>The type-facet exclusion case</td>
+</tr>
+<tr>
+<td><code>tests/unit/schema-migration.test.ts:42-74</code></td>
+<td>The wipe, asserted</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>. The <code>src/</code> and <code>tests/</code>
+trees are identical at both pins
+(<code class="commit-id" title="e162816c037b245567ca0fa1687fb6ac2383fa23">e162816c…</code> and
+<code class="commit-id" title="c4d52a0a81bdd70c8fd715884b3e0aaaa3846323">c4d52a0a…</code>), so each result
+holds at both.</p>
+<ul>
+<li><code>git grep -n -E 'readFileSync|writeFileSync|persist\(\)|lock|flock|rename|watch' -- src</code>
+— one <code>readFileSync</code> in <code>init</code>, one
+<code>writeFileSync</code> in <code>persist</code> and one in the backup
+export, the <code>persist()</code> definition and six calls; no lock,
+rename or watch.</li>
+<li><code>git grep -n -E 'applyDecayAndReinforcement' -- src</code> —
+defined at <code>:422</code>, called from <code>search</code>
+(<code>:210</code>) and <code>getById</code> (<code>:232</code>).</li>
+<li><code>git grep -n -E 'UPDATE memories' -- src</code> —
+<code>update</code> at <code>:279</code> and four in
+<code>applyDecayAndReinforcement</code> (<code>:435</code>,
+<code>:446</code>, <code>:450</code>, <code>:455</code>).</li>
+<li><code>git grep -n -E 'DROP TABLE|DELETE FROM' -- src</code> — the
+two schema drops (<code>:69</code>, <code>:90</code>), the two deletes,
+the <code>schema_meta</code> reset and a test-only helper.</li>
+<li><code>git grep -n -E 'json_extract|WHERE.*metadata' -- src</code> —
+no match; nothing filters on metadata.</li>
+<li><code>git grep -n -E 'WHERE' -- src</code> — no predicate on a user,
+project, tenant or status column.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_at|validFrom|invalid_at|effective|expires?_at|observed_at|event_time' -- . ':!package-lock.json' ':!CHANGELOG.md'</code>
+— two README hits on the word "effectively"; no validity time.</li>
+<li><code>git grep -n -i -E 'user_?id|tenant|namespace|scope|project_?id|session_?id|agent_?id|owner' -- . ':!package-lock.json' ':!CHANGELOG.md'</code>
+— the plugin manifest owner, the README's "user-scoped location",
+commit-message scope and registry ownership; no scope key.</li>
+<li><code>git grep -n -i -E 'history|audit|changelog|journal|event_log|append' -- . ':!package-lock.json' ':!CHANGELOG.md'</code>
+— release tooling and <code>*.db-journal</code> in
+<code>.gitignore</code>; no mutation record.</li>
+<li><code>git grep -n -i -E 'tombstone|reject|blocklist|denylist|suppress|forbid' -- . ':!package-lock.json' ':!CHANGELOG.md'</code>
+— the duplicate-content rejection and its tests; no value-keyed
+rejection.</li>
+<li><code>git grep -n -i -E 'status|verified|trusted|pending|quarantine|disputed|candidate|approve|confirm' -- . ':!package-lock.json' ':!CHANGELOG.md'</code>
+— response <code>status</code> strings, the README's "Verified
+information" gloss on <code>fact</code>, the local
+<code>candidates</code> array in <code>search</code>; no state
+column.</li>
+<li><code>git grep -n -E 'writeFileSync\)?\.(toHaveBeenCalled|mock)|toHaveBeenCalledTimes' -- tests</code>
+— no match; no test counts writes.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|citation|doi\.org' -- . ':!package-lock.json'</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/7f7f064d31f348dcc7f074e11c291a3f9ed5e046"><code class="commit-id" title="7f7f064d31f348dcc7f074e11c291a3f9ed5e046">7f7f064d…</code></a>
+— 21 commits on, all dependency updates; only
+<code>package-lock.json</code> changed. Wrong at the first pin and
+corrected: decay and reinforcement were said to be written only past
+half a point, when every unprotected read writes and rewrites the file
+(<a href="#1-executive-summary">section 1</a>). The schema version was
+called a migration, when it drops the table (<a
+href="#5-memory-data-model">section 5</a>); backup was called manual;
+importance was said to order nothing; 109 tests were 101; and
+<code>negative_eval</code> was earned (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Added: concurrent
+processes overwrite the shared file (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Screened from a
+full clone: nine files, four auto-run surfaces, one build-time exec
+point, one unpinned surface, <code>package-lock.json</code> inside the
+cooldown. Nothing was installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/5955730d50f0e1d999b28007271205d3e6c0dc37"><code class="commit-id" title="5955730d50f0e1d999b28007271205d3e6c0dc37">5955730d…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

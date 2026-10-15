@@ -4111,11 +4111,11 @@ Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP">MarcelRoozekrans/LongtermMemory-MCP</a>
 at <a
-href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/5955730d50f0e1d999b28007271205d3e6c0dc37"><code class="commit-id" title="5955730d50f0e1d999b28007271205d3e6c0dc37">5955730d…</code></a>
-— read only, from a shallow clone; eight files scanned, three auto-run
-surfaces, one build-time execution point, one unpinned surface and two
-dependency files inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/7f7f064d31f348dcc7f074e11c291a3f9ed5e046"><code class="commit-id" title="7f7f064d31f348dcc7f074e11c291a3f9ed5e046">7f7f064d…</code></a>
+— read only, from a full clone; nine files scanned, four auto-run
+surfaces, one build-time execution point, one unpinned surface and one
+dependency file (<code>package-lock.json</code>) inside the seven-day
+cooldown. Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/OWASP/www-project-agent-memory-guard">OWASP/www-project-agent-memory-guard</a>
 at <a
@@ -16773,6 +16773,34 @@ rather than four, and one of three <code>evals/</code> directories has
 no Dockerfile, instruction or probes. The first rested on a filter's
 predicate rather than on what the filtered list was for, and the third
 on a field's declaration rather than its writers.</li>
+<li><strong>Six published claims about <a
+href="../systems/longterm-memory-mcp/">LongtermMemory-MCP</a> were wrong
+at <a
+href="https://github.com/MarcelRoozekrans/LongtermMemory-MCP/commit/5955730d50f0e1d999b28007271205d3e6c0dc37"><code class="commit-id" title="5955730d50f0e1d999b28007271205d3e6c0dc37">5955730d…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+decay and reinforcement were persisted only when the change crossed half
+a point, so that a dozen reads did not produce a dozen writes. The
+threshold guarded only the <code>importance</code> column:
+<code>applyDecayAndReinforcement</code> wrote the accumulator into
+<code>metadata</code>, wrote <code>last_accessed</code> and called
+<code>persist()</code> on every unprotected access
+(<code>src/memory-store.ts:438-456</code>), and <code>search</code> ran
+it for every candidate above the similarity threshold
+(<code>:209-212</code>). It praised the versioned schema as a migration
+path for a file that would outlive releases;
+<code>initializeSchema</code> dropped the <code>memories</code> table on
+a missing or mismatched version (<code>:67-95</code>), and the migration
+test asserted the wipe. It called the backup manual; <code>save</code>
+triggered one automatically (<code>:162-163</code>,
+<code>src/backup.ts:77-84</code>). It said importance weighted nothing
+at retrieval; <code>searchByType</code> and <code>searchByTags</code>
+ordered by it (<code>:298</code>, <code>:320</code>). It counted 109
+tests; there were 101 vitest cases and 29 benchmarks. And it withheld
+<code>negative_eval</code>, though
+<code>tests/integration/mcp-server.test.ts:222-240</code> asserted that
+a populated preference stays out of a <code>fact</code> listing beside a
+positive control. The first two rested on the threshold function and the
+version table rather than on their callers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

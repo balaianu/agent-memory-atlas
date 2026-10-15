@@ -606,34 +606,28 @@ audit log covers security and DDL events rather than row mutations, so
 none for audit.</p>
 <p><strong><a
 href="../systems/longterm-memory-mcp/">LongtermMemory-MCP</a> puts its
-whole forgetting policy in one readable table.</strong> An MIT
-TypeScript MCP server at version 1.4.4 — 2,763 lines with 109 tests —
-that states its lineage and its difference in a comparison table:
-inspired by <code>mcp-mem0</code>, but SQLite through a
-<code>sql.js</code> WASM build instead of Postgres,
-<code>all-MiniLM-L6-v2</code> in process instead of the OpenAI
-embeddings API, cosine in memory instead of a cloud vector database, and
-no LLM dependency at all. <code>DECAY_CONFIG</code> is a half-life per
-memory type — ephemeral 10 days, task 30, conversation 45, general 60,
-preference 90, fact 120 — with a floor per type so nothing decays to
-nothing and a protected-tag set of <code>core</code>,
-<code>identity</code> and <code>pinned</code> that exempts a memory
-entirely; <code>computeDecay</code> is four lines. Most decay in this
-corpus is either an untuned constant or a model spread across three
-files, and this is a table a user could read and argue with. The second
-decision is write amplification, made deliberately: decay and
-reinforcement are computed on every access and persisted only when the
-change crosses half a point — <code>shouldWriteDecay</code> at a 0.5
-drop, and a reinforcement accumulator banking 0.1 per access that writes
-at 0.5 — which matters because <code>sql.js</code> exports and rewrites
-the entire database file on each persist. Dedup is an exact content hash
-that throws naming the colliding memory's id, and
-<code>schema_meta</code> carries a version with a migration test
-covering it. No marks: <code>memory_type</code> is a write-time genre,
-<code>importance</code> is a continuous weight, neither withholds
-anything from retrieval, and there is no status, provenance,
-supersession, validity interval or change record — deletion is deletion,
-and <code>delete_all_memories</code> is irreversible.</p>
+whole forgetting policy in one readable table, and rewrites its whole
+database on every read.</strong> A fully local MIT TypeScript MCP server
+inspired by <code>mcp-mem0</code>: SQLite through a <code>sql.js</code>
+WASM build, <code>all-MiniLM-L6-v2</code> in process, cosine in memory
+and no LLM. <code>DECAY_CONFIG</code> is a half-life per memory type —
+ephemeral 10 days, task 30, conversation 45, general 60, preference 90,
+fact 120 — with a floor per type and a protected-tag set of
+<code>core</code>, <code>identity</code> and <code>pinned</code> that
+exempts a memory entirely. The half-point threshold guards only the
+<code>importance</code> column: every unprotected read writes a
+reinforcement accumulator and <code>last_accessed</code> and exports the
+whole file, and <code>search_memory</code> does it for every candidate
+above the similarity threshold. Each server process loads the shared
+default file once and writes its own copy back with no lock, so
+concurrent sessions overwrite each other, and a schema version mismatch
+drops the memories table by design. One mark: a
+<code>search_by_type</code> case asserts that a populated preference
+stays out of a <code>fact</code> listing beside a positive control, an
+exclusion about a facet the caller chooses. Nothing is epistemic:
+<code>memory_type</code> is a write-time genre, <code>importance</code>
+a weight the semantic search ignores, and there is no status,
+provenance, supersession, validity interval or change record.</p>
 <p><strong><a href="../systems/a-memory/">a-memory</a> makes a
 suppression flag survive automatic re-saves by deciding what a missing
 argument means.</strong> A four-tier local memory in plain SQLite behind

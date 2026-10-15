@@ -15349,55 +15349,61 @@ user's own; hard retraction with no history</td>
 <tr>
 <td><a
 href="../systems/longterm-memory-mcp/"><code>longterm-memory-mcp</code></a></td>
-<td>A row with content, a content hash, free JSON metadata, an
-embedding, tags, an importance from 1 to 10, a memory type, and created,
-updated and last-accessed timestamps</td>
-<td>SQLite through <code>sql.js</code> compiled to WebAssembly, exported
-and written to disk on each persist, with a versioned
-<code>schema_meta</code> table and five indexes</td>
-<td>In-process cosine similarity over <code>all-MiniLM-L6-v2</code>
-embeddings, plus filters by type, tags and creation date range</td>
+<td>A row with content, a SHA-256 content hash, free JSON metadata that
+also carries a reinforcement accumulator, an embedding, tags, an
+importance from 1 to 10, a memory type, and created, updated and
+last-accessed timestamps</td>
+<td>SQLite through <code>sql.js</code> compiled to WebAssembly, loaded
+into memory once at start and exported as a whole file on every persist,
+with no lock and no reload; a <code>schema_meta</code> version whose
+mismatch drops the memories table</td>
+<td>In-process cosine over <code>all-MiniLM-L6-v2</code> embeddings of
+every row, ranked by similarity alone; type and tag listings ordered by
+stored importance; a creation-date range</td>
 <td><code>save_memory</code> with exact-content dedup — a repeat throws
-naming the existing memory's id — and <code>update_memory</code> for
-content, metadata, tags, importance or type</td>
+naming the existing memory's id — and <code>update_memory</code>, which
+overwrites content, metadata, tags, importance or type in place</td>
 <td>Half-life decay per memory type with per-type floors and protected
-tags; <code>delete_memory</code> by id and
-<code>delete_all_memories</code>, which the README marks
-irreversible</td>
-<td>None. One local database per installation</td>
-<td>An MCP server run by <code>npx</code>, with a Claude Code plugin
-that installs the server and a companion skill teaching the model how to
-use it</td>
-<td>Decay and reinforcement computed on access, and a backup tool that
-exports JSON alongside the database</td>
-<td>Nothing epistemic. Protected tags keep a memory from decaying, and a
-versioned schema with a migration test guards the file format</td>
-<td>The forgetting model is legible in a way most are not: a six-row
-half-life table — ephemeral 10 days, task 30, conversation 45, general
-60, preference 90, fact 120 — with a floor per type so nothing decays to
-nothing, and a protected-tag set (<code>core</code>,
+tags, applied lazily on access; hard <code>delete_memory</code> by id
+and <code>delete_all_memories</code>; deleted rows survive in the
+automatic backup snapshots until ten later ones prune them</td>
+<td>None in the store. One database file shared by every client and
+project unless <code>MEMORY_DB_PATH</code> points elsewhere; the
+companion skill writes the project name into the content as a prefix and
+a tag, and nothing filters on either</td>
+<td>An MCP server launched by an unpinned <code>npx -y</code>, with a
+Claude Code plugin that installs the server and a companion skill
+telling the model to recall at session start and save after tasks,
+silently</td>
+<td>No timer. Decay and reinforcement are computed on access; a copy of
+the database file and a JSON export run on save — the first save in each
+process, then every 24 hours or at a count that is a multiple of 100 —
+keeping ten</td>
+<td>Nothing epistemic. Protected tags exempt a memory from decay; the
+schema version protects the code from an old file by discarding the
+file's memories</td>
+<td>The forgetting policy is one table: half-lives of 10, 30, 45, 60, 90
+and 120 days for ephemeral, task, conversation, general, preference and
+fact, a floor per type, and a protected-tag set (<code>core</code>,
 <code>identity</code>, <code>pinned</code>) that exempts a memory
-entirely. Decay and reinforcement are both recomputed on access and
-persisted only when the change crosses half a point
-(<code>shouldWriteDecay</code>, and a reinforcement accumulator that
-banks 0.1 per access and writes at 0.5), so a read-heavy workload does
-not become a write-heavy one — the write-amplification decision made
-explicitly rather than discovered later. Dedup is an exact content hash
-that throws with the existing memory's id, so a caller can find what it
-collided with. <code>schema_meta</code> carries a version and a
-migration test covers it, which is more discipline than a 508-line store
-usually gets</td>
-<td>Nothing here is epistemic. <code>memory_type</code> is a write-time
-genre, <code>importance</code> is a continuous weight, and neither
-withholds anything from retrieval; there is no status, no provenance
-beyond free-form metadata, no supersession, no validity interval and no
-record of changes. Deletion is a hard delete and
-<code>delete_all_memories</code> is irreversible with no confirmation in
-the tool contract. Dedup is exact-hash, so the same fact phrased
-differently is stored twice and the two can then disagree with nothing
-to resolve them. The whole database is exported and rewritten on each
-persist, which is fine at a personal scale and is the shape that stops
-being fine quietly</td>
+entirely. <code>computeDecay</code> is exponential on idle days, rounded
+to the nearest half point and clamped to the floor, and every constant
+sits in <code>DECAY_CONFIG</code> under a name. Reinforcement banks 0.1
+per access in an accumulator and moves importance only at 0.5. Dedup
+throws with the colliding memory's id, so the caller knows what to
+update</td>
+<td>Every non-protected read writes.
+<code>applyDecayAndReinforcement</code> updates the accumulator and
+<code>last_accessed</code> and exports the whole database file, and
+<code>search_memory</code> runs it for every candidate above the
+similarity threshold before the limit is applied. Each server process
+loads the file once and writes its own copy back with no lock, so two
+sessions on the shared default file overwrite each other's saves. A
+schema version mismatch in either direction drops the memories table, by
+design and under test. Decay below the half-point step is discarded,
+because the access that skipped it resets the idle clock. Nothing is
+epistemic: no status, provenance, supersession, validity interval or
+change record, and updates overwrite</td>
 </tr>
 <tr>
 <td><a href="../systems/loongflow/"><code>loongflow</code></a></td>
@@ -34194,7 +34200,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>462 of 749:</em> <a
+<p><em>463 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34409,6 +34415,8 @@ href="../systems/lint-ai/"><code>lint-ai</code></a>, <a
 href="../systems/llm-wiki-cli/"><code>llm-wiki-cli</code></a>, <a
 href="../systems/lobu/"><code>lobu</code></a>, <a
 href="../systems/local-memory-mcp/"><code>local-memory-mcp</code></a>,
+<a
+href="../systems/longterm-memory-mcp/"><code>longterm-memory-mcp</code></a>,
 <a href="../systems/loreai/"><code>loreai</code></a>, <a
 href="../systems/loreweave/"><code>loreweave</code></a>, <a
 href="../systems/lossless-context-mcp/"><code>lossless-context-mcp</code></a>,
@@ -34689,7 +34697,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-462 repositories of
+463 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
