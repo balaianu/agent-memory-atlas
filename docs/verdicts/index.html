@@ -19716,23 +19716,22 @@ it usable is one line above: "[a] record that does not ASSERT A CHANGE
 never retires anything", so agreement is not correction and a subject's
 echoes do not supersede each other.</li>
 <li>Biggest risk: <strong>the guard is object- and text-based, and the
-code says exactly where that ends.</strong> Under "LOAD-BEARING LIMIT
+shipped agent surface is unscoped.</strong> Under "LOAD-BEARING LIMIT
 (measured, not assumed)": paraphrase resistance "comes ONLY from the
-OBJECT being value-preserving", embedding near-duplicate cannot separate
-a same-value paraphrase (cos mean 0.95) from a different-value
-correction (0.84) — "~42% false-block at a 0.9 threshold" — and "an echo
-that OBSCURES the value (coreferent 'her old hobby') is NOT caught." So
-an agent that restates a retired fact indirectly gets through.
-Separately <code>remember(agent_id="*")</code> stores <code>*</code>
-unchecked because <code>_check_agent_id</code> guards the grant path and
-<code>remember()</code> never calls it — a note that corrects an earlier
-version of itself: "An earlier version of this note said the route
-'reaches the SAME validated path it skipped'. That was false and a
-control caught it." And the README's comparison figures against Graphiti
-and mem0 are the project's own measurements at n=30 per system,
-unreproduced here; the fourth column is its own guard disabled at 100%,
-which is the control that makes the other three legible and is rare
-enough to credit.</li>
+OBJECT being value-preserving", and "an echo that OBSCURES the value
+(coreferent 'her old hobby') is NOT caught." So an agent that restates a
+retired fact indirectly gets through. The MCP server holds an operator
+handle: its <code>recall</code> and <code>get</code> read every record,
+<code>recall_as</code> takes the agent name from the model,
+<code>all_projects=True</code> lifts the project scope, no tenant is
+bound, and <code>reaffirm=True</code> on <code>remember</code> lifts the
+guard unless a revert authority is configured. <code>as_of()</code> and
+<code>believed_at()</code> apply no status predicate, so a provisional
+keyed write answers a point-in-time read that <code>recall</code>
+withholds. And the README's comparison figures against Graphiti and mem0
+are the project's own measurements at n=30 per system, unreproduced
+here; the fourth row is its own guard disabled at 100%, which is the
+control that makes the other three legible.</li>
 <li>Most reusable component: the comment above the guard. It cites its
 own probe, gives comparative stale rates against four named policies,
 states its own defeat condition with the measurement that explains why a
@@ -19741,12 +19740,13 @@ guard defaulting off so "the adapters missed it for ten releases", and a
 documented off-switch that was dead, where "all three of =0, =1 and
 unset produced an identical guarded store. A switch that reports nothing
 when it fails to take effect is worse than no switch."</li>
-<li>Maturity impression: MIT, version 2.35.0, 129,806 lines with 294
-test files and 2,837 test functions, a zero-dependency
-<code>core.py</code> that runs standalone, an MCP server, LangGraph
-packages, and a transparency-log half — Ed25519 attestation, Merkle
-anchoring, COSE/SCITT, witness co-signature, deletion manifests. The
-probes audit the project itself:
+<li>Maturity impression: MIT, version 3.19.1, 209,818 lines of Python
+with 4,882 test functions in 557 test files, a zero-dependency
+<code>core.py</code> that runs standalone, an MCP server, a Claude Code
+plugin, LangGraph and ADK packages, and a transparency-log half —
+Ed25519-signed receipt chains with the head kept outside the store,
+Merkle anchoring, COSE/SCITT, witness co-signature, deletion manifests.
+The probes audit the project itself:
 <code>forget_emits_tombstone_probe.py</code> was found "by running the
 published wheel in a clean room and checking the claim 'erasure with
 signed receipts' against what the API actually does."

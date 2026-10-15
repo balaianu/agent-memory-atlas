@@ -4,29 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="An agent memory whose write path
-consults the set of object signatures already superseded for a key and
-retires a matching incoming write on arrival, preserving the current
-value — with the guard's own defeat condition, its measured false-block
-rate and two shipped bugs written into the comment above it.">
+    <meta name="description" content="A zero-dependency Python agent
+memory whose write path keeps a ledger of each key's retired values and
+refuses a write that restates one.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="inspeximus — Agent Memory Atlas">
-    <meta property="og:description" content="An agent memory whose write
-path consults the set of object signatures already superseded for a key
-and retires a matching incoming write on arrival, preserving the current
-value — with the guard's own defeat condition, its measured false-block
-rate and two shipped bugs written into the comment above it.">
+    <meta property="og:description" content="A zero-dependency Python
+agent memory whose write path keeps a ledger of each key's retired
+values and refuses a write that restates one.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="inspeximus — Agent Memory Atlas">
-    <meta name="twitter:description" content="An agent memory whose
-write path consults the set of object signatures already superseded for
-a key and retires a matching incoming write on arrival, preserving the
-current value — with the guard's own defeat condition, its measured
-false-block rate and two shipped bugs written into the comment above
-it.">
+    <meta name="twitter:description" content="A zero-dependency Python
+agent memory whose write path keeps a ledger of each key's retired
+values and refuses a write that restates one.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>inspeximus — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -48,7 +41,7 @@ it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "inspeximus",
-      "description": "An agent memory whose write path consults the set of object signatures already superseded for a key and retires a matching incoming write on arrival, preserving the current value \u2014 with the guard's own defeat condition, its measured false-block rate and two shipped bugs written into the comment above it.",
+      "description": "A zero-dependency Python agent memory whose write path keeps a ledger of each key's retired values and refuses a write that restates one.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -106,25 +99,23 @@ it.">
           <p class="eyebrow">The value that was corrected is refused
 when it comes back</p>
           <h1>inspeximus</h1>
-          <p class="document-deck">An agent memory whose write path
-consults the set of object signatures already superseded for a key and
-retires a matching incoming write on arrival, preserving the current
-value — with the guard's own defeat condition, its measured false-block
-rate and two shipped bugs written into the comment above it.</p>
+          <p class="document-deck">A zero-dependency Python agent memory
+whose write path keeps a ledger of each key's retired values and refuses
+a write that restates one.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/DanceNitra/inspeximus">
               <span>Source</span>
               <strong>DanceNitra/inspeximus</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/DanceNitra/inspeximus/commit/d9efe84a79d19d5f22d5012c94f8df36fe1b07a2" title="d9efe84a79d19d5f22d5012c94f8df36fe1b07a2">
+            <a class="meta-pill revision-pill" href="https://github.com/DanceNitra/inspeximus/commit/2a6fe710b381f7ca2198e08aacc4a7477e683092" title="2a6fe710b381f7ca2198e08aacc4a7477e683092">
               <span>Analyzed revision</span>
-              <code>d9efe84a…</code>
+              <code>2a6fe710…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/DanceNitra--inspeximus" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -132,7 +123,20 @@ rate and two shipped bugs written into the comment above it.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>4</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>209,818
+lines of Python in 921 files; the package is 55,769 lines in 70 files
+outside its probes, 21,674 of them in core.py; 100,640 lines of
+tests</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,493
+commits on main by 5 author names, 13 July – 14 October 2026; version
+3.19.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>4,882
+test functions in 557 files under tests/; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -148,12 +152,17 @@ rate and two shipped bugs written into the comment above it.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>inspeximus is "the agent memory that takes it back" — MIT, Python,
-version 2.35.0, 129,806 lines with 294 test files and 2,837 test
-functions, built around one claim: "Your agent's most expensive failure
-is not forgetting. It is confidently remembering the old answer."</p>
-<p>The mechanism is the clearest tombstone in this corpus, and the
-writing around it is the most rigorous.</p>
+<p>inspeximus is a Python agent memory with an MCP server whose write
+path keeps a ledger of the values each key has retired and retires, on
+arrival, any later write that restates one. A corrected fact stays
+corrected unless a caller names the reversal. The code beside the guard
+states where it stops working, with the measurement that shows why, and
+records two bugs it shipped. The weak side is the agent surface: the MCP
+server reads through an operator handle, and the point-in-time read
+omits the status check the recall path carries.</p>
+<p>The project's own description is "[t]he agent memory that takes it
+back", and the README leads with "Correct a fact once and the old value
+stays retired".</p>
 <p>On the write path, <code>remember()</code> builds the set of object
 signatures already superseded for the incoming key:</p>
 <pre><code>superseded_sigs = {self._obj_sig(r) for r in same_key if r.get(&quot;status&quot;) == &quot;superseded&quot;}</code></pre>
@@ -165,23 +174,24 @@ is preserved. That is a durable record of a rejected <em>value</em>,
 keyed on the value, consulted on write so a later assertion cannot
 silently re-instate it. A companion <code>objectless_guard</code> closes
 the obvious hole: a write with no explicit object against a key whose
-values are ledgered is blocked, so an echo cannot slip past the
-signature check by omitting the field it would be matched on.</p>
+active value carries one is retired too, so an echo cannot slip past the
+signature check by omitting the field it would be matched on. A write
+that repeats the current text verbatim is let through and inherits the
+object, so lineage can be added to a record without changing its
+words.</p>
 <p>The bypass is explicit and named.
 <code>remember(..., reaffirm=True)</code> or <code>revert()</code>,
 "because the guard cannot un-supersede on its own" — and the caller is
 told: <code>store.last_write</code> carries <code>blocked: True</code>,
 the policy, the current record's id, and a note saying to use
 <code>reaffirm=True</code> if the value has genuinely returned. That
-reporting was added for a reason the comment states:
+reporting exists for a reason the comment states.
 <code>remember()</code> returns an id whether the write landed or was
 retired, so "a legitimate reversal (A -&gt; B -&gt; A, third write true)
 silently left the store on B while the call looked like a success … one
 defect reached through seven doors, all of them 'a demoted write
 reported as a landed one'."</p>
-<p>What lifts this above a good implementation is the sixteen-line
-comment above it, which does four things almost nothing else here
-does.</p>
+<p>The comment above the guard does four things.</p>
 <p>It <strong>cites its own probe</strong> —
 <code>inspeximus/probes/echo_attack_probe_v2.py</code>, on a MemBench
 echo fixture — and gives comparative stale rates for recency, mem0-v1, a
@@ -190,51 +200,60 @@ that the verbatim-hash policy "holds against verbatim (0.21) but is
 destroyed by paraphrase (1.00)".</p>
 <p>It <strong>states its own defeat condition</strong>, under the
 heading "LOAD-BEARING LIMIT (measured, not assumed)": paraphrase
-resistance "comes ONLY from the OBJECT being value-preserving", because
-embedding near-duplicate cannot separate a same-value paraphrase (cos
-mean 0.95) from a different-value correction (0.84) — they overlap at
-"~42% false-block at a 0.9 threshold" — so the guard is object- and
+resistance "comes ONLY from the OBJECT being value-preserving".
+Embedding near-duplicate cannot separate a same-value paraphrase (cos
+mean 0.95) from a different-value correction (0.84); they overlap at
+"~42% false-block at a 0.9 threshold". So the guard is object- and
 text-based, not similarity-based, and "an echo that OBSCURES the value
 (coreferent 'her old hobby') is NOT caught."</p>
-<p>It <strong>records a shipped bug</strong>: the guard was off by
-default, so every product surface had to re-enable it and "the adapters
-missed it for ten releases — a correction made through the CLI was
-undone by a restatement through an adapter, and then the honest
-re-correction was refused as an echo, so the store could not be put
-right through the surface that broke it."</p>
+<p>It <strong>records a shipped bug</strong>. The guard was off by
+default, so every surface had to re-enable it, and "the adapters missed
+it for ten releases — a correction made through the CLI was undone by a
+restatement through an adapter, and then the honest re-correction was
+refused as an echo, so the store could not be put right through the
+surface that broke it."</p>
 <p>And it <strong>records a second one</strong>: the documented
 off-switch was dead. <code>INSPEXIMUS_ECHO_GUARD=0</code> was silently
 ignored by a direct API user — "measured, all three of =0, =1 and unset
 produced an identical guarded store. A switch that reports nothing when
 it fails to take effect is worse than no switch."</p>
-<p>A project that writes its own failures into the file, with numbers,
-is giving a reader the thing an atlas normally has to reconstruct.</p>
+<p>Around the guard sit a status allowlist on recall, an event time a
+caller can declare apart from the record time, a hash-chained receipt
+for every write and retirement, and a tenant and agent view that every
+read on a bound handle passes through. The last binds only when the host
+opens a bound handle in its own code; the MCP server the plugin launches
+does not, which is why scope carries no mark. Each has an edge, and
+sections 5, 6 and 9 say where.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>record</strong> has a key and, ideally, an explicit
 <code>object</code> — the value, separate from the prose that states
 it.</p>
 <p>A <strong>supersession</strong> retires a value for a key; the
-retired object's signature stays in the ledger.</p>
+retired row, and with it the object's signature, stays in the store.</p>
 <p>An <strong>echo</strong> is a later write of a value that is already
 retired. It is retired on arrival.</p>
 <p>A <strong>reaffirm</strong> is the only way a retired value comes
 back, and it is a different call.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the ledger of superseded object signatures is consulted on every keyed write, so a corrected value cannot be re-instated by restating it — only by a call that names the reversal</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the ledger of superseded object signatures is consulted on every keyed write, so a corrected value cannot be re-instated by restating it — only by a call that names the reversal
+<p>A record also has a <strong>status</strong> that decides whether it
+is served at all, and two <strong>clocks</strong>: when the fact became
+true and when the store learned it.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the ledger of superseded object signatures is consulted on every keyed write, so a corrected value cannot be re-instated by restating it, only by a call that names the reversal</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the ledger of superseded object signatures is consulted on every keyed write, so a corrected value cannot be re-instated by restating it, only by a call that names the reversal
 flowchart TB
-    W[&quot;remember(key, text, object=…)&quot;] --&gt; OG{&quot;objectless_guard:&lt;br/&gt;no object, but this key&lt;br/&gt;has ledgered objects?&quot;}
-    OG --&gt;|&quot;yes&quot;| R1[&quot;retired stale-on-arrival&lt;br/&gt;objectless_blocked&quot;]
+    W[&quot;remember(key, text, object=…)&lt;br/&gt;or route(), which calls it&quot;] --&gt; OG{&quot;objectless_guard:&lt;br/&gt;no object, but the active value&lt;br/&gt;for this key carries one?&quot;}
+    OG --&gt;|&quot;yes, and the text differs&quot;| R1[&quot;retired stale-on-arrival&lt;br/&gt;objectless_blocked&quot;]
     OG --&gt;|&quot;no&quot;| SIG[&quot;new_sig = _obj_sig(rec)&quot;]
-    LED[(&quot;superseded_sigs = object signatures&lt;br/&gt;already superseded FOR THIS KEY&quot;)] --&gt; EG
+    LED[(&quot;superseded_sigs = object signatures&lt;br/&gt;of rows already superseded&lt;br/&gt;FOR THIS KEY, in this handle&#39;s view&quot;)] --&gt; EG
     SIG --&gt; EG{&quot;new_sig in superseded_sigs&lt;br/&gt;AND no active record&lt;br/&gt;carries that signature?&quot;}
     EG --&gt;|&quot;yes&quot;| R2[&quot;status = superseded ·&lt;br/&gt;echo_blocked ·&lt;br/&gt;policy = echo_guard&lt;br/&gt;CURRENT VALUE PRESERVED&quot;]
     R2 --&gt; LW[&quot;store.last_write = {blocked: true,&lt;br/&gt;policy, current_id, note:&lt;br/&gt;&#39;write it with reaffirm=True&#39;}&quot;]
     EG --&gt;|&quot;no&quot;| CH{&quot;meta.asserts_change is False?&quot;}
-    CH --&gt;|&quot;yes — a restatement&lt;br/&gt;is not a supersession&quot;| R3[&quot;retires nothing&quot;]
-    CH --&gt;|&quot;no&quot;| SUP[&quot;supersede the active value;&lt;br/&gt;its signature joins the ledger&quot;]
+    CH --&gt;|&quot;yes: a restatement&lt;br/&gt;is not a supersession&quot;| R3[&quot;retires nothing&quot;]
+    CH --&gt;|&quot;no&quot;| SUP[&quot;supersede the active value&lt;br/&gt;with an earlier valid_from;&lt;br/&gt;the retired row joins the ledger&quot;]
     SUP --&gt; LED
-    BYP[&quot;reaffirm=True · revert()&quot;] --&gt;|&quot;the only ways back&quot;| SUP
-    LIMIT[&quot;stated in the comment:&lt;br/&gt;paraphrase-resistance comes ONLY from&lt;br/&gt;the OBJECT being value-preserving.&lt;br/&gt;An echo that OBSCURES the value&lt;br/&gt;(&#39;her old hobby&#39;) is NOT caught.&lt;br/&gt;Similarity cannot separate a same-value&lt;br/&gt;paraphrase (0.95) from a different-value&lt;br/&gt;correction (0.84): ~42% false-block at 0.9&quot;] -.-&gt; EG
-    VIEW[&quot;every read passes one view:&lt;br/&gt;tenant filter → _acl_visible&lt;br/&gt;FAIL-CLOSED allow-list&quot;] --&gt; REC[&quot;recall — status allowlist,&lt;br/&gt;include_superseded is the&lt;br/&gt;caller&#39;s explicit widening&quot;]</code></pre></details></figure>
+    SUP --&gt; RC[&quot;write receipt names the ids&lt;br/&gt;it retires; hash-chained&quot;]
+    BYP[&quot;reaffirm=True · revert()&lt;br/&gt;capability only if a revert&lt;br/&gt;authority is configured&quot;] --&gt;|&quot;the only ways back&quot;| SUP
+    ERASE[&quot;forget() · apply_retention()&lt;br/&gt;· CLI retention --all&quot;] -.-&gt;|&quot;removes retired rows,&lt;br/&gt;and their values leave the ledger&quot;| LED
+    LIMIT[&quot;stated in the comment:&lt;br/&gt;paraphrase-resistance comes ONLY from&lt;br/&gt;the OBJECT being value-preserving.&lt;br/&gt;An echo that OBSCURES the value&lt;br/&gt;(&#39;her old hobby&#39;) is NOT caught.&quot;] -.-&gt; EG</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -246,7 +265,14 @@ flowchart TB
 <tbody>
 <tr>
 <td><code>inspeximus/core.py</code></td>
-<td>15,891 lines: the store, the guards, the view, recall, receipts</td>
+<td>21,674 lines: the store, the guards, the view, recall, receipts, the
+point-in-time reads</td>
+</tr>
+<tr>
+<td><code>inspeximus/sqlite_store.py</code>,
+<code>receipts_tail.py</code>, <code>archive.py</code></td>
+<td>The row store and its event table, the appendable receipt format,
+monthly archive segments</td>
 </tr>
 <tr>
 <td><code>inspeximus/probes/</code></td>
@@ -261,72 +287,156 @@ probe</td>
 </tr>
 <tr>
 <td><code>inspeximus/deletion_manifest.py</code>,
-<code>erasure_auditor.py</code>, <code>subject_rights.py</code></td>
-<td>Erasure with receipts</td>
+<code>erasure_auditor.py</code>, <code>erasure_residue.py</code>,
+<code>subject_rights.py</code>, <code>compliance.py</code></td>
+<td>Erasure with receipts, residue checks, retention and the regulatory
+ledgers</td>
 </tr>
 <tr>
-<td><code>inspeximus/mcp_server.py</code>, <code>integrations/</code>,
-<code>packages/langgraph-*</code></td>
-<td>The surfaces</td>
+<td><code>inspeximus/mcp_server.py</code>, <code>claude_code.py</code>,
+<code>hookd.py</code>, <code>install_all.py</code>,
+<code>integrations/</code>, <code>packages/</code></td>
+<td>The surfaces: MCP, hooks, a prompt daemon, installers, adapters</td>
 </tr>
 <tr>
 <td><code>tests/</code></td>
-<td>294 files, 2,837 test functions</td>
+<td>557 files, 4,882 test functions</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>core.py:2105-2121</code> — the echo-guard comment. Read it
+<p><code>core.py:3618-3656</code> — the echo-guard comment. Read it
 before the code; it is the design document, the measurement and the
 post-mortem in one place.</p>
-<p><code>core.py:5924-5962</code> — the two guards on the write path,
-and the caller-facing verdict.</p>
-<p><code>core.py:7940-7958</code> and <code>:8377-8394</code> — the
-single filtered view, and why it is an allow-list.</p>
-<p><code>core.py:239-257</code> — <code>_serving_class</code>, and the
-argument for committing a class rather than a status.</p>
+<p><code>core.py:8951-9022</code> — the two guards on the write path,
+the caller-facing verdict, and the one line that keeps agreement from
+retiring anything.</p>
+<p><code>core.py:15947-15978</code> — the recall status gate, and the
+two bugs that decided its placement and polarity.</p>
+<p><code>core.py:12187-12264</code> and <code>:12687-12703</code> — the
+filtered view, and why it is an allow-list.</p>
+<p><code>core.py:15037-15115</code> — <code>as_of()</code> and
+<code>believed_at()</code>, the two-clock reads.</p>
+<p><code>core.py:5058-5076</code> and <code>:5252-5300</code> — the
+receipt for a write and the receipt for a retirement with no newer
+record.</p>
+<p><code>mcp_server.py:3030-3126</code> — the operator-handle statement
+and the scoped tools beside it.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>A record carries a key, an optional explicit <code>object</code>, a
-status, a tenant, an owning agent, validity timestamps and receipt
-material. The separation of <code>object</code> from text is what the
-whole guard rests on: the object is the value, the text is a way of
+status, a tenant, an owning agent, an event time, a record time, a nonce
+and receipt material. The separation of <code>object</code> from text is
+what the guard rests on: the object is the value, the text is a way of
 saying it, and only the first can be compared across paraphrases.</p>
+<p><strong>Status</strong> is an allowlisted field.
+<code>_RECALLABLE</code> is <code>active</code>, <code>superseded</code>
+and <code>hub</code>; <code>_WITHHELD</code> is
+<code>provisional</code>, <code>candidate</code> and
+<code>discarded</code>. A <code>provisional</code> record comes from
+<code>remember(provisional=True)</code> and waits for
+<code>confirm()</code> or <code>discard_provisional()</code>; a
+<code>candidate</code> comes from a keyed write whose
+<code>identity_confidence</code> is below <code>fork_below</code> and
+waits for <code>promote_candidate()</code> or
+<code>discard_candidate()</code>. Both are library calls; the MCP
+server, the CLI and the hooks set neither flag.
+<code>confirm(by=...)</code> records a name the caller supplies, so this
+is a withheld state and not a review gate, and
+<code>promote_candidate()</code> takes a capability only when a revert
+authority is set.</p>
 <p><code>_serving_class</code> is worth reading as a design argument.
 Rather than committing the raw <code>status</code> string into the
 receipt chain, it commits a two-value class — <code>withheld</code> or
-<code>served</code> — because status "is written at fourteen call sites,
-most of them mechanical and high-volume … Committing the raw string
-would demand an amendment receipt at every one of them — chain churn
-proportional to housekeeping, and fourteen chances to miss one and raise
-a tamper alarm on an honest store." Only three transitions cross the
-boundary, "each a deliberate, low-volume act by someone vouching for a
-record", and <code>confirmed_by</code> rides in the same hash "so
+<code>served</code>. The reason is that status "is written at fourteen
+call sites, most of them mechanical and high-volume … Committing the raw
+string would demand an amendment receipt at every one of them — chain
+churn proportional to housekeeping, and fourteen chances to miss one and
+raise a tamper alarm on an honest store." Only three transitions cross
+the boundary, "each a deliberate, low-volume act by someone vouching for
+a record", and <code>confirmed_by</code> rides in the same hash "so
 stamping a fabricated reviewer onto a record is caught by the same check
 as flipping its status."</p>
-<p>That is a genuinely good answer to a problem every append-only store
-hits: what to commit when most state changes are bookkeeping.</p>
+<p><strong>Time</strong> has two axes. <code>ts</code> is the write
+clock. <code>valid_from</code> is the event time:
+<code>remember(valid_from=...)</code> accepts an epoch or an ISO-8601
+string, raises on anything else rather than guessing, and stamps
+<code>valid_from_source = "declared"</code> when the caller supplied it;
+otherwise it equals the write clock and carries no source.
+<code>time_sha256</code> commits both into the write receipt. Keyed
+supersession retires only rows whose <code>valid_from</code> is not
+later than the incoming one, so a back-filled fact lands as history
+rather than displacing the current value.</p>
+<p><code>as_of(key, when)</code> answers what was true at
+<code>when</code>, recomputing the interval from <code>valid_from</code>
+ordering rather than trusting the stored <code>invalidated_at</code>,
+because editing that cached field once moved an answer.
+<code>as_of(key, when, as_recorded=t)</code> keeps only rows written by
+<code>t</code>, which answers what the store believed at <code>t</code>
+about <code>when</code>. Neither read checks status. A keyed
+<code>provisional</code> write keeps its key, and
+<code>_latest_written</code> picks the row with the latest
+<code>valid_from</code>, so <code>as_of(key, now)</code> can return the
+unconfirmed value that <code>recall</code> withholds. The MCP server
+exposes <code>as_of</code>; its <code>remember</code> tool takes no
+<code>valid_from</code> and no <code>provisional</code>, so on that
+surface the event time is the write clock and no withheld row is
+written.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Lexical recall over the filtered view. Two filters matter.</p>
-<p>The view is the scope boundary and it is applied once: tenant, then
-<code>_acl_visible</code> for an agent handle, "so a method added
-tomorrow is access-controlled by construction rather than by review."
-The allow-list is fail-closed in both directions — an unevaluable grant
-authorises nothing, and an agent handle with no usable identity reads
-nothing, because "[r]eturning the rows unfiltered here would be the
-whole feature failing open on a falsy value." ACL records are never
-visible through an agent handle, and <code>can_read(agent, id)</code>
-explains a single decision without having to run a recall.</p>
-<p>The status filter is an allow-list for a reason the code states: "a
-denylist only knows the statuses somebody remembered to add.
+<p>Lexical recall over the filtered view, ranked by relevance and
+accrued value, with embedding ranking when an embedder is configured.
+Three filters matter.</p>
+<p><strong>The view.</strong> Every read on a bound handle starts from
+<code>items</code>: the tenant's rows, then, for an agent handle,
+<code>_acl_visible</code>, "so a method added tomorrow is
+access-controlled by construction rather than by review." The allow-list
+is fail-closed in both directions — an unevaluable grant authorises
+nothing, and an agent handle with no usable identity reads nothing,
+because "[r]eturning the rows unfiltered here would be the whole feature
+failing open on a falsy value." <code>recall</code>,
+<code>history</code>, <code>provenance</code>, <code>as_of</code>,
+<code>session_context</code> and <code>decisions_in_force</code> all
+read <code>items</code> or <code>_tenant_rows()</code>, which reads
+<code>items</code>. The cached view is keyed by tenant and agent
+together, after a shared cache handed one tenant another's rows under
+threads. No recall argument widens it.</p>
+<p>The binding is the handle, not a capability. A view's
+<code>as_agent(other)</code> re-binds the agent and
+<code>for_tenant(other)</code> re-scopes the tenant while keeping the
+agent, so the boundary holds against a method that forgets to filter,
+not against code that holds the handle.</p>
+<p><strong>The MCP server holds an operator handle</strong>, and says
+so: "Every other tool here (<code>recall</code>, <code>get</code>,
+<code>neighbors</code>, ...) reads the whole store … So the ACL is
+enforced on the STORE, not by which tool a client happens to pick."
+<code>recall_as</code> and <code>get_as</code> read through
+<code>as_agent(agent)</code> with an agent name the caller supplies —
+"IDENTITY IS ASSERTED HERE, NOT AUTHENTICATED". The server binds no
+tenant. Its declared project scope applies to <code>recall</code> unless
+the caller passes <code>all_projects=True</code>. On that surface the
+scope that holds is the one the host chose when it started the
+server.</p>
+<p><strong>The status gate.</strong> <code>_eligible</code> is an
+allowlist and runs first, for a reason the code states: "a denylist only
+knows the statuses somebody remembered to add.
 <code>discard_provisional()</code> set status='discarded' and that fell
 straight through to <code>return include_superseded</code> — a REJECTED
 record, surfaced by a flag named for supersession, minutes after the
-denylist above it was written."</p>
+denylist above it was written." The session-start digest and
+<code>decisions_in_force()</code> keep <code>active</code> rows only and
+pass them through <code>_served_rows</code>, which applies objections
+and quarantine. The SessionStart file list filters
+<code>status != "superseded"</code> and then <code>_served_rows</code>,
+so a <code>provisional</code> row tagged <code>file</code> would be
+listed; the hook's own file writer stamps none.</p>
+<p><strong>The read guards</strong> quarantine instruction-shaped text
+and demote keyword-stuffed text; <code>include_quarantined=True</code>
+is the caller's opt-in, and it is a parameter of the MCP
+<code>recall</code> tool.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Both write paths — <code>remember()</code> and <code>route()</code> —
-pass the guards. One detail is easy to miss and is the difference
-between a working guard and an unusable one:</p>
+<p>Both write paths — <code>remember()</code> and <code>route()</code>,
+which calls it — pass the guards. One detail is the difference between a
+working guard and an unusable one:</p>
 <blockquote>
 <p>"A record that does not ASSERT A CHANGE never retires anything. It is
 the store's only way to tell 'your address remains 742 Birchwood Lane,
@@ -335,34 +445,102 @@ it's Unit 3A now' (a correction). Without it, keying the echoes of a
 value makes the echoes supersede each other and the current answer
 disappears from recall."</p>
 </blockquote>
-<p>Agreement is not correction. Most systems that key on a subject treat
-every restatement as a new assertion and lose the current value to its
-own echoes.</p>
+<p>Agreement is not correction. A store that treats every restatement on
+a key as a new assertion loses the current value to its own echoes.</p>
+<p>The guard resolves against the writer's own view, which is the
+write-side half of the ACL: "anyone who can call remember() and knows
+the key string retires the current value", and resolving against the
+scoped view stops an agent retiring a value it cannot read. The comment
+prices it: two agent handles keying the same string each keep an active
+record, so the operator sees two.</p>
+<p>An opt-in authority policy retires a lower-authority keyed write on
+arrival, and its docstring names the case it gets wrong, MemTX
+<code>lost_update_0001</code>, where both last-write-wins and authority
+serve the wrong value.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>A zero-dependency core, an MCP server, one-line installs for five
-coding agents, and LangGraph checkpoint and store packages. The adapter
-story is also where the ten-release default bug lived, which is the
-argument for the resolution rule the comment lands on: one posture,
-resolved in one place, explicit argument beating environment beating
-default.</p>
+<p>A zero-dependency core, an MCP server, a Claude Code plugin whose
+five hooks recall on every prompt and inject a cross-session digest at
+session start, <code>install --all</code> for nine coding agents,
+framework adapters, and LangGraph and ADK packages. The plugin's hooks
+and its MCP entry launch a pinned <code>inspeximus==3.19.1</code>
+through <code>uvx</code>. The adapter story is also where the
+ten-release default bug lived, which is the argument for the resolution
+rule the comment lands on: one posture, resolved in one place, explicit
+argument beating environment beating default.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The second half of the package is a transparency-log system: Ed25519
-attestation, receipt chains, Merkle anchoring, COSE and SCITT, witness
-co-signature, deletion manifests and an erasure auditor. The name is
-explained in the README and the explanation is also a limit: a medieval
-<em>inspeximus</em> "attested that the copy faithfully matched the
-original, not that the original was true. Same guarantee here, and
-<code>provenance()</code> says so in a <code>limits</code> field rather
-than leaving you to find out."</p>
-<p>Two limits are stated plainly and both survive scrutiny. The guard
-cannot catch an echo that obscures the value. And
-<code>remember(agent_id="*")</code> stores <code>*</code> unchecked,
+<p>The receipt chain is the mutation record.
+<code>_emit_write_receipt</code> appends
+<code>{ts, memory_id, commit}</code> for each write, where
+<code>commit</code> holds content, status-class, time and attribution
+hashes and the ids the write retires. An amendment names the committed
+fields it rewrites and an <code>amend_reason</code>, and
+<code>_declare_retired</code> writes one for each retirement that has no
+newer record to hang it on, because undeclared ones "are
+indistinguishable from CONCEALMENT".</p>
+<p>Each receipt carries <code>seq</code>, <code>prev</code> and
+<code>hash</code>, optionally an Ed25519 signature from a key that may
+live outside the process, and the chain's head is written outside the
+store's directory so a tail cut is caught. Two writers merge: a peer's
+receipts are adopted and ours re-chained after them, the old hash kept
+as <code>rechained_from</code>. Compaction rewrites the whole chain as a
+snapshot, and a shorter chain is never written over a longer one.
+Erasure leaves a tombstone in its own chain. Receipts are off by default
+in the library and on when a sidecar, a signing key or the user config
+says so.</p>
+<p>The <code>memory_events</code> table is not that record: erasure
+rewrites its payload, agent and tenant columns in place so a person's
+name does not survive in it.</p>
+<p>The rest of the package is a transparency-log system: Merkle
+anchoring, COSE and SCITT, witness co-signature, deletion manifests, an
+erasure auditor and residue checks. The name is explained in the README
+and the explanation is also a limit: a medieval <em>inspeximus</em>
+"attested that the copy faithfully matched the original, not that the
+original was true. Same guarantee here, and <code>provenance()</code>
+says so in a <code>limits</code> field rather than leaving you to find
+out."</p>
+<p>Three limits stand. The guard cannot catch an echo that obscures the
+value. The ledger is the retired rows themselves, so
+<code>forget()</code>, <code>apply_retention()</code> — whose default
+drops superseded rows older than the cutoff — and the CLI
+<code>retention --all --apply</code> take values out of it; erasure and
+a value tombstone pull in opposite directions, and here erasure wins.
+And <code>remember(agent_id="*")</code> stores <code>*</code> unchecked,
 "because <code>_check_agent_id</code> guards the GRANT path and
-<code>remember()</code> never calls it" — a note that itself corrects an
-earlier version of the same comment: "An earlier version of this note
-said the route 'reaches the SAME validated path it skipped'. That was
-false and a control caught it."</p>
+<code>remember()</code> never calls it" — a note that corrects an
+earlier version of itself: "An earlier version of this note said the
+route 'reaches the SAME validated path it skipped'. That was false and a
+control caught it."</p>
+<p>On the MCP surface <code>reaffirm</code> is a boolean on
+<code>remember</code>. With no revert authority configured, which is the
+default, the agent can lift the guard for any write by setting it; the
+write is stamped <code>keyed_reaffirm</code> in the record.</p>
+<p><strong>Scope is not enforced on the surface the agent
+reaches.</strong> The plugin's <code>.mcp.json</code> and the registry's
+<code>server.json</code> launch the MCP server, which opens one operator
+handle with no tenant; the hooks open their store with no tenant or
+agent either. Its own comment says every other tool "reads the whole
+store" and that <code>agent</code> is "ASSERTED HERE, NOT AUTHENTICATED"
+(<code>inspeximus/mcp_server.py:3037-3046</code>). <code>recall</code>
+and <code>get</code> read every record (<code>:1038-1089</code>,
+<code>:1250-1255</code>). <code>recall_as</code> and <code>get_as</code>
+bind <code>as_agent(agent)</code> to a name the model passes
+(<code>:3102-3124</code>). <code>all_projects=True</code> on
+<code>recall</code> drops the declared project (<code>:1089</code>). The
+same code stood at the previous pin: the comment at
+<code>:2151-2160</code>, <code>recall</code> at <code>:584-629</code>
+with the lift at <code>:628</code>, <code>get</code> at
+<code>:770</code>, <code>recall_as</code> and <code>get_as</code> at
+<code>:2216-2239</code>. A model-supplied argument that lifts the scope
+fails the mark, so <code>scope_enforced</code> is withdrawn.</p>
+<p>The library path is the correct use and is well built. A host that
+opens <code>store.for_tenant(t)</code> or <code>store.as_agent(a)</code>
+in its own code gets the <code>items</code> view described in section 6
+(<code>inspeximus/core.py:12187-12264</code>,
+<code>:12687-12703</code>), fail-closed, swept over every public method
+by <code>test_no_public_method_leaks_an_ungranted_records_content</code>
+with a positive control. That handle, not a tool argument, is where the
+boundary belongs.</p>
 <p>The probes are self-audits rather than demos.
 <code>forget_emits_tombstone_probe.py</code> opens: "Found by running
 the published wheel in a clean room and checking the claim 'erasure with
@@ -370,23 +548,41 @@ signed receipts' against what the API actually does: the record was
 gone, the bytes were gone, and the receipt count was zero."</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>2,837 test functions across 294 files, probes with committed result
-JSON, and a "Claims audit" CI workflow beside the ordinary one.</p>
+<p>4,882 test functions across 557 files, probes with committed result
+JSON, and a "Claims audit" CI workflow beside the ordinary one. None was
+run for this reading.</p>
 <p><code>tests/test_core.py:20</code> is the negative eval in a single
 line —
 <code>assert "eu-west" in texts and "us-east" not in texts   # a corrected fact stops being recalled</code>
 — the surviving value and the excluded one asserted together against a
-real <code>recall</code>. The ACL suite does the same for isolation,
-with the failure message "{label} widened the ACL" repeated across
-parameter variations.</p>
+real <code>recall</code>.
+<code>test_echo_guard_blocks_resurrection</code> at <code>:32-38</code>
+writes A, B, A and asserts B is the one active value.</p>
+<p>The ACL suite is structural.
+<code>test_no_public_method_leaks_an_ungranted_records_content</code>
+calls every public method from an ungranted agent's handle with
+arguments aimed at the owner's record and searches each result for the
+secret; a method it cannot drive must be listed with a reason, and the
+test fails if fewer than 40 are exercised.
+<code>test_the_sweep_would_catch_a_leak</code> is its control: the same
+recall returns the secret once a grant is issued.
+<code>tests/test_bitemporal.py</code> asserts that
+<code>as_of(..., as_recorded=t)</code> returns the pre-correction value
+for a time before the correction was recorded.</p>
+<p><code>tests/test_a_splitter_may_write_but_not_mint.py</code> asserts
+a provisional record is never returned by <code>recall</code>, including
+<code>recall(as_of=...)</code>. No test file that writes a provisional
+record calls the <code>as_of()</code> or <code>believed_at()</code>
+method.</p>
 <p>The README's comparison chart should be read as what it is. It
 reports correction-recurrence rates for inspeximus, Graphiti and mem0 at
 n=30 per system, measured by this project, and none of those numbers was
 reproduced here. What distinguishes it from the usual vendor chart is
-the fourth column: inspeximus with its own guard disabled, at 100%.
+the fourth row: inspeximus with its own guard disabled, at 100%.
 Publishing your own ablation beside your own result is the control that
-makes the other three legible, and it is rare.</p>
+makes the other three legible.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Key the tombstone on the value, not the record. A deletion marker
 keyed on an id stops that row coming back; a ledger of retired object
 signatures stops the <em>value</em> coming back however it is restated.
@@ -401,18 +597,39 @@ and the current answer vanishes.</p>
 <p>Tell the caller when a write was demoted. A function that returns an
 id whether the write landed or was retired will produce "a demoted write
 reported as a landed one" in every surface that wraps it.</p>
-<p>And write the limit into the comment. "An echo that OBSCURES the
-value is NOT caught", with the measured overlap that explains why a
-similarity threshold cannot fix it, is worth more to a reader than any
-benchmark — it is the sentence that tells you whether this mechanism
-fits your problem.</p>
+<p>Put the status check first and make it an allowlist. Both of the bugs
+recorded beside <code>_eligible</code> came from the other choice.</p>
+<p>Sweep the ACL over every public method, with a control that proves
+the sweep can fail.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Leaving a point-in-time read outside the status predicate.
+<code>as_of()</code> reaches the same rows as <code>recall</code> and
+answers with a value <code>recall</code> would withhold.</p>
+<p>Shipping a scoped library behind an unscoped server. The view is
+careful; the MCP surface reads through an operator handle and takes the
+agent's name from the model, so the boundary exists only for hosts that
+never use the shipped server.</p>
+<p>Keeping the tombstone in the rows retention deletes. If a value must
+stay refused after its row is erased, the ledger needs its own
+content-free entry.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits an agent memory where a corrected value must not come
+back, where values can be stated as explicit objects, and where the host
+binds the tenant and agent when it opens the store. Walk away if echoes
+arrive as coreferent paraphrases with no object, if several principals
+share one MCP server and must not read each other's records, or if
+retired values must stay refused after retention runs.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <p>Whether <code>agent_id="*"</code> should be accepted by
 <code>remember()</code>. The code names the gap and explicitly declines
-to answer it in that release.</p>
+to answer it.</p>
 <p>How the guard behaves against coreferent echoes in practice. The
 limit is stated; no probe in the tree measures how often real agent
 output takes that form.</p>
+<p>Whether <code>as_of()</code> returning a withheld value is intended.
+The recall gate's comment names the bitemporal branch as the place a
+status check was once missing, and the method of the same name has
+none.</p>
 <p>Whether the comparison figures reproduce. The probes are committed
 and the fixtures named, so the question is answerable by anyone who runs
 them; it was not answered here.</p>
@@ -426,35 +643,112 @@ them; it was not answered here.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>inspeximus/core.py:2105-2121</code></td>
+<td><code>inspeximus/core.py:3618-3656</code></td>
 <td>The guard's measurement, its defeat condition, and two shipped
 bugs</td>
 </tr>
 <tr>
-<td><code>inspeximus/core.py:5924-5962</code></td>
-<td>The value-keyed ledger consulted on write, and the caller's
-verdict</td>
+<td><code>inspeximus/core.py:8951-9022</code></td>
+<td>The value-keyed ledger consulted on write, the caller's verdict,
+agreement versus correction</td>
 </tr>
 <tr>
-<td><code>inspeximus/core.py:239-257</code></td>
+<td><code>inspeximus/core.py:302-320</code></td>
 <td>Committing a class rather than a status, and why</td>
 </tr>
 <tr>
-<td><code>inspeximus/core.py:7940-7958</code>,
-<code>:8377-8394</code></td>
+<td><code>inspeximus/core.py:15947-15978</code></td>
+<td>The recall status gate, placed first, an allowlist</td>
+</tr>
+<tr>
+<td><code>inspeximus/core.py:15037-15115</code></td>
+<td><code>as_of()</code> and <code>believed_at()</code>: two clocks, no
+status check</td>
+</tr>
+<tr>
+<td><code>inspeximus/core.py:12187-12264</code>,
+<code>:12687-12703</code></td>
 <td>One filtered view, fail-closed in both directions</td>
+</tr>
+<tr>
+<td><code>inspeximus/core.py:5058-5076</code>,
+<code>:5129-5300</code></td>
+<td>Write and retirement receipts, re-chaining after a peer</td>
+</tr>
+<tr>
+<td><code>inspeximus/core.py:18975-19005</code></td>
+<td>Retention, and what it drops by default</td>
+</tr>
+<tr>
+<td><code>inspeximus/mcp_server.py:3030-3126</code></td>
+<td>The operator handle, stated, and the scoped tools beside it</td>
 </tr>
 <tr>
 <td><code>inspeximus/probes/forget_emits_tombstone_probe.py</code></td>
 <td>A project auditing its own published wheel</td>
 </tr>
 <tr>
-<td><code>tests/test_core.py:20</code></td>
-<td>A negative eval and its positive control in one assertion</td>
+<td><code>tests/test_core.py:14-38</code></td>
+<td>A negative eval with its positive control, and the echo guard</td>
+</tr>
+<tr>
+<td><code>tests/test_agent_grants.py:326-374</code></td>
+<td>The ACL sweep over every public method, and its control</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'valid_from[[:space:]]*=' -- '*.py' ':!tests' ':!probes' ':!inspeximus/core.py'</code>
+— <code>inspeximus/migrate.py:177</code> only, the mem0 importer.</li>
+<li><code>git grep -n -E 'provisional[[:space:]]*=[[:space:]]*True|identity_confidence[[:space:]]*=' -- '*.py' ':!tests' ':!probes' ':!inspeximus/core.py'</code>
+— no match; no surface writes a withheld status.</li>
+<li><code>git grep -n -E '_WITHHELD|_serving_class\(' -- inspeximus/core.py</code>
+— the definitions and the receipt commitment at <code>:4831</code>;
+recall uses <code>_RECALLABLE</code>, and neither appears in
+<code>as_of</code> or <code>believed_at</code>.</li>
+<li><code>for f in $(git grep -l -E 'provisional=True' -- tests); do git grep -l -E '\.as_of\(|\.believed_at\(' -- "$f"; done</code>
+— no output.</li>
+<li><code>git grep -n -E '^def (confirm|promote_candidate|discard_candidate|discard_provisional)\(' -- inspeximus/mcp_server.py</code>
+— no match.</li>
+<li><code>git grep -n -E 'tenant' -- inspeximus/mcp_server.py</code> —
+three docstring and comment lines; the server binds no tenant.</li>
+<li><code>git grep -n -E '^def (recall_as|get_as|get|recall)\(' -- inspeximus/mcp_server.py</code>
+— <code>:1038</code>, <code>:1250</code>, <code>:3102</code>,
+<code>:3119</code>.</li>
+<li><code>git grep -n -E 'apply_retention\(|retention_days=' -- '*.py' ':!tests' ':!probes'</code>
+— the definition, <code>sleep()</code> and the view's rebinding; no
+surface calls it.</li>
+<li><code>git grep -n -E 'self\._receipts\.(pop|remove|clear)|del self\._receipts' -- inspeximus</code>
+— no match.</li>
+<li><code>git grep -n -E 'UPDATE memory_events|DELETE FROM memory_events' -- inspeximus</code>
+— <code>inspeximus/sqlite_store.py:613</code>, the erasure rewrite.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; the MIT text carries no rider.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi' -- README.md CITATION.cff</code>
+— a Zenodo software DOI and the README's pointer to it; no paper by the
+project.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/DanceNitra/inspeximus/commit/2a6fe710b381f7ca2198e08aacc4a7477e683092"><code class="commit-id" title="2a6fe710b381f7ca2198e08aacc4a7477e683092">2a6fe710…</code></a>
+— 708 commits on, version 2.44.0 to 3.19.1; the guard, the status gate
+and the view are unchanged in substance. Three mark moves, all wrong at
+the previous pin: <code>bitemporal</code> gained, on a declared
+<code>valid_from</code> and <code>as_of(..., as_recorded=)</code> (<a
+href="#5-memory-data-model">section 5</a>); <code>audit_log</code>
+gained, on the receipt chain; <code>scope_enforced</code> withdrawn,
+because the shipped MCP server reads through an operator handle and
+<code>recall_as</code> and <code>all_projects</code> take the scope from
+the model (<a href="#9-reliability-safety-and-trust">section 9</a>).
+Also wrong then: the census, the opening quote and the tombstone and
+scope line numbers described <code>3df6535</code> (2.35.0). Found at
+both pins: <code>as_of()</code> checks no status. Screened from a full
+clone: 25 files, five auto-run surfaces, two build-time execution
+points, eight unpinned surfaces, <code>pyproject.toml</code> inside the
+cooldown. Nothing was installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/DanceNitra/inspeximus/commit/d9efe84a79d19d5f22d5012c94f8df36fe1b07a2"><code class="commit-id" title="d9efe84a79d19d5f22d5012c94f8df36fe1b07a2">d9efe84a…</code></a>
 — <code>trust_state</code> re-tested. The mark holds; anchors shifted by

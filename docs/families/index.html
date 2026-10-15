@@ -9768,41 +9768,42 @@ withheld because <code>eliot_operator_command</code>, the command that
 approves, is also a declared MCP tool the agent can call.</p>
 <p><strong><a href="../systems/inspeximus/">inspeximus</a> keeps a
 ledger of the values a key has retired, and refuses them when they come
-back.</strong> An MIT Python memory at version 2.35.0 — 129,806 lines,
-294 test files, 2,837 test functions — built on one claim: "[y]our
-agent's most expensive failure is not forgetting. It is confidently
-remembering the old answer." On the write path it builds
-<code>superseded_sigs</code>, the set of object signatures already
-superseded for the incoming key, and when the incoming signature matches
-one and no active record carries it, the write is retired on arrival
-with <code>superseded_by_policy = "echo_guard"</code> and the current
-value is preserved — a durable record of a rejected <em>value</em>,
-keyed on the value, consulted on write, with <code>reaffirm=True</code>
-and <code>revert()</code> as the named bypasses and
-<code>store.last_write</code> telling the caller the write was demoted
+back.</strong> An MIT Python memory at version 3.19.1 whose package
+metadata calls it "[t]he agent memory that takes it back". On the write
+path it builds <code>superseded_sigs</code>, the set of object
+signatures already superseded for the incoming key, and when the
+incoming signature matches one and no active record carries it, the
+write is retired on arrival with
+<code>superseded_by_policy = "echo_guard"</code> and the current value
+is preserved — a durable record of a rejected <em>value</em>, keyed on
+the value, consulted on write. <code>reaffirm=True</code> and
+<code>revert()</code> are the named bypasses, and
+<code>store.last_write</code> tells the caller the write was demoted
 rather than landed. A companion <code>objectless_guard</code> blocks a
-write with no explicit object against a key whose values are ledgered,
-closing the path an echo would otherwise take. The comment above it is
-the most rigorous in this atlas: it cites its own probe with comparative
-stale rates against recency, mem0-v1, a bi-temporal-Graphiti-faithful
-policy and a verbatim-hash policy, then states its own defeat condition
-under "LOAD-BEARING LIMIT (measured, not assumed)" — paraphrase
-resistance "comes ONLY from the OBJECT being value-preserving",
-similarity cannot separate a same-value paraphrase (0.95) from a
-different-value correction (0.84) at "~42% false-block at a 0.9
-threshold", and "an echo that OBSCURES the value (coreferent 'her old
-hobby') is NOT caught" — and records two shipped bugs in the same place:
-the guard defaulted off so "the adapters missed it for ten releases",
-and the documented off-switch was dead, with "all three of =0, =1 and
-unset produc[ing] an identical guarded store. A switch that reports
-nothing when it fails to take effect is worse than no switch." Its
-probes audit the project itself —
-<code>forget_emits_tombstone_probe.py</code> was found "by running the
-published wheel in a clean room". Four marks. Its README's comparison
+write with no explicit object against a key whose value carries one,
+closing the path an echo would otherwise take. The comment above it
+cites its own probe with comparative stale rates against recency,
+mem0-v1, a bi-temporal-Graphiti-faithful policy and a verbatim-hash
+policy, then states its own defeat condition under "LOAD-BEARING LIMIT
+(measured, not assumed)" — paraphrase resistance "comes ONLY from the
+OBJECT being value-preserving", and "an echo that OBSCURES the value
+(coreferent 'her old hobby') is NOT caught" — and records two shipped
+bugs in the same place: the guard defaulted off so "the adapters missed
+it for ten releases", and the documented off-switch was dead. Around the
+guard sit a status allowlist on recall, a caller-declared event time
+that <code>as_of(..., as_recorded=)</code> reads beside the write clock,
+and a hash-chained receipt for every write and retirement.
+<code>as_of()</code> itself applies no status check and the ledger is
+the retired rows that retention deletes. The tenant and agent view is
+fail-closed for a host that opens a bound handle, but the shipped MCP
+server reads through an operator handle: <code>recall</code> and
+<code>get</code> read everything, <code>recall_as</code> takes the agent
+name from the model and <code>all_projects=True</code> lifts the project
+scope, so scope carries no mark. Five marks. Its README's comparison
 figures against named competitors are the project's own measurements at
-n=30 per system and were not reproduced here; the fourth column is its
-own guard disabled at 100%, which is the control that makes the other
-three legible.</p>
+n=30 per system and were not reproduced here; the fourth row is its own
+guard disabled at 100%, which is the control that makes the other three
+legible.</p>
 <p><strong><a href="../systems/mandalore/">Mandalore</a> deletes
 nothing, withdraws by appending, and its recall packet tells the model
 what absence does not prove.</strong> An MIT Go engine at version 1.6.0

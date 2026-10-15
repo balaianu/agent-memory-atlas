@@ -13068,67 +13068,75 @@ rotates at 10 MB and the rebuild replays only the current segment</td>
 <tr>
 <td><a href="../systems/inspeximus/"><code>inspeximus</code></a></td>
 <td>A record with a key, an optional explicit <code>object</code>
-carrying the value, a status, a tenant, an owning agent, validity
-timestamps and a receipt</td>
-<td>A JSONL store with an optional SQLite backend, plus receipts, a
-Merkle transparency log, COSE/SCITT signing, witness co-signatures and
-deletion manifests</td>
-<td>Lexical recall over a filtered view, with an optional trusted-only
-gate applied before ranking</td>
+carrying the value, a status, a tenant, an owning agent, an event time
+and a record time, a nonce and receipt material</td>
+<td>A SQLite row store or a JSON file, plus a hash-chained receipt
+sidecar, a tombstone chain, an event table, monthly archive segments for
+captured mechanics, a Merkle transparency log and witness
+co-signatures</td>
+<td>Lexical recall over a filtered view, ranked by relevance and accrued
+value, with optional embedding ranking when an embedder is configured;
+read guards quarantine instruction-shaped text and demote keyword
+stuffing</td>
 <td><code>remember()</code> and <code>route()</code>, both passing the
-echo guard; <code>reaffirm=True</code> and <code>revert()</code> are the
-named bypasses</td>
-<td>Correction supersedes by key and object; <code>forget()</code>,
-<code>forget_subject()</code> and <code>forget_pii()</code> emit
-deletion receipts; a signed <code>revert()</code> undoes a correction
-from an instruction naming no value</td>
-<td>Tenant, owning agent and grant-based ACLs applied at the single view
-every read passes through, plus user, agent and session visibility
-levels on the recall pool</td>
-<td>A zero-dependency core module, an opt-in MCP server, one-line config
-install for Claude Code, Cursor, Windsurf, Codex and Cline, and
-LangGraph checkpoint and store packages</td>
-<td>Consolidation and supersession passes, an erasure auditor, a witness
-pool and timestamping</td>
-<td>Ed25519 attestation, receipt chains, a Merkle log with witness
-co-signature, strict corroboration counting distinct verified keys, PII
-detection and redaction, and a <code>provenance()</code> whose
-<code>limits</code> field states what the guarantee does not cover</td>
-<td>The echo guard is the clearest tombstone in this corpus —
-value-keyed, consulted on write, with a named bypass — and the comment
-above it is the most rigorous in the atlas. It cites its own probe,
-gives comparative stale rates against recency, mem0-v1, a
-bi-temporal-Graphiti-faithful policy and a verbatim-hash policy, and
-then states its own defeat condition: paraphrase resistance "comes ONLY
-from the OBJECT being value-preserving", embedding near-duplicate cannot
-separate a same-value paraphrase (cos mean 0.95) from a different-value
-correction (0.84) at "~42% false-block at a 0.9 threshold", and "an echo
-that OBSCURES the value (coreferent 'her old hobby') is NOT caught." It
-records two shipped bugs in the same place: the guard defaulted off so
-"the adapters missed it for ten releases", and the documented off-switch
-was dead — "all three of =0, =1 and unset produced an identical guarded
-store. A switch that reports nothing when it fails to take effect is
-worse than no switch." <code>_serving_class</code> commits the
-withheld/served class rather than the raw status to avoid "chain churn
-proportional to housekeeping, and fourteen chances to miss one". The
-probes are self-audits: <code>forget_emits_tombstone_probe.py</code> was
-found "by running the published wheel in a clean room and checking the
-claim 'erasure with signed receipts' against what the API actually
-does"</td>
-<td>The guard is text- and object-based by design, so the failure mode
-is stated rather than hidden and remains real: an echo that names the
-value indirectly is not caught, and the store cannot tell a coreferent
-restatement from a new claim. <code>remember(agent_id="*")</code> stores
-<code>*</code> unchecked because <code>_check_agent_id</code> guards the
-grant path and <code>remember()</code> never calls it — a limitation the
-code names after a control disproved an earlier claim that the routes
-converged on a validated path. The README leads with a comparison table
-against named competitors measured by the project itself at n=30 per
-system; the ablation column is its own guard disabled at 100%, which is
-the right control to publish, but every figure is a vendor measurement
-and none was reproduced here. At 129,806 lines the "one zero-dependency
-Python file" framing describes <code>core.py</code>'s 15,891 lines
-running standalone, not the package</td>
+echo and objectless guards; <code>reaffirm=True</code> and
+<code>revert()</code> are the named bypasses, and
+<code>store.last_write</code> reports a demoted write</td>
+<td>Correction supersedes by key and object; <code>retire()</code> ends
+a key with no replacement; <code>forget()</code>,
+<code>forget_subject()</code> and <code>forget_pii()</code> erase and
+leave deletion receipts; <code>apply_retention()</code> erases by
+age</td>
+<td>Tenant and grant-based agent ACLs in the view every read on a bound
+handle passes through, for a host that opens one in its own code;
+optional scope, project, user, agent and session filters on recall. The
+shipped MCP server reads through an operator handle that binds no
+tenant, takes the agent name from the caller and lets the caller lift
+the project scope</td>
+<td>A zero-dependency core module, an MCP server, a Claude Code plugin
+with five hooks, <code>install --all</code> for nine coding agents,
+framework adapters, and LangGraph and ADK packages</td>
+<td>Consolidation and supersession passes on <code>sleep()</code>,
+optional retention, an optional prompt daemon, archive tiering, an
+erasure auditor, a witness pool and timestamping</td>
+<td>A status allowlist on recall, Ed25519-signed receipt chains with the
+head kept outside the store, a Merkle log with witness co-signature,
+strict corroboration counting distinct verified keys, GDPR objections
+that withhold a subject, PII detection, and a <code>provenance()</code>
+whose <code>limits</code> field states what the guarantee does not
+cover</td>
+<td>The echo guard is a tombstone keyed on the value, consulted on every
+keyed write, with a named bypass and a caller-facing verdict. The
+comment above it cites its own probe, gives comparative stale rates
+against recency, mem0-v1, a bi-temporal-Graphiti-faithful policy and a
+verbatim-hash policy, and states its own defeat condition: paraphrase
+resistance "comes ONLY from the OBJECT being value-preserving",
+embedding near-duplicate cannot separate a same-value paraphrase (cos
+mean 0.95) from a different-value correction (0.84) at "~42% false-block
+at a 0.9 threshold", and "an echo that OBSCURES the value (coreferent
+'her old hobby') is NOT caught." It records two shipped bugs in the same
+place: the guard defaulted off so "the adapters missed it for ten
+releases", and the documented off-switch was dead.
+<code>_serving_class</code> commits the withheld or served class rather
+than the raw status to avoid "chain churn proportional to housekeeping,
+and fourteen chances to miss one". The ACL is tested by a sweep over
+every public method with its own positive control</td>
+<td>The guard is text- and object-based by design, so an echo that names
+the value indirectly is not caught. The ledger is the retired rows, so
+retention and erasure remove values from it. <code>as_of()</code> and
+<code>believed_at()</code> apply no status predicate, so a provisional
+keyed write answers a point-in-time read that <code>recall</code> would
+withhold. The shipped agent surface, the MCP server, is an operator
+handle: tenant is unbound, <code>recall</code> and <code>get</code> read
+everything, the agent name on <code>recall_as</code> is supplied by the
+model, <code>all_projects=True</code> lifts the project scope, and
+<code>reaffirm=True</code> on <code>remember</code> lifts the guard
+unless a revert authority is configured.
+<code>remember(agent_id="*")</code> stores <code>*</code> unchecked. The
+README's comparison figures are the project's own measurements at n=30
+per system, and none was reproduced here. The "one zero-dependency
+Python file" framing describes core.py running standalone, not the
+package</td>
 </tr>
 <tr>
 <td><a href="../systems/intaris/"><code>intaris</code></a></td>
@@ -33507,7 +33515,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>125 of 749:</em> <a
+<p><em>126 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33552,6 +33560,7 @@ href="../systems/graphiti/"><code>graphiti</code></a>, <a
 href="../systems/hexis/"><code>hexis</code></a>, <a
 href="../systems/hippo-memory/"><code>hippo-memory</code></a>, <a
 href="../systems/inite-brain/"><code>inite-brain</code></a>, <a
+href="../systems/inspeximus/"><code>inspeximus</code></a>, <a
 href="../systems/janus-graph/"><code>janus-graph</code></a>, <a
 href="../systems/kannaka-memory/"><code>kannaka-memory</code></a>, <a
 href="../systems/kimetsu/"><code>kimetsu</code></a>, <a
@@ -33640,7 +33649,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>324 of 749:</em> <a
+<p><em>323 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33766,7 +33775,6 @@ href="../systems/hungry-hippa/"><code>hungry-hippa</code></a>, <a
 href="../systems/huqan/"><code>huqan</code></a>, <a
 href="../systems/hypha/"><code>hypha</code></a>, <a
 href="../systems/inite-brain/"><code>inite-brain</code></a>, <a
-href="../systems/inspeximus/"><code>inspeximus</code></a>, <a
 href="../systems/intaris/"><code>intaris</code></a>, <a
 href="../systems/invalidate/"><code>invalidate</code></a>, <a
 href="../systems/kagura-memory-cloud/"><code>kagura-memory-cloud</code></a>,
@@ -33979,7 +33987,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>254 of 749:</em> <a
+<p><em>255 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34078,6 +34086,7 @@ href="../systems/humans/"><code>humans</code></a>, <a
 href="../systems/huqan/"><code>huqan</code></a>, <a
 href="../systems/iai-pme/"><code>iai-pme</code></a>, <a
 href="../systems/icarus/"><code>icarus</code></a>, <a
+href="../systems/inspeximus/"><code>inspeximus</code></a>, <a
 href="../systems/invalidate/"><code>invalidate</code></a>, <a
 href="../systems/jumbo/"><code>jumbo</code></a>, <a
 href="../systems/kaeru/"><code>kaeru</code></a>, <a
