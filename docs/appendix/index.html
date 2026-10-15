@@ -9678,10 +9678,12 @@ was found, though the code is parameterized for it.</li>
 <li>Six repositories examined in the same round have no reports.
 <code>TeleAI-UAGI/Awesome-Agent-Memory</code> is a survey, cited in the
 correction discussion rather than reviewed as a system.
-<code>webbrain-one/webbrain</code> (368 lines) and
-<code>AmeNetwork/aser</code> (29 lines) are too small to carry a
-mechanism. <code>AgentTeam-TaichuAI/ScienceClaw</code> is 78 lines with
-no licence file, and is a different repository from the OpenClaw-derived
+<code>webbrain-one/webbrain</code> (368 lines) is too small to carry a
+mechanism. <code>AmeNetwork/aser</code> is an agent framework of about
+4,000 lines whose 29-line <code>Memory</code> class is a persisted chat
+buffer, and its entry below gives the pin and the reason.
+<code>AgentTeam-TaichuAI/ScienceClaw</code> is 78 lines with no licence
+file, and is a different repository from the OpenClaw-derived
 <code>beita6969/ScienceClaw</code> noted above.
 <code>ArtificialAnalysis/Stirrup</code> and
 <code>howl-anderson/agentsilex</code> have no memory subsystem.</li>
@@ -14634,6 +14636,52 @@ CLI pings a licence endpoint only when a key or
 library is loaded with <code>libloading</code> from an absolute path
 (<code>src/louvain_backend.rs:118</code>). Nothing was installed, built
 or run.</li>
+<li><strong><code>AmeNetwork/aser</code> was examined and has no report:
+its <code>Memory</code> class is a persisted chat buffer that replays
+the last few messages stored under a caller id, which is
+conversation-window management.</strong> MIT, read at <a
+href="https://github.com/AmeNetwork/aser/commit/c2645226d28f5c77387a586d8df999fb5f57ef5b"><code class="commit-id" title="c2645226d28f5c77387a586d8df999fb5f57ef5b">c2645226…</code></a>,
+the head of <code>main</code> on 10 October 2026, 104 commits since 25
+February 2025; the package was named <code>esper</code> and then
+<code>amer</code> before 22 March 2025. It is an agent framework of
+about 4,000 lines of Python under <code>aser/</code>, most of it web3
+toolkits, social-platform bots, multi-agent orchestration and
+text-to-SQL. The memory module is the 29-line
+<code>aser/memory.py</code>, unchanged since 22 March 2025, over three
+33-to-49-line backends (SQLite, TinyDB, Supabase) that store
+<code>key</code>, <code>role</code> and <code>content</code> and nothing
+else (<code>aser/storage/sqlite.py:15-21</code>).
+<code>Agent.chat</code> fetches the newest <code>limit</code> rows for
+the <code>uid</code>, default 5, appends them after the system prompt,
+and writes the user turn and the reply back
+(<code>aser/agent.py:107-119</code>, <code>:188-192</code>). Nothing is
+selected by content, no row has an identity a caller can address, and no
+tool the model sees reads or writes the store. The only removal is
+<code>clear(key)</code>, which drops every row for that id and is wired
+to a <code>/clear</code> command in the Telegram and Discord bots
+(<code>aser/social/telegram.py:32-35</code>,
+<code>aser/social/discord.py:38-44</code>). Two keying details: the HTTP
+API verifies the <code>key</code> against the header's <code>uid</code>
+and then reads and writes history under the body's <code>uid</code>
+(<code>aser/api.py:26-28</code>, <code>:46-47</code>), and the CLI sets
+<code>self.uid</code> but calls <code>agent.chat(arg)</code> without it,
+so every CLI session shares the <code>None</code> key
+(<code>aser/cli.py:21</code>, <code>:37</code>).
+<code>aser/knowledge.py</code> is a Chroma index over documents a person
+loads from files or folders, retrieval over user documents with no agent
+writer. <code>SelfCodingTool</code> in <code>aser/evolution.py</code>
+writes generated tool code to a <code>mkdtemp</code> directory and keeps
+its registry in a process-local dict, so nothing survives the run.
+<code>aser/trace.py</code> logs each call to SQLite for observability
+and no code reads it back. Screened before reading, from a full clone:
+no auto-run surface, no build-time execution, nothing inside the
+cooldown, two unpinned surfaces (<code>pyproject.toml</code> with no
+lockfile, and <code>requirements.txt</code> with <code>&gt;=</code>
+ranges); there is no <code>.gitmodules</code>, <code>AGENTS.md</code> or
+<code>CLAUDE.md</code>, and the LICENSE is the MIT notice with no rider.
+The one committed test, <code>tests/test_mcp_transport.py</code>, covers
+the MCP transport and not memory. Nothing was installed, built or
+run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
