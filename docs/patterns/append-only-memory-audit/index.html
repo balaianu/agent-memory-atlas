@@ -835,6 +835,19 @@ next rebuild. The one store write outside it is an
 on the other side of the retention question. An owner's forget is itself
 a journal line, so the forgotten text is retained, signed and replicated
 to every device for good.</p>
+<p><strong><a href="../../systems/ken/">ken</a> logs one of its two
+stores.</strong> The premise store's <code>Memory.record</code> replaces
+or retracts a source bundle and appends an <code>events</code> row with
+the context, source, action and payload inside the same
+<code>BEGIN IMMEDIATE</code> transaction, and nothing in the tree reads,
+updates or deletes that table
+(<code>src/ken/reasoning/store.py:27-29</code>, <code>:62-81</code>). A
+retract row carries an empty payload, so the retracted content lives on
+in the earlier insert or replace row. The findings store beside it in
+<code>ken.db</code> overwrites a topic in place and deletes on
+<code>forget</code> with no record
+(<code>src/ken/memory.py:82-93</code>, <code>:166-167</code>), so the
+mark covers premises and not the notes the hooks inject.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Mutation and audit event commit or roll back together.</li>

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 749 reports.**
+**This page covers all 750 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6810,3 +6810,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0, 24,295 lines of Python under `app/`, five commits on master between 16 March and 7 September 2026, the first a monorepo sync. 387 test functions needing Postgres and a seeded user, no CI. Two marks: `scope_enforced` and `audit_log`. `negative_eval` is withheld: the one must-not-retrieve case cannot run at the pin, because its fixture reaches the missing import, and it puts both animas under one user, so it tests the anima predicate rather than the RLS it names. `trust_state`, `bitemporal`, `human_review` and `tombstone` are withheld.
 - Study when: you want a curation pass whose every rewrite is inspectable, provenance from memory to events and from knowledge to memory, or tenant isolation done in Postgres row-level security.
 - Do not copy when: you need to self-host from this repository as published, deletion must reach derived knowledge and cached packs, late or back-dated events must still become memories, or tenants who do not trust each other share a deployment, since the manual workflow trigger runs the Dreamer for any anima id.
+
+### [`ken`](../systems/ken/)
+
+- Best idea: **hash what a conclusion depends on and re-check it on every read.** A justified finding stores a SHA-256 per declared file and a digest over the sorted paths and hashes of a declared tree, so a new file in scope invalidates an absence claim; the re-check fails closed to `unknown` on a missing input or an exhausted budget, and a writer that supplies the hash it read has the write refused if the file moved.
+- Biggest risk: **the validity state is a label on every path.** The session brief, the prompt hook and `ken_recall` all return a `stale` finding with a `REVISAR` prefix, and a test asserts it cannot be hidden; the session brief picks the three newest findings by `updated_at`, so the stale one is injected first if it was written last.
+- Most reusable component: `src/ken/knowledge/dependencies.py` — `Fingerprints`, `capture` and `assess` — with `src/ken/knowledge/context.py` for whole-record budgeting that sends an expansion handle instead of a clipped conclusion.
+- Second risk: **anchors are a pull.** `recall_by_anchor` has one production caller, `ken_recall`, and the tool hook prints nothing, so a memory anchored to an error message reaches the agent only when the agent asks with it; through MCP that recall has a `min_score` default of `0.0`.
+- Maturity impression: MIT, version 0.17.0, 162 commits on main between 5 May and 22 September 2026; a large structural code-query engine with 2,954 test functions run in CI on Ubuntu and macOS, beside a 2,618-line memory layer. Two marks, both on the premise store: `audit_log` on its `events` table, and `negative_eval` on replacement, retraction and context-isolation cases with in-test positive controls. `trust_state` is withheld because validity and kind are labels no read filters on; `scope_enforced` because the store is one directory per project and the premise context is a caller argument; `tombstone`, `bitemporal` and `human_review` are withheld.
+- Study when: you want conclusions that carry the files they rest on and announce when those files change, or a local code ranker whose notebook is shared by every coding harness in a project.
+- Do not copy when: a finding whose evidence changed must stop reaching the model, findings must be attributable to an author or separated by tenant, or a forgotten finding must also leave the logged prompts and replies that quote it.

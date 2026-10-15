@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 749 reports.</strong></p>
+<p><strong>This page covers all 750 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31149,6 +31149,54 @@ published, deletion must reach derived knowledge and cached packs, late
 or back-dated events must still become memories, or tenants who do not
 trust each other share a deployment, since the manual workflow trigger
 runs the Dreamer for any anima id.</li>
+</ul>
+<h3 id="ken"><a href="../systems/ken/"><code>ken</code></a></h3>
+<ul>
+<li>Best idea: <strong>hash what a conclusion depends on and re-check it
+on every read.</strong> A justified finding stores a SHA-256 per
+declared file and a digest over the sorted paths and hashes of a
+declared tree, so a new file in scope invalidates an absence claim; the
+re-check fails closed to <code>unknown</code> on a missing input or an
+exhausted budget, and a writer that supplies the hash it read has the
+write refused if the file moved.</li>
+<li>Biggest risk: <strong>the validity state is a label on every
+path.</strong> The session brief, the prompt hook and
+<code>ken_recall</code> all return a <code>stale</code> finding with a
+<code>REVISAR</code> prefix, and a test asserts it cannot be hidden; the
+session brief picks the three newest findings by
+<code>updated_at</code>, so the stale one is injected first if it was
+written last.</li>
+<li>Most reusable component:
+<code>src/ken/knowledge/dependencies.py</code> —
+<code>Fingerprints</code>, <code>capture</code> and <code>assess</code>
+— with <code>src/ken/knowledge/context.py</code> for whole-record
+budgeting that sends an expansion handle instead of a clipped
+conclusion.</li>
+<li>Second risk: <strong>anchors are a pull.</strong>
+<code>recall_by_anchor</code> has one production caller,
+<code>ken_recall</code>, and the tool hook prints nothing, so a memory
+anchored to an error message reaches the agent only when the agent asks
+with it; through MCP that recall has a <code>min_score</code> default of
+<code>0.0</code>.</li>
+<li>Maturity impression: MIT, version 0.17.0, 162 commits on main
+between 5 May and 22 September 2026; a large structural code-query
+engine with 2,954 test functions run in CI on Ubuntu and macOS, beside a
+2,618-line memory layer. Two marks, both on the premise store:
+<code>audit_log</code> on its <code>events</code> table, and
+<code>negative_eval</code> on replacement, retraction and
+context-isolation cases with in-test positive controls.
+<code>trust_state</code> is withheld because validity and kind are
+labels no read filters on; <code>scope_enforced</code> because the store
+is one directory per project and the premise context is a caller
+argument; <code>tombstone</code>, <code>bitemporal</code> and
+<code>human_review</code> are withheld.</li>
+<li>Study when: you want conclusions that carry the files they rest on
+and announce when those files change, or a local code ranker whose
+notebook is shared by every coding harness in a project.</li>
+<li>Do not copy when: a finding whose evidence changed must stop
+reaching the model, findings must be attributable to an author or
+separated by tenant, or a forgotten finding must also leave the logged
+prompts and replies that quote it.</li>
 </ul>
         </article>
       </div>

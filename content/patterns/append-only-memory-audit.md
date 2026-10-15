@@ -526,6 +526,8 @@ report withholds `audit_log` on that ground.
 
 **[HiveMind (projectmentor)](../../systems/hive-mind/) has no audit table because the log is the store.** Every fact, retraction, link, decision, idea and governance act is a JSONL line carrying a per-device sequence number, the previous entry's hash and an Ed25519 signature, appended under a lock to a file opened only in append mode (`hivemind/parts/02_store_journal.py:969-1010`, `:782-795`). SQLite is a projection that `rebuild_db` empties and replays, so coverage holds by construction: a mutation that is not a journal line is gone after the next rebuild. The one store write outside it is an `access_count` bump that no projection reads. The cost sits on the other side of the retention question. An owner's forget is itself a journal line, so the forgotten text is retained, signed and replicated to every device for good.
 
+**[ken](../../systems/ken/) logs one of its two stores.** The premise store's `Memory.record` replaces or retracts a source bundle and appends an `events` row with the context, source, action and payload inside the same `BEGIN IMMEDIATE` transaction, and nothing in the tree reads, updates or deletes that table (`src/ken/reasoning/store.py:27-29`, `:62-81`). A retract row carries an empty payload, so the retracted content lives on in the earlier insert or replace row. The findings store beside it in `ken.db` overwrites a topic in place and deletes on `forget` with no record (`src/ken/memory.py:82-93`, `:166-167`), so the mark covers premises and not the notes the hooks inject.
+
 ## Tests to require
 
 - Mutation and audit event commit or roll back together.

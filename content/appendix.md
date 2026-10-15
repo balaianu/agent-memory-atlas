@@ -450,6 +450,7 @@ page_kind: comparison
 - [`binder`](../systems/binder/)
 - [`ontofelia`](../systems/ontofelia/)
 - [`elephantasm-core`](../systems/elephantasm-core/)
+- [`ken`](../systems/ken/)
 
 ## Repos Inspected
 
@@ -1204,6 +1205,7 @@ page_kind: comparison
 - [mpazik/Binder](https://github.com/mpazik/Binder) at [`e4066d750ac5c6918706f44b12daa261b261106e`](https://github.com/mpazik/Binder/commit/e4066d750ac5c6918706f44b12daa261b261106e) — read only, at the head of `main`, a commit dated 21 September 2026. MIT with no rider. Screened before reading from a full clone: one auto-run surface (`.vscode/settings.json`, which sets only `binder.devMode`), one build-time execution point (`packages/cli/package.json` `prepublishOnly`), nothing inside the seven-day cooldown, and five unpinned surfaces, three of them workspace manifests (`packages/cli`, `packages/repo`, `packages/utils`) without a lockfile beside them against the root `bun.lock`; `AGENTS.md` was treated as data. Nothing was installed, built or run
 - [semantification-org/Ontofelia](https://github.com/semantification-org/Ontofelia) at [`a9313c0fcc43a459fde9dd74918ea0ee7a23560e`](https://github.com/semantification-org/Ontofelia/commit/a9313c0fcc43a459fde9dd74918ea0ee7a23560e) — read only, at the head of `main`, a merge of 14 October 2026. Apache-2.0 with no rider. Screened before reading from a full clone: no auto-run surface, one build-time execution point (`packages/reasoner/build.rs`), nothing inside the cooldown, and 23 unpinned surfaces, most of them workspace package manifests resolved by the root `pnpm-lock.yaml`. Nothing was installed, built or run
 - [kaminocorp/elephantasm-core](https://github.com/kaminocorp/elephantasm-core) at [`3dc935e52b1b98e40f386194a5f2b39489e42b85`](https://github.com/kaminocorp/elephantasm-core/commit/3dc935e52b1b98e40f386194a5f2b39489e42b85) — read only, at the head of `master`, a commit dated 7 September 2026. Apache-2.0 with no rider. Screened before reading from a full clone: no auto-run surface, nothing inside the cooldown, no unpinned surface, and 2 build-time execution points (`tests/conftest.py`, `tests/integration/conftest.py`). The tree imports billing and organisation modules it does not contain, so neither the server nor its integration suite imports as published. Nothing was installed, built or run
+- [Infinibay/ken](https://github.com/Infinibay/ken) at [`6286d91032a973ab5b3001df272e870ebd922281`](https://github.com/Infinibay/ken/commit/6286d91032a973ab5b3001df272e870ebd922281) — read only, at the head of `main`, a commit dated 22 September 2026, version 0.17.0. MIT with no rider. Screened before reading from a full clone: no auto-run surface, nothing inside the cooldown, no unpinned surface, and 3 build-time execution points (`tests/conftest.py`, `tests/parsers/conftest.py`, `tests/ranker/conftest.py`); `AGENTS.md` read as data. Nothing was installed, built or run
 
 ## What the licences actually say
 

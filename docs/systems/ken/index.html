@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local code index and MCP server
+for coding agents: agent-written findings with hashed file dependencies,
+plus a premise store for rule inference.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="ken — Agent Memory Atlas">
+    <meta property="og:description" content="A local code index and MCP
+server for coding agents: agent-written findings with hashed file
+dependencies, plus a premise store for rule inference.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ken — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local code index and MCP
+server for coding agents: agent-written findings with hashed file
+dependencies, plus a premise store for rule inference.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>ken — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "ken",
+      "description": "A local code index and MCP server for coding agents: agent-written findings with hashed file dependencies, plus a premise store for rule inference.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A local code-ranking index whose
+agent-written findings carry hashed dependencies</p>
+          <h1>ken</h1>
+          <p class="document-deck">A local code index and MCP server for
+coding agents: agent-written findings with hashed file dependencies,
+plus a premise store for rule inference.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/Infinibay/ken">
+              <span>Source</span>
+              <strong>Infinibay/ken</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/Infinibay/ken/commit/6286d91032a973ab5b3001df272e870ebd922281" title="6286d91032a973ab5b3001df272e870ebd922281">
+              <span>Analyzed revision</span>
+              <code>6286d910…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Infinibay--ken" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>Infinibay--ken</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>59,553
+lines of Python under src/ken; the memory layer (memory.py, knowledge/,
+findings_graph.py, session_brief.py, reasoning/) is 2,618 of them, and
+most of the rest is a tree-sitter structural query engine</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>162
+commits on main under three author emails, 5 May – 22 September 2026;
+version 0.17.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,954
+test functions in 411 pytest files, most for the structural engine; the
+four memory suites total 1,341 lines; CI runs pytest and mypy on Ubuntu
+and macOS</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>ken is a per-project code index for Claude Code, Codex and OpenCode
+that ranks files before each prompt and keeps three memories beside the
+index: findings the agent writes with <code>ken_remember</code>, a log
+of prompts, replies and file touches that biases later rankings, and a
+store of formal premises for rule inference. What is notable is the
+justification on a finding. Declared file and tree dependencies are
+hashed when it is saved and re-hashed on every read, so a recalled
+conclusion arrives labelled <code>unchanged</code>, <code>stale</code>,
+<code>unknown</code> or <code>untracked</code>. What is weak is that the
+label is all it does: no read path withholds a stale finding, and the
+anchored recall the README describes as firing with no query fires only
+when the model passes the anchor itself.</p>
+<p>The package is <code>ken-rank</code> 0.17.0, MIT-licensed, by
+Infinibay LLC. Most of the tree is not memory. A tree-sitter parser for
+nineteen languages feeds a file and symbol index, a ranker fuses
+lexical, semantic, predictive and graph signals, and a structural query
+language (KQL2) with a design-pattern catalogue takes the bulk of the
+code and tests. This report covers the three memories and the hooks that
+deliver them.</p>
+<p>Five findings shape the rest of this report.</p>
+<ul>
+<li><strong>Validity is a label and never a filter.</strong>
+<code>records.enrich</code> attaches the live state to every finding a
+read returns (<code>src/ken/knowledge/records.py:126-180</code>). The
+session brief, the prompt hook and <code>ken_recall</code> print it, and
+a test asserts that a stale finding cannot be hidden from the ranked
+block (<code>tests/test_justified_memory.py:385-393</code>). A finding
+whose evidence changed is therefore injected into the next session
+exactly like a fresh one, behind a <code>REVISAR</code> prefix.</li>
+<li><strong>Anchors are pulled, not pushed.</strong>
+<code>recall_by_anchor</code> has one production caller,
+<code>_select_memories</code> behind <code>ken_recall</code>
+(<code>src/ken/mcp/server.py:1517-1527</code>). The tool hook posts the
+call to the daemon and prints nothing
+(<code>src/ken/hook.py:69-71</code>), so a memory anchored to
+<code>database is locked</code> reaches the agent only if the agent asks
+with that string.</li>
+<li><strong>The agent-facing recall has no floor.</strong>
+<code>ken_recall</code> defaults <code>min_score</code> to
+<code>0.0</code> (<code>src/ken/mcp/server.py:1466</code>) and passes it
+through, while the library and the <code>ken recall</code> CLI default
+to <code>0.25</code> (<code>src/ken/memory.py:14</code>,
+<code>src/ken/cli.py:331-333</code>). A query through MCP returns the
+nearest five findings whatever their similarity.</li>
+<li><strong>Findings correct by overwrite and delete; premises keep a
+log.</strong> Re-using a topic replaces the row in place and
+<code>forget</code> is a hard <code>DELETE</code>
+(<code>src/ken/memory.py:82-93</code>, <code>:166-167</code>). The
+premise store appends an <code>events</code> row for every insert,
+replace and retract, which earns <code>audit_log</code> for that store
+and not for the findings.</li>
+<li><strong>The premise store's context is a namespace the caller
+picks.</strong> <code>ask</code> filters sources on
+<code>context = ?</code>
+(<code>src/ken/reasoning/store.py:98-99</code>), and the context is a
+<code>ken_reason</code> argument defaulting to <code>main</code>. It
+isolates experiments; it does not bound a reader.</li>
+</ul>
+<p>Two marks, <code>audit_log</code> and <code>negative_eval</code>,
+both carried mainly by the premise store. The <a
+href="#10-tests-evals-and-benchmarks">section 10</a> evidence for
+<code>negative_eval</code> includes one findings case, guarding a
+default the MCP tool overrides.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>ken holds three kinds of durable state, and each becomes a belief
+differently.</p>
+<p><strong>A finding is whatever text the agent last wrote under a
+topic.</strong> <code>remember</code> upserts on the unique
+<code>topic</code> column, so a topic is the identity and the content is
+replaceable (<code>src/ken/memory.py:82-93</code>). A finding exists
+from the commit of that transaction and is retrievable at once: the
+embedding is computed inline before <code>BEGIN IMMEDIATE</code>
+(<code>:57-65</code>). It stops existing only two ways. A write to the
+same topic replaces content, tags and embedding, and drops a
+justification the caller did not resupply
+(<code>src/ken/knowledge/records.py:104-114</code>). A
+<code>forget</code> deletes the row, and foreign-key cascades remove its
+justification, references and edges
+(<code>src/ken/memory.py:147-175</code>,
+<code>src/ken/db.py:40</code>).</p>
+<p>Two classifications ride on a finding, and neither moves it. The
+<code>kind</code> is a reserved <code>kind:</code> tag drawn from
+<code>finding</code>, <code>persistent_rule</code>,
+<code>experimental_finding</code> and <code>hypothesis</code>
+(<code>src/ken/memory.py:15</code>, <code>:46-55</code>). The
+justification has its own <code>kind</code>: <code>observation</code>,
+<code>decision</code>, <code>hypothesis</code> or
+<code>derivation</code>
+(<code>src/ken/knowledge/records.py:19-26</code>). The only reader that
+branches on either appends <code>; hipótesis</code> to a hook line
+(<code>src/ken/knowledge/context.py:140-141</code>).</p>
+<p><strong>Validity is computed per read, from the worktree.</strong> A
+justification stores a SHA-256 for each declared file and, for a tree, a
+digest over the sorted paths and hashes of every file matching a pattern
+(<code>src/ken/knowledge/dependencies.py:95-147</code>). On each read
+<code>assess</code> re-hashes within a shared budget of 256 files, 16
+MiB, 10,000 entries and 200 ms. It returns <code>stale</code> if any
+hash moved, <code>unknown</code> if any input was missing or the budget
+ran out, <code>unchanged</code> otherwise, and <code>untracked</code>
+when nothing was declared (<code>:165-190</code>). Tree digests cover
+membership, so a new file inside the declared scope invalidates an
+absence claim. Nothing is stored about the outcome; a reverted edit
+returns the finding to <code>unchanged</code>.</p>
+<p><strong>Interaction memory is a log the ranker reads.</strong> Hooks
+write each prompt and each final reply into <code>cr_contexts</code>,
+and each read, edit, write, citation and dismissal into
+<code>cr_interactions</code> (<code>src/ken/schema.sql:105-128</code>).
+At session end the daemon snapshots a per-file productivity score with a
+pattern label such as <code>read_edit</code>
+(<code>src/ken/ranker/snapshot.py:17-63</code>). A later prompt that
+embeds close to an earlier one inherits a boost toward the files that
+session found productive, and a penalty on files it dismissed
+(<code>src/ken/ranker/boosts.py:262-293</code>). These rows have no
+correction path beyond the daemon dropping the last interaction of a
+failed tool call (<code>src/ken/daemon/server.py:263-283</code>).</p>
+<p><strong>A premise is a fact or rule bundle under a source id, in a
+named context.</strong> <code>ken_reason_record</code> stores ground
+atoms — predicate, subject, object, a negation flag and an opaque scope
+string — and rules of one to three premises
+(<code>src/ken/reasoning/model.py:20-92</code>). Re-recording a source
+replaces its bundle, <code>retract=true</code> removes it, and every
+change appends an <code>events</code> row
+(<code>src/ken/reasoning/store.py:62-81</code>). <code>ken_reason</code>
+derives <code>supported</code>, <code>refuted</code>,
+<code>conflict</code> or <code>unknown</code> with proofs and source
+evidence, and stores nothing about the answer except an inference
+checkpoint (<code>:85-148</code>). Premises and findings never mix:
+without a <code>goal</code>, <code>ken_reason</code> returns
+<code>ken_recall</code> hits labelled as candidates, not premises
+(<code>src/ken/mcp/server.py:1433-1436</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — How a ken finding is written, recalled with a live validity label, and removed, beside the logged premise store.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: How a ken finding is written, recalled with a live validity label, and removed, beside the logged premise store.
+flowchart TD
+    W[&quot;ken_remember(topic, content, anchors, justification)&quot;] --&gt; P[&quot;records.prepare: hash evidence and dependencies; reject if a supplied sha256 moved&quot;]
+    P --&gt; U[&quot;BEGIN IMMEDIATE: upsert cr_findings on topic&quot;]
+    U --&gt; J[&quot;replace cr_justifications row (dropped if none supplied)&quot;]
+    U --&gt; G[&quot;recompute refs and every edge; store anchors&quot;]
+    G --&gt; F[(&quot;cr_findings row&quot;)]
+    J --&gt; F
+    F --&gt; SB[&quot;SessionStart hook: three newest by updated_at&quot;]
+    F --&gt; PH[&quot;Prompt hook: cosine &gt;= 0.48 to the prompt&quot;]
+    F --&gt; RC[&quot;ken_recall: anchor, topic, path, query (floor 0.0) or newest&quot;]
+    SB --&gt; E[&quot;enrich: re-hash declared inputs at read time&quot;]
+    PH --&gt; E
+    RC --&gt; E
+    E --&gt; L{&quot;unchanged / stale / unknown / untracked&quot;}
+    L --&gt;|&quot;every state&quot;| OUT[&quot;delivered to the model; stale and unknown prefixed REVISAR&quot;]
+    F --&gt;|&quot;same topic written again&quot;| U
+    F --&gt;|&quot;forget(topic)&quot;| D[&quot;DELETE row; cascades to justification, refs, edges&quot;]
+    R[&quot;ken_reason_record(source, facts, rules, context)&quot;] --&gt; S[(&quot;sources keyed (context, id)&quot;)]
+    R --&gt; EV[(&quot;events: insert / replace / retract with payload&quot;)]
+    S --&gt; A[&quot;ken_reason: derive supported / refuted / conflict / unknown&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>ken is a Python package with a CLI, a per-project daemon, a stdio MCP
+server and hook shims. <code>ken install .</code> creates
+<code>.ken/</code>, writes <code>meta.json</code> with a random auth
+token, initialises <code>ken.db</code>, and wires hooks and an MCP entry
+for each requested host: Claude Code by default, <code>--codex</code>,
+<code>--opencode</code> and <code>--deepseek</code> on request
+(<code>src/ken/install.py:133</code>,
+<code>src/ken/cli.py:79-92</code>).</p>
+<p>Each hook invocation is a short <code>ken hook ...</code> process
+that walks up to the project root and POSTs the event to the daemon,
+spawning it if needed (<code>src/ken/hook.py:33-90</code>). The daemon
+binds localhost and checks <code>Authorization: Bearer</code> against
+the token in <code>meta.json</code>
+(<code>src/ken/daemon/server.py:401-404</code>). It holds one writer
+connection behind a <code>threading.Lock</code>, watches the tree with
+<code>watchfiles</code>, reindexes through a coalescing queue, and exits
+after its sessions end or an idle timeout. The MCP server is a separate
+process that opens its own connection per call
+(<code>src/ken/mcp/server.py:323-326</code>); SQLite's write lock and a
+5-second busy timeout arbitrate between them
+(<code>src/ken/db.py:23-42</code>).</p>
+<p>Three stores sit under <code>.ken/</code>. <code>ken.db</code> is
+SQLite in WAL mode with the code index, the session tables, the findings
+tables and an FTS5 mirror of file bodies
+(<code>src/ken/schema.sql</code>). Code vectors live in memory-mapped
+segment files under <code>.ken/vectors/</code>, with slots allocated in
+SQLite; finding embeddings are an inline BLOB on
+<code>cr_findings</code>. <code>reasoning.sqlite</code> holds premises,
+events and checkpoints
+(<code>src/ken/reasoning/store.py:18-33</code>).</p>
+<p>Embeddings default to a distilled static table committed in the tree,
+<code>src/ken/embedder/data/ken__static-qwen3-r512-v2.npz</code> (23
+MB), with fastembed ONNX and an optional torch backend as alternatives
+(<code>src/ken/embedder/</code>). Nothing calls a hosted model on any
+memory path.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to run beyond the hooks: the daemon starts on demand and
+stops itself. No API key is needed to store or recall. Installation is
+<code>uv tool install ken-rank</code>, <code>pip install ken-rank</code>
+or the repository's <code>install.sh</code>, then
+<code>ken install .</code> per project. The dependency list pins
+<code>tree-sitter</code> below 0.26 and <code>mcp</code> to the 2.x
+line, with a <code>uv.lock</code> in the tree. Everything is local and
+offline once the embedding table is present.</p>
+<p>The findings store is inspectable with <code>ken findings</code>,
+<code>ken recall</code> and any SQLite client, and a person can repair
+it by hand. It is not a document store: a finding is a row, and the hook
+output is the only rendered view. <code>ken uninstall .</code> removes
+the hooks, the MCP entries and the whole <code>.ken/</code> directory,
+including both memory stores, unless <code>--keep-db</code> is passed
+(<code>src/ken/install_uninstall.py:145-150</code>).</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture of a finding.</strong>
+<code>ken_remember(action="save")</code> validates non-empty content,
+optionally converts a <code>ken_check</code> receipt into justification
+evidence, and calls <code>_impl_ken_remember</code>, which drops empty
+anchors and calls <code>memory.remember</code>
+(<code>src/ken/mcp/server.py:1537-1607</code>, <code>:504-525</code>).
+<code>remember</code> validates the justification through
+<code>records.prepare</code>. That bounds every field, confines paths to
+the project, refuses symlinks and captures hashes, and a caller that
+supplies <code>sha256</code> for an input gets the whole write rejected
+if the file changed since it was read
+(<code>src/ken/knowledge/records.py:13-84</code>,
+<code>src/ken/knowledge/dependencies.py:150-162</code>). The embedding
+is computed, then one <code>BEGIN IMMEDIATE</code> transaction upserts
+the finding, replaces its justification, recomputes its references and
+every edge inside a savepoint, and writes anchors
+(<code>src/ken/memory.py:80-117</code>).</p>
+<p><strong>Capture of interactions.</strong> The prompt hook stores the
+prompt with its embedding
+(<code>src/ken/daemon/server.py:467-490</code>). The tool hooks map
+Read, Edit, Write and shell calls to <code>cr_interactions</code> rows.
+The Stop hook stores the last assistant text, capped at 8,000
+characters, as a <code>turn_end</code> context (<code>:812-828</code>),
+and session end snapshots scores (<code>:698-710</code>).</p>
+<p><strong>Retrieval.</strong> <code>ken_recall</code> dispatches in a
+fixed order: any <code>anchor_*</code> argument goes to
+<code>recall_by_anchor</code>; else <code>topic</code> to the findings
+graph; else <code>path</code> to <code>file_findings</code>; else
+<code>query</code> to cosine recall; else the newest findings
+(<code>src/ken/mcp/server.py:1517-1535</code>). With
+<code>detail="answer"</code> and an exact topic it reads only that row
+(<code>:1504-1509</code>). Each result passes through
+<code>knowledge.context.recall_view</code>, which enriches it with
+validity and applies the <code>summary</code> or <code>answer</code>
+projection and the character budget
+(<code>src/ken/knowledge/context.py:101-126</code>).</p>
+<p><strong>Context assembly.</strong> Session start calls
+<code>build_session_brief</code>: the newest prompt across all sessions,
+that session's last reply, its five most-touched files, and the three
+newest findings, each enriched
+(<code>src/ken/session_brief.py:128-188</code>). The prompt hook ranks
+files, then renders a <code>&lt;ken-knowledge&gt;</code> block for the
+findings the ranker selected, skipping any whose content and state the
+session has seen, inside a 3,500-character budget
+(<code>src/ken/daemon/server.py:492-525</code>,
+<code>src/ken/knowledge/context.py:153-179</code>).</p>
+<p><strong>Correction and deletion.</strong>
+<code>ken_remember(action="forget")</code> calls
+<code>memory.forget</code>, which deletes by exact topic and recomputes
+the remaining edges (<code>src/ken/memory.py:147-175</code>).
+<code>ken_remember(action="dismiss")</code> posts a path to the daemon,
+which records a <code>dismissed</code> interaction on the latest-started
+session (<code>src/ken/daemon/server.py:885-920</code>).
+<code>ken_reason_record(retract=True)</code> removes a premise bundle
+and logs it (<code>src/ken/reasoning/store.py:57-81</code>).</p>
+<p><strong>Schema.</strong> <code>src/ken/schema.sql:97-208</code> for
+sessions, interactions, findings, references and edges;
+<code>src/ken/knowledge/records.py:97-101</code> for
+<code>cr_justifications</code>, created lazily on first write;
+<code>src/ken/reasoning/store.py:23-33</code> for the premise store.</p>
+<p><strong>Tests.</strong> <code>tests/test_justified_memory.py</code>,
+<code>tests/test_findings_graph.py</code>,
+<code>tests/test_session_brief.py</code>,
+<code>tests/test_reasoning_memory.py</code>, and the remember, recall
+and forget cases in <code>tests/test_search_cli.py:566-758</code>.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>cr_findings</code> has <code>id</code>, a unique
+<code>topic</code>, <code>content</code>, <code>tags</code> as a JSON
+array, an <code>embedding</code> BLOB, and <code>created_at</code> and
+<code>updated_at</code> in milliseconds
+(<code>src/ken/schema.sql:154-164</code>). The embedded text is the
+topic plus the first 1,024 characters of content
+(<code>src/ken/memory.py:57</code>). There is no author, no session id,
+no source harness and no scope column; a finding written from Codex and
+one written from Claude Code are indistinguishable.</p>
+<p><code>cr_justifications</code> holds one JSON payload per finding:
+version, kind, rationale, evidence paths and notes, dependencies with
+their hashes, assumptions, a recheck note and optional check-run ids
+(<code>src/ken/knowledge/records.py:73-84</code>, <code>:97-101</code>).
+Evidence files become dependencies automatically, so a changed evidence
+file makes its finding stale.</p>
+<p><code>cr_finding_refs</code> bridges findings to code. Paths,
+tracebacks and identifiers are extracted from the prose with regular
+expressions and resolved against the index, grouped on a durable text
+key with the resolved ids kept as an advisory cache. Declared anchors
+are rows with <code>method = 'anchor'</code> and kinds
+<code>file</code>, <code>symbol</code>, <code>tool</code> and
+<code>error</code> (<code>src/ken/schema.sql:184-196</code>,
+<code>src/ken/findings_graph.py:262-298</code>).
+<code>cr_finding_edges</code> stores typed undirected edges —
+<code>semantic</code> above cosine 0.60, <code>shared_file</code>,
+<code>shared_symbol</code>, <code>shared_tag</code> — with evidence
+JSON. Its <code>directed</code> column is reserved in a schema comment
+for supersession and contradiction edges that nothing writes
+(<code>src/ken/schema.sql:198-208</code>).</p>
+<p>Temporal fields are record time only: <code>created_at</code> and
+<code>updated_at</code> on a finding, <code>created_at</code> on
+interactions and contexts, and <code>CURRENT_TIMESTAMP</code> on premise
+events. A premise's <code>scope</code> field defaults to
+<code>present</code> and is compared as an opaque string; the reasoning
+README states that no interval calculus is implemented
+(<code>src/ken/reasoning/README.md</code>).</p>
+<p>The premise store has <code>contexts(id, revision)</code>,
+<code>sources(context, id, payload)</code>,
+<code>events(seq, context, source, action, payload, created)</code> and
+<code>checkpoints(context, world, rules_hash, state)</code>
+(<code>src/ken/reasoning/store.py:23-33</code>). A context is created on
+first use by any caller; there is no list of who may read or write
+one.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p><strong>Query recall is brute-force cosine.</strong>
+<code>memory.recall</code> loads every finding with an embedding, stacks
+the vectors, skips any written by a model of a different dimension, and
+ranks by cosine against the query embedding
+(<code>src/ken/memory.py:213-254</code>). The floor is
+<code>DEFAULT_RECALL_MIN_SCORE = 0.25</code> in the library and the CLI.
+The MCP tool passes its own default of <code>0.0</code>
+(<code>src/ken/mcp/server.py:1466</code>, <code>:1533-1534</code>), so
+the agent receives the top <code>limit</code> findings by similarity
+with no floor unless it asks for one.</p>
+<p><strong>Anchors match stored keys.</strong> A <code>file</code>
+anchor matches the stored key, a longer path ending in it, or a stored
+key ending in the caller's basename. An <code>error</code> anchor
+matches when the stored key is a substring of the message passed, and
+<code>tool</code> and <code>symbol</code> match exactly. Results come
+back newest first, OR across kinds
+(<code>src/ken/findings_graph.py:324-388</code>). The basename clause
+means an anchor on <code>src/a.py</code> also fires for any other path
+whose last segment is <code>a.py</code>.</p>
+<p><strong>Topic and path recall read the graph.</strong>
+<code>related_findings</code> resolves a topic by exact match or else
+the top cosine hit, and returns neighbours ranked evidence-backed first
+(<code>src/ken/findings_graph.py:751-805</code>).
+<code>file_findings</code> returns findings whose prose or anchors
+reference the file, optionally one hop out (<code>:807-852</code>).</p>
+<p><strong>The prompt hook uses a separate floor.</strong> The ranker's
+findings channel keeps findings above cosine 0.48 and scales them into
+the fused score (<code>src/ken/ranker/channels.py:1321-1350</code>). The
+ranker suppresses its whole block when the top score falls under a
+confidence gate (<code>src/ken/ranker/__init__.py:44-47</code>,
+<code>:233-238</code>). Selected topics then pass through
+<code>render_brief</code>, which prints a status before content so
+clipping cannot remove a warning
+(<code>src/ken/knowledge/context.py:129-150</code>).</p>
+<p><strong>Budgeting keeps conclusions whole.</strong>
+<code>compact</code> adds records while the serialised JSON fits the
+budget. A record that does not fit is replaced by a reference with
+<code>conclusion_omitted</code> and an <code>expand</code> pointer
+rather than a clipped prefix
+(<code>src/ken/knowledge/context.py:61-98</code>). The session brief, by
+contrast, truncates the whole block at 1,800 characters
+(<code>src/ken/session_brief.py:185-187</code>).</p>
+<p><strong>Failure modes.</strong> Over-recall through MCP is the
+default, given the zero floor. The session brief selects by recency
+alone, so the three newest findings are injected whether or not they
+concern the task. Stale and <code>unknown</code> findings are returned
+and injected on every path.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Findings are written only by explicit calls:
+<code>ken_remember</code> from the agent, or <code>ken remember</code>
+and <code>ken tools remember</code> from a shell. Nothing extracts a
+finding from a conversation. The design document states that a passing
+test does not by itself establish a general conclusion, and the code
+matches (<code>docs/design/justified-memory.md</code>,
+<code>src/ken/memory.py</code>). The bundled skills ask the agent to
+write back root causes, unstated constraints and traps
+(<code>src/ken/skills/bundled/</code>).</p>
+<p>Deduplication is by topic only. Two findings with different topics
+and the same content coexist and are linked by a <code>semantic</code>
+edge. A topic collision overwrites without warning, which the README
+instructs the agent to treat as the update path.</p>
+<p>Validation is strict at the justification boundary and absent at the
+content boundary. <code>records.prepare</code> caps rationale at 4,000
+characters, assumptions at 16, evidence at 16 and dependencies at 32,
+refuses traversal and symlinks, and rejects a check receipt whose
+recorded inputs no longer match
+(<code>src/ken/knowledge/records.py:13-84</code>). Content has no length
+cap and no screening; whatever the agent writes is injected into later
+sessions.</p>
+<p>Interaction capture is unconditional while hooks are installed: every
+prompt, every final reply up to 8,000 characters, and every file touch.
+Premise writes are bounded at 500 facts and rules per source and 2,000
+sources per context (<code>src/ken/reasoning/store.py:53-72</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>A finding write blocks the tool call on one embedding, a reference
+extraction over the prose, and a full recompute of every edge. The
+recompute includes an O(N²) cosine pass that is skipped above 2,000
+findings (<code>src/ken/findings_graph.py:60</code>,
+<code>:548-566</code>). With the static table the embedding is a lookup;
+with torch it is a model call. There is no lag: the finding is
+retrievable at commit.</p>
+<p>No background pass rewrites findings. <code>ken reembed</code>
+rewrites every stored embedding when the model changes, findings
+included (<code>src/ken/reembed.py:328-332</code>). Per turn, the prompt
+hook injects at most 3,500 characters, the knowledge block counted
+inside that budget, and the session brief at most 1,800. Both are
+user-prompt content, so they vary per turn and sit after any cached
+system prefix.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP surface is twelve tools
+(<code>src/ken/mcp/server.py:936-1607</code>). Memory is
+<code>ken_remember</code> with <code>save</code>, <code>forget</code>
+and <code>dismiss</code> actions, <code>ken_recall</code>, and the
+premise pair <code>ken_reason_record</code> and <code>ken_reason</code>.
+A source comment explains why <code>ken_remember</code> is separate from
+<code>ken_recall</code>: hosts gate read-only agent tiers by tool, so
+folding writes into the read tool would grant them to every read-only
+tier (<code>:930-933</code>). The README's instruction block says the
+server describes six tools; the registry holds twelve.</p>
+<p>The model has full agency over findings. It chooses what to write,
+overwrites by topic, deletes by topic, and decides whether to pass
+anchors and a floor on recall. The hooks give it the newest three
+findings at session start and any selected by the ranker on each prompt,
+without a call. Anchored findings require a call. The README's promise
+that an anchored memory reaches whoever next touches the same thing with
+no query describes <code>ken_recall(anchor_file=...)</code> issued by
+the agent, and the <code>ken-investigate-bug</code> skill tells it to
+make that call
+(<code>src/ken/skills/bundled/ken-investigate-bug/SKILL.md:99</code>).</p>
+<p>Every harness installed in a project shares one store. A finding
+Codex writes is injected into the next Claude Code session, which the
+tool description presents as the point
+(<code>src/ken/mcp/server.py:1474-1476</code>).</p>
+<p>Adapting ken to another host means writing a hook shim that posts the
+same five events. The daemon API is plain JSON over localhost HTTP, and
+<code>ken tools</code> exposes every tool to a host without MCP.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Provenance.</strong> A justified finding records which files
+support it and their hashes, and a check receipt binds it to a KQL2
+contract run. Nothing records who wrote a finding or from which session,
+and an unjustified finding carries no provenance at all. The design
+document is explicit that <code>unchanged</code> proves neither the
+conclusion nor its assumptions.</p>
+<p><strong>Uncertainty is represented and not enforced.</strong>
+<code>hypothesis</code> is a kind, <code>assumptions</code> are listed
+as pending in hook output, and stale inputs are flagged. The
+<code>answer</code> projection adds
+<code>reuse: review_inputs_before_reusing</code> to any state other than
+<code>unchanged</code>
+(<code>src/ken/knowledge/context.py:39-58</code>). That is advice to the
+model. Nothing prevents a stale, unverified hypothesis from being the
+first line of the next session's brief.</p>
+<p><strong>False memories.</strong> The agent writes findings without
+review, and any text in a finding is injected into later prompts across
+harnesses. A prompt-injected instruction saved as a finding persists
+until someone runs <code>forget</code> on its exact topic. There is no
+screening, no quarantine state and no human approval surface.</p>
+<p><strong>Concurrency.</strong> Writes go through SQLite's write lock.
+<code>remember</code> and <code>forget</code> use
+<code>BEGIN IMMEDIATE</code>, the daemon serialises its own writes
+behind a lock, and the premise store opens <code>BEGIN IMMEDIATE</code>
+for both <code>record</code> and <code>ask</code>.
+<code>tests/test_reasoning_memory.py:151-158</code> runs eight
+concurrent record-and-ask jobs and asserts all eight answers survive.
+Dismissals attach to the latest-started session, so with two hosts open
+the attribution is a heuristic
+(<code>src/ken/daemon/server.py:885-899</code>).</p>
+<p><strong>Graph failures cannot cost a finding.</strong> Reference and
+edge recomputation run in a savepoint; a failure rolls back only the
+graph work and marks the graph dirty for repair
+(<code>src/ken/findings_graph.py:714-748</code>).</p>
+<p><strong>Deletion.</strong> <code>forget</code> removes the row and
+its cascades. It does not touch the prompts, replies and dismiss reasons
+in <code>cr_contexts</code> that may quote the finding, and those tables
+have no delete path short of uninstalling. The premise store's
+<code>events</code> table keeps every retracted bundle's content in its
+insert or replace row for good.</p>
+<p><strong>Path safety.</strong> Tool path arguments are confined to the
+project root, with traversal and escaping symlinks rejected
+(<code>src/ken/_paths.py:51-66</code>,
+<code>src/ken/mcp/server.py:329-334</code>). Dependency capture applies
+the same rule and refuses internal symlinks
+(<code>src/ken/knowledge/dependencies.py:45-63</code>).</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is large and mostly about the structural engine. CI runs
+<code>uv run pytest</code> and <code>mypy</code> on Ubuntu and macOS
+with the locked environment, then builds and smoke-tests the wheel
+(<code>.github/workflows/ci.yml</code>). I did not run it.</p>
+<p><strong>Justified memory.</strong>
+<code>tests/test_justified_memory.py</code> covers reuse across
+sessions, a relevant edit making a finding stale while an unrelated edit
+does not, and evidence tampering. It covers a new file invalidating a
+tree-scoped absence claim while a file outside the pattern does not,
+budget exhaustion yielding <code>unknown</code>, and rejection of
+evidence whose supplied hash moved. It also covers atomic rejection of
+invalid dependencies, an overwrite dropping the old justification, and
+hook delivery once per session with a warning after a dependency
+changes. Each of these asserts the label;
+<code>test_verbose_rank_cannot_hide_a_stale_memory</code> asserts that a
+stale finding is shown (<code>:385-393</code>).</p>
+<p><strong><code>negative_eval</code> — awarded, on the premise
+store.</strong>
+<code>test_source_replacement_and_rule_replacement</code> replaces a
+source's rule and asserts the old conclusion <code>q</code> is
+<code>unknown</code> while the new one <code>z</code> is
+<code>supported</code>
+(<code>tests/test_reasoning_memory.py:79-84</code>).
+<code>test_world_context_and_time_isolation</code> records
+<code>p</code> in context <code>one</code>, asserts <code>unknown</code>
+in context <code>two</code>, <code>unknown</code> under the
+<code>past</code> scope, and <code>supported</code> in <code>one</code>
+(<code>:87-95</code>).
+<code>test_retraction_alternate_support_and_cycles</code> retracts two
+supporting sources in turn and asserts support survives the first and is
+gone after the second, with zero facts (<code>:67-76</code>). Each case
+asserts exclusion on a populated store with a positive control in the
+same test, and each runs on SQLite with no embedder.</p>
+<p><strong>The findings cases are weaker.</strong>
+<code>test_recall_filters_weak_matches_by_default</code> stores one
+finding, asserts recall at the default floor is empty, and asserts the
+same finding returns at <code>min_score=0</code>
+(<code>tests/test_search_cli.py:585-597</code>). That is a sound pair,
+and it guards the library default that the MCP tool does not use.
+<code>test_an_unanchored_lookup_returns_nothing</code> asserts a
+<code>tool: npm</code> lookup misses a finding anchored to
+<code>pytest</code>, with its positive control in a sibling test
+(<code>tests/test_findings_graph.py:463-468</code>,
+<code>:518-523</code>).
+<code>test_forgetting_removes_the_anchors_too</code> asserts absence
+after deleting the only finding, which an empty retriever would also
+pass (<code>:526-531</code>).</p>
+<p><strong>Evaluations.</strong>
+<code>docs/validation/coding-memory-2026-09-21/</code> holds eight Codex
+CLI sessions on copies of ken's own database, with 275 findings,
+comparing plain and justified memory on a fixed note selection. Its
+README states that the runs showed no consistent token saving or
+accuracy gain, and that it tested memory use rather than hook activation
+or ranking. <code>scripts/evaluate_coding_memory.py</code> regenerates
+it. <code>docs/benchmark-evidence/2026-09-07-*</code> and
+<code>docs/codex-ken-benchmark-2026-09-07.md</code> record task runs
+with and without ken on code-navigation tasks, which concern the index,
+not memory. I read the committed summaries and recomputed nothing.</p>
+<p><strong>No paper.</strong> The tree has no arXiv link, BibTeX block,
+DOI or <code>CITATION.cff</code>.</p>
+<p><strong>Tests I would want.</strong> A stale finding withheld, or
+demoted below fresh ones, on some read path; an MCP-level recall at the
+tool's default floor; an anchored finding delivered by a hook with no
+agent call; a <code>forget</code> followed by a recall with a surviving
+control finding.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Fingerprint the inputs a conclusion depends on and re-check
+them on read.</strong> Store a hash per declared file and a digest over
+sorted path and hash pairs for a declared tree, and recompute at
+retrieval. Tree membership is what makes an absence claim checkable; a
+new file in scope changes the digest.</li>
+<li><strong>Bind the observation to what was read.</strong> Let the
+writer supply the hash it saw, and reject the whole write if the file
+changed between reading and recording.</li>
+<li><strong>Return <code>unknown</code>, never <code>unchanged</code>,
+when the check runs out of budget.</strong> A bounded re-check that
+fails open is a stale check; ken's fails closed.</li>
+<li><strong>Drop the old justification when the claim is
+rewritten.</strong> An overwrite that keeps the previous evidence
+attaches it to a conclusion it never supported.</li>
+<li><strong>Budget by whole records.</strong> When a conclusion does not
+fit, send a reference and an expansion handle instead of a prefix that
+may have lost its negation.</li>
+<li><strong>Log premise changes with the payload, in the same
+transaction.</strong> The events row makes a replaced bundle recoverable
+without a separate history table.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A validity state nothing filters on.</strong> If the label
+is the whole mechanism, the injection paths need a demotion or an
+exclusion, or the stale memory arrives first because it is newest.</li>
+<li><strong>A different relevance floor on the agent's tool than in the
+library.</strong> The test suite guards one default and the agent runs
+on the other.</li>
+<li><strong>Documenting push delivery for a pull mechanism.</strong>
+Anchors are a good index; without a hook that calls them, they are a
+search the agent must think of.</li>
+<li><strong>Session-start selection by recency alone.</strong> The
+newest three findings are the ones last written, not the ones about the
+task.</li>
+<li><strong>Retaining raw prompts and replies with no delete
+path.</strong> A forgotten finding survives in the transcript it was
+derived from.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>ken suits one developer, or a small team sharing a checkout, who
+wants a local code ranker for Claude Code or Codex and would value a
+project notebook the agent writes into and reads from automatically. The
+memory is a modest addition to a large code-intelligence package;
+adopting it means adopting the daemon, the hooks and the index. It does
+not suit a reader who needs findings withheld when wrong, separated by
+author or tenant, reviewed before use, or deleted along with their
+traces. For those the justification contract is the part to study and
+the store around it is the part to replace.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>How often a stale finding misleads an agent in practice, given that
+it arrives labelled; the committed evaluation fixes note selection and
+does not measure this.</li>
+<li>Whether the MCP <code>min_score=0.0</code> default is deliberate. It
+arrived with the 0.12.0 consolidation from thirty tools to six, commit
+<code class="commit-id" title="80a32a0a445eac16fa2f6c80e655f35bf30f05a3">80a32a0a…</code>, dated 30 July
+2026.</li>
+<li>Whether a hook-side anchor lookup is planned; the tool hook has the
+tool name, the input paths and the error text in hand.</li>
+<li>How the premise store is used outside the demos; no committed
+evaluation exercises <code>ken_reason</code> on project knowledge.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>src/ken/schema.sql</code>, <code>src/ken/db.py</code>,
+<code>src/ken/knowledge/records.py</code> (<code>ensure_schema</code>),
+<code>src/ken/vectors.py</code>,
+<code>src/ken/reasoning/store.py</code>.</li>
+<li><strong>Write:</strong> <code>src/ken/memory.py</code>
+(<code>remember</code>, <code>forget</code>),
+<code>src/ken/knowledge/records.py</code> (<code>prepare</code>,
+<code>save</code>), <code>src/ken/knowledge/dependencies.py</code>
+(<code>Fingerprints</code>, <code>capture</code>),
+<code>src/ken/findings_graph.py</code> (<code>apply_remember</code>,
+<code>set_finding_anchors</code>, <code>recompute_finding_edges</code>),
+<code>src/ken/checks/integration.py</code>.</li>
+<li><strong>Read:</strong> <code>src/ken/memory.py</code>
+(<code>recall</code>, <code>recall_by_anchor</code>,
+<code>list_findings</code>), <code>src/ken/findings_graph.py</code>
+(<code>find_by_anchor</code>, <code>related_findings</code>,
+<code>file_findings</code>),
+<code>src/ken/knowledge/dependencies.py</code> (<code>assess</code>),
+<code>src/ken/knowledge/context.py</code>,
+<code>src/ken/ranker/channels.py</code> (<code>finding_scores</code>),
+<code>src/ken/ranker/boosts.py</code>.</li>
+<li><strong>Context assembly:</strong>
+<code>src/ken/session_brief.py</code>,
+<code>src/ken/knowledge/context.py</code> (<code>render_brief</code>,
+<code>brief_line</code>), <code>src/ken/daemon/server.py</code>
+(<code>_handle_session_start</code>, <code>_handle_prompt</code>).</li>
+<li><strong>Interaction log:</strong>
+<code>src/ken/daemon/server.py</code> (<code>record_context</code>,
+<code>record_interaction</code>, <code>_record_dismiss</code>,
+<code>_handle_turn_end</code>), <code>src/ken/ranker/snapshot.py</code>,
+<code>src/ken/hook.py</code>.</li>
+<li><strong>Premises:</strong> <code>src/ken/reasoning/model.py</code>,
+<code>src/ken/reasoning/kernel.py</code>,
+<code>src/ken/reasoning/store.py</code>,
+<code>src/ken/reasoning/README.md</code>.</li>
+<li><strong>MCP and CLI:</strong> <code>src/ken/mcp/server.py</code>,
+<code>src/ken/cli.py</code>, <code>src/ken/install.py</code>,
+<code>src/ken/install_uninstall.py</code>,
+<code>src/ken/skills/bundled/</code>.</li>
+<li><strong>Tests and evaluations:</strong>
+<code>tests/test_justified_memory.py</code>,
+<code>tests/test_findings_graph.py</code>,
+<code>tests/test_session_brief.py</code>,
+<code>tests/test_reasoning_memory.py</code>,
+<code>tests/test_search_cli.py</code>,
+<code>docs/validation/coding-memory-2026-09-21/README.md</code>,
+<code>scripts/evaluate_coding_memory.py</code>,
+<code>docs/design/justified-memory.md</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the tree root against the pinned revision, with
+<code>PIN=6286d91032a973ab5b3001df272e870ebd922281</code>.</p>
+<ul>
+<li><code>git grep -n -E 'recall_by_anchor|find_by_anchor' "${PIN}" -- src</code>
+— definitions in <code>memory.py</code> and
+<code>findings_graph.py</code>; one caller,
+<code>mcp/server.py:1524-1527</code>.</li>
+<li><code>git grep -n -i 'anchor' "${PIN}" -- src/ken/hook.py src/ken/daemon src/ken/hooks_template.py src/ken/codex_hooks_template.py src/ken/opencode_template.py src/ken/deepseek_template.py</code>
+— turn-anchor and context-id comments only; no anchor lookup on a hook
+path.</li>
+<li><code>git grep -n -E 'FROM events|INTO events|UPDATE events|DELETE FROM events' "${PIN}" -- .</code>
+— one match, the insert at <code>reasoning/store.py:80</code>.</li>
+<li><code>git grep -n -E 'DELETE FROM (cr_|events|sources)|UPDATE (cr_|events)' "${PIN}" -- src scripts</code>
+— <code>cr_findings</code> deleted only at <code>memory.py:167</code>;
+<code>cr_interactions</code> only at <code>daemon/server.py:277</code>;
+<code>cr_session_scores</code> only at
+<code>ranker/snapshot.py:51</code>; <code>cr_contexts</code> updated
+only for embeddings at <code>reembed.py:320</code>; no
+<code>DELETE FROM cr_contexts</code>.</li>
+<li><code>git grep -n -E "\"stale\"|'stale'|state *(==|!=|in) *[\"'{(]" "${PIN}" -- src/ken/knowledge src/ken/memory.py src/ken/session_brief.py src/ken/ranker src/ken/daemon src/ken/mcp src/ken/findings_graph.py</code>
+— the state is produced in <code>dependencies.py</code> and
+<code>records.py</code> and branched on at <code>context.py:46</code>,
+<code>:135</code> and <code>:145</code> for labels; no read drops a row
+on it.</li>
+<li><code>git grep -n -E 'hypothesis' "${PIN}" -- src/ken ':!src/ken/skills' ':!src/ken/kql2' ':!src/ken/structural'</code>
+— kind vocabularies, the CLI choice list, label derivation, and the one
+label branch at <code>context.py:140</code>; the
+<code>responsibility/</code> hits belong to <code>ken_who</code>.</li>
+<li><code>git grep -n -i -E 'project_id|user_id|tenant|namespace|workspace_id' "${PIN}" -- src/ken/memory.py src/ken/schema.sql src/ken/findings_graph.py src/ken/knowledge src/ken/session_brief.py src/ken/reasoning</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'valid_(from|to|until)|as_of|effective_(at|from)|observed_at' "${PIN}" -- src/ken/memory.py src/ken/knowledge src/ken/reasoning src/ken/schema.sql src/ken/findings_graph.py</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'approv|pending|quarantin|review_state|needs_review' "${PIN}" -- src/ken/memory.py src/ken/knowledge src/ken/findings_graph.py src/ken/reasoning src/ken/session_brief.py src/ken/mcp/server.py</code>
+— embedding-upgrade notices, a graph backfill comment and an inference
+job counter; no review state.</li>
+<li><code>git grep -n -i -E 'tombstone|reject(ed)?_|blocklist|denylist|suppress' "${PIN}" -- src/ken/memory.py src/ken/knowledge src/ken/findings_graph.py src/ken/reasoning src/ken/ranker src/ken/daemon</code>
+— the ranker's confidence-gate suppression only.</li>
+<li><code>git grep -n -i -E 'min.score' "${PIN}" -- src/ken/mcp/server.py src/ken/cli.py src/ken/memory.py</code>
+— <code>0.25</code> at <code>memory.py:14</code>, in
+<code>_impl_ken_recall</code> at <code>mcp/server.py:544</code> and as
+the <code>--min-score</code> default at <code>cli.py:331-333</code>;
+<code>0.0</code> in <code>ken_recall</code> at
+<code>mcp/server.py:1466</code>, passed through at
+<code>:1533</code>.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org' "${PIN}" -- .</code>
+— no match;
+<code>git ls-tree -r --name-only "${PIN}" | grep -i citation</code> — no
+match.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/Infinibay/ken/commit/6286d91032a973ab5b3001df272e870ebd922281"><code class="commit-id" title="6286d91032a973ab5b3001df272e870ebd922281">6286d910…</code></a>
+— first reading, at the head of <code>main</code>, a commit dated 22
+September 2026, version 0.17.0. Two marks, <code>audit_log</code> and
+<code>negative_eval</code>, both on the premise store, with one findings
+case under <code>negative_eval</code>. Screened before reading from a
+full clone: no auto-run surface, nothing inside the cooldown, no
+unpinned surface (<code>uv.lock</code> unchanged for 23 days), three
+build-time execution points (<code>tests/conftest.py</code>,
+<code>tests/parsers/conftest.py</code>,
+<code>tests/ranker/conftest.py</code>), and an <code>AGENTS.md</code>
+read as data. MIT with no rider. Read with <code>git grep</code> and
+<code>sed</code>; nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>
