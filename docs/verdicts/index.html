@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 743 reports.</strong></p>
+<p><strong>This page covers all 744 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30864,6 +30864,46 @@ what it writes back.</li>
 <li>Do not copy when: several users or projects share one database, a
 correction must outrank the value it replaces, or the REST server will
 run where untrusted pages can reach it.</li>
+</ul>
+<h3 id="crystalline"><a
+href="../systems/crystalline/"><code>crystalline</code></a></h3>
+<ul>
+<li>Best idea: <strong>review mode makes the agent's write a draft only
+a merge can publish.</strong> With <code>review: overlay</code>, every
+write becomes an <code>engram</code> row keyed on its author and
+screened from every other reader by one anti-join on every read leg.
+<code>share_changes</code> opens a GitHub proposal, the provider trait
+has no merge call, and the switch itself is a REST route for the
+domain's owner or an admin.</li>
+<li>Biggest risk: <strong>retired knowledge keeps answering.</strong> A
+superseded engram is returned by <code>search_engrams</code> at 0.6
+weight, so a strong old match outranks a weak current one. The recall
+hook and the write advisory drop it, and <code>current_only</code>, the
+predicate that would confine search to current knowledge, has no product
+caller.</li>
+<li>Most reusable component: <code>actor_screen_on</code> in
+<code>crates/index/src/turso/search.rs</code> — base rows plus the
+reader's own drafts, tombstones excluded on the draft leg and kept in
+the anti-join, so a draft deletion hides the base row it deletes.</li>
+<li>Second risk: <strong>the defaults are open.</strong> HTTP MCP serves
+without a token unless <code>auth.mcp</code> is set, a stdio session is
+the machine owner and sees every domain, and
+<code>set_frontmatter</code> lets an agent record a verification in a
+person's name.</li>
+<li>Maturity impression: MPL-2.0, 527,318 lines of Rust in eight crates
+and 3,064 commits by one author between 2 July and 14 October 2026,
+version 0.26.0. Five marks, <code>trust_state</code>,
+<code>bitemporal</code>, <code>scope_enforced</code>,
+<code>human_review</code> and <code>negative_eval</code>. 6,741 Rust
+test functions, with must-not cases paired with must-have controls on a
+populated index; no retrieval benchmark and no committed eval runs.</li>
+<li>Study when: you want an agent's memory to be markdown in your own
+repositories, with a person accepting changes on GitHub and private
+domains for accounts on one server.</li>
+<li>Do not copy when: a superseded fact must stop appearing in answers,
+the server will be reachable by other local users without
+<code>auth.mcp</code>, or one developer wants a few facts remembered
+without running a multi-user daemon.</li>
 </ul>
         </article>
       </div>

@@ -7,7 +7,7 @@ page_kind: methodology
 layout: wide
 ---
 
-Every one of the **743 reports**, by name. Generated from each report's own frontmatter, so this list cannot drift from what the atlas actually holds — unlike the [verdicts](../verdicts/), which are hand-written, and where the difference between *complete by construction* and *complete as a fact about today* is drawn out.
+Every one of the **744 reports**, by name. Generated from each report's own frontmatter, so this list cannot drift from what the atlas actually holds — unlike the [verdicts](../verdicts/), which are hand-written, and where the difference between *complete by construction* and *complete as a fact about today* is drawn out.
 
 Looking for something else? The [capability index](../capabilities/) groups systems by the seven rubric mechanisms, the [comparative matrix](../compare/#2-comparative-matrix) puts eleven columns side by side, and the [pattern library](../patterns/) starts from the mechanism rather than the system.
 
@@ -185,6 +185,7 @@ Looking for something else? The [capability index](../capabilities/) groups syst
 <li><a class="az-row" href="../systems/craft/"><span class="az-id">craft</span><span class="az-what">A harness that keeps its rulings</span><code class="az-repo">drobins25/craft</code><span class="az-caps"><span class="az-cap">Human review</span></span></a></li>
 <li><a class="az-row" href="../systems/create-context-graph/"><span class="az-id">Create Context Graph</span><span class="az-what">Memory that ships as a template</span><code class="az-repo">neo4j-labs/create-context-graph</code><span class="az-caps"><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/crewai/"><span class="az-id">CrewAI</span><span class="az-what">Hierarchical scope paths</span><code class="az-repo">crewAIInc/crewAI</code><span class="az-caps"><span class="az-cap">Scope enforced</span><span class="az-cap">Negative evals</span></span></a></li>
+<li><a class="az-row" href="../systems/crystalline/"><span class="az-id">Crystalline</span><span class="az-what">Markdown engrams behind a Rust daemon, with a reviewed-draft overlay</span><code class="az-repo">jordiboehme/crystalline</code><span class="az-caps"><span class="az-cap">Trust state</span><span class="az-cap">Bi-temporal</span><span class="az-cap">Scope enforced</span><span class="az-cap">Human review</span><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/csm/"><span class="az-id">CSM</span><span class="az-what">Deterministic continuity runtime</span><code class="az-repo">NovasPlace/CSM</code><span class="az-caps"><span class="az-cap">Mutation audit</span><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/ctx/"><span class="az-id">ctx</span><span class="az-what">Guarded consolidation</span><code class="az-repo">ActiveMemory/ctx</code><span class="az-caps"><span class="az-cap">Mutation audit</span><span class="az-cap">Human review</span></span></a></li>
 <li><a class="az-row" href="../systems/ctx-open/"><span class="az-id">CTX Cognitive Version Control</span><span class="az-what">Version control for an agent&#x27;s reasoning</span><code class="az-repo">diegoxtr/ctx-open</code><span class="az-caps"><span class="az-cap">Negative evals</span></span></a></li>

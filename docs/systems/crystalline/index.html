@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Rust daemon serving markdown
+engrams to agents over MCP, with hybrid search, private domains and a
+review mode where writes wait as per-author drafts.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Crystalline — Agent Memory Atlas">
+    <meta property="og:description" content="A Rust daemon serving
+markdown engrams to agents over MCP, with hybrid search, private domains
+and a review mode where writes wait as per-author drafts.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crystalline — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Rust daemon serving
+markdown engrams to agents over MCP, with hybrid search, private domains
+and a review mode where writes wait as per-author drafts.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Crystalline — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Crystalline",
+      "description": "A Rust daemon serving markdown engrams to agents over MCP, with hybrid search, private domains and a review mode where writes wait as per-author drafts.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Markdown engrams behind a Rust daemon, with
+a reviewed-draft overlay</p>
+          <h1>Crystalline</h1>
+          <p class="document-deck">A Rust daemon serving markdown
+engrams to agents over MCP, with hybrid search, private domains and a
+review mode where writes wait as per-author drafts.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/jordiboehme/crystalline">
+              <span>Source</span>
+              <strong>jordiboehme/crystalline</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/jordiboehme/crystalline/commit/16689611c1f3d832486c6afb8d489b445c9354d6" title="16689611c1f3d832486c6afb8d489b445c9354d6">
+              <span>Analyzed revision</span>
+              <code>16689611…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/jordiboehme--crystalline" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>jordiboehme--crystalline</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MPL-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>527,318
+lines of Rust in eight crates, 298,343 of them under the crates' src/; a
+238,092-line TypeScript web UI in fluid/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>3,064
+commits on main, 3,061 by one author and three by bots, 2 July – 14
+October 2026; version 0.26.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>6,741
+Rust test functions, 3,694 of them in the integration suites under
+crates/*/tests/; a skill-training harness with committed item splits;
+none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Crystalline is a local-first knowledge store for coding agents,
+shipped as one Rust binary. An engram is a markdown file with OKF
+frontmatter in a domain folder. A daemon keeps a derived Turso or
+PostgreSQL index over those files and serves them over MCP, a REST API
+and a web UI called Fluid. What is notable is review mode: a domain can
+turn every write, the agent's included, into a draft only its author
+sees, published only when a person merges the proposal on GitHub. What
+is weak is retirement. A superseded engram stays in every search at 0.6
+weight, and the predicate that would confine search to current knowledge
+has no caller.</p>
+<p>The domain is the organising key, and it is required on every write.
+The agent calls <code>write_engram</code>, <code>edit_engram</code> or
+<code>split_engram</code> with a domain, a title and a body of
+<code>- [category] fact</code> observations and
+<code>- rel [[Target]]</code> relations. The file is written, the index
+rows follow in the same call, and an embed worker picks up the chunks
+afterwards. Reads are a hybrid search, a graph neighbourhood ranked by
+PageRank, and a per-prompt hook that names up to three engrams by
+address. Teams share a domain through a GitHub repository, one proposal
+per share.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>Review mode is a gate the agent cannot open.</strong> With
+<code>review: overlay</code>, writes become <code>engram</code> rows
+keyed on the author's identity, screened from every other reader. The
+reviewed folder moves only on a pulled merge, the provider trait has no
+merge call, and the switch is a REST route for an owner or admin
+(<code>crates/engine/src/engine/review_mode.rs:402-445</code>).</li>
+<li><strong>Retirement filters only the unbidden paths.</strong> The
+recall hook and the write receipt's similar list drop the four retired
+statuses. The agent's own <code>search_engrams</code> returns them faded
+(<code>crates/index/src/store.rs:1388-1400</code>).</li>
+<li><strong>Valid time is the caller's and record time is the
+system's.</strong> <code>recorded_at</code> is a reserved key and
+<code>valid_from</code>/<code>valid_to</code> are settable only by a
+caller, never by the clock
+(<code>crates/engine/src/engine/mod.rs:8485-8498</code>).</li>
+<li><strong>The open defaults are wide.</strong> HTTP MCP serves without
+a token unless <code>auth.mcp</code> is set, and a stdio session is the
+machine owner, so the scoping above binds authenticated HTTP accounts
+only.</li>
+</ul>
+<p>Five marks: <code>trust_state</code>, <code>bitemporal</code>,
+<code>scope_enforced</code>, <code>human_review</code> and
+<code>negative_eval</code>. Section 9 names the two withheld.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>An engram becomes a belief when its write commits. There is no
+extraction step, no model call on the write path and no candidate state
+the system assigns. The status is whatever the writer passed,
+<code>stable</code> by default, and the code treats <code>status</code>
+as free text with two recognised sets
+(<code>crates/core/src/engram.rs:28-49</code>). The retirement set is
+<code>deprecated</code>, <code>superseded</code>, <code>archived</code>
+and <code>legacy</code>. The speculative set is <code>draft</code>,
+<code>proposed</code>, <code>idea</code> and <code>poc</code>
+(<code>crates/index/src/sweep/mod.rs:251</code>). Any other word ranks
+and behaves like <code>stable</code>.</p>
+<p><strong>An engram stops being a belief by being retired, not
+removed.</strong> The supersede recipe in the capture skill sets a
+retirement status, closes <code>valid_to</code> at the real end date and
+writes <code>superseded_by</code>/<code>supersedes</code> relations;
+REST's <code>retire_engram</code> does the same in one call
+(<code>crates/engine/src/engine/attachments.rs:887-910</code>). What
+each reader then does with it differs:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th><code>search_engrams</code></th>
+<th>recall hook</th>
+<th>similar list</th>
+<th>contradiction scoring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stable</code>, <code>current</code>, any free word</td>
+<td>full rank</td>
+<td>eligible</td>
+<td>eligible</td>
+<td>eligible</td>
+</tr>
+<tr>
+<td><code>draft</code>, <code>proposed</code>, <code>idea</code>,
+<code>poc</code></td>
+<td>full rank</td>
+<td>eligible</td>
+<td>eligible</td>
+<td>skipped</td>
+</tr>
+<tr>
+<td><code>deprecated</code>, <code>superseded</code>,
+<code>archived</code>, <code>legacy</code></td>
+<td>score x0.6</td>
+<td>dropped</td>
+<td>dropped</td>
+<td>skipped</td>
+</tr>
+</tbody>
+</table></div>
+<p>The anchors are <code>retired_factor</code>
+(<code>store.rs:1388-1400</code>), <code>RETIRED</code> in
+<code>crates/cli/src/recall.rs:126-134</code>, the filter at
+<code>crates/engine/src/engine/search.rs:249</code> and
+<code>eligible</code> at
+<code>crates/index/src/nli/candidates.rs:73-85</code>. The design is
+stated in the docs: the past stays addressable, <em>"softly faded in
+ranking"</em>. A model that searches for a fact gets the superseded
+version back, labelled only by its <code>status</code> field.</p>
+<p><strong>Validity is a second, independent axis.</strong>
+<code>valid_from</code> and <code>valid_to</code> are never set by the
+clock; absence means unbounded. The agent bounds them through
+<code>metadata</code> or <code>set_frontmatter</code>, and
+<code>recorded_at</code> is stamped with the write date and refused as
+an override. Validity reaches retrieval only when the agent writes a
+range filter, and the skill warns that such a filter skips every
+unbounded engram.</p>
+<p><strong>Review mode adds a third axis: whose row a reader
+sees.</strong> In a domain with <code>review: overlay</code>, a write
+lands as a row carrying the author's actor key. The author's reads
+stitch their drafts over the reviewed tree, and everyone else sees the
+tree alone (<code>crates/index/src/turso/search.rs:153-180</code>). A
+draft leaves that state in three ways: a merged proposal folds it, the
+author discards it, or an owner turns review off and folds or discards
+it.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a Crystalline engram becomes visible, what the review overlay withholds and from whom, and which read paths honour the retirement status</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a Crystalline engram becomes visible, what the review overlay withholds and from whom, and which read paths honour the retirement status
+flowchart TD
+    W[&quot;write_engram / edit_engram&lt;br/&gt;domain always named&quot;] --&gt; RM{&quot;domain in&lt;br/&gt;review: overlay?&quot;}
+    RM -- &quot;no&quot; --&gt; F[&quot;file written, index rows synced,&lt;br/&gt;status as passed, stable by default&quot;]
+    RM -- &quot;yes&quot; --&gt; D[&quot;draft row keyed on the author&lt;br/&gt;mirrored to the journal&quot;]
+    D --&gt; AV[&quot;author&#39;s reads:&lt;br/&gt;draft stitched over the tree&quot;]
+    D -. &quot;screened&quot; .-&gt; OV[&quot;every other reader:&lt;br/&gt;reviewed tree only&quot;]
+    D --&gt; SH[&quot;share_changes:&lt;br/&gt;proposal on GitHub&quot;]
+    SH --&gt; MG{&quot;a person merges&lt;br/&gt;on GitHub&quot;}
+    MG -- &quot;merged and pulled&quot; --&gt; F
+    SH -- &quot;reviewed MANIFEST says&lt;br/&gt;sharing: direct&quot; --&gt; F
+    F --&gt; ST[&quot;stable, free word&lt;br/&gt;or speculative&quot;]
+    ST -- &quot;retire: status, valid_to,&lt;br/&gt;superseded_by&quot; --&gt; RT[&quot;deprecated, superseded,&lt;br/&gt;archived, legacy&quot;]
+    RT --&gt; S1[&quot;search_engrams:&lt;br/&gt;returned at 0.6 weight&quot;]
+    RT --&gt; S2[&quot;recall hook and&lt;br/&gt;similar list: dropped&quot;]
+    ST --&gt; S3[&quot;every read path&lt;br/&gt;at full rank&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Eight crates build one binary (<code>docs/architecture.md</code>).
+<code>crystalline-core</code> parses and emits engrams and holds the
+format rules. <code>crystalline-index</code> is the store, with a Turso
+backend and a PostgreSQL backend held to a parity suite.
+<code>crystalline-identity</code> holds accounts, roles, private-domain
+membership and the <code>Scope</code> type.
+<code>crystalline-engine</code> is the shared engine, including the
+review overlay and co-editing rooms. <code>crystalline-rest</code> and
+<code>crystalline-service</code> expose it, and
+<code>crystalline-remote</code> talks to GitHub.</p>
+<p><strong>Runtime.</strong> The first <code>crystalline mcp</code> or
+<code>crystalline serve</code> takes an advisory lock on the database
+and becomes the daemon. Later CLI commands and stdio MCP sessions attach
+over a Unix socket or named pipe; with no daemon, a CLI command opens
+the database briefly itself. The daemon binds
+<code>127.0.0.1:7411</code> for MCP over HTTP, the JSON API and Fluid
+(<code>docs/security.md</code>).</p>
+<p><strong>Persistence.</strong> A file domain's markdown is the source
+of truth and the index is derived, rebuilt by
+<code>crystalline reindex --full</code>. A virtual domain keeps its
+engrams in the database, with nothing to rebuild from. Draft rows are
+primary data too, so the engine mirrors each one under
+<code>&lt;state_dir&gt;/overlays/&lt;domain&gt;/&lt;actor&gt;/&lt;path&gt;</code>,
+with a <code>.tombstone</code> sidecar for a draft deletion
+(<code>crates/engine/src/overlay_journal.rs:1-45</code>). The journal is
+per machine.</p>
+<p><strong>Search stack.</strong> The lexical arm uses no FTS5. It is a
+<code>LIKE</code> prefilter capped at 5,000 candidates, scored in Rust
+with title x3, description x2 and content x1; the module comment gives
+the reason as native FTS5 being unavailable in Turso 0.6.1, and the
+workspace pins 0.8.1 (<code>crates/index/src/turso/search.rs:1-8</code>,
+<code>Cargo.toml:39</code>). The vector arm is
+<code>min(vector_distance_cos(...))</code> per engram over every chunk,
+a top-100 by exact scan (<code>:696-703</code>). PostgreSQL uses
+pgvector's <code>&lt;=&gt;</code> the same way, and its HNSW index is
+unused by the query
+(<code>crates/index/src/postgres/search.rs:688</code>). Embeddings
+default to <code>granite-embedding-97m-multilingual-r2</code>, run
+in-process through candle
+(<code>crates/index/src/embed/models.rs:78-81</code>).</p>
+<p><strong>Optional surfaces.</strong> A local NLI model, mDeBERTa-v3,
+scores observation pairs for contradictions when
+<code>evolve.contradictions</code> is <code>full</code>. GitHub team
+domains, mounted domains from other Crystalline servers, OIDC and OAuth
+sign-in, and a "Reflection" of human-facing documents beside the engrams
+are all opt-in.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Installation is <code>brew install</code> and
+<code>crystalline install claude-code</code>, or a <code>.deb</code>, an
+MSI or a container image. The first start downloads the embedding model
+from Hugging Face once; <code>HF_ENDPOINT</code> or a pre-fetched
+directory avoids it. No API key is needed to store or search, and
+nothing leaves the machine unless GitHub, a remote embedder, a shared
+PostgreSQL or a remote server is configured. The store is a folder of
+markdown with YAML frontmatter, readable, diffable and repairable by
+hand, and the index can be thrown away. The cost is operational surface:
+one binary, but with accounts, roles, OAuth, co-editing, provisioning of
+skills and MCP servers into harnesses, and a long settings registry.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write.</strong> The MCP tool <code>write_engram</code>
+(<code>crates/service/src/mcp.rs:2829</code>) calls
+<code>Engine::write_engram_present</code>
+(<code>crates/engine/src/engine/write.rs:345</code>). It builds a
+<code>DomainView</code> for the caller, which decides whether the write
+is a draft, resolves the path from folder and title, and refuses a taken
+permalink. <code>build_markdown</code> stamps <code>recorded_at</code>
+with the date, <code>generated</code> with actor, model and time, and
+merges <code>metadata</code> minus the reserved keys
+(<code>crates/engine/src/engine/mod.rs:8410-8498</code>). The file is
+written and <code>reindex_file</code> updates the rows under the store
+lock, restoring the old bytes if indexing fails
+(<code>write.rs:700-725</code>). <code>nudge_embed</code> hands the
+chunks to the embed worker without waiting.</p>
+<p><strong>Edit and retire.</strong> <code>edit_engram</code> offers
+seven operations, among them <code>set_frontmatter</code> over a fixed
+key list: <code>tags</code>, <code>status</code>,
+<code>valid_from</code>, <code>valid_to</code>,
+<code>stale_after</code>, <code>source_date</code>,
+<code>resource</code>, <code>source_version</code>,
+<code>sources</code>, <code>salience</code>, <code>verified</code> and
+<code>evolve_ack</code> (<code>mod.rs:175-200</code>).
+<code>split_engram</code> moves named observations into a new engram
+linked by <code>derived_from</code>/<code>split_into</code>, so one
+stale fact can be retired without its neighbours. REST's
+<code>POST /api/v1/domains/{domain}/retire</code> calls
+<code>retire_engram_as</code>, which sets the status, closes
+<code>valid_to</code> and writes the relation pair
+(<code>crates/rest/src/engrams.rs:1300-1401</code>).</p>
+<p><strong>Search.</strong> <code>search_engrams</code> reaches
+<code>Engine::search_engrams_under</code>
+(<code>crates/engine/src/engine/search.rs:42-170</code>). It computes
+the hidden domains, narrows the domain list, sets the reading actor,
+settles the mode against embedding coverage, embeds the query outside
+the store lock and calls <code>store.search</code>.
+<code>run_hybrid</code> blends the two arms, adds the salience prior and
+applies <code>retired_factor</code>
+(<code>turso/search.rs:446-560</code>).</p>
+<p><strong>Context assembly.</strong> Three paths put memory in front of
+the model without a search call. The MCP server's instructions carry a
+routing block, one line per visible domain from its MANIFEST's
+<code>## When to Use</code>. <code>crystalline prompt system</code>
+emits the same block from a <code>SessionStart</code> hook.
+<code>crystalline hook prompt</code>, a <code>UserPromptSubmit</code>
+hook, asks the running daemon for a hybrid search under a one-second
+budget and prints up to three addresses above a 0.69 floor, never the
+same one twice per session
+(<code>crates/cli/src/recall.rs:1-60</code>).</p>
+<p><strong>Graph.</strong> <code>build_context</code> takes a
+<code>crystalline://domain/permalink</code> anchor or glob, walks
+relations and links up to depth 3 under the same actor screen, ranks the
+neighbourhood by personalised PageRank with damping 0.85, and puts
+retired nodes last when the cap bites
+(<code>crates/engine/src/engine/context.rs:12-330</code>).</p>
+<p><strong>Team share.</strong> <code>share_changes</code> calls
+<code>Engine::origin_share_with</code>
+(<code>crates/engine/src/engine/origins.rs:1598</code>). In review mode
+it stages the author's drafts as a tree over the pinned base and opens
+or amends a proposal. On a <code>sharing: direct</code> domain it
+commits instead and folds the drafts into the folder
+(<code>:1690-1735</code>). <code>update_domain</code> pulls and
+converges.</p>
+<p><strong>Maintenance.</strong> <code>evolve_engrams</code> is a
+read-only sweep returning findings in four families, each tagged
+<code>mechanical</code> or <code>judgment</code>. The NLI pass stores
+scored pairs in <code>contradiction_pair</code> and
+<code>contradiction</code>, and <code>evolve</code> raises
+<code>V302</code> from them; nothing changes a status on its own.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The <code>engram</code> table holds one row per engram per actor:
+domain, path, permalink, title, type, status, <code>recorded_at</code>,
+<code>valid_from</code>, <code>valid_to</code>, the legacy
+<code>timestamp</code>, description, metadata JSON, file stamps,
+<code>actor</code> and <code>tombstone</code>
+(<code>crates/index/src/turso/migrations.rs:536-574</code>). An empty
+<code>actor</code> is the reviewed base. Side tables hold observations
+and their tags, relations with resolved targets, prose links, tags with
+a per-domain alias table, chunks with embeddings per model,
+<code>engram_meta_value</code> for list-valued metadata, attachments,
+reflections and the two contradiction tables.</p>
+<p><strong>Scope.</strong> The domain is a row in <code>domain</code>,
+and each engram row points at one. Private domains, their owners and
+members live in the accounts database
+(<code>crates/identity/src/auth_store.rs</code>), not on the engram.
+<code>Scope</code> is resolved once per request:
+<code>Unrestricted</code> for the CLI, the control socket and stdio MCP;
+<code>User</code> for an authenticated HTTP caller;
+<code>Anonymous</code> otherwise
+(<code>crates/identity/src/scope.rs:53-70</code>).</p>
+<p><strong>Provenance.</strong> <code>generated: {by, model, at}</code>
+names the last writer: an agent as <code>name/version</code>, a person
+as <code>human:name</code>, a job as <code>process:name</code>. It is
+replaced on every write. <code>verified</code> is a list of
+<code>{by, model, at}</code> entries, one per actor, each new
+verification replacing that actor's previous entry
+(<code>crates/engine/src/engine/edit.rs:1059-1088</code>).</p>
+<p><strong>Temporal fields.</strong> <code>recorded_at</code>,
+<code>valid_from</code>, <code>valid_to</code>, <code>source_date</code>
+and <code>stale_after</code> are plain ISO dates.
+<code>normalize_temporal_fields</code> rejects any other shape and drops
+a sentinel far-future <code>valid_to</code> or far-past
+<code>valid_from</code>
+(<code>crates/core/src/temporal.rs:53-120</code>).</p>
+<p><strong>What is not modelled.</strong> No row records a rejected
+value, no table records a mutation, and no field distinguishes a
+candidate from a verified fact beyond the free-text status.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Hybrid is the default when embeddings cover the store, falling back
+to lexical. Lexical scores are normalised by the query's top score;
+semantic scores are clamped cosine at or above 0.78. An engram found by
+both arms scores <code>0.4 * lexical + 0.6 * semantic</code>; one found
+by one arm keeps that score times 0.85
+(<code>crates/index/src/rank.rs:24-38</code>). A <code>salience</code>
+metadata value from 0 to 10 adds a bounded lift at weight 0.15. A
+retired status multiplies the total by
+<code>search.retired_weight</code>, 0.6 by default, and the code states
+it is <em>"Never a filter"</em> (<code>store.rs:1388-1400</code>).</p>
+<p><strong>Filters</strong> are pushed into SQL on both arms: domain
+list, type, status, tags with their alias class, a recorded-after date
+and <code>metadata_filters</code> with <code>$eq</code>, ranges,
+<code>$in</code>, <code>$contains</code> and <code>$contains_any</code>.
+Promoted keys map to columns, so a validity range is an indexed
+predicate (<code>turso/search.rs:995-1006</code>). The search tool
+exposes no as-of parameter; the agent writes the range itself, and a
+strict comparison excludes every engram whose bound is null.</p>
+<p><strong>Context formatting.</strong> Search returns a page of hits
+with snippet, status, tags and a <code>crystalline://</code> link;
+<code>read_engram</code> returns the file and resource links to
+attachments. The recall hook prints one line per engram, about 200
+tokens for three, under a header telling the model to read before
+relying on anything (<code>recall.rs:120-125</code>). The routing block
+is sized to survive truncation: rules first, then one bullet per domain,
+then a single count.</p>
+<p><strong>Failure modes.</strong> A superseded engram outranks its
+successor when its text matches the query better, since 0.6 times a
+strong match beats a weak current one. A free-form retirement word such
+as <code>obsolete</code> is not in the set and ranks at full strength,
+which the capture skill says outright. The vector arm is an exact scan
+over every chunk of every visible engram per query, which the project
+measures at 0.17 to 0.42 seconds on a 10,000-engram index
+(<code>recall.rs:101-105</code>); the measurement note is not
+committed.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Every write is explicit, through a tool, the CLI or Fluid. Nothing in
+the tree extracts memory from a transcript. The <code>Stop</code> hook
+asks the agent, once per session after it gains substance, to propose
+captures and wait for a yes, and to raise the salience of any recalled
+engram that proved key. The receipt of every <code>write_engram</code>
+and content edit may carry <code>similar</code>: up to three existing
+engrams nearest in meaning, with guidance to merge, supersede, link or
+say they are unrelated.</p>
+<p><strong>Deduplication</strong> is advisory. The similar list, the
+<code>vocabulary</code> tool and the evolve sweep's near-duplicate and
+semantic-twin rules surface duplicates; no write is refused for one. A
+taken permalink is refused, and an overwrite replaces the engram that
+owns it in place.</p>
+<p><strong>Delete and correct.</strong> <code>delete_engram</code>
+removes the file and its index rows, and the tool description recommends
+a retirement status where history matters. In a team domain a deletion
+is a local change to share; git upstream keeps the old file. In a
+review-mode domain it becomes a tombstone row in the author's draft.
+Conflicts between two engrams are a <code>V302</code> finding for a
+person or agent to settle.</p>
+<p><strong>Agent-generated content</strong> gets no special handling. An
+agent's write is <code>stable</code> unless it says otherwise, and the
+<code>model</code> it reports is recorded but not verified.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write blocks on the file write and the index transaction, not on
+a model. Lexical search sees a new engram as soon as the call returns.
+Semantic search sees it after the embed worker processes its chunks,
+normally seconds on a local model, longer while a re-embed is running.
+No background pass rewrites the store. The NLI pass reads observation
+pairs of related current engrams after each embedding pass, capped at 32
+line pairs per engram pair. Per turn the recall hook adds about 200
+tokens when it has hits, and the routing block is injected once per
+session and again after <code>/clear</code> or a compaction.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP server registers 30 tools and two prompts
+(<code>mcp.rs:2829-4092</code>). Six collaboration tools are listed only
+when <code>github.enabled</code> is on; a read-only instance lists the
+read tools alone. <code>crystalline install &lt;harness&gt;</code>
+registers the server, writes the three hooks for Claude Code, Codex and
+Copilot, and the session hook for Cursor, Kiro, Gemini CLI and Qwen
+Code. It copies five skills — routing, capture, schema, collaboration
+and provisioning — and never edits <code>CLAUDE.md</code> or
+<code>AGENTS.md</code>. The skills are served over MCP as a
+<code>skills</code> tool and <code>skill://</code> resources to clients
+that did not install them.</p>
+<p><strong>Agency.</strong> The model holds the whole write surface:
+create, edit, split, move, delete, retire through
+<code>set_frontmatter</code>, add and remove domains, configure
+non-operator settings, share to GitHub, and provision artifacts a domain
+ships into harnesses. Only <code>remove_domain</code> and
+<code>discard_changes</code> ask the person first, through MCP
+elicitation where the client supports it. Operator settings — network
+bind, database, <code>auth.*</code> — are refused through
+<code>configure</code> over every transport
+(<code>crates/engine/src/settings.rs:239-360</code>,
+<code>:665</code>).</p>
+<p><strong>Adaptation.</strong> The format is OKF markdown, the
+integration is MCP plus a shell hook per harness, and the CLI mirrors
+every tool, so wiring another harness is a registration and a hook.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Scope enforced.</strong> One index holds every domain, and
+two predicates guard it. <code>hidden_for(scope)</code> collects the
+private domains a caller may not see plus unregistered and shadowed
+names (<code>crates/engine/src/engine/mod.rs:2918-2923</code>). Search
+narrows to <code>d.name IN (...)</code> before embedding the query and
+answers a hidden domain exactly as an unregistered one. The actor screen
+opens every candidate leg with
+<code>tombstone = 0 AND (actor = ? OR (actor = '' AND NOT EXISTS ...))</code>,
+so a reader sees base rows plus their own drafts.</p>
+<p>Both run on search and the write advisory (<code>search.rs:50</code>,
+<code>:72</code>, <code>:204</code>, <code>:235</code>),
+<code>build_context</code> and its graph walk
+(<code>context.rs:17</code>, <code>:92</code>), <code>read_engram</code>
+(<code>read.rs:374</code>), <code>recent_activity</code>,
+<code>browse_domain</code> and <code>list_domains</code>
+(<code>domains.rs:18</code>, <code>:965-1038</code>),
+<code>evolve_engrams</code> (<code>evolve.rs:177</code>) and
+<code>vocabulary</code> (<code>schemas.rs:68</code>). The MCP routing
+block is built by <code>routing_text_scoped</code>
+(<code>domains.rs:964</code>, <code>mcp.rs:4175-4180</code>), and
+attachment links read through the caller's view
+(<code>mcp.rs:4220</code>). The per-prompt recall hook goes through the
+daemon's search as the machine owner. The limit is the defaults: stdio
+and the CLI are <code>Unrestricted</code>, and HTTP MCP serves
+<code>Anonymous</code> callers without a token unless
+<code>auth.mcp</code> is set.</p>
+<p><strong>Human review.</strong> In a review-mode domain the agent's
+write cannot reach the reviewed tree. It lands as a draft row other
+readers never see; <code>share_changes</code> opens a proposal; the
+provider trait offers <code>create_proposal</code>,
+<code>update_proposal</code> and <code>close_proposal</code> and no
+merge (<code>crates/remote/src/provider.rs:312-346</code>). The
+skill-training harness fails any collaboration item that reaches the
+merge endpoint. A person merges on GitHub and the pull folds the
+draft.</p>
+<p>The switch itself is off the agent's surface.
+<code>set_review_mode</code> requires the domain owner and is reached
+from <code>PUT /api/v1/domains/{domain}/review</code> and the CLI only
+(<code>review_mode.rs:402-445</code>,
+<code>crates/rest/src/domains_admin.rs:2500-2640</code>). The settings
+registry carries no review key, so <code>configure</code> cannot reach
+it. <code>configure</code> with a domain turns a policy change into the
+author's draft, and the share reads <code>sharing</code> off the
+reviewed folder (<code>origins.rs:1622-1628</code>).</p>
+<p>Four limits. Review is opt-in per domain and needs a GitHub origin. A
+reviewed MANIFEST declaring <code>sharing: direct</code> lets the
+agent's share commit and fold with no person, which is a person's
+decision to make but removes the gate entirely. A folder conflict, from
+an out-of-band edit meeting an upstream change, is settled on the folder
+with content the caller supplies (<code>origins.rs:2836-2866</code>).
+And the author's own reads show its drafts as if reviewed, so the agent
+acts on unreviewed text in its own session.</p>
+<p><strong>Trust state.</strong> The retirement set is a stored, movable
+state that withholds an engram on the paths where the model did not ask:
+the recall hook, the write advisory, contradiction scoring, and the
+Reflection's loose-engram listing
+(<code>crates/engine/src/engine/reflect.rs:357</code>).
+<code>search_engrams</code> returns it faded. <code>current_only</code>,
+a predicate in both backends that keeps
+<code>stable</code>/<code>current</code> engrams inside their validity
+window, is set only in a test
+(<code>crates/index/tests/it/store.rs:5125</code>).</p>
+<p><strong>Provenance.</strong> <code>generated.by</code> comes from the
+session, but the <code>model</code> is whatever the agent reports.
+<code>set_frontmatter</code> on <code>verified</code> accepts any actor
+as the verifier, by design (<em>"A caller may name somebody else as the
+verifier"</em>), so an agent can write
+<code>verified: human:alice</code> (<code>edit.rs:1059-1088</code>).
+Nothing reads <code>verified</code> to admit or exclude an engram; the
+evolve sweep reads it for its long-unverified rule.</p>
+<p><strong>Withheld marks.</strong> <code>tombstone</code>: the
+overlay's <code>.tombstone</code> and the <code>tombstone</code> column
+are one author's deletion of one path, keyed on the path, and a
+re-written fact walks past them. <code>audit_log</code>: the only change
+record is the change bus, an in-memory ring of 512 events for live
+clients (<code>crates/engine/src/changes.rs:20-25</code>);
+<code>log.md</code> is reserved by OKF and <em>"never written by
+Crystalline"</em> (<code>crates/core/src/index.rs:23-26</code>). Team
+domains have git history, which is a different mechanism.</p>
+<p><strong>Data loss and concurrency.</strong> Writes hold a per-file or
+per-draft lock and restore the previous bytes if indexing fails. One
+process holds the database; others attach. Draft rows are not
+rebuildable from files, which is why the journal exists, and the journal
+is per machine: a second instance sharing the PostgreSQL index cannot
+restore another machine's drafts.</p>
+<p><strong>Documentation and code disagree on one point.</strong>
+<code>docs/security.md</code> lists as a known gap that an agent
+<em>"can change every key in the settings registry, including
+<code>auth.mcp</code>, <code>service.http</code> and the database
+connection"</em>. At this pin <code>configure</code> refuses every
+<code>operator_only</code> key, which includes those three
+(<code>settings.rs:239-360</code>,
+<code>crates/service/src/mcp.rs:3309-3315</code>).</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is large and specific. <code>crates/service/tests</code>
+holds 146,759 lines, most of it end-to-end through an in-process engine,
+REST server or MCP session, with a deterministic
+<code>TopicEmbedder</code> standing in for the model. CI runs
+<code>cargo nextest</code> over the workspace and a stress pass with
+<code>--stress-count</code>
+(<code>.github/workflows/ci.yml:362-425</code>). The PostgreSQL tests
+need a database; the Turso tests do not.</p>
+<p><strong>Negative retrieval cases with controls.</strong>
+<code>an_authenticated_search_finds_the_callers_draft_and_nobody_elses</code>
+writes a reviewed engram and one draft per account on the same topic,
+then asserts for each account that its draft is present, the other's
+absent and the reviewed engram present
+(<code>crates/service/tests/overlay/overlay_domains.rs:3801-3877</code>).
+Its comment gives the reason: a predicate wrong in one direction would
+pass the other two checks.
+<code>neighbours_are_the_near_ones_and_exclude_self_and_retired</code>
+stores a superseded engram with the same text as a stable one and
+asserts an exact one-element list
+(<code>crates/service/tests/engine/similar.rs:161-194</code>). The
+visibility suites assert private-domain exclusion from search, listing,
+routing and the graph walk.</p>
+<p><strong>Weaker spots.</strong> The REST visibility case asserts the
+stranger's search lacks the secret without a search the stranger is
+expected to succeed on (<code>rest_visibility.rs:464-470</code>). The
+recall hook's retirement cut is tested against a hand-built search
+answer, not an index
+(<code>crates/cli/src/recall.rs:596-616</code>).</p>
+<p><strong>Evals.</strong> <code>evals/skill-training</code> trains and
+scores the shipped skills with SkillOpt against headless Claude Code
+sessions, scored deterministically on tool calls and post-state, with
+committed train, validation and test item splits. The evolve benchmark
+pairs every trigger with a must-not-trigger item. No run outputs are
+committed. <code>evals/scale</code> generates a 10,000-engram corpus and
+measures the product; its results live in a <code>research/</code> note
+absent from the tree. <code>evals/nli</code> checks the candle NLI
+loader against Python logits. There is no paper and no retrieval-quality
+benchmark.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make the write destination a required argument.</strong> No
+default domain means an agent cannot write into the wrong place by
+omission, and the refusal teaches the fix.</li>
+<li><strong>Gate shared memory with a per-author overlay, not a status
+column.</strong> Keying drafts on the author and screening every read
+leg with one anti-join keeps unreviewed text out of other readers'
+context without a second store, and the merge happens where the agent
+has no verb.</li>
+<li><strong>Read policy off the reviewed copy.</strong> A share that
+reads <code>sharing</code> from the folder rather than the author's
+draft cannot be talked out of its own review step by the draft it is
+sharing.</li>
+<li><strong>Pair every must-not with a must-have.</strong> Both the
+overlay test and the advisory test would fail on an empty result.</li>
+<li><strong>Reserve record time; let callers own valid time.</strong>
+Making <code>recorded_at</code> unsettable keeps one axis honest
+whatever the agent writes into the other.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A retirement that fades instead of hiding on the main
+read.</strong> A 0.6 multiplier leaves a strongly matching superseded
+fact above a weakly matching current one, and a filter that would fix it
+with no caller is worse than none.</li>
+<li><strong>Trust records whose actor is an argument.</strong> A
+<code>verified</code> entry the caller can attribute to a person is
+provenance in form only.</li>
+<li><strong>Wide defaults beside careful scoping.</strong> The actor
+screen and private domains do nothing for an unauthenticated HTTP caller
+or a stdio session.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Crystalline suits a person or a team that wants the agent's memory to
+be reviewable files in their own repository, with GitHub as the place a
+change is accepted. It is local, keyless and offline-capable, and the
+markdown is the asset, so the index can be discarded. It assumes an
+operator willing to run a substantial daemon with accounts, OAuth and
+provisioning, and to read a large surface of settings. A single
+developer who wants a few facts remembered will carry most of that
+surface unused. A team that needs facts withheld once superseded, on
+every read, has to supply that discipline itself.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is <code>current_only</code> meant to back an as-of parameter on
+<code>search_engrams</code>, or is the agent-written range filter the
+intended interface?</li>
+<li>Should the recall hook's retirement cut also apply to the
+speculative set, which contradiction scoring excludes?</li>
+<li>Does the project intend <code>verified</code> to accept a named
+human from an agent session, or only from Fluid?</li>
+<li>What latency does the exact vector scan reach past 10,000 engrams,
+and is the unused HNSW index on PostgreSQL scheduled for the top-k
+rewrite?</li>
+<li>Does any deployment pair review mode with GitHub branch protection
+so the merging identity differs from the sharing one under
+<code>share_identity = instance</code>?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Format and schema:</strong>
+<code>crates/core/src/engram.rs</code>,
+<code>crates/core/src/temporal.rs</code>,
+<code>crates/core/src/manifest.rs</code>,
+<code>crates/index/src/turso/migrations.rs</code>,
+<code>crates/index/src/postgres/migrations.rs</code>,
+<code>crates/index/src/store.rs</code>.</li>
+<li><strong>Write:</strong>
+<code>crates/engine/src/engine/write.rs</code>,
+<code>crates/engine/src/engine/edit.rs</code>,
+<code>crates/engine/src/engine/mod.rs</code>
+(<code>build_markdown</code>, <code>SETTABLE_FRONTMATTER_KEYS</code>),
+<code>crates/engine/src/engine/delete.rs</code>,
+<code>crates/engine/src/engine/attachments.rs</code>
+(<code>retire_engram_as</code>).</li>
+<li><strong>Read:</strong>
+<code>crates/engine/src/engine/search.rs</code>,
+<code>crates/index/src/turso/search.rs</code>,
+<code>crates/index/src/postgres/search.rs</code>,
+<code>crates/index/src/rank.rs</code>,
+<code>crates/engine/src/engine/context.rs</code>,
+<code>crates/engine/src/engine/read.rs</code>,
+<code>crates/engine/src/engine/domains.rs</code>.</li>
+<li><strong>Context injection:</strong>
+<code>crates/cli/src/recall.rs</code>,
+<code>crates/cli/src/hook.rs</code>,
+<code>crates/core/src/prompt.rs</code>,
+<code>crates/service/src/mcp.rs</code> (instructions).</li>
+<li><strong>Scope and review:</strong>
+<code>crates/identity/src/scope.rs</code>,
+<code>crates/identity/src/auth_store.rs</code>,
+<code>crates/engine/src/engine/review_mode.rs</code>,
+<code>crates/engine/src/overlay_journal.rs</code>,
+<code>crates/engine/src/engine/origins.rs</code>,
+<code>crates/remote/src/provider.rs</code>,
+<code>crates/rest/src/domains_admin.rs</code>.</li>
+<li><strong>Maintenance:</strong>
+<code>crates/engine/src/engine/evolve.rs</code>,
+<code>crates/index/src/sweep/mod.rs</code>,
+<code>crates/engine/src/engine/contradictions.rs</code>,
+<code>crates/index/src/nli/candidates.rs</code>,
+<code>crates/engine/src/changes.rs</code>.</li>
+<li><strong>Agent surfaces:</strong>
+<code>crates/service/src/mcp.rs</code>,
+<code>crates/engine/src/settings.rs</code>,
+<code>skills/*/SKILL.md</code>, <code>docs/learning-loop.md</code>,
+<code>docs/security.md</code>.</li>
+<li><strong>Tests and evals:</strong>
+<code>crates/service/tests/overlay/overlay_domains.rs</code>,
+<code>crates/service/tests/engine/similar.rs</code>,
+<code>crates/service/tests/domains/visibility.rs</code>,
+<code>crates/service/tests/rest/rest_visibility.rs</code>,
+<code>crates/index/tests/it/store.rs</code>,
+<code>evals/skill-training/README.md</code>,
+<code>evals/scale/README.md</code>,
+<code>.github/workflows/ci.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E 'current_only' -- crates</code> — readers in
+<code>turso/search.rs:852</code> and
+<code>postgres/search.rs:815</code>, the field in
+<code>store.rs:1138</code>, and one setter,
+<code>crates/index/tests/it/store.rs:5125</code>.</li>
+<li><code>git grep -n -E 'is_retired_status\(|RETIRED\.contains' -- crates ':!*/tests/*'</code>
+— <code>search.rs:249</code>, <code>context.rs:319</code>,
+<code>reflect.rs:357</code>, <code>reflection.rs:758</code>,
+<code>store.rs:1392</code>, <code>sweep/mod.rs:887</code>,
+<code>:2296</code> and <code>recall.rs:258</code>; no search
+predicate.</li>
+<li><code>git grep -n -o -i -E 'CREATE TABLE (IF NOT EXISTS )?[a-z_]+' -- crates ':!*/tests/*'</code>
+— no table named for a log, event, history or audit.</li>
+<li><code>git grep -n -E 'LOG_FILE' -- crates ':!*/tests/*'</code> —
+reserved-name checks only; no writer of <code>log.md</code>.</li>
+<li><code>git grep -n -i -E '/merge"|pulls/\{[^}]*\}/merge|fn merge_pull|fn merge_proposal|"merge_method"' -- crates ':!*/tests/*'</code>
+— no match.</li>
+<li><code>grep -n 'fn ' crates/remote/src/provider.rs</code> — proposal
+operations are create, update, close, state, feedback and list; no
+merge.</li>
+<li><code>grep -n -i 'review' crates/engine/src/settings.rs</code> — no
+match; review mode is not a settings key.</li>
+<li><code>git grep -n -E 'fn set_review|set_review_mode' -- crates</code>
+— the engine method, the REST handler, the CLI dispatcher and a test; no
+MCP caller.</li>
+<li><code>git grep -n -E 'hidden_for\(' -- crates ':!*/tests/*'</code> —
+the read paths listed in section 9.</li>
+<li><code>awk '/key: "/{k=$0} /operator_only: true/{print k}' crates/engine/src/settings.rs</code>
+— 25 operator keys, <code>auth.mcp</code>, <code>service.http</code>,
+<code>database.backend</code> and <code>database.url</code> among
+them.</li>
+<li><code>git grep -n -E 'retire_engram(_as)?\(' -- crates ':!*/tests/*'</code>
+— the REST handler and one engine caller; no MCP tool.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION' -- .</code>
+— no citation; the matches are the words "elicitation" and "citation" in
+tool text. No <code>CITATION.cff</code>.</li>
+<li><code>ls research</code> — absent; the scale harness's results note
+is not in the tree.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/jordiboehme/crystalline/commit/16689611c1f3d832486c6afb8d489b445c9354d6"><code class="commit-id" title="16689611c1f3d832486c6afb8d489b445c9354d6">16689611…</code></a>
+— first reading, at the head of <code>main</code>, the v0.26.0 release
+merge of 14 October 2026. Five marks: <code>trust_state</code>,
+<code>bitemporal</code>, <code>scope_enforced</code>,
+<code>human_review</code> and <code>negative_eval</code>. Screened
+before reading from a full clone: no auto-run surface; two build-time
+execution points (<code>crates/cli/build.rs</code>,
+<code>crates/service/build.rs</code>); six dependency surfaces inside
+the seven-day cooldown, among them <code>Cargo.lock</code> and
+<code>fluid/package.json</code>; one unpinned surface, the web UI's
+floating ranges behind a lockfile; <code>AGENTS.md</code> recorded as
+data. MPL-2.0 with no rider. Read with <code>git grep</code> and
+<code>sed</code>; nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 743 reports.**
+**This page covers all 744 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6746,3 +6746,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 25,857 lines of Rust outside tests across six crates, 283 commits on main under nine author names between 11 March and 8 October 2026, 797 Rust test functions run in CI. Two marks: `scope_enforced` and `negative_eval`. `human_review` is withheld: Muse cannot clear its own inbox and the self-hosted drain is a person-only CLI, but on the cloud path the local assistant's `muse_inbox` tool approves, allowed by default. The README's LoCoMo figure has no committed result file.
 - Study when: you want a hosted agent to read a curated slice of local memory, with budgets, revocation, an audit trail and a quarantine for what it writes back.
 - Do not copy when: several users or projects share one database, a correction must outrank the value it replaces, or the REST server will run where untrusted pages can reach it.
+
+### [`crystalline`](../systems/crystalline/)
+
+- Best idea: **review mode makes the agent's write a draft only a merge can publish.** With `review: overlay`, every write becomes an `engram` row keyed on its author and screened from every other reader by one anti-join on every read leg. `share_changes` opens a GitHub proposal, the provider trait has no merge call, and the switch itself is a REST route for the domain's owner or an admin.
+- Biggest risk: **retired knowledge keeps answering.** A superseded engram is returned by `search_engrams` at 0.6 weight, so a strong old match outranks a weak current one. The recall hook and the write advisory drop it, and `current_only`, the predicate that would confine search to current knowledge, has no product caller.
+- Most reusable component: `actor_screen_on` in `crates/index/src/turso/search.rs` — base rows plus the reader's own drafts, tombstones excluded on the draft leg and kept in the anti-join, so a draft deletion hides the base row it deletes.
+- Second risk: **the defaults are open.** HTTP MCP serves without a token unless `auth.mcp` is set, a stdio session is the machine owner and sees every domain, and `set_frontmatter` lets an agent record a verification in a person's name.
+- Maturity impression: MPL-2.0, 527,318 lines of Rust in eight crates and 3,064 commits by one author between 2 July and 14 October 2026, version 0.26.0. Five marks, `trust_state`, `bitemporal`, `scope_enforced`, `human_review` and `negative_eval`. 6,741 Rust test functions, with must-not cases paired with must-have controls on a populated index; no retrieval benchmark and no committed eval runs.
+- Study when: you want an agent's memory to be markdown in your own repositories, with a person accepting changes on GitHub and private domains for accounts on one server.
+- Do not copy when: a superseded fact must stop appearing in answers, the server will be reachable by other local users without `auth.mcp`, or one developer wants a few facts remembered without running a multi-user daemon.

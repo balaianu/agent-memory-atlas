@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-743, generated from each report's frontmatter —
+744, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-743, generated from each report's frontmatter —
+744, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-743, generated from each report's frontmatter —
+744, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 743, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 744, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-743, generated from each report's frontmatter —
+744, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 743 systems by the seven mechanisms
+filters all 744 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -7060,6 +7060,60 @@ test that a rooted view cannot recall a sibling's records; recall that
 reports what it looked for and did not find</td>
 <td>An LLM on the write path is authorised to delete existing records,
 with no tombstone, no audit and no human in the loop</td>
+</tr>
+<tr>
+<td><a href="../systems/crystalline/"><code>crystalline</code></a></td>
+<td>An engram: one markdown file with OKF frontmatter (type, title,
+permalink, tags, a free-text status, recorded_at, optional valid_from
+and valid_to, a generated stamp naming the actor and model, a verified
+trail), observation bullets and typed relations, inside a domain with a
+MANIFEST</td>
+<td>Markdown files per domain as the source of truth, or database rows
+for a virtual domain; a derived index in Turso (SQLite-compatible) or a
+shared PostgreSQL with pgvector, holding engrams, chunks with
+embeddings, observations, relations, links, tags and per-actor draft
+rows mirrored to a journal</td>
+<td>Hybrid search blending a LIKE-prefiltered weighted term score with a
+cosine top-100 over chunk embeddings, 0.4 and 0.6, with a salience lift
+and a fade for retired statuses; a PageRank-ranked relation and link
+neighbourhood for build_context; a per-prompt hook naming up to three
+engrams</td>
+<td>Explicit: an agent calls write_engram, edit_engram, split_engram or
+move_engram over MCP, always naming a domain, or a person edits in the
+Fluid web UI. The file and its index rows are written synchronously and
+embedding runs in a background worker. A Stop hook nudges the agent once
+per session to propose captures</td>
+<td>Edits in place; supersession by setting a retirement status, closing
+valid_to and linking superseded_by, which fades rather than hides;
+delete removes the file and rows. In a review-mode domain each of these
+lands in the author's draft, and a draft deletion is a per-path
+tombstone row</td>
+<td>Domains in one shared index, filtered by name on every read; private
+domains with owners and members per account; a per-author actor column
+screening drafts; the machine owner over stdio and the CLI is
+unrestricted</td>
+<td>A single binary: an MCP server over stdio or HTTP with 30 tools, a
+REST API, the Fluid web UI with live co-editing, a CLI mirroring the
+tools, and installers wiring SessionStart, UserPromptSubmit and Stop
+hooks plus skills into Claude Code, Codex, Copilot, Cursor, Kiro, Gemini
+CLI and Qwen Code</td>
+<td>An embed worker after each write, a file watcher and sync, an
+optional local NLI pass scoring observation pairs for contradictions
+after each embedding pass, GitHub pull and share for team domains;
+evolve is a read-only sweep returning a ranked maintenance queue</td>
+<td>A retirement status filtered from the recall hook and the write
+advisory and faded in search; review-mode drafts withheld from every
+reader but their author until a merged proposal lands; a verified trail
+whose actor the caller may name</td>
+<td>Every write must name a domain; a review mode that turns agent
+writes into per-author drafts only a forge merge publishes, with the
+agent holding no merge verb; one actor screen shared by every read leg;
+tests that pair each must-not with a must-have on a populated index</td>
+<td>Retired knowledge is returned by search at 0.6 weight and
+current_only has no caller; HTTP MCP serves without a token by default;
+an agent can record a verification naming a person; sharing: direct
+removes the review step without a person; no durable mutation log
+outside git</td>
 </tr>
 <tr>
 <td><a href="../systems/csm/"><code>csm</code></a></td>
@@ -32769,7 +32823,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 743:</em> <a
+<p><em>67 of 744:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -32840,7 +32894,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>190 of 743:</em> <a
+<p><em>191 of 744:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -32879,6 +32933,7 @@ href="../systems/core-memory/"><code>core-memory</code></a>, <a
 href="../systems/cortana/"><code>cortana</code></a>, <a
 href="../systems/cortex-hypermnesia/"><code>cortex-hypermnesia</code></a>,
 <a href="../systems/counterparts/"><code>counterparts</code></a>, <a
+href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/cyrene-agent/"><code>cyrene-agent</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
@@ -33038,7 +33093,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>124 of 743:</em> <a
+<p><em>125 of 744:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33064,6 +33119,7 @@ href="../systems/core-memory/"><code>core-memory</code></a>, <a
 href="../systems/core-redplanet/"><code>core-redplanet</code></a>, <a
 href="../systems/cortex-hub/"><code>cortex-hub</code></a>, <a
 href="../systems/cortexdb/"><code>cortexdb</code></a>, <a
+href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/daem0n-mcp/"><code>daem0n-mcp</code></a>, <a
 href="../systems/dense-mem/"><code>dense-mem</code></a>, <a
 href="../systems/elastic-atlas/"><code>elastic-atlas</code></a>, <a
@@ -33170,7 +33226,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>326 of 743:</em> <a
+<p><em>327 of 744:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33249,6 +33305,7 @@ href="../systems/cortex-hub/"><code>cortex-hub</code></a>, <a
 href="../systems/cortexes/"><code>cortexes</code></a>, <a
 href="../systems/cowagent/"><code>cowagent</code></a>, <a
 href="../systems/crewai/"><code>crewai</code></a>, <a
+href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/cyrene-agent/"><code>cyrene-agent</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/deepcode/"><code>deepcode</code></a>, <a
@@ -33512,7 +33569,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>256 of 743:</em> <a
+<p><em>256 of 744:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -33778,7 +33835,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 743:</em> <a
+<p><em>97 of 744:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -33792,6 +33849,7 @@ href="../systems/caura/"><code>caura</code></a>, <a
 href="../systems/citra/"><code>citra</code></a>, <a
 href="../systems/cortex/"><code>cortex</code></a>, <a
 href="../systems/craft/"><code>craft</code></a>, <a
+href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/ctx/"><code>ctx</code></a>, <a
 href="../systems/daimon/"><code>daimon</code></a>, <a
 href="../systems/deus/"><code>deus</code></a>, <a
@@ -33878,7 +33936,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>459 of 743:</em> <a
+<p><em>460 of 744:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33977,6 +34035,7 @@ href="../systems/cortexgraph/"><code>cortexgraph</code></a>, <a
 href="../systems/counterparts/"><code>counterparts</code></a>, <a
 href="../systems/create-context-graph/"><code>create-context-graph</code></a>,
 <a href="../systems/crewai/"><code>crewai</code></a>, <a
+href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/csm/"><code>csm</code></a>, <a
 href="../systems/ctx-open/"><code>ctx-open</code></a>, <a
 href="../systems/cyrene-agent/"><code>cyrene-agent</code></a>, <a
@@ -34370,8 +34429,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-459 repositories of
-743 assert that particular material must
+460 repositories of
+744 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -34444,7 +34503,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 743 is the real figure for the second kind, and
+of 744 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

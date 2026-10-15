@@ -220,6 +220,15 @@ an explicitly permitted non-empty scope"</em>. Its limit is the one the
 tradeoffs above predict. The in-process library and the consolidators do
 not pass through that boundary and can create unscoped records, which
 the read path treats as visible from every context.</p>
+<p><a href="../../systems/crystalline/">Crystalline</a> —
+<code>WriteParams.domain</code> is a required string documented as
+<em>"Required; there is no default domain for writes"</em>
+(<code>crates/engine/src/params.rs:61-62</code>), and the
+<code>write_engram</code> tool description gives the reason: <em>"so an
+engram never lands in the wrong place"</em>. Reads fan out across every
+visible domain when none is named. In a domain in review mode the
+destination gains a second key, the author, and the write lands in that
+author's private draft and nowhere else.</p>
 <p>The counterexamples show what the rule replaces. <a
 href="../../systems/mateclaw/">MateClaw</a> carries the destination on
 its provider contract as an <code>ownerKey</code>, beside unscoped

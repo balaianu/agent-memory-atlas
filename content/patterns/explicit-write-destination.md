@@ -121,6 +121,14 @@ the tradeoffs above predict. The in-process library and the consolidators do not
 pass through that boundary and can create unscoped records, which the read path
 treats as visible from every context.
 
+[Crystalline](../../systems/crystalline/) — `WriteParams.domain` is a required
+string documented as *"Required; there is no default domain for writes"*
+(`crates/engine/src/params.rs:61-62`), and the `write_engram` tool description
+gives the reason: *"so an engram never lands in the wrong place"*. Reads fan out
+across every visible domain when none is named. In a domain in review mode the
+destination gains a second key, the author, and the write lands in that author's
+private draft and nowhere else.
+
 The counterexamples show what the rule replaces.
 [MateClaw](../../systems/mateclaw/) carries the destination on its provider
 contract as an `ownerKey`, beside unscoped overloads that remain callable, so the
