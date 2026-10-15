@@ -1692,11 +1692,11 @@
             <a aria-label="Read the YantrikDB analysis" href="./systems/yantrikdb/">Read analysis <span aria-hidden="true">→</span></a>
           </article>
 
-          <article class="system-card accent-sage" data-category="local first" data-capabilities="audit_log" data-search="vibe cognition haagndaazer python mit mcp claude code journal jsonl append only journal-first projection networkx chromadb replay catch up offset multi process tombstone removed_by git identity surface tag decision fail discovery assumption constraint incident pattern episode document workflow task person supersedes profile_history seniority levels retired duplicate_of never un-embedded">
+          <article class="system-card accent-sage" data-category="local first" data-capabilities="audit_log negative_eval" data-search="vibe cognition haagndaazer python mit mcp claude code codex journal jsonl append only journal-first projection networkx chromadb replay catch up offset multi process per-person shards own ledger rollback repair accept-disk audit tombstone removed_by personal constraints scope visibility identity cognition_set_identity decision fail discovery assumption constraint incident pattern episode document workflow task person profiles supersedes seniority levels retired duplicate_of curation scope review orphan embedding sweep">
             <div class="system-card-top"><span>The log is the memory</span><code>184</code></div>
             <h3>Vibe Cognition</h3>
-            <p>Every mutation is appended to a JSONL journal before the graph is touched, so the graph is a projection — and a deletion is a tombstone line carrying who did it.</p>
-            <dl><div><dt>Best idea</dt><dd>Journal first, then mutate; the graph rebuilds</dd></div><div><dt>Main risk</dt><dd>Removed nodes are never un-embedded</dd></div></dl>
+            <p>Each change is appended to its writer's own JSONL journal file before the graph moves, and a file that a checkout rolls back cannot shrink the graph: the writer's lost lines are appended back.</p>
+            <dl><div><dt>Best idea</dt><dd>Journal first; a rollback is repaired, not obeyed</dd></div><div><dt>Main risk</dt><dd>The agent picks whose personal constraints it sees</dd></div></dl>
             <a aria-label="Read the Vibe Cognition analysis" href="./systems/vibe-cognition/">Read analysis <span aria-hidden="true">→</span></a>
           </article>
 

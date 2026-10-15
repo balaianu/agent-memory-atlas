@@ -1,345 +1,456 @@
 ---
 title: "Vibe Cognition"
 eyebrow: "Journal first, graph second"
-description: "Every mutation is appended to a JSONL journal before the graph is touched, so the graph is a projection — and a deletion is a tombstone line carrying who did it."
+description: "A local MCP memory for coding agents: each change is appended to its writer's journal file first, and the graph is replayed from those files."
 root: ../..
 page_kind: system
 source_name: "haagndaazer/vibe-cognition"
 source_url: https://github.com/haagndaazer/vibe-cognition
 archive_name: "haagndaazer--vibe-cognition"
-revision: 208e7d2ec8eb402edede7b8b255012b712007a66
-revision_url: https://github.com/haagndaazer/vibe-cognition/commit/208e7d2ec8eb402edede7b8b255012b712007a66
-analyzed_at: 2026-09-17
-capabilities: "audit_log"
+revision: e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1
+revision_url: https://github.com/haagndaazer/vibe-cognition/commit/e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1
+analyzed_at: 2026-10-15
+licence: "MIT"
+size: "60,629 lines of Python in 163 files, 33,924 of them under tests/; the cognition package is 10,254 lines in 32 files, and storage.py alone 2,231"
+activity: "623 commits on main by one maintainer under two author names, 25 March – 5 October 2026; version 0.45.0"
+tests: "1,645 pytest functions in 82 test files; none run for this reading"
+capabilities: "audit_log, negative_eval"
 capability_evidence:
-  audit_log: "two append-only journals, one per store | src/vibe_cognition/cognition/storage.py:309,347,376,404,443,456,942, src/vibe_cognition/cognition/people_facts.py | every graph mutation calls `_append_journal(action, data)` — add_node, add_edge, update_node, remove_node and both remove_edge paths — so the record is written by the mutating method rather than by a caller who might forget, and a `remove_node` appends a tombstone rather than deleting the history. Env facts are a second store with a second delta journal, and the module states why it is separate: the main journal's `update_node` convention writes the entire metadata dict per call, so accumulating per-fact history there would be O(n squared), and the delta shape makes that structurally impossible rather than merely avoided. The mark covers both stores, by two mechanisms | no committed case asserts that a mutation without a journal line fails"
+  audit_log: "the journal files and the people files, all appended through one locked writer | src/vibe_cognition/cognition/storage.py:567, :594, :612, :638, :671, :683, :1315-1335, src/vibe_cognition/cognition/journal_io.py, src/vibe_cognition/cognition/people_facts.py:305-320, src/vibe_cognition/cognition/profiles.py:297-361 | every graph mutation goes through `_append_journal`, which appends one stamped line to the writer's own shard under `.cognition/journal/` and only then applies it, and a removal is an appended `remove_node` line carrying `removed_by`. The legacy `journal.jsonl` is read and never written. Environment facts and profiles are separate append-only delta files under `.cognition/people/`. Replay re-applies files onto the graph it has and never wipes it, and `accept-disk`, the one path that drops what replay is holding, writes an incident node naming the dropped ids before it runs and refuses if that write fails. No production path rewrites or truncates a journal line; the hand-run SVN conflict resolver rebuilds a conflicted file as the union of both sides | tests/test_wp_core_tail.py:48-59 (a failed append leaves no node); tests/test_append_only_replay.py:54-104 (a rollback cannot remove a node, a deliberate deletion does), :214-243, :383-402 (accept-disk audits first and refuses without the audit)"
+  negative_eval: "the read paths for personal constraints, and the search formatter for deleted nodes | tests/test_personal_constraints.py:61-93, :154-166, tests/test_documents.py:648-662 | Alice records a personal constraint, a project constraint and an episode that cite the same issue; acting as Bob, the test asserts the personal one is absent from `get_node`, `get_all_nodes`, the reference index, predecessors, the curation worklist, the snapshot's nodes and edges, `cognition_search` for its exact summary over a real Chroma collection, `cognition_get_node` and `cognition_get_neighbors`, while the project constraint is returned; switched back to Alice, the same reads return it. The prime test asserts Bob's session context omits Alice's personal constraint and carries the project one. The formatter test drops a hit whose node is not in the graph beside a live node that must be returned | tests/test_personal_constraints.py:61-93; :154-166; tests/test_documents.py:648-662"
 stack_storage: "chroma, files"
 stack_retrieval: "vector, graph"
-stack_source: "seeded"
+stack_source: "reviewed"
 matrix:
-  memory_unit: "A typed cognition node from a twelve-value vocabulary — decision, fail, discovery, incident, workflow, person and more"
-  storage: "An append-only journal.jsonl as the source of truth, with a NetworkX graph and ChromaDB as projections"
-  retrieval: "Local embeddings over node summaries with graph traversal along typed edges"
-  write: "Journal-first — the line is appended before the in-memory graph is mutated, with a running SHA-256"
-  update_delete: "Workflows version by supersession; people update in place with an append-only profile_history"
-  scoping: "One cognition directory per project, git-hygiene enforced; no scope key on the read path"
-  integration: "An MCP server for Claude Code, plus a token-gated local dashboard"
-  background: "Catch-up replay on every synced operation, so a second process sees the first one's writes"
-  trust: "None on the node — provenance is the git identity or the acting surface recorded in the journal"
-  strengths: "The journal is the record and the graph is rebuilt from it, with tombstones carrying attribution"
-  risks: "Two replay-bookkeeping sets are documented as never drained, on the grounds that they stay small"
+  memory_unit: "A typed node from a twelve-value vocabulary (decision, fail, discovery, assumption, constraint, incident, pattern, episode, document, workflow, task, person) with typed edges; people are committed profile files rather than nodes"
+  storage: "Per-person append-only JSONL journal files under .cognition/journal, a frozen legacy journal.jsonl, and per-person profile and environment-fact delta files, all committed; a NetworkX graph and a ChromaDB index are replayed from them"
+  retrieval: "Local embeddings in ChromaDB, with hits dropped unless the node is visible in the graph; structural reads by type, recency, context substring and typed-edge traversal; a session-start digest that shows only the head of a supersedes chain"
+  write: "Journal-first: one stamped line appended to the writer's own file under a cross-process lock, then applied by the same last-writer-wins comparison replay uses; refused without a confirmed identity and a complete profile"
+  update_delete: "Workflows and documents version by supersedes edges; tasks and other nodes update in place by appended update_node lines; deletion is an appended remove_node line with removed_by, and the local delete purges the node's vectors"
+  scoping: "One .cognition directory per project. Constraints are personal by default and every read shows them only to the confirmed identity that recorded them; the agent can confirm any identity, and can load another project read-only by path"
+  integration: "A plugin-declared MCP server for Claude Code and an adapter for the Codex CLI, session-start and post-compaction hooks, a token-gated local dashboard, curation subagents, and CLIs for journal status, accept-disk, SVN conflict resolution and identity remapping"
+  background: "Catch-up replay before every synced call, a startup embedding sync that also deletes vectors whose node is gone, re-embedding of replayed nodes at search time, and agent-run curation that writes edges and scope-review flags"
+  trust: "A server-stamped recorded_by identity on every write, a caller-supplied from_agent flag that lowers a hit's search weight, seniority from the profile, and conflicted and superseded_by flags computed per search hit; no epistemic status on a node"
+  strengths: "The journal is the record and the graph cannot shrink below it: a rolled-back file is repaired from a checkout-bound ledger of the lines it wrote, a teammate's lost lines are held in memory and reported, and the one command that accepts the loss writes an audit node first and refuses without it"
+  risks: "Personal-constraint visibility follows identity.json, which the agent's own cognition_set_identity tool rewrites with any address it is given, and cognition_load_project opens any path the agent names; the project calls the scope visibility, not secrecy. from_agent is a caller argument. Journals have no compaction"
 ---
 
 ## 1. Executive Summary
 
-Vibe Cognition is a fully local MCP server for Claude Code that captures why a
-codebase is the way it is — decisions, failures, discoveries, patterns,
-incidents. MIT, about 56,000 lines of Python, no API keys after a one-time model
-download.
+Vibe Cognition is a local MCP server that records why a codebase is the way it
+is, as typed nodes in a graph that a team shares through version control. Every
+change is appended to a JSONL journal file before the in-memory graph moves,
+each person appends only to their own file, and the graph and its ChromaDB
+index are both rebuilt from those files. Replay is append-only, so a journal
+file that a `git checkout` rolls back cannot shrink the graph. The weak side
+is identity: a constraint can be personal, and its owner is whoever the agent
+last confirmed with `cognition_set_identity`.
 
-**The architecture is the finding, and it is the one the atlas's
-[log-and-projection](../../patterns/) framing asks for.** Every mutation appends
-a line to `journal.jsonl` *before* touching the in-memory graph, with the comment
-naming the discipline: "C-4 journal-FIRST (see add_node): record before mutating
-the graph." Five operations do it — `add_node`, `add_edge`, `update_node`,
-`remove_node`, `remove_edge` — and a running SHA-256 hasher covers the file. The
-NetworkX graph and the ChromaDB embeddings are both projections; the journal is
-the store.
+It runs as a plugin for Claude Code and as an adapter for the Codex CLI. Its
+README says in the first paragraph that after a one-time model download the
+only network call is an optional daily version check.
 
-A deletion is therefore not an absence but a line: `remove_node` writes a
-tombstone `{"id": ..., "removed_by": ...}`, where `removed_by` is "a resolved git
-identity dict or a surface tag like `dashboard`". The dashboard's own docstring
-explains why it passes a tag rather than a person: the dashboard "has no per-user
-identity (deliberately: token-gated, single local user), so the surface tag is
-the honest attribution."
+**The journal is the store.** `_append_journal` writes one stamped line to the
+writer's shard under a cross-process lock, then applies that line through the
+same comparison replay uses, so a process's view always equals a rebuild from
+the same bytes (`src/vibe_cognition/cognition/storage.py:1315-1335`). A
+deletion is an appended line, `{"id": ..., "removed_by": ...}`. The MCP path
+passes the confirmed identity. The dashboard passes `"dashboard"`, and its
+docstring says why: the dashboard "has no per-user identity (deliberately:
+token-gated, single local user), so the surface tag is the honest attribution"
+(`src/vibe_cognition/dashboard/api.py:233-256`).
 
-Being explicit that an attribution is a *surface* rather than a *person*, because
-the surface cannot know the person, is the kind of precision this atlas rarely
-finds in a provenance field.
+**A rollback is repaired, not obeyed.** Each line a checkout appends is also
+recorded in a machine-local ledger bound to that machine, account and folder.
+When a file loses lines, the checkout appends its own lines back, and holds a
+teammate's lost lines in memory with a standing notice. The single command
+that gives those up, `accept-disk`, writes an incident node naming what it
+drops before dropping anything. Its docstring states why there is no gate: "It
+is not gated technically -- an agent can run it, and a token echoed from the
+session-start text would only look like a gate, since the agent reads that
+text too" (`src/vibe_cognition/cognition/journal_cli.py:55-92`).
 
-**The second thing worth reading is the comments.** This codebase documents its
-own concurrency bugs at the point of the fix, at length, with the work-package
-and commit id attached. The `_removed_node_ids` set exists because "a process's
-own `remove_node` tombstone read back on its NEXT catch-up (C-6: appends don't
-advance the offset, so a process re-reads its own just-appended lines) always
-found the target already gone and defer-then-warned on every ordinary deletion."
-That is a real multi-process journal-replay bug, explained well enough that a
-reader building the same thing would avoid it.
+**Personal constraints are hidden on every read path from everyone but one
+identity, and the agent chooses the identity.** The filter is thorough and a
+committed test checks it across eleven read surfaces.
+`cognition_set_identity(name, email)` writes `.cognition/local/identity.json`
+with any valid address the agent passes, and the next read is filtered for
+that address (`src/vibe_cognition/tools/cognition_tools.py:3383-3491`). The
+README is explicit that this "is visibility, not secrecy".
 
 ## 2. Mental Model
 
-Twelve node types, and the vocabulary is a design document in itself:
-`decision`, `fail`, `discovery`, `assumption`, `constraint`, `incident`,
-`pattern`, `episode`, `document`, `workflow`, `task`, `person`.
-
-Each type declares its own update semantics in the enum comments, which is where
-the model's real thinking lives:
+Twelve node types, each with a correction strategy chosen for what it
+represents. The enum comments carry the reasoning
+(`src/vibe_cognition/cognition/models.py:14-42`):
 
 - **`workflow`** is "versioned by supersession: an update is a NEW workflow node
-  linked via SUPERSEDES" — procedures get history.
+  linked via SUPERSEDES". Documents version the same way.
 - **`task`** has "a mutable lifecycle (status/owner/parent) carried in metadata
-  and edited in place" — open work is not a claim, so versioning it is noise.
-- **`person`** is "UPDATED IN PLACE (not supersession-versioned) with an
-  append-only `metadata.profile_history` audit trail" — and is explicitly "a
-  HUMAN identity (never an agent — agent identity lives in teammate-comms, not
-  here)".
+  and edited in place", through appended `update_node` lines.
+- **`constraint`** carries a scope, `personal` by default for new records or
+  `project`, which decides who can read it
+  (`src/vibe_cognition/cognition/scope.py:20-38`).
+- **`person`** remains a legal node type for older graphs. People are committed
+  profile files, `.cognition/people/EMAIL.profile.jsonl`, append-only with a
+  last-write-wins fold, and a startup migration copies any legacy person node
+  into one (`src/vibe_cognition/cognition/profiles.py`,
+  `src/vibe_cognition/cognition/person_migration.py`).
 
-Three different correction strategies chosen per type, each with a stated reason.
-Most systems in this atlas apply one strategy to everything.
+Edges are typed: `led_to`, `supersedes`, `contradicts`, `relates_to`,
+`resolved_by`, `part_of`. Curation subagents write most of them, each with a
+reason and a curation session id.
 
 ```mermaid
-%% caption: the journal is appended before the graph is mutated, and a removal writes a tombstone that lets replay distinguish validly deleted from not yet replayed
+%% caption: each write lands in its writer's own journal file before the graph changes, replay never lets a rolled-back file shrink the graph, and every read passes the visibility check for the confirmed identity
 flowchart TD
-    OP["add_node / add_edge / update_node<br/>remove_node / remove_edge"] --> J["append to journal.jsonl<br/>C-4: journal FIRST"]
-    J --> H["running sha256 over the file"]
-    J --> G["mutate the NetworkX graph"]
-    G --> C["ChromaDB embeddings — sync only ADDS"]
-    J2["another process appends"] -.-> CU["_catch_up: replay from offset"]
-    CU --> G
-    CU --> RQ["replayed node ids queued for embedding"]
-    RM["remove_node"] --> TS["tombstone line: id + removed_by"]
-    TS --> SEEN["_removed_node_ids — 'validly deleted and we already know it'"]
-    SEEN -.->|"distinguishes from 'not replayed yet'"| CU
+    W["write tools<br/>gate: confirmed identity + complete profile"] --> A["_append_journal<br/>locked append to journal/EMAIL.jsonl"]
+    A --> L["local/own-appends.jsonl<br/>every line this checkout wrote"]
+    A --> AP["_apply<br/>last writer wins by stamp"]
+    AP --> G["NetworkX graph"]
+    F["teammates' shards<br/>frozen legacy journal.jsonl"] --> CU["_catch_up<br/>before every synced call"]
+    CU --> AP
+    CU -->|"a file shrank or lost a line"| RB["_rebuild<br/>re-apply onto the graph, never wipe"]
+    RB --> HL["_heal_own_shard<br/>append own lost lines back from the ledger"]
+    RB --> RT["teammate or legacy loss<br/>kept in memory, notice at session start"]
+    HL --> A
+    ID["local/identity.json<br/>written by cognition_set_identity"] --> V["_visible<br/>personal constraint: recorded_by must equal the viewer"]
+    G --> V
+    C["ChromaDB vectors"] --> S["cognition_search<br/>drop hits whose node is not visible"]
+    V --> S
+    V --> R["get, neighbors, history, prime, dashboard"]
+    S --> R
+    G -.->|"startup sweep deletes vectors with no node"| C
 ```
 
-The dotted edges are the multi-process path, and they are why the two
-bookkeeping sets exist.
+The left column is the write. The dotted edge and the right column are what
+make a deletion and a personal scope hold on the vector side.
 
 ## 3. Architecture
 
-One `.cognition` directory per project holding `journal.jsonl`, a ChromaDB store
-and a text sidecar for documents. An MCP server, a token-gated local dashboard,
-and a `git_hygiene` module that runs on startup to keep the directory out of
-version control (or in it, deliberately).
+A project's `.cognition/` directory holds the frozen legacy `journal.jsonl`,
+one shard per person under `journal/`, profile and environment-fact delta files
+under `people/`, document text sidecars, and a ChromaDB store. Machine-local
+state lives under `local/`, which one ignore entry covers: the confirmed
+identity, the own-append ledger and the loss notices
+(`src/vibe_cognition/cognition/local_paths.py`). Everything else is meant to be
+committed, and `git_hygiene.py` maintains the ignore entries and a
+`merge=union` attribute on startup.
 
-Multi-process correctness is handled by offset-tracked replay rather than by a
-lock: every synced operation catches up from the last read offset first, so a
-second Claude Code session sees the first one's writes on its next call. The
-`graph` property is exposed as "an UNSYNCED view — it does not trigger journal
-catch-up", with the docstring recommending the synced methods instead — an
-honest hazard label on a convenience accessor.
+Each Claude Code session runs its own server process, and the session-start
+hook runs a separate one for the digest. Appends take an exclusive file lock
+(`src/vibe_cognition/cognition/journal_io.py`); reads take none. Before every
+synced operation the store catches up from a per-file offset and checks a hash
+of the bytes it has read, so a file that was replaced, shrank or lost a line
+triggers a rebuild rather than a silent skip
+(`src/vibe_cognition/cognition/storage.py:1442-1469`, `:1557-1634`).
 
-`git_identity.py` resolves the acting author from git config, which is what makes
-`removed_by` meaningful without an auth system.
+Lines from different files are ordered by stamp, not arrival: a shard line is
+`(1, at, file name, sha256 of the line)` and a legacy line `(0, "", "", index)`
+(`src/vibe_cognition/cognition/journal_shards.py:1-23`). Each attribute, add,
+removal and edge keeps the stamp that set it, so the graph is the same whatever
+order the files are read in.
+
+The rebuild re-applies every file onto the graph it has and resets only the
+per-file offsets (`storage.py:1339-1359`). Only `_hard_reset`, which
+`accept-disk` alone calls, forgets the graph (`:1361-1371`). The `graph`
+property is "an UNSYNCED view — it does not trigger journal catch-up", and its
+docstring points callers at the synced methods.
 
 ## 4. Essential Implementation Paths
 
-**Write** — `CognitionStorage.add_node` (`storage.py:251`) → `_append_journal`
-(`:883`) → graph mutation, under `_synced()`.
+**Write** — a tool resolves the confirmed identity through the write gate,
+builds a `CognitionNode` with a server-stamped `recorded_by`, and calls
+`add_node` (`storage.py:532`) → `_append_journal` (`:1315`) → `_apply` (`:2031`).
 
-**Delete** — `remove_node` (`storage.py:322-350`) → tombstone with optional
-`removed_by` → graph removal → `_removed_node_ids` bookkeeping.
+**Delete** — `delete_cognition_node` captures incident edges and calls
+`remove_node` (`storage.py:615`), which appends the tombstone. It then purges
+the node's vector and chunk vectors, and reclaims document sidecars no twin
+still uses (`src/vibe_cognition/cognition/operations.py:20-110`).
 
-**Replay** — `_catch_up` → `_replay_entry`, whose `remove_node` branch consults
-`_removed_node_ids` to tell "validly deleted and we already know it" from "not
-replayed yet".
+**Replay** — `_catch_up` (`storage.py:1557`) scans every file. An append or an
+insert is consumed in place; a lost line sends it to `_rebuild` (`:1636`),
+which re-applies every file and then runs `_heal_own_shard` (`:1795`).
 
-**Embedding handoff** — `storage.py` has "no embeddings dependency (by design)",
-so replayed node ids queue in `_replayed_node_ids` and the tools layer, which has
-both, drains and embeds them.
+**Read** — every public read filters through `_visible` (`storage.py:1211`) or
+`_visible_nodes` (`:1218`). Search drops a vector hit through
+`search_hit_is_live`, which calls the same check
+(`src/vibe_cognition/tools/cognition_tools.py:891`).
+
+**Embedding repair** — replayed node ids queue in `_replayed_node_ids` and are
+embedded at the next search (`cognition_tools.py:966-1000`). The startup sync
+deletes any vector whose node is not in the graph
+(`src/vibe_cognition/server.py:336`, `:347-380`).
 
 ## 5. Memory Data Model
 
-A `CognitionNode` is a Pydantic model with a type, a summary, a body, metadata
-and a generated id derived from `f"{node_type}:{summary}:{timestamp}"` — so
-identity is content-and-time addressed rather than random.
+A `CognitionNode` has a type, summary, detail, context list, references,
+severity, timestamp, free-text `author` and a metadata dict. Its id is the first
+12 hex characters of `sha256(f"{node_type}:{summary}:{timestamp}")`, salted
+with `#n` on collision when minted (`models.py:106-120`, `storage.py:532-570`).
+The timestamp is the write clock.
 
-The edge vocabulary carries a retirement note worth quoting as an example of how
-to remove a feature: `duplicate_of` is "RETIRED (WP-14, decision 7b9db5a8d675):
-it was tool-rejected since inception (a modeled-then-shelved merge feature, never
-reachable…)". The enum records that the value existed, was never usable, and why
-it is gone — rather than deleting the line and leaving old journals unreadable.
+Provenance is in metadata. `recorded_by` is the server-resolved identity, and
+`from_agent` is a boolean the tool caller supplies, `True` by default. Edges
+carry `source` (`deterministic`, `manual`, `batch`, `curate-skill` and others),
+an optional `reason` and a `curation_session`.
 
-`SENIORITY_LEVELS` is a closed four-value tuple with an unusual comment —
-"pinned by Colton — not up for relitigation" — and the reason it is a constant
-rather than a literal: downstream retrieval weighting "imports this constant
-rather than re-declaring the vocabulary". A single source for a vocabulary that
-two subsystems must agree on.
+The edge enum records a retirement in place: `duplicate_of` is "RETIRED
+(WP-14, decision 7b9db5a8d675)", noted as never reachable, so old journals stay
+explicable. `SENIORITY_LEVELS` is a closed four-value tuple "pinned by Colton —
+not up for relitigation", exported so that search weighting "imports this
+constant rather than re-declaring the vocabulary".
 
 ## 6. Retrieval Mechanics
 
-Local embeddings over node summaries in ChromaDB, plus graph traversal along the
-typed edges, with a matcher that treats `episode` and `document` as hubs for
-`part_of` links and `task`/`person` as "graph-inert".
+`cognition_search` embeds the query locally, runs a ChromaDB vector search
+with adaptive widening, and formats hits through `_format_search_results`
+(`cognition_tools.py:830-960`). A hit is dropped unless its node is visible to
+the current viewer, and chunk hits collapse to one result per node. A
+penalty-only weight applies: 0.85 for `from_agent`, and a seniority factor from
+the author's profile. Every hit carries `conflicted` and `superseded_by`,
+computed from `contradicts` and `supersedes` edges, and neither changes the
+ranking.
 
-The synchronisation rule between the two stores is stated as an invariant in
-`server.py:342`: a node is removed by "`remove_node` tombstone (graph-only) and
-is NEVER un-embedded (the sync only ADDS)". So a deleted node's vector remains in
-ChromaDB and the graph is what excludes it from results.
+Structural reads cover type, recency, a case-insensitive substring over context
+fields, chains along `led_to`, and neighbours along any edge type. The
+session-start digest built by `prime.py` shows only the head of a `supersedes`
+chain for constraints, workflows and documents
+(`src/vibe_cognition/cognition/prime.py:405-460`).
 
-That is worth flagging both ways. It is a deliberate, documented simplification
-that keeps the sync path monotonic and therefore crash-safe. It also means the
-embedding store accumulates vectors for nodes that no longer exist, and anything
-querying ChromaDB directly rather than through the graph would surface them.
+**Scope.** The project directory is the outer boundary.
+`cognition_load_project(path)` attaches another project read-only, after which
+read tools take a `project` argument, including `"*"` for search
+(`cognition_tools.py:5526-5571`). Within a project, a constraint whose metadata
+says `personal` is visible only when its `recorded_by` email equals the
+viewer's confirmed email (`scope.py:34-38`, `storage.py:1178-1222`). Every
+storage read applies it, and search applies it through the live-hit check.
+Prime, the dashboard and the curation worklist read through storage. Only two
+maintenance CLIs open the store with `show_all_scopes=True`.
 
-There is no scope key. One directory per project is the boundary, and the read
-path has no tenant or namespace predicate — consistent with a single-user local
-tool.
+The viewer is `identity.json`, and the agent writes it. `cognition_set_identity`
+accepts any syntactically valid address and writes the pointer before the
+profile (`cognition_tools.py:3488-3491`). If that address already has a complete
+profile, the agent reads and writes as that person from the next call. The
+tool's docstring says every value "MUST come from the human"; nothing checks it.
 
 ## 7. Write Mechanics
 
-Writes are synchronous and local. The journal-first ordering means a crash
-between the append and the graph mutation loses nothing: the next catch-up
-replays the line.
+Writes are synchronous and refused until the checkout has a confirmed identity
+and a complete profile: name, email, role, seniority, and `reports_to`, where
+`"nobody"` is a valid answer (`src/vibe_cognition/cognition/identity.py:1-30`).
+A git or SVN identity is offered as a suggestion; the gate passes only a
+confirmed one (`identity.py:353`).
 
-Correction is per type, as described in section 2. `workflow` supersession keeps
-the old node and links forward. `person` edits in place but appends to
-`profile_history`, so the identity record has a history even though the node does
-not version. `task` edits in place with no history, because a task's status is
-not a claim about the world.
+Journal-first ordering means a failed append changes nothing, and a crash after
+the append loses nothing, because the next catch-up replays the line. The
+append does not advance the replay offset, so a process re-reads and
+re-applies its own line idempotently.
 
-Nothing is keyed on a rejected value: a node removed today can be recorded again
-tomorrow, and the journal will show both the tombstone and the new node with no
-relation between them.
+`remove_node` stamps a tombstone keyed on the node id, and replay skips any
+older add for that id. Nothing is keyed on the removed content: a new node with
+the same summary has a new id. The nearest thing is on the roster, where
+`profile_removed` is keyed on the email and a person returns only when every
+required field is written after it
+(`src/vibe_cognition/cognition/profiles.py:170-191`).
+
+Curation runs as subagents launched by `/vibe-curate`. Edge writes,
+`cognition_mark_curated` and `cognition_flag_constraint_scope` require a token
+from `cognition_begin_curation`, which any agent on the server can call. Its
+docstring calls the token "friction plus audit, not an access control: the
+server cannot see who is calling" (`cognition_tools.py:4783-4830`).
 
 ## 8. Agent Integration
 
-An MCP server with a `cognition_record` tool for general capture and dedicated
-tools for the types that need different handling — `cognition_register_person`,
-`cognition_update_person`, `cognition_update_task` — with the enum noting that
-`person` nodes are "created/edited only via the dedicated … tools, never
-`cognition_record`". Routing the types that must not be reference-matched away
-from the general capture tool is a small, effective guard.
+The Claude Code plugin declares the MCP server in `.claude-plugin/plugin.json`
+and registers two `SessionStart` hooks (`hooks/hooks.json`). One installs
+dependencies, migrates an old per-project MCP entry and injects the digest; the
+other re-injects the standing instructions after a compaction. The Codex
+adapter under `adapters/codex/` ships its own manifest, hooks, skills and agent
+roles.
 
-A local dashboard sits over the same storage, token-gated, and passes
-`removed_by="dashboard"`.
+The tool surface is about forty tools. The general `cognition_record` refuses
+`person`, and people go through `cognition_register_person`,
+`cognition_update_person` and `cognition_set_identity`, which write profiles.
+`cognition_record` takes `from_agent` and, for constraints, `scope`.
 
-The optional update check "reaches GitHub once a day by default" and the README
-says so in the first paragraph, which is the right place for a network call in a
-tool that advertises being fully local.
+A token-gated dashboard reads through the same storage and deletes with
+`removed_by="dashboard"`. The line lands in the confirmed person's shard, so
+the file names the person.
 
 ## 9. Reliability, Safety, and Trust
 
-**Audit log — awarded, and it is the strong form.** The journal is not a record
-*beside* the store, it is the store: append-only, written before the projection
-mutates, hashed, replayed by every reader, and carrying attribution on
-deletions. Rebuilding the graph from it is the normal startup path rather than a
-recovery tool.
+**Audit log — awarded.** The journal files are the record, appended through one
+locked writer and never rewritten by a production path. `accept-disk` drops
+retained entries from memory, not lines from files, and records an incident
+node first. `resolve_journal.py`, run by hand after an SVN conflict, rewrites
+the conflicted file as both sides' lines, each once, dropping only lines that
+are not JSON objects. The people files are separate append-only delta logs.
 
-**Trust state, bitemporal, tombstone, human review, negative eval, scope — no.**
-This is a capture tool for one developer's project knowledge, and it does not
-claim otherwise.
+**Negative eval — awarded.** `tests/test_personal_constraints.py` asserts that
+a teammate cannot reach a personal constraint through eleven read surfaces,
+including `cognition_search` for its exact summary over a real Chroma
+collection, while the owner and a project constraint stay reachable.
 
-**Two documented hazards a reader should weigh.** `_replayed_node_ids` and
-`_removed_node_ids` are both described as unbounded sets that are "never drained"
-— the argument being that legitimate deletions are rare relative to adds so it
-"stays small in practice", explicitly "the same trade" for both. That is a
-reasoned choice with the reasoning attached, and it is still unbounded state in a
-long-lived process. And the never-un-embed rule leaves orphan vectors, as
-section 6 describes.
+**Scope enforced — withheld.** The personal-constraint filter is a stored key
+applied on every read path. The viewer it compares against is a file the
+agent's own tool rewrites with any address, so a model-supplied argument lifts
+the scope. `cognition_load_project` also reads any project path the agent
+names.
+
+**Trust state, bitemporal, tombstone, human review — withheld.** `conflicted`
+and `superseded_by` are computed from edges and change no result, and prime's
+head-only display is a supersession filter, not a stored status. The only time
+is the write clock. Deletion is keyed on the node id, and the value-keyed
+roster removal guards people, not memories. A scope-review flag waits for the
+owner, but the flag is a single attribute written by `update_node` and
+changes no node's visibility (`cognition_tools.py:1579-1611`). The owner's ruling is
+`cognition_update_node`, which the agent holds.
+
+**Bookkeeping.** `_replayed_node_ids` is drained by each search.
+`_removed_node_ids` is documented as "Never drained" on the grounds that
+deletions are rare; a re-add discards its entry and `accept-disk` resets it.
+The per-file line-hash sets and the tombstone map grow with the journal.
 
 ## 10. Tests, Evals, and Benchmarks
 
-**No paper**, and no benchmark of any kind — no LoCoMo, no retrieval metric, no
-committed evaluation. For a project whose claim is "future sessions have context
-on *why*", that is a gap the project does not attempt to fill, and it is honest
-about not claiming a number.
+**No paper.** The tree carries no retrieval-quality benchmark and no committed
+result. It does carry three measurement scripts. `bench_wave1.py` and
+`bench_wave3.py` time replay, prime and weighted search over a synthetic
+fixture. `eval_conflict_lens.py` scores a curation analyzer's `contradicts`
+proposals for precision against a hand-labelled fixture of 36 node pairs
+(`tests/fixtures/conflict_lens_labeled_pairs.json`). The analyzer's
+predictions are produced in a session by hand, and no results file is
+committed.
 
-58 test files. **I did not run them** — the screen flagged the tree as read-only
-safe apart from ordinary Python test collection, and this report did not install
-it.
+**I ran none of the 1,645 test functions.** The screen found the plugin hooks
+and `tests/conftest.py`, and nothing was installed.
 
-What substitutes for evaluation here is the density of documented invariants:
-work-package identifiers (`WP-3`, `WP-5`, `WP-TC5`), commit ids
-(`8606d59905a5`, `d6cd1495b23a`, `7b9db5a8d675`) and decision references appear
-throughout the comments, so a claim in the code can be traced to the change that
-made it true. That is not a substitute for a measurement and it is a real form of
-accountability.
+What the suite pins, from reading it:
+
+- `tests/test_wp_core_tail.py:48-59` asserts a failed append leaves no node. It
+  patches `_append_journal` itself, and the graph is mutated inside that
+  method after the append, so the test guards the callers rather than the
+  order within it.
+- `tests/test_append_only_replay.py` (21 functions) covers the reported
+  incident, a cold start after a rollback, a deliberate deletion surviving a
+  rebuild, a conflicted or mid-merge file being left alone, a ledger copied
+  from another checkout being ignored, and `accept-disk` refusing when its
+  audit cannot be written.
+- `tests/test_personal_constraints.py` and `tests/test_scope_review.py`
+  (25 functions together) cover scope, the owner-only ruling and the token
+  refusals. The tests that call `cognition_set_identity` never record or read a
+  personal constraint.
 
 ## 11. For Your Own Build
 
 ### Steal
 
-- **Append to the journal before mutating the projection.** "Journal-FIRST" in
-  five operations, with a running hash, is what makes the graph rebuildable and a
-  crash harmless.
-- **Put attribution on the tombstone, and be honest about what you know.** A
-  resolved git identity when there is one, a surface tag when there is not, and a
-  docstring explaining that the dashboard cannot know the person.
-- **Choose the correction strategy per type, and write the reason in the enum.**
-  Supersession for procedures, in-place with an append-only history for people,
-  plain in-place for tasks — three strategies, three stated justifications.
-- **Retire an enum value in place rather than deleting it.** `duplicate_of` is
-  marked RETIRED with the decision id, so old journal lines still replay.
-- **Export the vocabulary as a constant the other subsystem imports.** Two
-  modules re-declaring the same closed set is a bug waiting for one of them to
-  change.
-- **Label an unsynced accessor as unsynced.** The `graph` property returns a
-  stale view and says so, pointing at the synced methods.
-- **Explain the concurrency bug at the fix.** The `_removed_node_ids` comment is
-  a paragraph and it would save the next implementer a day.
+- **Append to the journal before mutating the projection, and apply your own
+  line through the replay path.** One code path means the live view and a
+  rebuild cannot disagree (`storage.py:1315-1335`).
+- **Treat a shorter log as damage, not as truth.** A deletion is an appended
+  line, so a line that vanishes means the file was replaced. Rebuild onto what
+  you have and say what is missing.
+- **Keep a machine-local ledger of what this writer appended**, bound to the
+  checkout, so a rollback can be repaired by the only party entitled to
+  re-append those lines (`src/vibe_cognition/cognition/own_ledger.py`).
+- **When a gate would be theatre, make the escape hatch leave a record.**
+  `accept-disk` refuses to run if it cannot first write the audit node
+  (`journal_cli.py:81-92`).
+- **Give each writer its own file and order lines by stamp**, so a merge that
+  interleaves lines cannot change any decision.
+- **Put attribution on the tombstone, and be honest about what you know.** Use
+  a surface tag where the surface cannot know the person.
+- **Retire an enum value in place**, with the decision id, so old lines still
+  replay.
 
 ### Avoid
 
-- **Do not let the vector store diverge from the graph forever.** "The sync only
-  ADDS" is crash-safe and monotonic, and it means ChromaDB accumulates vectors
-  for nodes that no longer exist.
-- **Do not leave a growing set undrained on a "stays small in practice"
-  argument.** It is reasoned and it is still unbounded; a store with many
-  deletions breaks the assumption silently.
+- **Do not take the viewer's identity from a value the agent can set.** A scope
+  keyed on `recorded_by` is only as strong as the writer of the viewer field,
+  and here that writer is a tool with an `email` argument.
+- **Do not let the producer mark its own provenance.** `from_agent` defaults to
+  `True`, and an agent that passes `False` loses the search penalty.
 - **Do not ship a memory whose claim is context quality with no measurement of
-  it.** The invariant discipline here is excellent and it does not tell a user
-  whether recall works.
+  it.** The invariant discipline is thorough and says nothing about whether
+  recall finds the right decision.
 
 ### Fit
 
-This suits one developer wanting Claude Code to know why their codebase is the
-way it is, on a machine with no cloud dependency. The twelve-type vocabulary is
-opinionated and good, and the journal design means the data outlives the tool —
-`journal.jsonl` is readable with `jq`.
+This suits a small team that keeps a coding agent's project knowledge in the
+same repository as the code, on machines with no cloud dependency, including
+teams on Subversion. The journal files are readable with `jq`, and the data
+outlives the tool.
 
-It is not multi-user, not scoped, and not measured. `storage.py` is the file to
-read: about 900 lines, and the clearest small implementation of log-and-projection
-memory in this atlas.
+It is not a privacy boundary between teammates, and its own README says so.
+`storage.py` is the file to read for log-and-projection memory with several
+writers.
 
 ## 12. Open Questions
 
-- **What happens to a journal that grows for a year?** Replay is from offset on
-  each catch-up, but a cold start replays everything; no compaction or snapshot
-  rotation was found beyond `snapshot_cli.py`.
-- **Does anything reconcile ChromaDB against the graph?** The never-un-embed
-  rule is deliberate; a periodic reconciliation would close the orphan-vector
-  gap and none was found.
-- **Is the journal hash verified on read?** A SHA-256 is maintained over the
-  file; whether a mismatch is detected and what happens then was not traced.
-- **How does `part_of` interact with removal?** Removing an `episode` hub with
-  children was not traced, and the graph-inert types make the answer non-obvious.
+- **What happens to a journal that grows for a year?** A cold start replays
+  every file, and no compaction or snapshot rotation exists; `snapshot_cli.py`
+  copies the files and keeps them whole.
+- **How large do the per-file line-hash sets get?** They hold one hash per line
+  read for the life of the process, and rebuild bookkeeping depends on them.
+- **What does an episode's removal leave behind?** `_apply_remove_node` removes
+  the node and its incident edges, so its `part_of` children stay as nodes
+  without the edge. Whether prime or curation treats them as orphans was not
+  traced.
 
 ## Appendix: File Index
 
-**Storage and journal** — `src/vibe_cognition/cognition/storage.py`
-(`_append_journal` `:942`, its six call sites `:309,347,376,404,443,456`,
-`add_node` `:274`, `update_node` `:360`, `remove_node` `:381`, the env-fact
-delegates `:179,188`), `cognition/journal_io.py`,
-`cognition/people_facts.py` (the second journal)
+| Path | What to read it for |
+| --- | --- |
+| `src/vibe_cognition/cognition/storage.py:532-688` | The five mutating methods, each journal-first |
+| `src/vibe_cognition/cognition/storage.py:1178-1222` | The viewer and the visibility filter on every read |
+| `src/vibe_cognition/cognition/storage.py:1315-1335` | `_append_journal`: locked append, ledger record, apply |
+| `src/vibe_cognition/cognition/storage.py:1339-1371` | Append-only reset and the one hard reset |
+| `src/vibe_cognition/cognition/storage.py:1442-1673` | Per-file scan, catch-up and rebuild |
+| `src/vibe_cognition/cognition/storage.py:1795-1987` | Healing the own shard, and `accept-disk` |
+| `src/vibe_cognition/cognition/storage.py:2031-2186` | Stamp-ordered apply for nodes, removals and edges |
+| `src/vibe_cognition/cognition/journal_shards.py` | Shard layout, stamps, the frozen legacy journal |
+| `src/vibe_cognition/cognition/own_ledger.py` | The checkout-bound ledger of this writer's lines |
+| `src/vibe_cognition/cognition/journal_cli.py:55-128` | `accept-disk` and its audit node |
+| `src/vibe_cognition/cognition/scope.py` | Personal and project scope |
+| `src/vibe_cognition/cognition/identity.py` | The write gate and the confirmed identity |
+| `src/vibe_cognition/cognition/profiles.py` | Profiles, and removal keyed on the email |
+| `src/vibe_cognition/cognition/resolve_journal.py` | Union rebuild of an SVN-conflicted file |
+| `src/vibe_cognition/tools/cognition_tools.py:830-1000` | Search formatting, the live-hit drop, re-embedding |
+| `src/vibe_cognition/tools/cognition_tools.py:3383-3520` | `cognition_set_identity` |
+| `src/vibe_cognition/tools/cognition_tools.py:4783-4830` | The curation token |
+| `src/vibe_cognition/tools/cognition_tools.py:5526-5571` | `cognition_load_project` |
+| `src/vibe_cognition/server.py:336-380` | The startup sweep of orphan vectors |
+| `src/vibe_cognition/cognition/operations.py:20-110` | Deletion across graph, vectors and sidecars |
+| `src/vibe_cognition/dashboard/api.py:233-256` | Dashboard deletion and its attribution |
+| `tests/test_personal_constraints.py` | The must-not-retrieve cases for personal scope |
+| `tests/test_append_only_replay.py` | Rollback, repair and `accept-disk` |
+| `scripts/eval_conflict_lens.py` | The conflict-analyzer precision scorer |
 
-**Model** — `src/vibe_cognition/cognition/models.py` (`CognitionNodeType`
-`:14-42`, `SENIORITY_LEVELS` `:45`, `CognitionEdgeType` and the retired
-`duplicate_of` `:51`, `generate_node_id` `:105`)
+### Recorded searches
 
-**Provenance** — `src/vibe_cognition/cognition/git_identity.py`,
-`git_hygiene.py`, `src/vibe_cognition/dashboard/api.py:231-246`
+Run at the tree root of the pinned checkout with `git grep`, which reads
+committed files whatever `.gitignore` says.
 
-**Tools** — `src/vibe_cognition/tools/cognition_tools.py`,
-`src/vibe_cognition/server.py:342` (the never-un-embed invariant)
-
-**Retrieval and projection** — `src/vibe_cognition/cognition/queries.py`,
-`prime.py`, `chunking.py`, `documents.py`, `backfill.py`
-
-**Dashboard** — `src/vibe_cognition/dashboard/`
-
-## Appendix: Recorded Searches
-
-Checked against the repository tree at the pinned revision, without a clone.
-The command is the check that was actually run, not a local equivalent.
-
-| Claim | Check | Result at this pin |
-| --- | --- | --- |
-| No paper and no benchmark of any kind in the repository | `GET /repos/<owner>/<repo>/git/trees/<this revision>?recursive=1`, filtered for benchmark-shaped paths | Two hits, both this tool's own captured journal — `.cognition/journal.jsonl` and a per-author file beside it — which is data the system produced, not a benchmark of it. |
-| No paper and no citation file exists anywhere in the tree | `curl -s -o /dev/null -w '%{http_code}' https://raw.githubusercontent.com/OWNER/REPO/REVISION/CITATION.cff`, then the same fetch of `README.md` searched for `arxiv.org`, `doi.org`, `@article` and `@inproceedings` | 404 for the citation file, and no match in the README. |
-
+- `git grep -n -E "write_text|write_bytes|os\.replace|unlink\(|truncate|rmtree" -- 'src/*.py'` — no hit on a journal shard, the legacy journal or a people file; the writes are sidecars, flags, the identity pointer, the ledger prune (`own_ledger.py:125`) and the SVN union rebuild (`resolve_journal.py:125`).
+- `git grep -n -E '_append_journal\(|append_journal_line\(' -- src` — six `_append_journal` calls in the mutating methods, plus the shard start line, the heal, the ledger, the known-ids log and the two people registries.
+- `git grep -n -E 'show_all_scopes' -- src` — the constructor, `backfill_identity.py:580` and `remap_identity.py:201`; no tool.
+- `git grep -n -E 'write_confirmed_identity' -- src` — the definition and one caller, `cognition_set_identity` at `cognition_tools.py:3491`; the definition checks only a non-blank name and a well-formed address (`identity.py:157-180`).
+- `git grep -n -E 'visible_to|_visible\(|search_hit_is_live' -- src` — storage, `cognition_tools.py:891` and `dashboard/api.py:326`.
+- `git grep -n -E '_node_tombstones\[' -- 'src/*.py'` — keyed on the node id at `storage.py:1278`, `:2105`, `:2143`.
+- `git grep -n -iE 'valid_(from|to|until|at)|effective_(from|at)|occurred_at|event_time|as_of' -- 'src/*.py'` — no match; no valid time.
+- `git grep -n -iE 'compact(ion)?|rotate|retention|prune' -- 'src/vibe_cognition/cognition/*.py'` — the ledger prune and comments; no journal compaction.
+- `git grep -n -E 'pop_replayed_node_ids\(|_removed_node_ids\.(discard|remove|clear)|_removed_node_ids = set' -- 'src/*.py'` — the drain called from search at `cognition_tools.py:996`, the discard at `storage.py:2106` and the reset at `:1370`.
+- `git grep -n -E '_reconcile_orphan_embeddings|_collection\.delete\(' -- 'src/*.py'` — the startup sweep at `server.py:336` and `:377`, and the per-node deletes at `embeddings/storage.py:295` and `:308`.
+- `git grep -n -E 'scope=|SCOPE_PERSONAL|"personal"' -- $(git grep -l -E 'cognition_set_identity' -- tests)` — no match; no test that sets an identity touches a personal constraint.
+- `git ls-files | grep -iE 'bench|eval|result|fixture|metric|locomo|longmemeval'` — the three scripts named in section 10 and one fixture; no results file.
+- `git grep -n -iE 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md docs` — no match, and no `CITATION.cff`; no paper.
+- `git grep -n -iE 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE` — no match; the MIT text carries no rider.
 
 ## History
+
+**2026-10-15** — [`e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1`](https://github.com/haagndaazer/vibe-cognition/commit/e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1) — six commits on, version 0.42.0 to 0.45.0. Replay became append-only, with a checkout-bound repair ledger and an audited `accept-disk` ([section 3](#3-architecture)); curation gained a scope review. `negative_eval` gained, earned at the previous pin on the personal-constraint tests ([section 10](#10-tests-evals-and-benchmarks)). Wrong at that pin: no scope key, orphaned vectors never removed, both bookkeeping sets undrained, no test of journal-first, no evaluation script, one shared `journal.jsonl`, person nodes edited in place, and the line anchors. `scope_enforced` stays withheld, on a new ground ([section 6](#6-retrieval-mechanics)). Screened from a full clone: three auto-run entries for the plugin manifest and its hooks, `tests/conftest.py`, no unpinned surfaces, `uv.lock` outside the cooldown, `CLAUDE.md` read as data. Nothing was installed, built or run.
 
 **2026-09-17** — [`208e7d2ec8eb402edede7b8b255012b712007a66`](https://github.com/haagndaazer/vibe-cognition/commit/208e7d2ec8eb402edede7b8b255012b712007a66) — re-read after 37 commits. Both anchored files moved and the producer was re-counted rather than assumed: `_append_journal` is defined once and called from exactly six mutation sites, matching the add, update and remove paths the evidence record names, so every graph mutation still writes the journal. The mark holds. Nothing was installed, built or run.
 

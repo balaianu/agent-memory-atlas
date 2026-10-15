@@ -6591,26 +6591,27 @@ seeds in shadow mode.</li>
 <h3 id="vibe-cognition"><a
 href="../systems/vibe-cognition/"><code>vibe-cognition</code></a></h3>
 <ul>
-<li>Best idea: journal-first — every mutation is appended to
-<code>journal.jsonl</code> before the in-memory graph is touched, so the
-graph and the embeddings are both projections and a crash between the
-two loses nothing.</li>
-<li>Biggest risk: the ChromaDB sync "only ADDS" and a removed node "is
-NEVER un-embedded", so the vector store accumulates orphans that
-anything querying it directly would surface.</li>
-<li>Most reusable component: the tombstone line itself —
-<code>{"id": ..., "removed_by": ...}</code> where
-<code>removed_by</code> is a git identity or a surface tag, with the
-dashboard documenting why it passes <code>"dashboard"</code> rather than
-a person.</li>
-<li>Maturity impression: 56,000 lines of Python with 58 test files,
-twelve node types each declaring its own update semantics in the enum
-comments, and multi-process replay bugs explained in paragraph-length
-comments at the fix.</li>
-<li>Study when: you want the log-and-projection shape implemented small
-enough to read in an afternoon.</li>
-<li>Do not copy when: you need a measurement — there is no benchmark of
-any kind.</li>
+<li>Best idea: journal-first with append-only replay — every change is
+appended to its writer's own journal file before the graph moves, and a
+file that a checkout rolls back cannot shrink the graph, because the
+writer's lost lines are appended back from a machine-local ledger.</li>
+<li>Biggest risk: personal constraints are hidden from every read path
+except their owner's, and the owner is whatever address the agent last
+passed to its own <code>cognition_set_identity</code> tool.</li>
+<li>Most reusable component: <code>accept-disk</code> — the one command
+that gives up retained entries writes an incident node naming them first
+and refuses to run if it cannot, because, in its docstring's words, a
+token the agent can read "would only look like a gate".</li>
+<li>Maturity impression: MIT, 60,629 lines of Python with 1,645 test
+functions over 623 commits in six months, and multi-process replay bugs
+explained in paragraph-length comments at the fix; two capability
+marks.</li>
+<li>Study when: several people or sessions write one log-structured
+memory through version control, and a rollback must not destroy
+anything.</li>
+<li>Do not copy when: you need a boundary between teammates — the
+project calls its scope "visibility, not secrecy" — or a measurement of
+recall quality.</li>
 </ul>
 <h3 id="gbrain"><a
 href="../systems/gbrain/"><code>gbrain</code></a></h3>

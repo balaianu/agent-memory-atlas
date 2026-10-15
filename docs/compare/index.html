@@ -31812,28 +31812,52 @@ says itself, at length</td>
 <tr>
 <td><a
 href="../systems/vibe-cognition/"><code>vibe-cognition</code></a></td>
-<td>A typed cognition node from a twelve-value vocabulary — decision,
-fail, discovery, incident, workflow, person and more</td>
-<td>An append-only journal.jsonl as the source of truth, with a NetworkX
-graph and ChromaDB as projections</td>
-<td>Local embeddings over node summaries with graph traversal along
-typed edges</td>
-<td>Journal-first — the line is appended before the in-memory graph is
-mutated, with a running SHA-256</td>
-<td>Workflows version by supersession; people update in place with an
-append-only profile_history</td>
-<td>One cognition directory per project, git-hygiene enforced; no scope
-key on the read path</td>
-<td>An MCP server for Claude Code, plus a token-gated local
-dashboard</td>
-<td>Catch-up replay on every synced operation, so a second process sees
-the first one's writes</td>
-<td>None on the node — provenance is the git identity or the acting
-surface recorded in the journal</td>
-<td>The journal is the record and the graph is rebuilt from it, with
-tombstones carrying attribution</td>
-<td>Two replay-bookkeeping sets are documented as never drained, on the
-grounds that they stay small</td>
+<td>A typed node from a twelve-value vocabulary (decision, fail,
+discovery, assumption, constraint, incident, pattern, episode, document,
+workflow, task, person) with typed edges; people are committed profile
+files rather than nodes</td>
+<td>Per-person append-only JSONL journal files under .cognition/journal,
+a frozen legacy journal.jsonl, and per-person profile and
+environment-fact delta files, all committed; a NetworkX graph and a
+ChromaDB index are replayed from them</td>
+<td>Local embeddings in ChromaDB, with hits dropped unless the node is
+visible in the graph; structural reads by type, recency, context
+substring and typed-edge traversal; a session-start digest that shows
+only the head of a supersedes chain</td>
+<td>Journal-first: one stamped line appended to the writer's own file
+under a cross-process lock, then applied by the same last-writer-wins
+comparison replay uses; refused without a confirmed identity and a
+complete profile</td>
+<td>Workflows and documents version by supersedes edges; tasks and other
+nodes update in place by appended update_node lines; deletion is an
+appended remove_node line with removed_by, and the local delete purges
+the node's vectors</td>
+<td>One .cognition directory per project. Constraints are personal by
+default and every read shows them only to the confirmed identity that
+recorded them; the agent can confirm any identity, and can load another
+project read-only by path</td>
+<td>A plugin-declared MCP server for Claude Code and an adapter for the
+Codex CLI, session-start and post-compaction hooks, a token-gated local
+dashboard, curation subagents, and CLIs for journal status, accept-disk,
+SVN conflict resolution and identity remapping</td>
+<td>Catch-up replay before every synced call, a startup embedding sync
+that also deletes vectors whose node is gone, re-embedding of replayed
+nodes at search time, and agent-run curation that writes edges and
+scope-review flags</td>
+<td>A server-stamped recorded_by identity on every write, a
+caller-supplied from_agent flag that lowers a hit's search weight,
+seniority from the profile, and conflicted and superseded_by flags
+computed per search hit; no epistemic status on a node</td>
+<td>The journal is the record and the graph cannot shrink below it: a
+rolled-back file is repaired from a checkout-bound ledger of the lines
+it wrote, a teammate's lost lines are held in memory and reported, and
+the one command that accepts the loss writes an audit node first and
+refuses without it</td>
+<td>Personal-constraint visibility follows identity.json, which the
+agent's own cognition_set_identity tool rewrites with any address it is
+given, and cognition_load_project opens any path the agent names; the
+project calls the scope visibility, not secrecy. from_agent is a caller
+argument. Journals have no compaction</td>
 </tr>
 <tr>
 <td><a href="../systems/vir/"><code>vir</code></a></td>
@@ -34401,7 +34425,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>477 of 749:</em> <a
+<p><em>478 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34871,6 +34895,7 @@ href="../systems/velantrim-exocortex-crystal/"><code>velantrim-exocortex-crystal
 href="../systems/veracium/"><code>veracium</code></a>, <a
 href="../systems/verel/"><code>verel</code></a>, <a
 href="../systems/verimem/"><code>verimem</code></a>, <a
+href="../systems/vibe-cognition/"><code>vibe-cognition</code></a>, <a
 href="../systems/vir/"><code>vir</code></a>, <a
 href="../systems/virtual-context/"><code>virtual-context</code></a>, <a
 href="../systems/vllm-semantic-router/"><code>vllm-semantic-router</code></a>,
@@ -34912,7 +34937,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-477 repositories of
+478 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -1621,7 +1621,7 @@ href="https://github.com/yantrikos/yantrikdb-server/commit/36dca9accd8ccf188cd28
 <li><a
 href="https://github.com/haagndaazer/vibe-cognition">haagndaazer/vibe-cognition</a>
 at <a
-href="https://github.com/haagndaazer/vibe-cognition/commit/208e7d2ec8eb402edede7b8b255012b712007a66"><code class="commit-id" title="208e7d2ec8eb402edede7b8b255012b712007a66">208e7d2e…</code></a></li>
+href="https://github.com/haagndaazer/vibe-cognition/commit/e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1"><code class="commit-id" title="e8684fdcd48c6859fffe97c9ceeb8aa7afb127c1">e8684fdc…</code></a></li>
 <li><a href="https://github.com/garrytan/gbrain">garrytan/gbrain</a> at
 <a
 href="https://github.com/garrytan/gbrain/commit/d13aa742fd68b71bfd6c98be3dda5813791f1d6c"><code class="commit-id" title="d13aa742fd68b71bfd6c98be3dda5813791f1d6c">d13aa742…</code></a>
@@ -18064,6 +18064,51 @@ unused consumer; that module is a compat re-export facade
 (<code>codewiki/mcp/tools/knowledge_loop.py:1-14</code>). And it said no
 paper was cited; the README cited the upstream CodeWiki paper with a
 BibTeX entry (<code>README.md:875-885</code>).</li>
+<li><strong>Ten published claims about <a
+href="../systems/vibe-cognition/">Vibe Cognition</a> were wrong at <a
+href="https://github.com/haagndaazer/vibe-cognition/commit/208e7d2ec8eb402edede7b8b255012b712007a66"><code class="commit-id" title="208e7d2ec8eb402edede7b8b255012b712007a66">208e7d2e…</code></a>,
+the pin they were last published against, and are corrected.</strong>
+The report said there was no scope key on the read path; that commit
+added personal constraints, which every storage read and search filtered
+by the recorded owner's email
+(<code>src/vibe_cognition/cognition/scope.py:33</code>,
+<code>src/vibe_cognition/cognition/storage.py:1135-1146</code>). It
+withheld <code>negative_eval</code>, though
+<code>tests/test_personal_constraints.py:61-93</code> asserted that a
+teammate's search, get and neighbour reads excluded a personal
+constraint beside a project one that had to appear. It said a removed
+node was never un-embedded and that nothing reconciled ChromaDB with the
+graph, quoting the docstring of
+<code>_reconcile_orphan_embeddings</code>, the startup sweep that
+deletes those vectors
+(<code>src/vibe_cognition/server.py:347-377</code>); the local delete
+also purged them
+(<code>src/vibe_cognition/cognition/operations.py:80-81</code>). It said
+both replay bookkeeping sets were never drained; each search drained
+<code>_replayed_node_ids</code>
+(<code>src/vibe_cognition/tools/cognition_tools.py:989</code>), and a
+re-add discarded from <code>_removed_node_ids</code>
+(<code>storage.py:1635</code>). Its audit record said no case asserted
+that a mutation without a journal line fails;
+<code>tests/test_wp_core_tail.py:48-59</code> did. It said there was no
+benchmark or evaluation of any kind;
+<code>scripts/bench_wave1.py</code>, <code>scripts/bench_wave3.py</code>
+and <code>scripts/eval_conflict_lens.py</code>, with a labelled fixture,
+were committed. It said multi-process correctness relied on replay
+rather than a lock; appends took an exclusive lock
+(<code>src/vibe_cognition/cognition/journal_io.py</code>). It described
+one shared <code>journal.jsonl</code>, attribution from git config, and
+person nodes edited in place; writes went to per-person shards under
+<code>.cognition/journal/</code> behind a confirmed identity, and people
+were profile files. Its 58 test files were the first pin's count and its
+900-line <code>storage.py</code> matched neither pin; at this one there
+were 80 test files and 1,735 lines. And its storage anchors,
+<code>_append_journal</code> at <code>:942</code> among them, came from
+an earlier commit; at the pin it was <code>:1235</code>, with its six
+calls at <code>:502-618</code>. The embedding and bookkeeping claims
+rested on comments read as descriptions of the code beneath them, and
+the rest on the first reading's text carried forward across two
+re-pins.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

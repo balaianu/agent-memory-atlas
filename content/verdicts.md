@@ -1860,12 +1860,12 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 
 ### [`vibe-cognition`](../systems/vibe-cognition/)
 
-- Best idea: journal-first — every mutation is appended to `journal.jsonl` before the in-memory graph is touched, so the graph and the embeddings are both projections and a crash between the two loses nothing.
-- Biggest risk: the ChromaDB sync "only ADDS" and a removed node "is NEVER un-embedded", so the vector store accumulates orphans that anything querying it directly would surface.
-- Most reusable component: the tombstone line itself — `{"id": ..., "removed_by": ...}` where `removed_by` is a git identity or a surface tag, with the dashboard documenting why it passes `"dashboard"` rather than a person.
-- Maturity impression: 56,000 lines of Python with 58 test files, twelve node types each declaring its own update semantics in the enum comments, and multi-process replay bugs explained in paragraph-length comments at the fix.
-- Study when: you want the log-and-projection shape implemented small enough to read in an afternoon.
-- Do not copy when: you need a measurement — there is no benchmark of any kind.
+- Best idea: journal-first with append-only replay — every change is appended to its writer's own journal file before the graph moves, and a file that a checkout rolls back cannot shrink the graph, because the writer's lost lines are appended back from a machine-local ledger.
+- Biggest risk: personal constraints are hidden from every read path except their owner's, and the owner is whatever address the agent last passed to its own `cognition_set_identity` tool.
+- Most reusable component: `accept-disk` — the one command that gives up retained entries writes an incident node naming them first and refuses to run if it cannot, because, in its docstring's words, a token the agent can read "would only look like a gate".
+- Maturity impression: MIT, 60,629 lines of Python with 1,645 test functions over 623 commits in six months, and multi-process replay bugs explained in paragraph-length comments at the fix; two capability marks.
+- Study when: several people or sessions write one log-structured memory through version control, and a rollback must not destroy anything.
+- Do not copy when: you need a boundary between teammates — the project calls its scope "visibility, not secrecy" — or a measurement of recall quality.
 
 ### [`gbrain`](../systems/gbrain/)
 
