@@ -4,28 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A Rust MCP memory server over
-PostgreSQL whose quarantine tier is enforced by an allow-list on the
-search path and pinned by tests that pair each must-not with its
-control, and whose README retracts its own headline retrieval number and
-the two conclusions drawn from it.">
+    <meta name="description" content="A Rust MCP memory server on
+PostgreSQL whose allow-list quarantine keeps untrusted text out of
+search, and whose README retracts its headline retrieval number.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="MemoryIndustry — Agent Memory Atlas">
-    <meta property="og:description" content="A Rust MCP memory server
-over PostgreSQL whose quarantine tier is enforced by an allow-list on
-the search path and pinned by tests that pair each must-not with its
-control, and whose README retracts its own headline retrieval number and
-the two conclusions drawn from it.">
+    <meta property="og:description" content="A Rust MCP memory server on
+PostgreSQL whose allow-list quarantine keeps untrusted text out of
+search, and whose README retracts its headline retrieval number.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MemoryIndustry — Agent Memory Atlas">
     <meta name="twitter:description" content="A Rust MCP memory server
-over PostgreSQL whose quarantine tier is enforced by an allow-list on
-the search path and pinned by tests that pair each must-not with its
-control, and whose README retracts its own headline retrieval number and
-the two conclusions drawn from it.">
+on PostgreSQL whose allow-list quarantine keeps untrusted text out of
+search, and whose README retracts its headline retrieval number.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>MemoryIndustry — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -47,7 +41,7 @@ the two conclusions drawn from it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "MemoryIndustry",
-      "description": "A Rust MCP memory server over PostgreSQL whose quarantine tier is enforced by an allow-list on the search path and pinned by tests that pair each must-not with its control, and whose README retracts its own headline retrieval number and the two conclusions drawn from it.",
+      "description": "A Rust MCP memory server on PostgreSQL whose allow-list quarantine keeps untrusted text out of search, and whose README retracts its headline retrieval number.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -105,25 +99,23 @@ the two conclusions drawn from it.">
           <p class="eyebrow">It published the benchmark that was
 lying</p>
           <h1>MemoryIndustry</h1>
-          <p class="document-deck">A Rust MCP memory server over
-PostgreSQL whose quarantine tier is enforced by an allow-list on the
-search path and pinned by tests that pair each must-not with its
-control, and whose README retracts its own headline retrieval number and
-the two conclusions drawn from it.</p>
+          <p class="document-deck">A Rust MCP memory server on
+PostgreSQL whose allow-list quarantine keeps untrusted text out of
+search, and whose README retracts its headline retrieval number.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/LeandroPG19/Memorys">
               <span>Source</span>
               <strong>LeandroPG19/Memorys</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/LeandroPG19/Memorys/commit/2f45dcb729426b4b5bfca45981d52a39d3f09d0b" title="2f45dcb729426b4b5bfca45981d52a39d3f09d0b">
+            <a class="meta-pill revision-pill" href="https://github.com/LeandroPG19/Memorys/commit/b110ac22d5a0532f2eed02652be8078a6747da90" title="b110ac22d5a0532f2eed02652be8078a6747da90">
               <span>Analyzed revision</span>
-              <code>2f45dcb7…</code>
+              <code>b110ac22…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-20</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/LeandroPG19--Memorys" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -131,7 +123,21 @@ the two conclusions drawn from it.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache
+2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>85,883
+lines of Rust in 143 files under rust/src and 32,290 in 115 files under
+rust/tests, over 65 PostgreSQL migrations</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>618
+commits on main by 3 author names, all spellings of one maintainer, 8
+March – 13 October 2026; crate 0.30.0, PyPI 1.32.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,640
+#[test] and #[tokio::test] functions, 428 of them under rust/tests; the
+database cases are #[ignore] and CI runs them with --ignored against
+PostgreSQL; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -147,31 +153,40 @@ the two conclusions drawn from it.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>MemoryIndustry is an MCP server in Rust over PostgreSQL and pgvector,
-giving a coding agent a searchable knowledge graph across sessions.
-Thirty-one MCP tools, twenty-three CLI commands, Apache 2.0. It was
-called cuba-memorys until recently, and the <code>cuba_*</code> tool
-names are unchanged.</p>
-<p><strong>Three marks:</strong> <code>trust_state</code>,
-<code>scope_enforced</code>, <code>negative_eval</code>. The quarantine
-tier is the spine of all three. Text the agent did not vouch for is
-stored with <code>trust = 'quarantined'</code>, every search path admits
-rows with <code>AND trust = 'trusted'</code> — an allow-list, not an
-exclusion — and the tests pin both directions: a quarantined memory must
-not surface, <em>and</em> an ordinary write must stay retrievable, so a
-filter that excluded everything could not pass.</p>
-<p>Two mechanisms that look like marks are withheld, and the reasons are
-the interesting part of this page. The <code>brain_audit_log</code> is a
-hash-chained, trigger-enforced append-only table maintained under
-<code>SERIALIZABLE</code> with an advisory lock to keep the chain linear
-— and <strong>no memory mutation writes to it.</strong> Its only writer
-is the <code>append</code> action of a tool, which takes the action
-string and the payload from its caller. Separately,
-<code>brain_facts</code> carries <code>valid_from</code>,
-<code>valid_to</code> and <code>observed_at</code> behind database CHECK
-constraints, and every write sets validity from record time while no
-query asks a validity question.</p>
-<p>What distinguishes the project is section 10. Its README carries a
+<p>MemoryIndustry is an MCP memory server in Rust over PostgreSQL and
+pgvector, giving a coding agent a searchable knowledge graph across
+sessions. Its best idea is the quarantine tier: text the agent did not
+vouch for is stored with <code>trust = 'quarantined'</code>, the search
+arms admit rows with <code>AND trust = 'trusted'</code> — an allow-list,
+not an exclusion — and the tests pin both directions. Its weak side is
+that every boundary is written per query, so the reads that omit a
+predicate are the ones that leak.</p>
+<p>It was called cuba-memorys, and the <code>cuba_*</code> tool names
+carry that. It runs on stdio, one process per client, or as one HTTP
+daemon shared by every editor window, with paired accounts for machines
+on a LAN.</p>
+<p><strong>Two marks:</strong> <code>trust_state</code> and
+<code>negative_eval</code>. A quarantined memory must not surface in
+search, <em>and</em> an ordinary write must stay retrievable, so a
+filter that excluded everything could not pass; a project-isolation case
+and an unscoped-rows case carry their controls the same way.</p>
+<p><strong><code>scope_enforced</code> is not carried.</strong> Every
+search arm reads <code>$p::uuid IS NULL OR project_id = $p</code>, and
+the project is session state the agent sets with its own arguments —
+<code>cuba_jornada start project=NAME</code> or
+<code>cuba_proyecto switch</code>. On the stdio transport nothing binds
+one until the agent does, so by default every read spans every project,
+and a <code>cuba_faro</code> flag admits the rows that belong to no
+project.</p>
+<p>Two mechanisms that look like marks are withheld. The
+<code>brain_audit_log</code> is a hash-chained, trigger-enforced
+append-only table — and the only memory mutations that write it are
+promote and quarantine; writes, corrections and deletions append
+nothing. <code>brain_facts</code> carries <code>valid_from</code>,
+<code>valid_to</code> and <code>observed_at</code> behind CHECK
+constraints, every write stamps validity from record time, and no read
+asks a validity question.</p>
+<p>Section 10 is the reason to read the page: the README carries a
 heading reading <em>"Measured — and the benchmark that was lying"</em>,
 retracts its own published retrieval score, and withdraws the two
 conclusions that rested on it.</p>
@@ -179,38 +194,69 @@ conclusions that rested on it.</p>
 <p>Everything written is trusted unless something says otherwise, and
 "otherwise" has two sources: a caller that marks the text untrusted, and
 a policy that quarantines LLM inference. A quarantined row is stored,
-listable and invisible to search until a promotion moves it. Retrieval
-is hybrid — BM25 and vectors — and both branches carry the same two
-predicates: the trust tier and the project.</p>
-<h2 id="3-architecture">3. Architecture</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — text arrives from a tool call carrying an untrusted flag, and the trust tier is resolved from the source, the caller's explicit value and a policy that quarantines LLM inference only when an environment variable turns it on; both search branches admit rows with an allow-list trust predicate and a project predicate that also matches globally-scoped rows, and PostgreSQL row-level security is forced underneath; the audit chain is hash-linked and append-only by trigger but has no writer on any memory path, and the fact table carries a validity window whose ends are both stamped from record time and which no query reads</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: text arrives from a tool call carrying an untrusted flag, and the trust tier is resolved from the source, the caller&#39;s explicit value and a policy that quarantines LLM inference only when an environment variable turns it on; both search branches admit rows with an allow-list trust predicate and a project predicate that also matches globally-scoped rows, and PostgreSQL row-level security is forced underneath; the audit chain is hash-linked and append-only by trigger but has no writer on any memory path, and the fact table carries a validity window whose ends are both stamped from record time and which no query reads
+listable through <code>cuba_eco action=pending</code>, and kept out of
+<code>cuba_faro</code> until a promotion moves it.</p>
+<p>A session may carry a project. The agent names it when it starts a
+session or switches, and the HTTP daemon also adopts the client's
+workspace root as one. When a project is bound, each search arm keeps to
+it; when none is, the arms apply no project filter at all. Row-level
+security sits underneath with the same rule, so it narrows nothing an
+unbound session can reach.</p>
+<p>The diagram follows the read side, because that is where the marks
+are decided: which reads carry which predicate.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — a write resolves its trust tier and lands in a content table; the session's project comes from the agent's own jornada or proyecto call, or in the daemon from the client's root, and is absent otherwise; the cuba_faro observation and episode arms apply the trust allow-list and every arm applies a project predicate that vanishes when no project is bound, while the error arms, the context assembler, entity get and the entity resource read without the trust predicate; the audit chain is appended by promote and quarantine and by a caller-supplied append, and by no write, correction or delete</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: a write resolves its trust tier and lands in a content table; the session&#39;s project comes from the agent&#39;s own jornada or proyecto call, or in the daemon from the client&#39;s root, and is absent otherwise; the cuba_faro observation and episode arms apply the trust allow-list and every arm applies a project predicate that vanishes when no project is bound, while the error arms, the context assembler, entity get and the entity resource read without the trust predicate; the audit chain is appended by promote and quarantine and by a caller-supplied append, and by no write, correction or delete
 flowchart TD
-    W[&quot;cuba_cronica write&lt;br/&gt;untrusted flag optional&quot;] --&gt; RES[&quot;core::trust::resolve&lt;br/&gt;explicit value wins if valid&lt;br/&gt;else source == inference&lt;br/&gt;AND policy on → quarantined&lt;br/&gt;else trusted&quot;]
+    W[&quot;cuba_cronica write&lt;br/&gt;untrusted flag optional&quot;] --&gt; RES[&quot;core::trust::resolve&lt;br/&gt;explicit tier wins if valid&lt;br/&gt;else inference AND policy on → quarantined&lt;br/&gt;else trusted&quot;]
     RES --&gt; ROW[(&quot;brain_observations · brain_episodes · brain_errors&lt;br/&gt;trust · project_id&quot;)]
 
-    ROW --&gt; S1[&quot;BM25 branch&quot;]
-    ROW --&gt; S2[&quot;vector branch&quot;]
-    S1 --&gt; P[&quot;AND trust = &#39;trusted&#39;&lt;br/&gt;AND (project = $3 OR project IS NULL)&quot;]
-    S2 --&gt; P
-    P --&gt; OUT[&quot;cuba_faro results&quot;]
+    J[&quot;cuba_jornada start project=NAME&lt;br/&gt;cuba_proyecto switch NAME&quot;] --&gt; SP[&quot;session project&quot;]
+    ROOT[&quot;HTTP daemon only:&lt;br/&gt;client workspace root&quot;] --&gt; SP
+    NONE[&quot;stdio before any call,&lt;br/&gt;or after jornada end&quot;] --&gt; UNB[&quot;no project bound&quot;]
 
-    ROW -.-&gt;|withheld| Q[&quot;cuba_eco action=pending&lt;br/&gt;lists what is quarantined&quot;]
+    ROW --&gt; F1[&quot;cuba_faro observation + episode arms&lt;br/&gt;AND trust = &#39;trusted&#39;&quot;]
+    ROW --&gt; F2[&quot;cuba_faro error arms&lt;br/&gt;no trust predicate&quot;]
+    SP --&gt; PRED[&quot;project_id = p&lt;br/&gt;OR include_unscoped AND project_id IS NULL&quot;]
+    UNB --&gt; ALL[&quot;p IS NULL → no project filter&quot;]
+    PRED --&gt; F1
+    PRED --&gt; F2
+    ALL --&gt; F1
+    ALL --&gt; F2
+    F1 --&gt; OUT[&quot;what the agent reads&quot;]
+    F2 --&gt; OUT
+
+    ROW --&gt; CTX[&quot;cuba_contexto session + importance layers&lt;br/&gt;cuba_alma get · entity/ resource&lt;br/&gt;no trust predicate&quot;]
+    CTX --&gt; OUT
+
+    ROW -.-&gt;|withheld| Q[&quot;cuba_eco action=pending&quot;]
     Q --&gt; PROM[&quot;action=promote&lt;br/&gt;an enum value on the&lt;br/&gt;agent&#39;s own tool&quot;]
     PROM --&gt; ROW
 
-    RLS{{&quot;RLS: FORCE ROW LEVEL SECURITY&lt;br/&gt;policy tenant_isolation&quot;}} -.-&gt;|underneath| ROW
-
-    F[(&quot;brain_facts&lt;br/&gt;valid_from · valid_to · observed_at&lt;br/&gt;CHECK valid_from &lt;= valid_to&lt;br/&gt;CHECK NOT is_current OR valid_to IS NULL&quot;)]
-    F --&gt; SUP[&quot;supersede:&lt;br/&gt;is_current = FALSE&lt;br/&gt;valid_to = observed_at of the newer fact&quot;]
-    F -.-&gt;|&quot;no query filters on the window&quot;| NOREAD[&quot;was_valid_at: no caller&lt;br/&gt;outside its own tests&quot;]
-
-    A[(&quot;brain_audit_log&lt;br/&gt;sha256 chain · BEFORE UPDATE/DELETE trigger&lt;br/&gt;SERIALIZABLE + advisory lock&quot;)]
+    PROM --&gt; A[(&quot;brain_audit_log&lt;br/&gt;sha256 chain · BEFORE UPDATE/DELETE trigger&lt;br/&gt;SERIALIZABLE + advisory lock&quot;)]
     TOOL[&quot;cuba_archivo action=append&lt;br/&gt;caller supplies action and payload&quot;] --&gt; A
-    ROW -.-&gt;|&quot;no path writes here&quot;| A</code></pre></details></figure>
+    ROW -.-&gt;|&quot;write · correct · delete: no row&quot;| A</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>One Rust binary serves MCP on stdio or, under <code>serve</code>,
+over loopback HTTP to every client at once, keyed per client by an
+<code>Mcp-Client-Id</code> header and an MCP session id
+(<code>rust/src/session.rs:136-150</code>). The same binary carries the
+CLI — <code>search</code>, <code>save</code>, <code>delete</code>,
+<code>recall</code> for session-start injection, <code>sync</code>,
+<code>doctor</code> — and a LAN mode: a host announces itself over UDP,
+a client pairs with a one-time code, and an account credential travels
+beside the client identity without replacing it
+(<code>session.rs:39-63</code>).</p>
+<p>The store is PostgreSQL with pgvector. The runtime connects with the
+URL it is given, migrates, and then reconnects as the non-superuser
+<code>cuba_app</code> role when that role can log in
+(<code>rust/src/db.rs:295-338</code>), which is the condition under
+which row-level security and the audit trigger bite. The project's
+<code>doctor</code> says so in its own words: a superuser ignores RLS
+and can alter the audit log
+(<code>rust/src/doctor.rs:699-709</code>).</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <p><strong>The tier</strong> —
-<code>rust/src/core/trust.rs:11-21</code>.
+<code>rust/src/core/trust.rs:11-25</code>.
 <code>resolve(source, explicit, policy_quarantines_inference)</code>
 returns the caller's <code>explicit</code> value when it is one of the
 two legal strings, else <code>QUARANTINED</code> when the source is
@@ -218,115 +264,215 @@ two legal strings, else <code>QUARANTINED</code> when the source is
 <code>TRUSTED</code>. The policy is
 <code>CUBA_QUARANTINE_INFERENCE</code>, unset by default, so out of the
 box nothing is quarantined automatically.</p>
-<p><strong>The read predicate</strong> —
-<code>rust/src/search/bm25.rs:23-24</code>, repeated at
-<code>:59</code>, and <code>rust/src/search/calibrate.rs:64, :91</code>.
+<p><strong>The read predicates</strong> —
+<code>rust/src/search/bm25.rs:24-25</code> and
+<code>rust/src/handlers/faro.rs:359-360</code>:
 <code>AND o.trust = 'trusted'</code> beside
-<code>AND ($3::uuid IS NULL OR o.project_id = $3 OR o.project_id IS NULL)</code>.
-The trust clause names the state it admits; adding a third tier later
-would hide those rows rather than expose them.</p>
+<code>AND ($3::uuid IS NULL OR o.project_id = $3 OR ($4::bool AND o.project_id IS NULL))</code>.
+The trust clause names the state it admits, so adding a third tier would
+hide those rows rather than expose them. The project clause is the same
+text in every arm, and its first disjunct is the one that matters: when
+the session has no project, <code>$3</code> is null and the clause is
+true.</p>
+<p><strong>The project binding</strong> —
+<code>rust/src/project.rs:23-28</code> resolves the project as
+<code>session::project_id().or_else(session::client_root_project)</code>.
+The session value is written by <code>cuba_jornada start</code> from its
+<code>project</code> argument
+(<code>rust/src/handlers/jornada.rs:23-26</code>, <code>:65</code>) and
+by <code>cuba_proyecto switch</code>
+(<code>rust/src/handlers/proyecto.rs:108-126</code>); both upsert any
+name they are given. The root fallback is adopted only by the HTTP
+daemon, from the client's MCP roots
+(<code>rust/src/http.rs:1274-1281</code>).</p>
 <p><strong>The untrusted door</strong> —
-<code>rust/src/constants.rs:375</code>, the tool schema. <em>"Set when
+<code>rust/src/constants.rs:376</code>, the tool schema. <em>"Set when
 the text came from somewhere you do not control (a fetched page, a
 pasted document, a third party). Everything extracted lands quarantined
 — stored and inspectable via <code>cuba_eco action=pending</code>, but
 withheld from <code>cuba_faro</code> until promoted."</em></p>
 <p><strong>The chain</strong> —
-<code>rust/src/handlers/archivo.rs:145-173</code>. Each append opens a
+<code>rust/src/handlers/archivo.rs:142-210</code>. Each append opens a
 transaction at <code>SERIALIZABLE</code> <em>"to keep the hash chain
 linear"</em>, takes <code>pg_advisory_xact_lock</code> on a fixed key,
-reads the newest <code>current_hash</code>, and inserts
-<code>sha256(prev_hash || action || payload || created_at_iso)</code>,
-retrying up to five times. Migration <code>0016_audit_log.up.sql</code>
-puts <code>BEFORE UPDATE</code> and <code>BEFORE DELETE</code> triggers
-on the table that raise unless the role is <code>cuba_admin</code>, kept
-<em>"for legal data deletion under GDPR"</em>.</p>
+reads the newest <code>current_hash</code>, and inserts the next link —
+an HMAC when an audit key is configured, a plain SHA-256 otherwise —
+retrying up to five times on a serialization failure. Migration
+<code>0016_audit_log.up.sql</code> puts <code>BEFORE UPDATE</code> and
+<code>BEFORE DELETE</code> triggers on the table that raise unless the
+role is <code>cuba_admin</code>, kept <em>"for legal data deletion under
+GDPR"</em>, and <code>0041</code> revokes both verbs from
+<code>cuba_app</code>.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>Three content tables — observations, episodes, errors — each with
-<code>trust</code> and <code>project_id</code>. Facts live apart in
-<code>brain_facts</code> as subject/predicate/object with
-<code>valid_from</code>, <code>valid_to</code>,
-<code>observed_at</code>, <code>confidence</code> and
-<code>is_current</code>.</p>
+<code>trust</code> (constrained to the two tiers by
+<code>0043_episode_error_trust.up.sql</code> for episodes and errors)
+and <code>project_id</code>. Entity names are unique per project
+(<code>0064</code>). A correction keeps up to 20 prior versions in a
+<code>previous_versions</code> JSON array on the row, trimmed by
+<code>brain_append_version</code>
+(<code>0048_version_history.up.sql:17-38</code>).</p>
+<p>Facts are mirrored apart into <code>brain_facts</code> as
+subject/predicate/object with <code>valid_from</code>,
+<code>valid_to</code>, <code>observed_at</code>, <code>confidence</code>
+and <code>is_current</code>. Every observation write appends one through
+<code>append_observation_fact</code>
+(<code>rust/src/core/bitemporal.rs:98-122</code>, called from
+<code>cronica.rs:183</code> and <code>:546</code>) unless
+<code>CUBA_BITEMPORAL</code> turns it off.</p>
 <p>Migration <code>0029_bitemporal_check.up.sql</code> is worth reading
 for its candour. It adds two CHECK constraints and explains that the
 original schema <em>"allowed states that contradict its own model:
 <code>valid_from &gt; valid_to</code> (a fact valid in negative time);
 <code>is_current = TRUE</code> together with a <code>valid_to</code>
-already in the past. Nothing prevented them."</em> It records that it
-checked the existing rows and found none violating either constraint,
-and says a future violation should make <em>"the migration fail loudly
-instead of corrupting silently — which is the point."</em></p>
+already in the past. Nothing prevented them."</em> It records that the
+existing rows violated neither, and says a future violation should make
+<em>"the migration fail loudly instead of corrupting silently — which is
+the point."</em></p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid: a BM25 branch and a pgvector branch, fused, with an optional
-cross-encoder reranker. Both branches carry the trust and project
-predicates. Row-level security sits underneath —
+<p><code>cuba_faro</code> in <code>hybrid</code> mode fans out to a text
+arm, a BM25 arm and a pgvector arm per table, fuses them, and optionally
+reranks with a cross-encoder. On a multi-hop query it adds observations
+of entities named in the query (<code>faro.rs:991-1043</code>), and with
+<code>associative=true</code> it expands through graph-connected
+entities (<code>faro.rs:1688-1794</code>).</p>
+<p>The observation and episode arms carry both predicates. The two error
+arms — BM25 at <code>search/bm25.rs:91-100</code> and text at
+<code>faro.rs:1445-1460</code> — carry the project predicate and no
+trust predicate, though <code>brain_errors</code> has the column and
+<code>cuba_expediente</code> filters on it
+(<code>expediente.rs:56</code>, <code>:72</code>). With the FalkorDB
+graph backend configured, a multi-hop query also appends observations of
+PageRank-adjacent entities through
+<code>observations_for_entities</code> (<code>faro.rs:1045-1056</code>,
+called at <code>:811</code>), which keeps the trust predicate and has no
+project predicate.</p>
+<p>Row-level security sits underneath.
 <code>0017_rls_policies.up.sql</code> enables <em>and</em>
-<code>FORCE</code>s RLS on the listed tables and creates a
-<code>tenant_isolation</code> policy, and <code>0055</code> extends it
-to the content tables. <code>FORCE</code> is the part that matters: it
-applies to the table owner too.</p>
-<p>The project's own <code>doctor</code> names the limit rather than
+<code>FORCE</code>s it on the graph tables under a
+<code>tenant_isolation</code> policy, <code>0055</code> extends it to
+snapshots, working memory, chunks, procedures and judgments, and
+<code>0063</code> relaxes the session table's write policy so a session
+can change its own project. The policy admits every row when
+<code>app.current_project</code> is empty, and the pool sets it from
+<code>project::rls_scope()</code> on acquire
+(<code>db.rs:246-251</code>), which is empty while no project is bound
+to the session.</p>
+<p>The project's <code>doctor</code> names the other limit rather than
 leaving it implied — a superuser ignores RLS and can alter the audit
 log, so project isolation and traceability both rest on nobody
 connecting as one.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>A write resolves its tier before the insert. Superseding a fact sets
-<code>is_current = FALSE</code> and <code>valid_to</code> together,
-which is exactly what the second CHECK constraint requires, so the
-invariant and the write path agree.</p>
+<p>A write resolves its tier before the insert and mirrors the
+observation into <code>brain_facts</code>. A correction
+(<code>cuba_eco action=correct</code>, <code>eco.rs:398-445</code>)
+checks the observation is in scope, pushes the old content onto
+<code>previous_versions</code> and rewrites the row.
+<code>cuba_cronica</code> deletes an observation by id with no project
+check (<code>cronica.rs:319</code>), and <code>cuba_forget</code>
+cascades a hard delete through an entity's references.</p>
+<p>A fact is closed only by a sync import, which sets
+<code>is_current = FALSE</code> and <code>valid_to</code> together to
+the newer fact's <code>observed_at</code>
+(<code>rust/src/handlers/sync.rs:2383-2408</code>) — exactly what the
+second CHECK constraint requires. <code>supersede_fact</code> in
+<code>core/bitemporal.rs:147</code> would do the same locally and has no
+caller.</p>
+<p>Every delete fires a trigger that writes
+<code>(table_name, row_id)</code> into <code>brain_tombstones</code>
+(<code>0045_tombstones.up.sql:18-24</code>), so a delete on one machine
+reaches the other. It <em>"carries no content by design"</em>.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Thirty-one MCP tools under <code>cuba_*</code>. Promotion out of
-quarantine is <code>cuba_eco action=promote</code>, one value of an
-action enum that also carries <code>positive</code>,
+<p>Thirty memory tools under <code>cuba_*</code>, plus
+<code>cuba_tools</code> and <code>cuba_call</code>, which let a lean
+profile load schemas on demand (<code>rust/src/constants.rs</code>).
+Promotion out of quarantine is <code>cuba_eco action=promote</code>, one
+value of an action enum that also carries <code>positive</code>,
 <code>negative</code>, <code>correct</code>, <code>quarantine</code> and
-<code>pending</code>.</p>
+<code>pending</code> (<code>constants.rs:162</code>).</p>
+<p><code>cuba_contexto</code> assembles the agent's visible context —
+working memory, notes addressed to this client, the artifact index, and
+a recall layer of the session's recent writes, entities mentioned in
+working memory, and the 15 most important observations in the project
+(<code>rust/src/handlers/contexto.rs</code>). The <code>recall</code>
+CLI, wired as a session-start hook, is a separate assembler that takes
+the project from the working directory and does filter on trust
+(<code>rust/src/recall_cli.rs:36-44</code>, <code>:109-141</code>).</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong><code>trust_state</code>.</strong> Two discrete states, and
-<code>quarantined</code> withholds a row from every search path. The
-tier is a field rather than a score, and the ranking signals —
-confidence, decay — are separate from it.</p>
-<p><strong><code>scope_enforced</code>.</strong> Two layers: the
-<code>project_id</code> predicate in both search branches, and forced
-row-level security with a <code>tenant_isolation</code> policy beneath.
-The predicate admits <code>project_id IS NULL</code> as well, which is
-how a globally-scoped memory reaches every project, so the isolation the
-mark describes is between projects and not from the global set.</p>
+<code>quarantined</code> withholds an observation or an episode from
+every <code>cuba_faro</code> arm and an error from
+<code>cuba_expediente</code>. The tier is a field rather than a score,
+and the ranking signals — confidence, decay — are separate from it.</p>
+<p>Because the predicate is written at each read site, the reads that
+omit it serve quarantined text: the two error arms of
+<code>cuba_faro</code>; <code>cuba_contexto</code>'s session layer
+(<code>contexto.rs:67-80</code>) and importance layer
+(<code>:124-130</code>), which also skips the <code>superseded</code>
+filter; <code>cuba_alma action=get</code>, which lists every
+non-superseded observation of the entity (<code>alma.rs:164-168</code>);
+the <code>entity/</code> MCP resource
+(<code>rust/src/protocol.rs:1416-1421</code>); and the pre-compact
+snapshot's key observations (<code>pre_compact.rs:36-44</code>). The
+context assembler is where this matters most, because it returns prose
+rather than records.</p>
+<p><strong><code>scope_enforced</code> is not carried.</strong> The
+<code>project_id</code> predicate is in every search arm, but it is a
+predicate on an optional value the agent controls. On stdio no project
+is bound until the agent passes one to <code>cuba_jornada start</code>
+or <code>cuba_proyecto switch</code>, <code>cuba_jornada end</code>
+clears it, and while none is bound every arm reads
+<code>$p IS NULL</code> as true. <code>include_unscoped=true</code> on
+<code>cuba_faro</code> admits the rows that belong to no project. Only
+the HTTP daemon derives a default, from the client's workspace root.</p>
+<p>Row-level security does not close this, since its policy admits every
+row when no project is bound. Two more reads carry no project predicate
+at all: the FalkorDB expansion and the <code>entity/</code> resource. A
+process-wide <code>CUBA_PROJECT_FILTER=off</code> lifts the filter for
+everyone and is documented as such (<code>README.md:377</code>).</p>
 <p><strong><code>negative_eval</code>.</strong> Read-path must-not
 assertions with their controls beside them — section 10.</p>
 <p><strong><code>audit_log</code> is withheld.</strong> The table is a
-well-built tamper-evident ledger and nothing on a memory path writes to
-it. Its sole <code>INSERT</code> is inside the <code>append</code>
-branch of <code>cuba_archivo</code>, which takes the action string and
-the payload from its caller, so a row exists only because an agent chose
-to write one and says whatever that agent chose. A mutation audit has to
-be written by the mutation.</p>
+well-built tamper-evident ledger with one writer on a memory path, and
+it covers one kind of mutation. <code>set_trust</code> appends
+<code>memory.promote</code> or <code>memory.quarantine</code> after
+flipping the tier (<code>eco.rs:144-162</code>) and discards a failed
+append with <code>.ok()</code>. Account events are appended the same way
+(<code>accounts_db.rs:124</code>). The <code>append</code> action of
+<code>cuba_archivo</code> takes the action string and the payload from
+its caller, so agent-written rows share the chain. An observation
+written, corrected or deleted, an entity erased by
+<code>cuba_forget</code>, and a fact closed by sync append nothing.</p>
 <p><strong><code>bitemporal</code> is withheld.</strong> Both axes exist
 as columns and both are stamped from record time:
-<code>valid_from</code> is <code>Utc::now()</code> at construction in
-both builders, and supersession sets
-<code>valid_to = u.observed_at</code> of the superseding fact.
-<code>was_valid_at</code> is the only function that would ask a validity
-question and has no caller outside its own tests. The single query that
-touches the window is an integrity check in <code>doctor</code> looking
-for <code>valid_to &lt;= valid_from</code>.</p>
+<code>valid_from</code> is <code>Utc::now()</code> in
+<code>FactBuilder::new</code> (<code>core/bitemporal.rs:50</code>), the
+one builder production code uses, and a sync import copies the peer's
+value and closes <code>valid_to</code> at the newer fact's
+<code>observed_at</code>. <code>was_valid_at</code> is the only function
+that would ask a validity question and has no caller outside its own
+tests. The query that touches the window is an integrity check in
+<code>doctor</code> for <code>valid_to &lt;= valid_from</code>.</p>
 <p><strong><code>human_review</code> is withheld.</strong> Quarantine
 holds a memory in a state until something resolves it, but
 <code>promote</code> is one value of the <code>action</code> enum on
 <code>cuba_eco</code>, a tool the writing agent already holds. The
 producer can clear its own queue.</p>
-<p><strong><code>tombstone</code> is withheld.</strong> Supersession
-flips <code>is_current</code> on a row and feedback records an outcome
-per memory; nothing keys a rejection on the value, so the same claim
-arriving again is a new row.</p>
+<p><strong><code>tombstone</code> is withheld.</strong>
+<code>brain_tombstones</code> is keyed on
+<code>(table_name, row_id)</code> and exists so a delete propagates
+through sync; supersession flips a column on a row; feedback records an
+outcome per memory. Nothing keys a rejection on the value, so the same
+claim arriving again is a new row.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
 <p>Test files are named for the version and the invariant they defend —
 <code>v016_quarantine.rs</code>,
 <code>v021_import_quarantine_all_kinds.rs</code>,
-<code>v033_untrusted_extraction_does_not_touch_the_graph.rs</code> — and
-the assertion messages carry the claim:</p>
+<code>v033_untrusted_extraction_does_not_touch_the_graph.rs</code>,
+<code>v041_isolation.rs</code> — and the assertion messages carry the
+claim:</p>
 <ul>
 <li><em>"a quarantined memory must not surface in search"</em>
 (<code>v016_quarantine.rs:67</code>), paired at <code>:151</code> with
@@ -335,24 +481,40 @@ change default behaviour."</em> The control is the harder half: a
 predicate that excluded everything would satisfy the first assertion
 alone.</li>
 <li><em>"a quarantined episode must not come back from
-<code>cuba_faro</code>, or the quarantine is a column"</em>
-(<code>v021:174</code>) — the test states its own purpose, which is to
-prove the column is enforced rather than decorative.</li>
+<code>cuba_faro</code>, or the quarantine is a column nobody reads"</em>
+(<code>v021:174</code>). Its error-table half is asserted through
+<code>cuba_expediente</code> (<code>:188</code>), the read that filters,
+rather than through <code>cuba_faro</code>'s error arms, which do
+not.</li>
+<li><em>"quarantined text must not reach faro"</em> beside <em>"trusted
+twin must surface so a miss is not a dead search"</em>
+(<code>v041_isolation.rs:552-559</code>).</li>
+<li><em>"Project B search leaked Project A entity"</em>
+(<code>v08_project_scoping.rs:145-148</code>), and <em>"an active
+project must not see leftover NULL rows unless asked"</em> beside
+<em>"include_unscoped is the escape hatch"</em>
+(<code>v041_isolation.rs:311-333</code>). Both bind a project before
+reading, so neither exercises the unbound session.</li>
 </ul>
-<p>The NLI cases in <code>rust/tests/nli_entailment.rs</code> are
-<code>#[ignore]</code> because they need a downloaded model, and the
-helper refuses the usual escape: <em>"Soft-skip is forbidden."</em> They
-do not run in an ordinary CI pass.</p>
+<p>The database cases are <code>#[ignore]</code>, and the CI job
+discovers every file under <code>rust/tests</code> and runs it with
+<code>--ignored</code> against a PostgreSQL service, its comment
+recording that a hand-kept list had drifted to running a fraction of the
+files (<code>.github/workflows/ci.yml:171-214</code>). The NLI cases in
+<code>rust/tests/nli_entailment.rs</code> need a downloaded model and
+are excluded there, and the helper refuses the usual escape:
+<em>"Soft-skip is forbidden."</em> I ran none of these.</p>
 <p><strong>The benchmark.</strong> The README's own section,
-<em>"Measured — and the benchmark that was lying"</em>, records that
-until v0.12 the file claimed every number was measured and every number
-was wrong, in three ways: ten queries, so <em>"the smallest effect it
-could detect was ~0.25 nDCG"</em>; relevance judged by substring match,
-which <em>"measures keyword presence, not retrieval, and it tilts the
-whole benchmark toward the lexical branch"</em>; and nDCG normalised
-against what was retrieved rather than what exists, so a system that
-missed 60% of the answer scored 1.0. An <code>R@10 = 3.125</code> had
-shipped — <em>"Recall is a proportion."</em></p>
+<em>"Measured — and the benchmark that was lying"</em>
+(<code>README.md:520</code>), records that until v0.12 the file claimed
+every number was measured and every number was wrong, in three ways. It
+had ten queries, so <em>"the smallest effect it could detect was ~0.25
+nDCG"</em>. Relevance was judged by substring match, which <em>"measures
+keyword presence, not retrieval, and it tilts the whole benchmark toward
+the lexical branch"</em>. And nDCG was normalised against what was
+retrieved rather than what exists, so a system that missed 60% of the
+answer scored 1.0. An <code>R@10 = 3.125</code> had shipped —
+<em>"Recall is a proportion."</em></p>
 <p>The corrected figure is nDCG@10 = 0.50, 95% CI 0.44–0.56, over 221
 id-scored queries, against a published 0.894. The sentence that follows
 is the one worth quoting: <em>"The system did not get worse. It was
@@ -364,7 +526,9 @@ series, an error dropped by <code>if let Ok(..)</code>,
 none, and <code>f16</code> logits read as <code>f32</code>. The other
 held that associative retrieval degrades results, which a paired
 bootstrap on the new dataset confirms at [−0.051, −0.018] — <em>"The
-decision was right; the reasoning was not."</em></p>
+decision was right; the reasoning was not."</em> Nothing was run for
+this reading, so these figures are the project's own account of its own
+correction rather than a re-measurement.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
@@ -376,8 +540,8 @@ decision was right; the reasoning was not."</em></p>
 and the ordinary row is present, in the same file.</li>
 <li><strong>Put the invariant in the database and say what it was
 protecting against.</strong> Migration 0029's comment names the two
-illegal states the schema had permitted and reports how many rows
-violated them.</li>
+illegal states the schema had permitted and reports what the existing
+rows held.</li>
 <li><strong>Take a lock to keep a hash chain linear.</strong>
 <code>SERIALIZABLE</code> plus an advisory lock plus bounded retries is
 the honest way to append to a chain concurrently.</li>
@@ -387,9 +551,16 @@ a changelog line.</li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>A ledger with no producer.</strong> Hash chain, triggers,
-serializable appends — and a memory can be written, promoted or
-superseded without a row appearing.</li>
+<li><strong>A scope that is true when absent.</strong>
+<code>$p IS NULL OR project_id = $p</code> makes the unbound session the
+widest one; a read with no scope should return nothing or refuse.</li>
+<li><strong>A predicate repeated per query.</strong> The trust clause is
+right in the arms that carry it and missing from the error arms and the
+context assembler, which is where a hand-written filter goes
+missing.</li>
+<li><strong>A ledger that records one verb.</strong> Hash chain,
+triggers, serializable appends — and a memory can be written, corrected
+or deleted without a row appearing.</li>
 <li><strong>Two time axes both stamped from the clock.</strong> A
 validity window whose ends come from record time answers the same
 question the record time does.</li>
@@ -399,23 +570,27 @@ rather than review.</li>
 </ul>
 <h3 id="fit">Fit</h3>
 <p>Take this if you want a Postgres-backed agent memory with a real
-quarantine tier and are willing to run the promotion step yourself. Read
-section 10 before taking any retrieval number from any project,
-including this one.</p>
+quarantine tier for one person's projects, and are willing to run the
+promotion step yourself and bind a project before every session. Do not
+rely on it to keep two projects apart, and read section 10 before taking
+any retrieval number from any project, including this one.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
 <li><code>CUBA_QUARANTINE_INFERENCE</code> is off by default, so nothing
 is quarantined automatically unless a caller sets
 <code>untrusted</code>. Is the default meant to change?</li>
-<li><code>brain_audit_log</code> has no writer on a memory path. Was it
-meant to be called from the write handlers, or is it a ledger for the
-agent's own use?</li>
-<li><code>was_valid_at</code> has no caller. Is a validity-filtered read
-planned, and would <code>valid_from</code> then become
-caller-supplied?</li>
-<li><code>promote</code> sits on <code>cuba_eco</code> beside the write
-actions. Is there a deployment where the promoting principal is not the
-writing one?</li>
+<li>The error arms of <code>cuba_faro</code> read
+<code>brain_errors</code> without the trust predicate that
+<code>cuba_expediente</code> applies to the same table. Is that
+deliberate?</li>
+<li>Is an unbound session meant to read every project, or should the
+stdio server bind one from the working directory the way the
+<code>recall</code> hook does?</li>
+<li><code>brain_audit_log</code> records promote and quarantine. Was it
+meant to be written by the write, correct and delete handlers too?</li>
+<li><code>was_valid_at</code> and <code>supersede_fact</code> have no
+caller. Is a validity-filtered read planned, and would
+<code>valid_from</code> then become caller-supplied?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
@@ -432,21 +607,40 @@ writing one?</li>
 </tr>
 <tr>
 <td><code>rust/src/search/bm25.rs</code></td>
-<td>the allow-list trust predicate and the project predicate, twice</td>
+<td>the allow-list trust predicate and the project predicate on
+observations; the error arm without trust</td>
 </tr>
 <tr>
-<td><code>rust/src/constants.rs</code></td>
-<td>the tool schemas, including the <code>untrusted</code> flag and the
-<code>cuba_eco</code> action enum</td>
+<td><code>rust/src/handlers/faro.rs</code></td>
+<td>every <code>cuba_faro</code> arm, the <code>include_unscoped</code>
+flag, the FalkorDB expansion</td>
+</tr>
+<tr>
+<td><code>rust/src/project.rs</code></td>
+<td>project resolution, the RLS scope and the unscoped-row backfill</td>
+</tr>
+<tr>
+<td><code>rust/src/handlers/jornada.rs</code>,
+<code>rust/src/handlers/proyecto.rs</code></td>
+<td>the two calls that bind a project to the session</td>
+</tr>
+<tr>
+<td><code>rust/src/handlers/contexto.rs</code></td>
+<td>the context assembler and its three recall layers</td>
+</tr>
+<tr>
+<td><code>rust/src/handlers/eco.rs</code></td>
+<td>promotion, quarantine, correction, and the audit append for trust
+transitions</td>
 </tr>
 <tr>
 <td><code>rust/src/handlers/archivo.rs</code></td>
-<td>the hash chain, the advisory lock, and the only audit insert</td>
+<td>the hash chain, the advisory lock, and the audit insert</td>
 </tr>
 <tr>
 <td><code>rust/src/core/bitemporal.rs</code></td>
-<td>the <code>Fact</code> builder, the supersede write, and the uncalled
-<code>was_valid_at</code></td>
+<td>the <code>Fact</code> builder, the observation mirror, and the
+uncalled <code>was_valid_at</code> and <code>supersede_fact</code></td>
 </tr>
 <tr>
 <td><code>rust/migrations/0016_audit_log.up.sql</code></td>
@@ -462,8 +656,9 @@ writing one?</li>
 <td>the two CHECK constraints and what they were added against</td>
 </tr>
 <tr>
-<td><code>rust/tests/v016_quarantine.rs</code></td>
-<td>the must-not and its control</td>
+<td><code>rust/tests/v016_quarantine.rs</code>,
+<code>rust/tests/v041_isolation.rs</code></td>
+<td>the must-nots and their controls</td>
 </tr>
 <tr>
 <td><code>README.md</code></td>
@@ -472,62 +667,79 @@ conclusions</td>
 </tr>
 </tbody>
 </table></div>
-<h2 id="appendix-recorded-searches">Appendix: Recorded Searches</h2>
-<p>Run from the root of the checkout at the pinned commit.</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Claim</th>
-<th>Command</th>
-<th>Result at this pin</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nothing on a memory path writes the audit log</td>
-<td><code>grep -rn "brain_audit_log" --include='*.rs' rust/src | grep -i insert</code></td>
-<td>One hit, <code>handlers/archivo.rs:173</code>, inside the
-<code>append</code> action of <code>cuba_archivo</code></td>
-</tr>
-<tr>
-<td><code>was_valid_at</code> has no caller</td>
-<td><code>grep -rn "was_valid_at" --include='*.rs' rust/src</code></td>
-<td>Its definition and two assertions in its own test module</td>
-</tr>
-<tr>
-<td>No query filters on the validity window</td>
-<td><code>grep -rn "valid_from|valid_to" --include='*.rs' rust/src | grep -iE "select|where"</code></td>
-<td><code>doctor.rs:705</code> only, an integrity check for
-<code>valid_to &lt;= valid_from</code></td>
-</tr>
-<tr>
-<td><code>valid_from</code> is never caller-supplied</td>
-<td><code>grep -rn "valid_from" --include='*.rs' rust/src | grep -i "set |valid_from:"</code></td>
-<td><code>Utc::now()</code> in both builders,
-<code>core/bitemporal.rs:50</code> and
-<code>sync/chunk.rs:286</code></td>
-</tr>
-<tr>
-<td>The trust predicate is an allow-list on every search branch</td>
-<td><code>grep -rn "trust = 'trusted'" --include='*.rs' rust/src</code></td>
-<td><code>search/bm25.rs:23</code>, <code>search/calibrate.rs:64</code>
-and <code>:91</code></td>
-</tr>
-<tr>
-<td>Promotion is on the agent's own tool</td>
-<td>read <code>rust/src/constants.rs:161</code></td>
-<td><code>promote</code> and <code>quarantine</code> are values of the
-<code>action</code> enum on <code>cuba_eco</code></td>
-</tr>
-<tr>
-<td>The licence carries no rider</td>
-<td><code>grep -n -i 'anthropic|may not' LICENSE</code></td>
-<td>Stock Apache 2.0; the only match is the standard compliance
-clause</td>
-</tr>
-</tbody>
-</table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run at the tree root of the pinned checkout with
+<code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -E 'archivo::handle\(|INSERT INTO brain_audit_log' -- rust/src</code>
+— <code>accounts_db.rs:124</code>, <code>archivo.rs:173</code>,
+<code>eco.rs:149</code> and the dispatcher at
+<code>handlers/mod.rs:148</code>; no write, correct or delete
+handler.</li>
+<li><code>git grep -n -i -E '(UPDATE|DELETE FROM|TRUNCATE)[[:space:]]+(TABLE[[:space:]]+)?brain_audit_log' -- rust/src rust/migrations</code>
+— no match; the only updates and deletes are in
+<code>rust/tests</code>.</li>
+<li><code>git grep -n -c -E '\$[0-9]::uuid IS NULL OR (o\.|ep\.)?project_id = \$[0-9]' -- rust/src/handlers/faro.rs rust/src/search/bm25.rs</code>
+— 14 and 3; every project predicate on the search path is true when no
+project is bound.</li>
+<li><code>git grep -n -E 'adopt_client_root\(|remember_client_root\(' -- rust/src ':!rust/src/session.rs'</code>
+— <code>http.rs:1274</code>, <code>:1280</code>, <code>:2181</code> and
+a test in <code>project.rs</code>; no stdio path derives a project.</li>
+<li><code>git grep -n 'session::set(' -- rust/src</code> —
+<code>jornada.rs:65</code> and <code>proyecto.rs:125</code> on the
+server, <code>codegraph_cli.rs:88</code> in the indexer CLI, and the
+rest inside test modules.</li>
+<li><code>git grep -n -E 'is_current = FALSE' -- rust/src</code> —
+<code>sync.rs:2383</code> and <code>:2396</code>, the import, and the
+uncalled <code>supersede_fact</code> at
+<code>core/bitemporal.rs:154</code>.</li>
+<li>read <code>rust/src/handlers/faro.rs:1045-1056</code> and
+<code>rust/src/protocol.rs:1407-1421</code> — the first query keeps
+<code>o.trust = 'trusted'</code> and names no project; the second names
+neither.</li>
+<li><code>git grep -n -i -E 'reject|blocklist|denylist' -- rust/migrations</code>
+— two comments, neither a rejection table; no value-keyed record.</li>
+<li><code>git grep -n -E "trust[[:space:]]*(!=|&lt;&gt;)[[:space:]]*'quarantined'" -- rust/src</code>
+— no match; every trust predicate is the allow-list form.</li>
+<li><code>git grep -n -c "trust = 'trusted'" -- rust/src</code> —
+contexto 1, expediente 3, faro 12, ingesta 3, recall_cli 2, bm25 1,
+calibrate 2; none in the bm25 or faro error arms, <code>alma.rs</code>,
+<code>pre_compact.rs</code> or <code>protocol.rs</code>.</li>
+<li><code>git grep -n was_valid_at -- rust/src</code> — its definition
+and two assertions in its own test module.</li>
+<li><code>git grep -n supersede_fact -- rust/src</code> — its definition
+only.</li>
+<li><code>git grep -n -E 'valid_(from|to)[[:space:]]*(&lt;=|&gt;=|&lt;|&gt;|BETWEEN)' -- rust/src</code>
+— <code>was_valid_at</code> and <code>doctor.rs:1405</code>, an
+integrity check; no read path filters on the window.</li>
+<li><code>git grep -n -E 'brain_tombstones' -- rust/src</code> — sync
+export, the merge driver and the sync import, each by
+<code>table_name</code> and <code>row_id</code>.</li>
+<li><code>git grep -n -E '"enum": \["positive"' -- rust/src/constants.rs</code>
+— line 162; <code>promote</code> and <code>quarantine</code> are values
+of the <code>action</code> enum on <code>cuba_eco</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|doi\.org' -- README.md</code>
+— no match; no paper.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|not (be )?used (for|to)' -- LICENSE</code>
+— no match; stock Apache 2.0.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/LeandroPG19/Memorys/commit/b110ac22d5a0532f2eed02652be8078a6747da90"><code class="commit-id" title="b110ac22d5a0532f2eed02652be8078a6747da90">b110ac22…</code></a>
+— 285 commits on, crate 0.25.0 to 0.30.0. Screened first: two auto-run
+surfaces (<code>server.json</code>, and <code>.cursor/rules/</code>,
+added since the previous pin), one build-time execution point, one
+unpinned surface and four manifests inside the cooldown; nothing
+installed or run. Changed upstream: rows with no project are hidden
+while one is bound unless <code>cuba_faro include_unscoped=true</code>
+(<a
+href="https://github.com/LeandroPG19/Memorys/commit/11cdc57362cb5d15a836b6fad7709466059cf7c0"><code class="commit-id" title="11cdc57362cb5d15a836b6fad7709466059cf7c0">11cdc573…</code></a>),
+sessions are per client, and a LAN daemon with paired accounts arrived.
+<code>scope_enforced</code> is withdrawn: the project predicate is true
+when no project is bound, which the agent controls (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Three claims were
+wrong at the old pin and are listed under known limitations. Tool count
+re-measured.</p>
 <p><strong>2026-09-20</strong> — <a
 href="https://github.com/LeandroPG19/Memorys/commit/2f45dcb729426b4b5bfca45981d52a39d3f09d0b"><code class="commit-id" title="2f45dcb729426b4b5bfca45981d52a39d3f09d0b">2f45dcb7…</code></a>
 — first reading, at 402 files. Screened before reading: one auto-run

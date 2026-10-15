@@ -4982,11 +4982,11 @@ Brain's call sites.</li>
 <li><a
 href="https://github.com/LeandroPG19/Memorys">LeandroPG19/Memorys</a> at
 <a
-href="https://github.com/LeandroPG19/Memorys/commit/2f45dcb729426b4b5bfca45981d52a39d3f09d0b"><code class="commit-id" title="2f45dcb729426b4b5bfca45981d52a39d3f09d0b">2f45dcb7…</code></a>
-— read only; one auto-run surface, one build-time execution point, one
-unpinned surface and nothing inside the cooldown, plus an
-<code>AGENTS.md</code> addressed to a reading agent that was treated as
-data. Nothing was installed or run, so the retraction described in
+href="https://github.com/LeandroPG19/Memorys/commit/b110ac22d5a0532f2eed02652be8078a6747da90"><code class="commit-id" title="b110ac22d5a0532f2eed02652be8078a6747da90">b110ac22…</code></a>
+— read only; two auto-run surfaces, one build-time execution point, one
+unpinned surface and four manifests inside the seven-day cooldown, plus
+an <code>AGENTS.md</code> addressed to a reading agent that was treated
+as data. Nothing was installed or run, so the retraction described in
 section 10 of its report is the project's own account rather than a
 re-measurement.</li>
 <li><a href="https://github.com/majiayu000/remem">majiayu000/remem</a>
@@ -18161,6 +18161,36 @@ were the previous pin's, where this one measured 30,661 lines at v0.1.48
 and 613. The first rested on the field's name rather than its caller,
 the third on a reading that predated the registry, and the last on
 figures carried across a re-pin.</li>
+<li><strong>Three published claims about <a
+href="../systems/memory-industry/">MemoryIndustry</a> were wrong at <a
+href="https://github.com/LeandroPG19/Memorys/commit/2f45dcb729426b4b5bfca45981d52a39d3f09d0b"><code class="commit-id" title="2f45dcb729426b4b5bfca45981d52a39d3f09d0b">2f45dcb7…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code>, but every search arm read
+<code>$3::uuid IS NULL OR o.project_id = $3 OR o.project_id IS NULL</code>
+(<code>rust/src/search/bm25.rs:24</code>,
+<code>rust/src/handlers/faro.rs:302</code>). The project was bound only
+by the agent's own <code>cuba_jornada start project=</code> or
+<code>cuba_proyecto switch</code>
+(<code>rust/src/handlers/jornada.rs:25</code>,
+<code>rust/src/handlers/proyecto.rs:100-115</code>), or in the HTTP
+daemon alone from the client's root (<code>rust/src/http.rs:449</code>),
+so an unbound stdio session read every project. It said the audit log
+had no writer on any memory path; <code>set_trust</code> appended
+<code>memory.promote</code> and <code>memory.quarantine</code> through
+<code>archivo::handle</code>
+(<code>rust/src/handlers/eco.rs:145-149</code>), a call the recorded
+search, which grepped for the <code>INSERT</code>, could not see. And it
+said quarantine withheld a row from every search branch; the two
+<code>cuba_faro</code> error arms carried no trust predicate
+(<code>rust/src/search/bm25.rs:88-97</code>,
+<code>rust/src/handlers/faro.rs:1375-1384</code>), and
+<code>cuba_contexto</code>'s importance layer
+(<code>rust/src/handlers/contexto.rs:124-128</code>) and
+<code>cuba_alma action=get</code>
+(<code>rust/src/handlers/alma.rs:165-168</code>) served quarantined
+observations. The first rested on the predicate's presence rather than
+on what its empty value did, the second on a search for the insert
+rather than for its callers.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

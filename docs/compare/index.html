@@ -18184,43 +18184,59 @@ queried as one</td>
 href="../systems/memory-industry/"><code>memory-industry</code></a></td>
 <td>A row in one of three content tables — observations, episodes,
 errors — each carrying a <code>trust</code> tier and a
-<code>project_id</code>; facts live apart in <code>brain_facts</code> as
-subject/predicate/object with a validity window and a confidence</td>
-<td>PostgreSQL 18 with pgvector, row-level security enabled and forced
-on the content tables under a <code>tenant_isolation</code> policy</td>
-<td>Hybrid BM25 and vector, fused, with an optional cross-encoder
-reranker; both branches compose the same trust and project
-predicates</td>
+<code>project_id</code>; facts are mirrored apart into
+<code>brain_facts</code> as subject/predicate/object with a validity
+window and a confidence</td>
+<td>PostgreSQL 18 with pgvector; row-level security enabled and forced
+on the content tables under a <code>tenant_isolation</code> policy that
+admits every row while no project is bound</td>
+<td>Hybrid text, BM25 and vector arms fused, with an optional
+cross-encoder reranker and an optional associative expansion over the
+entity graph; the observation and episode arms carry the trust
+predicate, and every arm carries the project predicate when a project is
+bound</td>
 <td>An MCP tool call resolves the trust tier before the insert, from the
 source, an optional caller-supplied tier and a policy that quarantines
-LLM inference only when an environment variable enables it</td>
-<td>Superseding a fact sets <code>is_current = FALSE</code> and
-<code>valid_to</code> together, which a CHECK constraint requires;
-feedback records an outcome per memory. Nothing keys a rejection on the
-value, so the same claim arriving again is a new row</td>
-<td>A project predicate in both search branches that also admits
-globally-scoped rows, over forced row-level security at the
-database</td>
-<td>An MCP server with 31 tools under <code>cuba_*</code> plus 23 CLI
-commands, published to PyPI, npm and the MCP registry</td>
+LLM inference only when an environment variable enables it; each
+observation is mirrored into <code>brain_facts</code> with
+<code>valid_from</code> set to the clock</td>
+<td><code>cuba_eco action=correct</code> rewrites an observation in
+place and keeps its newest 20 prior versions in a JSON array on the row;
+<code>cuba_cronica</code> deletes by id and <code>cuba_forget</code>
+hard-deletes an entity with everything that references it. Facts are
+closed only by a sync import. Deletions leave a row-keyed tombstone for
+sync; nothing keys a rejection on the value</td>
+<td>A project bound to the session by the agent's own
+<code>cuba_jornada start project=</code> or
+<code>cuba_proyecto switch</code>, or in the HTTP daemon from the
+client's workspace root. Every search arm reads
+<code>project IS NULL OR project_id = project</code>, so with no project
+bound nothing is filtered; <code>include_unscoped=true</code> also
+admits rows with no project</td>
+<td>An MCP server with thirty <code>cuba_*</code> memory tools plus
+<code>cuba_tools</code> and <code>cuba_call</code> to find and invoke
+them, run on stdio or as one shared HTTP daemon, with a CLI, published
+to PyPI, npm and the MCP registry</td>
 <td>Embedding backfill, calibration over recorded outcomes,
-deduplication, and a code-graph indexer</td>
-<td>Two discrete tiers, trusted and quarantined. A quarantined row is
-stored and listable and admitted by no search path until promoted; the
-promoting action sits on the same tool the writing agent already
-holds</td>
+deduplication, a REM consolidation queue and a code-graph indexer</td>
+<td>Two discrete tiers, trusted and quarantined. A quarantined
+observation or episode is stored, listable and admitted by no
+<code>cuba_faro</code> arm until promoted; the error arms, the context
+assembler, entity get and the entity resource read without the
+predicate. The promoting action sits on the tool the writing agent
+already holds</td>
 <td>The trust predicate is written as an allow-list so a new tier fails
 closed; each must-not test is paired with the control that would catch a
 filter excluding everything; database CHECK constraints were added with
 a comment naming the illegal states the schema had permitted; and the
 README retracts its own published retrieval score and the two
 conclusions drawn from it</td>
-<td>The hash-chained append-only audit log has no writer on any memory
-path — its only insert is a tool action whose action string and payload
-come from the caller; both time axes on a fact are stamped from record
-time and no query reads the validity window, whose only accessor has no
-caller; and promotion out of quarantine is one value of an action enum
-on the writing agent's own tool</td>
+<td>The project scope is optional state the agent sets with its own
+arguments, and with none bound every read spans every project; the
+quarantine predicate is missing from the error search arms, the context
+assembler and entity get; the hash-chained audit log records trust
+transitions only and drops a failed append; both time axes on a fact are
+stamped from record time</td>
 </tr>
 <tr>
 <td><a
@@ -33928,7 +33944,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>322 of 752:</em> <a
+<p><em>321 of 752:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34102,7 +34118,6 @@ href="../systems/memori/"><code>memori</code></a>, <a
 href="../systems/memorix/"><code>memorix</code></a>, <a
 href="../systems/memorizer/"><code>memorizer</code></a>, <a
 href="../systems/memory-engine/"><code>memory-engine</code></a>, <a
-href="../systems/memory-industry/"><code>memory-industry</code></a>, <a
 href="../systems/memory-lancedb-pro/"><code>memory-lancedb-pro</code></a>,
 <a href="../systems/memory-vault/"><code>memory-vault</code></a>, <a
 href="../systems/memorybear/"><code>memorybear</code></a>, <a

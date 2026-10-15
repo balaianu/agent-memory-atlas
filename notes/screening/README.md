@@ -18,7 +18,7 @@ Neither counts as screened.
 | Result | Count |
 | --- | ---: |
 | Repositories with an auto-run surface (`RUNS`) | 357 |
-| Repositories with a dependency surface inside the cooldown (`FRESH`) | 394 |
+| Repositories with a dependency surface inside the cooldown (`FRESH`) | 395 |
 | Repositories with build-time execution (`EXEC`) | 551 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
@@ -224,7 +224,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`memora`](../../content/systems/memora.md) | `.claude-plugin/` |
 | [`memorix`](../../content/systems/memorix.md) | `.gitmodules`, `.opencode/`, `server.json` |
 | [`memory-engine`](../../content/systems/memory-engine.md) | `.claude-plugin/` |
-| [`memory-industry`](../../content/systems/memory-industry.md) |  |
+| [`memory-industry`](../../content/systems/memory-industry.md) | `.cursor/rules/`, `server.json` |
 | [`memory-project`](../../content/systems/memory-project.md) | `hooks/` |
 | [`memory-ts`](../../content/systems/memory-ts.md) | `hooks/` |
 | [`memory-vault`](../../content/systems/memory-vault.md) | `server.json` |

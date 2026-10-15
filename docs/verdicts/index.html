@@ -24811,19 +24811,21 @@ behaviour."</em> The second half is what a filter excluding everything
 would fail. A sibling case states its own purpose: <em>"a quarantined
 episode must not come back from <code>cuba_faro</code>, or the
 quarantine is a column."</em></li>
-<li>Biggest risk: <strong>the tamper-evident audit log has no writer on
-any memory path.</strong> <code>brain_audit_log</code> is a sha256 chain
-with <code>BEFORE UPDATE</code> and <code>BEFORE DELETE</code> triggers,
-appended under <code>SERIALIZABLE</code> with an advisory lock to keep
-the chain linear — and its only <code>INSERT</code> sits in the
-<code>append</code> action of <code>cuba_archivo</code>, which takes the
-action string and the payload from its caller. A memory can be written,
-promoted or superseded with no row appearing. Separately,
-<code>brain_facts</code> carries <code>valid_from</code>,
-<code>valid_to</code> and <code>observed_at</code> behind two CHECK
-constraints, every write stamps both window ends from record time, and
-<code>was_valid_at</code> — the one function that would ask a validity
-question — has no caller outside its own tests.</li>
+<li>Biggest risk: <strong>the project scope is optional, and the agent
+holds it.</strong> Every <code>cuba_faro</code> arm reads
+<code>$p::uuid IS NULL OR project_id = $p</code>, and <code>p</code> is
+session state set by the agent's own
+<code>cuba_jornada start project=</code> or
+<code>cuba_proyecto switch</code>; on stdio nothing binds one until the
+agent does, so by default every read spans every project, and row-level
+security admits every row under the same condition. The quarantine
+predicate has the same per-query weakness: it is missing from the two
+error arms of <code>cuba_faro</code>, from <code>cuba_contexto</code>'s
+session and importance layers and from
+<code>cuba_alma action=get</code>. Separately, the tamper-evident audit
+log records promote and quarantine and no other mutation, and
+<code>brain_facts</code> stamps both window ends from record time while
+no read asks a validity question.</li>
 <li>Most reusable component:
 <code>rust/migrations/0016_audit_log.up.sql</code> and
 <code>0029_bitemporal_check.up.sql</code>, read together. The first is a
@@ -24832,13 +24834,15 @@ correct hash chain with its bypass named and justified
 constraints and explains in the comment which illegal states the schema
 had permitted and how many existing rows violated them.</li>
 <li>Maturity impression: Apache 2.0, Rust over PostgreSQL 18 and
-pgvector, 31 MCP tools and 23 CLI commands, published to PyPI, npm and
-the MCP registry; formerly cuba-memorys, and the <code>cuba_*</code>
-tool names still carry that. Three marks — <code>trust_state</code>,
-<code>scope_enforced</code>, <code>negative_eval</code>.
-<code>human_review</code> is withheld because <code>promote</code> is
-one value of an action enum on the tool the writing agent already
-holds.</li>
+pgvector, thirty <code>cuba_*</code> memory tools plus two to find and
+invoke them, on stdio or as a shared HTTP daemon with paired LAN
+accounts, published to PyPI, npm and the MCP registry; formerly
+cuba-memorys, and the <code>cuba_*</code> tool names carry that. Two
+marks — <code>trust_state</code>, <code>negative_eval</code>.
+<code>scope_enforced</code> is withheld because the project predicate is
+true when no project is bound, and <code>human_review</code> because
+<code>promote</code> is one value of an action enum on the tool the
+writing agent already holds.</li>
 <li>Study when: you are about to publish a retrieval number. Its README
 carries a section headed <em>"Measured — and the benchmark that was
 lying"</em> that retracts a published nDCG@10 of 0.894 down to 0.50

@@ -24216,23 +24216,54 @@
     },
     "memory-industry": {
       "counts": {
+        "AGENT": 1,
         "EXEC": 1,
         "FLOAT": 1,
-        "NOTE": 2,
-        "RUNS": 1
+        "FRESH": 4,
+        "RUNS": 2
       },
-      "files_scanned": 9,
+      "files_scanned": 10,
       "findings": [
         {
-          "detail": "AGENTS.md carries instructions addressed to a reading agent; treated as data",
-          "kind": "NOTE",
-          "path": "AGENTS.md"
+          "detail": "editor rules injected into an agent's context — 12 entr(ies): el-gate-es-el-juez.mdc, governance.mdc, memory-industry-gate.mdc, memory-industry-gobernanza.mdc, programar-inmutable.mdc, swarm-forge-ciclo.mdc, swarm-forge-crap.mdc, swarm-forge-handoff.mdc, swarm-forge-mutacion.mdc, swarm-forge-orquestador.mdc, swarm-forge-tdd.mdc, testear-hasta-rojo.mdc",
+          "kind": "RUNS",
+          "path": ".cursor/rules/"
+        },
+        {
+          "detail": "MCP server manifest; declares a start command",
+          "kind": "RUNS",
+          "path": "server.json"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "package.json"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "pyproject.toml"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "rust/Cargo.lock"
+        },
+        {
+          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "kind": "FRESH",
+          "path": "rust/Cargo.toml"
+        },
+        {
+          "detail": "npm lifecycle `postinstall`: node npm/postinstall.js",
+          "kind": "EXEC",
+          "path": "package.json"
         }
       ],
-      "revision": "2f45dcb729426b4b5bfca45981d52a39d3f09d0b",
-      "screened_at": "2026-09-20T00:00:00+00:00",
+      "revision": "b110ac22d5a0532f2eed02652be8078a6747da90",
+      "screened_at": "2026-10-15T21:48:48+00:00",
       "slug": "memory-industry",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/LeandroPG19/Memorys"
     },
