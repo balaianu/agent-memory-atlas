@@ -2080,7 +2080,7 @@ is not an open-source licence</li>
 <li><a
 href="https://github.com/slowave-ai/slowave">slowave-ai/slowave</a> at
 <a
-href="https://github.com/slowave-ai/slowave/commit/00b5a1d7594fef3261a6bc1786e46cceebcd9d49"><code class="commit-id" title="00b5a1d7594fef3261a6bc1786e46cceebcd9d49">00b5a1d7…</code></a>
+href="https://github.com/slowave-ai/slowave/commit/23c951420944009ce8cea8762fa4d4a30eff810d"><code class="commit-id" title="23c951420944009ce8cea8762fa4d4a30eff810d">23c95142…</code></a>
 — read only; one auto-run surface, five build-time execution points, one
 unpinned dependency surface and one dependency file inside the seven-day
 cooldown, with <code>uv.lock</code> present. Nothing was installed,
@@ -16911,6 +16911,29 @@ and no GUC (<code>recall_hooks/write_time.py:222-229</code>), and
 <code>BYPASSRLS</code> role ignores the policy, which the MCP server
 allowed for single-tenant serving with a warning. The mark holds,
 because every statement carries the tenant predicate.</li>
+<li><strong>Three published claims about <a
+href="../systems/slowave/">Slowave</a> were wrong at <a
+href="https://github.com/slowave-ai/slowave/commit/00b5a1d7594fef3261a6bc1786e46cceebcd9d49"><code class="commit-id" title="00b5a1d7594fef3261a6bc1786e46cceebcd9d49">00b5a1d7…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+every timestamp was a record time; <code>slowave_remember</code> took an
+optional <code>occurred_at</code>, an RFC 3339 source-event time kept
+apart from the write clock (<code>slowave/mcp/tools.py:1309</code>), and
+episode ranking read it against an anchor estimated from the query
+(<code>slowave/latent/retrieval.py:338</code>). <code>bitemporal</code>
+stays withheld, on the absence of a validity interval rather than of a
+second clock. It said the derived layers could always be discarded and
+rebuilt from <code>raw_events</code>; <code>remember()</code> wrote its
+schema directly (<code>slowave/core/engine.py:713</code>), and
+consolidation, the rebuild's only schema writer, skipped any prototype
+whose episodes were all remember events
+(<code>slowave/core/consolidation.py:180</code>), so a remembered schema
+was not re-formed. And its <code>negative_eval</code> record said three
+cases paired a required with a forbidden content; seven did
+(<code>tests/acceptance/test_memory_lifecycle.py:119</code>,
+<code>:225</code>, <code>:348</code>, <code>:748</code>,
+<code>:782</code>, <code>:806</code>, <code>:853</code>). The first two
+rested on the column names and the rebuild's own description rather than
+on the write path's arguments and the consolidation loop.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

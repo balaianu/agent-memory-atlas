@@ -15978,46 +15978,52 @@ recall items, the feedback events naming the schema as target
 scrubbed in the same transaction as the row. Most stores in this corpus
 leave a deleted memory's id behind in tables nobody thought to
 sweep.</li>
-<li>Biggest risk: <strong>a rebuild restores what a person
-deleted.</strong> Removal is a person's act at the local dashboard —
-none of the agent's five MCP tools reaches it — and it removes the
-schema and every row naming it but leaves the <code>raw_events</code>
-the claim was consolidated from and records nothing. The rebuild that
-runs unprompted after an upgrade changes
-<code>current_logic_version</code> deletes <code>schemas</code> and
-re-consolidates from those events, so a memory removed to keep it out of
-the context can re-form, as it can from a later session.</li>
-<li>Most reusable component: the cross-scope rule, written once as a
-predicate rather than assembled by callers. A row is admitted when its
-scope matches, when it is unscoped, when it sits in
+<li>Biggest risk: <strong>the rebuild knows only one of the two write
+paths.</strong> When an upgrade changes
+<code>current_logic_version</code>, the engine deletes every schema and
+re-consolidates from <code>raw_events</code>. Consolidation skips
+prototypes whose episodes are all remember events, because
+<code>remember()</code> wrote its schema directly, so a memory the agent
+stored with <code>slowave_remember</code> is not re-formed; every status
+is reset on the schemas that are; and a schema a person deleted at the
+dashboard can return, because its raw events were kept and nothing
+records the deletion.</li>
+<li>Most reusable component: the cross-scope rule, written as a
+predicate in the store's SQL rather than assembled by callers. A row is
+admitted when its scope matches, when it is unscoped, when it sits in
 <code>('global', 'user')</code>, or when its
 <code>generalization_stage</code> has reached 2 — so a memory earns its
-way across a project boundary by demonstrating it travels, instead of
-being marked global at write time by whoever wrote it. The same shape
-appears on the direct-candidate filter and on the graph-expansion walk,
-which is the drift this atlas most often finds between exactly those two
-paths.</li>
+way across a project boundary by demonstrating it travels. The
+working-memory gate holds the stricter line, <code>recall</code> routes
+direct and graph-expansion candidates through one
+<code>_cross_scope_gate</code>, and the MCP tools fix the strict mode;
+the catalog they read from admits a stage-2 schema without the discount
+<code>recall</code> applies.</li>
 <li>Maturity impression: AGPL-3.0-or-later with a separate commercial
-licence and a CLA, version 0.20.4, 534 commits between 8 June and 24
-September 2026 from one author under three names and a release bot,
-33,193 lines of Python across 80 files against 34,645 lines of test in
-136 files carrying 907 test functions, 28 tables, a local dashboard of
+licence and a CLA, version 0.22.2, 577 commits between 8 June and 14
+October 2026 from one author under three names and a release bot, 39,363
+lines of Python across 93 files against 41,784 lines of test in 157
+files carrying 1,172 test functions, 33 tables, a local dashboard of
 over 4,000 lines, and a memory core with no LLM call and no API key in
-ingest, consolidation or recall. One auto-run surface, five build-time
-execution points and one dependency file inside the cooldown at this
-pin.</li>
+ingest, consolidation or recall. Acceptance tests run over a real MCP
+stdio client, with a mutation registry that requires each
+launch-critical negative case to fail when its guard is removed. One
+auto-run surface, five build-time execution points and one dependency
+file inside the cooldown at this pin.</li>
 <li>Study when: you want a memory layer with no LLM in its own loop, a
-project boundary that holds by default, and a schema erasure that
-removes every row naming the thing erased.</li>
+project boundary that holds by default, a schema erasure that removes
+every row naming the thing erased, and negative retrieval tests that are
+themselves tested.</li>
 <li>Do not copy when: a claim someone rejected must stay rejected
-against the pass that would re-derive it, or you need to ask what was
-true at a past moment — every timestamp here is a record time. Three
-marks: trust state, scope enforced, negative eval.
+against the pass that would re-derive it, an explicitly stored memory
+must survive an upgrade, or you need to ask what was true at a past
+moment — <code>occurred_at</code> is an event time, not a validity
+interval. Three marks: trust state, scope enforced, negative eval.
 <code>human_review</code> is withheld: the
 delete-only-from-the-dashboard boundary is a permission over a
 destructive act, not a state a memory waits in, and
 <code>needs_review</code> — the one status that reads like a review
-queue — is admitted by four read paths and written by nothing in the
+queue — is admitted by several read paths and written by nothing in the
 tree.</li>
 </ul>
 <h3 id="ultracontext"><a
