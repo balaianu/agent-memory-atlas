@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 745 reports.</strong></p>
+<p><strong>This page covers all 746 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30903,6 +30903,49 @@ what it writes back.</li>
 <li>Do not copy when: several users or projects share one database, a
 correction must outrank the value it replaces, or the REST server will
 run where untrusted pages can reach it.</li>
+</ul>
+<h3 id="binder"><a
+href="../systems/binder/"><code>binder</code></a></h3>
+<ul>
+<li>Best idea: <strong>put the prior value in the change record and
+check the chain inside the write lock.</strong> Every changeset is
+<code>[old, new]</code> or <code>["clear", old]</code>, so
+<code>invertTransaction</code> needs no database read, and
+<code>applyAndSaveTransaction</code> refuses unless the new id is the
+tip plus one and <code>previous</code> is the tip's SHA-256, inside an
+<code>immediate</code> SQLite transaction. A parallel-process test
+asserts four colliding upserts all land.</li>
+<li>Biggest risk: <strong>undo deletes history.</strong>
+<code>rollbackTransaction</code> applies the inverses and then runs
+<code>DELETE FROM transactions</code> over the range,
+<code>journalOnRollback</code> trims the same lines from
+<code>transactions.jsonl</code>, and the reverted transactions survive
+only in <code>undo.jsonl</code> until the next commit clears it.
+<code>binder undo</code> asks for no confirmation, <code>squash</code>
+rewrites authors to the newest, and configured hooks get no rollback
+event.</li>
+<li>Most reusable component:
+<code>packages/repo/src/transaction-applier.ts</code> with
+<code>packages/cli/src/plugins/journal/integrity.ts</code> — a
+version-checked apply, a canonical hash over schema-ordered changesets,
+and a verifier that recomputes each journal line's hash against the
+schema as of that line.</li>
+<li>Second risk: <strong>provenance cannot tell the agent from the
+person.</strong> The MCP <code>transact</code> tool and the LSP save
+handler both stamp <code>author: config.author</code> with no source or
+channel; only CLI commands stamp <code>channel: "cli"</code>, and the
+HTTP body may override the author.</li>
+<li>Maturity impression: MIT, 35,499 lines of TypeScript outside tests,
+396 commits by one author between 15 October 2025 and 21 September 2026,
+2,224 bun test cases and no CI workflow in the tree. No marks. Retrieval
+is substring <code>LIKE</code> in row order, and the model-call helper
+<code>callLlm</code> has no caller.</li>
+<li>Study when: you want a typed, schema-validated store an agent and a
+person edit together, with every change invertible and verifiable from a
+plain-text journal.</li>
+<li>Do not copy when: deletions must remove content, corrections must
+leave a record after undo, or the log must say which writer was the
+model.</li>
 </ul>
 <h3 id="crystalline"><a
 href="../systems/crystalline/"><code>crystalline</code></a></h3>

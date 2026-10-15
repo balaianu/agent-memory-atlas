@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 745 reports.**
+**This page covers all 746 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6756,6 +6756,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 25,857 lines of Rust outside tests across six crates, 283 commits on main under nine author names between 11 March and 8 October 2026, 797 Rust test functions run in CI. Two marks: `scope_enforced` and `negative_eval`. `human_review` is withheld: Muse cannot clear its own inbox and the self-hosted drain is a person-only CLI, but on the cloud path the local assistant's `muse_inbox` tool approves, allowed by default. The README's LoCoMo figure has no committed result file.
 - Study when: you want a hosted agent to read a curated slice of local memory, with budgets, revocation, an audit trail and a quarantine for what it writes back.
 - Do not copy when: several users or projects share one database, a correction must outrank the value it replaces, or the REST server will run where untrusted pages can reach it.
+
+### [`binder`](../systems/binder/)
+
+- Best idea: **put the prior value in the change record and check the chain inside the write lock.** Every changeset is `[old, new]` or `["clear", old]`, so `invertTransaction` needs no database read, and `applyAndSaveTransaction` refuses unless the new id is the tip plus one and `previous` is the tip's SHA-256, inside an `immediate` SQLite transaction. A parallel-process test asserts four colliding upserts all land.
+- Biggest risk: **undo deletes history.** `rollbackTransaction` applies the inverses and then runs `DELETE FROM transactions` over the range, `journalOnRollback` trims the same lines from `transactions.jsonl`, and the reverted transactions survive only in `undo.jsonl` until the next commit clears it. `binder undo` asks for no confirmation, `squash` rewrites authors to the newest, and configured hooks get no rollback event.
+- Most reusable component: `packages/repo/src/transaction-applier.ts` with `packages/cli/src/plugins/journal/integrity.ts` — a version-checked apply, a canonical hash over schema-ordered changesets, and a verifier that recomputes each journal line's hash against the schema as of that line.
+- Second risk: **provenance cannot tell the agent from the person.** The MCP `transact` tool and the LSP save handler both stamp `author: config.author` with no source or channel; only CLI commands stamp `channel: "cli"`, and the HTTP body may override the author.
+- Maturity impression: MIT, 35,499 lines of TypeScript outside tests, 396 commits by one author between 15 October 2025 and 21 September 2026, 2,224 bun test cases and no CI workflow in the tree. No marks. Retrieval is substring `LIKE` in row order, and the model-call helper `callLlm` has no caller.
+- Study when: you want a typed, schema-validated store an agent and a person edit together, with every change invertible and verifiable from a plain-text journal.
+- Do not copy when: deletions must remove content, corrections must leave a record after undo, or the log must say which writer was the model.
 
 ### [`crystalline`](../systems/crystalline/)
 

@@ -681,6 +681,7 @@ href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a></li>
 href="../systems/hermes-fleet-memory/"><code>hermes-fleet-memory</code></a></li>
 <li><a href="../systems/aigent-os/"><code>aigent-os</code></a></li>
 <li><a href="../systems/crystalline/"><code>crystalline</code></a></li>
+<li><a href="../systems/binder/"><code>binder</code></a></li>
 </ul>
 <h2 id="repos-inspected">Repos Inspected</h2>
 <ul>
@@ -6715,6 +6716,19 @@ cooldown, among them <code>Cargo.lock</code> and
 <code>fluid/package.json</code>'s floating ranges behind
 <code>pnpm-lock.yaml</code>; <code>AGENTS.md</code> treated as data.
 Nothing was installed, built or run</li>
+<li><a href="https://github.com/mpazik/Binder">mpazik/Binder</a> at <a
+href="https://github.com/mpazik/Binder/commit/e4066d750ac5c6918706f44b12daa261b261106e"><code class="commit-id" title="e4066d750ac5c6918706f44b12daa261b261106e">e4066d75…</code></a>
+— read only, at the head of <code>main</code>, a commit dated 21
+September 2026. MIT with no rider. Screened before reading from a full
+clone: one auto-run surface (<code>.vscode/settings.json</code>, which
+sets only <code>binder.devMode</code>), one build-time execution point
+(<code>packages/cli/package.json</code> <code>prepublishOnly</code>),
+nothing inside the seven-day cooldown, and five unpinned surfaces, three
+of them workspace manifests (<code>packages/cli</code>,
+<code>packages/repo</code>, <code>packages/utils</code>) without a
+lockfile beside them against the root <code>bun.lock</code>;
+<code>AGENTS.md</code> was treated as data. Nothing was installed, built
+or run</li>
 </ul>
 <h2 id="what-the-licences-actually-say">What the licences actually
 say</h2>

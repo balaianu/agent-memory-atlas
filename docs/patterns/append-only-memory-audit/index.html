@@ -803,6 +803,23 @@ The redaction event is recorded and nothing consults it, so the DuckDB
 index keeps the redacted text and search returns it; a test that
 searches for the removed value is what this pattern's audit would have
 needed beside it.</p>
+<p><strong><a href="../../systems/binder/">Binder</a> builds the log
+this pattern asks for and then gives undo the right to delete from
+it.</strong> Each transaction carries the old and new value of every
+field it touches, is SHA-256-chained to its predecessor, is inserted in
+the same <code>immediate</code> SQLite transaction as the change, and is
+mirrored to a JSONL journal whose verifier recomputes every hash
+(<code>packages/repo/src/transaction-applier.ts:67-88</code>,
+<code>packages/cli/src/plugins/journal/integrity.ts:28-100</code>).
+<code>rollbackTransaction</code> applies the inverses and then deletes
+the reverted range from the table, and the journal plugin trims the same
+lines (<code>transaction-applier.ts:141-150</code>,
+<code>packages/cli/src/plugins/journal/handlers.ts:54-68</code>). Three
+CLI commands reach it — <code>undo</code>,
+<code>transaction rollback</code> and <code>squash</code>, the last of
+which also rewrites authors. <strong>An inverse appended as a new
+transaction would keep the same undo and the history; a delete keeps the
+undo and loses the history.</strong></p>
 <p><strong><a href="../../systems/hive-mind/">HiveMind
 (projectmentor)</a> has no audit table because the log is the
 store.</strong> Every fact, retraction, link, decision, idea and

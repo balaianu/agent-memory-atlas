@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local-first typed record graph
+that agents read and write over MCP, where every change is a
+hash-chained transaction that undo deletes.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Binder — Agent Memory Atlas">
+    <meta property="og:description" content="A local-first typed record
+graph that agents read and write over MCP, where every change is a
+hash-chained transaction that undo deletes.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Binder — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local-first typed record
+graph that agents read and write over MCP, where every change is a
+hash-chained transaction that undo deletes.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Binder — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Binder",
+      "description": "A local-first typed record graph that agents read and write over MCP, where every change is a hash-chained transaction that undo deletes.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A typed local graph with a hash-chained,
+rewindable log</p>
+          <h1>Binder</h1>
+          <p class="document-deck">A local-first typed record graph that
+agents read and write over MCP, where every change is a hash-chained
+transaction that undo deletes.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/mpazik/Binder">
+              <span>Source</span>
+              <strong>mpazik/Binder</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/mpazik/Binder/commit/e4066d750ac5c6918706f44b12daa261b261106e" title="e4066d750ac5c6918706f44b12daa261b261106e">
+              <span>Analyzed revision</span>
+              <code>e4066d75…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/mpazik--Binder" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>mpazik--Binder</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>35,499
+lines of TypeScript in packages/ outside tests and mocks</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>396
+commits on main, all by one author, 15 October 2025 – 21 September
+2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>2,224
+bun test cases in 87 files, unit and end-to-end; no CI workflow in the
+tree</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Binder is a local-first database of typed records — <em>"The database
+for tools you build with AI"</em> in its README — held in SQLite and
+rendered to Markdown files. Editors reach it through an LSP, agents
+through a three-tool MCP server and the CLI, and browsers through a
+loopback HTTP API. What is notable is the change model. Every write is a
+transaction carrying the full prior value of every field it touches,
+chained by SHA-256 to its predecessor, mirrored to a JSONL journal that
+<code>binder journal verify</code> re-hashes, and invertible. What is
+weak is that the history is rewindable and unattributed.
+<code>binder undo</code>, <code>transaction rollback</code> and
+<code>transaction squash</code> apply the inverse and then delete the
+transactions from the table and the journal. An agent's MCP write is
+recorded under the same author, with no channel, as a person's editor
+save.</p>
+<p>It is in scope as a store agents write into across sessions, not as a
+dedicated memory system. The README lists <em>"Agent context and
+memory"</em> as one of five uses, the default blueprint is a
+<code>Note</code> type, and the MCP <code>transact</code> tool lets an
+agent create, update and delete any record it can describe. What a
+record means is set by the workspace schema. That puts it beside the
+note applications this atlas reads — <a href="../joplin/">Joplin</a>, <a
+href="../silverbullet/">SilverBullet</a>, <a
+href="../trilium/">Trilium</a> — and on the work side of the <a
+href="../../families/#not-in-scope-conversation-window-management">work-versus-belief
+boundary</a> only when a workspace is configured as a tracker.</p>
+<p>No mark is earned. The transaction log is the closest: hash-chained,
+complete for forward writes and attributed to an author, and truncated
+by three CLI commands, so <code>audit_log</code> is withheld on the
+append-only clause. Retrieval is a SQL <code>LIKE</code> over text
+fields in insertion order. Nothing marks an agent's record as
+unconfirmed, there is no scope key, and the one deletion test asserts
+absence without a positive control. A model-call helper,
+<code>callLlm</code>, is defined and has no caller, so the write path is
+model-free.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory here is a record of a schema type, and a record is true from
+the transaction that creates it until a later transaction changes or
+deletes it. There is no candidate state, no confidence and no
+supersession pointer. The only epistemic machinery is the transaction
+log: it says who changed what, when, from which value to which, and it
+lets the last N changes be taken back.</p>
+<p>The life of a record:</p>
+<ul>
+<li><strong>Created</strong> by a transaction with an <code>id</code>
+set-change; the changeset records every field's initial value
+(<code>packages/repo/src/changeset-applier.ts:56-63</code>).</li>
+<li><strong>Patched</strong> by later transactions whose changesets
+carry old and new values, so each one can be inverted without reading
+the database
+(<code>packages/repo/src/model/transaction.ts:162-166</code>).</li>
+<li><strong>Deleted</strong> by a transaction that clears every non-null
+field, recording its value, and removes the row
+(<code>packages/repo/src/changeset-processor.ts:1379-1401</code>,
+<code>packages/repo/src/entity-store.ts:184-194</code>). The record's
+content stays in that transaction for as long as the transaction
+exists.</li>
+<li><strong>Un-happened</strong> by <code>rollback</code>, which applies
+the inverse of the last N transactions and then deletes them
+(<code>packages/repo/src/transaction-applier.ts:90-152</code>). The undo
+plugin keeps them in <code>undo.jsonl</code> for
+<code>binder redo</code> until the next forward commit clears that
+file.</li>
+</ul>
+<p>The last transition is the one that matters for trust. Correction by
+a new transaction leaves a record of the wrong value and of who replaced
+it. Correction by undo leaves no record that the wrong value was ever
+written. The docs describe the same log as <em>"an append-only linked
+list"</em> forming a tamper-evident history
+(<code>docs/concepts/transaction.md:30</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — Every writer funnels into one hash-chained transaction, and undo, rollback and squash delete transactions from both the table and the journal after applying their inverses.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: Every writer funnels into one hash-chained transaction, and undo, rollback and squash delete transactions from both the table and the journal after applying their inverses.
+flowchart TD
+    A[&quot;Agent: MCP transact&quot;] --&gt; P
+    B[&quot;Person: editor save via LSP&quot;] --&gt; P
+    C[&quot;CLI create / update / delete&quot;] --&gt; P
+    D[&quot;HTTP POST /api/transactions&quot;] --&gt; P
+    P[&quot;processTransactionInput: resolve refs, upsert pre-pass, validate against schema&quot;] --&gt; V
+    V{&quot;id is tip+1 and previous is tip hash?&quot;}
+    V -- no --&gt; X[&quot;version-mismatch: nothing written&quot;]
+    V -- yes --&gt; W[&quot;apply changesets to records and configs; insert transaction row&quot;]
+    W --&gt; J[&quot;journal: append line to transactions.jsonl&quot;]
+    W --&gt; R[&quot;docs: re-render Markdown files&quot;]
+    W --&gt; U[&quot;undo: clear undo.jsonl&quot;]
+    W --&gt; H[&quot;config hooks: shell command, tx JSON on stdin&quot;]
+    W --&gt; S[&quot;search: filters and LIKE over live rows&quot;]
+    W --&gt; Z[&quot;binder undo / tx rollback / tx squash&quot;]
+    Z --&gt; I[&quot;apply inverse changesets&quot;]
+    I --&gt; DEL[&quot;DELETE FROM transactions WHERE id in range&quot;]
+    DEL --&gt; T[&quot;journal: remove matching tail lines&quot;]
+    DEL --&gt; UL[&quot;undo: append reverted txs to undo.jsonl&quot;]
+    T --&gt; GONE[&quot;no record the reverted writes happened; hooks get no event&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>A Bun workspace of three TypeScript packages.
+<code>@binder/repo</code> is the engine: records, configs and
+transactions in SQLite through Drizzle, changeset processing and
+filtering. <code>@binder.do/cli</code> holds the CLI, the LSP and MCP
+servers, Markdown rendering and parsing, the HTTP server and the
+plugins. <code>@binder/utils</code> is shared helpers. Two editor
+integrations under <code>integrations/</code> launch
+<code>binder lsp</code>.</p>
+<p>The store is one SQLite file, <code>binder.db</code>, under the
+workspace's data directory, with three tables
+(<code>packages/repo/src/schema.ts:39-97</code>). <code>records</code>
+and <code>configs</code> hold a JSON <code>fields</code> blob, a
+<code>tx_ids</code> list naming the transactions that touched the row,
+and <code>tags</code>. <code>transactions</code> holds the hash, the
+previous hash, the record and config changesets as JSON, the author, a
+<code>fields</code> blob with message, source and channel, and
+<code>created_at</code>. The schema itself lives in
+<code>configs</code>: a <code>Type</code> or field definition is an
+entity written by transactions like any record.</p>
+<p>Three commit subscribers run after every database commit, in
+registration order (<code>packages/cli/src/runtime.ts:276-297</code>).
+The journal plugin reconciles <code>transactions.jsonl</code> against
+the table. The undo plugin clears <code>undo.jsonl</code>. The docs
+plugin re-renders the Markdown files whose navigation rules match the
+changed records. Hooks declared in <code>.binder/config.yaml</code> run
+a shell command per transaction with the transaction as JSON on stdin
+(<code>packages/repo/src/local/plugin-loader.ts:54-76</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing has to run but the CLI:
+<code>npm install -g @binder.do/cli</code>, then
+<code>binder init</code> with a blueprint. Node 22 or Bun, SQLite
+through <code>better-sqlite3</code> or <code>bun:sqlite</code>, no
+network and no API key to store anything. The store is repairable by
+hand three ways: as Markdown files, as a JSONL journal that
+<code>binder journal repair --from-log</code> can rebuild the database
+from, and as plain SQLite. The CLI sends usage telemetry — command
+names, durations, error chains, MCP tool names, no record content — to
+PostHog when a key is configured, unless <code>DO_NOT_TRACK</code>,
+<code>BINDER_TELEMETRY_DISABLED</code> or the global config turns it off
+(<code>packages/cli/src/telemetry.ts:53-90</code>,
+<code>packages/cli/src/commands/mcp.ts:82-90</code>).</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write.</strong> Every surface ends in <code>kg.update</code>
+(<code>packages/repo/src/knowledge-graph.ts:604-616</code>). It reloads
+the record schema inside the write transaction, because another process
+may have committed a schema change, and calls
+<code>processTransactionInput</code>. That resolves keys and references
+to uids, runs the upsert pre-pass, validates each field against its
+definition and builds changesets with prior values
+(<code>packages/repo/src/changeset-processor.ts:1608-1700</code>).
+<code>prepareApplyAndNotify</code> then opens an <code>immediate</code>
+SQLite transaction, and <code>applyAndSaveTransaction</code> refuses
+unless the new id is the tip plus one and <code>previous</code> is the
+tip's hash
+(<code>packages/repo/src/transaction-applier.ts:67-88</code>).
+Subscribers fire after the commit; a subscriber failure is reported and
+never aborts it.</p>
+<p><strong>Hashing.</strong> <code>transactionToCanonical</code>
+canonicalises the changesets against the schema, drops empty ones and
+keeps <code>previous</code>, <code>createdAt</code>,
+<code>author</code>, tags, message, source and channel.
+<code>hashTransaction</code> is SHA-256 of its JSON, base64url-encoded
+(<code>packages/repo/src/model/transaction.ts:63-107</code>).
+<code>verifyLog</code> walks the journal checking each
+<code>previous</code> and, with <code>verifyIntegrity</code>, recomputes
+every hash against the schema as of that line
+(<code>packages/cli/src/plugins/journal/integrity.ts:28-100</code>).</p>
+<p><strong>Retrieval.</strong> <code>kg.search</code> checks every
+filter key against the schema, resolves relation filters to uids,
+compiles the rest with <code>buildWhereClause</code>, orders by row id
+unless <code>orderBy</code> is given, fetches one row past the limit to
+set <code>hasNext</code>, and expands includes
+(<code>packages/repo/src/knowledge-graph.ts:513-602</code>). The MCP
+<code>search</code> tool passes filters and pagination straight through
+(<code>packages/cli/src/mcp/tools/search.ts:36-50</code>).</p>
+<p><strong>Correction and forgetting.</strong>
+<code>$delete: true</code> on a key or uid builds the clearing
+changeset, and <code>expandDeleteCleanup</code> removes the deleted uid
+from every relation that points at it in the same transaction
+(<code>packages/repo/src/changeset-processor.ts:1255-1357</code>).
+<code>kg.rollback(count)</code> is the only path that removes a
+transaction. Its callers are <code>binder undo</code>
+(<code>packages/cli/src/plugins/undo/commands.ts:45</code>),
+<code>transaction rollback</code> and <code>transaction squash</code>
+(<code>packages/cli/src/commands/transaction.ts:259,340</code>), and
+journal repair
+(<code>packages/cli/src/plugins/journal/sync.ts:141</code>).</p>
+<p><strong>Markdown round trip.</strong> The docs plugin renders records
+into files by navigation rules and views. On save, the LSP's
+<code>syncDocument</code> extracts the file's changes against the
+snapshot it rendered and submits them as one transaction
+(<code>packages/cli/src/lsp/handlers/save-handler.ts:41-105</code>).
+List items without a uid are matched to existing entities by a
+similarity score and an auction assignment, which decides whether an
+edited line is an update or a delete plus a create
+(<code>packages/cli/src/diff/entity-matcher.ts</code>,
+<code>packages/cli/src/diff/auction-match.ts</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>A record is <code>id</code>, <code>uid</code>, a unique nullable
+<code>key</code>, a <code>type</code>, and a JSON fieldset
+(<code>packages/repo/src/schema.ts:39-56</code>). Field definitions are
+config entities with a data type — text, number, date, period, relation,
+option and others — and attributes such as <code>required</code>,
+<code>only</code>, <code>allowMultiple</code> and
+<code>inverseOf</code>, validated at write time
+(<code>packages/repo/src/data-type-validators.ts</code>). The blueprints
+define the vocabulary a new workspace starts with:
+<code>default.yaml</code> a <code>Note</code>,
+<code>personal.yaml</code> the PARA set of Area, Project, Task, Note and
+Resource, <code>project.yaml</code> Task and Milestone
+(<code>packages/cli/data/blueprints/</code>).</p>
+<p>Provenance lives on the transaction, not the record. A record's
+<code>tx_ids</code> names every transaction that touched it, and each
+transaction carries <code>author</code>, <code>createdAt</code> and
+optional <code>message</code>, <code>source</code>, <code>channel</code>
+and <code>tags</code>. Which of those is set depends on the surface:</p>
+<ul>
+<li><strong>CLI</strong> commands stamp <code>channel: "cli"</code> and
+take <code>--tx-source</code>, <code>--tx-message</code> and
+<code>--tx-tag</code> or their environment variables
+(<code>packages/cli/src/cli/options.ts:177-227</code>).</li>
+<li><strong>MCP</strong> <code>transact</code> passes
+<code>author: config.author</code> and nothing else
+(<code>packages/cli/src/mcp/tools/transact.ts:101-105</code>).</li>
+<li><strong>LSP</strong> saves pass <code>author: config.author</code>
+and nothing else
+(<code>packages/cli/src/lsp/handlers/save-handler.ts:93-96</code>).</li>
+<li><strong>HTTP</strong> sets <code>author: config.author</code> and
+then spreads the request body over it, so a caller may supply any
+author, source or channel
+(<code>packages/cli/src/http/server.ts:133-136</code>).</li>
+<li><strong>Library</strong> callers opened with a <code>clientId</code>
+get it as <code>source</code>
+(<code>packages/cli/src/workspace.ts:91-93</code>).</li>
+</ul>
+<p>The only timestamp is the transaction's <code>createdAt</code>, which
+is record time. Date and period fields exist as data types a schema may
+use; nothing in the engine treats one as validity.</p>
+<p>There is no scope key. A workspace is a directory with its own
+<code>.binder/</code> and database, and every reader in the tree reads
+the whole workspace.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is structured lookup. A filter is a field and either a
+value or an operator: <code>eq</code>, <code>not</code>,
+<code>in</code>, <code>notIn</code>, <code>contains</code>,
+<code>notContains</code>, <code>match</code>, <code>lt</code>,
+<code>lte</code>, <code>gt</code>, <code>gte</code>, <code>range</code>,
+<code>empty</code>. Values are compared through JSON extraction on the
+fieldset, with <code>json_each</code> for multi-valued fields
+(<code>packages/repo/src/filter-entities.ts:255-376</code>).
+<code>match</code> and <code>contains</code> both compile to
+<code>LIKE '%value%'</code> (<code>filter-entities.ts:341-344</code>).
+<code>$text</code> ORs a <code>LIKE</code> across every text-typed field
+except id, uid, type and tags
+(<code>filter-entities.ts:185-192,378-398</code>). A proposal document
+describes FTS5 <code>match</code>, a vector <code>similar</code> and a
+hybrid <code>search</code> operator
+(<code>packages/repo/src/model/query-extension.md</code>); none is
+implemented, and the README's roadmap lists full-text and semantic
+search as next.</p>
+<p>Results come back in row-id order with a default limit of 50 and an
+opaque cursor. Includes expand relation fields one level per nested
+spec, so an agent can ask for <code>partOf(title,status)</code> in one
+call. There is no ranking, no recency weighting, no token budget and no
+formatting for a prompt. The MCP tool returns the records as structured
+content plus a one-line count.</p>
+<p>Retrieval is entirely tool-mediated. Nothing reads the store on
+session start, on a prompt or after compaction; the agent sees the
+workspace only when it calls <code>search</code> or <code>schema</code>,
+or runs the CLI. Over-recall is the failure the substring match invites:
+a <code>$text</code> of <code>"auth"</code> matches
+<code>"author"</code> in every text field. Under-recall is the failure
+the schema invites, because a filter on an undefined field is an error
+rather than an empty result.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes are explicit and synchronous. An agent calls
+<code>transact</code> with records and configs; the tool builds a
+<code>TransactionInput</code>, calls <code>kg.update</code>, and returns
+the transaction id, hash and counts. There is no extraction, no
+deduplication beyond key uniqueness, no consolidation and no model call.
+<code>callLlm</code> (<code>packages/cli/src/lib/llm.ts:126</code>) and
+its per-operation model config are declared and nothing calls them.</p>
+<p>The upsert pre-pass is the write behaviour an agent is most likely to
+trip over. An input carrying both <code>type</code> and an existing
+<code>key</code> or <code>uid</code> is routed to an update of that
+entity, refused only if the types differ
+(<code>packages/repo/src/changeset-processor.ts:1608-1660</code>). An
+agent that writes <code>{type: "Note", key: "auth-decision", …}</code>
+believing it is creating a note overwrites the fields of the note
+already under that key. The tool's reply reports <em>"1 record(s)"</em>
+either way.</p>
+<p>Validation is the only filter on content. A value outside an
+<code>only</code> list, a missing required field or a relation to the
+wrong type fails the whole transaction. Nothing screens text for
+instructions, and nothing distinguishes a record an agent inferred from
+one a person typed.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>A write blocks for one SQLite transaction plus the subscribers: the
+journal check reads the journal's tail and appends a line, and the docs
+render rewrites the affected Markdown files. A record is retrievable as
+soon as the call returns. No background pass touches the store. When the
+journal holds transactions the table lacks, <code>syncLogFromDb</code>
+clears the journal and rewrites it from the whole table
+(<code>packages/cli/src/plugins/journal/sync.ts:157-198</code>), which
+is a full pass over history on that commit. Nothing is injected per
+turn, so there is no prompt-cache cost.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP server is three tools — <code>schema</code>,
+<code>search</code>, <code>transact</code> — and an empty resource list
+(<code>packages/cli/src/mcp/tools/index.ts:6</code>,
+<code>packages/cli/src/mcp/resources.ts:38</code>). The
+<code>transact</code> description teaches create, update by key or uid,
+delete with <code>$delete</code>, and schema changes, and tells the
+model to call <code>schema</code> first. The model therefore holds every
+verb over every record and over the schema itself. It can add a field,
+change a type's field list, or delete any entity, in one call. It cannot
+undo, roll back or squash; those are CLI commands.</p>
+<p>Four skills under <code>skills/</code> teach an agent the CLI, schema
+modelling, import and building an HTTP app on a workspace. The examples
+add a journal with day-to-year roll-ups and a task workflow. None of
+them tells an agent to record what it learns, and no hook wires Binder
+into a harness's session lifecycle. An adopter who wants a memory loop
+writes the prompt and the hook.</p>
+<p>Adapting it to another agent is cheap at the transport — stdio MCP, a
+CLI with <code>--format json</code>, a JSON HTTP API — and the work is
+in the schema. The design expects a person to define types and fields
+first and the agent to fill them.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Concurrency is handled properly.</strong> Every write runs
+inside an <code>immediate</code> SQLite transaction and re-checks the
+tip id and hash before applying
+(<code>packages/repo/src/knowledge-graph.ts:425</code>,
+<code>packages/repo/src/transaction-applier.ts:75-84</code>). An
+end-to-end test runs four CLI updates and four colliding upserts as
+parallel processes and asserts every exit code, the absence of a
+uniqueness error and the final value of each record
+(<code>packages/cli/tests/concurrency.test.ts:15-60</code>).</p>
+<p><strong>The log is complete for forward writes and rewritable by
+three commands.</strong> <code>rollbackTransaction</code> deletes the
+reverted range from <code>transactions</code>
+(<code>transaction-applier.ts:141-150</code>), and
+<code>journalOnRollback</code> removes the matching lines from the
+journal's tail
+(<code>packages/cli/src/plugins/journal/handlers.ts:54-68</code>).
+<code>binder undo</code> asks for no confirmation;
+<code>transaction rollback</code> and <code>squash</code> do.
+<code>squash</code> also replaces the authors of the merged transactions
+with the newest one, and warns that it will
+(<code>packages/cli/src/commands/transaction.ts:308-317</code>). The
+reverted transactions survive only in <code>undo.jsonl</code>, which the
+next commit truncates
+(<code>packages/cli/src/plugins/undo/handlers.ts:22-26</code>).</p>
+<p><strong>Configured hooks do not close that gap.</strong> The README's
+example hook appends each transaction to <code>.binder/audit.log</code>
+with <code>jq</code>, which would be an external append-only copy. Hooks
+subscribe through <code>onTransaction</code> only
+(<code>plugin-loader.ts:58</code>), so a rollback produces no event. The
+file would hold the undone transactions with nothing marking them
+reverted.</p>
+<p><strong>Provenance cannot separate the agent from the
+person.</strong> MCP and LSP writes both carry
+<code>author: config.author</code> with no source and no channel, and
+CLI writes carry <code>channel: "cli"</code>. A reviewer reading
+<code>binder tx log</code> sees an agent's <code>transact</code> and a
+person's save as the same author on the same unlabeled channel. The HTTP
+API lets any local caller name any author.</p>
+<p><strong>Deletion is not erasure.</strong> A deleted record's every
+field is in the deleting transaction, in SQLite and in the journal, and
+<code>binder tx read</code> prints it. The only way to remove the
+content is to roll back past the transaction that created it, which
+removes everything after it too. A secret an agent writes into a record
+is recoverable from the log after <code>$delete</code>.</p>
+<p><strong>The HTTP API binds to 127.0.0.1 by default and has no
+authentication</strong>
+(<code>packages/cli/src/commands/http.ts:9,31</code>).
+<code>--host</code> or the config's <code>host</code> widens it with
+nothing else changing. A <code>server.ts</code> in the static directory
+is loaded and run as routes, workspace scripts in
+<code>.binder/scripts/</code> become subcommands, and hooks run through
+a shell. Each is code a workspace carries, which matters when a
+workspace is cloned from someone else.</p>
+<p><strong>Uncertainty has no representation.</strong> A schema can add
+a <code>status</code> field with <code>only: [draft, confirmed]</code>,
+and nothing in the engine or the MCP tool reads it.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The suite is 2,224 <code>it</code> or <code>test</code> cases in 87
+files. Unit tests sit beside each module in <code>packages/*/src</code>,
+and end-to-end tests under <code>packages/cli/tests</code> create a
+temporary workspace and drive the CLI, LSP, MCP and HTTP surfaces as
+subprocesses. No workflow under <code>.github/</code> runs them, so the
+tree carries no evidence of a passing run. I read the tests and ran none
+of them.</p>
+<p>Memory-relevant coverage is good on mechanics.
+<code>transaction.test.ts</code> checks that inversion is an involution.
+<code>knowledge-graph.test.ts</code> covers rollback, version mismatch,
+and subscriber ordering and failure isolation.
+<code>integrity.test.ts</code> covers chain breaks and hash mismatches,
+<code>sync.test.ts</code> covers journal and database reconciliation,
+and the concurrency test is described in section 9.</p>
+<p>The one must-not-retrieve case is vacuous by the atlas's definition.
+<code>deletes entity and cleans up inverse relations</code> deletes
+<code>task-create-api</code>, asserts a <code>read</code> fails, and
+asserts <code>search type=Task</code> does not contain the key and the
+project's <code>tasks</code> include does not either
+(<code>packages/cli/tests/cli.test.ts:264-287</code>). Neither result is
+checked for a record that should be there, and the include falls back to
+<code>[]</code>, so an empty search or a broken include passes.
+Asserting that the same search also returns <code>task-new</code>,
+created earlier in the file, would make it a negative retrieval
+assertion; <code>negative_eval</code> is withheld until then.</p>
+<p>There is no retrieval-quality test, no benchmark and no paper. The
+tree has no <code>CITATION.cff</code> and no arXiv, DOI or BibTeX
+reference.</p>
+<p>Tests I would want before trusting it as agent memory: a rollback
+that leaves a record of itself, a provenance test that an MCP write and
+an LSP save are distinguishable in <code>tx log</code>, an upsert test
+that the tool reply says <em>updated</em> when it updated, and the
+deletion search with its positive control.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Store the prior value in the change record.</strong> A
+changeset of <code>["clear", old]</code> and <code>[old, new]</code>
+pairs makes every transaction invertible without reading the database,
+makes undo a pure function, and lets a reviewer see what a correction
+replaced.</li>
+<li><strong>Check the chain inside the write lock.</strong> Requiring
+the tip id plus one and the tip's hash inside an <code>immediate</code>
+transaction turns every concurrent writer race into a refused write
+instead of a merge.</li>
+<li><strong>Keep the schema in the same log as the data.</strong> Types
+and fields as config entities written by transactions means a schema
+change is reviewable, revertible and hashed with the records it
+affects.</li>
+<li><strong>Mirror the log to a line-oriented file and verify it
+independently.</strong> A JSONL journal plus a verifier that recomputes
+each hash against the schema as of that line gives a recovery path that
+does not trust the database.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Undo by deletion in a log called append-only.</strong>
+Revert by appending the inverse as a new transaction and keep the redo
+stack as a pointer. History then survives undo, and the hash chain keeps
+meaning tamper evidence.</li>
+<li><strong>Provenance set per surface by whoever remembered
+to.</strong> Derive the channel from the entry point in one place, and
+refuse a caller-supplied author on any surface a model can reach.</li>
+<li><strong>Create that silently updates.</strong> If a create may
+resolve to an existing entity, say so in the result the model
+reads.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Binder suits a single person who wants agent-readable structured data
+they can also edit as Markdown in their own editor — trackers,
+catalogues, notes — and who values reverting an agent's bad batch over
+keeping a record that it happened. It does not suit a memory that must
+be defensible: deletions keep the content, undo erases the history, and
+the log cannot say whether the agent or the person wrote a line. It is
+also not a retrieval system yet. Anything beyond a few hundred records
+with a known schema needs the search the roadmap promises. Treat it as a
+well-built typed store and bring your own memory policy.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether the published npm build ships with a telemetry key, which
+decides whether telemetry is on by default for installed users; the key
+is a build-time define not in the tree.</li>
+<li>How the auction matcher behaves on a heavily reordered list: whether
+an edited anonymous item is ever matched to the wrong entity and written
+as an update to it. Running the editor round trip would answer it.</li>
+<li>Whether undo-by-deletion is the intended long-term model, given the
+roadmap item <em>"Transaction log compaction"</em> and the docs'
+append-only claim.</li>
+<li>Whether the end-to-end suite passes at this commit; nothing in the
+tree records a run.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>packages/repo/src/schema.ts</code>,
+<code>packages/repo/src/migrations/*.sql</code>,
+<code>packages/repo/src/entity-store.ts</code>,
+<code>packages/repo/src/transaction-store.ts</code>,
+<code>packages/repo/src/model/transaction.ts</code>,
+<code>packages/repo/src/model/changeset.ts</code>.</li>
+<li><strong>Write:</strong>
+<code>packages/repo/src/knowledge-graph.ts</code>,
+<code>packages/repo/src/transaction-processor.ts</code>,
+<code>packages/repo/src/changeset-processor.ts</code>,
+<code>packages/repo/src/changeset-applier.ts</code>,
+<code>packages/repo/src/transaction-applier.ts</code>,
+<code>packages/repo/src/data-type-validators.ts</code>.</li>
+<li><strong>Read:</strong>
+<code>packages/repo/src/filter-entities.ts</code>,
+<code>packages/repo/src/relationship-resolver.ts</code>,
+<code>packages/repo/src/model/query-extension.md</code>.</li>
+<li><strong>History, undo, journal:</strong>
+<code>packages/cli/src/plugins/undo/*.ts</code>,
+<code>packages/cli/src/plugins/journal/*.ts</code>,
+<code>packages/cli/src/commands/transaction.ts</code>,
+<code>packages/repo/src/local/plugin-loader.ts</code>.</li>
+<li><strong>Surfaces:</strong>
+<code>packages/cli/src/mcp/tools/*.ts</code>,
+<code>packages/cli/src/mcp/resources.ts</code>,
+<code>packages/cli/src/commands/mcp.ts</code>,
+<code>packages/cli/src/lsp/handlers/save-handler.ts</code>,
+<code>packages/cli/src/http/server.ts</code>,
+<code>packages/cli/src/cli/options.ts</code>,
+<code>packages/cli/src/workspace.ts</code>,
+<code>packages/cli/src/plugins/docs/index.ts</code>,
+<code>packages/cli/src/diff/*.ts</code>.</li>
+<li><strong>Unwired:</strong>
+<code>packages/cli/src/lib/llm.ts</code>.</li>
+<li><strong>Tests:</strong> <code>packages/cli/tests/cli.test.ts</code>,
+<code>packages/cli/tests/concurrency.test.ts</code>,
+<code>packages/cli/tests/mcp.test.ts</code>,
+<code>packages/repo/src/knowledge-graph.test.ts</code>,
+<code>packages/repo/src/model/transaction.test.ts</code>,
+<code>packages/cli/src/plugins/journal/integrity.test.ts</code>,
+<code>packages/cli/src/plugins/journal/sync.test.ts</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E '(delete|update)\(transactionTable\)' -- packages</code>
+— one hit, <code>packages/repo/src/transaction-applier.ts:143</code>,
+inside <code>rollbackTransaction</code>.</li>
+<li><code>git grep -n -E 'rollback\(' -- 'packages/cli/src/*.ts' ':!*.test.ts'</code>
+— <code>undo/commands.ts:45</code>,
+<code>commands/transaction.ts:259,340</code>,
+<code>journal/sync.ts:141</code>; no MCP or HTTP caller.</li>
+<li><code>git grep -n -E 'onRollback' -- packages/repo/src/local</code>
+— no match; <code>hooksToPlugin</code> registers
+<code>onTransaction</code> only.</li>
+<li><code>git grep -n -E 'callLlm' -- packages</code> — the definition
+and a comment in <code>packages/cli/src/lib/llm.ts</code>; no
+caller.</li>
+<li><code>git grep -n -E 'channel:' -- 'packages/cli/src/*.ts' ':!*.test.ts'</code>
+— <code>cli/options.ts:225</code> and the pass-through at
+<code>commands/transaction.ts:163</code>; nothing in <code>mcp/</code>
+or <code>lsp/</code>.</li>
+<li><code>git grep -n -E 'author: config.author' -- packages/cli/src</code>
+— <code>change-extractor.ts:639</code>, <code>http/server.ts:134</code>,
+<code>save-handler.ts:94</code>, <code>transact.ts:102</code>.</li>
+<li><code>git grep -n -i -E 'confirm' -- packages/cli/src/plugins/undo/commands.ts</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'embedding|vector|fts5|bm25' -- packages ':!*.test.ts'</code>
+— three lines of
+<code>packages/repo/src/model/query-extension.md</code>, a proposal; no
+code.</li>
+<li><code>git grep -n -E '"similar"|similar:' -- 'packages/*.ts'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'valid_?from|valid_?to|validFrom|validUntil|valid_?until' -- packages</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'SessionStart|UserPromptSubmit|PreCompact'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'authorization|bearer|token' -- packages/cli/src/http packages/cli/src/commands/http.ts</code>
+— no match.</li>
+<li><code>git ls-files .github/workflows</code> — empty.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/mpazik/Binder/commit/e4066d750ac5c6918706f44b12daa261b261106e"><code class="commit-id" title="e4066d750ac5c6918706f44b12daa261b261106e">e4066d75…</code></a>
+— first reading, at the head of <code>main</code>, a commit of 21
+September 2026. No marks: <code>audit_log</code> withheld because three
+CLI commands delete transactions, <code>negative_eval</code> because the
+deletion test has no positive control. Screened before reading from a
+full clone: one auto-run surface (<code>.vscode/settings.json</code>,
+which sets only <code>binder.devMode</code>), one build-time execution
+point (<code>packages/cli/package.json</code>
+<code>prepublishOnly</code>), nothing inside the cooldown, and five
+unpinned surfaces, three of them workspace manifests without a lockfile
+beside them against the root <code>bun.lock</code>;
+<code>AGENTS.md</code> was treated as data. MIT with no rider. Read with
+<code>git grep</code> and <code>sed</code>; nothing was installed, built
+or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

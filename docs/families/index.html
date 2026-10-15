@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 745
+    <meta name="description" content="The 746
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 745
+    <meta property="og:description" content="The 746
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-745 systems grouped by eight architectural
+746 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 745 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 746 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 745 systems
+          <p class="document-deck">The 746 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>745 systems do not fall into 182 categories. They
+<p>746 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -4038,6 +4038,7 @@ href="../systems/pi-memory/"><code>pi-memory</code></a>, <a
 href="../systems/pi-jarvis/"><code>pi-jarvis</code></a>, <a
 href="../systems/brain-mcp/"><code>brain-mcp</code></a>, <a
 href="../systems/obsidian-wiki/"><code>obsidian-wiki</code></a>, <a
+href="../systems/binder/"><code>binder</code></a>, <a
 href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/aigent-os/"><code>aigent-os</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
@@ -8169,6 +8170,25 @@ Against that: a deleted note's chunks survive every re-index, blocked
 candidates are embedded with the rest, and the validity line search
 demotes on has no documented writer. One mark,
 <code>negative_eval</code>.</p>
+<p><strong><a href="../systems/binder/">Binder</a> records every change
+with its prior value, and lets three commands erase the record.</strong>
+An MIT local-first database of typed records in SQLite, rendered to
+Markdown files that an LSP diffs back into transactions, with a
+three-tool MCP server — <code>schema</code>, <code>search</code>,
+<code>transact</code> — through which an agent holds every verb over
+every record and the schema. Each write is one transaction carrying the
+old and new value of every field, SHA-256-chained to its predecessor
+inside an immediate SQLite transaction that refuses a stale tip, and
+mirrored to a JSONL journal that <code>journal verify</code> re-hashes.
+<code>binder undo</code>, <code>transaction rollback</code> and
+<code>squash</code> apply the inverse and then delete the transactions
+from the table and the journal, so the log the docs call append-only is
+rewindable. MCP and LSP writes carry the same workspace author with no
+channel, a delete keeps the deleted content in the log, a create on a
+taken key silently updates, and retrieval is a <code>LIKE</code> in
+insertion order. No marks: <code>audit_log</code> withheld on the
+rollback, <code>negative_eval</code> on a deletion test with no positive
+control.</p>
 <h2 id="graph-temporal-and-symbolic-memory">Graph, temporal, and
 symbolic memory</h2>
 <p><a href="../systems/holomem/"><code>holomem</code></a>, <a
