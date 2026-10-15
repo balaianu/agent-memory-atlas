@@ -3146,15 +3146,22 @@ the delete-cleanup tests</li>
 <li><a
 href="https://github.com/Krilliac/Sonder-runtime">Krilliac/Sonder-runtime</a>
 at <a
-href="https://github.com/Krilliac/Sonder-runtime/commit/1a41a88d2442302421e1cf8c0893ca3edef537ee"><code class="commit-id" title="1a41a88d2442302421e1cf8c0893ca3edef537ee">1a41a88d…</code></a>
-— read only; no auto-run surface, no dependency surface inside the
-cooldown, two build-time execution points (<code>conftest.py</code>),
-two unpinned dev/train requirement ranges. Nothing installed or run; the
-quarantine base-rate and attribution guards, the outcome-provenance
-enforcement, and the new <code>lesson_tombstones</code> rejected-value
-registry were read from <code>retriever.py</code>,
-<code>memory_store.py</code>, <code>reflection.py</code> and
-<code>lesson_pruner.py</code> against the committed tests</li>
+href="https://github.com/Krilliac/Sonder-runtime/commit/ad7e59d45fb3792c638e690e9aeb02773fc5ccc0"><code class="commit-id" title="ad7e59d45fb3792c638e690e9aeb02773fc5ccc0">ad7e59d4…</code></a>
+— read only from a full clone; no auto-run surface, no dependency
+surface inside the cooldown, two build-time execution points
+(<code>conftest.py</code>, <code>tests/conftest.py</code>), two unpinned
+requirement files (<code>requirements-dev.txt</code>,
+<code>requirements-train.txt</code>); Apache-2.0 with no rider. Nothing
+installed or run; the quarantine base-rate and attribution guards, the
+outcome-provenance enforcement, the <code>lesson_tombstones</code>
+registry, fact validity intervals, the playbook approval gate, the
+opt-in authoritative fact journal and the unscoped
+<code>memory_search</code> tool were read from
+<code>retriever.py</code>, <code>reflection.py</code>,
+<code>lesson_pruner.py</code>, <code>server.py</code>,
+<code>sonder_runtime/adapters/memory_store.py</code>, the playbook
+modules and <code>sonder_runtime/adapters/persistence/sqlite/</code>
+against the committed tests.</li>
 <li><a
 href="https://github.com/Anchorstate-Lab/GMR">Anchorstate-Lab/GMR</a> at
 <a
@@ -17602,6 +17609,43 @@ human-graded A/B of the distill prompt from 2026-09-15 with its results
 kept out of the tree. Section 3 counted 46 test files against 93, and
 section 5 said notes carried no status field while section 9 credited
 one.</li>
+<li><strong>Six published claims about <a
+href="../systems/sonder-runtime/">Sonder Runtime</a> were wrong at <a
+href="https://github.com/Krilliac/Sonder-runtime/commit/1a41a88d2442302421e1cf8c0893ca3edef537ee"><code class="commit-id" title="1a41a88d2442302421e1cf8c0893ca3edef537ee">1a41a88d…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>scope_enforced</code> on the project and account filters
+of the prompt-assembly reads. <code>memory_search</code>
+(<code>server.py:15630</code>), an MCP tool on the agent's project-bound
+tool list (<code>:18527</code>) routed by <code>_agent_dispatch</code>
+(<code>:17549</code>), read facts, preferences, sessions and
+interactions with no project or scope predicate, so the mark is
+withdrawn. It awarded <code>audit_log</code> on
+<code>refinement_history</code>.
+<code>apply_preference_refinement</code> and
+<code>rollback_preference_refinement</code>
+(<code>refinement_transactions.py:226</code>, <code>:290</code>) had no
+caller outside tests, preferences changed through
+<code>upsert_preference</code> and <code>set_preference_enabled</code>
+without a journal row, and the authoritative fact source that writes
+<code>memory_replication_log</code> was constructed only in tests. It
+said tasks and preferences carried <code>account_scope</code>;
+preferences carried a <code>scope</code> column defaulting to
+<code>'global'</code>
+(<code>sonder_runtime/adapters/memory_store.py:219-232</code>). It said
+the quarantine math weighted caller-sourced outcomes over machine ones;
+only heuristically <code>attributed</code> evidence was excluded, and
+<code>test_directly_graded_machine_evidence_still_drives_the_gate</code>
+(<code>tests/test_outcome_source.py:281</code>) asserted that machine
+evidence counts. It said nothing outside <code>tests/</code> constructed
+an <code>OutcomeService</code>; <code>MemoryFacade.record</code> did
+(<code>sonder_runtime/application/memory/facade.py:63</code>), itself
+without a caller. And it placed <code>is_tombstoned_duplicate</code> in
+<code>grounded_extraction.py</code> rather than
+<code>reflection.py:165</code>, and named a root <code>recall.py</code>,
+<code>mmr_rerank.py</code> and <code>eval_history.py</code>, none of
+which existed; several <code>memory_store.py</code> line anchors were
+off by up to nineteen lines. The first two rested on the filter and the
+triggers rather than on every reader and every writer.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

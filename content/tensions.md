@@ -98,9 +98,11 @@ adjudicating between strangers.
 
 Two more chose narrowly rather than wholesale: [remem-mcp](../systems/remem-mcp/)
 ships an `org` scope that **deliberately drops the agent filter** so a handoff can
-cross agents, and [Sonder Runtime](../systems/sonder-runtime/) scopes
-interactions, tasks and preferences by project while holding lessons global on
-the argument that procedural knowledge is the part worth sharing. Neither is a
+cross agents, and [Sonder Runtime](../systems/sonder-runtime/) scopes the
+facts and past interactions it assembles into a prompt by project while holding
+lessons global on the argument that procedural knowledge is the part worth
+sharing; its `memory_search` tool applies no project at all, on the stated
+ground that the direct surface belongs to one local operator. Neither is a
 missing scope key; both are a scope key someone decided not to apply on one path,
 which is a different thing and should be documented as one.
 

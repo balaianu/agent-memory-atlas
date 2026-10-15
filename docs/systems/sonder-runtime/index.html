@@ -5,29 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="A self-modifying agent runtime
-whose distilled lessons are scored by the outcomes that followed them
-and quarantined when a loss run is statistically improbable for the
-lesson's own retrieval-frequency band — with blame deduplicated across
-co-retrieved lessons and a probation path back.">
+that quarantines a distilled lesson when its loss run is improbable for
+its retrieval-frequency band, splitting blame across co-retrieved
+lessons.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Sonder
 Runtime — Agent Memory Atlas">
     <meta property="og:description" content="A self-modifying agent
-runtime whose distilled lessons are scored by the outcomes that followed
-them and quarantined when a loss run is statistically improbable for the
-lesson's own retrieval-frequency band — with blame deduplicated across
-co-retrieved lessons and a probation path back.">
+runtime that quarantines a distilled lesson when its loss run is
+improbable for its retrieval-frequency band, splitting blame across
+co-retrieved lessons.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sonder
 Runtime — Agent Memory Atlas">
     <meta name="twitter:description" content="A self-modifying agent
-runtime whose distilled lessons are scored by the outcomes that followed
-them and quarantined when a loss run is statistically improbable for the
-lesson's own retrieval-frequency band — with blame deduplicated across
-co-retrieved lessons and a probation path back.">
+runtime that quarantines a distilled lesson when its loss run is
+improbable for its retrieval-frequency band, splitting blame across
+co-retrieved lessons.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Sonder Runtime — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -49,7 +46,7 @@ co-retrieved lessons and a probation path back.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Sonder Runtime",
-      "description": "A self-modifying agent runtime whose distilled lessons are scored by the outcomes that followed them and quarantined when a loss run is statistically improbable for the lesson's own retrieval-frequency band \u2014 with blame deduplicated across co-retrieved lessons and a probation path back.",
+      "description": "A self-modifying agent runtime that quarantines a distilled lesson when its loss run is improbable for its retrieval-frequency band, splitting blame across co-retrieved lessons.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,25 +104,24 @@ co-retrieved lessons and a probation path back.">
           <p class="eyebrow">A quarantine that checks the base rate
 before it blames</p>
           <h1>Sonder Runtime</h1>
-          <p class="document-deck">A self-modifying agent runtime whose
-distilled lessons are scored by the outcomes that followed them and
-quarantined when a loss run is statistically improbable for the lesson's
-own retrieval-frequency band — with blame deduplicated across
-co-retrieved lessons and a probation path back.</p>
+          <p class="document-deck">A self-modifying agent runtime that
+quarantines a distilled lesson when its loss run is improbable for its
+retrieval-frequency band, splitting blame across co-retrieved
+lessons.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/Krilliac/Sonder-runtime">
               <span>Source</span>
               <strong>Krilliac/Sonder-runtime</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/Krilliac/Sonder-runtime/commit/1a41a88d2442302421e1cf8c0893ca3edef537ee" title="1a41a88d2442302421e1cf8c0893ca3edef537ee">
+            <a class="meta-pill revision-pill" href="https://github.com/Krilliac/Sonder-runtime/commit/ad7e59d45fb3792c638e690e9aeb02773fc5ccc0" title="ad7e59d45fb3792c638e690e9aeb02773fc5ccc0">
               <span>Analyzed revision</span>
-              <code>1a41a88d…</code>
+              <code>ad7e59d4…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Krilliac--Sonder-runtime" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -133,7 +129,20 @@ co-retrieved lessons and a probation path back.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>5</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>780,185
+lines of Python in 3,162 tracked files, 357,944 of them in 1,638 files
+under tests/; the memory adapter sonder_runtime/adapters/memory_store.py
+is 3,983 lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>2,978
+commits on main by 6 author names, 2 July – 9 October 2026; version
+0.9.0.dev0</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>17,049
+test functions in 1,582 test_*.py files; none run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>6</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip is-present" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip is-present" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -149,773 +158,818 @@ co-retrieved lessons and a probation path back.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Sonder Runtime is a self-modifying terminal agent — Apache-2.0,
-~260,000 lines of Python across 743 files, with a code-rewriting loop
-(<code>selfmod.py</code>), a training pipeline, an NPU broker, and a
-great deal else. Most of that is out of this atlas's scope. What is in
-scope is a genuinely serious memory subsystem: a stdlib-only SQLite
-adapter (<code>sonder_runtime/adapters/memory_store.py</code>, 3,632
-lines) that stores <strong>interactions</strong>, the
-<strong>outcomes</strong> credited to them, and the
-<strong>lessons</strong> distilled from them, and then lets the outcomes
-decide which lessons keep being retrieved.</p>
-<p>The unit that matters is a <strong>lesson</strong> — a concrete
-directive like <em>"Use <code>collections.Counter</code> for frequency
-counting and <code>.most_common()</code> to find the most frequent item
-efficiently,"</em> extracted from an interaction that went well,
-embedded, and made retrievable. The atlas has many systems that store
-lessons. What lifts this one out of the pile is that it closes the loop
-the field almost never closes: <strong>it credits the outcome of each
-interaction back to the lessons that were retrieved for it, and uses
-that credit to quarantine lessons that keep leading to
-losses.</strong></p>
-<p>The quarantine is the report's headline, and it is careful in exactly
-the places the atlas keeps finding this idea done badly:</p>
+<p>Sonder Runtime is a self-modifying terminal agent whose memory
+credits the outcome of each interaction back to the lessons retrieved
+for it, and quarantines a lesson only when its run of losses is
+improbable for its own retrieval-frequency band and it is individually
+answerable for them. The weak side is the read surface around that loop:
+an agent tool searches every project's facts and interactions, and
+machine-graded outcomes drive the quarantine at full weight.</p>
+<p>Most of the runtime is out of this atlas's scope: a code-rewriting
+loop (<code>selfmod.py</code>), a training pipeline, an NPU broker,
+multi-agent lanes. What is in scope is a stdlib-only SQLite adapter
+(<code>sonder_runtime/adapters/memory_store.py</code>) holding
+interactions, the outcomes credited to them, the lessons distilled from
+them, project facts and preferences, plus a Markdown store of
+owner-reviewed playbooks beside it.</p>
+<p>The quarantine is careful in the places this idea is usually done
+badly:</p>
 <ul>
-<li><strong>Blame is deduplicated across co-retrieved lessons.</strong>
-If five lessons are always retrieved together and the task fails, they
-cannot each claim the failure as independent evidence — "a cluster of
-lessons that always fail together cannot each claim the same failures."
-A test,
-<code>test_one_failure_cluster_no_longer_quarantines_its_whole_cohort</code>,
+<li><strong>Blame is split across co-retrieved lessons.</strong> A
+failing task writes its reward onto every lesson retrieved for it, so
+each loss row counts as <code>1/cohort</code> and the gate needs 2.0
+attributable losses (<code>retriever.py:54</code>, <code>:319</code>).
+<code>test_one_failure_cluster_no_longer_quarantines_its_whole_cohort</code>
 pins it.</li>
 <li><strong>A loss run is judged against the lesson's own base
-rate.</strong> Quarantine fires only when the run of losses is
-<em>improbable</em> for the loss rate of the lesson's
-retrieval-frequency band, "so a rarely-retrieved lesson is not punished
-for the unusual tasks that retrieval sends it." The test computes an
-explicit <code>p=0.006</code>.</li>
-<li><strong>Quarantine has a route back.</strong> After a cooldown a
-quarantined lesson becomes eligible for sampled probation retrieval — a
-production path to a win — and a win lifts the quarantine on evidence
-rather than on a clock.</li>
+rate.</strong> Seven frequency bands carry measured loss rates from
+50.62% down to 1.24%, and the run must be improbable at p ≤ 0.01 for the
+lesson's band (<code>retriever.py:73-89</code>). The band test computes
+an explicit <code>p=0.006</code>.</li>
+<li><strong>Quarantine has a route back.</strong> After 24 hours a
+quarantined lesson is admitted on a deterministic one-in-twenty sample
+of tasks, and a win lifts the quarantine on evidence rather than on the
+seven-day timer (<code>retriever.py:99-100</code>,
+<code>:494</code>).</li>
 </ul>
-<p>And the whole apparatus rests on <strong>who judged the
-outcome</strong>. The <code>outcomes</code> table has a
-<code>source</code> column — <code>caller</code>, <code>machine</code>,
-<code>attributed</code>, <code>self_curriculum</code>,
-<code>unknown</code> — that is <code>NOT NULL</code> with deliberately
-no default, and the success-rate math weights caller-sourced outcomes
-over machine ones. That is a direct, built defense against the
-self-grading failure the atlas documents at length (<a
-href="../../appendix/#known-limitations">the reward-inflation paper</a>
-is the theory; this is one of the few implementations that acts on
-it).</p>
-<p>The weakness is the same fact read from the other side. The loop is
-only as good as the outcome signal, and in practice much of that signal
-is <code>machine</code> or <code>unknown</code> — the code treats those
-categories with visible suspicion, which is the right instinct and also
-an admission that the ground truth is thin. The rejected-value gap is
-half-closed: near-duplicate pruning writes a content-hashed tombstone
-that distillation refuses to re-derive, so a pruned duplicate cannot
-come back — but quarantine <em>suppresses</em> a lesson without
-recording a rejected value, so a lesson quarantined for being harmful,
-then re-distilled from a fresh interaction, can re-enter.</p>
+<p>The whole apparatus rests on <strong>who judged the outcome</strong>.
+<code>outcomes.source</code> is <code>NOT NULL</code> with deliberately
+no default and a closed vocabulary — <code>caller</code>,
+<code>machine</code>, <code>attributed</code>,
+<code>self_curriculum</code>, <code>unknown</code>
+(<code>memory_store.py:73</code>). The quarantine excludes heuristically
+<code>attributed</code> evidence and counts <code>machine</code>
+evidence fully, by design: a test is named
+<code>test_directly_graded_machine_evidence_still_drives_the_gate</code>.
+The ranking tiebreak prefers the caller's population wherever a caller
+has judged.</p>
+<p>Two further mechanisms sit beside the lessons.
+<strong>Playbooks</strong> are agent-written notes that wait as
+<code>proposed</code> until the owner approves them at the CLI or REPL,
+and only approved entries reach the prompt. <strong>Facts</strong> carry
+an optional validity interval the caller asserts, separate from the
+write time, and a successor closes its predecessor's interval.</p>
+<p>The rejected-value story is half-closed. Near-duplicate pruning
+writes a content-hashed tombstone that distillation refuses to
+re-derive, but quarantine suppresses a lesson without one, so a lesson
+quarantined as harmful and then re-distilled from a fresh interaction
+can return.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A memory is a <strong>lesson</strong>, and its life is governed by
 the outcomes of the interactions that retrieve it.</p>
-<pre class="text"><code>interaction happens        -&gt; interactions row (task, retrieved_ctx, response, project, tier)
-outcome lands              -&gt; outcomes row (signal, reward, source ∈ {caller, machine,
-                              attributed, self_curriculum, unknown})  -- source NOT NULL
-distillation claims it     -&gt; lesson_distillations state machine:
-                              claimed -&gt; stored | no_lesson | cancelled
-                              refusing not_concrete, exact_duplicate, semantic_duplicate
-lesson stored              -&gt; lessons row + embedding + lessons_fts
-lesson retrieved           -&gt; lesson_usage row links (lesson, interaction)
-outcome credited           -&gt; lesson_usage.reward / outcome_source filled in
-losses accumulate          -&gt; quarantine if the run is improbable for the band&#39;s base rate
-                              AND the lesson is individually answerable for them
-quarantine                 -&gt; excluded from retrieval; after cooldown, sampled probation;
-                              a win exits, on evidence</code></pre>
-<p>Lessons are the procedural layer; three other durable kinds sit
-beside them. <strong>Preferences</strong> are corrected beliefs with a
-<code>confidence</code>, an <code>evidence_count</code>, an
-<code>enabled</code> flag and a <code>revision</code> — and every change
-to one is journalled. This is the atlas's clearest example of a memory
-whose <em>state</em> is the whole point: a lesson is
-<code>active</code>, <code>quarantined</code>, or
-<code>on probation</code>; a preference is enabled or disabled at a
-version. <code>trust_state</code> is earned without strain.</p>
-<p>How a memory dies has three distinct paths, and the distinction
-between them is the design's sophistication:</p>
+<pre class="text"><code>interaction happens   -&gt; interactions row (task, retrieved_ctx, response, project, project_explicit)
+outcome lands         -&gt; outcomes row (signal, reward, source)  -- source NOT NULL, closed vocabulary
+distillation claims   -&gt; lesson_distillations: claimed -&gt; stored | no_lesson | cancelled
+                         refusing not_concrete, exact_duplicate, semantic_duplicate, rejected_value
+lesson stored         -&gt; lessons row + embedding + lessons_fts
+lesson retrieved      -&gt; lesson_usage row links (lesson, interaction)
+outcome credited      -&gt; lesson_usage.reward and outcome_source filled in
+losses accumulate     -&gt; quarantine when floor, attribution and band test all agree
+quarantine            -&gt; excluded before ranking; after 24 h sampled probation; a win exits
+pruned as duplicate   -&gt; row deleted, lesson_tombstones row keyed on the text hash</code></pre>
+<p>Lessons are the procedural layer, and four other durable kinds sit
+beside them.</p>
 <ul>
-<li><strong>Quarantine</strong> — a lesson stops being retrieved because
-the outcomes credited to it went bad, statistically and answerably.
-Reversible by a probation win.</li>
-<li><strong>Near-duplicate pruning</strong> — a lesson is deleted
-because another says the same thing (cosine ≥ 0.93), keeping one
-representative.</li>
-<li><strong>Age-decay ranking</strong> — a lesson loses ground over a
-30-day half-life to fresher lessons, blended with usage evidence; not
-deletion but demotion.</li>
+<li><strong>Facts</strong> are asserted, not earned:
+<code>sonder_remember_fact</code> stores a project fact that is injected
+into every call for that project. A fact may carry
+<code>valid_from</code> and <code>valid_until</code>, and
+<code>supersedes=&lt;id&gt;</code> closes the earlier fact's interval as
+the new one is stored. A fact outside its interval is kept and not
+recalled.</li>
+<li><strong>Preferences</strong> carry <code>confidence</code>,
+<code>evidence_count</code>, <code>enabled</code> and a
+<code>revision</code> under <code>UNIQUE(scope, key)</code>; a disabled
+preference is filtered out of reads.</li>
+<li><strong>Playbook entries</strong> are owner-curated notes in
+Markdown. The agent proposes one with <code>playbook_note</code>; it
+stays <code>proposed</code> until the owner approves or rejects it; only
+<code>approved</code> entries enter the system-prompt index or a topic
+read.</li>
+<li><strong>Session summaries</strong> condense a conversation per
+project.</li>
 </ul>
-<p>One of these paths records a <em>rejected value</em> and one does
-not. Near-duplicate pruning writes a <code>lesson_tombstones</code> row
-keyed on the pruned lesson's normalized-text SHA-256, carrying its
-embedding but — by an explicit comment — never its text, and
-distillation refuses a candidate that matches one, by exact hash and by
-semantic similarity to those embeddings, terminating with
-<code>result: rejected_value</code>. So a pruned duplicate cannot be
-re-distilled, and <code>tombstone</code> is earned. Quarantine is the
-path that does <em>not</em> tombstone: it keeps the row and suppresses
-it, so a lesson quarantined for being harmful, then re-distilled from a
-fresh interaction, can return. The machinery to close that is one call
-away — the same tombstone check the pruner triggers, extended from
-pruning to quarantine.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — outcomes credited back to retrieved lessons drive a quarantine that checks blame attribution and base rate before it suppresses</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: outcomes credited back to retrieved lessons drive a quarantine that checks blame attribution and base rate before it suppresses
+<p>How a lesson stops being believed has three paths, and they differ in
+what they remember:</p>
+<ul>
+<li><strong>Quarantine</strong> — excluded from retrieval because the
+outcomes credited to it went bad, statistically and answerably.
+Reversible by a probation win. The row is kept and no rejected value is
+recorded.</li>
+<li><strong>Near-duplicate pruning</strong> — deleted because another
+lesson says the same thing (cosine ≥ 0.93), keeping one representative
+and writing a <code>lesson_tombstones</code> row that distillation
+consults by hash and by embedding.</li>
+<li><strong>Age-decay ranking</strong> — demoted over a 30-day default
+half-life blended with usage evidence; not exclusion.</li>
+</ul>
+<p>A fact stops being believed when its interval closes, either by the
+<code>valid_until</code> it was written with or by a successor; it can
+also be deleted by exact id and project. A playbook entry stops being
+believed when the owner rejects or supersedes it.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — outcomes credited to retrieved lessons drive a quarantine that checks attribution and base rate; playbooks wait for the owner; facts close by interval</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: outcomes credited to retrieved lessons drive a quarantine that checks attribution and base rate; playbooks wait for the owner; facts close by interval
 flowchart TB
-    Task[&quot;interaction&quot;] --&gt; Ret[&quot;retrieve: embedding≥0.62 ∪ FTS5, MMR rerank&lt;br/&gt;quarantined lessons excluded first&quot;]
+    Task[&quot;interaction&quot;] --&gt; Ret[&quot;retrieve lessons: FTS5 + cosine, RRF, MMR&lt;br/&gt;quarantined lessons excluded first&quot;]
     Ret --&gt; Use[(&quot;lesson_usage: (lesson, interaction)&quot;)]
-    Task --&gt; Out[(&quot;outcomes: signal, reward, source&lt;br/&gt;caller | machine | self_curriculum | unknown&quot;)]
-    Out --&gt;|&quot;credited back&quot;| Use
-    Use --&gt; Q{&quot;quarantine check&quot;}
-    Q --&gt;|&quot;losses ≥ 5, ≥ 2 distinct tasks,&lt;br/&gt;improbable for the band&#39;s base rate,&lt;br/&gt;blame not shared across a cohort&quot;| Quar[&quot;quarantined:&lt;br/&gt;excluded from retrieval and prompt&quot;]
+    Task --&gt; Out[(&quot;outcomes: signal, reward, source&lt;br/&gt;caller | machine | attributed | self_curriculum | unknown&quot;)]
+    Out --&gt;|&quot;credited back, attributed rows ignored&quot;| Use
+    Use --&gt; Q{&quot;quarantine gates&quot;}
+    Q --&gt;|&quot;≥ 5 losses, ≥ 2.0 attributable,&lt;br/&gt;p ≤ 0.01 for the band&quot;| Quar[&quot;quarantined:&lt;br/&gt;excluded from retrieval and prompt&quot;]
     Q --&gt;|&quot;otherwise&quot;| Active[&quot;active&quot;]
-    Quar --&gt;|&quot;after cooldown&quot;| Prob[&quot;sampled probation retrieval&quot;]
+    Quar --&gt;|&quot;after 24 h&quot;| Prob[&quot;sampled probation, 1 task in 20&quot;]
     Prob --&gt;|&quot;a win&quot;| Active
-    Task --&gt;|&quot;went well&quot;| Dist[&quot;distill: refuse not_concrete,&lt;br/&gt;exact_duplicate, semantic_duplicate,&lt;br/&gt;rejected_value (tombstone hit)&quot;]
+    Task --&gt;|&quot;good outcome&quot;| Dist[&quot;distill: refuse not_concrete,&lt;br/&gt;exact or semantic duplicate,&lt;br/&gt;rejected_value&quot;]
     Dist --&gt; Lesson[(&quot;lessons + embedding + FTS&quot;)]
-    Lesson -.-&gt;|&quot;cosine ≥ 0.93&quot;| Prune[&quot;near-duplicate pruned, keep one +&lt;br/&gt;content-hashed tombstone&quot;]
-    Prune -.-&gt;|&quot;distillation refuses by hash or embedding&quot;| Blocked[&quot;a pruned duplicate cannot return&quot;]
-    Quar -.-&gt;|&quot;row kept, no rejected-value record&quot;| Regrow[&quot;a re-distilled quarantined lesson can return&quot;]</code></pre></details></figure>
+    Lesson -.-&gt;|&quot;nightly, cosine ≥ 0.93&quot;| Prune[&quot;prune, keep one,&lt;br/&gt;write text-hash tombstone&quot;]
+    Prune -.-&gt;|&quot;consulted by hash and embedding&quot;| Dist
+    Quar -.-&gt;|&quot;row kept, no tombstone&quot;| Regrow[&quot;re-distilled lesson can return&quot;]
+    Agent[&quot;agent: playbook_note&quot;] --&gt; Prop[(&quot;playbook entry: proposed&quot;)]
+    Prop --&gt;|&quot;owner approves at CLI or REPL&quot;| Appr[&quot;approved: enters prompt index&quot;]
+    Prop --&gt;|&quot;owner rejects&quot;| Rej[&quot;rejected: never read&quot;]
+    Caller[&quot;caller: sonder_remember_fact&lt;br/&gt;valid_from, valid_until, supersedes&quot;] --&gt; Fact[(&quot;fact: interval beside ts&quot;)]
+    Fact --&gt;|&quot;interval contains now&quot;| Inject[&quot;injected for its project&quot;]
+    Fact --&gt;|&quot;closed or not yet open&quot;| Kept[&quot;kept, not recalled&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <p>One local SQLite database is the spine.
-<code>sonder_runtime/adapters/memory_store.py</code> defines the schema
-— <code>interactions</code>, <code>outcomes</code>, <code>lessons</code>
-+ <code>lessons_fts</code>, <code>lesson_usage</code>,
-<code>lesson_distillations</code>, <code>preferences</code>,
-<code>refinement_history</code>, <code>facts</code>,
-<code>sessions</code>, <code>session_project_summaries</code>,
-<code>tasks</code>/<code>task_events</code>/<code>task_deps</code>, plus
-migration and claim tables — and it is <strong>stdlib-only</strong>:
-<code>sqlite3</code>, <code>array</code>, <code>hashlib</code>,
-<code>math</code>. No ORM, no vector service, no server. Embeddings are
-stored as BLOBs stamped with <code>embedding_model</code>,
-<code>embedding_revision</code> and <code>embedding_dim</code>, so a
-vector always carries the space that produced it.</p>
-<p>The memory logic is spread across small, mostly pure modules that
-wire into the adapter:</p>
+<code>sonder_runtime/adapters/memory_store.py</code> defines
+<code>interactions</code>, <code>outcomes</code>, <code>lessons</code>
+with <code>lessons_fts</code>, <code>lesson_tombstones</code>,
+<code>lesson_usage</code>, <code>lesson_distillations</code>,
+<code>facts</code>, <code>preferences</code>,
+<code>refinement_history</code>, <code>sessions</code>,
+<code>session_project_summaries</code>, <code>tasks</code> with
+<code>task_events</code> and <code>task_deps</code>, an
+<code>outbox_events</code> table, and the authoritative-fact journal
+tables. The adapter needs no third-party package: it imports the
+standard library (<code>sqlite3</code>, <code>array</code>,
+<code>hashlib</code>, <code>math</code> among others) and sibling
+modules of <code>sonder_runtime</code>. Embeddings are BLOBs stamped
+with <code>embedding_model</code>, <code>embedding_revision</code> and
+<code>embedding_dim</code>, and retrieval skips a stored vector from a
+different space rather than scoring it zero.</p>
+<p>The memory logic sits in small modules wired to the adapter:</p>
 <ul>
-<li><strong><code>retriever.py</code></strong> (654 lines) — hybrid
-retrieval, MMR, and the quarantine decision
+<li><strong><code>retriever.py</code></strong> (670 lines) — hybrid
+lesson retrieval, MMR selection and the quarantine decision
 (<code>lesson_quarantine</code>, <code>band_loss_rate</code>,
-<code>_attribution</code>).</li>
-<li><strong><code>lesson_decay.py</code></strong> (253) — pure age-decay
-+ usage-evidence ranking math, and a contradiction detector for
-semantically-similar lessons carrying opposite outcomes. No I/O, no
-clock, similarity injected — built for deterministic tests.</li>
-<li><strong><code>lesson_pruner.py</code></strong> (256) —
-embedding-cluster near-duplicate removal that writes a content-hashed
-rejected-value tombstone as it deletes, dry-run by default,
-embedding-space-isolated.</li>
-<li><strong><code>memory_quality.py</code></strong> (358) — a read-only
-auditor that flags vague lessons (<em>"use appropriate", "be careful",
-"best practices"</em>) against concrete anchors (backticks, dotted
-names, Big-O).</li>
-<li><strong><code>grounded_extraction.py</code></strong>,
-<strong><code>reflection.py</code></strong>,
-<strong><code>preference_learning.py</code></strong>,
-<strong><code>mmr_rerank.py</code></strong>,
-<strong><code>store_integrity.py</code></strong>,
-<strong><code>refinement_transactions.py</code></strong>.</li>
+<code>attributable_losses</code>, <code>_usage_boost</code>).</li>
+<li><strong><code>reflection.py</code></strong> (520) — distillation and
+the tombstone refusal; its prompts load from editable files under
+<code>prompts/</code> through <code>prompt_store</code>.</li>
+<li><strong><code>lesson_decay.py</code></strong> (342) — pure age-decay
+and usage ranking, and <code>detect_contradictions</code>, which
+<code>memory_quality.contradiction_findings</code> wires to the store as
+a report-only finding.</li>
+<li><strong><code>lesson_pruner.py</code></strong> (327) —
+embedding-cluster near-duplicate removal that tombstones each loser
+after revalidating both vectors under a write lock.</li>
+<li><strong><code>memory_quality.py</code></strong> (707) — a read-only
+auditor for vague lessons, duplicates, contradictions and playbook
+quality.</li>
+<li><strong><code>sonder_runtime/adapters/playbook_store.py</code></strong>
+(405) with <code>playbook_review.py</code>,
+<code>domain/memory/playbooks.py</code> and
+<code>application/memory/playbook_context.py</code> — the playbook
+store, its approval rules and its prompt selection.</li>
+<li><strong><code>sonder_runtime/domain/memory/fact_validity.py</code></strong>
+— the validity interval and the predicate every current-fact read
+uses.</li>
+<li><strong><code>sonder_runtime/adapters/persistence/sqlite/authoritative_memory.py</code></strong>
+and <strong><code>memory_replication.py</code></strong> — an opt-in
+authoritative fact source with an ordered journal.</li>
 </ul>
-<p>The root <code>memory_store.py</code> and <code>recall.py</code> are
-compatibility shims that alias the migrated adapters under
-<code>sonder_runtime/adapters/</code> — a strangler-fig migration in
-progress, with the true modules under the package and the root names
-preserved for legacy callers.</p>
+<p>The root <code>memory_store.py</code> is a compatibility alias that
+replaces itself in <code>sys.modules</code> with the adapter.
+<code>sonder_runtime/application/memory/strategy_memory.py</code>
+indexes content-free strategy history from sealed runtime attempts into
+the same database; it is peripheral to the lesson loop and not read
+further here.</p>
 <h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
 <ul>
-<li><strong>One SQLite file, no services.</strong> The memory adapter
-needs nothing beyond the standard library; embeddings are computed by
-<code>embeddings.py</code>/<code>embed_cache.py</code> and stored
-locally.</li>
-<li><strong>The store is inspectable and repairable</strong> with any
-SQLite client, and <code>store_integrity.py</code>,
-<code>sonder_doctor.py</code> and <code>memory_quality.py</code> are
-shipped audit tools.</li>
-<li><strong>Concurrency is taken seriously</strong> for a local store:
-claim tokens with owner pid/identity on session turns and distillation,
+<li><strong>One SQLite file, no services.</strong> The adapter needs
+nothing beyond the standard library; embeddings come from a local model
+through <code>embeddings.py</code>.</li>
+<li><strong>The store is inspectable</strong> with any SQLite client,
+and <code>store_integrity.py</code>, <code>sonder_doctor.py</code> and
+<code>memory_quality.py</code> are shipped audit tools;
+<code>connect_read_only</code> opens a <code>mode=ro</code> URI so an
+inspector cannot migrate it.</li>
+<li><strong>Playbooks are plain Markdown</strong> under the state home,
+parsed strictly: a block with a forged nested entry or an unknown status
+is skipped.</li>
+<li><strong>Concurrency is handled for a local store</strong>: claim
+tokens with owner pid and identity on session turns and distillation,
 and abandoned-claim recovery guarded by process-liveness checks.</li>
-<li>The wider runtime (self-modification, training, NPU) is heavy, but
-the memory layer is a clean, importable, dependency-light module inside
-it.</li>
+<li><strong>Hosted accounts do not use this memory.</strong> An
+account-backed HTTP request passes <code>augment=False</code>, so it
+neither injects nor trains the lesson store, and the global memory tools
+are refused at the HTTP boundary
+(<code>sonder_runtime/interfaces/http/serve.py:1593</code>,
+<code>:7647</code>).</li>
 </ul>
-<p>The screen found no auto-run surfaces, no dependency surfaces inside
-the cooldown, two build-time execution points (<code>conftest.py</code>
-on pytest collection) and two unpinned dev/train requirement ranges.
-Nothing was installed or run; the code was read and cross-checked
-against its committed tests.</p>
+<p>The screen of this checkout found no auto-run surface, two build-time
+execution points (<code>conftest.py</code> and
+<code>tests/conftest.py</code>), two unpinned requirement files
+(<code>requirements-dev.txt</code>, <code>requirements-train.txt</code>)
+and no dependency surface inside the cooldown. The licence is Apache-2.0
+with no rider. Nothing was installed or run; the code was read and
+cross-checked against its committed tests.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
 <ul>
-<li><strong>Write / distill</strong> — the
-<code>lesson_distillations</code> state machine in
-<code>memory_store.py</code>: <code>claim</code> an interaction, extract
-a lesson, transition to <code>stored</code> / <code>no_lesson</code> /
-<code>cancelled</code>, with <code>result_reason</code> recording
-<code>not_concrete</code>, <code>exact_duplicate</code>,
-<code>semantic_duplicate</code>, or <code>rejected_value</code> (a hit
-against the tombstone registry, by exact hash in
-<code>reflection.py:465</code> or by embedding in
-<code>is_tombstoned_duplicate</code>).</li>
-<li><strong>Credit</strong> — <code>lesson_usage</code> rows link a
-retrieved lesson to its interaction; outcome signal, reward and
-<code>outcome_source</code> are filled in when the outcome lands
-(<code>record_outcome</code>, the <code>_checked_source</code>
-guard).</li>
-<li><strong>Retrieve</strong> — <code>retriever.retrieve</code> /
-<code>retrieve_with_ids</code>: embedding cosine at
-<code>DEFAULT_MIN_SIM = 0.62</code> unioned with
-<code>memory_store.fts_search</code>, then
-<code>mmr_rerank.mmr_rerank</code> at <code>lambda 0.5</code>, with
-<code>exclude_ids=quarantined</code> applied before ranking.</li>
+<li><strong>Write / distill</strong> —
+<code>reflection.maybe_add_lesson</code> and the
+<code>lesson_distillations</code> state machine: claim an interaction,
+extract a lesson through <code>reflection_distill</code>, refuse
+<code>not_concrete</code> (<code>reflection.py:328</code>),
+<code>exact_duplicate</code> (<code>:428</code>), a tombstoned text
+(<code>:430</code>) and a tombstoned embedding (<code>:446</code>, via
+<code>is_tombstoned_duplicate</code> at <code>:146</code>).</li>
+<li><strong>Credit</strong> —
+<code>memory_store.record_outcome_row</code>
+(<code>memory_store.py:965</code>) requires a <code>source</code>;
+<code>lesson_usage</code> rows for the interaction receive the reward
+and <code>outcome_source</code>. <code>lesson_usage_history</code>
+(<code>:2347</code>) drops <code>attributed</code> rows from quarantine
+evidence.</li>
+<li><strong>Retrieve lessons</strong> —
+<code>retriever.retrieve_with_ids</code>
+(<code>retriever.py:576</code>): compute <code>quarantined</code>,
+over-fetch FTS hits by that many, rank compatible vectors with
+<code>exclude_ids=quarantined</code> (<code>:612</code>), fuse by RRF
+with a bounded <code>_usage_boost</code>, keep candidates clearing 0.62
+(0.70 without two content-word anchors), then
+<code>memory_rerank.mmr_rerank</code> at lambda 0.5.</li>
 <li><strong>Quarantine</strong> —
-<code>retriever.lesson_quarantine</code> at <code>:392</code>, with
-constants <code>QUARANTINE_MIN_LOSSES = 5</code>,
+<code>retriever.lesson_quarantine</code> (<code>:391</code>) with
+<code>QUARANTINE_MIN_LOSSES = 5</code>,
+<code>QUARANTINE_REPEAT_TASK_MIN_LOSSES = 6</code>,
 <code>QUARANTINE_MIN_DISTINCT_TASKS = 2</code>,
-<code>QUARANTINE_PROBATION_AFTER_HOURS = 24</code>,
-<code>band_loss_rate</code> for the base-rate test, and
-<code>_attribution</code> for shared-blame deduplication.</li>
-<li><strong>Correct preferences</strong> —
-<code>refinement_transactions.apply_preference_refinement</code> writes
-a <code>refinement_history</code> row per
-<code>apply</code>/<code>rollback</code> with
-<code>expected_version</code> optimistic concurrency and before/after
-versions.</li>
-<li><strong>Prune</strong> — <code>lesson_pruner.prune</code> clusters
-by cosine ≥ <code>0.93</code> and deletes all but one representative per
-cluster, dry-run unless <code>--apply</code>; each deletion goes through
+<code>QUARANTINE_MAX_AVG_REWARD = -0.5</code>,
+<code>QUARANTINE_MIN_ATTRIBUTABLE_LOSSES = 2.0</code>,
+<code>QUARANTINE_BAND_ALPHA = 0.01</code>, probation after 24 hours at
+one in twenty, cooldown seven days.</li>
+<li><strong>Assemble the prompt</strong> — <code>server.py:4191</code>
+reads <code>facts_for_project(conn, project)</code>, newest first;
+recall reads <code>good_interaction_candidate_page</code> with
+<code>i.project=? AND i.project_explicit=1</code>
+(<code>memory_store.py:3389-3402</code>); the approved playbook index
+enters the system prompt (<code>server.py:2446</code>).</li>
+<li><strong>Facts</strong> — <code>sonder_remember_fact</code>
+(<code>server.py:14438</code>) parses validity through
+<code>fact_write_inputs</code>, refuses a duplicate within the project
+(<code>find_duplicate_fact_in</code>, <code>memory_store.py:3586</code>)
+and calls <code>MemoryRepositoryAdapter.add_fact</code>, which routes to
+the authoritative source when one is composed and to
+<code>memory_store.add_fact</code> (<code>:3624</code>) otherwise.
+<code>sonder_forget_fact</code> deletes by exact id and project after a
+matching <code>confirm</code>.</li>
+<li><strong>Playbooks</strong> — <code>playbook_note</code>
+(<code>sonder_runtime/bootstrap/playbooks.py:93</code>) writes a
+<code>proposed</code> entry and records a pending ledger item; the
+owner's <code>approve</code> runs <code>approve_pending</code> then
+<code>PlaybookStore.review</code> (<code>playbook_store.py:291</code>)
+with the content digest.</li>
+<li><strong>Prune</strong> — <code>lesson_pruner.prune</code> from
+<code>scripts/nightly_self_improve.py:544</code> with
+<code>dry_run=False</code>; <code>apply_plan</code>
+(<code>lesson_pruner.py:246</code>) revalidates both vectors under
+<code>BEGIN IMMEDIATE</code> and calls
 <code>memory_store.tombstone_lesson</code>
-(<code>lesson_pruner.py:209</code>), writing a
-<code>lesson_tombstones</code> row (content SHA-256 + embedding) so the
-value cannot be re-distilled.</li>
-<li><strong>Tombstone / re-derivation guard</strong> —
-<code>memory_store.tombstone_lesson</code> (<code>:2225</code>) records
-the digest and embedding then deletes the lesson rows;
-<code>lesson_text_tombstoned</code> and
-<code>all_lesson_tombstones</code> back the distillation refusal.
-<code>delete_interaction</code> purges the tombstones derived from
-it.</li>
-<li><strong>Decay / contradiction</strong> — <code>lesson_decay</code>
-blends a 30-day half-life with a small usage weight and flags
-contradicting lesson pairs.</li>
-<li><strong>Quality audit</strong> — <code>memory_quality</code>
-classifies stored lessons as vague or concrete and reports
-duplicates.</li>
+(<code>memory_store.py:2271</code>).</li>
+<li><strong>Search</strong> — <code>memory_search</code>
+(<code>server.py:16651</code>), an MCP tool and an agent tool, reads
+lessons by FTS and facts, preferences, sessions and interactions by
+<code>LIKE</code> over the whole database.</li>
 </ul>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
 <p>The schema is where the epistemic care shows, and several columns
-carry a comment explaining the failure they prevent — a habit worth
-reading the source for.</p>
+carry a comment naming the failure they prevent.</p>
 <p><code>outcomes.source</code> is the sharpest: <code>NOT NULL</code>
 with <strong>no default</strong>, a closed <code>CHECK</code>
 vocabulary, and a comment stating why —</p>
 <blockquote>
 <p>a default is how the original defect would come back, because a
 writer that forgot would keep filing rows under a meaning it never
-chose. Omitting the column is a constraint failure, not a silent
-relabelling.</p>
+chose.</p>
 </blockquote>
-<p>That is provenance enforced at the schema level: the system cannot
-record an outcome without saying who judged it, and it cannot invent a
-category. The <code>lesson_usage.outcome_source</code> mirror is
-nullable because a usage row exists before any outcome credits it, and
-the eviction math reads <code>NULL</code> as unknown provenance.</p>
-<p><code>preferences</code> carries <code>confidence REAL</code>,
-<code>evidence_count</code>, <code>enabled</code>, and
-<code>revision &gt;= 1</code> with a <code>UNIQUE(scope, key)</code> — a
-corrected belief with a version and an on/off switch.
-<code>refinement_history</code> records
-<code>operation IN ('apply', 'rollback')</code> with
-<code>expected_version</code>, <code>before_version</code>,
-<code>after_version</code> and a <code>parent_refinement_id</code>,
-which is an <strong>append-only audit of every correction, with
-rollback</strong> — the mechanism the <a
-href="../../patterns/append-only-memory-audit/">append-only memory
-audit</a> pattern describes, applied to preferences.</p>
-<p><code>lesson_tombstones</code> is the model's rejected-value record.
-Its primary key is the normalized-text SHA-256 of a pruned lesson, and
-it carries the lesson's embedding and vector provenance but — by an
-explicit comment — never the lesson text: <em>"its content identity must
-not disappear with it… never retain the lesson text in this denial
-record."</em> A <code>reason CHECK</code> admits only
-<code>near_duplicate_pruned</code> today, so the table is scoped to the
-pruning path, and deleting a source interaction purges the tombstones
-derived from it. This is the value-keyed <a
-href="../../patterns/rejected-value-tombstone/">rejected-value
-tombstone</a>, and it is kept distinct from privacy deletion on purpose:
-<code>delete_lesson</code> and the new project-scoped
-<code>delete_fact</code> erase completely, while
+<p>The system cannot record an outcome without saying who judged it.
+<code>lesson_usage.outcome_source</code> is nullable because a usage row
+exists before any outcome credits it, and the evidence query keeps
+<code>NULL</code> rows on purpose so the gate does not lose its
+pre-column history.</p>
+<p><code>lesson_tombstones</code> is the rejected-value record: primary
+key the normalized text's SHA-256, carrying embedding and vector
+provenance, and by an explicit comment never the text.
+<code>reason</code> admits only <code>near_duplicate_pruned</code>.
+Deleting a source interaction purges the tombstones derived from it
+(<code>memory_store.py:733</code>). It is kept distinct from privacy
+deletion: <code>delete_lesson</code> erases,
 <code>tombstone_lesson</code> rejects a value and remembers,
 content-free, that it did.</p>
-<p><strong>Scoping</strong> is real on the scoped stores and absent on
-the lesson store, by design. Interactions carry <code>project</code> and
-a <code>project_explicit</code> flag; tasks and preferences carry
-<code>account_scope</code>, described as "an account boundary supplied
-by the authenticated serving layer," applied as
-<code>WHERE project=?</code> / <code>account_scope=?</code> on the read
-builders. Lessons, by contrast, are <strong>global</strong> — procedural
-knowledge is meant to cross projects, and retrieval fetches them by id
-without a project filter. So <code>scope_enforced</code> is earned by
-the interaction, task and preference reads, and the report states
-plainly that the lesson layer is deliberately unscoped.</p>
-<p>Temporal fields are record time throughout; preference
-<code>revision</code> is versioning, not validity time, so
-<code>bitemporal</code> does not apply.</p>
+<p><code>facts</code> gained <code>valid_from</code>,
+<code>valid_to</code> and <code>superseded_by</code> beside
+<code>ts</code>, as fixed-width UTC text so SQL compares them as
+strings. The columns are additive and unbackfilled, so a legacy fact has
+no interval and stays current. Valid time comes from the caller and must
+carry a timezone; <code>ts</code> is the write clock. Closing a
+predecessor overwrites its <code>valid_to</code> and sets
+<code>superseded_by</code>, and the <code>UPDATE</code> re-checks
+<code>superseded_by IS NULL</code>, so a fact gains at most one
+successor (<code>memory_store.py:3674-3703</code>). When the correction
+was recorded is recoverable only from the successor's
+<code>ts</code>.</p>
+<p><code>preferences</code> carries
+<code>scope TEXT DEFAULT 'global'</code>, <code>confidence</code>,
+<code>evidence_count</code>, <code>enabled</code> and
+<code>revision</code>. Production writes go through
+<code>upsert_preference</code> (<code>memory_store.py:3771</code>),
+which overwrites the text and bumps <code>revision</code>, and
+<code>set_preference_enabled</code> (<code>:3974</code>).
+<code>refinement_history</code> is append-only by trigger and has a
+writer,
+<code>refinement_transactions.apply_preference_refinement</code>, with
+no caller outside its tests; the repository's own landscape note calls
+it "fully built with no production route", and the grep agrees.</p>
+<p>Playbook entries are Markdown blocks whose metadata lines carry
+<code>id</code>, <code>date</code>, <code>category</code>,
+<code>status</code>, <code>tainted</code> and a JSON
+<code>provenance</code>, followed by Body, Evidence and Triggers. The
+parser drops a block whose status is outside the four values or that
+nests a second entry header.</p>
+<p><strong>Scoping</strong> has three different keys. Interactions,
+facts and sessions carry <code>project</code>, with
+<code>project_explicit</code> on interactions so a migrated row with a
+plausible project string is not recalled into it. Preferences carry
+<code>scope</code>. Tasks carry <code>account_scope</code>, an opaque
+digest derived from the authenticated HTTP principal. Lessons and
+playbooks carry none: procedural knowledge is meant to cross
+projects.</p>
+<p>The project filter is applied on prompt assembly and not on search.
+<code>facts_for_project</code>, the interaction recall page and
+<code>find_duplicate_fact_in</code> take one project, and the last says
+why in its docstring: <em>"scoping is a privacy boundary, not a
+convenience filter."</em> <code>memory_search</code>
+(<code>server.py:16651</code>) takes a query and a limit and reads
+<code>facts</code>, <code>preferences</code>, <code>sessions</code> and
+<code>interactions</code> with no project or scope predicate. It is on
+<code>REPOSITORY_READ_ONLY_TOOLS</code> (<code>server.py:17285</code>)
+and <code>_PROJECT_BOUND_AGENT_TOOLS</code> (<code>:19501</code>), and
+<code>_agent_dispatch</code> routes it (<code>:18516</code>). An agent
+working in one project can therefore read another project's facts and
+transcripts in one call, and <code>scope_enforced</code> is not awarded.
+The hosted HTTP surface refuses this tool to accounts, on the stated
+ground that direct MCP and local-open deployments belong to one
+operator.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Hybrid and outcome-filtered. A query is embedded and matched by
-cosine at a 0.62 relevance floor, unioned with an FTS5 lexical search
-over <code>lessons_fts</code>, and the combined candidates are
-MMR-reranked at <code>lambda 0.5</code> to trade relevance against
-redundancy. <strong>Quarantined lessons are removed before
-ranking</strong> — <code>exclude_ids</code> is computed from the
-quarantine decision and passed into the candidate query, so a lesson
-that has been leading to losses never reaches the prompt.</p>
-<p>The quarantine decision is the retrieval mechanic worth studying, and
-section 1 gives its three guards. Two consequences for retrieval follow.
-First, the exclusion is <strong>evidence-gated, not
-score-gated</strong>: a lesson is not dropped for a low similarity but
-for a documented run of bad outcomes it is answerable for, so retrieval
-quality and lesson trust are separated. Second, the probation path means
-the exclusion is <strong>not permanent</strong> — a quarantined lesson
-is sampled back into a fraction of traffic so it can earn its way out,
-which is the difference between suppression and deletion.</p>
-<p>The failure mode the design carries is the base-rate test's
-dependence on having enough outcomes: a new lesson has no band
-statistics, so quarantine cannot fire on it, and a lesson retrieved
-rarely accumulates evidence slowly. That is the correct direction to
-fail — a lesson is trusted until it has demonstrably earned suspicion —
-but it means a harmful new lesson gets a grace period proportional to
-how often it is used.</p>
-<p>The contradiction detector in <code>lesson_decay</code> is a second,
-quieter retrieval-time signal: it flags pairs of lessons that are
-semantically similar (≥ 0.8) but carry opposite outcome signals — the
-situation where the store holds "do X" and "never do X" and needs a
-human or a further outcome to break the tie. It flags rather than
-resolves, which is the honest posture for a store that cannot know which
-directive is right.</p>
+<p>Lesson retrieval is hybrid and outcome-filtered. The task is embedded
+and scored by cosine against every stored vector in the same embedding
+space, FTS5 supplies lexical candidates, and the two lists are fused by
+reciprocal rank with a bounded tiebreak from outcome history. A fused
+candidate must clear 0.62 cosine, or 0.70 when it shares fewer than two
+content words with the task; the comment cites a reproduced cross-domain
+false positive at 0.650211. MMR at lambda 0.5 then picks the final
+<code>k</code>. <strong>Quarantined lessons are removed before any of
+this</strong>: the same set is excluded from the vector ranking and
+filtered out of the over-fetched FTS hits.</p>
+<p>The quarantine decision is evidence-gated, not score-gated: a lesson
+is dropped for a documented run of bad outcomes it is answerable for,
+not for low similarity, so retrieval quality and lesson trust are
+separate axes. The tiebreak (<code>_usage_boost</code>) reads the
+caller's mean wherever a caller has judged the lesson and the execution
+mean only otherwise, capped at ±0.01, because a blended mean let eight
+self-graded passes outrank a caller's rejection.</p>
+<p>The base-rate test needs evidence, so a new lesson cannot be
+quarantined and a rarely retrieved one accumulates evidence slowly. That
+is the right direction to fail, and it gives a harmful new lesson a
+grace period proportional to how often it is used.</p>
+<p>Fact retrieval is a filter, not a ranking: every current fact of the
+project is a candidate for the bounded facts block, newest first,
+round-robin with preference facts. Playbook selection matches topic
+triggers against the task and reads up to twelve approved entries within
+a byte budget.</p>
+<p><code>memory_search</code> is the exception to every filter above. It
+returns FTS lesson hits through <code>get_lesson_text</code> without the
+quarantine set, so a quarantined lesson reaches the agent through its
+own tool, and it returns other projects' rows as section 5 describes. It
+does apply the current-fact predicate.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
 <p>Writes are two-phase and idempotent. An interaction is recorded
-synchronously; the lesson is distilled asynchronously through the
-<code>lesson_distillations</code> state machine, which
-<strong>claims</strong> the interaction with a token and owner identity,
-extracts a candidate lesson, and lands in a terminal state with a
-<code>result_reason</code>. The refusal reasons are the interesting
-part: <code>not_concrete</code> rejects a vague lesson before it is
-stored (backed by the <code>memory_quality</code> vocabulary),
-<code>exact_duplicate</code> and <code>semantic_duplicate</code> reject
-one that restates an existing lesson. So the distiller is a
-quality-and-dedup gate, and the fact that a lesson was refused is itself
+synchronously; distillation runs through the
+<code>lesson_distillations</code> state machine, which claims the
+interaction with a token and owner identity, extracts a candidate, and
+lands in a terminal state with a <code>result_reason</code>. The
+refusals are the interesting part: <code>not_concrete</code> rejects a
+platitude before it is stored, <code>exact_duplicate</code> and
+<code>semantic_duplicate</code> reject a restatement, and
+<code>rejected_value</code> rejects a pruned value. The refusal is
 recorded against the interaction.</p>
 <p>Outcome crediting is the write that powers everything downstream.
 When an outcome lands it is attached to the interaction and propagated
-to the <code>lesson_usage</code> rows for every lesson that was
-retrieved — with its <code>outcome_source</code>. This is the
-credit-assignment step the atlas keeps asking for and rarely finds: the
-store knows not just that a lesson exists but which interactions used it
-and how those turned out, and by whom that judgement was made.</p>
-<p>Background work is substantial and all outcome-driven: near-duplicate
-pruning, age-decay ranking, contradiction detection, and quarantine.
-None of it blocks a turn — the retrieval path reads the current
-quarantine state, and the heavier passes run as maintenance. The token
-cost of distillation is one extraction per interaction that produced a
-storable lesson, gated by the concreteness and dedup checks, so noise
-does not accumulate.</p>
-<p>Deletion has the two shapes above — reversible quarantine and
-irreversible near-duplicate pruning — and they differ in exactly the way
-that matters. Pruning writes a <code>lesson_tombstones</code> row keyed
-on the rejected lesson's content hash and embedding, and distillation
-checks a candidate against it by both exact hash and semantic match,
-returning <code>rejected_value</code>; a pruned duplicate cannot be
-re-distilled. Quarantine leaves no rejected-value record — it keeps the
-row and suppresses it — so a lesson quarantined as harmful can be
-re-distilled from a fresh interaction and return. Closing that is a
-one-line extension: the tombstone check the pruner already triggers,
-applied when a lesson is quarantined rather than only when it is
-pruned.</p>
+to the <code>lesson_usage</code> rows for every lesson retrieved, with
+its source. The store knows not just that a lesson exists but which
+interactions used it, how they turned out, and who judged.</p>
+<p>Facts are written on the hot path by
+<code>sonder_remember_fact</code>. Validity input that names no entity,
+decision or provenance goes to the legacy store with an interval; input
+that does is an authoritative claim and needs the configured source. A
+superseded statement can be re-asserted later as a new fact, because
+duplicate detection reads current facts only, and a test asserts it.</p>
+<p>Playbook notes are written as <code>proposed</code> with redaction
+applied first; an exact duplicate of any existing entry body in the
+topic, whatever its status, is refused, and a near-duplicate is marked.
+A rejected body therefore cannot be re-proposed verbatim while the
+rejected entry exists.</p>
+<p>Background work is a nightly job
+(<code>scripts/nightly_self_improve.py</code>): drain distillation,
+backfill embeddings, prune near-duplicates. The pruner loads the newest
+1,024 lessons and compares only those (<code>lesson_pruner.py:26</code>,
+<code>:29</code>), so a duplicate pair older than that window is never
+examined. Quarantine and decay are computed at read time and cost one
+ordered scan of <code>lesson_usage</code> per retrieval.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Distillation is one model call per qualifying interaction — a good
+outcome, or a failure with a readable error for a pitfall — deferred
+through the claim state machine, with the nightly job draining what is
+left. Retrieval embeds the task and scans all lesson vectors in the same
+space in Python; the prompt carries at most <code>k</code> lessons, a
+bounded facts block and the approved playbook index, which is frozen per
+session so it does not move under a provider's prefix cache.</p>
 <h3 id="an-outbox-in-the-memory-schema-one-layer-from-the-live-path">An
 outbox in the memory schema, one layer from the live path</h3>
-<p>Migration revision 5 concatenates <code>OUTBOX_DDL</code> into the
-memory schema, so every database carries an <code>outbox_events</code>
-table — id, event type, aggregate type and id, a <code>sequence</code>,
-a payload, a correlation id, <code>created_at</code> and a nullable
-<code>published_at</code>, under
-<code>UNIQUE(aggregate_type, aggregate_id, sequence)</code>. The module
-states the contract: <em>"State mutations and their events are committed
-atomically. The dispatcher polls unpublished events and projects them
-into <code>operations.db</code>."</em></p>
-<p><strong>The producer exists and the live path does not use
-it.</strong> <code>OutcomeService.record_outcome</code> calls
-<code>self._store.record_outcome(...)</code> and then
-<code>self._store.append_outbox_event(event)</code> with an
-<code>outcome.recorded</code> event — the atomic pairing the docstring
-describes. But nothing outside <code>tests/</code> constructs an
-<code>OutcomeService</code>: the running system records outcomes from
-<code>server.py</code>, directly against the store, at eight call sites.
-So the table is created on every install, the writer and the dispatcher
-are complete and covered by <code>tests/test_spec5_outbox.py</code>, and
-a reader who queries <code>outbox_events</code> on a working deployment
-finds it empty. This is a layered architecture being built beside the
-working one rather than a mechanism that was abandoned, and the
-distinction matters for what the table means today: nothing.</p>
-<p><strong>There is a latent collision in the wiring that would activate
-it.</strong> The event is constructed with <code>sequence=0</code>
-hardcoded, and <code>OutboxWriter.append</code> issues a plain
-<code>INSERT INTO outbox_events</code> with no conflict clause against a
-UNIQUE over <code>(aggregate_type, aggregate_id, sequence)</code>. The
-aggregate is the interaction, and an interaction can receive more than
-one outcome — <code>outcomes</code> has no unique constraint on
-<code>interaction_id</code>, and <code>server.py</code> records
-<code>tests_passed</code> and <code>failed</code> from different
-branches of the same flows. So the second outcome for an interaction
-would raise, and because the append happens inside the transaction that
-recorded the outcome, the outcome write would roll back with it.
-Whichever caller migrates to the service first is the one that finds
-this.</p>
+<p>Every memory database carries an <code>outbox_events</code> table
+under <code>UNIQUE(aggregate_type, aggregate_id, sequence)</code>. Its
+only writer is <code>OutcomeService.record</code>, which records an
+outcome and appends an <code>outcome.recorded</code> event in one unit
+of work. The one production constructor of that service is
+<code>MemoryFacade.record</code>
+(<code>sonder_runtime/application/memory/facade.py:63</code>), and
+nothing calls it; the running system records outcomes through
+<code>uow.memory.record_outcome</code> in <code>server.py</code>. A
+reader who queries <code>outbox_events</code> on a working deployment
+finds it empty.</p>
+<p>The event is built with <code>sequence=0</code> hardcoded
+(<code>sonder_runtime/application/memory/outcome_service.py:76</code>)
+and inserted with no conflict clause. An interaction can receive more
+than one outcome, so the second outcome for the same interaction would
+raise inside the transaction and roll back the outcome with it, once a
+caller routes through the service.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>The memory adapter is a stdlib-only importable module, and the
-runtime drives it from a terminal REPL, a headless service, and an MCP
-surface. The agent's leverage over memory is indirect and
-outcome-mediated rather than tool-driven: it does not call
-<code>save_lesson</code> or <code>forget</code>; it acts, an outcome is
-recorded, and the distillation and quarantine machinery decide what
-becomes and stays a lesson. That is a deliberate design — the model does
-not curate its own procedural memory, the outcome loop does — and it is
-the right shape for a self-improving loop where the model's own
-judgement is exactly what should not be trusted to grade itself.</p>
-<p>Preferences are the one memory a person or the serving layer edits
-directly, and they carry the <code>account_scope</code> boundary and the
-refinement audit. The <code>contribute.py</code> /
-<code>pull_community.py</code> / <code>proposals/</code> machinery is a
-community-contribution flow for <em>code modules</em> (a lesson tagger,
-a C++ repair flow), not a per-memory review surface — so
-<code>human_review</code> is withheld: the quarantine that governs
-lesson trust is statistical and automatic, and there is no surface where
-a person adjudicates a lesson's content.</p>
-<p>Adopting the mechanism means taking the outcome→credit→quarantine
-loop, which is portable in principle: it needs an interaction log, an
-outcome with a provenance field, a usage join, and the base-rate math in
-<code>retriever.py</code> and <code>lesson_decay.py</code>. Those
-modules are pure and test-friendly by construction.</p>
+<p>The memory adapter is importable, and the runtime drives it from a
+REPL, a headless service, an HTTP server and an MCP surface. The agent's
+leverage over lessons is outcome-mediated: it has no
+<code>save_lesson</code> or <code>forget_lesson</code> tool; it acts, an
+outcome is recorded, and distillation and quarantine decide what becomes
+and stays a lesson.</p>
+<p>Two memories are written by tool. <code>sonder_remember_fact</code>
+takes text, a project and optional validity, and
+<code>sonder_forget_fact</code> deletes by exact id after an exact
+<code>confirm</code>. <code>playbook_note</code> proposes an entry, and
+<code>playbook_read</code> returns approved entries for one topic.</p>
+<p><strong>Playbook review is the one human gate.</strong> The producer
+is the agent, through <code>playbook_note</code> on MCP or the local
+agent's tool list. The entry's taint comes from a context variable, not
+an argument, and the module says why: <em>"they are not public tool
+arguments that a model could use to self-approve a note."</em>
+<code>approval_status</code> returns <code>proposed</code> for any
+tainted note in every approval mode, including <code>auto</code>
+(<code>sonder_runtime/domain/memory/playbooks.py:215-220</code>).</p>
+<p>The resolvers are out of the agent's reach:</p>
+<ul>
+<li>the <code>sonder playbooks approve</code> CLI and the REPL's
+<code>/playbooks approve</code>, typed by the operator, which issue and
+consume a ledger approval bound to the entry's content digest and then
+set <code>approved</code>;</li>
+<li><code>permission_approve</code>, which issues a one-shot approval
+only for the in-process console object, a developer-role token, or
+<code>SONDER_ALLOW_PERMISSION_EDITS=1</code>
+(<code>server.py:9163-9185</code>), and which the agent loop refuses as
+a system-operator tool (<code>server.py:18259</code>,
+<code>sonder_runtime/bootstrap/generic_agent_dispatch.py:30</code>);</li>
+<li>the playbook directory itself, which the control-plane inventory
+owns so file tools cannot write an approved entry into it
+(<code>control_plane_paths.py:358</code>).</li>
+</ul>
+<p><code>human_review</code> is awarded on that store. Two limits are
+stated rather than counted against it. An agent with a general shell
+tool could invoke the CLI as a subprocess, as with any CLI-gated review.
+And an operator who sets <code>SONDER_ALLOW_PERMISSION_EDITS=1</code>
+lets a direct MCP client issue the ledger approval that the next
+<code>/playbooks list</code> reconciles.</p>
+<p>Lessons have no review surface; the quarantine that governs them is
+statistical and automatic. The <code>contribute.py</code> and
+<code>pull_community.py</code> flow exchanges code modules, not
+memories.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
 <p><strong>Provenance is the strongest work here.</strong> Every outcome
-records who judged it, enforced at the schema level, and the
-success-rate and quarantine math weight caller-sourced outcomes over
-machine ones and treat unknown provenance as its own category. This is
-the concrete answer to self-grading: a lesson credited only by the
-machine's assessment of its own output is not trusted the way one
-credited by a caller is. Read against <a
-href="../../appendix/#known-limitations">the reward-inflation result</a>
-the atlas records, Sonder is one of the few systems that has built the
-distinction the theory says is necessary — a de-inflation signal that
-tracks who is doing the grading.</p>
-<p><strong>The quarantine's two statistical guards are what separate it
-from the naive version.</strong> The naive outcome-gated memory punishes
-a lesson for a run of losses; this one asks whether the run is
-improbable for the lesson's own retrieval band (so a rarely-used lesson
-on hard tasks is not punished for the difficulty of the tasks retrieval
-sent it) and whether the lesson is individually answerable for the
-losses (so a cohort that always fails together does not let each member
-count the shared failure). Both are tested with worked probabilities.
-This is the credit-assignment discipline the atlas argues for and finds
-almost nowhere.</p>
-<p><strong>The residual risks are real and mostly acknowledged in the
-code.</strong> The loop trusts an outcome signal that is frequently
-<code>machine</code> or <code>unknown</code>; the code's suspicion of
-those categories is correct but does not manufacture ground truth where
-there is none, so a store fed only machine-graded outcomes is a store
-grading itself, however carefully the weights are set. Near-duplicate
-pruning writes a content-hashed rejected-value tombstone that
-distillation honours, so a pruned duplicate cannot come back; quarantine
-suppresses without one, so a quarantined lesson can be re-distilled from
-a fresh interaction and resurrect. And the base-rate test's need for
-evidence gives a new harmful lesson a grace period.</p>
-<p><strong>Correction of preferences is auditable and
-reversible</strong> — <code>refinement_history</code> with
-apply/rollback and version checks — which earns <code>audit_log</code>.
-Concurrency is handled with claim tokens and liveness-guarded
-abandoned-claim recovery. There is no encryption of the local database
-mentioned; the store is as private as the disk.</p>
-<h3 id="a-fact-cannot-exist-without-the-record-of-how-it-arrived">A fact
-cannot exist without the record of how it arrived</h3>
-<p><code>sonder_runtime/adapters/persistence/sqlite/memory_replication.py</code>
-adds a bounded ordered journal for authoritative fact mutations, and the
-placement is argued in a comment rather than assumed: the journal tables
-live in the same <code>memory.db</code> as the mutations they describe
-because <em>"an authoritative fact state row and the journal evidence
-must share a single SQLite commit"</em>
-(<code>memory_store.py:258-266</code>).
-<code>memory_authoritative_fact_state(project, fact_id, source_id, version, tombstoned)</code>
-is keyed on <code>(project, fact_id)</code>, and
-<code>memory_replication_log</code> carries
-<code>(source_id, source_epoch, sequence, entity_kind, entity_id, version)</code>
-with <code>CHECK</code> constraints refusing a zero epoch or
-sequence.</p>
-<p>Two tests make the coupling real rather than conventional:
-<code>test_authoritative_fact_source_commits_fact_and_journal_record_together</code>
-and
-<code>test_authoritative_fact_source_rolls_back_materialized_fact_when_journal_rejects</code>.
-The second is the one that matters — the fact is discarded when its
-journal row is refused, so the failure direction is a lost write rather
-than an unexplained memory.
-<code>test_default_unit_of_work_preserves_the_legacy_unjournaled_fact_path</code>
-is the positive control that the older path still works, so the suite is
-not asserting into a feature that is switched off.</p>
-<p>The journal is explicitly <strong>not</strong> a replication system:
-the module header says it is <em>"deliberately provider-neutral: a
-replicated database or transport must supply ownership, durability, and
-network delivery guarantees around this journal."</em>
-<code>SQLiteMemoryReplicationProjection</code>
-(<code>memory_projection.py:153</code>) applies ordered records to one
-database to rebuild derived recall indexes, and takes a
-<code>project_scope</code> of its own.
-<code>sonder_runtime/domain/memory/retention_gate.py</code> sits beside
-it on the same principle — a pure eligibility decision for removing a
-versioned record that <em>"does not open a database, delete a file,
-replicate data, contact a provider, or implement consensus"</em>,
-returned for an adapter to re-check at its own side-effect boundary.</p>
-<p>The <code>tombstoned</code> column here is row-level, keyed on
-<code>(project, fact_id)</code>, and does not extend the
-<code>tombstone</code> mark this report already carries — that one is
-earned at the distillation seam on the lesson <em>text</em>, which is
-the value rather than the row.</p>
-<h3
-id="duplicate-facts-are-refused-at-the-write-path-inside-one-project">Duplicate
-facts are refused at the write path, inside one project</h3>
-<p><code>sonder_remember_fact</code> (<code>server.py:13468</code>)
-normalises a candidate and asks whether the project already holds it
-before writing, and the reason is a budget argument the code states:
-facts <em>"are injected into EVERY project-scoped prompt, so storing the
-same assertion twice spends prompt budget on a repeat forever."</em>
-<code>normalize_fact_text</code> (<code>memory_store.py:3441</code>)
-collapses whitespace and casefolds, and
-<code>find_duplicate_fact_in</code> (<code>:3452</code>) takes
-already-loaded rows so a caller holding a repository rather than a
-connection can ask the same question.</p>
-<p>The scope discipline is written where it can be got wrong. The call
-site passes <code>uow.memory.facts_for_project(project_id)</code> and
-says why — <em>"a fact another project already knows must still be
-stored here, never referenced across the scope"</em> — and the helper's
-own docstring repeats it: <em>"Callers must pass rows from ONE project
-only: matching across projects would let a fact leak between scopes, and
-scoping is a privacy boundary, not a convenience filter."</em> A
-de-duplicator is the classic place a scope boundary is quietly widened
-for efficiency, and both halves of this one refuse to.</p>
-<p>A refused write returns the id of the fact that already says it, and
-names <code>sonder_forget_fact</code> as the way to replace it, so the
-caller is told what to do rather than that nothing happened.</p>
+records who judged it, enforced by schema, and a test guards that no
+production <code>INSERT INTO outcomes</code> omits the column. The
+provenance is used in two different ways. Heuristically attributed
+evidence is dropped from the quarantine evidence and can never ground a
+distillation. Machine-graded evidence — the code gate running a reply's
+own code — counts toward quarantine fully, and the test docstring
+explains the line is "NOT machine-versus-human". So a store fed only
+machine-graded outcomes is a store grading itself, however carefully the
+attribution is set.</p>
+<p><strong>The quarantine's two statistical guards separate it from the
+naive version.</strong> It asks whether the run is improbable for the
+lesson's own retrieval band, so a rarely used lesson is not punished for
+the difficulty of the tasks retrieval sent it, and whether the lesson is
+individually answerable, so a cohort that always fails together does not
+let each member count the shared failure. Both are tested with worked
+probabilities.</p>
+<h3 id="the-mutation-journal-is-opt-in">The mutation journal is
+opt-in</h3>
+<p>With <code>[memory_replication] enabled = true</code>,
+<code>compose_memory_unit_of_work</code>
+(<code>sonder_runtime/bootstrap/app.py:187</code>) gives every live unit
+of work an <code>SQLiteAuthoritativeFactSource</code> for one project
+scope. Each fact write or delete then appends an ordered
+<code>memory_replication_log</code> row — source, epoch, sequence, kind,
+id, version, <code>upsert</code> or <code>delete</code>, payload, digest
+— in the same SQLite transaction as the fact, and a failed append rolls
+the fact back. Legacy <code>add_fact</code> and <code>delete_fact</code>
+refuse the activated project, so the fact cannot be changed around the
+journal. Nothing in production updates or deletes log rows;
+<code>prune_before</code> exists and only tests call it.
+<code>audit_log</code> is awarded on this journal.</p>
+<p>It covers facts in one configured project, and the default
+configuration leaves it off. Lessons, preferences and playbooks have no
+mutation journal: a lesson is pruned with only a content-free tombstone
+left, a preference is overwritten in place, and a playbook entry's
+status is rewritten in its file. <code>refinement_history</code>, with
+its append-only triggers, would cover preferences and has no production
+writer.</p>
+<h3 id="residual-risks">Residual risks</h3>
+<ul>
+<li><code>memory_search</code> crosses projects and ignores quarantine
+(section 5).</li>
+<li><code>memory_export</code> dumps lessons, facts, preferences and
+optionally interactions across projects to the caller; the agent loop
+refuses it as an operator tool.</li>
+<li>Quarantine writes no rejected-value record, so a quarantined lesson
+re-distilled from a fresh interaction can return.</li>
+<li>The pruner's newest-1,024 window leaves older duplicates
+unpruned.</li>
+<li>There is no encryption of the local database; it is as private as
+the disk.</li>
+</ul>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>The test suite is large and unusually well-aimed at the mechanisms
-this report cares about: 362 test files, and the memory-relevant ones
-assert behaviour rather than coverage.
-<code>tests/test_retriever.py</code> alone pins the quarantine's design:
+<p>The suite is large and aimed at the mechanisms this report cares
+about. <code>tests/test_retriever.py</code> pins the quarantine:
 <code>test_quarantine_judges_a_lesson_against_its_own_frequency_band</code>
 (with an explicit <code>p=0.006</code>),
 <code>test_positive_outcome_rehabilitates_quarantined_lesson</code>,
-<code>test_quarantine_reaches_probation_and_a_win_is_the_exit</code>,
-and
+<code>test_quarantine_reaches_probation_and_a_win_is_the_exit</code> and
 <code>test_quarantine_still_fires_on_an_unambiguously_harmful_lesson</code>.
-<code>tests/test_learning_health.py</code> adds the shared-blame cases —
-<code>test_one_failure_cluster_no_longer_quarantines_its_whole_cohort</code>
-and <code>test_a_lesson_failing_alone_is_still_quarantined</code>.</p>
-<p>Two tests earn <code>negative_eval</code> directly, and they are the
-strong kind — material that exists must not be <em>retrieved or
-injected</em>, not merely kept out of a write:
-<code>test_orchestrator_memory.py::test_prompt_and_trace_omit_quarantined_lesson</code>
-asserts a quarantined lesson reaches neither the prompt nor the trace,
-and the retriever tests assert quarantined lessons are excluded from the
-candidate set. <code>tests/test_outcome_source.py</code> ties the
-eligibility decision to provenance, asserting a lesson driven by
-non-caller outcomes is not treated as active.</p>
-<p>The rejected-value tombstone is pinned by tests of its own.
-<code>tests/test_reflection.py::test_store_prepared_lesson_refuses_pruned_value_tombstone</code>
-refuses a re-distillation of a pruned lesson by exact text, and
-<code>…refuses_semantic_pruned_tombstone</code> refuses a
-<em>reworded</em> one whose embedding still matches — the semantic half
-being what makes the tombstone more than a hash set.
-<code>tests/test_lesson_pruner.py</code> asserts the tombstones are
-written with no lesson text retained, and
-<code>tests/test_memory_store.py</code> asserts deleting a source
-interaction purges the tombstones derived from it. These are
-write-refusal assertions rather than retrieval-omission ones, so they
-strengthen the rejected-value story without adding to
-<code>negative_eval</code>.</p>
-<p>What is missing is an end-to-end retrieval-quality benchmark: the
-constants — the 0.62 relevance floor, the 0.93 dedup threshold, the
-30-day half-life, the five-loss quarantine trigger — are each defended
-in a comment and tested for behaviour, but nothing measures whether the
-tuned values maximise recall or task success.
-<code>eval_retrieval.py</code> and <code>eval_history.py</code> exist as
-harnesses; no committed run characterises the loop's effect on outcomes
-over time, which is the measurement the whole design invites.</p>
+<code>tests/test_learning_health.py:466</code> and <code>:498</code> add
+the shared-blame cases.</p>
+<p>The must-not-retrieve cases are the strong kind, each with a returned
+control in the same populated store.
+<code>test_prompt_and_trace_omit_quarantined_lesson</code>
+(<code>tests/test_orchestrator_memory.py:94</code>) asserts a neutral
+lesson reaches the prompt and trace while the quarantined one reaches
+neither.
+<code>test_retrieve_excludes_repeated_unanimous_failure_lesson</code>
+(<code>tests/test_retriever.py:305</code>) asserts the healthy lesson is
+returned on both paths and the failing one is not.
+<code>test_remember_fact_supersedes_and_recall_drops_the_old_fact</code>
+(<code>tests/test_fact_validity.py:314</code>) asserts the successor is
+in the injected prompt and in <code>memory_search</code> while the
+superseded fact is in neither, and <code>:331</code> asserts an expired
+fact is stored and not injected.
+<code>test_a_default_note_is_proposed_and_never_reaches_the_prompt_index</code>
+(<code>tests/test_playbook_safety_gates.py:57</code>) has no returned
+control.</p>
+<p>The tombstone has tests of its own:
+<code>tests/test_reflection.py:197</code> refuses a pruned value by
+exact text and <code>:216</code> a reworded one whose embedding matches;
+<code>tests/test_lesson_pruner.py</code> asserts tombstones carry no
+text, that a refreshed embedding blocks a planned deletion, and that a
+large corpus is pruned in the newest window. These are write refusals
+rather than retrieval omissions.</p>
+<p>Nothing asserts that <code>memory_search</code> keeps another project
+out, and nothing could pass: the function takes no project. An
+end-to-end retrieval benchmark is also missing.
+<code>tune_min_sim.py</code> calibrated the 0.62 floor on 22 positive
+and 15 noise probes, and the band rates are measured from the live store
+in comments, but no committed run characterises the loop's effect on
+outcomes.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <p><strong>Credit outcomes back to the memories that were retrieved, and
 record who judged the outcome.</strong> The
 <code>interaction → outcome(source) → lesson_usage</code> chain is the
-loop most lesson stores omit, and the <code>source</code> column
-enforced <code>NOT NULL</code> with a closed vocabulary is what lets the
-trust math distinguish a caller's judgement from the machine grading
-itself. Without provenance on the outcome, outcome-gated memory is
-self-grading with extra steps.</p>
+loop most lesson stores omit, and a <code>source</code> column enforced
+<code>NOT NULL</code> with a closed vocabulary is what lets later math
+tell a caller's judgement from the machine's.</p>
 <p><strong>Before suppressing a memory for bad outcomes, check the base
-rate and the attribution.</strong> A run of losses is only evidence if
+rate and the attribution.</strong> A run of losses is evidence only if
 it is improbable for how often the memory is used, and only the memory's
-<em>own</em> losses count, not the shared losses of a cohort it is
-always retrieved with. These two guards are the difference between a
-quarantine that removes genuinely harmful lessons and one that removes
-whatever is used on hard tasks.</p>
+own share of each failure counts.</p>
 <p><strong>Make suppression reversible with a sampled
-probation.</strong> A quarantined memory that gets a fraction of traffic
-can earn its way back on evidence; a permanently excluded one can only
-be wrong forever. Probation is the difference between forgetting and
-demotion.</p>
-<p><strong>Distill with a concreteness gate and a semantic-duplicate
-gate.</strong> Rejecting <em>"be careful with errors"</em> before it is
-stored, and rejecting a restatement of an existing lesson, keeps the
-procedural store from filling with vagueness and redundancy — and
-recording <em>why</em> a distillation was refused makes the gate
-auditable.</p>
-<p><strong>Journal every correction with a version check.</strong>
-<code>refinement_history</code> with apply/rollback and
-<code>expected_version</code> is optimistic concurrency plus an audit
-trail in one table; a preference can be corrected, the correction can be
-rolled back, and both are on the record.</p>
+probation.</strong> A quarantined memory that gets a deterministic
+fraction of traffic can earn its way back on evidence; a permanently
+excluded one cannot.</p>
+<p><strong>Keep review state out of the agent's arguments.</strong>
+Sonder's playbook taint is a context variable that only the owner's REPL
+path sets, so no tool argument can mark a note trusted, and the approval
+is bound to a content digest checked again under the write lock.</p>
 <p><strong>Tombstone a rejected value without keeping the
-value.</strong> Sonder's pruner records the normalized-text hash and the
-embedding of the lesson it removes — never the text — and distillation
-refuses a re-derivation by both exact hash and semantic match. It is a
-rejected-value tombstone that is also privacy-safe, and it stays
-distinct from a full privacy delete that erases everything, so "reject a
-value" and "erase a record" are two verbs rather than one.</p>
+value.</strong> A normalized-text hash plus the embedding, consulted by
+exact and semantic match, rejects re-derivation while staying
+privacy-safe and distinct from erasure.</p>
+<p><strong>Give asserted facts a validity interval and an explicit
+successor.</strong> Supersession by id rather than inference, closing
+the old interval exactly at the new one's start, keeps "what was true"
+queryable without a resolver.</p>
 <h3 id="avoid">Avoid</h3>
+<p><strong>Do not let a search tool bypass the scope the prompt
+assembler applies.</strong> Sonder filters facts and recalls by project
+when it builds a prompt, and its <code>memory_search</code> returns
+every project's rows to the same agent.</p>
 <p><strong>Do not let outcome provenance be optional.</strong> A
 nullable-with-default <code>source</code> is how a machine-graded
-outcome silently becomes indistinguishable from a caller-graded one, and
-the whole trust argument collapses. Enforce it at the schema.</p>
-<p><strong>Do not quarantine on a raw loss count.</strong> Without the
-base-rate and attribution guards, an outcome-gated memory punishes the
-memories that get the hard tasks and lets a co-failing cohort escape,
-which is backwards.</p>
+outcome becomes indistinguishable from a caller-graded one.</p>
+<p><strong>Do not ship an audit table without a writer.</strong>
+<code>refinement_history</code> has triggers, version checks and a
+rollback path, and preferences change through an upsert that never
+touches it.</p>
 <p><strong>Do not suppress without a rejected-value record if
-re-derivation is likely.</strong> Sonder shows both halves: its pruner
-writes a content-hashed tombstone that distillation checks, so a pruned
-duplicate cannot come back — but quarantine keeps the row without a
-rejected-value record, so a quarantined lesson can be re-distilled from
-a fresh interaction and return. If your extractor runs continuously, a
-suppression that does not tombstone the value invites it back.</p>
-<p><strong>Do not confuse a preference version history with
-bitemporality.</strong> Revisions are record-time; they tell you what
-the system believed and when it changed its mind, not when the belief
-was true of the world.</p>
+re-derivation is likely.</strong> Pruning tombstones and quarantine does
+not, so the harmful lesson is the one that can come back.</p>
+<p><strong>Do not bound a maintenance sweep newest-first without a
+cursor.</strong> The pruner's window never reaches the older half of a
+large store.</p>
 <h3 id="fit">Fit</h3>
 <p>This suits a builder of a self-improving agent that accumulates
-procedural lessons and can observe outcomes — the loop is the point, and
-the loop needs a signal. It is the best-built outcome-gated lesson
-memory in the atlas, and the quarantine's statistical guards are worth
-lifting whole even into a different store. It fits a single machine and
-a local SQLite file naturally; the concurrency and provenance work would
-extend to a served deployment, and the <code>account_scope</code> column
-is already there for it.</p>
-<p>Walk away if you cannot produce a trustworthy outcome signal — the
-whole design degrades to self-grading if every outcome is
-<code>machine</code>, and no amount of base-rate care fixes a signal
-that is the model assessing itself. Walk away if you need contradiction
-<em>resolved</em> rather than flagged, or a rejected-value tombstone
-that keeps a bad lesson gone. And treat the surrounding runtime as out
-of scope: what is worth adopting is the memory adapter and the
-retriever, not the self-modifying agent around them.</p>
+procedural lessons and can observe outcomes; the quarantine's
+statistical guards are worth lifting whole into a different store. It
+fits a single machine and one local SQLite file, used by one
+operator.</p>
+<p>Walk away if you cannot produce a trustworthy outcome signal, since
+machine-graded outcomes drive the gate at full weight. Walk away if
+projects must be isolated from the agent itself, since
+<code>memory_search</code> reads across them, or if you need a mutation
+audit on lessons or preferences. Treat the surrounding runtime as out of
+scope: the memory adapter, the retriever and the playbook store are the
+parts worth adopting.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>What fraction of outcomes in practice carry <code>caller</code>
-provenance versus <code>machine</code>/<code>unknown</code>? The
-improvement report surfaces the buckets
-(<code>legacy/unknown provenance: N</code> beside the caller-judged and
-autograded rates) rather than a blended number, but no committed run
-reports the ratio on real traffic — and the trust math is only as strong
-as it.</li>
-<li>Distillation checks a candidate against <em>pruned</em> lessons via
-the tombstone registry, by exact hash and by embedding. Does the same
-check ever run against <em>quarantined</em> lessons, or is quarantine
-the one suppression a re-derivation can undo? At this reading it is the
-latter.</li>
-<li>Are the quarantine constants (five losses, two distinct tasks,
-24-hour probation) tuned against anything, or chosen? Each is defended
-in a comment, none is measured.</li>
-<li>How does the contradiction detector's output get consumed — flagged
-for a human, fed back into ranking, or logged? The detector is pure
-logic; its wiring is elsewhere.</li>
-<li>Does the served deployment apply <code>account_scope</code> to the
-lesson store, or do lessons remain global across accounts as they are
-locally? The comment implies a serving layer that the reviewed tree does
-not include.</li>
+<li>What fraction of outcomes on real traffic carry <code>caller</code>
+provenance versus <code>machine</code> or <code>unknown</code>? The
+improvement report shows the buckets separately, and no committed run
+reports the ratio.</li>
+<li>Does the same tombstone check ever run against <em>quarantined</em>
+lessons? At this pin it does not; <code>reason</code> admits only
+<code>near_duplicate_pruned</code>.</li>
+<li>Are the quarantine constants — five losses, two distinct tasks,
+24-hour probation, one in twenty — tuned against outcomes, or chosen?
+The band rates are measured; the gates are defended in comments.</li>
+<li>Is <code>memory_search</code> meant to cross projects on the local
+surface, or is the missing predicate an omission? The HTTP layer refuses
+it to accounts as global; nothing on the local surface says why it
+should be.</li>
+<li>Will <code>refinement_transactions</code> be routed into the
+preference writes, and will replication be enabled by default?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <p><strong>Store and schema</strong></p>
 <ul>
-<li><code>sonder_runtime/adapters/memory_store.py</code> — the SQLite
-adapter, migration revision 5: schema, distillation state machine,
-outcome crediting, <code>outcomes.source</code> enforcement, the
-<code>lesson_tombstones</code> rejected-value registry
-(<code>tombstone_lesson</code>, <code>lesson_text_tombstoned</code>,
-<code>all_lesson_tombstones</code>), and the project-scoped
-<code>delete_fact</code>.</li>
-<li><code>memory_store.py</code>, <code>recall.py</code> — root
-compatibility shims aliasing the adapters.</li>
+<li><code>sonder_runtime/adapters/memory_store.py</code> — schema,
+distillation state machine, outcome crediting,
+<code>outcomes.source</code> enforcement, the
+<code>lesson_tombstones</code> registry, fact validity and supersession,
+preferences, recall candidate pages.</li>
+<li><code>sonder_runtime/domain/memory/fact_validity.py</code> —
+<code>FactValidity</code>, <code>CURRENT_FACT_PREDICATE</code>,
+<code>fact_write_inputs</code>.</li>
+<li><code>sonder_runtime/adapters/memory_repository.py</code> — routes
+fact writes to the legacy store or the authoritative source.</li>
+<li><code>sonder_runtime/adapters/persistence/sqlite/authoritative_memory.py</code>,
+<code>memory_replication.py</code>,
+<code>sonder_runtime/bootstrap/app.py</code> — the opt-in fact journal
+and its composition.</li>
+<li><code>memory_store.py</code> — root alias for the adapter.</li>
 </ul>
 <p><strong>Retrieval and trust</strong></p>
 <ul>
 <li><code>retriever.py</code> — hybrid retrieval, MMR,
 <code>lesson_quarantine</code>, <code>band_loss_rate</code>,
-<code>_attribution</code>.</li>
-<li><code>lesson_decay.py</code> — age-decay + usage ranking and the
-contradiction detector.</li>
+<code>attributable_losses</code>, <code>_usage_boost</code>.</li>
+<li><code>lesson_decay.py</code> — age-decay ranking and
+<code>detect_contradictions</code>.</li>
 <li><code>sonder_runtime/adapters/memory_rerank.py</code> — MMR
-diversity reranking.</li>
+selection.</li>
+<li><code>server.py</code> — prompt assembly (<code>:4191</code>),
+<code>sonder_remember_fact</code>, <code>memory_search</code>,
+<code>memory_export</code>, <code>permission_approve</code>, agent tool
+lists.</li>
 </ul>
 <p><strong>Curation</strong></p>
 <ul>
-<li><code>lesson_pruner.py</code> — embedding-cluster near-duplicate
-deletion.</li>
-<li><code>memory_quality.py</code> — vague-vs-concrete lesson
-auditing.</li>
-<li><code>grounded_extraction.py</code>, <code>reflection.py</code> —
-lesson and outcome extraction, including the distillation tombstone
-check that returns <code>rejected_value</code>
+<li><code>reflection.py</code> — distillation and the tombstone refusals
 (<code>is_tombstoned_duplicate</code>).</li>
+<li><code>lesson_pruner.py</code>,
+<code>scripts/nightly_self_improve.py</code> — near-duplicate pruning
+and its nightly caller.</li>
+<li><code>memory_quality.py</code> — vague, duplicate, contradiction and
+playbook findings.</li>
 </ul>
-<p><strong>Correction</strong></p>
+<p><strong>Playbooks</strong></p>
 <ul>
-<li><code>refinement_transactions.py</code> — preference apply/rollback
-with version checks.</li>
-<li><code>preference_learning.py</code> — preference formation.</li>
+<li><code>sonder_runtime/adapters/playbook_store.py</code>,
+<code>playbook_review.py</code>,
+<code>sonder_runtime/domain/memory/playbooks.py</code>,
+<code>sonder_runtime/bootstrap/playbooks.py</code>,
+<code>sonder_runtime/application/memory/playbook_context.py</code>,
+<code>sonder_runtime/interfaces/cli/playbooks.py</code>.</li>
 </ul>
-<p><strong>Integrity and ops</strong></p>
+<p><strong>Unwired</strong></p>
 <ul>
-<li><code>store_integrity.py</code>, <code>sonder_doctor.py</code>,
-<code>learning_health.py</code>.</li>
+<li><code>refinement_transactions.py</code> — preference apply and
+rollback journal, no production caller.</li>
+<li><code>sonder_runtime/application/memory/outcome_service.py</code>,
+<code>facade.py</code> — the outbox producer, no production caller.</li>
 </ul>
 <p><strong>Tests</strong></p>
 <ul>
-<li><code>tests/test_retriever.py</code> — quarantine base-rate,
-probation, rehabilitation, harmful-fires.</li>
+<li><code>tests/test_retriever.py</code> — quarantine base rate,
+probation, rehabilitation, exclusion.</li>
 <li><code>tests/test_learning_health.py</code> — shared-blame cohort
 cases.</li>
-<li><code>tests/test_outcome_source.py</code> — provenance-gated
-eligibility.</li>
+<li><code>tests/test_outcome_source.py</code> — provenance populations
+and the gate.</li>
 <li><code>tests/test_orchestrator_memory.py</code> — quarantined lesson
 omitted from prompt and trace.</li>
-<li><code>tests/test_reflection.py</code> — distillation refuses a
-pruned value by exact hash and by embedding
-(<code>rejected_value</code>).</li>
-<li><code>tests/test_lesson_pruner.py</code>,
-<code>tests/test_memory_store.py</code> — tombstones written without
-lesson text; purged when their source interaction is deleted.</li>
+<li><code>tests/test_reflection.py</code>,
+<code>tests/test_lesson_pruner.py</code> — tombstone refusals and
+pruning.</li>
+<li><code>tests/test_fact_validity.py</code> — intervals, supersession,
+exclusion.</li>
+<li><code>tests/test_playbook_safety_gates.py</code>,
+<code>test_playbook_surfaces.py</code>,
+<code>test_playbook_control_plane.py</code> — playbook approval.</li>
+<li><code>tests/test_authoritative_memory_source.py</code> — journal
+composition and rollback.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from a clone at the pin with <code>git grep</code>, which reads
+tracked files regardless of <code>.gitignore</code>.</p>
+<ul>
+<li>Callers of the preference journal:
+<code>git grep -n -E 'apply_preference_refinement|rollback_preference_refinement|INSERT INTO refinement_history' -- ':!tests'</code>
+returns the definitions in <code>refinement_transactions.py</code>
+only.</li>
+<li>Writers of preferences:
+<code>git grep -n -i -E '(INSERT( OR [A-Z]+)? INTO|UPDATE|DELETE FROM)[[:space:]]+preferences\b' -- ':!tests' ':!docs'</code>
+returns <code>memory_store.py:3775</code>, <code>:3977</code>, the
+projection's replay, and <code>refinement_transactions.py</code>.</li>
+<li>Deletes of the fact journal:
+<code>git grep -n -i -E '(DELETE FROM|UPDATE)[[:space:]]+memory_replication_log'</code>
+returns <code>memory_replication.py:677</code>, inside
+<code>prune_before</code>; <code>git grep -n prune_before</code> finds
+callers in <code>tests/</code> only.</li>
+<li>Project predicate in <code>memory_search</code>:
+<code>sed -n 16651,16700p server.py</code> shows the FTS call and four
+SQL queries; no WHERE clause names <code>project</code> or
+<code>scope</code>.</li>
+<li>Tombstone writers:
+<code>git grep -n -E 'INSERT (OR [A-Z]+ )?INTO lesson_tombstones' -- ':!tests'</code>
+returns <code>memory_store.py:2288</code> only, inside
+<code>tombstone_lesson</code>.</li>
+<li>Playbook approval reach:
+<code>git grep -n -E 'approve_pending|\.review\(|note_context\(' -- ':!tests' ':!docs'</code>
+returns the CLI, the REPL bootstrap in
+<code>sonder_runtime/__main__.py</code>, the store's own supersession,
+and the reconcile path.</li>
+<li>Outbox producer:
+<code>git grep -n -E 'OutcomeService\(|\.memory\.record\(' -- ':!tests'</code>
+returns <code>facade.py:63</code> only, and
+<code>git grep -n 'facade\.record\b'</code> returns nothing.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/Krilliac/Sonder-runtime/commit/ad7e59d45fb3792c638e690e9aeb02773fc5ccc0"><code class="commit-id" title="ad7e59d45fb3792c638e690e9aeb02773fc5ccc0">ad7e59d4…</code></a>
+— 707 commits on. <code>scope_enforced</code> is withdrawn, wrong at
+1a41a88: <code>memory_search</code> reads every project's facts,
+sessions and interactions (<a href="#5-memory-data-model">section
+5</a>). <code>bitemporal</code> is gained on fact validity intervals (<a
+href="https://github.com/Krilliac/Sonder-runtime/commit/0ada6adde6b74b98e33582acf5872551dc4c60b2"><code class="commit-id" title="0ada6adde6b74b98e33582acf5872551dc4c60b2">0ada6add…</code></a>)
+and <code>human_review</code> on owner-approved playbooks (<a
+href="https://github.com/Krilliac/Sonder-runtime/commit/7da8c7cd995af92660721c22a9633191dab79a5d"><code class="commit-id" title="7da8c7cd995af92660721c22a9633191dab79a5d">7da8c7cd…</code></a>),
+in <a href="#8-agent-integration">section 8</a>. <code>audit_log</code>
+was wrong at 1a41a88, since <code>refinement_history</code> has no
+production writer at either pin; it holds on the opt-in fact journal (<a
+href="#9-reliability-safety-and-trust">section 9</a>). Also wrong then:
+account scope on preferences, caller-over-machine quarantine weighting,
+the outbox constructor, four module locations. The quarantine moved one
+line. Screened from a full clone: no auto-run surface, two
+<code>conftest.py</code> execution points, two unpinned requirement
+files, nothing inside the cooldown; Apache-2.0, no rider. Nothing was
+installed, built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/Krilliac/Sonder-runtime/commit/1a41a88d2442302421e1cf8c0893ca3edef537ee"><code class="commit-id" title="1a41a88d2442302421e1cf8c0893ca3edef537ee">1a41a88d…</code></a>
 — <code>trust_state</code> re-tested at an unchanged pin against the
@@ -929,18 +983,18 @@ is derived per call rather than stored on the row, which this atlas
 usually treats as disqualifying — the distinction that matters is what
 it is derived <em>from</em> and what it does. Here it is derived from
 durable outcome records and it excludes, where the cases the atlas
-withholds derive a belief and then rank with it. The three gates are now
-in the record because the third is the part worth copying: beyond a raw
-loss floor and a blame-adjusted volume that stops co-failing lessons
-claiming the same failures as independent evidence, the run of losses
-must be improbable for the base loss rate of the lesson's own
-retrieval-frequency band — so a rarely-retrieved lesson is not punished
-for the unusual tasks that retrieval sends it. A quarantine with a
-stated null hypothesis rather than a threshold. Evidence is scoped to
-the epoch since the last grounded success, so a lesson can recover and
-can also relapse, and probation gives it a production path back to a
-win. Re-read from a fresh clone; nothing was installed and no suite was
-run.</p>
+withholds derive a belief and then rank with it.</p>
+<p>The three gates are now in the record because the third is the part
+worth copying. Beyond a raw loss floor and a blame-adjusted volume that
+stops co-failing lessons claiming the same failures as independent
+evidence, the run of losses must be improbable for the base loss rate of
+the lesson's own retrieval-frequency band — so a rarely-retrieved lesson
+is not punished for the unusual tasks that retrieval sends it. A
+quarantine with a stated null hypothesis rather than a threshold.
+Evidence is scoped to the epoch since the last grounded success, so a
+lesson can recover and can also relapse, and probation gives it a
+production path back to a win. Re-read from a fresh clone; nothing was
+installed and no suite was run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/Krilliac/Sonder-runtime/commit/1a41a88d2442302421e1cf8c0893ca3edef537ee"><code class="commit-id" title="1a41a88d2442302421e1cf8c0893ca3edef537ee">1a41a88d…</code></a>
 — re-pinned after 1 commit. It touches fifteen files and none of them is
@@ -965,12 +1019,13 @@ pin.</p>
 <p>What arrived is beside the store rather than inside it: a bounded
 ordered journal for authoritative fact mutations that commits in the
 same SQLite transaction as the fact, with a committed test that the fact
-is rolled back when the journal rejects; a pure retention-eligibility
-gate that touches no database; and a write-path duplicate check scoped
-to one project, whose call site and helper docstring both state that
-matching across projects would leak. The <code>audit_log</code> and
-<code>scope_enforced</code> records are extended to name these as second
-subsystems. The row-level <code>tombstoned</code> column on
+is rolled back when the journal rejects. Beside it sit a pure
+retention-eligibility gate that touches no database, and a write-path
+duplicate check scoped to one project, whose call site and helper
+docstring both state that matching across projects would leak. The
+<code>audit_log</code> and <code>scope_enforced</code> records are
+extended to name these as second subsystems. The row-level
+<code>tombstoned</code> column on
 <code>memory_authoritative_fact_state</code> does not extend the
 <code>tombstone</code> mark, which is earned on the lesson text.</p>
 <p>One near-miss worth recording as method:
@@ -1022,8 +1077,9 @@ matching one by exact hash or by embedding
 (<code>result: rejected_value</code>); the near-duplicate pruner writes
 a tombstone as it deletes. That earns <code>tombstone</code> and closes
 the re-derivation gap for the pruning path, leaving quarantine as the
-one suppression that still keeps a row without a rejected-value record.
-<a
+one suppression that still keeps a row without a rejected-value
+record.</p>
+<p><a
 href="https://github.com/Krilliac/Sonder-runtime/commit/e33c604468d0da2561477b29c6f694c9cfd3c4ff"><code class="commit-id" title="e33c604468d0da2561477b29c6f694c9cfd3c4ff">e33c6044…</code></a>
 added a project-scoped <code>delete_fact</code>, and <a
 href="https://github.com/Krilliac/Sonder-runtime/commit/03455668e4b4718a833cb78a138020d64b892970"><code class="commit-id" title="03455668e4b4718a833cb78a138020d64b892970">03455668…</code></a>

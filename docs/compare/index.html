@@ -28949,39 +28949,58 @@ applied to a failure that had been silent</td>
 <tr>
 <td><a
 href="../systems/sonder-runtime/"><code>sonder-runtime</code></a></td>
-<td>A distilled lesson — a concrete directive with an embedding and FTS
-text — plus the interaction it came from, the outcomes credited to it,
-preferences, facts and session summaries</td>
-<td>One stdlib-only SQLite database with a dozen tables and an FTS5
-virtual table; embeddings as BLOBs stamped with model and revision</td>
-<td>Hybrid — embedding cosine at min_sim 0.62 unioned with FTS5 lexical,
-MMR-reranked (lambda 0.5), with quarantined lessons excluded before
-ranking</td>
+<td>A distilled lesson with an embedding and FTS text, the interaction
+it came from and the outcomes credited to it; beside it project facts
+with an optional validity interval, preferences, session summaries, and
+owner-reviewed playbook entries in Markdown</td>
+<td>One stdlib-only SQLite database with an FTS5 table and embeddings
+stored as BLOBs stamped with model, revision and dimension; playbook
+topics as Markdown files under the state home</td>
+<td>Lessons by RRF fusion of FTS5 and embedding cosine, a 0.62 relevance
+floor raised to 0.70 for a candidate without two content-word anchors,
+then MMR at lambda 0.5, with quarantined lessons excluded first; project
+facts current at now; past good interactions by project; approved
+playbook index</td>
 <td>A lesson-distillation state machine claims an interaction, extracts
-a concrete lesson, and refuses exact and semantic duplicates; outcomes
-are credited back to the lessons that were retrieved</td>
-<td>Preferences carry a revision and every apply/rollback is journalled
-in refinement_history with optimistic version checks; a near-duplicate
-pruner deletes redundant lessons keeping one representative and writes a
-content-hashed tombstone so the pruned value cannot be re-distilled</td>
-<td>Interactions, tasks, preferences and sessions filter by project and
-an account_scope supplied by the authenticated serving layer; lessons
-are deliberately global procedural knowledge</td>
-<td>A terminal runtime, REPL, headless service and MCP surface over one
-local database; the memory adapter is stdlib-only and importable</td>
-<td>Distillation, near-duplicate pruning, age-decay ranking,
-contradiction detection and quarantine, all driven by accumulated
-outcomes</td>
-<td>A lesson is active, quarantined or on probation by outcome
-statistics; preferences carry confidence, evidence_count and an enabled
-flag; every outcome records who judged it</td>
-<td>Outcome-gated quarantine that deduplicates blame across co-retrieved
+a concrete lesson, and refuses vague text, exact and semantic
+duplicates, and tombstoned values; outcomes carry a required provenance
+and are credited back to the lessons retrieved; facts are asserted
+directly with optional validity and supersession; playbook notes are
+proposed</td>
+<td>A nightly near-duplicate pruner deletes all but one lesson per
+cluster and writes a content-hashed tombstone; facts are superseded by
+closing their interval or deleted by exact id and project; preferences
+are upserted in place; playbook entries are approved, rejected, edited
+or removed by the owner</td>
+<td>Facts and recalled interactions are filtered by a caller-selected
+project on prompt assembly; preferences by a scope column; lessons and
+playbooks are global; the agent-callable memory_search applies no
+project; account-backed HTTP requests skip memory injection and are
+refused the global memory tools</td>
+<td>A terminal REPL, a headless service, an HTTP server and an MCP
+surface over one local database; the agent's leverage on lessons is
+outcome-mediated, while playbook_note and sonder_remember_fact are
+direct tools</td>
+<td>A nightly self-improvement job drains distillation, backfills
+embeddings and prunes near-duplicates in a window of the newest 1,024
+lessons; quarantine and decay are computed at read time</td>
+<td>Lessons are active, quarantined or on probation by outcome
+statistics; every outcome records who judged it under a NOT NULL closed
+vocabulary; preferences carry an enabled flag; playbook entries carry a
+review status that only the owner moves to approved</td>
+<td>Outcome-gated quarantine that splits blame across co-retrieved
 lessons and tests a loss run against the lesson's own frequency-band
-base rate before suppressing it, with a probation path back</td>
-<td>The whole loop trusts an outcome signal whose provenance is often
-machine or unknown; near-duplicate pruning tombstones the rejected
-value, but quarantine suppresses a lesson without one, so a quarantined
-lesson re-distilled from a fresh interaction can return</td>
+base rate before suppressing it, with a sampled probation path back;
+owner review of agent-written playbooks that the agent cannot clear;
+caller-asserted validity on facts</td>
+<td>memory_search, an agent tool on the project-bound list, returns
+every project's facts, sessions and interactions and returns quarantined
+lessons; machine-graded outcomes drive quarantine at full weight;
+quarantine writes no rejected-value record; the pruner never compares
+lessons older than its newest-1,024 window; refinement_history has no
+production writer; the fact journal runs only when replication is
+enabled; memory_export dumps lessons, facts and preferences across
+projects</td>
 </tr>
 <tr>
 <td><a
@@ -33484,7 +33503,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>124 of 749:</em> <a
+<p><em>125 of 749:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33593,6 +33612,7 @@ href="../systems/scope-recall-hermes/"><code>scope-recall-hermes</code></a>,
 <a href="../systems/semantica/"><code>semantica</code></a>, <a
 href="../systems/signetai/"><code>signetai</code></a>, <a
 href="../systems/smriti/"><code>smriti</code></a>, <a
+href="../systems/sonder-runtime/"><code>sonder-runtime</code></a>, <a
 href="../systems/spector/"><code>spector</code></a>, <a
 href="../systems/sqlite-memory-mcp/"><code>sqlite-memory-mcp</code></a>,
 <a href="../systems/statewave/"><code>statewave</code></a>, <a
@@ -33616,7 +33636,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>325 of 749:</em> <a
+<p><em>324 of 749:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33912,7 +33932,6 @@ href="../systems/signetai/"><code>signetai</code></a>, <a
 href="../systems/simplemem/"><code>simplemem</code></a>, <a
 href="../systems/slowave/"><code>slowave</code></a>, <a
 href="../systems/smythos-sre/"><code>smythos-sre</code></a>, <a
-href="../systems/sonder-runtime/"><code>sonder-runtime</code></a>, <a
 href="../systems/sqlite-memory-mcp/"><code>sqlite-memory-mcp</code></a>,
 <a href="../systems/stash/"><code>stash</code></a>, <a
 href="../systems/statewave/"><code>statewave</code></a>, <a
@@ -34220,7 +34239,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>95 of 749:</em> <a
+<p><em>96 of 749:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/areev/"><code>areev</code></a>, <a
@@ -34303,6 +34322,7 @@ href="../systems/scope-recall-hermes/"><code>scope-recall-hermes</code></a>,
 <a href="../systems/second-me/"><code>second-me</code></a>, <a
 href="../systems/shisad/"><code>shisad</code></a>, <a
 href="../systems/sibyl-memory/"><code>sibyl-memory</code></a>, <a
+href="../systems/sonder-runtime/"><code>sonder-runtime</code></a>, <a
 href="../systems/stella/"><code>stella</code></a>, <a
 href="../systems/swarmai/"><code>swarmai</code></a>, <a
 href="../systems/the-librarian/"><code>the-librarian</code></a>, <a

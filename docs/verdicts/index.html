@@ -11088,13 +11088,17 @@ stores omit and the thing that makes outcome-gated trust possible at
 all. The base-rate math in <code>retriever.py</code> and the pure
 ranking/contradiction logic in <code>lesson_decay.py</code> are
 test-friendly by construction and portable.</li>
-<li>Maturity impression: Apache-2.0, ~260,000 lines of Python (a
-self-modifying runtime; the memory layer is a stdlib-only SQLite adapter
-inside it), 362 test files with worked-probability quarantine cases,
-schema columns that carry a comment explaining the defect each prevents.
-The constants — 0.62 relevance floor, 0.93 dedup, 30-day half-life,
-five-loss quarantine — are each defended in a comment and tested for
-behaviour, and none is measured against retrieval quality.</li>
+<li>Maturity impression: Apache-2.0, 780,185 lines of Python in 3,162
+files (a self-modifying runtime; the memory layer is a stdlib-only
+SQLite adapter inside it), 17,049 test functions with worked-probability
+quarantine cases, schema columns that carry a comment explaining the
+defect each prevents. The constants — 0.62 relevance floor, 0.93 dedup,
+30-day half-life, five-loss quarantine — are each defended in a comment
+and tested for behaviour, and none is measured against retrieval
+quality. Two audit surfaces are less than they look:
+<code>refinement_history</code> has no production writer, and the fact
+journal runs only when <code>[memory_replication]</code> is
+enabled.</li>
 <li>Study when: you are building a self-improving agent that accumulates
 procedural lessons and can observe outcomes, and you want to suppress
 the lessons that hurt without punishing the ones that merely got the
@@ -11102,13 +11106,15 @@ hard tasks. The quarantine's two statistical guards are worth lifting
 whole even into a different store.</li>
 <li>Do not copy when: you cannot produce a trustworthy outcome signal —
 the design degrades to self-grading if every outcome is
-<code>machine</code>. Also walk away if you need contradiction
-<em>resolved</em> rather than flagged. Note that the rejected-value gap
-is now half-closed: near-duplicate pruning writes a content-hashed
-tombstone that distillation refuses to re-derive, so a pruned duplicate
-cannot return — but quarantine still keeps a suppressed row without a
-rejected-value record, so a quarantined lesson re-distilled from a fresh
-interaction can come back.</li>
+<code>machine</code>, and machine-graded outcomes count toward
+quarantine at full weight. Also walk away if you need contradiction
+<em>resolved</em> rather than flagged, or a project boundary the agent
+cannot read across: prompts are assembled per project, but the agent's
+<code>memory_search</code> tool returns every project's facts, sessions
+and interactions. Near-duplicate pruning writes a content-hashed
+tombstone that distillation refuses to re-derive, while quarantine keeps
+a suppressed row without a rejected-value record, so a quarantined
+lesson re-distilled from a fresh interaction can come back.</li>
 </ul>
 <h3 id="gmr"><a href="../systems/gmr/"><code>gmr</code></a></h3>
 <ul>

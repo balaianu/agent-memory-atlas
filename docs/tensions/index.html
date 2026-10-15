@@ -210,12 +210,14 @@ you inherit the problem of adjudicating between strangers.</p>
 href="../systems/remem-mcp/">remem-mcp</a> ships an <code>org</code>
 scope that <strong>deliberately drops the agent filter</strong> so a
 handoff can cross agents, and <a
-href="../systems/sonder-runtime/">Sonder Runtime</a> scopes
-interactions, tasks and preferences by project while holding lessons
-global on the argument that procedural knowledge is the part worth
-sharing. Neither is a missing scope key; both are a scope key someone
-decided not to apply on one path, which is a different thing and should
-be documented as one.</p>
+href="../systems/sonder-runtime/">Sonder Runtime</a> scopes the facts
+and past interactions it assembles into a prompt by project while
+holding lessons global on the argument that procedural knowledge is the
+part worth sharing; its <code>memory_search</code> tool applies no
+project at all, on the stated ground that the direct surface belongs to
+one local operator. Neither is a missing scope key; both are a scope key
+someone decided not to apply on one path, which is a different thing and
+should be documented as one.</p>
 <h2 id="4-synchronous-writes-against-write-to-readable-lag">4.
 Synchronous writes against write-to-readable lag</h2>
 <p>Extract on the write path and the user waits for a model call.
