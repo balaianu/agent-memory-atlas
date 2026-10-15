@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A local-first second brain whose
-search query validates each row's ACL shape in SQL before matching it,
-gates every read on a validity window and an active status, and starts
-query-only until each capability is separately authorised.">
+    <meta name="description" content="A local-first Rust second brain
+whose memory search validates each row's access list in SQL before
+matching it, and which starts query-only.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Cortana — Agent Memory Atlas">
-    <meta property="og:description" content="A local-first second brain
-whose search query validates each row's ACL shape in SQL before matching
-it, gates every read on a validity window and an active status, and
-starts query-only until each capability is separately authorised.">
+    <meta property="og:description" content="A local-first Rust second
+brain whose memory search validates each row's access list in SQL before
+matching it, and which starts query-only.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Cortana — Agent Memory Atlas">
-    <meta name="twitter:description" content="A local-first second brain
-whose search query validates each row's ACL shape in SQL before matching
-it, gates every read on a validity window and an active status, and
-starts query-only until each capability is separately authorised.">
+    <meta name="twitter:description" content="A local-first Rust second
+brain whose memory search validates each row's access list in SQL before
+matching it, and which starts query-only.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Cortana — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ starts query-only until each capability is separately authorised.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Cortana",
-      "description": "A local-first second brain whose search query validates each row's ACL shape in SQL before matching it, gates every read on a validity window and an active status, and starts query-only until each capability is separately authorised.",
+      "description": "A local-first Rust second brain whose memory search validates each row's access list in SQL before matching it, and which starts query-only.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -102,24 +99,23 @@ starts query-only until each capability is separately authorised.">
           <p class="eyebrow">A malformed access list is excluded, not
 treated as empty</p>
           <h1>Cortana</h1>
-          <p class="document-deck">A local-first second brain whose
-search query validates each row's ACL shape in SQL before matching it,
-gates every read on a validity window and an active status, and starts
-query-only until each capability is separately authorised.</p>
+          <p class="document-deck">A local-first Rust second brain whose
+memory search validates each row's access list in SQL before matching
+it, and which starts query-only.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/adea-ai/cortana">
               <span>Source</span>
               <strong>adea-ai/cortana</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/adea-ai/cortana/commit/9609d2ab5f916b2795500ed98c57dd2388592144" title="9609d2ab5f916b2795500ed98c57dd2388592144">
+            <a class="meta-pill revision-pill" href="https://github.com/adea-ai/cortana/commit/f26a1ac2b01bc903a86b0198d375c8e146ecbbde" title="f26a1ac2b01bc903a86b0198d375c8e146ecbbde">
               <span>Analyzed revision</span>
-              <code>9609d2ab…</code>
+              <code>f26a1ac2…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-19</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/adea-ai--cortana" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -127,7 +123,22 @@ query-only until each capability is separately authorised.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip is-present" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>141,299
+lines of Rust in 187 files, beside 17,533 of Python connectors and
+39,047 of TypeScript for the web UI; crates/core/src/store.rs, which
+holds the memory schema, search and candidate lifecycle, is 11,944
+lines</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,384
+commits on main by 5 author names, 29 July – 14 October 2026; version
+0.68.4</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,047
+Rust test functions in 116 files, 107 of them in store.rs, plus 268
+Python and 533 TypeScript test cases and a committed memory-evaluation
+lane; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>3</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip is-present" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -143,13 +154,18 @@ query-only until each capability is separately authorised.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Cortana is "a local-first, agent-native second brain for people and
-the AI agents that work with them" — Apache-2.0, Rust, version 0.58.2,
-138,872 lines with 605 test functions, reachable through a Tauri desktop
-app, an MCP stdio server, a loopback or explicitly secured HTTP API, and
-a local-owner CLI.</p>
-<p>Its product statement is a list of refusals before it is a list of
-features:</p>
+<p>Cortana is a local-first second brain in Rust whose native memory
+search checks that each row's access list is a well-formed array of
+strings before matching it, so a corrupted ACL excludes the row instead
+of falling through to unrestricted. The weak side is time and review:
+the validity window opens at the write clock, and the agent that
+proposes a memory can approve it through its own MCP tool, or skip the
+queue and write directly.</p>
+<p>It describes itself as "a local-first, agent-native second brain for
+people and the AI agents that work with them", reachable through a Tauri
+desktop app, an MCP stdio server, a loopback or explicitly secured HTTP
+API and a local-owner CLI. Its product statement is a list of refusals
+before it is a list of features:</p>
 <blockquote>
 <p>"It is not an unrestricted crawler, implicit backup service, agent
 harness, or hosted personal-data warehouse. A new installation starts
@@ -157,188 +173,363 @@ query-only. Source authorization, validation, ingestion, reconciliation,
 recurring synchronization, model use, shared-agent access, and memory
 writes are separate explicit decisions."</p>
 </blockquote>
-<p>Eight capabilities, eight separate decisions, and a default of
-query-only. For a tool whose value proposition is ingesting a person's
-notes, messages, documents, calendars and code, starting with none of
-that enabled is the right default and an uncommon one.</p>
-<p><strong>The search query is where the care shows.</strong> One
-statement gates on the active status, on both ends of a validity window
-against a supplied moment, on project, kind, content type, retention
-tier and scope, on a flag that must be set before owner-global rows are
-reachable at all — and then, before it matches the row's access list, it
-checks that the access list is <em>shaped</em> like one:</p>
+<p><strong>The search statement is where the care shows.</strong> One
+SQL statement gates on the active status, the validity window, project,
+kind, content type, retention tier and scope, and on the principal's
+admin bit before owner-global rows are reachable. Then, before it
+matches the row's access list, it checks that the list is shaped like
+one:</p>
 <pre class="sql"><code>AND json_valid(m.acl_json)
 AND json_type(m.acl_json)=&#39;array&#39;
 AND NOT EXISTS (
   SELECT 1 FROM json_each(m.acl_json) AS memory_acl
   WHERE memory_acl.type&lt;&gt;&#39;text&#39;
 )</code></pre>
-<p>Only a row that passes all three reaches the branch where an empty
-ACL means unrestricted or a principal match admits it. So a corrupted,
-wrongly-typed or half-written ACL matches nothing rather than falling
-through to public.</p>
-<p>That is the failure direction that matters, and it is the one an
-application-layer check usually gets wrong: a lenient JSON parse turns a
-malformed ACL into an empty list, and an empty list means everyone.
-Putting the shape check in the same statement as the match means there
-is no window in which a row is loaded with an ACL nobody validated.</p>
-<p><strong>Three clocks, kept apart.</strong> <code>observed_at</code>
-is when the thing was observed; <code>valid_from</code> and
-<code>valid_until</code> bound the window it applies in;
-<code>created_at</code> and <code>updated_at</code> are when the row was
-written. The search gates the validity window in both directions against
-the moment it is given, so a memory whose validity has not begun, or has
-ended, is absent from the answer without being removed from the
-store.</p>
-<p><strong>A correction keeps the corrected row.</strong>
-<code>supersedes_id</code> links a new memory to the one it replaces,
-and the superseded row keeps its place while leaving the active set —
-recoverable rather than deleted, which is what makes the supersession
-link worth storing.</p>
-<p><strong>Candidates are staged, with reasons.</strong> An observation
-becomes a <code>memory_candidate</code> carrying a scope, a sensitivity,
-an ACL, a provenance document, an expiry and — if it is turned down — a
-<code>rejection_reason</code>, under a status transition guarded by a
-compare-and-set on <code>pending</code>. Promotion into
-<code>memories</code> takes an approving principal.</p>
-<p>What that queue is not, yet, is a human-review gate: the approving
-principal is a string, and nothing found establishes it as a person
-rather than a label — the same gap this atlas noted in <a
-href="../edda/">Edda</a>'s verdicts. And a rejected candidate's
-<code>dedupe_key</code> is not consulted when the same observation
-arrives again: the rejection is recorded, and re-offering the content
-produces a new candidate rather than meeting the old refusal.</p>
-<p>The remaining caveats are ordinary. <code>confidence</code> and
-<code>importance</code> are continuous and feed the ranking, so a
-low-confidence memory is ranked down rather than withheld;
-<code>provenance_json</code> is carried and not gated on; and the
-surface is broad for a personal store — desktop, MCP, HTTP, CLI, OAuth
-connectors, fleet and community modules — with one auto-run surface and
-three unpinned dependency surfaces at this pin.</p>
+<p>Only a row that passes reaches the branch where an empty ACL means
+unrestricted or a label match admits it
+(<code>crates/core/src/store.rs:2240-2268</code>). A lenient
+application-layer parse turns a malformed ACL into an empty list, and an
+empty list means everyone. Here the shape check and the match share a
+statement, so no row is admitted on an ACL nobody validated. The writer
+closes the same branch from its side: <code>normalize_acl</code>
+replaces an empty list with the project label and refuses the reserved
+<code>*</code> (<code>crates/core/src/memory.rs:385-405</code>).</p>
+<p><strong>A correction keeps the corrected row.</strong> A write naming
+<code>supersedes_id</code> marks the target <code>superseded</code>,
+keeps its content, and the replacement takes its place in recall.
+Forgetting is different: it marks the row <code>retracted</code> and
+blanks its content and provenance, leaving an id and a status.</p>
+<p><strong>The time columns are one clock at write.</strong>
+<code>memories</code> carries <code>observed_at</code>,
+<code>valid_from</code>, <code>valid_until</code> and
+<code>created_at</code> separately, and the only product writer binds
+the first, second and fourth to the same <code>now</code>
+(<code>crates/core/src/store.rs:2051</code>). <code>valid_until</code>
+is documented as an "expiry for short-lived working context"
+(<code>crates/core/src/memory.rs:264</code>), and the search compares
+the window against the wall clock. The window answers "has this
+expired", not "when was this true".</p>
+<p><strong>The review queue is staging, not a gate.</strong>
+Observations stage as candidates with an expiry, rate limits and a
+reason code when a policy rejects them. Promotion happens through
+consolidation, and the MCP <code>consolidate_memory_candidate</code>
+tool accepts <code>explicit_approval: true</code> from the agent that
+calls it. The same agent holds <code>remember</code>, which writes
+canonical memory without a candidate at all.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>capability</strong> is off until somebody turns it on, one
 at a time.</p>
-<p>A <strong>memory</strong> is active, within its window, and on your
-access list — or it is not in the answer.</p>
+<p>A <strong>memory</strong> is a conclusion written by a principal,
+carrying an ACL that principal may grant. It is <code>active</code>,
+<code>superseded</code> by a later row that names it, or
+<code>retracted</code> by forget. Only <code>active</code> rows inside
+their expiry are in an answer.</p>
+<p>A <strong>candidate</strong> is a proposal. It is
+<code>pending</code> until it expires, is cancelled or redacted, or is
+consolidated into <code>accepted</code> or <code>rejected</code>. An
+accepted candidate becomes a memory with a retention expiry; a rejected
+one keeps its reason code.</p>
 <p>A <strong>malformed access list</strong> protects nothing, so it
 grants nothing.</p>
-<p>A <strong>correction</strong> writes a new row and points back.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — one query gates status, both ends of the validity window, scope, the owner-global flag, and the ACL — validating the ACL's shape before matching it, so a malformed list fails closed</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: one query gates status, both ends of the validity window, scope, the owner-global flag, and the ACL — validating the ACL&#39;s shape before matching it, so a malformed list fails closed
+<p>Who moves a memory: any principal holding the memory scope whose
+labels cover the row's ACL can write, supersede or forget it. Who moves
+a candidate: the same principal, through consolidation, with a boolean
+it supplies.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — one recall statement gates status, expiry against the wall clock, scope, the owner bit and the ACL, checking the ACL's shape before matching it; writes reach memories directly or through a candidate the caller can approve itself</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: one recall statement gates status, expiry against the wall clock, scope, the owner bit and the ACL, checking the ACL&#39;s shape before matching it; writes reach memories directly or through a candidate the caller can approve itself
 flowchart TB
-    OBS[&quot;an observation from an authorised source&quot;] --&gt; CAND[(&quot;memory_candidates: scope · sensitivity ·&lt;br/&gt;acl_json · provenance_json · confidence ·&lt;br/&gt;importance · expires_at · rejection_reason ·&lt;br/&gt;created_by&quot;)]
-    CAND --&gt; DEC{&quot;status transition,&lt;br/&gt;guarded on &#39;pending&#39;&quot;}
-    DEC --&gt;|&quot;rejected&quot;| REJ[&quot;status=&#39;rejected&#39; + a reason&lt;br/&gt;— the dedupe_key is NOT consulted&lt;br/&gt;when the same content returns&quot;]
-    DEC --&gt;|&quot;approved by a principal&quot;| MEM[(&quot;memories: status · scope · acl_json ·&lt;br/&gt;provenance_json · observed_at ·&lt;br/&gt;valid_from · valid_until ·&lt;br/&gt;supersedes_id · created_at&quot;)]
-    CORR[&quot;a correction&quot;] --&gt; NEW[&quot;a new row carrying supersedes_id&quot;]
-    NEW --&gt; MEM
-    NEW -.-&gt;|&quot;the superseded row keeps its place&lt;br/&gt;and leaves the active set&quot;| MEM
-    Q[&quot;search(query, moment, principals, flags)&quot;] --&gt; G1[&quot;m.status = &#39;active&#39;&quot;]
-    G1 --&gt; G2[&quot;m.valid_from &lt;= moment AND&lt;br/&gt;(m.valid_until IS NULL OR valid_until &gt; moment)&quot;]
-    G2 --&gt; G3[&quot;project · kind · content_type ·&lt;br/&gt;retention_tier · scope filters&quot;]
-    G3 --&gt; G4[&quot;?7 OR m.scope &lt;&gt; &#39;owner-global&#39;&lt;br/&gt;— a flag the caller must set to reach&lt;br/&gt;owner-global rows at all&quot;]
-    G4 --&gt; SHAPE{&quot;is the row&#39;s ACL SHAPED like an ACL?&lt;br/&gt;json_valid · json_type=&#39;array&#39; ·&lt;br/&gt;no element whose type is not text&quot;}
-    SHAPE --&gt;|&quot;no&quot;| CLOSED[&quot;excluded — a malformed ACL matches&lt;br/&gt;nothing rather than degrading to&lt;br/&gt;&#39;empty means unrestricted&#39;&quot;]
-    SHAPE --&gt;|&quot;yes&quot;| MATCH{&quot;empty ACL, or a principal match&lt;br/&gt;against the caller&#39;s list (or &#39;*&#39;)&quot;}
-    MATCH --&gt;|&quot;no&quot;| CLOSED
-    MATCH --&gt;|&quot;yes&quot;| RANK[&quot;bm25 × importance × confidence × recency&quot;]
-    POSTURE[&quot;a new installation starts query-only;&lt;br/&gt;eight capabilities are eight separate&lt;br/&gt;explicit decisions&quot;] -.-&gt; OBS</code></pre></details></figure>
+    AGENT[&quot;an agent principal&lt;br/&gt;(MCP or HTTP credential)&quot;] --&gt;|&quot;remember&quot;| VAL[&quot;validate_input:&lt;br/&gt;empty ACL becomes the project label;&lt;br/&gt;&#39;*&#39; refused&quot;]
+    AGENT --&gt;|&quot;propose_memory_candidate&quot;| CAND[(&quot;memory_candidates: pending ·&lt;br/&gt;expires_at within 7 days ·&lt;br/&gt;dedupe key unique per creator&quot;)]
+    CAND --&gt;|&quot;same creator, same key,&lt;br/&gt;earlier row not pending&quot;| REFUSE[&quot;refused:&lt;br/&gt;&#39;dedupe key already belongs&lt;br/&gt;to a different proposal&#39;&quot;]
+    AGENT --&gt;|&quot;consolidate_memory_candidate&lt;br/&gt;explicit_approval = true&quot;| POLICY{&quot;consolidation policy&quot;}
+    CAND --&gt; POLICY
+    POLICY --&gt;|&quot;discard&quot;| REJ[&quot;candidate &#39;rejected&#39;&lt;br/&gt;+ reason code&quot;]
+    POLICY --&gt;|&quot;approve&quot;| VAL
+    VAL --&gt; WRITE[&quot;INSERT: observed_at = valid_from =&lt;br/&gt;created_at = now;&lt;br/&gt;valid_until = caller expiry, or&lt;br/&gt;now + 365 days on approval&quot;]
+    WRITE --&gt; MEM[(&quot;memories: active&quot;)]
+    WRITE --&gt;|&quot;supersedes_id&quot;| SUP[&quot;target: &#39;superseded&#39;,&lt;br/&gt;valid_until = now, content kept&quot;]
+    FORGET[&quot;forget&quot;] --&gt; RET[&quot;&#39;retracted&#39;: content blanked,&lt;br/&gt;FTS row deleted&quot;]
+    Q[&quot;recall(query, principal)&quot;] --&gt; G1[&quot;m.status = &#39;active&#39;&quot;]
+    G1 --&gt; G2[&quot;valid_from ≤ now AND&lt;br/&gt;(valid_until IS NULL OR &gt; now)&quot;]
+    G2 --&gt; G3[&quot;project · kind · content type ·&lt;br/&gt;retention tier · scope&quot;]
+    G3 --&gt; G4[&quot;owner bit OR scope ≠ &#39;owner-global&#39;&quot;]
+    G4 --&gt; SHAPE{&quot;ACL shaped like an ACL?&lt;br/&gt;json_valid · array · all text&quot;}
+    SHAPE --&gt;|&quot;no&quot;| OUT[&quot;excluded&quot;]
+    SHAPE --&gt;|&quot;yes&quot;| MATCH{&quot;empty, or a label from the&lt;br/&gt;credential matches&quot;}
+    MATCH --&gt;|&quot;no&quot;| OUT
+    MATCH --&gt;|&quot;yes&quot;| RANK[&quot;bm25, then importance ·&lt;br/&gt;confidence · recency&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
+<p>A Cargo workspace of four crates and a binary, with a Python
+connector package and a Solid web UI served in the desktop shell.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>File</th>
+<th>Path</th>
 <th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>crates/core/src/store.rs</code></td>
-<td>The schema, the gated search, the candidate lifecycle (11,171
-lines)</td>
+<td>Schema, the gated recall and export, the candidate lifecycle,
+consolidation commits, forget</td>
 </tr>
 <tr>
-<td><code>src/api.rs</code>, <code>src/mcp.rs</code></td>
-<td>The HTTP and MCP surfaces</td>
+<td><code>crates/core/src/memory.rs</code>,
+<code>observation.rs</code></td>
+<td>Input validation, ACL normalisation, candidate validation and
+limits</td>
 </tr>
 <tr>
-<td><code>src/consolidation.rs</code>, <code>src/derived.rs</code></td>
-<td>Consolidation jobs and derived state</td>
+<td><code>crates/core/src/consolidation.rs</code>,
+<code>classification.rs</code></td>
+<td>The versioned policy and the deterministic candidate classifier</td>
 </tr>
 <tr>
-<td><code>src/knowledge_graph.rs</code>,
-<code>src/context.rs</code></td>
-<td>The graph and context compilation</td>
+<td><code>crates/core/src/auth.rs</code></td>
+<td>Principals, scopes and the ACL labels a credential carries</td>
 </tr>
 <tr>
-<td><code>src/auth.rs</code>, <code>src/device_identity.rs</code></td>
-<td>Principals and device identity</td>
+<td><code>crates/core/src/sync_engine.rs</code></td>
+<td>The device-to-device journal and bundle apply</td>
 </tr>
 <tr>
-<td><code>apps/desktop/</code></td>
-<td>The Tauri application</td>
+<td><code>crates/mcp/src/mcp.rs</code></td>
+<td>The MCP tool surface</td>
+</tr>
+<tr>
+<td><code>crates/server/src/api.rs</code></td>
+<td>The HTTP API</td>
+</tr>
+<tr>
+<td><code>crates/retrieval/src/answer.rs</code>,
+<code>reflection.rs</code>, <code>memory_evaluation.rs</code></td>
+<td>Answer synthesis, reflection and the memory-evaluation lane</td>
+</tr>
+<tr>
+<td><code>src/main.rs</code></td>
+<td>The local-owner CLI</td>
+</tr>
+<tr>
+<td><code>apps/desktop/</code>, <code>apps/web/</code></td>
+<td>The Tauri shell and its UI</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>One SQLite file holds documents, chunks, memories, candidates, the
+audit ring and the sync journal. Nothing else has to run for memory:
+recall is FTS5 and the consolidation policy is deterministic. Model use
+is one of the decisions the owner turns on, and the memory path does not
+need it. The store is readable with any SQLite client, and the memory
+rows are plain text and JSON columns.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><code>crates/core/src/store.rs:2075-2114</code> — one query, and
-everything it refuses to assume.</p>
-<p><code>crates/core/src/store.rs:366-412</code> — memories and their
-staging table, side by side.</p>
-<p><code>crates/core/src/store.rs:3271</code> — a rejection that records
-its reason under a compare-and-set.</p>
+<p><strong>Write.</strong> <code>remember_scoped_with_axes</code>
+refuses <code>owner-global</code> to non-owners and refuses session and
+principal scopes. <code>remember_in_transaction</code>
+(<code>crates/core/src/store.rs:1872-2091</code>) then resolves the
+dedupe key, checks the active-memory ceiling, applies supersession and
+inserts. The MCP handler narrows the requested ACL to the caller's
+visible labels first (<code>crates/mcp/src/mcp.rs:1073-1094</code>).</p>
+<p><strong>Recall.</strong>
+<code>recall_memories_with_axes_authorized</code>
+(<code>crates/core/src/store.rs:2188-2310</code>) runs the strict FTS
+query, then an OR fallback, under the full predicate, and re-checks
+<code>acl_allows</code> in Rust on every row it keeps.</p>
+<p><strong>Context assembly.</strong> The MCP <code>context</code> tool
+(<code>crates/mcp/src/mcp.rs:531-555</code>), HTTP
+<code>/v1/context</code> (<code>crates/server/src/api.rs:3108</code>)
+and the answer path
+(<code>crates/retrieval/src/answer.rs:415-430</code>) all call the same
+recall with the principal's labels.</p>
+<p><strong>Export and its consumers.</strong>
+<code>export_memories_with_axes_authorized</code>
+(<code>crates/core/src/store.rs:4138-4228</code>) carries scope, the
+owner bit and the full ACL predicate, and no status filter. Derived
+representations, reflection and candidate classification read through it
+and drop non-active rows in Rust.</p>
+<p><strong>Candidates and consolidation.</strong>
+<code>propose_memory_candidate</code>
+(<code>crates/core/src/store.rs:2317-2444</code>) admits a proposal.
+<code>consolidate_memory_candidate_with_action</code>
+(<code>:2889</code>) classifies it, runs
+<code>consolidation::evaluate</code>, and commits the candidate status,
+the memory, the FTS row and the job in one transaction.</p>
+<p><strong>Forget.</strong> <code>forget_memory_scoped</code>
+(<code>crates/core/src/store.rs:3913-3954</code>).</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Both tables carry <code>acl_json</code> and
-<code>provenance_json</code> from the candidate stage onward, so an
-observation's access list and its provenance exist before it is promoted
-rather than being attached afterwards. <code>retention_tier</code> and
-<code>content_type</code> sit beside <code>kind</code>, separating how
-long something is kept from what kind of thing it is — two questions
-frequently collapsed into one field.</p>
+<p><code>memories</code> (<code>crates/core/src/store.rs:517-539</code>)
+separates <code>content_type</code> from <code>retention_tier</code> and
+both from <code>kind</code>, so how long a record is kept is a different
+field from what kind of record it is. <code>scope</code> takes
+<code>workspace</code> or <code>owner-global</code> on the write path;
+<code>session</code> and <code>principal</code> parse and are refused
+until an identity binding exists.</p>
+<p><code>memory_candidates</code> (<code>:540-562</code>) carries the
+same ACL and provenance documents plus <code>created_by</code>,
+<code>sensitivity</code>, <code>expires_at</code> and
+<code>rejection_reason</code>, so a proposal's access list exists before
+it is promoted. A unique index on
+<code>(project, scope, created_by, dedupe_key)</code>
+(<code>:6313-6316</code>) keeps one candidate per key per creator,
+whatever its status.</p>
+<p>The time columns are four, written from one clock.
+<code>observed_at</code>, <code>valid_from</code> and
+<code>created_at</code> are bound to the same <code>now</code> in the
+insert (<code>:2051</code>). <code>valid_until</code> is the caller's
+working-memory expiry, the policy's retention ceiling on an approved
+candidate (<code>now + max_durable_days</code>, 365 by default;
+<code>crates/core/src/consolidation.rs:334-342</code>), or
+<code>now</code> when the row is superseded. A sync apply copies a
+peer's values verbatim, and the one migration copies them between table
+shapes.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>BM25 over the FTS index, ordered by score then importance, confidence
-and recency, behind the gates above. The ordering puts the lexical match
-first and uses the stored weights to break ties, which keeps a
-high-importance memory from dominating an unrelated query.</p>
+<p>The statement ranks by <code>bm25(memories_fts)</code>, then
+importance, confidence and <code>updated_at</code>, over four times the
+requested limit. Rust re-scores the survivors with
+<code>memory_relevance_score</code> before truncating. The strict query
+runs first and the OR fallback only when it leaves room. Low confidence
+lowers a memory's rank; nothing withholds it.</p>
+<p>The validity gate takes <code>memory::now()</code>
+(<code>crates/core/src/store.rs:2225</code>, bound at
+<code>:2282</code>), and no caller passes another moment, so recall
+cannot be asked about a past date. <code>valid_from &lt;= now</code>
+excludes a row only if a sync peer's clock ran ahead.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Staged, expiring candidates promoted by an approving principal, with
-corrections writing new rows. The expiry on a candidate is the detail
-worth noting: an observation nobody rules on does not sit in the queue
-indefinitely.</p>
+<p>An explicit <code>remember</code> is synchronous and lands in recall
+on commit. A proposal waits until a principal calls consolidation from
+MCP, HTTP or the CLI. No standing worker drains the job table; an
+owner's HTTP call with an enabled policy spawns one recovery pass over
+queued jobs (<code>crates/server/src/api.rs:4038-4050</code>). The
+automatic-retention branch is closed unless
+<code>automatic_retention_release_authorized</code> is set, and that
+field is <code>#[serde(skip_deserializing)]</code>
+(<code>crates/core/src/consolidation.rs:47-50</code>), so neither the
+MCP tool nor the HTTP route's policy JSON can open it.</p>
+<p>Dedupe is keyed on a caller-chosen string, at two levels. A memory
+write whose key belongs to a superseded or retracted row is refused with
+"choose a new key" (<code>crates/core/src/store.rs:1940</code>). A
+candidate whose key matches an earlier candidate from the same creator,
+project and scope is returned as-is if that one is pending and
+identical, and refused otherwise (<code>:2357-2388</code>). Neither
+check reads the value, so a re-extraction under a fresh key, or by
+another principal, walks past both.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>No model call sits on the memory write, consolidation or recall path
+in <code>store.rs</code>; classification is deterministic. Recall is
+bounded by <code>MAX_MEMORY_RECALL_LIMIT</code> (100) and the context
+builder's token budget. No background pass rewrites the store;
+consolidation touches one candidate per call.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>Four surfaces, and shared-agent access as one of the eight decisions
-rather than a consequence of installing.</p>
+<p>The MCP surface gives an agent holding the memory scope
+<code>remember</code>, <code>recall</code>, <code>forget</code>,
+<code>export_memory</code>, the candidate verbs (propose, list, export,
+cancel, redact, classify, consolidate), <code>reflect_memory</code> and
+<code>inspect_memory_representations</code>. The <code>context</code>
+tool returns evidence and memories in separate fields, and its
+description asks agents to call it before answering questions about the
+user. Shared-agent access is one of the owner's separate decisions, and
+a credential fixes the ACL labels the agent can read and grant.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>The ACL shape check is the strongest single thing here, and the
-query-only default is the posture that makes the rest coherent. The gap
-is the identity behind an approval.</p>
+<p>The ACL shape check and the credential-bound labels make scope the
+strongest property here. Every memory read that returns content goes
+through the recall or the export statement, and both carry the
+predicate. The point read by id carries none and is reached only from
+the two forget handlers, which check <code>acl_allows</code> before
+acting. They answer "memory not found" and "memory ACL denied"
+differently, which tells a principal outside the ACL that an id
+exists.</p>
+<p>Review is the gap. <code>explicit_approval</code> is a field of the
+MCP tool's parameters (<code>crates/mcp/src/mcp.rs:217-223</code>)
+passed straight to the policy (<code>:1508</code>), where it turns a
+low-confidence <code>review</code> into <code>approve</code>
+(<code>crates/core/src/consolidation.rs:285-289</code>,
+<code>:328-331</code>). The HTTP route takes the same boolean. A
+candidate needs nobody but its author.</p>
+<p>Corrections are inspectable and forgetting is close to erasure. A
+superseded row keeps its content and is returned by export with its
+status. A retracted row keeps an id, a project, an ACL and timestamps;
+its content, provenance and FTS entry are gone.</p>
+<p><code>audit_events</code> records principal, action, project, source,
+outcome and counts for each operation, with no memory id, and is trimmed
+to a configured maximum (<code>crates/core/src/store.rs:1534</code>).
+<code>sync_journal</code> records an object id, a revision and a
+fingerprint per change, only once a device identity is adopted.
+<code>sync_compact</code> deletes every acknowledged entry but the
+newest per object (<code>crates/core/src/sync_engine.rs:492-505</code>).
+Neither answers what a memory said before it changed.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>605 test functions, with an <code>eval/</code> directory beside the
-source. Nothing was built or run for this reading.</p>
+<p>1,047 Rust test functions, 107 of them in <code>store.rs</code>, plus
+the memory-evaluation lane. I read the memory tests and the lane; I
+built and ran nothing.</p>
+<p><code>native_memory_is_idempotent_acl_scoped_and_redactable</code>
+(<code>crates/core/src/store.rs:9456</code>) is the negative case with
+its control on one store. The <code>work</code> principal recalls one
+row, the <code>personal</code> principal running the same query gets
+<code>is_empty()</code>, and after <code>forget_memory</code> the row's
+content is empty and recall returns nothing.
+<code>native_memory_supersession_deactivates_previous_fact_atomically</code>
+(<code>:10167</code>) writes two rows that both match
+<code>current editor</code> and asserts that only the replacement comes
+back.
+<code>owner_global_memory_is_hidden_from_acl_matching_non_owners</code>
+(<code>:7658</code>) asserts the owner-global gate on recall and
+export.</p>
+<p><code>crates/retrieval/src/memory_evaluation.rs</code> defines
+sixteen required cases over synthetic disposable stores. Three assert
+absence from recall: an expired working memory, a forgotten one and
+another workspace's memory (<code>:1229-1297</code>).
+<code>explicit-idempotent-recall</code> fails a retriever that returns
+nothing. <code>tests/evaluation.rs:82-96</code> runs
+<code>cortana eval --memory</code> and asserts <code>passed</code>,
+<code>unauthorized_exposures == 0</code> and that automatic retention
+stays off. No case writes a <code>valid_from</code> earlier than its
+insert, because no input can.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
-<p>Validate the access list's shape where you match it. A lenient parse
-turns a malformed ACL into an empty one, and an empty one usually means
-everybody.</p>
-<p>Gate both ends of a validity window. Checking only the end lets a
-memory that has not started applying answer a question about today.</p>
-<p>Keep the superseded row. A <code>supersedes_id</code> and a status
-change cost one column each and make a correction inspectable.</p>
-<p>Start query-only, and make each capability its own decision. Eight
-decisions is more friction than one; ingesting somebody's calendar
-because they installed a note-taker is worse.</p>
-<p>And expire the candidates nobody ruled on. A review queue without an
-expiry becomes a backlog, and a backlog becomes a default.</p>
+<h3 id="steal">Steal</h3>
+<p>Validate the access list's shape in the statement that matches it,
+and normalise an empty list at write so the unrestricted branch is
+unreachable from the front door.</p>
+<p>Take a principal's labels from its credential, not from the request,
+and let a write grant only labels the writer can read.</p>
+<p>Mark the superseded row and keep it. A status change and a
+<code>supersedes_id</code> make a correction inspectable, and an
+exact-id assertion over two rows matching one query proves recall
+honours it.</p>
+<p>Keep the flag that opens automatic behaviour out of every
+deserialiser. <code>skip_deserializing</code> on a release flag means no
+request body reaches it.</p>
+<p>Start query-only, and make each capability its own decision.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Calling an expiry a validity window. Columns named
+<code>valid_from</code> and <code>valid_until</code>, both stamped from
+the write path, read in a schema as event time and cannot answer when
+something became true.</p>
+<p>An approval boolean on the proposer's own tool. If the agent that
+wrote a candidate can pass <code>explicit_approval: true</code>, the
+queue records a decision nobody else made.</p>
+<h3 id="fit">Fit</h3>
+<p>This suits one owner running many agents over one local store, where
+the boundary that matters is between those agents' credentials rather
+than between truths and errors. Scope, redaction and the query-only
+posture are built for that. Walk away if memories must carry when a fact
+held rather than when it was written, or if a person must approve what
+an agent proposes before recall can return it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether an approving principal is ever established as a person. The
-column and the compare-and-set are there; the identity check was not
-found.</p>
-<p>Whether a rejection is ever consulted again. <code>dedupe_key</code>
-and <code>rejection_reason</code> are both stored and no write path
-reads the pair.</p>
-<p>What <code>provenance_json</code> is used for. It is carried from
-candidate to memory and no read gates on it.</p>
+<p>Whether <code>session</code> and <code>principal</code> scopes will
+ship, and whether their identity binding will reach the recall predicate
+or sit beside it.</p>
+<p>Whether <code>explicit_approval</code> is meant to reach the agent's
+tool surface. The MCP tool description says "explicit approval remains
+separate", and the parameter struct carries it.</p>
+<p>Whether a rejected value is meant to be remembered. The candidate's
+unique key blocks one creator's re-offer under one key; nothing keyed on
+content exists.</p>
+<p>What <code>provenance_json</code> is for at read time. It is carried
+from candidate to memory and cleared by forget, and no read gates on
+it.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -349,20 +540,118 @@ candidate to memory and no read gates on it.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>crates/core/src/store.rs:2075-2114</code></td>
-<td>An ACL validated before it is trusted</td>
+<td><code>crates/core/src/store.rs:2188-2310</code></td>
+<td>Recall: the full predicate and the ACL shape check</td>
 </tr>
 <tr>
-<td><code>crates/core/src/store.rs:366-412</code></td>
-<td>Three clocks, an ACL, and a staging table</td>
+<td><code>crates/core/src/store.rs:1872-2091</code></td>
+<td>The one memory writer, supersession, and the <code>now</code>
+binding</td>
 </tr>
 <tr>
-<td><code>crates/core/src/store.rs:3271</code></td>
-<td>A rejection with a reason, guarded</td>
+<td><code>crates/core/src/store.rs:517-562</code></td>
+<td>Memories and their staging table, side by side</td>
+</tr>
+<tr>
+<td><code>crates/core/src/store.rs:2317-2444</code></td>
+<td>Candidate admission, the dedupe guard and rate limits</td>
+</tr>
+<tr>
+<td><code>crates/core/src/store.rs:3913-3954</code></td>
+<td>Forget: retraction and redaction</td>
+</tr>
+<tr>
+<td><code>crates/core/src/store.rs:4138-4228</code></td>
+<td>Export: the ACL predicate without a status filter</td>
+</tr>
+<tr>
+<td><code>crates/core/src/consolidation.rs:215-355</code></td>
+<td>The policy, the approval boolean and the retention ceiling</td>
+</tr>
+<tr>
+<td><code>crates/core/src/memory.rs:243-405</code></td>
+<td>Inputs, the expiry field and ACL normalisation</td>
+</tr>
+<tr>
+<td><code>crates/mcp/src/mcp.rs:1044-1165</code>,
+<code>:1486-1535</code></td>
+<td><code>remember</code> and <code>consolidate_memory_candidate</code>
+on the agent's surface</td>
+</tr>
+<tr>
+<td><code>crates/core/src/store.rs:9456-9530</code>,
+<code>:10167-10217</code></td>
+<td>Negative recall cases with their controls</td>
+</tr>
+<tr>
+<td><code>crates/retrieval/src/memory_evaluation.rs:1207-1297</code></td>
+<td>The evaluation lane's absence cases</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>git grep -n -E</code> at the tree root of the pinned
+checkout, and at <code class="commit-id" title="9609d2ab5f916b2795500ed98c57dd2388592144">9609d2ab…</code>
+with the same result.</p>
+<ul>
+<li><code>"'active',\?14,\?15,\?16,\?16,\?17,\?18,\?16,\?16"</code> over
+<code>*.rs</code> — one hit, <code>crates/core/src/store.rs:2051</code>;
+<code>observed_at</code>, <code>valid_from</code>,
+<code>created_at</code> and <code>updated_at</code> share
+<code>?16</code>, which is <code>now</code>.</li>
+<li><code>'valid_from\s*[:=]|valid_from='</code> over <code>*.rs</code>
+— the field, the row reader, the <code>excluded</code> copy in the
+upsert, and struct literals inside <code>#[cfg(test)]</code> modules of
+<code>classification.rs</code>, <code>context.rs</code>,
+<code>derived.rs</code>, <code>reflection.rs</code> and
+<code>tests/provider_conformance.rs</code>; no product path sets
+it.</li>
+<li><code>'consolidate_memory_candidate\(|supersede_memory_candidate\(|process_pending_memory_consolidation\('</code>
+over <code>*.rs</code> — the MCP tool, the HTTP route and its recovery
+pass, the CLI, the evaluation lane and tests; no scheduler.</li>
+<li><code>"status='rejected'"</code> over <code>*.rs</code> — one
+writer, <code>store.rs:3429</code>; no reader on the memory or candidate
+write path.</li>
+<li><code>'DELETE FROM (audit_events|sync_journal)'</code> over
+<code>*.rs</code> — <code>store.rs:1534</code>, <code>:5976</code> and
+<code>sync_engine.rs:498</code>; both logs are trimmed.</li>
+<li><code>'explicit_approval'</code> over
+<code>crates/mcp crates/server src/main.rs</code> — the MCP parameter
+(<code>mcp.rs:222</code>, passed at <code>:1508</code>) and the HTTP
+request field (<code>api.rs:528</code>, passed at
+<code>:4023</code>).</li>
+<li><code>'recalled\.is_empty\(\)'</code> over
+<code>crates/retrieval/src/memory_evaluation.rs</code> — three hits,
+<code>:1245</code>, <code>:1266</code>, <code>:1282</code>.</li>
+<li><code>'recall_memories|export_memories|FROM memories'</code> over
+<code>apps src/cortana</code> — no match; every memory read goes through
+<code>store.rs</code>.</li>
+<li><code>'arxiv|bibtex|@article|@misc|doi\.org'</code>
+(case-insensitive) over <code>README.md docs</code> — no match; no
+paper.</li>
+<li><code>'anthropic|machine learning|not (be )?used (for|to)'</code>
+(case-insensitive) over <code>LICENSE NOTICE</code> — no match; the
+Apache-2.0 text carries no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/adea-ai/cortana/commit/f26a1ac2b01bc903a86b0198d375c8e146ecbbde"><code class="commit-id" title="f26a1ac2b01bc903a86b0198d375c8e146ecbbde">f26a1ac2…</code></a>
+— 173 commits on, version 0.58.11 to 0.68.4, almost all in the web UI
+and release tooling; the memory schema, writer and recall did not move.
+<code>bitemporal</code> withdrawn: the only writer binds
+<code>valid_from</code> to the insert clock and recall compares against
+the wall clock, at both pins (<a href="#5-memory-data-model">section
+5</a>). <code>negative_eval</code> added, earned at both pins (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Also wrong then:
+a rejected candidate's key is consulted, approval is a caller boolean,
+the owner-global gate is the admin bit, and the architecture table's
+paths (<a href="#7-write-mechanics">section 7</a>, <a
+href="#9-reliability-safety-and-trust">section 9</a>). The 2026-09-16
+entry's sha is restored to the commit that reading pinned. Screened from
+a full clone: one auto-run surface (an inert git hook), one build-time
+execution point, three unpinned surfaces, fourteen files inside the
+cooldown, <code>AGENTS.md</code> read as data. Nothing was installed,
+built or run.</p>
 <p><strong>2026-09-19</strong> — <a
 href="https://github.com/adea-ai/cortana/commit/9609d2ab5f916b2795500ed98c57dd2388592144"><code class="commit-id" title="9609d2ab5f916b2795500ed98c57dd2388592144">9609d2ab…</code></a>
 — <code>trust_state</code> re-tested. Every anchor in this report
@@ -370,10 +659,11 @@ pointed at <code>src/store.rs</code> and the file is now at
 <code>crates/core/src/store.rs</code> — the repository became a Cargo
 workspace since the previous pin, so thirteen citations across three
 marks and the file index were dead paths. They are re-mapped, with line
-numbers shifted by one or two. The mark holds and is wider than
-recorded: <code>status='active'</code> is composed into a dozen reads in
-that one file — the counting read (<code>:1819</code>), the update
-guards (<code>:1832</code>, <code>:1880</code>), the upsert
+numbers shifted by one or two.</p>
+<p>The mark holds and is wider than recorded:
+<code>status='active'</code> is composed into a dozen reads in that one
+file — the counting read (<code>:1819</code>), the update guards
+(<code>:1832</code>, <code>:1880</code>), the upsert
 (<code>:1899</code>), the full-text search (<code>:2082</code>), a
 second count (<code>:2792</code>), the ACL lookup (<code>:3788</code>),
 the validity stamp (<code>:3808</code>) and the aggregate rollups
@@ -388,7 +678,7 @@ backup. The record now says so rather than claiming the predicate is
 universal. Screened again first; nothing was installed and no suite was
 run.</p>
 <p><strong>2026-09-16</strong> — <a
-href="https://github.com/adea-ai/cortana/commit/9609d2ab5f916b2795500ed98c57dd2388592144"><code class="commit-id" title="9609d2ab5f916b2795500ed98c57dd2388592144">9609d2ab…</code></a>
+href="https://github.com/adea-ai/cortana/commit/6b76a1dbd38a18a32c502e963f0d380f5b92d75f"><code class="commit-id" title="6b76a1dbd38a18a32c502e963f0d380f5b92d75f">6b76a1db…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before
 opening, from a shallow clone: eighteen files scanned, one auto-run
 surface, one build-time execution point, three unpinned surfaces and ten

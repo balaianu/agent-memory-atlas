@@ -7593,35 +7593,15 @@
         "NOTE": 1,
         "RUNS": 1
       },
-      "files_scanned": 22,
+      "files_scanned": 23,
       "findings": [
         {
-          "detail": "instructions addressed to a reading agent — treat as data, never as commands",
-          "kind": "AGENT",
-          "path": "AGENTS.md"
+          "detail": "committed git hooks; harmless until core.hooksPath points here — 1 entr(ies): pre-commit",
+          "kind": "RUNS",
+          "path": ".githooks/"
         },
         {
-          "detail": "cargo executes this at build time",
-          "kind": "EXEC",
-          "path": "apps/desktop/src-tauri/build.rs"
-        },
-        {
-          "detail": "1 floating range(s) — no lockfile beside it: @tauri-apps/cli=^2.11.4",
-          "kind": "FLOAT",
-          "path": "apps/desktop/package.json"
-        },
-        {
-          "detail": "16 floating range(s) — no lockfile beside it: @fontsource-variable/geist=^5.3.0, @kobalte/core=^0.13.14, @tauri-apps/api=^2.11.1, class-variance-authority=^0.7.1, clsx=^2.1.1, cmdk-solid=^1.2.0",
-          "kind": "FLOAT",
-          "path": "apps/web/package.json"
-        },
-        {
-          "detail": "15 floating range(s) — lockfile present, so resolution is reproducible today: @axe-core/playwright=^4.13.0, @babel/core=^7.28.0, @babel/preset-typescript=^7.27.0, @happy-dom/global-registrator=^20.11.1, @shadcn/lint=^0.1.1, @testing-library/dom=^10.4.1",
-          "kind": "FLOAT",
-          "path": "package.json"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "Cargo.lock"
         },
@@ -7636,7 +7616,7 @@
           "path": "apps/desktop/package.json"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "apps/desktop/src-tauri/Cargo.lock"
         },
@@ -7646,9 +7626,14 @@
           "path": "apps/desktop/src-tauri/Cargo.toml"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "apps/web/package.json"
+        },
+        {
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "kind": "FRESH",
+          "path": "bun.lock"
         },
         {
           "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
@@ -7671,7 +7656,7 @@
           "path": "crates/server/Cargo.toml"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
           "kind": "FRESH",
           "path": "package.json"
         },
@@ -7681,30 +7666,20 @@
           "path": "pyproject.toml"
         },
         {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — resolution may pick up something published this week",
-          "kind": "FRESH",
-          "path": "third_party/glib-0.18.5/Cargo.toml"
-        },
-        {
-          "detail": "changed 1 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
+          "detail": "changed 0 day(s) ago, inside the 7-day cooldown — `npm ci` would install exactly what this pins, however new that is",
           "kind": "FRESH",
           "path": "uv.lock"
         },
         {
-          "detail": "lockfile(s) present: uv.lock, Cargo.lock",
-          "kind": "NOTE",
-          "path": "-"
-        },
-        {
-          "detail": "committed git hooks; harmless until core.hooksPath points here — 1 entr(ies): pre-commit",
-          "kind": "RUNS",
-          "path": ".githooks/"
+          "detail": "cargo executes this at build time",
+          "kind": "EXEC",
+          "path": "apps/desktop/src-tauri/build.rs"
         }
       ],
-      "revision": "9609d2ab5f916b2795500ed98c57dd2388592144",
-      "screened_at": "2026-09-19",
+      "revision": "f26a1ac2b01bc903a86b0198d375c8e146ecbbde",
+      "screened_at": "2026-10-15T02:50:40+00:00",
       "slug": "cortana",
-      "source": "fresh-clone",
+      "source": "reused-clone",
       "status": "screened",
       "url": "https://github.com/adea-ai/cortana"
     },

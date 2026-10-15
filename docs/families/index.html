@@ -6557,31 +6557,30 @@ mutation log is enforced in code rather than by triggers, which the
 schema states and justifies, so a new write path can omit it.</p>
 <p><strong><a href="../systems/cortana/">Cortana</a> checks that an
 access list is shaped like one before it trusts it.</strong> An
-Apache-2.0 Rust second brain at version 0.58.2 — 138,872 lines with 605
-test functions, reachable as a desktop app, an MCP server, a loopback
-HTTP API and a CLI — whose product statement is a list of refusals: "not
-an unrestricted crawler, implicit backup service, agent harness, or
-hosted personal-data warehouse. A new installation starts query-only",
-with eight capabilities named as eight separate explicit decisions. Its
-search gates on an active status, on both ends of a validity window
-against a supplied moment, on project, kind, content type, retention
-tier and scope, and on a flag a caller must set before owner-global rows
-are reachable at all — and then, before matching the row's ACL,
-validates the ACL's shape in the same statement:
-<code>json_valid</code>, <code>json_type='array'</code>, and no element
-whose type is not text. Only then does it admit the
-empty-means-unrestricted branch, so a corrupted or wrongly-typed access
-list matches nothing rather than degrading to public. That is the
-failure direction a lenient application-layer parse usually gets wrong.
-Three marks. <code>observed_at</code>, the
-<code>valid_from</code>/<code>valid_until</code> window and
-<code>created_at</code> are separate columns; a correction writes a new
-row carrying <code>supersedes_id</code> and the superseded row keeps its
-place while leaving the active set; and observations stage as expiring
-candidates with a <code>rejection_reason</code> under a compare-and-set.
-No human-review mark: the approving principal is a string, and a
-rejected candidate's <code>dedupe_key</code> is not consulted when the
-same content returns.</p>
+Apache-2.0 Rust second brain, reachable as a desktop app, an MCP server,
+a loopback HTTP API and a CLI, whose product statement is a list of
+refusals: "not an unrestricted crawler, implicit backup service, agent
+harness, or hosted personal-data warehouse. A new installation starts
+query-only", with ingestion, model use, shared-agent access and memory
+writes as separate explicit decisions. Its memory search gates on an
+active status, an expiry, project, kind, content type, retention tier
+and scope, and on the principal's admin bit before owner-global rows are
+reachable. Then, before matching the row's ACL, it validates the ACL's
+shape in the same statement: <code>json_valid</code>,
+<code>json_type='array'</code>, and no element whose type is not text. A
+corrupted or wrongly typed access list therefore matches nothing rather
+than degrading to public, and the writer replaces an empty list with the
+project label, so the unrestricted branch is closed from both sides.
+Three marks. A correction marks its target <code>superseded</code> and
+keeps the content, and recall admits only <code>active</code> rows;
+committed tests assert that another principal's memory, a forgotten one
+and a superseded one stay out of recall, beside cases that return
+something. No bitemporal mark: <code>valid_from</code>,
+<code>observed_at</code> and <code>created_at</code> are bound to one
+insert clock, and <code>valid_until</code> is an expiry. No human-review
+mark: the agent's own MCP consolidate tool takes an
+<code>explicit_approval</code> boolean, and its <code>remember</code>
+tool writes past the queue.</p>
 <p><strong><a href="../systems/cortex-hypermnesia/">Cortex</a> fails its
 own build when the README's numbers stop matching the
 repository.</strong> An MIT memory server for coding agents at version

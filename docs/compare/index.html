@@ -6345,64 +6345,67 @@ in another repository</td>
 <tr>
 <td><a href="../systems/cortana/"><code>cortana</code></a></td>
 <td>A memory with a kind, content type, retention tier, scope, project,
-source, dedupe key, confidence, importance, status, an ACL, a provenance
-document, an observed time, a validity window and a supersession
-link</td>
-<td>Local SQLite with a full-text index over memories, a separate
-candidate staging table, and consolidation job and control tables</td>
-<td>BM25 over the FTS index ranked by importance and confidence, gated
-on status, validity window, scope, the owner-global flag and the
-ACL</td>
-<td>Observations become <code>memory_candidates</code> with an expiry
-and a rejection reason; approval by a principal promotes them into
-<code>memories</code></td>
-<td>A correction writes a new row carrying <code>supersedes_id</code>;
-the superseded row keeps its place and leaves the active set</td>
-<td>A scope column, an explicit flag for owner-global rows, and a
-per-row ACL matched against the caller's principals inside the
-query</td>
+source, dedupe key, confidence, importance, lifecycle status, an ACL, a
+provenance document, an observed time, a valid-from and valid-until pair
+and a supersession link</td>
+<td>Local SQLite in WAL mode with a full-text index over memories, a
+separate candidate staging table, and consolidation job and control
+tables; documents and chunks with embeddings sit beside them</td>
+<td>BM25 over the memory FTS index with a fallback OR query, gated in
+SQL on active status, the validity window against the wall clock,
+project, kind, content type, retention tier, scope, the owner bit and
+the ACL, then re-scored with importance, confidence and recency</td>
+<td>Three doors: an explicit remember on MCP, HTTP and CLI that writes
+canonical memory directly; observations staged as expiring candidates;
+and consolidation, which promotes a candidate under a versioned policy
+or an approval boolean</td>
+<td>A correction writes a new row carrying <code>supersedes_id</code>
+and marks the target superseded with its content kept; forget marks a
+row retracted, blanks its content and provenance and removes it from the
+FTS index</td>
+<td>A scope column with an owner-only <code>owner-global</code> value, a
+project, and a per-row ACL normalised to the project label when empty,
+matched in SQL against labels taken from the authenticated
+credential</td>
 <td>A Tauri desktop app, an MCP stdio server, a loopback or explicitly
 secured HTTP API, and a local-owner CLI</td>
-<td>Consolidation jobs under their own control table, reconciliation and
-recurring synchronisation — each a separate authorisation</td>
-<td>A candidate queue with expiries and rejection reasons, a provenance
-document per memory, an ACL validated in SQL, and a posture that starts
-query-only</td>
-<td>The search query is the artifact to read. It gates on the active
-status, on both ends of the validity window against a supplied moment,
-on project, kind, content type and retention tier, on scope with a
-separate flag before owner-global rows are reachable at all — and then,
-before matching the access list, it checks the access list's
-<em>shape</em>: <code>json_valid</code>, <code>json_type='array'</code>,
-and no element whose type is not text. Only a row that passes admits the
-empty-ACL-means-unrestricted branch. A corrupted or wrongly-typed ACL is
-therefore excluded rather than falling through to public, which is the
-failure direction that matters and the one an application-layer check
-usually gets wrong by parsing leniently. The product posture matches:
-"[a] new installation starts query-only. Source authorization,
-validation, ingestion, reconciliation, recurring synchronization, model
-use, shared-agent access, and memory writes are separate explicit
-decisions" — eight capabilities, eight decisions, and a statement of
-what the product is not: "not an unrestricted crawler, implicit backup
-service, agent harness, or hosted personal-data warehouse". Evidence and
-conclusions are separated too: one canonical evidence store, and "a
-separate native memory lifecycle for bounded conclusions"</td>
-<td>Approval is by a principal string. <code>memory_candidates</code>
-carries <code>created_by</code>, a status guarded by a compare-and-set
-on <code>pending</code>, an expiry and a <code>rejection_reason</code>,
-and the promotion path takes an approving principal — but nothing found
-establishes that the principal is a person rather than a label, so the
-queue is a staging and audit mechanism rather than a human-review gate.
-A rejected candidate's <code>dedupe_key</code> is likewise not consulted
-when the same observation returns: the rejection reason is recorded, and
-re-offering the same content produces a new candidate.
-<code>confidence</code> and <code>importance</code> are continuous and
-carried into the ranking, so a low-confidence memory is ranked down
-rather than withheld, and nothing in <code>provenance_json</code> gates
-a read. And the surface is broad for a personal store — a desktop app,
-an MCP server, an HTTP API, a CLI, OAuth connectors for several
-providers, fleet and community modules — with one auto-run surface and
-three unpinned dependency surfaces at this pin</td>
+<td>No standing memory worker. Consolidation runs per call from MCP,
+HTTP or the CLI and records a job row under a control table with a pause
+switch, and an owner's HTTP call spawns one recovery pass over queued
+jobs; candidate expiry runs on every candidate operation; device sync
+exchanges bundles through a compacted journal</td>
+<td>A lifecycle status filtered on every recall, an ACL validated in
+SQL, credentials that fix a principal's labels, candidate rate limits
+and expiries, an automatic-retention gate that policy JSON cannot set,
+and a posture that starts query-only</td>
+<td>The recall statement is the artifact to read. It gates on the active
+status, on the validity window, on project, kind, content type,
+retention tier and scope, and on the principal's admin bit before
+owner-global rows are reachable. Before it matches the access list it
+checks the list's shape with json_valid, json_type='array' and no
+element whose type is not text, so a corrupted or wrongly typed ACL
+matches nothing instead of reaching the empty-means-unrestricted branch.
+The writer closes that branch from the other side by substituting the
+project label for an empty list. The product posture matches: a new
+installation starts query-only, and source authorisation, ingestion,
+model use, shared-agent access and memory writes are separate decisions.
+Committed tests assert that another principal, a forgotten row and a
+superseded row stay out of recall, each beside a case that returns
+something</td>
+<td>The validity window opens at the write clock: the only product
+writer binds <code>valid_from</code>, <code>observed_at</code> and
+<code>created_at</code> to one <code>now</code>, and
+<code>valid_until</code> is a working-memory expiry, a 365-day retention
+ceiling or the supersession time, so nothing records when a fact became
+true. Review is advisory: the MCP consolidate tool takes an
+<code>explicit_approval</code> boolean from the agent, and the agent's
+own <code>remember</code> tool writes canonical memory without the
+queue. A rejected candidate blocks only a re-offer by the same principal
+under the same dedupe key. <code>confidence</code> and
+<code>importance</code> rank rather than withhold, and
+<code>provenance_json</code> gates nothing. The surface is broad for a
+personal store, with one auto-run surface and three unpinned dependency
+surfaces at this pin</td>
 </tr>
 <tr>
 <td><a
@@ -32613,7 +32616,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>123 of 734:</em> <a
+<p><em>122 of 734:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -32637,7 +32640,6 @@ href="../systems/claude-total-memory/"><code>claude-total-memory</code></a>,
 href="../systems/compartment/"><code>compartment</code></a>, <a
 href="../systems/core-memory/"><code>core-memory</code></a>, <a
 href="../systems/core-redplanet/"><code>core-redplanet</code></a>, <a
-href="../systems/cortana/"><code>cortana</code></a>, <a
 href="../systems/cortex-hub/"><code>cortex-hub</code></a>, <a
 href="../systems/cortexdb/"><code>cortexdb</code></a>, <a
 href="../systems/daem0n-mcp/"><code>daem0n-mcp</code></a>, <a
@@ -33447,7 +33449,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>446 of 734:</em> <a
+<p><em>447 of 734:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -33536,6 +33538,7 @@ href="../systems/context-mode/"><code>context-mode</code></a>, <a
 href="../systems/contextdb/"><code>contextdb</code></a>, <a
 href="../systems/contextmeld/"><code>contextmeld</code></a>, <a
 href="../systems/core-memory/"><code>core-memory</code></a>, <a
+href="../systems/cortana/"><code>cortana</code></a>, <a
 href="../systems/cortexdb/"><code>cortexdb</code></a>, <a
 href="../systems/cortexes/"><code>cortexes</code></a>, <a
 href="../systems/cortexgraph/"><code>cortexgraph</code></a>, <a
@@ -33926,7 +33929,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-446 repositories of
+447 repositories of
 734 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

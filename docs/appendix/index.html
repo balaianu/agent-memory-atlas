@@ -4286,11 +4286,12 @@ dependency file inside the seven-day cooldown. Nothing was installed,
 built or run</li>
 <li><a href="https://github.com/adea-ai/cortana">adea-ai/cortana</a> at
 <a
-href="https://github.com/adea-ai/cortana/commit/9609d2ab5f916b2795500ed98c57dd2388592144"><code class="commit-id" title="9609d2ab5f916b2795500ed98c57dd2388592144">9609d2ab…</code></a>
-— read only, from a shallow clone; eighteen files scanned, one auto-run
-surface, one build-time execution point, three unpinned surfaces and ten
-dependency files inside the seven-day cooldown. Nothing was installed,
-built or run</li>
+href="https://github.com/adea-ai/cortana/commit/f26a1ac2b01bc903a86b0198d375c8e146ecbbde"><code class="commit-id" title="f26a1ac2b01bc903a86b0198d375c8e146ecbbde">f26a1ac2…</code></a>
+— read only, from a full clone; twenty-three files scanned, one auto-run
+surface (a committed pre-commit hook, inert until
+<code>core.hooksPath</code> points at it), one build-time execution
+point, three unpinned surfaces and fourteen dependency files inside the
+seven-day cooldown. Nothing was installed, built or run</li>
 <li><a href="https://github.com/cdeust/Cortex">cdeust/Cortex</a> at <a
 href="https://github.com/cdeust/Cortex/commit/d02917d4c9fec031889dbcdc240dc34abb440589"><code class="commit-id" title="d02917d4c9fec031889dbcdc240dc34abb440589">d02917d4…</code></a>
 — read only, from a shallow clone; twenty-five files scanned, four
@@ -16084,6 +16085,34 @@ port; under <code>MUNINN_AUTH=entra</code> the default-deny zones in
 <code>src/auth/zones.ts</code> required an admin role. The first three
 rested on searches scoped to <code>src/db/memories.ts</code>, and the
 cascade lives in the threads module.</li>
+<li><strong>Five published claims about <a
+href="../systems/cortana/">Cortana</a> were wrong at <a
+href="https://github.com/adea-ai/cortana/commit/9609d2ab5f916b2795500ed98c57dd2388592144"><code class="commit-id" title="9609d2ab5f916b2795500ed98c57dd2388592144">9609d2ab…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>bitemporal</code> on separate <code>observed_at</code>,
+<code>valid_from</code> and <code>valid_until</code> columns gated by "a
+moment the query is given". The only writer bound
+<code>valid_from</code>, <code>observed_at</code> and
+<code>created_at</code> to one <code>now</code>
+(<code>crates/core/src/store.rs:1893</code>), <code>valid_until</code>
+was documented as an "expiry for short-lived working context"
+(<code>crates/core/src/memory.rs:267</code>), and the search bound the
+wall clock (<code>store.rs:2067</code>); the mark is withdrawn. It did
+not credit <code>negative_eval</code>, though
+<code>native_memory_is_idempotent_acl_scoped_and_redactable</code>
+(<code>store.rs:8681</code>) asserted an empty recall for a second
+principal beside a one-row recall for the first, and
+<code>tests/evaluation.rs</code> ran three absence cases through
+<code>cortana eval --memory</code>. It said a rejected candidate's
+<code>dedupe_key</code> was not consulted, and the candidate writer
+refused a re-offer under the same key from the same creator
+(<code>store.rs:2206-2228</code>). It said approval took an approving
+principal; it was an <code>explicit_approval</code> boolean on the
+agent's own MCP tool (<code>crates/mcp/src/mcp.rs:222</code>). And its
+architecture table named <code>src/api.rs</code> and four other paths
+that had moved under <code>crates/</code>. The first rested on column
+names rather than on the insert's bindings, and the third on a field's
+storage rather than its reader.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

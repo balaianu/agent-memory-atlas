@@ -21044,37 +21044,35 @@ matching it.</strong> <code>json_valid(m.acl_json)</code>,
 <code>json_type(m.acl_json)='array'</code>, and no element whose type is
 not text — all in the same statement as the match, so a corrupted or
 wrongly-typed ACL matches nothing instead of falling through to the
-empty-means-unrestricted branch. That is the direction a lenient
-application-layer parse gets wrong, and putting the shape check in the
-query leaves no window where a row is loaded with an ACL nobody
-validated.</li>
-<li>Biggest risk: <strong>the approving principal is a string, and a
-rejection is never consulted again.</strong>
-<code>memory_candidates</code> carries <code>created_by</code>, an
-expiry, a compare-and-set on <code>pending</code> and a
-<code>rejection_reason</code>, and promotion takes an approving
-principal — but nothing establishes that principal as a person, so the
-queue is staging and audit rather than a human-review gate. The rejected
-candidate's <code>dedupe_key</code> is stored and no write path reads
-it, so re-offering the same content produces a new candidate rather than
-meeting the old refusal. <code>confidence</code> and
-<code>importance</code> rank rather than withhold, and
-<code>provenance_json</code> is carried without gating anything.</li>
-<li>Most reusable component: the search statement in full — status, both
-ends of a validity window against a supplied moment, scope, an explicit
-flag before owner-global rows are reachable, the ACL shape check, then
-the principal match — and beside it the product posture: "[a] new
-installation starts query-only", with eight capabilities as eight
-separate decisions.</li>
-<li>Maturity impression: Apache-2.0, Rust, version 0.58.2, 138,872 lines
-with 605 test functions and an <code>eval/</code> directory, four
-independent surfaces (Tauri desktop, MCP stdio, loopback HTTP, CLI),
-OAuth connectors, and candidates that expire so an unruled queue does
-not become a backlog.</li>
+empty-means-unrestricted branch. The writer closes the branch from the
+other side: <code>normalize_acl</code> replaces an empty list with the
+project label, and the labels a principal can read or grant come from
+its credential, not the request.</li>
+<li>Biggest risk: <strong>the time columns are one clock, and the
+proposer can approve itself.</strong> The only memory writer binds
+<code>valid_from</code>, <code>observed_at</code> and
+<code>created_at</code> to the same <code>now</code>, and
+<code>valid_until</code> is a working-memory expiry, a 365-day retention
+ceiling or the supersession time, so nothing records when a fact became
+true. The MCP <code>consolidate_memory_candidate</code> tool takes
+<code>explicit_approval</code> from the agent calling it, and the same
+agent's <code>remember</code> writes canonical memory without a
+candidate. A rejected candidate blocks only its creator's re-offer under
+the same dedupe key.</li>
+<li>Most reusable component: the recall statement in full — active
+status, expiry, scope, the admin bit before owner-global rows, the ACL
+shape check, then the label match — and beside it
+<code>#[serde(skip_deserializing)]</code> on the automatic-retention
+release flag, so no policy JSON can open it.</li>
+<li>Maturity impression: Apache-2.0, Rust, version 0.68.4, 141,299 lines
+of Rust with 1,047 Rust test functions and a memory-evaluation lane run
+by an integration test, 1,384 commits, and four surfaces (Tauri desktop,
+MCP stdio, loopback HTTP, CLI).</li>
 <li>Study when: you match an access list you parsed somewhere else, or
-you gate only the end of a validity window.</li>
-<li>Do not copy when: you need the approval to establish who approved.
-Three marks: trust state, bitemporal, scope enforced.</li>
+you want a negative recall test with its control on the same store.</li>
+<li>Do not copy when: you need a validity window that records when a
+fact held, or an approval the proposing agent cannot give itself. Three
+marks: trust state, scope enforced, negative eval.</li>
 </ul>
 <h3 id="cortex-hypermnesia"><a
 href="../systems/cortex-hypermnesia/"><code>cortex-hypermnesia</code></a></h3>
