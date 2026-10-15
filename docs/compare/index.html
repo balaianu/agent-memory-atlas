@@ -32621,62 +32621,66 @@ two smoke databases' write-ahead files</td>
 </tr>
 <tr>
 <td><a href="../systems/yantrik-os/"><code>yantrik-os</code></a></td>
-<td>A pulse from a tool call, an entity in a cross-system graph, a
-baseline, a learned expectation with a confidence, and a brain candidate
-carrying one of four signal types</td>
-<td>Upstream YantrikDB for durable memory, reached as a path dependency
-to a sibling checkout; the cognition crates use a plain
-<code>rusqlite::Connection</code></td>
-<td>None of its own — the companion assembles a situation briefing from
-the cortex, and durable recall belongs to the engine crate</td>
-<td>Pulses captured from every tool call, entities and relationships
-derived from them, expectations and baselines updated incrementally</td>
-<td>A nightly consolidation prunes expectations below 0.05 confidence
-unseen for sixty days, prunes zero-variance baselines, backs off
-unproductive curiosity sources and drops zero-confidence feedback</td>
-<td>None — a single-user desktop</td>
-<td>A unix socket every app publishes state and accepts actions on
-(<code>yos describe shell</code>,
-<code>yos act shell open_app name=notes</code>), plus an MCP crate</td>
-<td>A brain tick, an instinct pipeline of Detect → Generate → Score →
-Deliver, a cortex reasoner reflecting every four hours, and the nightly
-consolidation</td>
-<td>A sanitizer that redacts sensitive fragments from model output
-before display, and a drive that makes the system more selective the
-more it is ignored</td>
-<td>The drive model contains the best single decision here, and the
-comment states the failure it avoids: <code>usefulness_pressure</code>
-"rises when outputs are ignored, raises threshold (more selective, NOT
-more spammy)". A proactive assistant that gets quieter when unheeded
-inverts the incentive nearly every notification system encodes. The
-signal taxonomy beneath it is equally concrete — prediction error,
-tension, opportunity, uncertainty — with uncertainty being the one that
-triggers external fetching rather than a guess. The whole loop is
-deliberately LLM-free, so the decision of <em>whether to speak</em> is
-arithmetic a reader can follow, and the cortex is explicit that it "does
-NOT call the LLM directly", emitting attention items that the existing
-pipeline packages instead. The module history is unusually honest about
-its own architecture: the four brain modules were moved out of a
-vendored copy of the database crate because living there "made them look
-like database code. They are not: they touch no YantrikDB type at all,
-only a plain <code>rusqlite::Connection</code>" — and the move is what
-lets the OS track the upstream release instead of maintaining a
-fork</td>
-<td>The durable memory is not in this repository.
-<code>yantrikdb-core</code> is a path dependency on
-<code>../yantrikdb/crates/yantrikdb-core</code>, a sibling checkout, so
-a reader cloning this tree alone gets the cognition loop and the shell
-but not the store beneath them — that engine is read separately in this
-atlas. What the OS layer holds of its own is continuous throughout:
-drives, confidences, Welford baselines, exponential moving averages per
-source. Nothing is a stored discrete state that withholds a record from
-a read, nothing supersedes or retires a claim, and consolidation's
-answer to a stale expectation is to delete it, so the record of having
-believed something does not survive the belief. That is a defensible
-shape for a single-user desktop with no tenancy to enforce, and it means
-none of this atlas's marks apply to the layer this repository actually
-contains. Licensing is also worth noting against its siblings: GPL-3.0
-here, where the engine is Apache-2.0</td>
+<td>An engine memory row the companion writes with a type, importance,
+domain and source, plus companion side tables for importance tiers,
+lifecycle states, contradictions and a consolidation log; above them the
+brain's pulses, entities, baselines, expectations and drives</td>
+<td>An embedded YantrikDB engine over one SQLite file, pinned to an
+exact git revision; the companion reads and writes the engine's tables
+by raw SQL beside the API, and the brain and cortex keep their own
+tables over a plain rusqlite connection</td>
+<td>The engine's hybrid vector and lexical recall with no namespace,
+filtered by domain so audit and system lines stay out; a multi-query
+smart recall, an identity-fact SQL lane, a self-memory lane, and a
+section from the machine's shared memory server</td>
+<td><code>remember</code> and <code>save_user_fact</code> behind a
+similarity dedup, an LLM extraction pass after each turn that also
+writes through to the shared memory, and every tool call recorded as an
+audit line</td>
+<td><code>forget_topic</code> and <code>forget_memory</code> set the
+engine's status to tombstoned by raw SQL, outside the engine's own
+forget; LLM consolidation and pruning demote by setting
+<code>half_life</code> to one second, which the pinned engine's ranking
+does not read; a startup purge overwrites vault audit lines in the
+memories table and the oplog, then vacuums</td>
+<td>None in the companion's store, which writes and recalls one
+<code>default</code> namespace. Per-mind grants are answered by the
+shell and enforced by the Yantrik Mind memory server, another
+repository. A program asking on the companion socket gets no memory in
+its prompt</td>
+<td>A unix socket every app publishes state and accepts actions on,
+seventeen memory tools on the companion's own surface, an MCP client to
+the machine's shared memory, and an MCP server crate that is not a
+workspace member</td>
+<td>A brain tick and instinct pipeline, a cortex reasoner reflecting
+every four hours, nightly brain consolidation, and companion maintenance
+running LLM consolidation, pruning, reference decay, graph weaving and a
+lifecycle pass</td>
+<td>A domain rule keeping audit and system lines out of recall,
+credential-touching tool results withheld from audit lines, a ceiling on
+turns a program asks for, a per-mind grants file the shell refuses to
+widen behind its back, and an output sanitizer</td>
+<td>The drive model carries the decision worth copying, and the comment
+states the failure it avoids: <code>usefulness_pressure</code> rises
+when outputs are ignored and raises the threshold, more selective and
+not more spammy. The whole speak-or-not decision is arithmetic a reader
+can follow. The vault purge is the most careful erasure in the tree: it
+overwrites a leaked audit line in the memories table and in the oplog
+payload that recorded it, then runs VACUUM and a WAL truncate because an
+UPDATE frees a page without erasing it. The recall tool's audit-line
+filter carries a committed must-not-appear case with a positive control
+on a real engine</td>
+<td>Three removal paths do not do what their names say. LLM
+consolidation's tombstone sets <code>half_life = 1.0</code> on every row
+with that text and leaves the status active, and the pinned engine ranks
+on a constant half-life, so a superseded memory stays recallable beside
+its replacement. The contradiction detector reads
+<code>memories.id</code>, a column the engine's table does not have, so
+it never flags. The exclusion list has no production caller. The agent's
+own tools tombstone by raw SQL outside the engine's forget, which skips
+the oplog and synthesis invalidation, and <code>resolve_conflicts</code>
+closes every open conflict in one call. Audit lines reach the prompt
+through the self-memory lane the domain rule was written to protect</td>
 </tr>
 <tr>
 <td><a
@@ -34339,7 +34343,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>471 of 749:</em> <a
+<p><em>472 of 749:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34818,6 +34822,7 @@ href="../systems/wordcell/"><code>wordcell</code></a>, <a
 href="../systems/xerj/"><code>xerj</code></a>, <a
 href="../systems/yacmemo/"><code>yacmemo</code></a>, <a
 href="../systems/yantrik-mind/"><code>yantrik-mind</code></a>, <a
+href="../systems/yantrik-os/"><code>yantrik-os</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <a
 href="../systems/yantrikdb-hermes-plugin/"><code>yantrikdb-hermes-plugin</code></a>,
@@ -34844,7 +34849,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-471 repositories of
+472 repositories of
 749 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

@@ -4,29 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="A desktop operating system whose
-shell is an agent, with an LLM-free cognition loop over four homeostatic
-drives — one of which raises the speaking threshold when its suggestions
-are ignored — and whose durable memory is a database crate that lives
-outside this repository.">
+    <meta name="description" content="A Rust desktop OS whose companion
+keeps memory in an embedded YantrikDB, writes around the engine's API by
+raw SQL, and grows quieter when ignored.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Yantrik OS — Agent Memory Atlas">
-    <meta property="og:description" content="A desktop operating system
-whose shell is an agent, with an LLM-free cognition loop over four
-homeostatic drives — one of which raises the speaking threshold when its
-suggestions are ignored — and whose durable memory is a database crate
-that lives outside this repository.">
+    <meta property="og:description" content="A Rust desktop OS whose
+companion keeps memory in an embedded YantrikDB, writes around the
+engine's API by raw SQL, and grows quieter when ignored.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Yantrik
 OS — Agent Memory Atlas">
-    <meta name="twitter:description" content="A desktop operating system
-whose shell is an agent, with an LLM-free cognition loop over four
-homeostatic drives — one of which raises the speaking threshold when its
-suggestions are ignored — and whose durable memory is a database crate
-that lives outside this repository.">
+    <meta name="twitter:description" content="A Rust desktop OS whose
+companion keeps memory in an embedded YantrikDB, writes around the
+engine's API by raw SQL, and grows quieter when ignored.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Yantrik OS — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -48,7 +42,7 @@ that lives outside this repository.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Yantrik OS",
-      "description": "A desktop operating system whose shell is an agent, with an LLM-free cognition loop over four homeostatic drives \u2014 one of which raises the speaking threshold when its suggestions are ignored \u2014 and whose durable memory is a database crate that lives outside this repository.",
+      "description": "A Rust desktop OS whose companion keeps memory in an embedded YantrikDB, writes around the engine's API by raw SQL, and grows quieter when ignored.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -106,25 +100,23 @@ that lives outside this repository.">
           <p class="eyebrow">Being ignored makes it quieter, not
 louder</p>
           <h1>Yantrik OS</h1>
-          <p class="document-deck">A desktop operating system whose
-shell is an agent, with an LLM-free cognition loop over four homeostatic
-drives — one of which raises the speaking threshold when its suggestions
-are ignored — and whose durable memory is a database crate that lives
-outside this repository.</p>
+          <p class="document-deck">A Rust desktop OS whose companion
+keeps memory in an embedded YantrikDB, writes around the engine's API by
+raw SQL, and grows quieter when ignored.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/yantrikos/yantrik-os">
               <span>Source</span>
               <strong>yantrikos/yantrik-os</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/yantrikos/yantrik-os/commit/ec2e424f594b7f8e801526273a5e31506615b1ad" title="ec2e424f594b7f8e801526273a5e31506615b1ad">
+            <a class="meta-pill revision-pill" href="https://github.com/yantrikos/yantrik-os/commit/f063fcef907fecaa6bd27cbc6899d3aee5ac82e1" title="f063fcef907fecaa6bd27cbc6899d3aee5ac82e1">
               <span>Analyzed revision</span>
-              <code>ec2e424f…</code>
+              <code>f063fcef…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-16</strong>
+              <strong>2026-10-15</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/yantrikos--yantrik-os" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -132,7 +124,21 @@ outside this repository.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>GPL-3.0;
+the YantrikDB engine it pins is Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>409,904
+lines of Rust in 988 files and 52,568 of Python; the nine companion and
+shell memory modules read here are 6,204 lines, the brain 3,102 and the
+cortex 5,055</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>1,647
+commits on main by five author names, 27 February – 15 October 2026,
+1,436 since 16 September</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>4,575
+Rust test functions in 504 files and 1,013 Python test functions; CI
+runs cargo test --workspace; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (44%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -148,222 +154,416 @@ outside this repository.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Yantrik OS is "[a]n AI-native desktop operating system where the AI
-<strong>is</strong> the shell" — GPL-3.0, Rust throughout with a Slint
-UI, 181,759 lines with 753 test functions, sixteen application binaries,
-local quantized models, no Electron and no Python runtime. Every app
-publishes its state and accepts actions over a unix socket, so
-"[a]nything a person can do from the keyboard, an agent can do through
-the same path": <code>yos describe shell</code>,
+<p>Yantrik OS is a Rust desktop operating system whose shell is an
+agent, and whose companion keeps memory in an embedded YantrikDB engine
+pinned to an exact revision. What this repository adds on top of the
+engine is a full memory layer: recall assembly, seventeen memory tools
+on the agent's own surface, LLM-driven consolidation, and a client to
+the machine's shared memory. That layer reaches the engine's tables by
+raw SQL as often as through its API, and three of its removal paths do
+not do what their names say.</p>
+<p>It describes itself as "[a]n AI-native desktop operating system where
+the AI <strong>is</strong> the shell", built on Debian 13 and shipped as
+a live ISO. Every app publishes its state and accepts actions over a
+unix socket, so "[a]nything a person can do from the keyboard, an agent
+can do through the same path": <code>yos describe shell</code>,
 <code>yos act shell open_app name=notes</code>.</p>
-<p>Its durable memory is not here. <code>yantrikdb-core</code> is a path
-dependency on <code>../yantrikdb/crates/yantrikdb-core</code> — a
-sibling checkout of the upstream database, which this atlas reads in its
-own right as <a href="../yantrikdb-engine/">YantrikDB Engine</a>. A
-reader cloning this repository alone gets the shell and the cognition
-loop, and not the store underneath them. The manifest is candid about
-why it is a dependency rather than a fork: "Upstream yantrikdb, not a
-vendored fork … the <code>package =</code> rename keeps every existing
-<code>use yantrikdb_core::…</code> call site compiling unchanged".</p>
-<p>What this tree contributes is the layer above: an LLM-free loop that
-decides when the machine should speak.</p>
-<p><strong>Four signal types and four drives.</strong> Every observation
-is classified as a prediction error (reality differs from what was
-expected), a tension (unresolved pressure building), an opportunity
-(favourable conditions), or an uncertainty — and uncertainty is the one
-that triggers fetching external information rather than guessing. Over
-them sit four homeostatic drives that "oscillate between satiation and
-hunger, controlling the system's rhythm and preventing both spam and
-stagnation": information hunger, novelty hunger, tension pressure, and
-one more that carries the best decision in the repository:</p>
+<p><strong>The cognition loop is the part worth copying.</strong> Every
+observation is typed as a prediction error, a tension, an opportunity or
+an uncertainty, and uncertainty is the one that triggers fetching
+external information rather than guessing. Four homeostatic drives
+"oscillate between satiation and hunger", and one of them carries the
+best decision in the repository:</p>
 <blockquote>
 <p>"<code>usefulness_pressure</code>: rises when outputs are ignored,
 raises threshold (more selective, NOT more spammy)"</p>
 </blockquote>
 <p>A proactive assistant that becomes quieter the more it is ignored
-inverts the incentive almost every notification system encodes, and the
-parenthesis exists because the obvious implementation does the
-opposite.</p>
-<p>The tick is arithmetic, not a model call: update drives from recent
-events, collect candidates from wrapped instincts and native detectors,
-score them against signal type, drives and a per-source moving average,
-enrich the top few with cheap context, and apply a threshold the
-usefulness drive moves. The cortex above it — pulses from every tool
-call, a canonical entity graph across email, Jira, git, calendar,
-browser and filesystem, Welford baselines, a temporal pattern miner, and
-a reasoner that reflects roughly every four hours rather than every
-cycle — is explicit that it "does NOT call the LLM directly", emitting
-attention items the instinct pipeline packages.</p>
-<p><strong>Sleep is a real pass.</strong> Nightly consolidation, gated
-on long idle plus night-time, strengthens patterns that positive
-feedback confirmed, decays source weights for consistently poor
-outcomes, prunes expectations below 0.05 confidence unseen for sixty
-days, applies batch Welford corrections to baselines, recalculates
-curiosity source TTLs from yield history, and drops zero-confidence
-feedback entries. It reports what it did.</p>
-<p><strong>The module history is worth the detour.</strong> Those four
-brain modules used to live inside a vendored copy of the database crate,
-and the header says why they were moved:</p>
-<blockquote>
-<p>"which made them look like database code. They are not: they touch no
-YantrikDB type at all, only a plain <code>rusqlite::Connection</code>.
-Keeping them here lets Yantrik OS depend on the upstream yantrikdb
-release instead of maintaining a fork of it."</p>
-</blockquote>
-<p>A dependency reduced by noticing that the code inside it never
-touched its types.</p>
-<p>No marks, and the reason is structural rather than a criticism.
-Everything this layer stores of its own is continuous — drives,
-confidences, baselines, per-source moving averages. There is no stored
-discrete state that withholds a record from a read, no supersession or
-retraction, no mutation record, and no scope to enforce on a single-user
-desktop. Consolidation's answer to a stale expectation is deletion, so
-the fact of having believed something does not outlive the belief. The
-marks that could apply belong to the engine crate this repository points
-at.</p>
+inverts the incentive almost every notification system encodes. The tick
+is arithmetic, not a model call, and the cortex above it states that it
+"does NOT call the LLM directly". The brain modules were moved out of a
+vendored copy of the database because living there "made them look like
+database code. They are not: they touch no YantrikDB type at all, only a
+plain <code>rusqlite::Connection</code>."</p>
+<p><strong>The memory layer says one thing and does another in three
+places.</strong> Consolidation asks a model whether a newer memory
+updates or merges with an older one, and then "tombstones" the loser by
+setting <code>half_life = 1.0</code> on every row with that exact text.
+The status stays <code>active</code>, and the pinned engine ranks on a
+constant half-life rather than the stored one, so the superseded memory
+is recalled beside its replacement. The contradiction detector looks a
+candidate up by <code>memories.id</code>; the engine's table is keyed
+<code>rid</code> and has no <code>id</code> column, so the lookup fails,
+the detector moves on, and the background prompt asking the person which
+version is correct has nothing to show. A repair module with an
+exclusion list for "Don't remember this" has no production caller beyond
+creating its tables.</p>
+<p><strong>Where it does remove, it goes around the engine.</strong>
+<code>forget_topic</code> and <code>forget_memory</code> set
+<code>consolidation_status = 'tombstoned'</code> with a raw UPDATE. The
+engine's own forget does that inside a transaction that also deletes
+chunk and entity rows, breaks record links, invalidates syntheses built
+on the row and writes an oplog entry. The raw path does none of it.
+<code>forget_topic</code> then records a "suppression memory" telling
+the model not to bring the topic up; nothing in code reads it.</p>
+<p><strong>Two mechanisms are well built.</strong> The
+<code>recall</code> tool drops the companion's own tool-audit lines,
+with a committed must-not-appear case on a real engine, which is the
+report's one mark, <code>negative_eval</code>. It covers that tool only:
+the self-memory lane of the context assembler and the
+<code>introspect</code> tool admit rows by
+<code>source == "self"</code>, which every audit line carries. And a
+startup purge overwrites vault tool output that had been filed in plain
+text, in the memories table, in the oplog payload that recorded it, and
+in the file, by VACUUM and WAL truncate.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A <strong>pulse</strong> is something that happened. An
-<strong>entity</strong> is what it was about.</p>
-<p>A <strong>signal</strong> is why it might matter, and there are four
-kinds.</p>
-<p>A <strong>drive</strong> is how badly the system wants to say
-something, and being ignored lowers it.</p>
-<p><strong>Sleep</strong> is when the confidences get corrected.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the brain tick is arithmetic, not a model call, and the usefulness drive raises the speaking threshold when suggestions are ignored rather than lowering it</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the brain tick is arithmetic, not a model call, and the usefulness drive raises the speaking threshold when suggestions are ignored rather than lowering it
+<strong>entity</strong> is what it was about. A <strong>signal</strong>
+is why it might matter, and a <strong>drive</strong> is how badly the
+system wants to say something. Being ignored lowers it.</p>
+<p>A <strong>memory</strong> is an engine row the companion writes: a
+fact from a conversation, a fact the model saved, or a line recording a
+tool call. All of them share one namespace and one table, told apart by
+<code>domain</code> and <code>source</code>.</p>
+<p><strong>Forgetting</strong> is three different operations. Setting
+the engine's status hides a row from recall. Setting
+<code>half_life</code> changes nothing recall reads. Recording a
+suppression memory asks the model to behave.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — the companion's memory layer over the pinned engine, with the brain beside it; the dashed edges are paths that do not reach what their names say</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the companion&#39;s memory layer over the pinned engine, with the brain beside it; the dashed edges are paths that do not reach what their names say
 flowchart TB
-    TOOLS[&quot;every tool call — email, Jira, git,&lt;br/&gt;calendar, browser, filesystem&quot;] --&gt; PULSE[(&quot;pulses — cheap event capture&quot;)]
-    PULSE --&gt; ENT[(&quot;entity graph: canonical entities&lt;br/&gt;and relationships across systems&quot;)]
-    ENT --&gt; LEARN[&quot;Welford baselines · temporal pattern miner ·&lt;br/&gt;a reasoner reflecting every ~4h,&lt;br/&gt;not every cycle&quot;]
-    LEARN --&gt; ATT[&quot;AttentionItems — the cortex does NOT&lt;br/&gt;call the LLM directly&quot;]
-    TICK[&quot;brain_tick()&quot;] --&gt; D1[&quot;1. update drives from recent events&quot;]
-    D1 --&gt; DRIVES[(&quot;information_hunger · novelty_hunger ·&lt;br/&gt;tension_pressure · usefulness_pressure&quot;)]
-    D1 --&gt; D2[&quot;2. collect candidates: wrapped instinct&lt;br/&gt;urges + native detectors&quot;]
-    ATT --&gt; D2
-    D2 --&gt; SIG{&quot;classify the signal&quot;}
-    SIG --&gt; PE[&quot;PredictionError — reality ≠ expected&quot;]
-    SIG --&gt; TEN[&quot;Tension — unresolved pressure building&quot;]
-    SIG --&gt; OPP[&quot;Opportunity — favourable conditions&quot;]
-    SIG --&gt; UNC[&quot;Uncertainty — insufficient data;&lt;br/&gt;triggers external fetching&lt;br/&gt;rather than a guess&quot;]
-    PE &amp; TEN &amp; OPP &amp; UNC --&gt; D3[&quot;3. score: signal × drives × source EMA&quot;]
-    D3 --&gt; D4[&quot;4. orient the top candidates&lt;br/&gt;(cheap context enrichment)&quot;]
-    D4 --&gt; D5{&quot;5. adaptive threshold,&lt;br/&gt;driven by usefulness_pressure&quot;}
-    D5 --&gt;|&quot;outputs being ignored →&lt;br/&gt;threshold RISES: &#39;more selective,&lt;br/&gt;NOT more spammy&#39;&quot;| QUIET[&quot;says less&quot;]
-    D5 --&gt;|&quot;above threshold&quot;| SPEAK[&quot;deliver an urge&quot;]
-    SLEEP[&quot;nightly consolidation — long idle + night&quot;] --&gt; C1[&quot;strengthen patterns positive feedback confirmed&quot;]
-    SLEEP --&gt; C2[&quot;decay source weights for poor outcomes&quot;]
-    SLEEP --&gt; C3[&quot;prune expectations &lt; 0.05 confidence&lt;br/&gt;unseen for 60+ days&quot;]
-    SLEEP --&gt; C4[&quot;batch Welford baseline corrections&quot;]
-    SLEEP --&gt; C5[&quot;recalculate curiosity TTLs from yield history&quot;]
-    DRIVES -.-&gt; SLEEP
-    DB[(&quot;durable memory: upstream yantrikdb,&lt;br/&gt;a path dependency on ../yantrikdb —&lt;br/&gt;not in this repository&quot;)] -.-&gt; ENT</code></pre></details></figure>
+    TURN[&quot;a person&#39;s turn&quot;] --&gt; ASM[&quot;context assembler&quot;]
+    ASM --&gt; SR[&quot;smart recall: query, active topic,&lt;br/&gt;active entities — engine recall_text,&lt;br/&gt;no namespace&quot;]
+    SR --&gt; DF{&quot;domain rule:&lt;br/&gt;audit/ · system/ · self-reflection out&quot;}
+    DF --&gt; PROMPT[&quot;prompt&quot;]
+    ASM --&gt; ID[&quot;identity facts: raw SQL,&lt;br/&gt;status = &#39;active&#39;&quot;] --&gt; PROMPT
+    ASM --&gt; SELF[&quot;self-memory lane:&lt;br/&gt;source == &#39;self&#39;&quot;]
+    SELF -.-&gt;|&quot;every audit line has&lt;br/&gt;source &#39;self&#39;&quot;| PROMPT
+    ASM --&gt; SH[&quot;shared memory server, 127.0.0.1:7440&lt;br/&gt;(skipped when incognito)&quot;] --&gt; PROMPT
+    TOOLS[&quot;every tool call&quot;] --&gt; AUD[(&quot;audit line in the engine:&lt;br/&gt;domain audit/tools, source self&quot;)]
+    AUD --&gt; STORE[(&quot;engine memories table&quot;)]
+    TURN --&gt; LEARN[&quot;LLM extraction after the turn&quot;]
+    LEARN --&gt; DUP{&quot;is_duplicate:&lt;br/&gt;recall similarity&quot;} --&gt; STORE
+    LEARN --&gt; CONTRA[&quot;contradiction detector&quot;]
+    CONTRA -.-&gt;|&quot;SELECT … WHERE id = ?&lt;br/&gt;no such column: never flags&quot;| QUEUE[(&quot;memory_contradictions&quot;)]
+    QUEUE -.-&gt; ASK[&quot;background prompt:&lt;br/&gt;&#39;which one is correct?&#39;&quot;]
+    AGENT[&quot;agent tool surface&quot;] --&gt; FT[&quot;forget_topic / forget_memory&quot;]
+    FT --&gt;|&quot;raw UPDATE status = &#39;tombstoned&#39;&lt;br/&gt;no oplog, no synthesis invalidation&quot;| STORE
+    FT --&gt; SUP[&quot;suppression memory:&lt;br/&gt;prose for the model, no code reader&quot;]
+    AGENT --&gt; RC[&quot;resolve_conflicts resolve_all&quot;]
+    RC --&gt;|&quot;UPDATE conflicts SET status = &#39;resolved&#39;&quot;| CONF[(&quot;engine conflicts&quot;)]
+    BG[&quot;LLM consolidation and pruning&quot;] -.-&gt;|&quot;half_life = 1.0 WHERE text = ?&lt;br/&gt;engine ranks on a constant half-life&quot;| STORE
+    BG --&gt; CLOG[(&quot;consolidation_log&quot;)]
+    BOOT[&quot;shell start&quot;] --&gt; PURGE[&quot;vault purge: memories text,&lt;br/&gt;oplog payload, VACUUM, WAL truncate&quot;] --&gt; STORE
+    TICK[&quot;brain_tick()&quot;] --&gt; DRIVES[(&quot;information_hunger · novelty_hunger ·&lt;br/&gt;tension_pressure · usefulness_pressure&quot;)]
+    DRIVES --&gt; THR{&quot;adaptive threshold&quot;}
+    THR --&gt;|&quot;outputs ignored → threshold rises&quot;| QUIET[&quot;says less&quot;]
+    THR --&gt;|&quot;above threshold&quot;| SPEAK[&quot;deliver an urge&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>Crate</th>
+<th>Crate or path</th>
 <th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>yantrik-brain</code></td>
-<td>The LLM-free loop: drives, detectors, curiosity, consolidation</td>
+<td><code>crates/yantrik-companion</code></td>
+<td>The companion: context assembly, smart recall, learning,
+consolidation, lifecycle and repair modules, the shared-memory client,
+and eleven memory tools</td>
 </tr>
 <tr>
-<td><code>yantrik-companion-cortex</code></td>
+<td><code>crates/yantrik-companion-tools</code></td>
+<td>The tool library, including six memory-hygiene tools</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion-core</code></td>
+<td>The tool registry, the tool-call audit line, taint rules and the
+sanitizer</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-brain</code></td>
+<td>The LLM-free loop: drives, detectors, curiosity, nightly
+consolidation</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion-cortex</code></td>
 <td>Pulses, entity graph, baselines, patterns, reasoner</td>
 </tr>
 <tr>
-<td><code>yantrik-companion-instincts</code></td>
-<td>Dozens of named instincts, each proposing urges</td>
+<td><code>crates/yantrik-ui</code></td>
+<td>The shell, its Memory screen reader and the per-mind memory
+grants</td>
 </tr>
 <tr>
-<td><code>yantrik-companion-core</code></td>
-<td>Shared types, and the output sanitizer</td>
+<td><code>crates/yantrik-mcp</code></td>
+<td>An MCP server over the engine; not a workspace member, and nothing
+builds it</td>
 </tr>
 <tr>
-<td><code>yantrik-shell-core</code>, <code>yantrik-ui-slint</code></td>
-<td>The shell and its UI</td>
-</tr>
-<tr>
-<td><code>yantrikdb-server</code>, <code>yantrik-mcp</code></td>
-<td>The database server wrapper and an MCP surface</td>
-</tr>
-<tr>
-<td><code>apps/</code></td>
-<td>Sixteen application binaries</td>
+<td><code>apps/</code>, <code>services/</code></td>
+<td>Application binaries and the services behind them</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The engine is a git dependency at revision
+<code class="commit-id" title="9aa589921da244ba07358674986f0bf30f87a198">9aa58992…</code> (version 0.23.1),
+recorded in <code>Cargo.toml</code> and <code>Cargo.lock</code>. The
+manifest says why it is not a sibling path: a local build "silently used
+whichever branch was checked out in the neighbouring directory — which
+is how a public image shipped without a vault fix that had been written
+two weeks earlier". The default feature set carries a bundled
+64-dimension embedder, so an in-memory store records and recalls with no
+download.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
+<p><code>crates/yantrik-companion/src/companion.rs:1807-1925</code> —
+the context assembler: smart recall, identity facts, the self-memory
+lane, the shared-memory section.</p>
+<p><code>crates/yantrik-companion/src/memory_evolution.rs:173-266</code>
+— the domain rule and smart recall.</p>
+<p><code>crates/yantrik-companion/src/memory_evolution.rs:381-530</code>
+and <code>:1386-1400</code> — LLM consolidation and the half-life
+"tombstone".</p>
+<p><code>crates/yantrik-companion/src/tools/memory.rs:589-760</code> —
+<code>forget_topic</code>.</p>
+<p><code>crates/yantrik-companion-tools/src/memory_hygiene.rs:16-23</code>,
+<code>:323-366</code>, <code>:472-584</code> — the hygiene tools,
+<code>forget_memory</code> and <code>resolve_conflicts</code>.</p>
+<p><code>crates/yantrik-companion/src/companion.rs:6354-6423</code> —
+the vault purge.</p>
 <p><code>crates/yantrik-brain/src/brain.rs:1-50</code> — the signal
-taxonomy, the drives, and the tick.</p>
-<p><code>crates/yantrik-brain/src/brain_consolidation.rs:1-37</code> —
-what sleep actually does.</p>
-<p><code>crates/yantrik-brain/src/lib.rs:1-18</code> — why these modules
-moved out of the database.</p>
-<p><code>crates/yantrik-companion-cortex/src/lib.rs:1-19</code> — four
-layers, and the boundary the cortex keeps.</p>
+taxonomy, the drives and the tick.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Pulses, entities and relationships, baselines with running variance,
-expectations with confidences, curiosity sources with yields and TTLs,
-and a brain state holding drives and feedback. All of it is state the
-loop maintains for itself; the user's durable memories live in the
-engine crate.</p>
+<p>The unit is the engine's memory row. The companion writes
+<code>type</code>, <code>importance</code>, <code>half_life</code>,
+<code>namespace</code> (always <code>default</code>),
+<code>certainty</code>, <code>domain</code> and <code>source</code>.
+Domain separates kinds that share one table: conversation facts,
+<code>identity</code>, <code>preference</code>, <code>audit/tools</code>
+for tool calls, <code>system/*</code> for telemetry,
+<code>self-reflection</code> for the companion's notes on itself.</p>
+<p>The companion adds side tables in the same file.
+<code>memory_tiers</code> assigns an importance tier and a half-life per
+row. <code>memory_lifecycle</code> holds a state per row — observed,
+inferred, confirmed, reinforced, contradicted, stale, archived,
+forgotten — with a scope and a privacy flag.
+<code>memory_contradictions</code> pairs rows.
+<code>consolidation_log</code> records removals with a type and a
+reason. <code>memory_exclusions</code>, <code>memory_boundaries</code>
+and <code>memory_repairs</code> belong to the repair module.</p>
+<p><strong>Most of the side state is written and never read to exclude
+anything.</strong> Lifecycle states change on registration and in a
+nightly pass, and the only reader that filters on them,
+<code>active_ids_for_scope</code>
+(<code>memory_lifecycle.rs:468</code>), has no caller outside its tests.
+The privacy flag has no production setter. <code>MemoryRepair</code> is
+reached only through <code>ensure_table</code>; <code>apply</code>,
+<code>add_exclusion</code> and <code>is_excluded</code> have no
+production caller.</p>
+<p><strong><code>half_life</code> is written for a purpose the engine
+retired.</strong> Tier assignment and consolidation both write it. The
+pinned engine has ranked on <code>RANKING_HALF_LIFE</code>, a constant,
+since its commit of 17 August 2026, because reinforcement overwrites the
+stored value; the engine keeps the stored value for an eviction routine
+nothing calls and a decay-trigger check in <code>think()</code>
+(<code>base/scoring.rs:22-27</code>, <code>:60-83</code> in the
+engine).</p>
+<p><code>consolidation_log.original_rid</code> receives memory text from
+<code>tombstone_memory</code>, and <code>replacement_rid</code> the
+newer of the two inputs rather than the row consolidation records in
+their place.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>None of its own. The situation briefing is assembled from cortex
-state when attention fires; recall over stored memory belongs to the
-engine.</p>
+<p><strong>Smart recall.</strong> <code>smart_recall</code>
+(<code>memory_evolution.rs:193</code>) calls the engine's
+<code>recall_text</code> up to three times — the query, the active
+conversation topic, and recently mentioned entities — over-fetches,
+drops excluded domains, deduplicates on the first 80 characters and caps
+the total. <code>recall_text</code> passes no namespace, so every row in
+the file is a candidate, and <code>include_consolidated</code> false, so
+the engine keeps only <code>active</code> rows (engine
+<code>engine/mod.rs:3275-3295</code>).</p>
+<p><strong>Three more lanes.</strong> <code>recall_identity_facts</code>
+reads identity and high-importance work rows by raw SQL with
+<code>consolidation_status = 'active'</code>. The self-memory lane
+recalls <code>self: &lt;query&gt;</code> and keeps rows where
+<code>r.source == "self" || r.domain == "self-reflection"</code>
+(<code>companion.rs:1838</code>, <code>:2768</code>); every tool-audit
+line is recorded with source <code>self</code>
+(<code>yantrik-companion-core/src/tools.rs:219-220</code>), so up to two
+audit lines reach the prompt as the companion's self-observations. The
+shared-memory section recalls from the Yantrik Mind server at
+<code>127.0.0.1:7440/mcp</code> and is skipped in incognito.</p>
+<p><strong>A program is not the person.</strong> A turn asked for on the
+companion's socket runs as incognito under an outside ceiling, and its
+prompt carries no smart recall, no identity facts, no self-memories and
+no urges (<code>companion.rs:2623-2639</code>,
+<code>:2738-2771</code>).</p>
+<p><strong>The tools.</strong> <code>recall</code> applies the domain
+rule. <code>introspect</code> returns rows by the same source-or-domain
+test as the self-memory lane, so it returns audit lines too, and so does
+the background pass that gathers self-reflections for the companion's
+diary (<code>background.rs:495-505</code>). <code>review_memories</code>
+lists active rows by raw SQL. <code>forget_topic</code> finds its
+targets by semantic recall and by
+<code>LOWER(text) LIKE '%topic%'</code>.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Incremental: a pulse per tool call, an entity update, a baseline
-correction. Consolidation is the only pass that removes anything, and it
-removes rather than retires.</p>
+<p><code>remember</code> and <code>save_user_fact</code> skip a fact
+when the top recall result's similarity reaches the dedup threshold
+(<code>learning.rs:425-432</code>). After each turn an LLM extracts
+facts, writes them, assigns a tier, registers a lifecycle row, and
+shares them with the machine's memory server in the <code>default</code>
+namespace. Incognito blocks remembering, learning and audit lines; the
+forget tools write regardless.</p>
+<p>Every tool call becomes a memory:
+<code>Tool: name(args) → first 200 characters</code>, domain
+<code>audit/tools</code>, source <code>self</code>. A tool that touches
+credentials is recorded with its result withheld.</p>
+<p><strong>Consolidation</strong>
+(<code>memory_evolution.rs:381-530</code>) selects recent rows and asks
+a model whether each pair is an update, a merge or two facts. Its
+selection SQL reads
+<code>WHERE type = 'semantic' AND consolidation_status IS NULL OR consolidation_status = 'active' AND created_at &gt; ?1</code>;
+AND binds before OR, so every active row from the last day qualifies
+whatever its type, audit lines included. On update or merge it records a
+new row and calls <code>tombstone_memory</code>, which runs
+<code>UPDATE memories SET half_life = 1.0 WHERE text = ?1</code> and
+logs the action. Pruning's compression calls the same helper.</p>
+<p><strong>Removal by the agent.</strong> <code>forget_topic</code>
+tombstones matching rows, deletes matching cortex entities with their
+relationships, baselines and patterns, cancels matching scheduled tasks,
+and records the suppression memory. <code>forget_memory</code> resolves
+a model-supplied rid prefix with
+<code>rid LIKE ?1 || '%' LIMIT 1</code>, tombstones the first match and
+logs it. <code>update_memory</code> rewrites importance, domain or
+storage tier, so a model can move a row into an excluded domain.</p>
+<p><strong>Removal at start.</strong>
+<code>purge_vault_audit_lines</code> (<code>companion.rs:1257</code>,
+<code>:6363-6406</code>) overwrites audit lines from vault and
+browser-login tools with a withheld line and tombstones them, rewrites
+every <code>text</code> field in the oplog payloads that recorded them,
+and runs <code>VACUUM; PRAGMA wal_checkpoint(TRUNCATE);</code>. The doc
+comment names the limit: "Backups taken before it keep the lines."</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>The uniform control path is the interesting piece: every app
-publishes state and accepts actions on the same unix socket, so an agent
-drives the desktop through the documented surface a person uses rather
-than through synthesised input. For a system whose thesis is that the AI
-is the shell, making the shell describable is the load-bearing
-decision.</p>
+<p>The uniform control path is the interesting piece for the desktop:
+every app publishes state and accepts actions on the same socket, so an
+agent drives the machine through the documented surface a person
+uses.</p>
+<p>For memory, the companion's registry carries two groups.
+<code>memory</code>: remember, recall, relate_entities, set_reminder,
+introspect, form_opinion, create_inside_joke, check_bond,
+save_user_fact, forget_topic, brain_status. <code>memory_hygiene</code>:
+memory_stats, review_memories, forget_memory, update_memory,
+resolve_conflicts, purge_system_noise.</p>
+<p>Other minds on the machine — the first-party Yantrik Mind, Hermes and
+other harnesses — share memory through the Yantrik Mind server, which
+the companion reaches with the server's bearer token from a file beside
+its database. What each mind may recall is a per-mind grants file in
+<code>~/.config/yantrik</code> that the shell answers the server about
+(<code>yantrik-ui/src/memory_grants.rs</code>). Its header is candid
+that the grants are advisory against a mind running as the person, and
+that the shell takes out any widening it did not make itself except on
+the first read after it starts. The filter itself lives in the server,
+which this atlas reads as <a href="../yantrik-mind/">Yantrik
+Mind</a>.</p>
+<p><code>crates/yantrik-mcp</code> exposes the engine — remember,
+recall, forget, resolve_conflict and more — over MCP. It is not listed
+in the workspace's <code>members</code>, no crate depends on it, and no
+script builds it.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p><code>sanitize.rs</code> scans model output for sensitive internal
-information and redacts fragments before display, logging when it fires,
-with a table of patterns including an SSH private key read attempt. That
-is output-side defence for a system that reads the user's whole machine,
-and it is the right place for it.</p>
-<p>What is absent at this layer is any epistemic record: nothing marks
-where a belief came from, nothing supersedes a wrong expectation rather
-than deleting it, and no log records what the loop concluded before it
-changed its mind.</p>
+<p><strong>Withheld, with the reason.</strong></p>
+<ul>
+<li><strong>Tombstone.</strong> <code>forget_topic</code>'s suppression
+memory is keyed on the topic, and its only consumer is the model reading
+it. <code>memory_exclusions</code> and <code>is_excluded</code> are the
+right shape and have no production caller. <code>is_duplicate</code>
+consults recall, which excludes tombstoned rows, so a forgotten fact is
+re-admitted as new.</li>
+<li><strong>Trust state.</strong> <code>consolidation_status</code> and
+the predicate that filters on it are the engine's, and that mark sits on
+<a href="../yantrikdb-engine/">YantrikDB Engine</a>. The companion's own
+lifecycle states have no read that excludes a row.</li>
+<li><strong>Scope enforced.</strong> One namespace is written and none
+is passed on recall. The lifecycle scope has no reader. The grants are
+enforced in another repository. Excluding a socket program's turn from
+memory is a gate on the caller's class, not a stored scope key.</li>
+<li><strong>Audit log.</strong> <code>consolidation_log</code> is
+insert-only and covers <code>forget_memory</code>, consolidation
+demotions and noise purges. <code>forget_topic</code>,
+<code>update_memory</code>, <code>resolve_conflicts</code> and the vault
+purge write nothing to it, and the raw UPDATEs bypass the engine's
+oplog. The vault purge rewrites oplog payloads in production.</li>
+<li><strong>Human review.</strong> <code>resolve_conflicts</code> on the
+agent's own surface marks every open engine conflict resolved in one
+call. The companion's contradiction queue is never filled, and
+<code>resolve_contradiction</code> has no caller.</li>
+<li><strong>Bi-temporal.</strong> No valid-time argument is passed and
+<code>recall_as_of</code> is not called.</li>
+</ul>
+<p><code>sanitize_response</code> redacts every case-insensitive
+occurrence of a list of internal fragments from model output. The same
+file's <code>detect_harmful_command</code> blocks shell patterns such as
+reading <code>id_rsa</code> before a command runs.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>753 test functions across the crates and apps. Nothing was built or
-run for this reading, and no model was loaded.</p>
+<p>4,575 Rust test functions and 1,013 Python test functions; CI runs
+<code>cargo test --workspace</code>. I ran nothing and loaded no
+model.</p>
+<p>The case behind the mark is
+<code>recall_does_not_hand_the_audit_log_back_to_the_model</code>
+(<code>tools/memory.rs:902-947</code>). Its comment dates the defect: on
+24 September <code>recall</code> returned "Tool: recall(query=…) → Found
+memories: - Tool: recall(query=…)". It builds the store with the engine
+itself, not a hand-made table, and asserts both directions on one
+query.</p>
+<p><code>memory_lifecycle.rs</code> carries <code>scope_filtering</code>
+and <code>privacy_flag_excludes_from_recall</code>, each asserting an
+exclusion beside a positive control, against
+<code>active_ids_for_scope</code>, which no production read calls.
+<code>memory_reader.rs</code> asserts that the Memory screen leaves out
+audit and consolidated rows, over a hand-made table. Nothing tests
+consolidation's demotion, the contradiction detector against the
+engine's schema, or the self-memory lane.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
 <p>Make being ignored raise the bar. One drive, one parenthesis — "more
 selective, NOT more spammy" — and a proactive system stops training its
 user to dismiss it.</p>
 <p>Separate "insufficient data" from "nothing to say". Uncertainty as
-its own signal type, wired to fetching rather than to guessing, is the
+its own signal type, wired to fetching rather than guessing, is the
 distinction most assistants collapse.</p>
-<p>Reflect on a slower clock than you tick on. Every four hours for the
-expensive reasoner, every cycle for the arithmetic, is a ratio worth
-copying.</p>
-<p>And check whether the code inside your vendored fork touches the
-types it was vendored for. Here it did not, and noticing turned a fork
-back into a dependency.</p>
+<p>Erase every copy. The vault purge rewrites the row, the log payload
+that recorded the row, and the free pages, in that order, and says which
+copy it cannot reach.</p>
+<p>Give a program's request an empty memory. A turn that did not come
+from the person gets no recall and leaves nothing behind.</p>
+<h3 id="avoid">Avoid</h3>
+<p>Writing an engine's tables around its API. Each raw UPDATE here
+skipped something the engine's own path did — the oplog, synthesis
+invalidation, the status itself.</p>
+<p>Demoting by a field the engine does not read. A score change that
+ranking ignores is no change; retire by the status recall filters on,
+and test through recall.</p>
+<p>A filter applied on one lane. The audit-line rule guards two readers,
+and the third admits the same rows by another column.</p>
+<h3 id="fit">Fit</h3>
+<p>A single-user desktop with no tenancy to enforce, where memory serves
+a proactive companion and correction can be soft. Not a fit where a
+forgotten fact must stay forgotten, or where the agent must not close
+its own conflicts.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
-<p>Whether consolidation keeps any trace of what it pruned. The report
-counts expectations and baselines removed; nothing found preserves what
-they said.</p>
-<p>How the OS layer and the engine's own lifecycle states interact. The
-engine carries consolidation status and tombstones; whether the
-companion reads them was not traced.</p>
-<p>What the sibling checkout implies for distribution. The path
-dependency is explicit about tracking the upstream release, and how a
-packaged build resolves it was not established.</p>
+<p>Whether any installed store has rows in
+<code>memory_contradictions</code>: the detector's lookup fails on every
+call at this pin, and an older schema might have differed.</p>
+<p>How the shared memory's beliefs and the companion's own rows
+reconcile when they disagree; the prompt carries both, labelled, and
+nothing compares them.</p>
+<p>Whether the decay-trigger check in the engine's <code>think()</code>
+surfaces consolidated-away rows, since <code>half_life = 1.0</code> on
+an important row is exactly what it looks for.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -374,29 +574,119 @@ packaged build resolves it was not established.</p>
 </thead>
 <tbody>
 <tr>
+<td><code>crates/yantrik-companion/src/companion.rs:1807-1925</code></td>
+<td>The context assembler and its four lanes</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/companion.rs:2623-2639</code></td>
+<td>A program's turn runs incognito with no memory</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/companion.rs:6354-6423</code></td>
+<td>The vault purge across memories, oplog and file</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/memory_evolution.rs:173-266</code></td>
+<td>The domain rule and smart recall</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/memory_evolution.rs:381-530</code></td>
+<td>LLM consolidation and its selection SQL</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/memory_evolution.rs:1386-1400</code></td>
+<td>The half-life tombstone</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/learning.rs:348-410</code></td>
+<td>The contradiction detector and its <code>id</code> lookup</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/tools/memory.rs:589-760</code></td>
+<td><code>forget_topic</code> and the suppression memory</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/tools/memory.rs:902-947</code></td>
+<td>The must-not-appear case</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion-tools/src/memory_hygiene.rs:323-584</code></td>
+<td>Forget by prefix, update, resolve all conflicts</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-companion/src/memory_repair.rs:1-11</code></td>
+<td>The exclusion list nothing calls</td>
+</tr>
+<tr>
+<td><code>crates/yantrik-ui/src/memory_grants.rs:1-24</code></td>
+<td>Per-mind grants and their stated limits</td>
+</tr>
+<tr>
 <td><code>crates/yantrik-brain/src/brain.rs:1-50</code></td>
-<td>Four signals, four drives, and the one that inverts the usual
-incentive</td>
+<td>Four signals, four drives</td>
 </tr>
 <tr>
-<td><code>crates/yantrik-brain/src/brain_consolidation.rs:1-37</code></td>
-<td>A sleep cycle with a checklist</td>
-</tr>
-<tr>
-<td><code>crates/yantrik-brain/src/lib.rs:1-18</code></td>
-<td>Code that only looked like database code</td>
-</tr>
-<tr>
-<td><code>crates/yantrik-companion-cortex/src/lib.rs:1-19</code></td>
-<td>Four layers, and a boundary kept</td>
-</tr>
-<tr>
-<td><code>Cargo.toml:132-136</code></td>
-<td>Where the durable memory actually lives</td>
+<td><code>Cargo.toml:193-210</code></td>
+<td>The engine pinned to a revision, and why</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>/usr/bin/git grep</code> at the pinned commit, and in
+the engine clone at
+<code class="commit-id" title="9aa589921da244ba07358674986f0bf30f87a198">9aa58992…</code>.</p>
+<ul>
+<li><code>git grep -n -E 'topic_suppression|suppressed_topic' -- '*.rs'</code>
+— the writer in <code>tools/memory.rs</code> only.</li>
+<li><code>git grep -n -E 'memory_repair|MemoryRepair|is_excluded\(|add_exclusion' -- '*.rs' ':!crates/yantrik-companion/src/memory_repair.rs'</code>
+— <code>ensure_table</code> in <code>companion.rs</code> and the module
+declaration.</li>
+<li><code>git grep -n -E 'active_ids_for_scope|set_privacy|resolve_contradiction' -- '*.rs' ':!crates/yantrik-companion/src/memory_lifecycle.rs'</code>
+— no match.</li>
+<li><code>git grep -n -E 'FROM memories WHERE id' -- '*.rs'</code> —
+<code>learning.rs:372</code>, <code>background.rs:244</code>,
+<code>:247</code>, <code>memory_hygiene.rs:534</code>,
+<code>:538</code>.</li>
+<li>In the engine:
+<code>git grep -n -i -E 'ALTER TABLE memories ADD' | grep -o -E 'ADD (COLUMN )?[a-z_]+' | sort -u</code>
+— no <code>id</code>; <code>schema.rs:32</code> declares
+<code>rid TEXT PRIMARY KEY</code>.</li>
+<li>In the engine:
+<code>git grep -n -E 'decay_score\(' -- crates/yantrikdb-core/src</code>
+— ranking uses <code>RANKING_HALF_LIFE</code>; the stored value reaches
+<code>storage.rs:293</code> (<code>evict</code>, no caller) and
+<code>triggers.rs:71</code>.</li>
+<li><code>git grep -n -E 'consolidation_log' -- '*.rs'</code> — the
+table and three INSERTs; no UPDATE or DELETE.</li>
+<li><code>git grep -n -E 'UPDATE oplog' -- '*.rs'</code> —
+<code>companion.rs:6400</code>, the vault purge.</li>
+<li><code>git grep -n -E 'recall_as_of|event_time|valid_from' -- 'crates/*.rs' 'services/*.rs'</code>
+— a calendar parser and a comment; no valid-time use.</li>
+<li><code>git grep -n -A8 -E '\.record_text\(' -- crates services</code>
+— 25 call sites, each passing <code>"default"</code> as the namespace;
+<code>recall_text</code> takes none.</li>
+<li><code>git grep -n -E '"crates/yantrik-mcp"' -- Cargo.toml</code> —
+no match;
+<code>git grep -l 'yantrik-mcp' -- ':!crates/yantrik-mcp'</code> —
+<code>PR.md</code> only.</li>
+<li><code>git grep -n -i -E 'anthropic|machine learning|additional restriction' -- LICENSE</code>
+— the GPL-3.0 text; no rider.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/yantrikos/yantrik-os/commit/f063fcef907fecaa6bd27cbc6899d3aee5ac82e1"><code class="commit-id" title="f063fcef907fecaa6bd27cbc6899d3aee5ac82e1">f063fcef…</code></a>
+— 1,436 commits on. The engine moved from a sibling path to a pinned
+revision, 0.23.1, read at that revision for this entry. A shared-memory
+client, per-mind grants, memory-free socket turns and the vault purge
+arrived. <code>negative_eval</code> gained on a new recall test (<a
+href="#10-tests-evals-and-benchmarks">section 10</a>). Wrong at the
+first pin: the companion's memory layer was missed, including its own
+recall, its retirements and its log (<a
+href="#1-executive-summary">section 1</a>), along with the test count,
+the MCP crate and the sanitizer table. Screened from a full clone: 116
+files, no auto-run, 25 build-time execution points, one unpinned Python
+manifest, five dependency files inside the cooldown. Nothing was
+installed, built or run.</p>
 <p><strong>2026-09-16</strong> — <a
 href="https://github.com/yantrikos/yantrik-os/commit/ec2e424f594b7f8e801526273a5e31506615b1ad"><code class="commit-id" title="ec2e424f594b7f8e801526273a5e31506615b1ad">ec2e424f…</code></a>
 — first reading, at a commit dated 16 September 2026. Screened before

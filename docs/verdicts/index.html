@@ -20561,34 +20561,40 @@ drive, one parenthesis, and a proactive assistant stops training its
 user to dismiss it. Beside it, a signal taxonomy that separates
 "insufficient data" from "nothing to say": uncertainty is its own type
 and it triggers fetching external information rather than a guess.</li>
-<li>Biggest risk: <strong>the durable memory is not in this
-repository.</strong> <code>yantrikdb-core</code> is a path dependency on
-<code>../yantrikdb/crates/yantrikdb-core</code>, a sibling checkout, so
-a reader cloning this tree gets the shell and the cognition loop and not
-the store beneath them. What the OS layer holds of its own is continuous
-throughout — drives, confidences, Welford baselines, per-source moving
-averages — with no stored discrete state withholding a record, no
-supersession, and consolidation deleting a stale expectation rather than
-retiring it, so having believed something does not outlive the
-belief.</li>
-<li>Most reusable component: <code>yantrik-brain</code> entire — 3,102
-lines of LLM-free cognition over a plain
-<code>rusqlite::Connection</code>: four signal types, four homeostatic
-drives, a tick that is arithmetic, and a nightly consolidation with a
-written checklist (prune expectations below 0.05 confidence unseen for
-sixty days, batch Welford corrections, curiosity TTLs from yield
-history).</li>
-<li>Maturity impression: GPL-3.0, Rust with a Slint UI, 181,759 lines
-with 753 test functions, sixteen application binaries, a uniform
-<code>yos describe</code> / <code>yos act</code> control surface over a
-unix socket, and an output sanitizer that redacts sensitive fragments
-from model responses before display. The engine it depends on is
-Apache-2.0.</li>
+<li>Biggest risk: <strong>three removal paths do not do what their names
+say.</strong> LLM consolidation "tombstones" a superseded memory with
+<code>UPDATE memories SET half_life = 1.0 WHERE text = ?1</code>,
+leaving the status <code>active</code>, and the pinned engine ranks on a
+constant half-life, so the old version is recalled beside its
+replacement. The contradiction detector looks rows up by
+<code>memories.id</code>; the engine's table is keyed <code>rid</code>,
+so the query fails and nothing is flagged. The exclusion list behind
+"Don't remember this" has no production caller. Where the agent does
+forget, <code>forget_topic</code> and <code>forget_memory</code> set the
+status by raw SQL outside the engine's forget, skipping its oplog entry
+and its invalidation of syntheses built on the row, and
+<code>resolve_conflicts</code> closes every open engine conflict in one
+call from the agent's own tool surface.</li>
+<li>Most reusable component: the vault purge — overwrite the leaked row,
+rewrite every <code>text</code> field in the oplog payloads that
+recorded it, then <code>VACUUM</code> and a WAL truncate, because an
+UPDATE frees a page without erasing it; its doc comment names the copy
+it cannot reach, backups. Second, <code>yantrik-brain</code> entire:
+3,102 lines of LLM-free cognition over a plain
+<code>rusqlite::Connection</code>.</li>
+<li>Maturity impression: GPL-3.0, Rust with a Slint UI, 409,904 lines
+with 4,575 Rust test functions run by
+<code>cargo test --workspace</code> in CI, 1,647 commits from 27
+February to 15 October 2026. The engine is pinned to a git revision with
+the reason written beside it. An MCP server crate over the engine sits
+outside the workspace and nothing builds it.</li>
 <li>Study when: you are building anything proactive and have not decided
-what happens when the user ignores it, or you want a cognition loop
-whose speak-or-not decision is readable arithmetic.</li>
-<li>Do not copy when: you need the memory semantics — those live in the
-engine crate this repository points at. No marks.</li>
+what happens when the user ignores it, or you need to erase a secret
+that reached an append-only log.</li>
+<li>Do not copy when: you need forgetting to hold — here a forgotten
+fact is re-admitted as new, and consolidation's demotion changes nothing
+recall reads. One mark: negative evals, on the <code>recall</code>
+tool's audit-line filter.</li>
 </ul>
 <h3 id="huiran-cerebro"><a
 href="../systems/huiran-cerebro/"><code>huiran-cerebro</code></a></h3>

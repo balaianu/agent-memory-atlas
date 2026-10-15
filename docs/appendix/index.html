@@ -4224,11 +4224,13 @@ installed, built or run</li>
 <li><a
 href="https://github.com/yantrikos/yantrik-os">yantrikos/yantrik-os</a>
 at <a
-href="https://github.com/yantrikos/yantrik-os/commit/ec2e424f594b7f8e801526273a5e31506615b1ad"><code class="commit-id" title="ec2e424f594b7f8e801526273a5e31506615b1ad">ec2e424f…</code></a>
-— read only, from a shallow clone; seventy-two files scanned, no
-auto-run surfaces, twenty build-time execution points, no unpinned
-surfaces and fifty-one dependency files inside the seven-day cooldown.
-Nothing was installed, built or run</li>
+href="https://github.com/yantrikos/yantrik-os/commit/f063fcef907fecaa6bd27cbc6899d3aee5ac82e1"><code class="commit-id" title="f063fcef907fecaa6bd27cbc6899d3aee5ac82e1">f063fcef…</code></a>
+— read only, from a full clone, with the YantrikDB engine read at the
+revision the pin names,
+<code class="commit-id" title="9aa589921da244ba07358674986f0bf30f87a198">9aa58992…</code>; 116 files
+scanned, no auto-run surfaces, 25 build-time execution points, one
+unpinned surface and five dependency files inside the seven-day
+cooldown. Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/qilunuojiang9-hue/Huiran-cerebro">qilunuojiang9-hue/Huiran-cerebro</a>
 at <a
@@ -17646,6 +17648,34 @@ without a caller. And it placed <code>is_tombstoned_duplicate</code> in
 which existed; several <code>memory_store.py</code> line anchors were
 off by up to nineteen lines. The first two rested on the filter and the
 triggers rather than on every reader and every writer.</li>
+<li><strong>Six published claims about <a
+href="../systems/yantrik-os/">Yantrik OS</a> were wrong at <a
+href="https://github.com/yantrikos/yantrik-os/commit/ec2e424f594b7f8e801526273a5e31506615b1ad"><code class="commit-id" title="ec2e424f594b7f8e801526273a5e31506615b1ad">ec2e424f…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the OS layer had no retrieval of its own; the companion's
+<code>smart_recall</code>
+(<code>crates/yantrik-companion/src/memory_evolution.rs:190</code>) ran
+up to three engine recalls and dropped audit and system domains, and
+<code>recall_identity_facts</code>
+(<code>crates/yantrik-companion/src/companion.rs:3607</code>) read the
+engine's table by raw SQL. It said nothing superseded or retired a claim
+and that no mutation record existed; <code>forget_topic</code> set
+<code>consolidation_status = 'tombstoned'</code>
+(<code>crates/yantrik-companion/src/tools/memory.rs:655</code>), LLM
+consolidation recorded update and merge decisions, and
+<code>consolidation_log</code> took inserts from three paths
+(<code>crates/yantrik-companion-tools/src/memory_hygiene.rs:355</code>).
+It counted 753 test functions; the tree held 809 <code>#[test]</code>
+attributes. It listed <code>yantrik-mcp</code> as an MCP surface; the
+crate was not a workspace member and nothing built it. It put an SSH-key
+pattern table in the output sanitizer; the table belonged to
+<code>detect_harmful_command</code>
+(<code>crates/yantrik-companion-core/src/sanitize.rs:343</code>). And it
+classified the storage as delegated to the adopter, where the companion
+embedded the engine's SQLite file. An open question it left, whether the
+companion read the engine's lifecycle states, had an answer at the pin:
+it filtered on them in four files. The first two came from reading the
+brain and cortex crates as the whole memory layer.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
