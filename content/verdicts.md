@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 747 reports.**
+**This page covers all 748 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6756,6 +6756,16 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, 25,857 lines of Rust outside tests across six crates, 283 commits on main under nine author names between 11 March and 8 October 2026, 797 Rust test functions run in CI. Two marks: `scope_enforced` and `negative_eval`. `human_review` is withheld: Muse cannot clear its own inbox and the self-hosted drain is a person-only CLI, but on the cloud path the local assistant's `muse_inbox` tool approves, allowed by default. The README's LoCoMo figure has no committed result file.
 - Study when: you want a hosted agent to read a curated slice of local memory, with budgets, revocation, an audit trail and a quarantine for what it writes back.
 - Do not copy when: several users or projects share one database, a correction must outrank the value it replaces, or the REST server will run where untrusted pages can reach it.
+
+### [`flatbread`](../systems/flatbread/)
+
+- Best idea: **every lifecycle transition is a typed mutation planned against a snapshot.** `planMutation` checks kinds, liveness, the owning Effort and the transition rules, then returns every file it will touch with before and after bytes; `AcceptDecision` refuses a second accepted Decision on the same `question` Issue and rejects the proposed siblings in the same transaction, and `ReopenDecision` keeps the rejection in `reopen_history`.
+- Biggest risk: **the state machine never reaches the read.** The records read filters on `state` only when the caller asks, and no read consults `invalidated_by`, so a rejected, superseded or invalidated Decision is returned and counted beside the accepted ones. The agent that proposes a Decision accepts it through the same `proof write` command.
+- Most reusable component: `packages/proof/src/journal.ts` with `planner.ts` — a multi-file write journal with before and after images, hash-verified completion on recovery, and a generation token that doubles as a read-your-writes barrier for `--strict-min-generation`.
+- Second risk: **retraction shortens the provenance of what survives.** `Retract` strips the retracted id from every relation in the Effort, `derives_from` included, and blocks only when the record is the last closer of an Issue, Risk or Decision, so a Decision built on a withdrawn Finding ends up citing nothing.
+- Maturity impression: MIT; Proof is 2,975 lines of TypeScript in `packages/proof/src` plus a 791-line read path, inside a monorepo of 447 commits since November 2021, with Proof since 7 May 2026 and Cursor Agent the second most frequent author. 143 AVA cases in the package and 26 in the CLI run in CI. One mark, `negative_eval`, on a retracted Finding withheld beside a live Decision. `scope_enforced` is withheld: the Effort key is enforced at write and on three reads, and an Effort is a work thread inside one repository that `get` reads across. The four skill evals have no runner in the tree.
+- Study when: you want a team's design reasons kept as linked, reviewable files in the repository, with a writer strict enough that the graph stays consistent across agent sessions.
+- Do not copy when: the agent's writes must be approved before they count, an overturned Decision must stay out of the next session's reading, or memory has to be found by meaning rather than by Effort and edge.
 
 ### [`ontofelia`](../systems/ontofelia/)
 

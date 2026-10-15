@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A Git-tracked graph of typed
+Markdown records — efforts, findings, decisions, risks — that coding
+agents write through one validated CLI and read in digests.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Flatbread
+Proof — Agent Memory Atlas">
+    <meta property="og:description" content="A Git-tracked graph of
+typed Markdown records — efforts, findings, decisions, risks — that
+coding agents write through one validated CLI and read in digests.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Flatbread
+Proof — Agent Memory Atlas">
+    <meta name="twitter:description" content="A Git-tracked graph of
+typed Markdown records — efforts, findings, decisions, risks — that
+coding agents write through one validated CLI and read in digests.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Flatbread Proof — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Flatbread Proof",
+      "description": "A Git-tracked graph of typed Markdown records \u2014 efforts, findings, decisions, risks \u2014 that coding agents write through one validated CLI and read in digests.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Typed decision records in Git for coding
+agents</p>
+          <h1>Flatbread Proof</h1>
+          <p class="document-deck">A Git-tracked graph of typed Markdown
+records — efforts, findings, decisions, risks — that coding agents write
+through one validated CLI and read in digests.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/FlatbreadLabs/flatbread">
+              <span>Source</span>
+              <strong>FlatbreadLabs/flatbread</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/FlatbreadLabs/flatbread/commit/0d506bc80eb376a00dff550b7ff67b3b7787ef02" title="0d506bc80eb376a00dff550b7ff67b3b7787ef02">
+              <span>Analyzed revision</span>
+              <code>0d506bc8…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-15</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/FlatbreadLabs--flatbread" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>FlatbreadLabs--flatbread</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>2,975
+lines of TypeScript in packages/proof/src outside tests, plus the
+791-line read path in packages/flatbread/src/proof/read.ts; the rest of
+the monorepo is the Flatbread content-graph engine, CLI and
+explorer</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>447
+commits on main under nine author names, including Cursor Agent and two
+bots, 7 November 2021 – 25 September 2026; packages/proof since 7 May
+2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>143
+AVA cases in 15 files under packages/proof and 26 Proof cases in
+packages/flatbread, run in CI on Node 20 and 22; a four-case skill eval
+file with no runner in the tree</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Flatbread Proof is project memory for coding agents stored as typed
+Markdown files in the repository itself. An agent records Issues,
+Findings, Decisions, Constraints, Risks and Citations under an Effort,
+links them with typed edges, and commits them beside the code, so the
+next session and a reviewer read the same reasons. What is notable is
+the writer: one CLI command takes 17 validated mutations, refuses
+cross-Effort edges, runs Decision lifecycles in code and commits every
+touched file through a crash-safe journal. What is weak is that the
+lifecycle stops at the writer. Every read returns rejected, superseded
+and invalidated Decisions beside accepted ones, and the agent that
+proposes a Decision also accepts it.</p>
+<p>Proof lives in <code>packages/proof</code> of the Flatbread monorepo.
+Flatbread itself is an older engine that turns Markdown and YAML files
+into a typed relational graph queried over GraphQL; Proof is a preset of
+eight collections on that engine plus a writer, a digest renderer and an
+Agent Skill. The <code>flatbread</code> package ships the
+<code>flatbread proof</code> CLI and an optional 3D explorer. The
+repository dogfoods it: <code>.flatbread-proof/</code> holds the
+project's own graph of five Efforts, 33 Decisions and 32 Findings at
+this commit.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The state machine is enforced and not consulted.</strong>
+<code>AcceptDecision</code> refuses a non-proposed target, refuses a
+second accepted Decision on the same <code>question</code> Issue, and
+rejects proposed siblings in the same transaction
+(<code>packages/proof/src/decision-lifecycle.ts:31-116</code>). The
+records read filters on <code>state</code> only when the caller passes
+<code>--state</code>
+(<code>packages/flatbread/src/proof/read.ts:581-602</code>).</li>
+<li><strong>The agent holds every verb.</strong> Accept, reject, reopen,
+supersede and retract are values of one mutation union behind one
+command (<code>packages/proof/src/schemas.ts:123-141</code>), and the
+packaged skill tells the agent to preview and then commit acceptances.
+Review happens in the pull request, outside the code.</li>
+<li><strong>Retract shortens provenance.</strong> Retracting a record
+strips its id from every other record's relations in the Effort,
+including <code>derives_from</code>, which is not among the keys that
+block a retraction (<code>packages/proof/src/planner.ts:66-131</code>,
+<code>:584-589</code>).</li>
+<li><strong>Effort is enforced and is not a scope mark.</strong> The
+writer refuses edges into another Effort and three reads filter on it or
+fail closed on a foreign edge. An Effort is a thread of work inside a
+single repository rather than a user, project, agent or tenant boundary,
+and <code>proof get &lt;id&gt;</code> reads across Efforts, so
+<code>scope_enforced</code> is withheld.</li>
+</ul>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory in Proof is a <strong>record</strong>: one Markdown file
+whose YAML frontmatter holds an id, a kind, an owning Effort, a title,
+<code>created_at</code>, a lifecycle field where the kind has one, and
+relation lists. The body is free prose. The skill calls the store <em>"a
+map of durable reasons, not a work log"</em>, and the record kinds
+follow that: a Finding is an observation, a Decision a commitment among
+alternatives, a Constraint a boundary, a Risk a possible outcome with
+likelihood and severity.</p>
+<p>How a thing becomes a belief depends on its kind, and only some kinds
+have a lifecycle at all.</p>
+<ul>
+<li><strong>Decision</strong>: created <code>proposed</code>
+(<code>planner.ts:326</code>). <code>AcceptDecision</code> moves it to
+<code>accepted</code> and rejects proposed Decisions deriving from the
+same <code>question</code> Issue, plus any named in
+<code>rejects</code>. <code>ReopenDecision</code> returns a rejected
+Decision to <code>proposed</code> and appends the rejection to
+<code>reopen_history</code>. A <code>Supersede</code>, or a create
+carrying <code>supersedes</code>, moves the target to
+<code>superseded</code>. The schema admits <code>deprecated</code>
+(<code>schemas.ts:182</code>), and no mutation writes it.</li>
+<li><strong>Issue</strong>: <code>open</code> until
+<code>ResolveIssue</code> sets <code>resolved</code>,
+<code>deferred</code> or <code>wontfix</code>, which requires at least
+one resolving record id.</li>
+<li><strong>Risk</strong>: <code>open</code> until
+<code>MitigateRisk</code> names an accepted Decision, or
+<code>SetRiskState</code> records <code>realized</code> with at least
+one Finding as evidence, or <code>accepted</code>.</li>
+<li><strong>Finding, Constraint, Citation, Blob</strong>: no lifecycle.
+A Finding can <code>invalidate</code> an older Finding or a Decision,
+which adds an <code>invalidates</code> edge and its
+<code>invalidated_by</code> reverse and changes no state
+(<code>planner.ts:428-440</code>).</li>
+<li><strong>Every kind but Effort</strong>: <code>Retract</code> sets
+<code>retracted: true</code> with a time and reason and keeps the file.
+This flag, not any state, is what the browse reads exclude.</li>
+</ul>
+<p>Memory is agent-controlled. The agent decides what to write, applies
+the skill's four-part gate in its own reasoning, and runs every
+lifecycle transition. A person's part is the Git workflow: the records
+land in a pull request beside the code, and merging is the act of
+agreement. The system treats a record as the team's account of its
+reasoning, not as a verified fact, and it has no confidence field; the
+packaged evals use a Decision against numeric confidence fields as their
+acceptance example.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — A Decision's lifecycle in Proof, every transition reachable from the agent's own write command, and the one flag the browse reads exclude.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: A Decision&#39;s lifecycle in Proof, every transition reachable from the agent&#39;s own write command, and the one flag the browse reads exclude.
+stateDiagram-v2
+    state &quot;retracted = true&quot; as retracted
+    [*] --&gt; proposed: WriteDecision
+    proposed --&gt; accepted: AcceptDecision
+    proposed --&gt; rejected: sibling of an accepted Decision on the same question Issue
+    rejected --&gt; proposed: ReopenDecision with a reason kept in reopen_history
+    proposed --&gt; superseded: Supersede or a create with supersedes
+    accepted --&gt; superseded: Supersede or a create with supersedes
+    proposed --&gt; retracted: Retract
+    accepted --&gt; retracted: Retract
+    rejected --&gt; retracted: Retract
+    superseded --&gt; retracted: Retract
+    note right of accepted
+        A Finding&#39;s Invalidate edge
+        leaves the state accepted
+    end note
+    note left of retracted
+        Dropped from list, records,
+        relations and blocking reads,
+        and proof get returns it
+    end note
+    note right of superseded
+        Returned by every browse read
+        beside accepted Decisions
+    end note</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Proof is a TypeScript library and a CLI.
+<code>@flatbread/proof</code> holds the record schemas, the mutation
+planner, the journaled writer, the digest renderer, the content preset
+and the packaged skills. The <code>flatbread</code> package wraps them
+in <code>flatbread proof</code> subcommands built with sade
+(<code>packages/flatbread/src/cli/proof.ts</code>) and implements the
+read path over the Flatbread engine
+(<code>packages/flatbread/src/proof/read.ts</code>).</p>
+<p>Persistence is the filesystem. <code>proofContent()</code> registers
+eight collections under one graph root, default
+<code>.flatbread-proof/</code>, with Flatbread <code>refs</code> from
+each record to its Effort (<code>packages/proof/src/preset.ts</code>).
+Beside the records sit two gitignored areas:
+<code>&lt;root&gt;/.journal/</code> holding the writer lock, in-flight
+transactions and <code>generation.json</code>, and
+<code>.flatbread/proof/read-cache/</code> holding rendered digests.</p>
+<p>The write path never touches GraphQL. <code>createProofWriter</code>
+takes the lock, recovers any pending transaction, builds a snapshot by
+reading and validating every record file, plans the mutation against it
+and commits through the journal
+(<code>packages/proof/src/writer.ts:15-105</code>). The read path
+constructs a <code>FlatbreadProvider</code> from the loaded config on
+every call and issues
+<code>all&lt;Collection&gt;(filter: $filter)</code> queries
+(<code>read.ts:331-432</code>). When <code>flatbread start</code> runs a
+live GraphQL server, a bridge reindexes it after each committed
+generation (<code>packages/proof/src/live.ts</code>,
+<code>packages/flatbread/src/graphql/proofComposition.ts</code>).</p>
+<p>There is no retrieval index, no embedding and no model call anywhere
+in the package.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing runs between commands. Adoption is
+<code>npx flatbread@latest proof install-skill</code>, which pins the
+CLI version as a devDependency and copies the skill, then a
+<code>proofContent()</code> entry in <code>flatbread.config.js</code>
+and two <code>.gitignore</code> lines;
+<code>proof bootstrap --verify</code> checks all three and edits
+nothing. It runs fully offline with no key. Node 20.19 or newer is
+required.</p>
+<p>The store is human-readable and repairable: every record is a
+Markdown file with deterministic frontmatter ordering
+(<code>packages/proof/src/frontmatter.ts:4-46</code>). Bodies may be
+edited by hand. Frontmatter may not, and the writer enforces that
+indirectly: the snapshot validates every file against its kind's schema
+on each write, so one malformed record blocks every mutation until fixed
+(<code>packages/proof/src/snapshot.ts:95-125</code>).</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture and write.</strong>
+<code>flatbread proof write '&lt;json&gt;'</code> reaches
+<code>handleEffortWrite</code>
+(<code>packages/flatbread/src/cli/proof.ts:118-164</code>), which parses
+the JSON and validates it against <code>ProofMutationSchema</code>, a
+Zod discriminated union of 17 mutations
+(<code>packages/proof/src/schemas.ts:123-141</code>). Non-strict object
+schemas strip unknown keys, so a create cannot smuggle a
+<code>state</code> or <code>retracted</code> field.
+<code>createProofWriter().mutate</code> takes the lock, recovers,
+snapshots and calls <code>planMutation</code>.</p>
+<p><strong>Planning.</strong> <code>planMutation</code>
+(<code>packages/proof/src/planner.ts:201-593</code>) returns a list of
+<code>PlannedWrite</code>s, each with before and after bytes. Creates
+generate an id of the form
+<code>&lt;prefix&gt;-&lt;slug&gt;--&lt;16 random characters&gt;</code>
+(<code>ids.ts:46-52</code>), set the initial lifecycle field, check
+every <code>cites</code> and <code>derives_from</code> target is live
+and in the same Effort (<code>:149-199</code>), and materialize
+<code>superseded_by</code> and <code>invalidated_by</code> on targets.
+Lifecycle mutations delegate to <code>decision-lifecycle.ts</code> for
+Decisions and inline checks for Issues, Risks and Efforts.</p>
+<p><strong>Commit.</strong> <code>commitJournal</code>
+(<code>packages/proof/src/journal.ts:166-226</code>) writes
+<code>intent.json</code> with every file's before image and after image
+plus its SHA-256, then replaces each file by temp write, fsync and
+rename, verifying the lock before each. It writes a
+<code>committed</code> marker, calls the publisher to reindex, publishes
+the incremented generation and removes the transaction directory.
+<code>recoverJournal</code> (<code>:86-164</code>) rolls back an
+uncommitted transaction from before images, or completes a committed one
+from after images.</p>
+<p><strong>Retrieval.</strong> Each read handler in
+<code>proof.ts</code> (<code>:168-239</code>, <code>:386-401</code>)
+resolves the graph root and calls a function in <code>read.ts</code>:
+<code>listEfforts</code> (<code>:623-665</code>),
+<code>effortRecords</code> (<code>:552-621</code>),
+<code>relations</code> (<code>:667-745</code>),
+<code>blockingDecisions</code> (<code>:747-791</code>) and
+<code>getRecord</code> (<code>:497-550</code>). Each waits for a
+requested generation if strict, queries the engine, applies the Effort
+and retraction predicates in application code, sorts by
+<code>created_at</code> then id, slices a page and hands it to
+<code>renderDigest</code>
+(<code>packages/proof/src/digest.ts</code>).</p>
+<p><strong>Context assembly.</strong> There is none in code. The skill's
+session loop has the agent run <code>proof list --status active</code>,
+then <code>proof records &lt;effortId&gt; --kinds issue,decision</code>
+per Effort, then <code>blocking-decisions</code> where a blocker is open
+(<code>packages/proof/skills/proof/SKILL.md</code>). Each read returns a
+JSON envelope with a summary and an <code>artifact_path</code>; the
+agent reads the Markdown digest at that path.</p>
+<p><strong>Update, forget and conflict.</strong> <code>Supersede</code>
+and <code>Invalidate</code> add an edge and its reverse
+(<code>planner.ts:382-442</code>); a second supersession of the same
+target is refused. <code>Retract</code> (<code>:541-593</code>) refuses
+Efforts, refuses a record that is the sole closer of another record,
+strips relation keys from the retracted record, sets the flag and strips
+the id from every other record in the Effort.</p>
+<p><strong>Tests.</strong>
+<code>packages/proof/src/__tests__/planner.test.ts</code> (43 cases) and
+<code>writer.test.ts</code> (21) cover the mutation rules and journal;
+<code>packages/flatbread/src/cli/proof.test.ts</code> (18) drives the
+handlers and the spawned CLI end to end.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>Frontmatter shapes are Zod schemas per kind
+(<code>schemas.ts:143-233</code>), all <code>.passthrough()</code>, so
+extra keys survive a round trip. Common fields are <code>id</code>,
+<code>effort</code>, <code>title</code>, <code>created_at</code>,
+optional <code>produced_in</code> and <code>created_by</code>.
+Kind-specific fields are <code>kind</code> on Issue, Finding, Constraint
+and Blob, <code>status</code> on Effort and Issue, <code>state</code> on
+Decision and Risk, <code>likelihood</code> and <code>severity</code> on
+Risk, and <code>blob</code> and <code>role</code> on Citation.</p>
+<p>Relations are lists of ids in frontmatter. Forward edges supplied by
+a payload are <code>derives_from</code>, <code>supersedes</code>,
+<code>invalidates</code> and <code>cites</code>; the writer materializes
+<code>superseded_by</code> and <code>invalidated_by</code>, and
+lifecycle mutations write <code>resolved_by</code>,
+<code>rejected_by</code>, <code>mitigated_by</code> and
+<code>evidence</code> (<code>planner.ts:66-77</code>).
+<code>derives_from</code> has no reverse projection.</p>
+<p><strong>Scope.</strong> The Effort id is required on every non-Effort
+record and every edge is confined to it at write time
+(<code>planner.ts:149-199</code>, <code>:359</code>,
+<code>:391-401</code>). The read side is covered in section 6.</p>
+<p><strong>Time.</strong> <code>created_at</code> is the only time field
+on a record, defaulting to the write clock and accepted from the payload
+when supplied (<code>planner.ts:321</code>). There is no validity
+interval. <code>retracted_at</code> and each <code>reopen_history</code>
+entry's <code>at</code> record when the transition happened.</p>
+<p><strong>Provenance.</strong> <code>created_by</code> and
+<code>produced_in</code> are free strings the caller may supply and
+nothing verifies. <code>cites</code> must point at live Citation records
+in the same Effort, and a Citation may carry one Blob. The writer has no
+record of which agent or session issued a mutation; the journal's intent
+file holds a lock token and is deleted after publish.</p>
+<p><strong>History.</strong> Git is the version history. The system's
+own store keeps two partial trails in frontmatter:
+<code>reopen_history</code> on a revived Decision, and the retraction
+triple on a retracted record. The journal is a redo and undo log for one
+transaction, not an audit, so <code>audit_log</code> is withheld.
+Retraction deletes relation keys from both the target and its
+neighbours, so the current files no longer say what a retracted record
+linked to; only Git does.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is structured lookup over the graph, invoked by the agent
+through the CLI. There is no text search, no ranking and no relevance
+scoring.</p>
+<p><strong>Filters.</strong> <code>effortRecords</code> passes
+<code>state</code>, <code>status</code>, <code>kind</code> and a
+<code>created_at</code> range to the engine as scalar predicates, then
+intersects with the Effort and drops retracted rows
+(<code>read.ts:581-602</code>). The comment there explains the split:
+the generated relation field materializes as an object, so an
+<code>eq</code> on <code>effort</code> does not match. Default kinds
+exclude Blob. <code>blockingDecisions</code> selects open
+<code>blocker</code> Issues and proposed Decisions in the Effort that
+derive from one (<code>:754-774</code>).</p>
+<p><strong>Scope on each read.</strong> <code>effortRecords</code> and
+<code>blockingDecisions</code> apply the Effort predicate.
+<code>relations</code> refuses a source outside the Effort and throws
+<code>ProofCrossEffortRelationError</code> when a stored edge points
+into another one, naming every such edge, rather than returning a short
+page (<code>:687-723</code>). <code>listEfforts</code> spans Efforts by
+design. <code>getRecord</code> takes only an id and returns any record,
+retracted or not, with <code>--resolve head</code> walking
+<code>superseded_by</code> and reporting a fork or a cycle as an anomaly
+(<code>:497-550</code>). The GraphQL endpoint and explorer that
+<code>flatbread start</code> serves return every collection
+unfiltered.</p>
+<p><strong>What the reads do not withhold.</strong> No read filters on
+Decision <code>state</code> unless the caller asks, and no read consults
+<code>invalidated_by</code>. A Decision that a Finding invalidated
+renders with <code>state: "accepted"</code> and an
+<code>invalidated_by</code> line under Relations
+(<code>digest.ts:192-223</code>), and the envelope summary counts it
+among the accepted. The explorer computes an effective lifecycle from
+the edges for display
+(<code>packages/explorer/src/web/presets/proof/lifecycle.ts</code>); the
+CLI digest does not.</p>
+<p><strong>Budget.</strong> A page holds at most 25 records
+(<code>read.ts:459-464</code>); a digest at most 50 edges and 64 KiB
+(<code>digest.ts:67-69</code>). Browse digests excerpt each body to 600
+characters and 12 lines; <code>get</code> renders the full body or a
+byte-cap banner, never a silent excerpt. The header carries
+<code>complete</code>, <code>has_more</code> and
+<code>cap_reasons</code>. Cursors are bound to the query hash and served
+generation, so a write between pages invalidates the cursor
+(<code>read.ts:221-243</code>).</p>
+<p><strong>Ordering.</strong> Every read sorts oldest first
+(<code>read.ts:185-191</code>). On an Effort with more than 25 matching
+records, the first page of the skill's resume briefing holds the oldest
+and the newest arrive on the last page. The header says the page is
+incomplete; the skill's fast path tells the agent to trust the returned
+digest.</p>
+<p><strong>Consistency.</strong> Reads are eventual by default. With
+<code>--strict-min-generation</code>, a read polls
+<code>generation.json</code> every 25 ms for up to 3,000 ms and fails
+with <code>PROOF_GENERATION_WAIT_TIMEOUT</code> rather than serve older
+data (<code>read.ts:260-292</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes are explicit, hot-path and synchronous: the agent issues a
+mutation and the CLI returns after the files are renamed into place and
+the generation is published. No model runs on the write path, and there
+is no extraction, deduplication or consolidation. Two writes of the same
+claim produce two records with different random suffixes.</p>
+<p><strong>The gate is prose.</strong> The skill requires a 4/4 score on
+future need, durable effect, causal value and unique signal before any
+create or claim-adding body edit, and says lifecycle transitions and
+<code>Retract</code> need no score. The README says the CLI does not
+enforce it. <code>evals.json</code> holds four prompts, three testing
+the gate's refusals and one an acceptance; nothing in the tree runs
+them.</p>
+<p><strong>Correction is typed.</strong> Supersession is one record per
+kind, refused when the target has a superseder. Invalidation is an edge
+from a Finding. Revival keeps the rejection in
+<code>reopen_history</code>. <code>AcceptDecision</code> refuses a
+Decision whose <code>reopen_history</code> names a rejector that is
+itself accepted (<code>decision-lifecycle.ts:54-73</code>), so a
+rejected alternative cannot be accepted while the Decision that beat it
+stands.</p>
+<p><strong>Forgetting is a flag.</strong> <code>Retract</code> is the
+only removal, and it refuses when the target is the last record closing
+an Issue, mitigating a Risk, superseding or rejecting a Decision, or the
+last live Finding evidencing a realized Risk
+(<code>planner.ts:113-148</code>, <code>:553-569</code>).
+<code>derives_from</code> is not on that list. The end-to-end case at
+<code>proof.test.ts:1250-1337</code> exercises exactly this: the
+Decision that derived from the retracted Finding ends with no
+<code>derives_from</code>, and its relations read returns an empty
+page.</p>
+<p><strong>Concurrency.</strong> One writer at a time per graph root, by
+an exclusive-create lock file with a 120 s lease. An expired lock is
+taken over when its host differs or its pid is gone
+(<code>packages/proof/src/lock.ts:13-70</code>). Concurrent branches are
+reconciled by Git, which knows nothing of the invariants: two branches
+can each supersede the same record, and the merged file then carries two
+<code>superseded_by</code> ids, which <code>get --resolve head</code>
+reports as a fork.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>A write blocks on reading and validating every record file in the
+graph root, then on fsyncs for the journal and each touched file. A read
+constructs the Flatbread engine over the configured content on each CLI
+invocation. Both scale with the graph, not with the change; at the
+dogfood graph's size this is small, and nothing in the tree measures it.
+A write is visible to a strict read as soon as the command returns. No
+background pass touches the store. Nothing is injected per turn; the
+agent pays one digest read per command, capped at 64 KiB.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The integration is an Agent Skill and a CLI.
+<code>install-skill</code> copies
+<code>packages/proof/skills/proof/</code> into the project with the
+matching package version, and two companion skills,
+<code>effort-modeling</code> and <code>grill-with-efforts</code>, cover
+modelling a Decision before committing it. There is no MCP server, no
+hook and no automatic injection; recall happens when the agent runs a
+read. The 17 mutations and five reads are the whole surface, and every
+command prints one JSON object, with errors as JSON on stderr and exit
+status 1.</p>
+<p>The agent has full agency over the graph: every create, every
+lifecycle transition and every retraction is on the one command it uses.
+The project's own history shows the shape in use. Commit <a
+href="https://github.com/FlatbreadLabs/flatbread/commit/ff1d38c1b23a3264f9325374c3dae16cc2166cfd"><code class="commit-id" title="ff1d38c1b23a3264f9325374c3dae16cc2166cfd">ff1d38c1…</code></a>,
+authored by Cursor Agent on 22 August 2026, adds a Decision file whose
+frontmatter reads <code>state: accepted</code>, and supersedes a
+Constraint in the same commit.</p>
+<p>Adapting it to another agent costs nothing beyond shell access: any
+harness that can run <code>npx flatbread proof ...</code> and read a
+file can use it. Session and compaction boundaries do not exist for it,
+because nothing is held in memory between commands.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Crash safety is the strongest property.</strong> A multi-file
+mutation is atomic across a crash: either the before images are restored
+or the after images are completed, verified by hash, and the generation
+advances only after publish. Recovery runs on the next write or
+live-server start, and a read alone does not run it, which the README
+states. <code>journal-recovery.test.ts</code> covers rollback,
+completion, idempotence and a corrupt intent, and
+<code>journal-barrier.test.ts</code> holds the live watcher until a
+transaction commits or rolls back.</p>
+<p><strong>Referential integrity fails closed.</strong> A dangling
+<code>derives_from</code> is refused at write, and a dangling id met on
+read raises <code>PROOF_DANGLING_RELATION</code> naming the edge rather
+than dropping it (<code>packages/proof/src/read.ts:93-122</code>,
+<code>packages/flatbread/src/proof/read.ts:703-721</code>). Cross-Effort
+edges are refused at write and raise on read.</p>
+<p><strong>Scope is withheld as a mark, and the Effort key is the
+near-miss.</strong> Every non-Effort record carries a required
+<code>effort</code> id (<code>schemas.ts:35</code>), and the writer
+refuses any <code>derives_from</code>, <code>supersedes</code>,
+<code>invalidates</code>, <code>cites</code> or <code>blob</code> target
+in another Effort (<code>planner.ts:149-199</code>, <code>:359</code>,
+<code>:391-401</code>). The records and blocking-decisions reads keep
+only the named Effort's rows, and the relations read throws with every
+foreign edge named
+(<code>packages/flatbread/src/proof/read.ts:597-601</code>,
+<code>:687-723</code>, <code>:759-772</code>). An Effort is a thread of
+work inside a single repository, not a user, project, agent or tenant
+boundary. <code>proof get &lt;id&gt;</code> takes no Effort and reads
+across all of them, <code>proof list</code> spans them by design, and
+the GraphQL endpoint applies no predicate. No committed case writes to
+one Effort and lists another.</p>
+<p><strong>Human review is withheld.</strong> The test is whether the
+agent that wrote a Decision can clear it, and it can:
+<code>AcceptDecision</code>, <code>ReopenDecision</code> and
+<code>Retract</code> are values of the union the agent submits through
+<code>proof write</code>, with no actor argument and no check of who is
+calling. The pull request is a real review surface for a team that
+requires one, and it sits outside the code, after the write has landed
+in the working tree.</p>
+<p><strong>Trust state is withheld.</strong> Decision <code>state</code>
+is a discrete field with a <code>rejected</code> value, and transitions
+are enforced in code. No read excludes a row by it: the default browse
+read returns all states, and the summary counts them. Findings, the kind
+that states facts, have no state, and invalidation leaves its target's
+state unchanged. The one exclusion a read applies is the
+<code>retracted</code> boolean, which is a removal flag rather than an
+epistemic status. The <a
+href="../../patterns/trust-state-machine/">trust state machine</a> page
+asks for a state that is used for filtering, and this one is used for
+display.</p>
+<p><strong>Bitemporal and tombstone are withheld.</strong>
+<code>created_at</code> is the only time on a record and is record time
+a caller may backdate. Retraction is keyed on the record id; a new
+record with the same claim is a new id and walks past it.</p>
+<p><strong>Prompt-injected memories.</strong> Nothing distinguishes a
+claim the agent read in a tool result from one a person stated.
+<code>created_by</code> is a free string. A record's body is passed to
+the next agent verbatim inside a digest. The guard is Git review and the
+skill's gate, both outside the code.</p>
+<p><strong>Retracted records leak through two surfaces.</strong>
+<code>get</code> returns a retracted record by design, with the flag
+shown. The GraphQL endpoint and the explorer read every record, and the
+explorer's lifecycle helper does not read <code>retracted</code>, so a
+retracted record is drawn like a live one.</p>
+<p><strong>Privacy and deletion.</strong> Records are committed to Git,
+so a retracted body persists in the working tree and in history, and
+removing it means rewriting history. The skill tells the agent never to
+<code>git rm</code> a record.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I counted 143 AVA cases in 15 files under
+<code>packages/proof/src/__tests__/</code> and 26 Proof cases in three
+files under <code>packages/flatbread/src/</code>. CI runs
+<code>pnpm test</code>, which builds and runs AVA, Vitest and the
+explorer's tests, on Node 20.x and 22.x
+(<code>.github/workflows/pipeline.yml</code>). I ran none of them.</p>
+<p>The planner suite is the core: supersession of the same kind only,
+refusal of a second supersession, cross-Effort refusal for every edge
+type, sibling rejection scoped to the shared <code>question</code>
+Issue, reopen and re-accept rules, and the sole-closer checks on
+<code>Retract</code>. The recovery suite stages an uncommitted and a
+committed transaction and recovers each. The CLI suite spawns the binary
+and checks JSON errors without stack traces, paging and caps.</p>
+<p>The must-not-retrieve case is
+<code>Retract drops a record from browse reads and keeps get</code>
+(<code>proof.test.ts:1250-1337</code>). It holds a Finding and a
+Decision in one Effort, retracts the Finding and asserts the records
+digest excludes the Finding while including the Decision, which makes it
+a negative assertion with a positive control on a populated read. The
+blocking-decisions case at <code>:129-229</code> asserts a foreign
+Effort's Decision is absent, and that Decision has no
+<code>derives_from</code>, so the blocker predicate excludes it without
+the Effort check. No case writes to one Effort and lists another.</p>
+<p><code>packages/proof/skills/proof/evals/evals.json</code> defines
+four prompt-level cases for the write gate with expected outputs and
+assertions; no runner, result file or harness for it is in the tree. The
+skill cites a 12-run experiment that halved recall tool calls, recorded
+as a Decision in the project's own graph; no run artifact is committed.
+No paper is cited.</p>
+<p>Tests I would want before relying on it: a records read across two
+Efforts with matching kinds; a case that an invalidated Decision is
+either labelled or withheld; a case that <code>Retract</code> keeps or
+records the dependents' <code>derives_from</code>; and a merge of two
+branches that each supersede one record.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Make every lifecycle transition a typed mutation with its
+preconditions in one planner.</strong> Proof's
+<code>AcceptDecision</code> checks the target state, the
+one-accepted-per-question rule and the reopen history, and returns every
+file it will touch, which makes <code>dryRun</code> free.</li>
+<li><strong>Refuse cross-scope edges at write and fail closed on legacy
+ones at read.</strong> A read that throws with the offending edges named
+is easier to repair than one that returns a short page.</li>
+<li><strong>Journal multi-file writes with before and after images and a
+published generation.</strong> The generation doubles as a
+read-your-writes token, so an agent never polls.</li>
+<li><strong>Report incompleteness in the envelope.</strong>
+<code>complete</code>, <code>has_more</code> and
+<code>cap_reasons</code> let an agent know a digest is a page, not the
+store.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A state machine the readers ignore.</strong> If
+<code>rejected</code> and <code>superseded</code> are enforced at write,
+the default read should withhold or label them; otherwise the next agent
+re-reads an overturned Decision as a peer of the accepted one.</li>
+<li><strong>Retraction that edits the neighbours.</strong> Stripping a
+retracted id from dependents keeps reads from failing, and erases the
+fact that a Decision rested on evidence later withdrawn. Mark the edge
+instead.</li>
+<li><strong>Oldest-first paging on a resume path.</strong> A briefing
+capped at one page should show the newest records first, or fetch the
+last page.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Proof suits a small team that reviews pull requests and wants the
+reasons behind its code kept beside the code, readable without a server
+and repairable in an editor. The cost is low: a devDependency, a config
+entry and an agent willing to shell out. It assumes a person reads the
+records in review, because nothing in the code stops an agent from
+accepting its own Decisions. Walk away if the agent's writes must be
+gated before they count, if the store must hold facts about users rather
+than about a codebase, or if retrieval by meaning matters more than
+navigation by Effort and edge.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>How the read path scales: each CLI read builds the Flatbread engine
+over the whole configured content, and the cost on a graph of thousands
+of records is unmeasured here.</li>
+<li>Whether the explorer's comment that an inline supersession keeps
+<code>state: accepted</code> describes records written before the
+planner change, or a path the explorer has to tolerate; the planner sets
+<code>superseded</code> on both routes at this commit.</li>
+<li>How teams resolve merge conflicts in materialized reverse edges,
+which the writer cannot see.</li>
+<li>Whether the four skill evals were run, and against which
+models.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>packages/proof/src/schemas.ts</code>,
+<code>packages/proof/src/types.ts</code>,
+<code>packages/proof/src/preset.ts</code>,
+<code>packages/proof/src/ids.ts</code>,
+<code>packages/proof/src/frontmatter.ts</code>,
+<code>packages/proof/src/snapshot.ts</code>.</li>
+<li><strong>Write path:</strong>
+<code>packages/proof/src/writer.ts</code>,
+<code>packages/proof/src/planner.ts</code>,
+<code>packages/proof/src/decision-lifecycle.ts</code>,
+<code>packages/proof/src/journal.ts</code>,
+<code>packages/proof/src/lock.ts</code>,
+<code>packages/flatbread/src/cli/proof.ts</code>.</li>
+<li><strong>Read path and digests:</strong>
+<code>packages/flatbread/src/proof/read.ts</code>,
+<code>packages/proof/src/read.ts</code>,
+<code>packages/proof/src/digest.ts</code>.</li>
+<li><strong>Live server and explorer:</strong>
+<code>packages/proof/src/live.ts</code>,
+<code>packages/proof/src/journalBarrier.ts</code>,
+<code>packages/flatbread/src/graphql/proofComposition.ts</code>,
+<code>packages/explorer/src/web/presets/proof/lifecycle.ts</code>.</li>
+<li><strong>Agent surface:</strong>
+<code>packages/proof/skills/proof/SKILL.md</code>,
+<code>packages/proof/skills/proof/reference.md</code>,
+<code>packages/proof/skills/proof/glossary.md</code>,
+<code>packages/flatbread/src/cli/installSkill.ts</code>.</li>
+<li><strong>Tests and evals:</strong>
+<code>packages/proof/src/__tests__/*.test.ts</code>,
+<code>packages/flatbread/src/cli/proof.test.ts</code>,
+<code>packages/flatbread/src/graphql/liveServerProof.test.ts</code>,
+<code>packages/proof/skills/proof/evals/evals.json</code>,
+<code>.github/workflows/pipeline.yml</code>.</li>
+<li><strong>Dogfood graph:</strong> <code>.flatbread-proof/</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E "retracted" -- ':!*.md' ':!**/__tests__/**' ':!**/*.test.*'</code>
+— readers in <code>packages/flatbread/src/proof/read.ts</code>,
+<code>decision-lifecycle.ts</code>, <code>digest.ts</code>,
+<code>frontmatter.ts</code> and <code>planner.ts</code>; the only
+explorer hits are animation code in <code>growth.ts</code>.</li>
+<li><code>git grep -n -i "retract" -- packages/explorer packages/core</code>
+— animation comments only; the explorer's Proof preset does not read the
+flag.</li>
+<li><code>git grep -n -E "invalidated_by|superseded|state ===|state !==|'rejected'|deprecated" -- packages/proof/src packages/flatbread/src ':!*.test.ts' ':!**/__tests__/**'</code>
+— <code>state</code> is compared only in the planner and
+<code>decision-lifecycle.ts</code>; <code>invalidated_by</code> appears
+in read and digest field lists, and no read predicate uses it.</li>
+<li><code>git grep -n -E "'deprecated'|deprecated:" -- packages ':!*.test.ts'</code>
+— the schema enum and the explorer's display set; no writer.</li>
+<li><code>git grep -l -E "createProofWriter|mutate\(" -- packages ':!**/__tests__/**' ':!*.test.ts'</code>
+— <code>cli/proof.ts</code>, <code>live.ts</code>,
+<code>types.ts</code>, <code>writer.ts</code>; the GraphQL server
+exposes no write.</li>
+<li><code>git grep -n -i -E "mutation|app\.(post|put)|router\.(post|put)" -- packages/flatbread/src packages/core/src ':!*.test.ts'</code>
+— the CLI's <code>proof write</code> and the live bridge only.</li>
+<li><code>git grep -n -E "isTTY|isatty|created_by" -- packages ':!**/__tests__/**' ':!*.test.ts' ':!*.md'</code>
+— no TTY or actor check; <code>created_by</code> is copied from the
+payload.</li>
+<li><code>git grep -n -i -E "hook|SessionStart|settings\.json|CLAUDE\.md|AGENTS\.md" -- packages/flatbread/src/cli/installSkill.ts packages/proof/scripts</code>
+— one prose mention of <code>AGENTS.md</code>; the installer writes no
+hook.</li>
+<li><code>git grep -n -E "handleEffortRecords|effortRecords\(" -- '*.test.ts'</code>
+— three calls in <code>proof.test.ts</code>, each against a single
+Effort.</li>
+<li><code>git grep -n -E "evals\.json|evals/" -- ':!.flatbread-proof'</code>
+— no match; nothing reads the eval file.</li>
+<li><code>git grep -n -i -E "valid_from|valid_to|valid_until|as_of" -- packages</code>
+— no match.</li>
+<li><code>git grep -n -i -E "arxiv|bibtex|@article|doi\.org|CITATION" -- . ':!.flatbread-proof'</code>
+— Proof's own <code>Citation</code> record kind only, and no
+<code>CITATION.cff</code>.</li>
+<li><code>git grep -n -i -E "renamed|formerly" -- CHANGELOG.md README.md packages/proof/README.md</code>
+— no match.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-15</strong> — <a
+href="https://github.com/FlatbreadLabs/flatbread/commit/0d506bc80eb376a00dff550b7ff67b3b7787ef02"><code class="commit-id" title="0d506bc80eb376a00dff550b7ff67b3b7787ef02">0d506bc8…</code></a>
+— first reading, at the head of <code>main</code>, a merge commit of 25
+September 2026. One mark, <code>negative_eval</code>;
+<code>scope_enforced</code> is withheld because an Effort is a work
+thread inside a single repository and <code>get</code> reads across
+Efforts. MIT with no rider. Screened before reading from a full clone:
+two auto-run surfaces (<code>.cursor/rules/</code>, seven agent-directed
+rule files, and <code>.vscode/settings.json</code>, a TypeScript SDK
+path), both read; two build-time execution points
+(<code>preinstall</code> running <code>npx only-allow pnpm</code>,
+<code>prepare</code> running <code>husky install</code>); 11 unpinned
+manifest surfaces beside a <code>pnpm-lock.yaml</code> unchanged for 63
+days; nothing inside the cooldown; <code>AGENTS.md</code> recorded as
+data. <code>.gitattributes</code> names a <code>weave</code> merge
+driver, inert without local git config. Read with <code>git grep</code>
+and <code>sed</code>; nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -9,7 +9,7 @@ A finding is a place execution can happen, not an accusation. Most are ordinary.
 The point is that the surface is now written down instead of discovered by
 typing `npm install`.
 
-**Progress: 747 of 747 screened at the report's current pin.**
+**Progress: 748 of 748 screened at the report's current pin.**
 
 0 further record(s) describe a revision the report has since moved
 off, and 0 report(s) have no record at all.
@@ -17,9 +17,9 @@ Neither counts as screened.
 
 | Result | Count |
 | --- | ---: |
-| Repositories with an auto-run surface (`RUNS`) | 354 |
+| Repositories with an auto-run surface (`RUNS`) | 355 |
 | Repositories with a dependency surface inside the cooldown (`FRESH`) | 405 |
-| Repositories with build-time execution (`EXEC`) | 544 |
+| Repositories with build-time execution (`EXEC`) | 545 |
 | Repositories where the screen saw nothing (`NOTHING SCANNED`) | 6 |
 | Repositories that could not be screened | 0 |
 
@@ -143,6 +143,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`fernme`](../../content/systems/fernme.md) | `.claude-plugin/` |
 | [`fidelis`](../../content/systems/fidelis.md) | `server.json` |
 | [`fireweed-mcp`](../../content/systems/fireweed-mcp.md) | `server.json` |
+| [`flatbread`](../../content/systems/flatbread.md) | `.cursor/rules/`, `.vscode/settings.json` |
 | [`fluctlightdb`](../../content/systems/fluctlightdb.md) | `.claude/settings.json`, `.githooks/` |
 | [`gaius`](../../content/systems/gaius.md) | `.claude-plugin/`, `.mcp.json`, `hooks/`, `hooks/hooks.json` |
 | [`gambletan-cortex`](../../content/systems/gambletan-cortex.md) | `.claude/hooks/`, `.claude/settings.json`, `server.json` |

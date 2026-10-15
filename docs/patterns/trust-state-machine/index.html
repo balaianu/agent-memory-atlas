@@ -515,6 +515,23 @@ Nothing reads a status back: <code>supersedes</code> and
 checked against each other, so the corpus's single supersession pair is
 reciprocal by hand. A state machine enforced at the boundary and nowhere
 else is a vocabulary, not a machine.</p>
+<p><strong><a href="../../systems/flatbread/">Flatbread Proof</a> builds
+the machine and leaves the readers outside it.</strong> Its Decisions
+move from <code>proposed</code> to <code>accepted</code>,
+<code>rejected</code> or <code>superseded</code> only through typed
+mutations: acceptance refuses a non-proposed target and a second
+accepted Decision on the same <code>question</code> Issue, rejects the
+proposed siblings in one transaction, and a revived Decision cannot be
+accepted while the Decision that rejected it stands
+(<code>packages/proof/src/decision-lifecycle.ts:31-116</code>). No read
+excludes a row by that state, and a Finding's <code>invalidates</code>
+edge leaves its target <code>accepted</code>
+(<code>packages/flatbread/src/proof/read.ts:581-602</code>,
+<code>packages/proof/src/planner.ts:428-440</code>). The only property a
+read filters on is a <code>retracted</code> boolean. <strong>Enforcing
+transitions at the writer settles which states exist; only a read
+predicate decides whether an overturned record reaches the next
+session.</strong></p>
 <p><a href="../../systems/ouroboros-agent-os/">Ouroboros</a> splits the
 axis one further step than this page usually argues for, and the reason
 is recorded in the code. Its ledger carries <code>LedgerSource</code> —

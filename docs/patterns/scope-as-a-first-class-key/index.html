@@ -1400,6 +1400,23 @@ per request before any wider reach, returning a refusal sentence when
 declined (<code>archive-extension.ts:109-125</code>). The gate sits on
 the store that is off by default. <strong>Put the same reach gate on
 every store the agent can widen.</strong></p>
+<p><strong><a href="../../systems/flatbread/">Flatbread Proof</a> checks
+a work-thread key on edges as well as rows, and the key is not a scope
+boundary.</strong> Every record but an Effort carries a required
+<code>effort</code> id, and the writer refuses a
+<code>derives_from</code>, <code>supersedes</code>,
+<code>invalidates</code>, <code>cites</code> or <code>blob</code> target
+in another Effort (<code>packages/proof/src/planner.ts:149-199</code>,
+<code>:359</code>, <code>:391-401</code>). The records and
+blocking-decisions reads keep only the named Effort's rows, and the
+relations read throws with every foreign edge named when a hand-edited
+or legacy record points across, rather than returning a short page
+(<code>packages/flatbread/src/proof/read.ts:597-601</code>,
+<code>:687-723</code>). An Effort partitions one repository's work
+rather than users, projects or tenants, get by id takes no Effort, and
+the GraphQL endpoint beside the CLI applies none, so the report
+withholds the scope mark. <strong>Scope the edges too, and make a read
+that meets a foreign one fail loudly.</strong></p>
 <p><strong><a href="../../systems/hermes-fleet-memory/">Hermes Fleet
 Memory</a> decides the key from the process and leaves the credential
 fleet-wide.</strong> Every card carries a <code>domain</code>, and

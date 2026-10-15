@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 747 reports.</strong></p>
+<p><strong>This page covers all 748 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -30903,6 +30903,52 @@ what it writes back.</li>
 <li>Do not copy when: several users or projects share one database, a
 correction must outrank the value it replaces, or the REST server will
 run where untrusted pages can reach it.</li>
+</ul>
+<h3 id="flatbread"><a
+href="../systems/flatbread/"><code>flatbread</code></a></h3>
+<ul>
+<li>Best idea: <strong>every lifecycle transition is a typed mutation
+planned against a snapshot.</strong> <code>planMutation</code> checks
+kinds, liveness, the owning Effort and the transition rules, then
+returns every file it will touch with before and after bytes;
+<code>AcceptDecision</code> refuses a second accepted Decision on the
+same <code>question</code> Issue and rejects the proposed siblings in
+the same transaction, and <code>ReopenDecision</code> keeps the
+rejection in <code>reopen_history</code>.</li>
+<li>Biggest risk: <strong>the state machine never reaches the
+read.</strong> The records read filters on <code>state</code> only when
+the caller asks, and no read consults <code>invalidated_by</code>, so a
+rejected, superseded or invalidated Decision is returned and counted
+beside the accepted ones. The agent that proposes a Decision accepts it
+through the same <code>proof write</code> command.</li>
+<li>Most reusable component: <code>packages/proof/src/journal.ts</code>
+with <code>planner.ts</code> — a multi-file write journal with before
+and after images, hash-verified completion on recovery, and a generation
+token that doubles as a read-your-writes barrier for
+<code>--strict-min-generation</code>.</li>
+<li>Second risk: <strong>retraction shortens the provenance of what
+survives.</strong> <code>Retract</code> strips the retracted id from
+every relation in the Effort, <code>derives_from</code> included, and
+blocks only when the record is the last closer of an Issue, Risk or
+Decision, so a Decision built on a withdrawn Finding ends up citing
+nothing.</li>
+<li>Maturity impression: MIT; Proof is 2,975 lines of TypeScript in
+<code>packages/proof/src</code> plus a 791-line read path, inside a
+monorepo of 447 commits since November 2021, with Proof since 7 May 2026
+and Cursor Agent the second most frequent author. 143 AVA cases in the
+package and 26 in the CLI run in CI. One mark,
+<code>negative_eval</code>, on a retracted Finding withheld beside a
+live Decision. <code>scope_enforced</code> is withheld: the Effort key
+is enforced at write and on three reads, and an Effort is a work thread
+inside one repository that <code>get</code> reads across. The four skill
+evals have no runner in the tree.</li>
+<li>Study when: you want a team's design reasons kept as linked,
+reviewable files in the repository, with a writer strict enough that the
+graph stays consistent across agent sessions.</li>
+<li>Do not copy when: the agent's writes must be approved before they
+count, an overturned Decision must stay out of the next session's
+reading, or memory has to be found by meaning rather than by Effort and
+edge.</li>
 </ul>
 <h3 id="ontofelia"><a
 href="../systems/ontofelia/"><code>ontofelia</code></a></h3>

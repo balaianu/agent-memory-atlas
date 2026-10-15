@@ -13275,6 +13275,44 @@
       "status": "screened",
       "url": "https://github.com/tpsdev-ai/flair"
     },
+    "flatbread": {
+      "counts": {
+        "AGENT": 1,
+        "EXEC": 2,
+        "FLOAT": 11,
+        "NOTE": 7,
+        "RUNS": 2
+      },
+      "files_scanned": 38,
+      "findings": [
+        {
+          "detail": "editor rules injected into an agent's context — 7 entr(ies): cursor-cloud-agent-url.mdc, cursor-grok-latest.mdc, flatbread-pmf-workflow.mdc, flatbread-schema-migration.mdc, orwell-prose.mdc, post-edit-lint-fix.mdc, typescript-rules.mdc",
+          "kind": "RUNS",
+          "path": ".cursor/rules/"
+        },
+        {
+          "detail": "VS Code settings; can set interpreters and terminal env",
+          "kind": "RUNS",
+          "path": ".vscode/settings.json"
+        },
+        {
+          "detail": "npm lifecycle `preinstall`: npx only-allow pnpm",
+          "kind": "EXEC",
+          "path": "package.json"
+        },
+        {
+          "detail": "npm lifecycle `prepare`: husky install",
+          "kind": "EXEC",
+          "path": "package.json"
+        }
+      ],
+      "revision": "0d506bc80eb376a00dff550b7ff67b3b7787ef02",
+      "screened_at": "2026-10-15T05:09:43+00:00",
+      "slug": "flatbread",
+      "source": "reused-clone",
+      "status": "screened",
+      "url": "https://github.com/FlatbreadLabs/flatbread"
+    },
     "flowix": {
       "counts": {
         "AGENT": 1,
