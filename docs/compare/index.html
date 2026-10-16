@@ -20829,44 +20829,48 @@ the test command, applicability conditions, avoid and recovery notes,
 success and failure counts, and a validation status</td>
 <td>SQLite at ~/.musclememory/memory.db by default, PostgreSQL with
 pgvector and partial HNSW indexes for teams; runs, events, procedures,
-revisions, evaluations, artifact postings, failure contrasts and an
-audit_log table</td>
+revisions, evaluations, artifact postings, failure contrasts, tombstones
+and an audit_log table</td>
 <td>Candidates from exact file and command postings, BM25 (PostgreSQL
 FTS on that backend) and MiniLM cosine with a 0.40 floor, fused by RRF;
-only active, validated, reviewed, fresh and capability-compatible
-revisions score; one-hop producer and consumer links add related
-skills</td>
+only active, validated, approved, fresh and capability-compatible
+revisions score; hooks deliver the top candidate only after finding its
+edited code in the current project</td>
 <td>Hooks for Claude Code, Codex and Cursor record every tool call; a
-Stop with a test command passing after the last change counts the
-session as a check on a matching skill or compiles a new one pending a
-person's OK. MCP, REST and SDK learn writes an approved skill</td>
-<td>A revision is added by learn with revise_procedure_token; one failed
-check flags a revision for good; retire hides a procedure; delete
-removes it and clears the cached compile so the same trace can be
-learned again. Traces expire after 30 days through a manual purge</td>
+Stop whose last test run after the last change passed counts the session
+as a check on a matching skill or compiles a new one. MCP, REST, SDK and
+hooks learn compile the same way, and every new skill and revision waits
+for a person's OK</td>
+<td>A revision is added by learn with revise_procedure_token and needs a
+new OK; one failed check flags a revision for good; retire and delete
+store a fingerprint of every revision that refuses the same compile
+later, and a retired procedure takes no revision. Traces expire after 30
+days through a manual purge</td>
 <td>Tenant from the API key and namespace from a granted
 visibility_scope on every read; the local install puts every agent and
-project in one namespace; no project key</td>
+project in one namespace unless a key and hook config are made per
+project; no project key</td>
 <td>musclememory connect installs hooks that inject one compact JSON
-pointer per prompt, at most two per session; five MCP tools; Python and
-TypeScript SDKs; a CleanSlate host adapter; a dashboard; export of a
-Ready skill as SKILL.md</td>
+pointer per prompt, at most two per session, after a local file check;
+five MCP tools; Python and TypeScript SDKs; a CleanSlate host adapter; a
+dashboard; export of a Ready skill as SKILL.md</td>
 <td>None in the server. Hooks queue events in a local SQLite and deliver
 them on each hook call; trace purge is a CLI command to schedule
 externally</td>
-<td>Two stored statuses gate every read, and an approval timestamp gates
-automatically learned skills; success evidence is whatever the capture
-or the caller reports, and the agent's MCP tools can learn, validate and
-so publish a skill with no person</td>
-<td>A two-check promotion rule that excludes the training run; a
-fail-closed applicability filter; failure contrasts compared on
-value-free action shapes; a bounded pointer that never cuts code
-mid-string; benchmark totals that recompute from committed per-session
-rows</td>
-<td>Skills learned through MCP or the SDK skip the review queue; the
-default hook path never records a failed check or a failed run; the test
-gate is a word list; a deleted or retired skill can return; one
-namespace spans every project on the machine</td>
+<td>Two stored statuses and an approval timestamp gate every read, and
+approving needs an admin key agent keys lack; success and failure
+evidence is whatever the capture or the caller reports, and the hooks
+flag a skill only when its own test runs last and fails</td>
+<td>A two-check promotion rule that excludes the training run and
+re-runs the skill's own test; approval on every write path behind an
+admin grant; a content fingerprint that keeps a removed skill removed;
+failure contrasts on value-free action shapes; a bounded pointer that
+never cuts code mid-string</td>
+<td>Completion evidence is caller-attested; the CLI that mints admin
+keys opens the database directly, so a shell running as the user can
+approve; the tombstone matches the exact compile only; a flagged skill
+is never buried and can be learned again as a new procedure; one
+namespace spans every project by default</td>
 </tr>
 <tr>
 <td><a href="../systems/muse-brain/"><code>muse-brain</code></a></td>
@@ -33598,7 +33602,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 753:</em> <a
+<p><em>68 of 753:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33627,6 +33631,7 @@ href="../systems/memsem/"><code>memsem</code></a>, <a
 href="../systems/mimir/"><code>mimir</code></a>, <a
 href="../systems/mira/"><code>mira</code></a>, <a
 href="../systems/mnemosyne/"><code>mnemosyne</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/neoth/"><code>neoth</code></a>, <a
 href="../systems/nexusmem/"><code>nexusmem</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
@@ -34606,7 +34611,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>95 of 753:</em> <a
+<p><em>96 of 753:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
@@ -34662,6 +34667,7 @@ href="../systems/mimir/"><code>mimir</code></a>, <a
 href="../systems/mind-mem/"><code>mind-mem</code></a>, <a
 href="../systems/mnemory/"><code>mnemory</code></a>, <a
 href="../systems/muninn/"><code>muninn</code></a>, <a
+href="../systems/musclememory/"><code>musclememory</code></a>, <a
 href="../systems/no-human/"><code>no-human</code></a>, <a
 href="../systems/nova-ai/"><code>nova-ai</code></a>, <a
 href="../systems/obelyth-cortex/"><code>obelyth-cortex</code></a>, <a

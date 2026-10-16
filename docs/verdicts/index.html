@@ -30611,43 +30611,44 @@ the sleep pass and read its reports.</li>
 <h3 id="musclememory"><a
 href="../systems/musclememory/"><code>musclememory</code></a></h3>
 <ul>
-<li>Best idea: <strong>two independent checks, never the source
-session.</strong> <code>evaluate</code> refuses the training run,
-requires the checking run to have executed the revision's required
-capabilities and matching action shapes, and promotes at two successes
-and reliability 0.65; one failure flags the revision for good, and every
-read path requires <code>validated</code>.</li>
-<li>Biggest risk: <strong>the approval queue has a side door.</strong>
-Hook-learned skills wait for a person's Keep, but <code>learn</code>
-through MCP, REST or an SDK sets <code>reviewed_at</code> at once, and
-the committed MCP test takes a skill from three self-reported traces to
-a recall hit with no person involved.</li>
+<li>Best idea: <strong>a person and two independent checks, never the
+source session.</strong> <code>evaluate</code> refuses the training run,
+requires the checking run to have re-run the skill's stored test after
+its last change, and promotes at two successes and reliability 0.65.
+Every learn path lands unapproved, approving needs an admin grant agent
+keys lack, and one failure flags the revision for good.</li>
+<li>Biggest risk: <strong>the approver credential is a CLI
+away.</strong> <code>musclememory dashboard</code> and
+<code>musclememory key --permissions</code> mint admin credentials by
+opening the database directly, so a coding agent with a shell running as
+the same user can approve its own skills; no test exercises either
+path.</li>
 <li>Most reusable component: <code>compatibility_freshness</code> in
 <code>packages/musclememory/retrieval.py</code> with
 <code>conditions_satisfied</code> in <code>shapes.py</code> — a
 fail-closed admission filter over capabilities, permissions,
 environment, freshness, reliability, status and approval, applied alike
 to search, plans and related links.</li>
-<li>Second risk: <strong>failure is reported, not captured.</strong> The
-hooks only ever call <code>evaluate</code> with success, a failed
-session closes as <code>incomplete</code>, and "tests passed" is any
-command containing <code>test</code>, <code>check</code>,
-<code>go</code> or <code>cargo</code> that exits 0; delete clears the
-cached compile so the same trace can be learned again.</li>
-<li>Maturity impression: Apache-2.0 with a trademark NOTICE, 8,043 lines
-of Python in the package and 27 commits by one author, all dated 13
-October 2026. Four marks, <code>trust_state</code>,
-<code>scope_enforced</code>, <code>audit_log</code> and
-<code>negative_eval</code>. CI runs 112 pytest functions on SQLite and
-pgvector; three benchmark runs are committed with per-session rows whose
-totals recompute.</li>
+<li>Second risk: <strong>every outcome is client-reported, and the hooks
+flag narrowly.</strong> A test is a recognised runner invocation whose
+exit status the client captured; the hooks flag a skill only when its
+own stored test runs last and fails, and the removal fingerprint refuses
+only the exact compile.</li>
+<li>Maturity impression: Apache-2.0 with a trademark NOTICE, 8,501 lines
+of Python in the package and 35 commits by one author, 13 to 16 October
+2026. Six marks, <code>tombstone</code>, <code>trust_state</code>,
+<code>scope_enforced</code>, <code>audit_log</code>,
+<code>human_review</code> and <code>negative_eval</code>. CI runs 137
+pytest functions on SQLite and pgvector; three benchmark runs are
+committed with per-session rows whose totals recompute.</li>
 <li>Study when: you want procedural memory for coding agents promoted on
 observed, repeated success rather than on a model's judgement, with a
-bounded pointer and a capability mapping that carries skills between
-agents.</li>
-<li>Do not copy when: the memory must be defended against the agent
-writing it, a removed skill must stay removed, or several projects on
-one machine must not see each other's skills.</li>
+person's approval, a removal that sticks, a bounded pointer and a
+capability mapping that carries skills between agents.</li>
+<li>Do not copy when: the memory must be defended against an agent with
+a shell on the same account, a near-identical re-learn of a removed
+skill must also be refused, or several projects on one machine must not
+see each other's skills.</li>
 </ul>
 <h3 id="remembra"><a
 href="../systems/remembra/"><code>remembra</code></a></h3>

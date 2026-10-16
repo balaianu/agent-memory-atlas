@@ -6622,17 +6622,20 @@ data. Nothing was installed, built or run</li>
 <li><a
 href="https://github.com/TheWariend/MuscleMemory">TheWariend/MuscleMemory</a>
 at <a
-href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d"><code class="commit-id" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">4c7b01b4…</code></a>
-— read only, at the head of <code>main</code>, a commit dated 13 October
-2026. Apache-2.0 with a <code>NOTICE</code> withholding the trademarks
-and no rider. Screened before reading from a full clone: no auto-run
-surface, one build-time execution point
-(<code>tests/conftest.py</code>), five dependency files inside the
-seven-day cooldown, and two floating-range manifests without a lockfile
-beside them (<code>apps/dashboard/package.json</code>,
+href="https://github.com/TheWariend/MuscleMemory/commit/51946bd800813881a1348d92b71e04cdeeedc415"><code class="commit-id" title="51946bd800813881a1348d92b71e04cdeeedc415">51946bd8…</code></a>
+— read only, at the head of <code>main</code>, a commit dated 16 October
+2026; first read at <a
+href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d"><code class="commit-id" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">4c7b01b4…</code></a>.
+Apache-2.0 with a <code>NOTICE</code> withholding the trademarks and no
+rider. Screened before reading from a full clone: no auto-run surface,
+one build-time execution point (<code>tests/conftest.py</code>), five
+dependency files inside the seven-day cooldown, and two floating-range
+manifests without a lockfile beside them
+(<code>apps/dashboard/package.json</code>,
 <code>packages/sdk-typescript/package.json</code>). Nothing was
 installed, built or run; the committed benchmark totals were recomputed
-from their JSON with a separate script</li>
+from their JSON with a separate script, and no benchmark file changed
+between the two pins</li>
 <li><a
 href="https://github.com/remembra-ai/remembra">remembra-ai/remembra</a>
 at <a
@@ -18255,6 +18258,20 @@ said quarantine withheld a row from every search branch; the two
 observations. The first rested on the predicate's presence rather than
 on what its empty value did, the second on a search for the insert
 rather than for its callers.</li>
+<li><strong>One published claim about <a
+href="../systems/musclememory/">MuscleMemory</a> was wrong at <a
+href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d"><code class="commit-id" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">4c7b01b4…</code></a>,
+the pin it was made at, and is corrected.</strong> The report said a
+passing session that touches an existing skill's files and matches its
+action shapes counts as a check rather than a new skill. At that pin
+<code>auto_learn</code> counted only successful tool calls
+(<code>packages/musclememory/service.py:1170</code>,
+<code>:1214</code>), while <code>evaluate</code> compared the count with
+every tool event in the trace (<code>:786-789</code>). Any session
+containing a failed command therefore raised
+<code>metrics_conflict</code>, was skipped at <code>:1240</code>, and
+was compiled as a duplicate skill. The claim rested on the matching rule
+rather than on the metrics the caller sent.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,

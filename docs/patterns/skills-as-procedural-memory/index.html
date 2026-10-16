@@ -497,19 +497,22 @@ new one; here nothing does, and an agent that follows the skill believes
 it recorded an acceptance the ledger never received.</p>
 <p><a href="../../systems/musclememory/">MuscleMemory</a> carries the
 outcome gate to coding agents and adds the generality check this page
-asks for. A session becomes a skill only when a test command passes
-after the last edit, and the skill reaches a prompt only after two later
-sessions, never the source, execute its required capabilities and action
-shapes and pass (<code>packages/musclememory/service.py:692-776</code>,
+asks for. A session becomes a skill only when a test run passes after
+the last edit, and the skill reaches a prompt only after a person
+approves it and two later sessions, never the source, execute its
+required capabilities and action shapes and re-run its own test after
+their last change
+(<code>packages/musclememory/service.py:723-845</code>,
 <code>retrieval.py:211-233</code>). One failed check flags the revision
 for good. It also keeps the failures Voyager discards: failed runs with
 the same action sequence are diffed against the success by argument
-shape and become avoid notes (<code>service.py:414-461</code>). Two
-things weaken the gate. "Passed" is any command containing
-<code>test</code>, <code>check</code>, <code>go</code> or
-<code>cargo</code> that exits 0 (<code>artifacts.py:17-18</code>). And
-the hooks only ever report successes, so in a default install neither
-the flag nor the contrasts fire (<code>service.py:1225-1240</code>).</p>
+shape and become avoid notes (<code>service.py:441-489</code>). Two
+things weaken the gate. "Passed" is the exit status the client captured
+for a command recognised as a test runner by name
+(<code>artifacts.py:18-77</code>). And the hooks flag a skill only when
+the session was handed it and its own test ran last and failed
+(<code>service.py:1232-1289</code>), so a skill whose test is the whole
+suite is blamed for any later failure of the suite.</p>
 <p><a href="../../systems/screenpipe/">Screenpipe</a> settles who may
 edit a skill with a hash rather than a flag.
 <code>AgentSkillStore::create</code> records

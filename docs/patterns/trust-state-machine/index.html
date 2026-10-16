@@ -724,18 +724,20 @@ them.</strong> A revision is <code>provisional</code>,
 <code>validated</code> or <code>flagged</code> and a procedure
 <code>provisional</code>, <code>active</code>, <code>flagged</code> or
 <code>retired</code>; search, plan composition and related-skill links
-all require <code>active</code> and <code>validated</code>
-(<code>packages/musclememory/retrieval.py:228-230</code>,
+all require <code>active</code>, <code>validated</code> and a person's
+approval (<code>packages/musclememory/retrieval.py:228-230</code>,
 <code>:409-410</code>, <code>planning.py:40-41</code>).
 <code>flagged</code> is terminal for a revision: no later success clears
-it (<code>service.py:827-836</code>). The transitions are driven by
+it (<code>service.py:895-905</code>). The transitions are driven by
 outcomes the caller reports, and the compiler stamps every revision
 <em>"Completion evidence is caller-attested"</em>
-(<code>compiler.py:212</code>). Two writers sit outside the ladder: a
-revise sets a <code>retired</code> procedure back to
-<code>provisional</code> without reading its old value
-(<code>service.py:464-474</code>), and the hook path never reports a
-failure, so <code>flagged</code> has no automatic producer.</p>
+(<code>compiler.py:212</code>). <code>retired</code> is terminal too: a
+revise of a retired procedure is refused
+(<code>service.py:510-513</code>), and retiring stores a fingerprint
+that refuses the same skill on any later learn. The hooks produce
+<code>flagged</code> in one case only, when a session was handed a skill
+and that skill's own test ran last and failed
+(<code>service.py:1232-1289</code>).</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Prove candidates cannot enter verified-only context.</li>

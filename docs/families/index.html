@@ -7610,20 +7610,22 @@ eviction writes no ledger entry. One mark,
 <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/musclememory/">MuscleMemory</a> moves <a
 href="../systems/voyager/">Voyager</a>'s success gate onto the test
-suite, and the gate is a word.</strong> A local FastAPI service fed by
-hooks in Claude Code, Codex and Cursor compiles a session into a skill
-when a test command passes after the last edit. It injects the skill
-only after two further sessions, never the source, pass doing the same
-thing, and one failed check flags a revision for good. Where <a
+suite and puts a person in front of it.</strong> A local FastAPI service
+fed by hooks in Claude Code, Codex and Cursor compiles a session into a
+skill when a test run passes after the last edit. It injects the skill
+only after a person approves it with an admin key agent keys lack, and
+after two further sessions, never the source, re-run its own test and
+pass; one failed check flags a revision for good. Where <a
 href="../systems/altk-evolve/">ALTK-Evolve</a> distils every trajectory
 and <a href="../systems/autoharness/">autoharness</a> gates on lint,
-this gates on observed, repeated outcomes. The weak side is what counts
-as an outcome: any command containing <code>test</code>,
-<code>check</code> or <code>go</code> that exits 0. The hooks never
-report a failure, so flagging and failure contrasts need explicit calls,
-and a <code>learn</code> through MCP lands approved. Four marks:
-<code>trust_state</code>, <code>scope_enforced</code>,
-<code>audit_log</code>, <code>negative_eval</code>.</p>
+this gates on observed, repeated outcomes, and a removed skill leaves a
+fingerprint of what it taught that refuses the same compile. The weak
+side is the evidence: every outcome is client-reported, the hooks flag a
+skill only when its own test fails last, the fingerprint matches the
+exact compile only, and the CLI that mints admin keys trusts whoever
+runs it. Six marks: <code>tombstone</code>, <code>trust_state</code>,
+<code>scope_enforced</code>, <code>audit_log</code>,
+<code>human_review</code>, <code>negative_eval</code>.</p>
 <p><strong><a href="../systems/megamemory/">MegaMemory</a> makes the
 coding agent the indexer of its own project graph, and keeps removal
 honest but correction thin.</strong> A stdio MCP server over one SQLite
