@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 752 reports.**
+**This page covers all 753 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6840,3 +6840,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: MIT, version 0.17.0, 162 commits on main between 5 May and 22 September 2026; a large structural code-query engine with 2,954 test functions run in CI on Ubuntu and macOS, beside a 2,618-line memory layer. Two marks, both on the premise store: `audit_log` on its `events` table, and `negative_eval` on replacement, retraction and context-isolation cases with in-test positive controls. `trust_state` is withheld because validity and kind are labels no read filters on; `scope_enforced` because the store is one directory per project and the premise context is a caller argument; `tombstone`, `bitemporal` and `human_review` are withheld.
 - Study when: you want conclusions that carry the files they rest on and announce when those files change, or a local code ranker whose notebook is shared by every coding harness in a project.
 - Do not copy when: a finding whose evidence changed must stop reaching the model, findings must be attributable to an author or separated by tenant, or a forgotten finding must also leave the logged prompts and replies that quote it.
+
+### [`hy-memory`](../systems/hy-memory/)
+
+- Best idea: **build the scope envelope in the broker, from the grant.** MemHub's `authorizeHost` verifies the host's secret, checks the requested scope against the grant, and writes the grant's own scopes into `x-one-memory-*` headers; Core refuses a scope outside them, drops disjoint memories, and takes the workspace from the host process rather than from a tool argument.
+- Second idea: **refuse a model write resting on evidence a person overruled.** A person's delete or correction marks the evidence ids it rested on, and a later model write citing them is refused; the same fact from a new conversation is remembered again, by design and by test.
+- Biggest risk: **the SDK trusts the writer model's target ids.** The reconcile prompt lists real memory UUIDs, and whatever `memory_id` comes back is shadowed or superseded with no check that it was among the candidates shown.
+- Second risk: **deleting a correction resurrects the value it replaced.** Deleting a supersession chain's head restores its predecessor to `active`, and no record of the rejected value is kept.
+- Third risk: the SDK's bundled HTTP server answers any origin with no credential, and the OpenClaw tools take a model-supplied `userId`.
+- Most reusable component: `memhub/apps/core/src/one_memory/external_memory_access.py` — a strict parser for a broker-built grant envelope and a route allow-list that refuses everything else, including id-addressed reads.
+- Maturity impression: Apache-2.0, published 16 October 2026 as a single-commit snapshot: 75,578 lines of SDK Python with 1,238 test functions run in CI, and MemHub's 80,944 lines of Core Python and 32,739 of host-bridge TypeScript with 4,282 Core test functions. The model card's benchmark table cannot be recomputed from the tree. Two marks: `audit_log`, `negative_eval`.
+- Study when: you are building a governed recall surface for several coding hosts on one machine, or an extract-and-reconcile writer and want its failure paths spelled out.
+- Do not copy when: the SDK alone must hold a scope against a model, a deleted correction must stay deleted, or you need a harness to compare memory writers.

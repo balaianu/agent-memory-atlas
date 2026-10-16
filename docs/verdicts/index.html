@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 752 reports.</strong></p>
+<p><strong>This page covers all 753 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31299,6 +31299,48 @@ notebook is shared by every coding harness in a project.</li>
 reaching the model, findings must be attributable to an author or
 separated by tenant, or a forgotten finding must also leave the logged
 prompts and replies that quote it.</li>
+</ul>
+<h3 id="hy-memory"><a
+href="../systems/hy-memory/"><code>hy-memory</code></a></h3>
+<ul>
+<li>Best idea: <strong>build the scope envelope in the broker, from the
+grant.</strong> MemHub's <code>authorizeHost</code> verifies the host's
+secret, checks the requested scope against the grant, and writes the
+grant's own scopes into <code>x-one-memory-*</code> headers; Core
+refuses a scope outside them, drops disjoint memories, and takes the
+workspace from the host process rather than from a tool argument.</li>
+<li>Second idea: <strong>refuse a model write resting on evidence a
+person overruled.</strong> A person's delete or correction marks the
+evidence ids it rested on, and a later model write citing them is
+refused; the same fact from a new conversation is remembered again, by
+design and by test.</li>
+<li>Biggest risk: <strong>the SDK trusts the writer model's target
+ids.</strong> The reconcile prompt lists real memory UUIDs, and whatever
+<code>memory_id</code> comes back is shadowed or superseded with no
+check that it was among the candidates shown.</li>
+<li>Second risk: <strong>deleting a correction resurrects the value it
+replaced.</strong> Deleting a supersession chain's head restores its
+predecessor to <code>active</code>, and no record of the rejected value
+is kept.</li>
+<li>Third risk: the SDK's bundled HTTP server answers any origin with no
+credential, and the OpenClaw tools take a model-supplied
+<code>userId</code>.</li>
+<li>Most reusable component:
+<code>memhub/apps/core/src/one_memory/external_memory_access.py</code> —
+a strict parser for a broker-built grant envelope and a route allow-list
+that refuses everything else, including id-addressed reads.</li>
+<li>Maturity impression: Apache-2.0, published 16 October 2026 as a
+single-commit snapshot: 75,578 lines of SDK Python with 1,238 test
+functions run in CI, and MemHub's 80,944 lines of Core Python and 32,739
+of host-bridge TypeScript with 4,282 Core test functions. The model
+card's benchmark table cannot be recomputed from the tree. Two marks:
+<code>audit_log</code>, <code>negative_eval</code>.</li>
+<li>Study when: you are building a governed recall surface for several
+coding hosts on one machine, or an extract-and-reconcile writer and want
+its failure paths spelled out.</li>
+<li>Do not copy when: the SDK alone must hold a scope against a model, a
+deleted correction must stay deleted, or you need a harness to compare
+memory writers.</li>
 </ul>
         </article>
       </div>

@@ -127,7 +127,7 @@ belief.</p>
 <p><strong>Reported:</strong> a durable record keyed on the rejected
 <em>value</em> rather than on the row, and consulted on the write path,
 recurs across the corpus. 67 systems of
-752 carry the mark, and <a
+753 carry the mark, and <a
 href="#sorted-by-what-actually-stops-the-value">the table below</a>
 sorts the holders this page discusses by what actually stops the value.
 The idea's history runs from invention to independent arrival: Verel
@@ -292,7 +292,7 @@ not the hard half.</li>
 </ul>
 <h3 id="every-instance">Every instance</h3>
 <p><strong>67 systems of
-752 in the atlas carry the mark.</strong> The
+753 in the atlas carry the mark.</strong> The
 entries below are the ones whose mechanism this page discusses.</p>
 <p><a href="../../systems/verel/">Verel</a> uses rejected memory records
 as a correctness mechanism and protects rejected states from ordinary
@@ -1641,6 +1641,23 @@ title and asserts the refusal
 the slot rather than the value, and the same fact under a new title is a
 new identity. <strong>Key the tombstone on what a writer will re-assert,
 and decide whether that is the title or the body.</strong></p>
+<p><strong><a href="../../systems/hy-memory/">Hy-Memory</a> stores a
+forget request as an ordinary fact, and only derived artifacts read
+it.</strong> An extracted fact such as "the user asked the assistant to
+forget that they like hiking" is detected by regex, its target terms are
+extracted, and in ultra mode the balanced-catalog and
+specific-supplement builders suppress entries matching them while System
+2 retires matching schemas
+(<code>hy_memory/pipelines/balanced_catalog.py:76-237</code>,
+<code>hy_memory/pipelines/system2_agent.py:1956-2030</code>). All three
+are behind flags that default to <code>false</code>, and the System 1
+extractor and reconciler that would re-assert the value never consult a
+marker. MemHub, in the same repository, blocks the evidence ids a
+person's delete rested on and asserts by test that the same fact from a
+new conversation is remembered again
+(<code>memhub/apps/core/tests/test_hy_state_source.py:281</code>).
+<strong>A value-keyed record consulted only downstream of the write that
+re-asserts the value is a filter, not a tombstone.</strong></p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li><strong>Run the laundering sequence</strong>: reject a value,

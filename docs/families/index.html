@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 752
+    <meta name="description" content="The 753
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 752
+    <meta property="og:description" content="The 753
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-752 systems grouped by eight architectural
+753 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 752 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 753 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 752 systems
+          <p class="document-deck">The 753 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>752 systems do not fall into 182 categories. They
+<p>753 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -168,7 +168,8 @@ href="../systems/memhop/"><code>memhop</code></a>, <a
 href="../systems/cortexdb/"><code>cortexdb</code></a>, <a
 href="../systems/fernme/"><code>fernme</code></a>, <a
 href="../systems/fluctlightdb/"><code>fluctlightdb</code></a>, <a
-href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a></p>
+href="../systems/gambletan-cortex/"><code>gambletan-cortex</code></a>,
+<a href="../systems/hy-memory/"><code>hy-memory</code></a></p>
 <p>Called from an application that owns the agent loop. Easy to adopt;
 weak authority over when memory is written or how recall is used.</p>
 <p><strong>AI Workflow Workspace is the family's clearest case of
@@ -843,6 +844,21 @@ main store <code>namespace</code> is a filter on
 <code>User</code> and no namespace, exact dedup and compression cross
 namespaces, and recall never refreshes the access time decay reads. Two
 marks: <code>scope_enforced</code>, <code>negative_eval</code>.</p>
+<p><strong><a href="../systems/hy-memory/">Hy-Memory</a> puts its
+boundary in the app built on the library, not in the library.</strong>
+Tencent Hunyuan's Apache-2.0 SDK stores chat in eight layers and lets
+one configured model extract and then reconcile every write into ADD,
+UPDATE, SUPERSEDE or DELETE ops. The ids the model returns are applied
+without a membership check, and deleting a correction restores the value
+it replaced. Its HTTP server has no authentication and open CORS, and
+its OpenClaw tools let the model name any user. MemHub, a desktop app in
+the same repository, builds a grant envelope in a broker, intersects it
+in Core, and takes the workspace from the host process. The repository
+is where the Hy-Memory-30B-A3B writer model points for evaluation
+utilities, and it holds no benchmark harness. Two marks,
+<code>audit_log</code> and <code>negative_eval</code>;
+<code>scope_enforced</code> is withheld because the shipped OpenClaw
+tools take the user from the model.</p>
 <h2 id="hosted-and-service-memory">Hosted and service memory</h2>
 <p><a href="../systems/openlore/"><code>openlore</code></a>, <a
 href="../systems/honcho/"><code>honcho</code></a>, <a

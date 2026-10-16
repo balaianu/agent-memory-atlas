@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-752, generated from each report's frontmatter —
+753, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-752, generated from each report's frontmatter —
+753, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-752, generated from each report's frontmatter —
+753, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 752, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 753, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-752, generated from each report's frontmatter —
+753, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 752 systems by the seven mechanisms
+filters all 753 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -12740,6 +12740,66 @@ a library export no binary constructs, so a default approval records no
 resolved identity. HUQAN_HUMAN_APPROVAL_DISABLED auto-approves every
 review. Edge pruning deletes without an audit event. The surface is very
 large for a gate, with seven binaries and an HTTP server</td>
+</tr>
+<tr>
+<td><a href="../systems/hy-memory/"><code>hy-memory</code></a></td>
+<td>Chat: a MemoryNode in one of eight layers (basic info, raw turn,
+fact, summary, schema, intention and two reserved), with owner, tags, a
+lifecycle status, a supersession chain and a caller-supplied event time.
+Working and Coding: a session fact plus reusable experiences, and for
+Coding a per-function diff chain</td>
+<td>Chroma by default, or Qdrant or FAISS, for chat nodes; Kuzu or Neo4j
+for the schema and intention graph in ultra mode; SQLite for history,
+the operations cache, coding facts, experiences and diff threads. MemHub
+adds its own SQLite ledger of evidence, governed memories, versions and
+grants</td>
+<td>Vector search over layers filtered by user, agent or session key,
+status active and latest, with optional BM25 fusion, tag and entity
+boosts, a local cross-encoder, graph expansion in ultra and
+evolution-chain expansion of hits. Coding adds lexical and
+workspace-scoped search and attaches diff chains. MemHub re-filters HY's
+ranked ids through its ledger</td>
+<td>Synchronous in add(): the raw turn is stored, one model call
+extracts facts, intentions and basic info, a second compares them with
+the user's candidate memories and returns ADD, UPDATE, SUPERSEDE or
+DELETE ops, which the writer applies; the raw turn is then shadowed.
+Summaries and graph projection run as background tasks</td>
+<td>UPDATE rewrites a fact in place; SUPERSEDE marks the old fact
+superseded and links it; the reconciler's DELETE shadows it.
+client.update re-embeds by id; client.delete hard-deletes vector and
+graph rows and restores a deleted chain head's predecessor to active.
+MemHub deletes softly and queues the HY delete</td>
+<td>SDK: an isolation key of user, agent and session, with search
+requiring user_ids and filtering on them; reconcile candidates are
+user-wide across agents by design; get, update and delete by id are
+unscoped, and the OpenClaw tools take a model-supplied userId. Coding:
+workspace and branch filters. MemHub: grant envelopes with all-apps,
+workspace and source scopes on every external read</td>
+<td>Python SDK, a stdlib HTTP server on 127.0.0.1 with no authentication
+and CORS open to any origin, an OpenClaw plugin with six tools and
+auto-recall and auto-capture hooks; MemHub ships an MCP server, a recall
+broker, Claude Code and other host hooks, a desktop app and a CLI</td>
+<td>Episode summaries and graph projection scheduled after writes;
+System 2 schema induction, cross-domain sweeps and forget-marker
+retirement only when evolve() or sweep() is called in ultra mode;
+MemHub's processing runner imports transcripts from granted sources and
+calls HY ingest</td>
+<td>No epistemic state. SHADOW and SUPERSEDED are lifecycle states that
+the read filters honour; NEGATED and CONFLICTED have no writer,
+schema_status is never set, and source_type and confidence rank. MemHub
+writes every memory confirmed on arrival and converts legacy candidate
+rows to confirmed</td>
+<td>A grant envelope that a model cannot widen, built by the broker and
+re-checked by Core; a correction ledger that refuses a model write
+resting on evidence a person overruled; a zero-LLM diff chain recording
+each version of edited code; exact-list negative tests on real
+stores</td>
+<td>One model setting drives write and read-side model calls;
+model-chosen target ids are applied without checking they were among the
+candidates; deleting a correction resurrects the value it replaced; the
+SDK server has no authentication and open CORS; the OpenClaw tools let
+the model name any user, so no shipped agent surface holds a scope on
+the SDK; no harness for the published model numbers</td>
 </tr>
 <tr>
 <td><a
@@ -33538,7 +33598,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>67 of 752:</em> <a
+<p><em>67 of 753:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33609,7 +33669,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>193 of 752:</em> <a
+<p><em>193 of 753:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33809,7 +33869,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>127 of 752:</em> <a
+<p><em>127 of 753:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -33944,7 +34004,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>321 of 752:</em> <a
+<p><em>321 of 753:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34280,7 +34340,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>255 of 752:</em> <a
+<p><em>256 of 753:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34376,6 +34436,7 @@ href="../systems/hive-mind/"><code>hive-mind</code></a>, <a
 href="../systems/holo-invariant/"><code>holo-invariant</code></a>, <a
 href="../systems/humans/"><code>humans</code></a>, <a
 href="../systems/huqan/"><code>huqan</code></a>, <a
+href="../systems/hy-memory/"><code>hy-memory</code></a>, <a
 href="../systems/hyperconsciousness/"><code>hyperconsciousness</code></a>,
 <a href="../systems/iai-pme/"><code>iai-pme</code></a>, <a
 href="../systems/icarus/"><code>icarus</code></a>, <a
@@ -34545,7 +34606,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>95 of 752:</em> <a
+<p><em>95 of 753:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
@@ -34644,7 +34705,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>481 of 752:</em> <a
+<p><em>482 of 753:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34828,6 +34889,7 @@ href="../systems/holomem/"><code>holomem</code></a>, <a
 href="../systems/honcho/"><code>honcho</code></a>, <a
 href="../systems/humans/"><code>humans</code></a>, <a
 href="../systems/huqan/"><code>huqan</code></a>, <a
+href="../systems/hy-memory/"><code>hy-memory</code></a>, <a
 href="../systems/hyperconsciousness/"><code>hyperconsciousness</code></a>,
 <a href="../systems/hypha/"><code>hypha</code></a>, <a
 href="../systems/iai-pme/"><code>iai-pme</code></a>, <a
@@ -35159,8 +35221,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-481 repositories of
-752 assert that particular material must
+482 repositories of
+753 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -35233,7 +35295,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 752 is the real figure for the second kind, and
+of 753 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not
