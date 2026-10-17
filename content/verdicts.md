@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 753 reports.**
+**This page covers all 754 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6852,3 +6852,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0, published 16 October 2026 as a single-commit snapshot: 75,578 lines of SDK Python with 1,238 test functions run in CI, and MemHub's 80,944 lines of Core Python and 32,739 of host-bridge TypeScript with 4,282 Core test functions. The model card's benchmark table cannot be recomputed from the tree. Two marks: `audit_log`, `negative_eval`.
 - Study when: you are building a governed recall surface for several coding hosts on one machine, or an extract-and-reconcile writer and want its failure paths spelled out.
 - Do not copy when: the SDK alone must hold a scope against a model, a deleted correction must stay deleted, or you need a harness to compare memory writers.
+
+### [`maka`](../systems/maka/)
+
+- Best idea: **admit a fact only on a quote from the user.** Evidence is projected only from text events whose role and author are both `user`, every citation must be a substring of one, and a canonicalized rewrite is re-checked against the same citations, so injected tool output cannot cite itself into the store.
+- Second idea: **derive the scope key from the session header on both sides.** The writer and the reader of the fact layer both take `workspaceRoot` from the Session header, and the model's tools take no scope argument, so that predicate cannot drift or be widened at read time.
+- Biggest risk: **no production path corrects or forgets a fact.** `applyMutations` carries update, archive and restore with compare-and-swap, its only caller outside tests is the facade, nothing deletes an item, and a purged Session leaves the facts quoted from it.
+- Second risk: **one Recall call pairs a scoped fact layer with an unscoped transcript layer.** The transcripts those facts quote are returned from every Session on the Host, archived ones included, which is why `scope_enforced` is withheld; whether a fact is global is the extraction model's choice.
+- Third risk: the MEMORY.md review queue has no producer in any shipped client, and over ACP the client that proposes can also approve.
+- Most reusable component: `packages/runtime/src/memory-extraction-evidence.ts` with `admitMemoryProposalItemDetailed` in `memory-extraction-proposal.ts` — user-only evidence projection and substring admission.
+- Maturity impression: Apache-2.0 incubating podling, 5,086 commits from 146 contributors between 19 May and 17 October 2026, about 737,000 lines of TypeScript, 312 test cases in 27 memory and recall test files with crash failpoints at every write boundary. Two marks: `audit_log`, `negative_eval`.
+- Study when: you are building extraction that must resist injected tool output, or a crash-safe per-session extraction cursor with one retry and a receipted discard.
+- Do not copy when: facts must be correctable or deletable, or two projects must not see each other's history through recall.

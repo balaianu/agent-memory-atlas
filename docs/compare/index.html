@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-753, generated from each report's frontmatter —
+754, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-753, generated from each report's frontmatter —
+754, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-753, generated from each report's frontmatter —
+754, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 753, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 754, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-753, generated from each report's frontmatter —
+754, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 753 systems by the seven mechanisms
+filters all 754 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -16037,6 +16037,66 @@ in and ordered after its replacement; hook context has byte budgets</td>
 published eval advantage is on a superseded fixture; any actor can
 abandon or re-seal another actor's intent; nothing in the store can be
 deleted, and it travels with every push</td>
+</tr>
+<tr>
+<td><a href="../systems/maka/"><code>maka</code></a></td>
+<td>Three. A fact item in memory.sqlite: content, kind, fact, plan or
+prediction, event bounds, global or workspace scope, keys and the
+user-message events it quotes. A MEMORY.md entry with a status and an
+optional session scope. A free-form document in an agent-maintained
+index whose links cite original messages</td>
+<td>memory.sqlite under the storage root in WAL mode with synchronous
+FULL: items, keys, sources, write receipts, per-Session extraction
+cursors and failures. MEMORY.md and PENDING.md as files with one backup
+per kind. The personal assistant's network.sqlite: documents, fragments,
+references, indexes, entries, links and an append-only commits
+table</td>
+<td>The Recall tool returns up to 10 facts by exact or prefix key match,
+ranked by matched-term count then recency, plus BM25-ranked transcript
+passages from up to 200 Sessions. MEMORY.md active entries are injected
+into the prompt only when agent reading is enabled. Index documents are
+read by key or literal search through assistant tools</td>
+<td>Facts: memory_remember extracts in the foreground and memory_extract
+or a compaction checkpoint in a background lane, with up to 3 model
+calls, admitted only when every citation is a substring of a user
+message. MEMORY.md: a person saves the file. Index: the assistant agent
+writes documents with MemoryIndexWrite and MemoryIndexEdit</td>
+<td>Facts have update, archive and restore verbs with compare-and-swap,
+and none has a production caller; nothing deletes an item, and a purged
+Session leaves its facts. MEMORY.md entries are archived or edited by
+hand, or reset to the default. Index documents are replaced in place,
+and empty text deletes one</td>
+<td>Facts: a global or workspace scope_key equal to the Session's
+workspaceRoot, filtered in SQL on the fact read. The same Recall call
+returns transcript passages from every Session on the Host with no
+workspace predicate, so the agent read path is not scoped. Global versus
+workspace is the extraction model's choice. MEMORY.md: session-scoped
+entries shown only to their Session. Index reads assert the caller's
+source visibility</td>
+<td>Built into the Maka Runtime Host shared by the Electron desktop,
+TUI, CLI and an ACP agent: memory_remember, memory_extract, Recall,
+RecallMore and RecallMaterial for root Sessions, a Local Memory prompt
+block, memory.query and memory.mutate host operations, and nineteen
+Memory tools in personal-assistant Sessions</td>
+<td>A per-Session extraction lane for memory_extract and automatic
+compaction-time extraction, on by default; one retry of a failed range,
+then a durable discard. The memory network schedules index maintenance
+every 12 hours once enabled, run by a background Maka agent session</td>
+<td>No epistemic state on facts: lifecycle is active or archived, and
+origin records agent_extracted or user_requested. MEMORY.md has
+review_required, rejected and active, but proposals land in PENDING.md,
+which no prompt reads, and no shipped client sends propose or
+approve</td>
+<td>Admission that cites user-authored text only; one-transaction
+commits with idempotency receipts and a per-Session cursor that never
+re-reads a range; a workspace predicate derived from the Session header
+on both sides; secret redaction before matching; an append-only log of
+every index write</td>
+<td>No production path corrects, archives or deletes a fact; one Recall
+call joins a workspace-scoped fact layer with transcripts from every
+workspace, archived Sessions included; the extraction model chooses
+global scope; event bounds are stored and never read; the MEMORY.md
+review queue has no producer and no actor check</td>
 </tr>
 <tr>
 <td><a href="../systems/mama/"><code>mama</code></a></td>
@@ -33602,7 +33662,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>68 of 753:</em> <a
+<p><em>68 of 754:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33674,7 +33734,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>193 of 753:</em> <a
+<p><em>193 of 754:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33874,7 +33934,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>127 of 753:</em> <a
+<p><em>127 of 754:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -34009,7 +34069,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>321 of 753:</em> <a
+<p><em>321 of 754:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34345,7 +34405,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>256 of 753:</em> <a
+<p><em>257 of 754:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34468,6 +34528,7 @@ href="../systems/lossless-context-mcp/"><code>lossless-context-mcp</code></a>,
 href="../systems/magic-context/"><code>magic-context</code></a>, <a
 href="../systems/magicore/"><code>magicore</code></a>, <a
 href="../systems/mainline/"><code>mainline</code></a>, <a
+href="../systems/maka/"><code>maka</code></a>, <a
 href="../systems/mama/"><code>mama</code></a>, <a
 href="../systems/mandalore/"><code>mandalore</code></a>, <a
 href="../systems/mastra-observational-memory/"><code>mastra-observational-memory</code></a>,
@@ -34611,7 +34672,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 753:</em> <a
+<p><em>96 of 754:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
@@ -34711,7 +34772,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>482 of 753:</em> <a
+<p><em>483 of 754:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34945,6 +35006,7 @@ href="../systems/lossless-context-mcp/"><code>lossless-context-mcp</code></a>,
 href="../systems/m3-memory/"><code>m3-memory</code></a>, <a
 href="../systems/magicore/"><code>magicore</code></a>, <a
 href="../systems/mainline/"><code>mainline</code></a>, <a
+href="../systems/maka/"><code>maka</code></a>, <a
 href="../systems/mama/"><code>mama</code></a>, <a
 href="../systems/mandalore/"><code>mandalore</code></a>, <a
 href="../systems/marm-memory/"><code>marm-memory</code></a>, <a
@@ -35227,8 +35289,8 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-482 repositories of
-753 assert that particular material must
+483 repositories of
+754 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -35301,7 +35363,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 753 is the real figure for the second kind, and
+of 754 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

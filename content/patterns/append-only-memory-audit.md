@@ -535,6 +535,8 @@ report withholds `audit_log` on that ground.
 
 **[ken](../../systems/ken/) logs one of its two stores.** The premise store's `Memory.record` replaces or retracts a source bundle and appends an `events` row with the context, source, action and payload inside the same `BEGIN IMMEDIATE` transaction, and nothing in the tree reads, updates or deletes that table (`src/ken/reasoning/store.py:27-29`, `:62-81`). A retract row carries an empty payload, so the retracted content lives on in the earlier insert or replace row. The findings store beside it in `ken.db` overwrites a topic in place and deletes on `forget` with no record (`src/ken/memory.py:82-93`, `:166-167`), so the mark covers premises and not the notes the hooks inject.
 
+**[Apache Maka](../../systems/maka/) logs one of its three stores in full.** The personal assistant's index network inserts a `commits` row carrying the document key, the full new text, the cited refs and the revision inside the same transaction as each `MemoryIndexWrite` or `MemoryIndexEdit`, and no statement in the tree updates or deletes one (`packages/runtime-host/src/assistant/memory-network/corpus.ts:478-511`). The fact store beside it keeps an idempotency receipt per operation with outcomes and no content, and its correction verbs have no production caller.
+
 ## Tests to require
 
 - Mutation and audit event commit or roll back together.

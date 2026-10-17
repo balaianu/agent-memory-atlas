@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local agent workspace whose
+facts are extracted only from quoted user messages and recalled by
+workspace, beside a user-written MEMORY.md and an agent-kept index.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Apache
+Maka — Agent Memory Atlas">
+    <meta property="og:description" content="A local agent workspace
+whose facts are extracted only from quoted user messages and recalled by
+workspace, beside a user-written MEMORY.md and an agent-kept index.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apache
+Maka — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local agent workspace
+whose facts are extracted only from quoted user messages and recalled by
+workspace, beside a user-written MEMORY.md and an agent-kept index.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Apache Maka — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Apache Maka",
+      "description": "A local agent workspace whose facts are extracted only from quoted user messages and recalled by workspace, beside a user-written MEMORY.md and an agent-kept index.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A local agent workspace with an
+evidence-gated fact store, a user-owned MEMORY.md and an
+agent-maintained index</p>
+          <h1>Apache Maka</h1>
+          <p class="document-deck">A local agent workspace whose facts
+are extracted only from quoted user messages and recalled by workspace,
+beside a user-written MEMORY.md and an agent-kept index.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/apache/maka">
+              <span>Source</span>
+              <strong>apache/maka</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/apache/maka/commit/d14cec5719352f77d324e1065e0c1943c33772c7" title="d14cec5719352f77d324e1065e0c1943c33772c7">
+              <span>Analyzed revision</span>
+              <code>d14cec57…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-17</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/apache--maka" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>apache--maka</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0,
+an Apache Incubator podling; DISCLAIMER-WIP records that the
+initial-code authorization review (issue 3268) is open; no
+rider</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>about
+737,000 lines of TypeScript outside test files; the fact store,
+MEMORY.md bundle, extraction and recall are 13,105 lines in 18 files,
+the personal assistant's memory network 2,848</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>5,086
+commits on main by 146 contributors, 19 May 2026 – 17 October 2026; the
+GitHub repository was created 27 May 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,621
+test files in the tree; 312 test cases in the 27 memory and recall test
+files, run by the workspace npm test</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>2</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip is-present" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Apache Maka is a local agent workspace: one Runtime Host, written in
+TypeScript, serves an Electron desktop app, a TUI, a CLI and an ACP
+agent, and records every model message and tool call as an append-only
+RuntimeEvent. Its memory is three stores. A fact store in
+<code>memory.sqlite</code> holds statements the model extracts and must
+back with exact quotes from user messages. A <code>MEMORY.md</code> file
+belongs to the user. An index network, in the opt-in personal assistant,
+holds documents an agent maintains over history sources. What is notable
+is the fact store's admission and the workspace predicate on its read.
+What is weak is that nothing in production corrects or forgets a
+fact.</p>
+<p>The RuntimeEvent log is the product's headline, and it is a record of
+what happened rather than memory that can turn out false. This report
+reads the log only where the memory paths read it: as evidence for
+extraction, and as the transcript layer of the <code>Recall</code>
+tool.</p>
+<p>Five findings shape the rest of this report.</p>
+<ul>
+<li><strong>A fact is admitted only on user-authored evidence.</strong>
+Each proposed item must cite at least one quote, and each quote must be
+a substring of a user message in the frozen range. Tool and assistant
+output never qualify as evidence
+(<code>packages/runtime/src/memory-extraction-proposal.ts:307-353</code>,
+<code>memory-extraction-evidence.ts:95-118</code>).</li>
+<li><strong>The fact store cannot be corrected in production.</strong>
+<code>applyMutations</code> carries update, archive and restore with
+compare-and-swap, and its only caller outside tests is the facade that
+forwards it
+(<code>packages/storage/src/long-term-memory-store.ts:134</code>). No
+statement deletes an item.</li>
+<li><strong>Scope holds on facts and not on the transcripts beside
+them.</strong> The fact read filters to global or the active Session's
+workspace in SQL. The same <code>Recall</code> call returns BM25
+passages from every Session on the Host
+(<code>packages/core/src/recall.ts:991-1010</code>).</li>
+<li><strong>The MEMORY.md review queue is a protocol with no
+producer.</strong> <code>propose</code>, <code>approve</code> and
+<code>reject</code> exist on <code>memory.mutate</code>, no shipped
+client sends them, and an ACP client that could send one can send the
+others.</li>
+<li><strong>The index network logs every write it makes.</strong> Each
+document write or edit appends its full text to an append-only
+<code>commits</code> table in the same transaction
+(<code>packages/runtime-host/src/assistant/memory-network/corpus.ts:478-511</code>).</li>
+</ul>
+<p>Two marks: <code>audit_log</code> and <code>negative_eval</code>.
+They sit on two different stores, and section 9 names the five withheld,
+<code>scope_enforced</code> among them.</p>
+<p>The licence is Apache-2.0. The podling's <code>DISCLAIMER-WIP</code>
+records that the review of the authorization basis for the retained
+initial code is open (issue 3268), which matters to anyone
+redistributing the code, not to reading it.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p><strong>A fact becomes a belief when it commits, and stops being one
+never.</strong> The extraction engine runs a proposal call, an optional
+localization call and a canonicalization call, with a budget of three
+model calls (<code>packages/runtime/src/memory-extraction.ts:267</code>,
+<code>:823</code>). Each surviving candidate is re-admitted against the
+same evidence and written <code>active</code>, with <code>origin</code>
+set to <code>user_requested</code> for a <code>memory_remember</code>
+request and <code>agent_extracted</code> otherwise
+(<code>memory-extraction.ts:1876-1907</code>). There is no candidate
+state and no review. Because <code>applyMutations</code> has no
+production caller, the row then stays <code>active</code> and unchanged
+for good.</p>
+<p><strong>Identity is a random UUID, not the content.</strong>
+<code>#createItem</code> takes <code>randomUUID()</code> for every
+write, and the store's own test is named
+<code>stores duplicate assertions independently within one batch</code>
+(<code>packages/storage/src/sqlite-long-term-memory-store.ts:921-955</code>,
+<code>__tests__/sqlite-long-term-memory-store.test.ts:1216</code>). The
+engine has no port that reads existing items
+(<code>memory-extraction.ts:143-190</code>), so the same preference
+extracted twice is two rows, and a later contrary statement is a
+third.</p>
+<p><strong>The extraction model chooses where a fact applies.</strong>
+Each proposed item carries <code>scope: 'global' | 'workspace'</code>
+(<code>memory-extraction-proposal.ts:44-56</code>). A workspace item
+takes the Session's <code>workspaceRoot</code> as its key; a global item
+has none and is returned in every workspace
+(<code>memory-extraction.ts:1895-1896</code>). The model also supplies
+<code>statementType</code> (fact, plan, prediction) and event bounds,
+validated as a shape and stored.</p>
+<p><strong>MEMORY.md is the user's document, with a review state machine
+beside it.</strong> An entry is <code>active</code>,
+<code>archived</code>, <code>review_required</code>, <code>draft</code>,
+<code>rejected</code> or <code>unknown</code>, and the prompt builder
+injects only <code>active</code> ones
+(<code>packages/core/src/local-memory.ts:39-45</code>,
+<code>:291-313</code>, <code>:735</code>). A proposal is written to
+<code>PENDING.md</code> as <code>review_required</code>;
+<code>approve</code> moves it into MEMORY.md as <code>active</code> with
+<code>approvedBy=user</code>, and <code>reject</code> marks it
+<code>rejected</code> in <code>PENDING.md</code>
+(<code>local-memory.ts:386-417</code>, <code>:489-571</code>).</p>
+<p><strong>An index document is whatever the assistant agent last
+wrote.</strong> The assistant creates an index from a natural-language
+criterion and a history cursor, and an agent session writes free-form
+documents whose <code>memory-original:</code> links cite original
+messages. A write replaces the document; the previous text survives only
+in the <code>commits</code> log.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — How each of Maka's three memories is written and read, and where the workspace predicate does and does not apply.</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: How each of Maka&#39;s three memories is written and read, and where the workspace predicate does and does not apply.
+flowchart TD
+  U[&quot;User message in a root Session&quot;] --&gt; T[&quot;memory_remember in the foreground, memory_extract or compaction in a background lane&quot;]
+  T --&gt; P[&quot;Proposal call: items with scope, keys, event bounds and quotes&quot;]
+  P --&gt; A{&quot;Every quote a substring of a user message, and no secret?&quot;}
+  A --&gt;|&quot;no&quot;| X[&quot;Item dropped, and an explicit request returns not_applicable&quot;]
+  A --&gt;|&quot;yes&quot;| C[&quot;Canonicalize call, then re-admission on the same quotes&quot;]
+  C --&gt; I[&quot;memory_items row: active, new UUID, scope_key = workspaceRoot or NULL&quot;]
+  I -.-&gt;|&quot;no production caller&quot;| M[&quot;update, archive, restore&quot;]
+  I --&gt; RF[&quot;Recall facts: global OR this workspace, active only, 10 rows&quot;]
+  S[&quot;Every Session transcript on the Host&quot;] --&gt; RT[&quot;Recall passages: BM25 over up to 200 Sessions, no workspace predicate&quot;]
+  RF --&gt; OUT[&quot;One Recall envelope to the model&quot;]
+  RT --&gt; OUT
+  H[&quot;Person saves MEMORY.md in Settings&quot;] --&gt; MD[&quot;MEMORY.md: active and archived entries&quot;]
+  Q[&quot;memory.mutate propose, sent by no shipped client&quot;] --&gt; PD[&quot;PENDING.md: review_required&quot;]
+  PD --&gt;|&quot;approve, same verb surface&quot;| MD
+  MD --&gt; INJ[&quot;Local Memory prompt block: active entries, only if agent reading is on&quot;]
+  AG[&quot;Personal-assistant agent session&quot;] --&gt; W[&quot;MemoryIndexWrite or MemoryIndexEdit&quot;]
+  W --&gt; E[&quot;entries row replaced or deleted&quot;]
+  W --&gt; CM[&quot;commits row with full text, same transaction&quot;]</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Every client is a thin front end over one Runtime Host process, which
+owns storage through a lease on a storage root and serves operations
+over a local socket. The fact store opens <code>memory.sqlite</code>
+under that root through
+<code>openInteractiveLongTermMemoryStoreForWrite</code>, which refuses a
+forged lease or writer facade
+(<code>packages/storage/src/long-term-memory-store.ts:64-112</code>).
+The database runs WAL with <code>synchronous = FULL</code> and foreign
+keys on, and refuses a schema newer than version 5
+(<code>sqlite-long-term-memory-schema.ts:21</code>,
+<code>:423-440</code>).</p>
+<p>Extraction calls the Session's own model connection through
+<code>createHostMemoryExtractionModel</code> and runs in
+<code>MemoryExtractionSessionLane</code>, one lane per Session
+(<code>packages/runtime-host/src/server/execution-composition.ts:1243-1272</code>).
+The MEMORY.md bundle is a separate store with its own revision and
+backup files
+(<code>packages/storage/src/memory-bundle-io.ts:57-59</code>). The
+personal assistant keeps its index network in
+<code>network.sqlite</code> under its own control directory, and is off
+until enabled in Settings
+(<code>execution-composition.ts:449-484</code>).</p>
+<p>Retrieval is lexical throughout. Facts match on normalized keys,
+exact or by prefix range over an index; transcripts are scored with
+Okapi BM25; index documents are read by key or by literal substring.
+There is no embedding anywhere on these paths.</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<ul>
+<li><strong>What has to run:</strong> the Maka desktop app or CLI, which
+starts the Runtime Host. SQLite is Node's built-in
+<code>node:sqlite</code>. No service, vector store or queue.</li>
+<li><strong>Local and offline:</strong> the stores are local files.
+Extraction needs a model: a cloud API, a local model or a compatible
+gateway.</li>
+<li><strong>An API key to store anything:</strong> a fact needs a model
+call, so a model connection; MEMORY.md does not.</li>
+<li><strong>Install:</strong> a signed source release or a packaged
+desktop build; a source checkout runs <code>npm ci</code> and
+<code>npm run dev</code>. Nothing was built for this report.</li>
+<li><strong>Repairable by hand:</strong> MEMORY.md is Markdown with one
+HTML-comment metadata line per entry. <code>memory.sqlite</code> is
+readable with any SQLite client, and the store checks each row's
+<code>content_hash</code> on read, so a hand edit that misses the hash
+fails the read
+(<code>sqlite-long-term-memory-store.ts:1704-1715</code>).</li>
+</ul>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<ul>
+<li><strong>Capture triggers.</strong>
+<code>buildMemoryExtractionTriggerTools</code> registers
+<code>memory_remember</code> and <code>memory_extract</code>, both with
+no arguments
+(<code>packages/runtime/src/memory-extraction.ts:290-338</code>).
+Automatic extraction runs when a history-compaction checkpoint is
+recorded, if memory is enabled and the Session is neither a subagent nor
+archived (<code>packages/runtime/src/ai-sdk-turn.ts:750-819</code>,
+<code>packages/runtime-host/src/server/execution-model-composition.ts:442-454</code>).</li>
+<li><strong>Extraction.</strong>
+<code>MemoryExtractionEngine.execute</code> reads the Session's
+RuntimeEvents past the cursor, plans evidence from user messages only,
+calls the model, admits candidates and commits
+(<code>memory-extraction.ts:346</code>). Secrets in content, keys or
+quotes reject the item; for an explicit request the whole batch becomes
+a <code>sensitive_information</code> no-op
+(<code>memory-extraction-proposal.ts:359-365</code>,
+<code>memory-extraction.ts:984-1000</code>).</li>
+<li><strong>Commit.</strong> <code>commitExtraction</code> checks the
+cursor and any pending failure, creates every item, writes a receipt and
+advances the cursor in one <code>BEGIN IMMEDIATE</code> transaction
+(<code>packages/storage/src/sqlite-long-term-memory-store.ts:293-495</code>).</li>
+<li><strong>Retrieval.</strong> The <code>Recall</code> tool calls
+<code>runRecall</code>, whose <code>readFacts</code> passes the active
+Session id to <code>searchFacts</code>, which resolves the workspace and
+calls <code>searchByKeys</code>
+(<code>packages/runtime/src/recall-tools.ts:55-150</code>,
+<code>packages/core/src/recall.ts:541-616</code>,
+<code>:1012-1031</code>, <code>execution-composition.ts:877-895</code>).
+The UI's <code>recall.query</code> runs the same function with no active
+Session, so it sees global facts only
+(<code>packages/runtime-host/src/server/recall-coordinator.ts:52</code>).</li>
+<li><strong>Context injection.</strong>
+<code>readPromptProjection</code> builds the MEMORY.md body when memory
+and agent reading are both enabled and incognito is off, and the run
+composer wraps it as untrusted Local Memory
+(<code>packages/runtime-host/src/server/memory-coordinator.ts:162-190</code>,
+<code>interactive-run-composer.ts:801-818</code>). No path injects
+facts.</li>
+<li><strong>Correction.</strong> Facts: <code>#updateItem</code> and
+<code>#changeLifecycle</code> exist, unreached
+(<code>sqlite-long-term-memory-store.ts:962-1046</code>). MEMORY.md:
+whole-file save, reset and backup restore from the desktop
+(<code>apps/desktop/src/main/runtime-host-memory-ipc-main.ts:86-118</code>).</li>
+<li><strong>Index network.</strong> The assistant's tools are registered
+in
+<code>packages/runtime-host/src/assistant/memory-network/host.ts:83-579</code>,
+and <code>CorpusStore.write</code> is the one writer of documents
+(<code>corpus.ts:478-511</code>).</li>
+<li><strong>Tests.</strong>
+<code>packages/storage/src/__tests__/sqlite-long-term-memory-store.test.ts</code>,
+<code>packages/runtime-host/src/__tests__/memory-extraction-coordinator.test.ts</code>,
+<code>packages/core/src/__tests__/recall.test.ts</code> and
+<code>packages/runtime-host/test/assistant/memory-network/test/</code>.</li>
+</ul>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p><code>memory_items</code> is the fact table
+(<code>packages/storage/src/sqlite-long-term-memory-schema.ts:38-87</code>).
+Its columns are <code>item_id</code>, <code>version</code>,
+<code>content</code> (at most 2,000 code points), <code>kind</code> (one
+of six), <code>statement_type</code>, <code>temporal_type</code>,
+<code>scope_type</code>, <code>scope_key</code>,
+<code>event_started_at</code>, <code>event_ended_at</code>,
+<code>observed_at</code>, <code>lifecycle_state</code>,
+<code>origin</code>, <code>content_hash</code>, <code>created_at</code>
+and <code>updated_at</code>. <code>CHECK</code> constraints tie
+<code>scope_key</code> to <code>scope_type</code> and the event bounds
+to <code>temporal_type</code>. <code>observed_at</code> is the latest
+cited event's timestamp, rounded to the minute
+(<code>memory-extraction.ts:1899</code>).</p>
+<p>Keys live in <code>memory_item_keys</code>, up to 16 per item, each
+with a type and an origin of <code>deterministic</code>,
+<code>llm</code> or <code>user</code>. Provenance lives in
+<code>memory_item_sources</code> as the
+<code>(session_id, run_id, turn_id, event_id)</code> of each cited
+event. <code>memory_write_operations</code> holds one row per operation
+with a request hash and the per-mutation results;
+<code>memory_extraction_cursors</code>, <code>_receipts</code>,
+<code>_failures</code> and <code>memory_compaction_policy_denials</code>
+hold the extraction state machine (<code>schema.ts:92-149</code>,
+<code>:213-220</code>).</p>
+<p><strong>Two clocks, one of them unread.</strong> The event bounds are
+the time a statement refers to, kept apart from <code>created_at</code>
+and <code>observed_at</code>. They are validated and stored, and no read
+path filters, ranks or returns them: <code>searchFacts</code> projects
+<code>content</code>, <code>kind</code> and <code>observedAt</code>
+(<code>execution-composition.ts:890-894</code>).</p>
+<p>MEMORY.md entries carry their metadata in a
+<code>&lt;!-- maka-memory: ... --&gt;</code> line: id, origin, source,
+status, scope, an optional <code>sessionId</code>, timestamps,
+<code>approvedBy</code>, <code>approvalSurface</code>, tags and an
+unread <code>decayTtlMs</code> (<code>local-memory.ts:642-733</code>).
+The file is capped at 128 KiB and the prompt body at 12,000 characters
+(<code>local-memory.ts:249-250</code>).</p>
+<p>The index network stores imported originals as <code>documents</code>
+and <code>fragments</code>, external references in
+<code>memory_references</code>, each index's definition as JSON in
+<code>indexes</code>, documents in <code>entries</code>, citations in
+<code>links</code>, and an autoincrementing <code>commits</code> log
+(<code>memory-network/store.ts:52-60</code>, <code>:97-112</code>).</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p><strong>Facts.</strong> <code>buildSqliteMemoryKeySearchQuery</code>
+matches normalized key terms by equality, or by a half-open range for
+prefix mode, then joins items under the scope clause and
+<code>lifecycle_state = 'active'</code>. It groups by item and orders by
+distinct matched terms, then <code>updated_at</code>, then id
+(<code>sqlite-long-term-memory-store.ts:1232-1290</code>). Recall asks
+for 10 in prefix mode (<code>recall.ts:83</code>). The match is on keys
+the extractor chose, never on content, so a term the model did not
+anticipate misses. The fact text is redacted again on the way out, and a
+store failure reads as no facts rather than an error
+(<code>recall.ts:1012-1031</code>).</p>
+<p><strong>Transcripts.</strong> The same call lists every Session on
+the Host, archived ones included because the tool passes
+<code>includeArchived: true</code>, except fake-backend ones, newest
+first, up to 200 (<code>recall-tools.ts:125-129</code>,
+<code>recall.ts:991-1010</code>,
+<code>packages/core/src/transcript-search.ts:40</code>). A candidate
+source narrows which to read, the predicate runs per message on redacted
+text, and BM25 with a quota per Session picks anchors expanded to four
+neighbours. The envelope is capped at 96 KiB
+(<code>recall.ts:74-98</code>, <code>:541-616</code>). The model may
+narrow to one <code>session_id</code> or a time window; it cannot narrow
+by workspace, because no workspace argument exists.</p>
+<p><strong>MEMORY.md.</strong> Injected whole, active entries only,
+session-scoped entries only into their Session, truncated at 12,000
+characters with a marker (<code>local-memory.ts:291-313</code>). Agent
+reading is off by default
+(<code>packages/core/src/runtime-policy.ts:263</code>).</p>
+<p><strong>Index network.</strong> <code>MemoryIndexContent</code>
+returns a directory, one document, a batch or full text, with an
+optional literal search over keys and bodies;
+<code>MemoryIndexLinks</code> walks one hop from a document to originals
+and to other documents citing the same original;
+<code>MemoryOriginal</code> resolves a citation
+(<code>memory-network/host.ts:418-579</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>A fact is created only by extraction. <code>memory_remember</code> is
+<code>exclusive_step</code> and blocks its tool call until the lane
+finishes; <code>memory_extract</code> returns <code>accepted</code> and
+runs after the turn; compaction-time extraction runs in the background
+lane (<code>memory-extraction.ts:298-336</code>,
+<code>packages/runtime-host/src/server/memory-extraction-coordinator.ts:123-164</code>).
+The cursor is per Session, so each range of RuntimeEvents is evaluated
+once. A failed range is retried once, on the next trigger, and then
+settled as <code>discarded</code> with a receipt
+(<code>sqlite-long-term-memory-store.ts:607-832</code>).</p>
+<p>The extractor sees bounded user-message evidence plus assistant text
+for interpretation, and may ask for a history search
+(<code>memory-extraction-proposal.ts:88-120</code>). Canonicalization
+may rewrite an item's content; the rewritten item is checked again
+against the original citations, which constrains the quotes and not the
+paraphrase (<code>memory-extraction.ts:1084-1116</code>).</p>
+<p>There is no deduplication, no update and no conflict handling. Two
+statements that contradict each other are both <code>active</code> and
+are returned in update order.</p>
+<p>MEMORY.md is written by a person: a whole-file save through a
+chunked, hash-checked upload, after <code>redactSecrets</code>
+(<code>memory-coordinator.ts:310-343</code>). The protocol's
+<code>remember</code> verb appends an entry as
+<code>user_authored</code>; nothing in the desktop or CLI sends it.</p>
+<p>An index document is written by the assistant agent, foreground or as
+a background maintenance session, with optimistic concurrency on the
+index revision. A write is refused if it cites an original outside the
+index's sources (<code>corpus.ts:478-491</code>).</p>
+<h3 id="operational-cost">Operational cost</h3>
+<ul>
+<li><strong>Blocking:</strong> only <code>memory_remember</code> blocks,
+for up to three model calls.</li>
+<li><strong>Lag:</strong> an extracted fact is retrievable when its
+commit lands, after the turn for <code>memory_extract</code> and after
+the compaction checkpoint for automatic extraction. Nothing here
+measures it; an estimate is seconds after the turn.</li>
+<li><strong>Whole-store passes:</strong> none for facts. The index
+network re-evaluates each maintained index every 12 hours by default, at
+the cost of an agent session per index
+(<code>memory-network/host.ts:399-416</code>).</li>
+<li><strong>Per turn:</strong> at most 12,000 characters of MEMORY.md,
+in a block the composer builds per run. Facts reach the model only when
+it calls <code>Recall</code>.</li>
+</ul>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>Root Sessions get <code>memory_remember</code>,
+<code>memory_extract</code>, <code>Recall</code>,
+<code>RecallMore</code> and <code>RecallMaterial</code>; child sessions
+get neither the recall tools nor extraction, and plan-mode Sessions get
+no extraction (<code>execution-composition.ts:901-912</code>,
+<code>execution-model-composition.ts:442-445</code>). The tool
+descriptions ask the model to call <code>memory_remember</code> only
+when the user explicitly asks, and <code>memory_extract</code> for
+durable information the user did not ask to keep. Neither takes an
+argument, so the model chooses when to extract and never what.</p>
+<p>Incognito blocks recall and extraction, and disabling memory blocks
+extraction (<code>recall.ts:553-569</code>,
+<code>memory-extraction-coordinator.ts:166-190</code>). The
+<code>Recall</code> tool itself does not consult
+<code>memory.enabled</code>.</p>
+<p>The ACP agent exposes <code>_maka/memory/query</code> and
+<code>_maka/memory/mutate</code> as extension methods, checking only
+that a session-scoped mutation names a Session the client owns
+(<code>packages/cli/src/acp/maka-acp-agent.ts:247-256</code>,
+<code>session-registry.ts:669-678</code>).</p>
+<p>Personal-assistant Sessions get nineteen <code>Memory*</code> tools,
+including the write, edit, create, maintain and control verbs
+(<code>memory-network/host.ts:83-579</code>).</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Admission is the strongest part.</strong> Evidence is
+projected only from text events whose role and author are both
+<code>user</code>, and a quote must appear in one of them
+(<code>memory-extraction-evidence.ts:95-118</code>). A prompt injection
+in a fetched page cannot cite itself into the store. It can steer the
+paraphrase of a fact that quotes the user, and choose its scope.</p>
+<p><strong>Commits are atomic and replay-safe.</strong> Every write
+takes <code>BEGIN IMMEDIATE</code> and an operation id whose request
+hash must match on replay, and the test suite injects failpoints at each
+write boundary (<code>sqlite-long-term-memory-store.ts:246-291</code>,
+test <code>:1159-1215</code>).</p>
+<p><strong>Forgetting does not exist for facts.</strong> No production
+path archives an item, nothing deletes one, purging a Session leaves the
+facts quoted from it, and the Settings reset touches MEMORY.md only. The
+only way to remove a fact is to delete <code>memory.sqlite</code>.</p>
+<p>Withheld marks, and the reason for each:</p>
+<ul>
+<li><p><strong><code>trust_state</code> — withheld.</strong> Facts have
+<code>active</code> and <code>archived</code>, a lifecycle axis with no
+production writer. MEMORY.md's <code>review_required</code> and
+<code>rejected</code> are produced only into <code>PENDING.md</code>,
+which no prompt reader opens, so the status filter in
+<code>buildLocalMemoryPromptBody</code> never sees them; the rows it
+excludes in practice are archived.</p></li>
+<li><p><strong><code>human_review</code> — withheld.</strong> No shipped
+client sends <code>propose</code>, <code>approve</code> or
+<code>reject</code>, so the queue is empty. Over ACP, the client that
+proposes can also approve, and the approver is recorded as the literal
+<code>user</code> (<code>memory-coordinator.ts:378-442</code>,
+<code>local-memory.ts:377</code>).</p></li>
+<li><p><strong><code>bitemporal</code> — withheld.</strong> Event bounds
+are model-extracted valid time, distinct from record time, and nothing
+reads them.</p></li>
+<li><p><strong><code>tombstone</code> — withheld.</strong> A rejected
+proposal is a status on a row in <code>PENDING.md</code>, keyed on its
+proposal id, and no write consults it; <code>content_hash</code> is an
+integrity check.</p></li>
+<li><p><strong><code>scope_enforced</code> — withheld, on the
+<code>Recall</code> path.</strong> The fact layer has a real boundary:
+<code>searchByKeys</code> filters in SQL to global or the active
+Session's <code>workspaceRoot</code>, and the key comes from the Session
+header on both the write and the read side
+(<code>sqlite-long-term-memory-store.ts:1266-1281</code>,
+<code>execution-composition.ts:877-895</code>,
+<code>ai-sdk-turn.ts:747</code>). The same <code>Recall</code> response
+joins those facts with BM25 passages from every Session on the Host,
+archived ones included, and <code>recall.ts</code> has no workspace term
+(<code>recall.ts:991-1010</code>, <code>recall-tools.ts:125-129</code>).
+Memory from another workspace reaches the agent through that call, so
+the agent's read path is not scoped. Whether a fact is global, and so
+visible in every workspace, is also the extraction model's choice
+(<code>memory-extraction-proposal.ts:53</code>).</p></li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The store suite has 49 cases, including concurrent migrations,
+cross-connection compare-and-swap, crash failpoints at every write
+boundary, corrupt receipts and child-cardinality limits. The extraction
+coordinator suite has 33, covering replay, retry-then-discard and policy
+denial. <code>recall.test.ts</code> has 61. The memory-network suite
+under <code>packages/runtime-host/test/assistant/</code> runs through
+<code>test:assistant</code>. I ran none of them.</p>
+<p>The <code>negative_eval</code> case is the scope test at
+<code>sqlite-long-term-memory-store.test.ts:302-353</code>. A workspace
+item is absent from a global-only prefix search for
+<code>runtime</code>, and the next assertion returns it for
+<code>workspace-maka</code>, so the absence cannot pass on an empty
+search. The archive case at <code>:948-976</code> has the same shape, on
+verbs production does not call.</p>
+<p>Missing cases: a second workspace key that must not see the first's
+item; a <code>Recall</code> call from one workspace that must not return
+another's transcript, if that is the intent; a test that a
+<code>commits</code> row carries the text written; and any test that a
+contradicted fact stops being returned, which the design cannot
+pass.</p>
+<p><code>docs/eval/</code> holds Terminal-Bench 2.1 runs comparing Maka
+with other harnesses on the same model. They measure task completion,
+not memory, and no committed case exercises recall quality. No paper
+describes the memory design.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Admit a fact only on a quote from the user.</strong> Check
+every citation as a substring of a user message the model saw, and
+refuse tool and assistant text as evidence by construction rather than
+by prompt.</li>
+<li><strong>Derive the scope key from the session on both
+sides.</strong> Maka reads <code>workspaceRoot</code> from the Session
+header at write and at read, so the two cannot drift and the model is
+never asked for it.</li>
+<li><strong>Give extraction a cursor and a one-retry rule.</strong> A
+per-session watermark with a frozen coverage hash, one retry and a
+receipted discard means a range is never re-extracted and never silently
+lost.</li>
+<li><strong>Log the full text of every agent write in the same
+transaction.</strong> The index network's <code>commits</code> table is
+the cheapest audit that answers what the document said before.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Shipping the correction verbs without a caller.</strong> A
+store with compare-and-swap update and archive that nothing calls is an
+append-only store with extra code; contradictions accumulate as
+peers.</li>
+<li><strong>A scoped layer beside an unscoped one in the same
+answer.</strong> If the facts are scoped and the transcripts they quote
+are not, the boundary costs latency and protects nothing.</li>
+<li><strong>A review queue whose producer and approver share a
+verb.</strong> Put approve on a surface the proposer cannot reach before
+writing the queue.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Maka suits a single user who wants a local agent that remembers a few
+stable preferences and project facts and can search its own history, and
+who will accept that a remembered fact is permanent. It does not suit
+anyone who must honour a deletion request, correct a stale fact, or keep
+two clients' projects apart in what the agent can recall. The memory is
+one subsystem of a large workspace product; adopting it means adopting
+the Runtime Host.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is the transcript layer's reach across workspaces intended, given
+that the tool description promises what this workspace knows, and the
+facts layer reads "workspace" as <code>workspaceRoot</code>?</li>
+<li>Is a correction surface for facts planned, and would it reach the
+model or only the desktop?</li>
+<li>How often does compaction-time extraction fire in practice, and what
+does it cost per Session? This needs running the system.</li>
+<li>Does the memory network's visibility gate
+(<code>controller.ts:49-80</code>) hold for every source adapter,
+including external ones? It was read, not traced through each
+adapter.</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong>
+<code>packages/storage/src/sqlite-long-term-memory-schema.ts</code>,
+<code>sqlite-long-term-memory-store.ts</code>,
+<code>long-term-memory-store.ts</code>,
+<code>memory-bundle-io.ts</code>, <code>memory-bundle-store.ts</code>,
+<code>packages/runtime-host/src/assistant/memory-network/store.ts</code>,
+<code>corpus.ts</code>.</li>
+<li><strong>Contracts:</strong>
+<code>packages/core/src/long-term-memory.ts</code>,
+<code>packages/core/src/local-memory.ts</code>.</li>
+<li><strong>Write path:</strong>
+<code>packages/runtime/src/memory-extraction.ts</code>,
+<code>memory-extraction-proposal.ts</code>,
+<code>memory-extraction-evidence.ts</code>,
+<code>packages/runtime-host/src/server/memory-extraction-coordinator.ts</code>,
+<code>memory-extraction-session-lane.ts</code>,
+<code>memory-coordinator.ts</code>.</li>
+<li><strong>Read path:</strong>
+<code>packages/core/src/recall.ts</code>,
+<code>packages/runtime/src/recall-tools.ts</code>,
+<code>packages/runtime-host/src/server/execution-composition.ts</code>,
+<code>recall-coordinator.ts</code>,
+<code>interactive-run-composer.ts</code>.</li>
+<li><strong>API and integration:</strong>
+<code>packages/runtime-host/src/protocol/memory.ts</code>,
+<code>packages/cli/src/acp/maka-acp-agent.ts</code>,
+<code>session-registry.ts</code>,
+<code>apps/desktop/src/main/runtime-host-memory-ipc-main.ts</code>,
+<code>packages/runtime-host/src/assistant/memory-network/host.ts</code>,
+<code>controller.ts</code>.</li>
+<li><strong>Tests:</strong>
+<code>packages/storage/src/__tests__/sqlite-long-term-memory-store.test.ts</code>,
+<code>sqlite-long-term-memory-crash.test.ts</code>,
+<code>packages/runtime-host/src/__tests__/memory-extraction-coordinator.test.ts</code>,
+<code>packages/core/src/__tests__/recall.test.ts</code>,
+<code>packages/runtime-host/test/assistant/memory-network/test/index-navigation.test.ts</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run from the clone root with
+<code>PIN=d14cec5719352f77d324e1065e0c1943c33772c7</code>. The clone was
+shallow (<code>--depth 1</code>). Each returned nothing unless a result
+is stated.</p>
+<ol type="1">
+<li><code>git ls-tree $PIN .gitmodules</code> — no submodules.</li>
+<li><code>git grep -n -E 'DELETE FROM memory_(items|write_operations)([^_]|$)' $PIN</code>
+— nothing deletes a fact or a write receipt.</li>
+<li><code>git grep -n -E '\.applyMutations\(' $PIN -- packages apps ':!**/__tests__/**'</code>
+— one hit, the facade forwarding at
+<code>long-term-memory-store.ts:134</code>.</li>
+<li><code>git grep -n -E '\.readItem\(' $PIN -- packages apps ':!**/__tests__/**'</code>
+— one hit, the facade at
+<code>long-term-memory-store.ts:156</code>.</li>
+<li><code>git grep -n -E '\.searchByKeys\(' $PIN -- packages apps ':!**/__tests__/**'</code>
+— two hits: <code>execution-composition.ts:884</code> and the
+facade.</li>
+<li><code>git grep -l -E 'eventStartedAt|event_started_at|eventEndedAt' $PIN -- packages apps ':!**/__tests__/**'</code>
+— five files: the contract, the proposal schema, the engine, the schema
+and the store. No reader in recall, the host or the desktop.</li>
+<li><code>git grep -n -E "kind: '(propose|approve|reject)'" $PIN -- packages apps ':!**/__tests__/**'</code>
+— the memory protocol's type and decoder, plus unrelated
+<code>reject</code> kinds in <code>quiescent-session-snapshot.ts</code>.
+No client builds a memory proposal.</li>
+<li><code>git grep -n -i -E 'propose|approve' $PIN -- apps/desktop/src/main/runtime-host-memory-ipc-main.ts apps/desktop/src/renderer/settings</code>
+— three hits, all in permission and subagent settings pages.</li>
+<li><code>git grep -n -E 'workspaceRoot|workspaceKey|projectId' $PIN -- packages/core/src/recall.ts</code>
+— no workspace predicate in recall.</li>
+<li><code>git grep -n -E '(DELETE FROM|UPDATE|DROP TABLE)[[:space:]]+commits' $PIN</code>
+— no statement mutates the index network's log.</li>
+<li><code>git grep -n -E 'FROM commits' $PIN -- packages/runtime-host/test packages/runtime-host/src/__tests__</code>
+— three hits in <code>index-navigation.test.ts</code>, all
+<code>count(*)</code>.</li>
+<li><code>git grep -n -E 'memory\.sqlite|LONG_TERM_MEMORY_DATABASE_NAME' $PIN -- packages apps ':!**/__tests__/**'</code>
+— the facade and <code>storage-footprint.ts</code>, which only measures
+the file.</li>
+<li><code>git grep -n -E 'arxiv\.org' $PIN</code> — two hits, a blog
+footnote citing a serverless-computing paper. No memory paper.</li>
+</ol>
+<h2 id="history">History</h2>
+<p><strong>2026-10-17</strong> — <a
+href="https://github.com/apache/maka/commit/d14cec5719352f77d324e1065e0c1943c33772c7"><code class="commit-id" title="d14cec5719352f77d324e1065e0c1943c33772c7">d14cec57…</code></a>
+— first reading, at the head of <code>main</code>, from a shallow clone.
+LICENSE, NOTICE and DISCLAIMER-WIP were read in full; no rider. The
+project's proposal names its earlier home,
+<code>maka-agent/maka-agent</code>, and the atlas had no report under
+that name. Screened before reading: one auto-run surface,
+<code>.github/copilot-instructions.md</code>, read as data; three
+build-time execution points; 29 surfaces inside the cooldown, a count
+the shallow clone inflates; nine unpinned surfaces. Two marks:
+<code>audit_log</code>, <code>negative_eval</code>;
+<code>scope_enforced</code> withheld because <code>Recall</code> returns
+transcripts from every workspace beside the scoped facts. Nothing was
+installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -487,6 +487,15 @@ feature leads to a JSON facts ledger no script reads, and the
 ranks as before. The project's harness shows what the reader buys: its
 eight temporal cases all fail before the demotion landed and all pass
 after.</p>
+<p><a href="../../systems/maka/">Apache Maka</a> has the writer and not
+the reader. The extraction model supplies <code>eventStartedAt</code>
+and <code>eventEndedAt</code> with a temporal type, checked by a
+<code>CHECK</code> constraint and stored beside <code>created_at</code>
+and <code>observed_at</code>
+(<code>packages/storage/src/sqlite-long-term-memory-schema.ts:38-87</code>).
+No read path filters, ranks or returns them; the Recall fact projection
+carries content, kind and <code>observedAt</code> only
+(<code>packages/runtime-host/src/server/execution-composition.ts:890-894</code>).</p>
 <h2 id="a-third-clock">A third clock</h2>
 <p>Two clocks answer <em>what was true</em> and <em>what did we
 believe</em>. The temporal database literature names a third, decision

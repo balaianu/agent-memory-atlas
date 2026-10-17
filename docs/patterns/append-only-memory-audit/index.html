@@ -866,6 +866,16 @@ in the earlier insert or replace row. The findings store beside it in
 <code>forget</code> with no record
 (<code>src/ken/memory.py:82-93</code>, <code>:166-167</code>), so the
 mark covers premises and not the notes the hooks inject.</p>
+<p><strong><a href="../../systems/maka/">Apache Maka</a> logs one of its
+three stores in full.</strong> The personal assistant's index network
+inserts a <code>commits</code> row carrying the document key, the full
+new text, the cited refs and the revision inside the same transaction as
+each <code>MemoryIndexWrite</code> or <code>MemoryIndexEdit</code>, and
+no statement in the tree updates or deletes one
+(<code>packages/runtime-host/src/assistant/memory-network/corpus.ts:478-511</code>).
+The fact store beside it keeps an idempotency receipt per operation with
+outcomes and no content, and its correction verbs have no production
+caller.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Mutation and audit event commit or roll back together.</li>

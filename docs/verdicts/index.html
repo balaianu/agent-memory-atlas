@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 753 reports.</strong></p>
+<p><strong>This page covers all 754 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31342,6 +31342,48 @@ its failure paths spelled out.</li>
 <li>Do not copy when: the SDK alone must hold a scope against a model, a
 deleted correction must stay deleted, or you need a harness to compare
 memory writers.</li>
+</ul>
+<h3 id="maka"><a href="../systems/maka/"><code>maka</code></a></h3>
+<ul>
+<li>Best idea: <strong>admit a fact only on a quote from the
+user.</strong> Evidence is projected only from text events whose role
+and author are both <code>user</code>, every citation must be a
+substring of one, and a canonicalized rewrite is re-checked against the
+same citations, so injected tool output cannot cite itself into the
+store.</li>
+<li>Second idea: <strong>derive the scope key from the session header on
+both sides.</strong> The writer and the reader of the fact layer both
+take <code>workspaceRoot</code> from the Session header, and the model's
+tools take no scope argument, so that predicate cannot drift or be
+widened at read time.</li>
+<li>Biggest risk: <strong>no production path corrects or forgets a
+fact.</strong> <code>applyMutations</code> carries update, archive and
+restore with compare-and-swap, its only caller outside tests is the
+facade, nothing deletes an item, and a purged Session leaves the facts
+quoted from it.</li>
+<li>Second risk: <strong>one Recall call pairs a scoped fact layer with
+an unscoped transcript layer.</strong> The transcripts those facts quote
+are returned from every Session on the Host, archived ones included,
+which is why <code>scope_enforced</code> is withheld; whether a fact is
+global is the extraction model's choice.</li>
+<li>Third risk: the MEMORY.md review queue has no producer in any
+shipped client, and over ACP the client that proposes can also
+approve.</li>
+<li>Most reusable component:
+<code>packages/runtime/src/memory-extraction-evidence.ts</code> with
+<code>admitMemoryProposalItemDetailed</code> in
+<code>memory-extraction-proposal.ts</code> — user-only evidence
+projection and substring admission.</li>
+<li>Maturity impression: Apache-2.0 incubating podling, 5,086 commits
+from 146 contributors between 19 May and 17 October 2026, about 737,000
+lines of TypeScript, 312 test cases in 27 memory and recall test files
+with crash failpoints at every write boundary. Two marks:
+<code>audit_log</code>, <code>negative_eval</code>.</li>
+<li>Study when: you are building extraction that must resist injected
+tool output, or a crash-safe per-session extraction cursor with one
+retry and a receipted discard.</li>
+<li>Do not copy when: facts must be correctable or deletable, or two
+projects must not see each other's history through recall.</li>
 </ul>
         </article>
       </div>

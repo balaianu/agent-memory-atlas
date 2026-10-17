@@ -7,7 +7,7 @@ page_kind: methodology
 layout: wide
 ---
 
-Every one of the **753 reports**, by name. Generated from each report's own frontmatter, so this list cannot drift from what the atlas actually holds — unlike the [verdicts](../verdicts/), which are hand-written, and where the difference between *complete by construction* and *complete as a fact about today* is drawn out.
+Every one of the **754 reports**, by name. Generated from each report's own frontmatter, so this list cannot drift from what the atlas actually holds — unlike the [verdicts](../verdicts/), which are hand-written, and where the difference between *complete by construction* and *complete as a fact about today* is drawn out.
 
 Looking for something else? The [capability index](../capabilities/) groups systems by the seven rubric mechanisms, the [comparative matrix](../compare/#2-comparative-matrix) puts eleven columns side by side, and the [pattern library](../patterns/) starts from the mechanism rather than the system.
 
@@ -77,6 +77,7 @@ Looking for something else? The [capability index](../capabilities/) groups syst
 <li><a class="az-row" href="../systems/anolisa-agent-memory/"><span class="az-id">ANOLISA Agent Memory</span><span class="az-what">The escape test checks the filesystem, not the error</span><code class="az-repo">agentic-os-org/ANOLISA</code><span class="az-caps"><span class="az-cap">Mutation audit</span><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/anything-llm/"><span class="az-id">AnythingLLM</span><span class="az-what">Five global, twenty per workspace</span><code class="az-repo">Mintplex-Labs/anything-llm</code><span class="az-caps"><span class="az-cap">Scope enforced</span></span></a></li>
 <li><a class="az-row" href="../systems/aoci-code/"><span class="az-id">AOCI-CODE</span><span class="az-what">A governed, source-bound code index as agent memory</span><code class="az-repo">aoci-spec/aoci-code</code><span class="az-caps"></span></a></li>
+<li><a class="az-row" href="../systems/maka/"><span class="az-id">Apache Maka</span><span class="az-what">A local agent workspace with an evidence-gated fact store, a user-owned MEMORY.md and an agent-maintained index</span><code class="az-repo">apache/maka</code><span class="az-caps"><span class="az-cap">Mutation audit</span><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/arc-code/"><span class="az-id">arc-code</span><span class="az-what">The actuator writes the log</span><code class="az-repo">jerber/arc-code</code><span class="az-caps"></span></a></li>
 <li><a class="az-row" href="../systems/archeus/"><span class="az-id">archeus</span><span class="az-what">A per-project code graph and reviewed lessons for Claude Code</span><code class="az-repo">babarmuhammad/archeus</code><span class="az-caps"><span class="az-cap">Trust state</span><span class="az-cap">Negative evals</span></span></a></li>
 <li><a class="az-row" href="../systems/archiver-rag/"><span class="az-id">Archiver RAG</span><span class="az-what">An Obsidian vault as shared agent memory</span><code class="az-repo">FernandoJRR/archiver-rag</code><span class="az-caps"></span></a></li>
