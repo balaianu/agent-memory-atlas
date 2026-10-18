@@ -13,7 +13,11 @@ when the work happens.
   Beliefs map to trust state and resolution, intentions to the prospective-memory
   category, the plan library to procedural skills. Goals are a common stored
   type; what no reading shows is a goal selecting what the agent commits to, and
-  no mark covers a commitment. Not a proposal for an eighth mark.
+  no mark covers a commitment. Compares BDI with ReAct and with a ReAct loop
+  plus kanban, memory and sub-agents: the gaps are drop reasons, cards linked to
+  the beliefs they assume, and delegation without the beliefs. Agent Mesh's
+  `decision_assumption_violated` is the nearest schema and has no producer. Not
+  a proposal for an eighth mark.
 - [2026-09-28-unreleased-code-watchlist.md](2026-09-28-unreleased-code-watchlist.md) —
   items examined while their code, their memory component or their paper was
   not public, with the places to watch for a release and the commands to

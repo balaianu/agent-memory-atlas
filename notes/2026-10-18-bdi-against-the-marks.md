@@ -65,6 +65,47 @@ systems read here ([MuscleMemory](../content/systems/musclememory.md),
 [stella](../content/systems/stella.md), [vir](../content/systems/vir.md)) mostly
 retrieve one by similarity to the task or by file overlap.
 
+## BDI and ReAct
+
+A ReAct loop and a BDI interpreter are both perceive–think–act cycles, and a
+ReAct agent with a memory store has something like a belief base. What ReAct
+lacks is the rest of BDI. Its plan lives in generated text ("Thought: first
+check the config"), so the next step can drop or contradict it without anything
+recording that it happened. BDI keeps intentions as objects, separates choosing
+*what* to pursue from planning *how*, and has a commitment rule saying when to
+reconsider. ReAct reconsiders on every step by default, which is one way to
+describe why it drifts. Classic BDI also selects a stored plan by trigger and
+context where ReAct has the model improvise one; agent skills are the middle
+ground. This section is reasoning about the two designs, not a reading of code.
+
+## A ReAct loop with a kanban, memory and delegation
+
+Add a kanban and sub-agents and the shape comes close. Memory is the belief
+base; the backlog holds desires; cards in progress are intentions; moving a card
+into progress is deliberation; a WIP limit is a commitment policy; delegating a
+card is sub-goaling, a plan step that spawns a child intention, here executed
+by another agent.
+
+Three gaps remain, and each is where such systems fail. A card leaves "doing"
+without a reason, so the next agent cannot tell finished work from work
+abandoned because a premise proved false. A card is not linked to the beliefs it
+rests on, so when memory learns that a premise is wrong, nothing pulls the card
+back for review; that is the cascade problem the atlas keeps finding for
+deletion, in another form. And a delegated card arrives without the beliefs
+behind it, which is the cross-agent handoff problem stated in BDI's terms.
+
+Four readings hold pieces of this. [Jumbo](../content/systems/jumbo.md) keeps
+goals as event-sourced aggregates tied to a git branch and worktree, with a
+background agent that reviews an implementation before `jumbo goal approve`.
+[ctx-open](../content/systems/ctx-open.md) keeps goal, epic and task records
+with a state enum. [Gas Town](../content/systems/gastown.md) orchestrates
+several coding agents. [Agent Mesh](../content/systems/agent-mesh.md) comes
+closest to the second gap in its schema: a decision carries `assumptions`, and
+a `decision_assumption_violated` event would flip one to `violated` and stamp
+the event that invalidated it, but no code path in the package emits it. What
+does run is the neighbouring rule: editing an accepted decision needs a
+`revision_reason` and returns it to `proposed`.
+
 ## What the lens adds
 
 It names a distinction the seven marks do not draw. Every mark is about whether
@@ -81,6 +122,8 @@ protocol](2026-08-07-the-atlas-as-an-agent-protocol.md) explains why uniform
 judgements nobody has made uniformly are kept out of the machine-readable layer,
 and the same reasoning applies here: the corpus holds too few intention systems
 to calibrate a test against. What would change that is a system that stores an
-intention with its adoption reason and its drop reason, and a read path that
-withholds a dropped intention from the agent's plan. If one arrives, this note is
-the place to start the comparison.
+intention with its adoption reason and its drop reason, links it to the beliefs
+it assumes, and withholds or re-opens it when one of them is superseded. Agent
+Mesh's unemitted `decision_assumption_violated` is the nearest schema; a system
+that emits it is the one to compare against. If one arrives, this note is the
+place to start.
