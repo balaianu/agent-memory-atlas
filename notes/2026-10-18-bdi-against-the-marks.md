@@ -2,7 +2,8 @@
 
 **Status:** a lens, not a finding about any system
 **Origin:** a request on 2026-10-18 to analyse the Wikipedia article on the
-belief–desire–intention software model, alongside four weight-side memory
+[belief–desire–intention software model](https://en.wikipedia.org/wiki/Belief%E2%80%93desire%E2%80%93intention_software_model),
+alongside four weight-side memory
 papers that were excluded the same day.
 
 ## What this note is
