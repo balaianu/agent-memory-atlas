@@ -1829,23 +1829,37 @@ event the policy may already have dropped.</li>
 <h3 id="ai-memory"><a
 href="../systems/ai-memory/"><code>ai-memory</code></a></h3>
 <ul>
-<li>Best idea: a <code>Handoff</code> with an open/accepted/expired
-lifecycle, typed sender and recipient, and an
-<code>open_questions</code> list — memory of what is <em>not</em>
-known.</li>
-<li>Biggest risk: hooks re-capture every session and supersession is
-page-keyed, so a deleted page returns through the path that first
-produced it.</li>
-<li>Most reusable component: <code>handoff.rs</code>, which is small and
-independent of the rest of the system.</li>
-<li>Maturity impression: broad and well packaged, with harness adapters
-for eight agents and committed prior-art analyses of four systems in
-this atlas.</li>
-<li>Study when: work is interrupted and resumed in a different harness,
-and re-explaining the state is the actual cost.</li>
-<li>Do not copy when: you need trust state — and do not assume its
-<code>do_not_answer_from</code> tag does anything; it appears only in a
-test fixture.</li>
+<li>Best idea: <strong>a single-use claim that is one
+compare-and-set.</strong> The next session in the same project and
+directory flips a handoff from <code>open</code> to
+<code>accepted</code> with the scope and owner predicates inside the
+<code>UPDATE</code>, and receives the body only if its own statement
+changed the row.</li>
+<li>Biggest risk: <strong>the baton is thinner than its schema.</strong>
+An automatic handoff holds the first and last user prompt and a list of
+tool names, <code>files_touched</code> stays empty and
+<code>to_agent</code> is never written, so what the first agent learned
+travels only in a manual <code>memory_handoff_begin</code>.</li>
+<li>Most reusable component: <code>accept_handoff_in_transaction</code>
+in <code>crates/ai-memory-store/src/ops.rs</code> with the selection
+rules in <code>reader.rs</code> — owner, directory and liveness
+boundaries on delivery, and a no-claim notice that carries metadata
+only.</li>
+<li>Second risk: <strong>nothing expires a baton by age.</strong> Expiry
+is supersession by a newer automatic baton, a cancel or an operator bulk
+expiry; manual batons are exempt from the sweeps and outrank automatic
+ones, so a stale manual baton wins the next session start. Separately,
+<code>memory_query</code> with <code>global=true</code> searches every
+project on a default install.</li>
+<li>Maturity impression: MIT, 478,099 lines of Rust across eleven crates
+and 3,922 commits from 21 May to 17 October 2026, with 6,544 test
+functions and committed LongMemEval-S retrieval reports; no handoff
+evaluation is committed. One mark, <code>negative_eval</code>.</li>
+<li>Study when: agents in different harnesses share one store and one
+must pick up the other's interrupted task exactly once, without
+misdelivery across operators, projects or parallel sessions.</li>
+<li>Do not copy when: the handoff must carry the first agent's findings,
+be held for a specific recipient, or lapse when it goes stale.</li>
 </ul>
 <h3 id="ctx"><a href="../systems/ctx/"><code>ctx</code></a></h3>
 <ul>

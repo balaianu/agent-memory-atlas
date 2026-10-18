@@ -649,11 +649,11 @@
             <a aria-label="Read the Memory Engine analysis" href="./systems/memory-engine/">Read analysis <span aria-hidden="true">→</span></a>
           </article>
 
-          <article class="system-card accent-gold" data-category="local" data-capabilities="scope_enforced" data-search="ai-memory rust handoff open questions next steps expired cross harness claude codex markdown git sqlite decay retention observation hooks">
+          <article class="system-card accent-gold" data-category="local" data-capabilities="negative_eval" data-search="ai-memory rust handoff baton single-use claim compare-and-set open accepted expired cross harness claude codex opencode owner operator cwd directory turn checkpoint recap open questions next steps markdown git sqlite fts5 rrf decay retention observation hooks mcp agent messages longmemeval">
             <div class="system-card-top"><span>Cross-harness handoff</span><code>50</code></div>
             <h3>ai-memory</h3>
-            <p>A handoff that expires, addressed between harnesses, carrying the open questions rather than the conclusions.</p>
-            <dl><div><dt>Best idea</dt><dd>Memory of what is not known</dd></div><div><dt>Main risk</dt><dd>Re-capture undoes deletion</dd></div></dl>
+            <p>A single-use handoff baton between coding-agent sessions, claimed by one atomic update inside the receiving project; the automatic baton carries the user's prompts, not the agent's findings.</p>
+            <dl><div><dt>Best idea</dt><dd>One compare-and-set claims the baton, and only the claimant reads it</dd></div><div><dt>Main risk</dt><dd>Batons never expire by age and route on no recipient</dd></div></dl>
             <a aria-label="Read the ai-memory analysis" href="./systems/ai-memory/">Read analysis <span aria-hidden="true">→</span></a>
           </article>
 

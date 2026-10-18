@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="Memory for coding agents built
-around a handoff that expires — a typed record of unfinished work
-addressed from one harness to another, carrying open questions rather
-than conclusions.">
+    <meta name="description" content="A Rust memory server for coding
+agents, with Markdown pages in git over SQLite, harness lifecycle hooks,
+and a single-use handoff baton between sessions.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="ai-memory — Agent Memory Atlas">
-    <meta property="og:description" content="Memory for coding agents
-built around a handoff that expires — a typed record of unfinished work
-addressed from one harness to another, carrying open questions rather
-than conclusions.">
+    <meta property="og:description" content="A Rust memory server for
+coding agents, with Markdown pages in git over SQLite, harness lifecycle
+hooks, and a single-use handoff baton between sessions.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ai-memory — Agent Memory Atlas">
-    <meta name="twitter:description" content="Memory for coding agents
-built around a handoff that expires — a typed record of unfinished work
-addressed from one harness to another, carrying open questions rather
-than conclusions.">
+    <meta name="twitter:description" content="A Rust memory server for
+coding agents, with Markdown pages in git over SQLite, harness lifecycle
+hooks, and a single-use handoff baton between sessions.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>ai-memory — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -44,7 +41,7 @@ than conclusions.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "ai-memory",
-      "description": "Memory for coding agents built around a handoff that expires \u2014 a typed record of unfinished work addressed from one harness to another, carrying open questions rather than conclusions.",
+      "description": "A Rust memory server for coding agents, with Markdown pages in git over SQLite, harness lifecycle hooks, and a single-use handoff baton between sessions.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -101,24 +98,23 @@ than conclusions.">
         <div class="document-hero-inner">
           <p class="eyebrow">Cross-harness handoff</p>
           <h1>ai-memory</h1>
-          <p class="document-deck">Memory for coding agents built around
-a handoff that expires — a typed record of unfinished work addressed
-from one harness to another, carrying open questions rather than
-conclusions.</p>
+          <p class="document-deck">A Rust memory server for coding
+agents, with Markdown pages in git over SQLite, harness lifecycle hooks,
+and a single-use handoff baton between sessions.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/akitaonrails/ai-memory">
               <span>Source</span>
               <strong>akitaonrails/ai-memory</strong>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
-            <a class="meta-pill revision-pill" href="https://github.com/akitaonrails/ai-memory/commit/74d2d31ebd8cca656c49f31563fac53e0b61c5cf" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">
+            <a class="meta-pill revision-pill" href="https://github.com/akitaonrails/ai-memory/commit/995e35d5866973c3176709261e924a67e3c76158" title="995e35d5866973c3176709261e924a67e3c76158">
               <span>Analyzed revision</span>
-              <code>74d2d31e…</code>
+              <code>995e35d5…</code>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-14</strong>
+              <strong>2026-10-18</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/akitaonrails--ai-memory" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -126,7 +122,21 @@ conclusions.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip is-present" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>478,099
+lines of Rust across eleven crates, tests included; 27,240 lines of Rust
+and TypeScript in seven companion packages; 7,083 in the evals
+harness</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>3,922
+commits on main under 175 distinct author names, 21 May to 17 October
+2026; workspace version 3.1.1</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>6,544
+#[test] and #[tokio::test] functions; CI runs the workspace under cargo
+nextest; LongMemEval-S retrieval reports committed under
+docs/benchmarks; none run for this reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -142,29 +152,37 @@ conclusions.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>ai-memory is an MIT-licensed Rust workspace of about 140,000 lines
-across ten crates, aimed at one scenario stated in its own opening
-line:</p>
-<blockquote>
-<p>"Quit Claude Code mid-task, start OpenAI Codex in the same directory,
-continue without re-explaining the architecture, the failed approaches,
-or the open questions."</p>
-</blockquote>
-<p>Most of the design is familiar and well executed: Markdown in git as
-the human source of truth with SQLite as a derived index, harness
-lifecycle hooks for capture, opt-in LLM consolidation, a retention
-score. That combination is <a href="../basic-memory/">Basic Memory</a>'s
-position with <a href="../agentmemory/">agentmemory</a>'s decay, and the
-repository says so — it carries
-<code>docs/research-basic-memory.md</code>,
-<code>research-agentmemory.md</code>, <code>research-cognee.md</code>
-and <code>research-karpathy-llm-wiki.md</code>, plus a
-<code>prior-art-implementation-findings.md</code> comparing those
-analyses against its own implementation. A system that has explicitly
-read the same prior art this atlas reviews is unusual, and the findings
-document is candid about what it took and what it did not.</p>
-<p>The novel part is the <strong>handoff</strong>, and it is worth the
-review on its own:</p>
+<p>ai-memory is a memory server for coding agents. Hooks in each harness
+record the session without a model call, the end of the session writes a
+rule-based summary page into a git-tracked Markdown wiki, and SQLite
+indexes it. Its distinctive part is the <strong>handoff</strong>: a
+single-use baton that the end of one session writes and the start of the
+next claims, so a task interrupted in Claude Code can be resumed in
+Codex. The delivery is the strong half. A claim is one compare-and-set
+on <code>state = 'open'</code> inside the receiving project, filtered by
+operator and directory, and only the session that wins it receives the
+body. The content is the weak half. An automatic baton holds the
+session's first and last user prompt and the names of the tools it used,
+<code>to_agent</code> is never written, and nothing expires a baton
+because it is old.</p>
+<p>For anyone treating this as a reference design for cross-agent
+handoff, the split matters. What the first agent <em>learned</em>
+reaches the second only if the first agent writes a manual handoff
+through <code>memory_handoff_begin</code>, or if assistant capture is
+opted into on both the hook and the server. The
+<code>open_questions</code> field of an automatic baton is the last user
+prompt with a label in front of it. Addressing is by workspace, project,
+owner and working directory; the typed sender and recipient on the
+record route nothing.</p>
+<p>The system carries one mark, <code>negative_eval</code>: committed
+tests assert that another operator's, a cancelled and a superseded baton
+are not delivered, with the positive delivery beside each.
+<code>scope_enforced</code> is withheld, because
+<code>memory_query</code> takes a <code>global</code> argument that
+searches every project, and on a deployment that does not distinguish
+operators no predicate narrows it.</p>
+<p>The record type, last changed in <code>handoff.rs</code> on 21 August
+2026:</p>
 <pre class="rust"><code>pub enum HandoffState { Open, Accepted, Expired }
 
 pub struct NewHandoff {
@@ -178,337 +196,599 @@ pub struct NewHandoff {
     pub open_questions: Vec&lt;String&gt;,
     pub next_steps: Vec&lt;String&gt;,
     pub files_touched: Vec&lt;String&gt;,
+    pub owner_user: Option&lt;String&gt;,
 }</code></pre>
-<p>Three things about that type are absent from every other system in
-this atlas.</p>
-<p><strong>It is addressed.</strong> <code>from_agent</code> and
-<code>to_agent</code> are typed harness kinds, so a handoff is a message
-from Claude Code to Codex rather than an undirected note left in a
-store. Memory here has a sender and a recipient.</p>
-<p><strong>It carries open questions.</strong> Every other system in
-this atlas stores conclusions — facts, lessons, decisions, skills.
-<code>open_questions: Vec&lt;String&gt;</code> is memory of <em>what is
-not known</em>, which is the state a half-finished task actually leaves
-behind and the thing a fresh agent most needs.</p>
-<p><strong>It expires.</strong> <code>Open → Accepted → Expired</code>
-means an unclaimed handoff decays out rather than lingering as
-authoritative-looking stale context. The atlas has found decay applied
-to facts many times and never to a work item, where it is more obviously
-correct: nobody picked this up for a week, so it is probably no longer
-the state of the world.</p>
-<p>Reservations. There is no trust state and no tombstone; supersession
-is page-keyed, and the hooks re-capture on every session, so a corrected
-page can be re-derived. And the surface is large — 39,000 lines of CLI
-and 23,000 of MCP — for a system whose distinctive idea is a few hundred
-lines.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — observations are captured without a model call and consolidate into Markdown pages in git that stay the human source of truth; SQLite is derived from them, and a handoff either gets accepted by a later session or expires</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: observations are captured without a model call and consolidate into Markdown pages in git that stay the human source of truth; SQLite is derived from them, and a handoff either gets accepted by a later session or expires
-flowchart TB
-    H[&quot;harness lifecycle hooks&lt;br/&gt;&lt;i&gt;SessionStart, UserPrompt, PreToolUse, PostToolUse,&lt;br/&gt;PreCompact, PostCompaction, Notification, Stop, SessionEnd&lt;/i&gt;&quot;]
-    H --&gt; OB[&quot;observations&lt;br/&gt;&lt;i&gt;raw, captured without an LLM call&lt;/i&gt;&quot;]
-    OB --&gt;|&quot;opt-in consolidation&quot;| MD[(&quot;Markdown pages in git&lt;br/&gt;&lt;b&gt;the human source of truth&lt;/b&gt;&lt;br/&gt;&lt;i&gt;editable, diffable&lt;/i&gt;&quot;)]
-    MD --&gt;|derived| SQ[(&quot;SQLite index + state&lt;br/&gt;&lt;i&gt;tiers, authority ranking, retention score&lt;/i&gt;&quot;)]
-
-    HO[&quot;handoff&quot;] --&gt; OPEN[&quot;open&quot;]
-    OPEN --&gt; ACC[&quot;accepted&lt;br/&gt;&lt;i&gt;a later session picks it up&lt;/i&gt;&quot;]
-    OPEN --&gt; EXP[&quot;expired&lt;br/&gt;&lt;i&gt;nobody did&lt;/i&gt;&quot;]
-
-    style MD fill:#e7efe9,stroke:#3d6b59
-    style HO fill:#f4e2bd,stroke:#b8860b</code></pre></details></figure>
-<p>The Markdown is the source of truth and SQLite is a
-<strong>projection</strong> of it, so the index can be rebuilt and the
-human-editable layer is the authority. The handoff is the atlas's rare
-instance of prospective memory: an <code>open</code> commitment that a
-later session either accepts or lets expire.</p>
-<h2 id="3-architecture">3. Architecture</h2>
-<p>Crates, in lines of Rust:</p>
-<ul>
-<li><code>ai-memory-cli</code> (39,508), <code>ai-memory-mcp</code>
-(23,708), <code>ai-memory-store</code> (23,752),
-<code>ai-memory-hooks</code> (13,074),
-<code>ai-memory-consolidate</code> (11,198), <code>ai-memory-llm</code>
-(7,687), <code>ai-memory-wiki</code> (7,320), <code>ai-memory-web</code>
-(5,731), <code>ai-memory-workstream</code> (4,447),
-<code>ai-memory-core</code> (4,237).</li>
-<li><code>ai-memory-core</code> holds the model:
-<code>handoff.rs</code>, <code>observation.rs</code>,
-<code>actor.rs</code>, <code>workstream.rs</code>, <code>page.rs</code>,
-<code>active_project.rs</code>, <code>routing_skills.rs</code>,
-<code>sanitize.rs</code>.</li>
-</ul>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the same path across two agents — a handoff written by one session is either picked up by another or decays out, and the SQLite index is rebuildable from the pages</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: the same path across two agents — a handoff written by one session is either picked up by another or decays out, and the SQLite index is rebuildable from the pages
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — two writers produce a handoff, one atomic claim consumes it, and four writers expire it; the receiving session gets the body only when its own claim changed the row</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: two writers produce a handoff, one atomic claim consumes it, and four writers expire it; the receiving session gets the body only when its own claim changed the row
 flowchart TD
-  H[&quot;harness hooks&lt;br/&gt;(8 agents)&quot;] --&gt; Obs[&quot;observations&quot;]
-  Obs --&gt; Cons[&quot;opt-in consolidation&quot;]
-  Cons --&gt; Pages[&quot;Markdown pages&lt;br/&gt;in git&quot;]
-  Pages --&gt; Idx[&quot;SQLite&lt;br/&gt;index&quot;]
-  Idx --&gt; Search[&quot;authority + tier&lt;br/&gt;ranked search&quot;]
-  Idx --&gt; Ret[&quot;retention_score(age,&lt;br/&gt;last access)&quot;]
-  Sess1[&quot;session A ·&lt;br/&gt;Claude Code&quot;] --&gt; HO[&quot;handoff: summary, open_questions,\nnext_steps,&lt;br/&gt;files_touched&quot;]
-  HO --&gt; St{&quot;state&quot;}
-  St --&gt;|accepted| Sess2[&quot;session B ·&lt;br/&gt;Codex&quot;]
-  St --&gt;|expired| Gone[&quot;decays&lt;br/&gt;out&quot;]</code></pre></details></figure>
+    SE[&quot;SessionEnd hook, or an OpenCode turn checkpoint&lt;br/&gt;&lt;i&gt;code-derived: first and last user prompt,&lt;br/&gt;tool names, opt-in assistant excerpt&lt;/i&gt;&quot;]
+    MB[&quot;memory_handoff_begin&lt;br/&gt;&lt;i&gt;model-written summary, open questions,&lt;br/&gt;next steps, files; shared flag&lt;/i&gt;&quot;]
+    SE --&gt; ROW[(&quot;handoffs row&lt;br/&gt;&lt;b&gt;state = open&lt;/b&gt;&lt;br/&gt;workspace, project, owner_user, cwd&lt;br/&gt;to_agent always NULL&quot;)]
+    MB --&gt; ROW
+    ROW --&gt;|&quot;session start, first prompt or first tool call&quot;| SEL[&quot;startup_handoff&lt;br/&gt;&lt;i&gt;project + owner in SQL, busy filter,&lt;br/&gt;cwd boundary for automatic batons;&lt;br/&gt;manual beats automatic, then newest&lt;/i&gt;&quot;]
+    SEL --&gt; CLAIM{&quot;UPDATE ... SET state = accepted&lt;br/&gt;WHERE id AND project AND state = open&lt;br/&gt;AND owner admits caller&quot;}
+    CLAIM --&gt;|&quot;one row changed&quot;| INJ[&quot;body injected,&lt;br/&gt;fenced as untrusted&quot;]
+    CLAIM --&gt;|&quot;no row changed&quot;| NONE[&quot;nothing injected&quot;]
+    ROW --&gt;|&quot;newer automatic baton, same cwd and owner&quot;| EXP[&quot;state = expired&quot;]
+    ROW --&gt;|&quot;memory_handoff_cancel&quot;| EXP
+    ROW --&gt;|&quot;operator bulk expiry,&lt;br/&gt;optional age floor&quot;| EXP
+    ROW --&gt;|&quot;/recap after a reload request&quot;| RC[&quot;up to five open summaries&lt;br/&gt;and next steps, not claimed&quot;]
+
+    style ROW fill:#f4e2bd,stroke:#b8860b
+    style CLAIM fill:#e7efe9,stroke:#3d6b59</code></pre></details></figure>
+<p>The pages are the long-term memory and the handoff is a message slot.
+The two share a project boundary and little else: pages are searched,
+versioned and consolidated, while a handoff is claimed exactly once and
+never searched.</p>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Eleven crates, in lines of Rust including their tests:
+<code>ai-memory-cli</code> (147,853), <code>ai-memory-store</code>
+(81,286), <code>ai-memory-mcp</code> (69,291),
+<code>ai-memory-hooks</code> (45,588),
+<code>ai-memory-consolidate</code> (42,826), <code>ai-memory-wiki</code>
+(22,324), <code>ai-memory-web</code> (20,381),
+<code>ai-memory-llm</code> (19,216), <code>ai-memory-workstream</code>
+(15,254), <code>ai-memory-core</code> (14,005) and
+<code>ai-memory-test-support</code> (75). Seven companion packages sit
+beside them, among them a TypeScript SDK, a relay, an importer, a
+desktop app and a wiki sync.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — hooks and MCP write into one SQLite store and a git-tracked wiki; the store answers searches over pages and atomic claims over handoffs</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: hooks and MCP write into one SQLite store and a git-tracked wiki; the store answers searches over pages and atomic claims over handoffs
+flowchart TD
+  H[&quot;harness hooks&lt;br/&gt;(Claude Code, Codex, Cursor, Gemini CLI, opencode, ...)&quot;] --&gt; R[&quot;ai-memory-hooks router&lt;br/&gt;/hook, /handoff, /recap&quot;]
+  M[&quot;MCP client&quot;] --&gt; S[&quot;ai-memory-mcp server&lt;br/&gt;24 tools&quot;]
+  R --&gt; W[&quot;writer actor&lt;br/&gt;(ai-memory-store)&quot;]
+  S --&gt; W
+  W --&gt; DB[(&quot;SQLite&lt;br/&gt;pages, observations, sessions,&lt;br/&gt;handoffs, agent_messages, audit_log&quot;)]
+  W --&gt; G[(&quot;Markdown wiki in git&quot;)]
+  C[&quot;ai-memory-consolidate&lt;br/&gt;session jobs, auto-improve, profile, sweep&quot;] --&gt; W
+  DB --&gt; Q[&quot;reader pool&lt;br/&gt;hybrid search, handoff selection&quot;]
+  Q --&gt; R
+  Q --&gt; S</code></pre></details></figure>
+<p><code>ai-memory-core</code> holds the model types
+(<code>handoff.rs</code>, <code>observation.rs</code>,
+<code>actor.rs</code>, <code>ids.rs</code>).
+<code>ai-memory-store</code> holds every SQL statement:
+<code>ops.rs</code> for writes, <code>reader.rs</code> for reads, and
+<code>project_authz.rs</code> and <code>grants.rs</code> for the
+per-project access check.</p>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<h3 id="the-handoff-as-a-memory-type">The handoff as a memory type</h3>
-<p>Continuity across an interrupted task is a problem every coding-agent
-memory in this atlas gestures at and none models. The usual approach is
-to make session history retrievable and hope the next agent's query
-finds the right part of it. That fails in a specific way: the most
-important thing about an abandoned task is not what was
-<em>concluded</em> but what was <em>still open</em>, and open questions
-are exactly what a similarity search over prior conversation surfaces
-worst.</p>
-<p>Making the handoff a record with <code>open_questions</code>,
-<code>next_steps</code> and <code>files_touched</code> moves that from a
-retrieval problem to a schema one. And the state machine is what keeps
-it honest — a handoff that nobody accepted for long enough becomes
-<code>Expired</code>, so the store does not accumulate
-confident-sounding descriptions of work whose context has moved on.</p>
-<p><code>from_agent</code> / <code>to_agent</code> being typed
-<code>AgentKind</code> values is the part that serves the stated goal.
-The handoff knows it came from a different harness, which means the
-receiving agent can be told so rather than inferring it.</p>
+<h3 id="who-writes-a-handoff-and-from-what">Who writes a handoff, and
+from what</h3>
+<p>There are two producers. The <strong>automatic</strong> one runs at
+<code>SessionEnd</code>, and for OpenCode at every completed root turn,
+inside the hook router
+(<code>crates/ai-memory-hooks/src/router.rs:4520-4610</code>). It calls
+no model. The summary is <code>Started: &lt;first prompt&gt;</code> and
+<code>Last: &lt;last prompt&gt;</code>, each capped at 1,500 characters,
+and gains <code>Latest assistant response:</code> only when assistant
+capture is enabled on both the hook and the server.
+<code>open_questions</code> comes from
+<code>derive_open_questions</code> (<code>:4630-4690</code>):
+<code>Unresolved question: &lt;last prompt&gt;</code> if it ends in a
+question mark, a fixed two-line warning if the session ended during file
+work without a <code>Stop</code>, otherwise
+<code>Continue from: &lt;last prompt&gt;</code>. <code>next_steps</code>
+is one line, <code>Tools used: …</code>, and <code>files_touched</code>
+is always empty.</p>
+<p>The <strong>manual</strong> producer is the MCP tool
+<code>memory_handoff_begin</code>
+(<code>crates/ai-memory-mcp/src/server.rs:5421-5523</code>). Every prose
+field is the model's, passed through the sanitizer and capped;
+<code>from_session_id</code> is hard-coded to <code>None</code> and
+<code>from_agent</code> to <code>Other</code> (<code>:5487-5489</code>).
+The store re-bounds every field at 16 KiB and 256 list items as a
+backstop (<code>crates/ai-memory-store/src/ops.rs:4319-4371</code>).</p>
+<p>So the record that carries what the first agent learned is the
+model-written one. The automatic baton carries what the <em>user</em>
+asked, which is useful context for a resumed task and is not the same
+thing.</p>
+<h3 id="how-a-handoff-is-addressed">How a handoff is addressed</h3>
+<p><code>to_agent</code> is never assigned a value. Both producers write
+<code>None</code> (<code>router.rs:4602</code>,
+<code>server.rs:5489</code>), no reader filters on it, and its only
+consumer is the CLI listing, which prints "any agent" when it is empty
+(<code>crates/ai-memory-cli/src/commands/handoffs.rs:75</code>).
+<code>from_agent</code> on a manual baton is <code>Other</code>. The
+searches are in the appendix. The project's design note
+<code>docs/design-handoff-offer-not-claim.md</code> states the
+consequence itself — a pending baton goes to whichever session starts
+next in the project, <em>"whatever its harness or purpose"</em> — and
+records the decision of 2 October 2026 not to make <code>to_agent</code>
+load-bearing, in favour of an offer mode.</p>
+<p>The address that is enforced has four parts. <strong>Workspace and
+project</strong> are in the <code>WHERE</code> clause of every
+agent-facing handoff read. <strong>Owner</strong>: on a deployment that
+distinguishes operators, a handoff belongs to its creator unless created
+with <code>shared: true</code> (<code>server.rs:5470-5482</code>), and
+the owner predicate is in SQL on selection and inside the claim's
+<code>UPDATE</code> (<code>reader.rs:13248-13257</code>,
+<code>ops.rs:4669-4707</code>). <strong>Directory</strong>: an automatic
+baton reaches a session whose cwd lies at or below its own, by path
+components rather than <code>LIKE</code>
+(<code>reader.rs:13284-13296</code>); a manual baton is project-wide
+whatever cwd it carries (<code>:13259-13279</code>).
+<strong>Liveness</strong>: the baton of a session that is still open and
+captured anything in the last ten minutes is not offered
+(<code>router.rs:82</code>, <code>reader.rs:7233-7243</code>).</p>
+<p>A model can move each part only within limits. A
+<code>workspace</code>/<code>project</code> pair names the project,
+through the same resolver as every other tool, and on a restricted
+project needs a grant. <code>shared: true</code> widens a new baton to
+the whole project. <code>any_owner: true</code> on list, accept and
+cancel requires the admin capability, which every level holds on a
+single-operator deployment and which the stdio transport skips
+(<code>server.rs:3591-3611</code>); on such a deployment every baton is
+unowned, so the flag changes nothing there. Omitting <code>cwd</code> on
+<code>memory_handoff_accept</code> makes every automatic baton in the
+project a candidate, which lifts the directory boundary and not the
+project one.</p>
+<h3 id="what-the-receiving-session-reads">What the receiving session
+reads</h3>
+<p>The hook path is the one most handoffs take
+(<code>router.rs:1571-1836</code>). It resolves the project from the
+hook's cwd and markers, checks read access (<code>:1614</code>), selects
+with <code>startup_handoff</code> (<code>:1649</code>), asks the
+admission chain for <code>HandoffAccept</code> under a timeout, and
+claims inside <code>accept_startup_context</code>. The rendered Markdown
+is returned only when <code>acceptance.handoff_accepted</code> is true
+(<code>:1781</code>), and it opens with an untrusted-memory notice and
+fences (<code>router.rs:2661-2731</code>). That offer mode is opt-in:
+with <code>claim_handoff_on_session_start = false</code> the session
+gets a notice carrying the id, sender and age and none of the stored
+text (<code>:1854-1867</code>), and the default is to claim
+(<code>crates/ai-memory-cli/src/config.rs:5421</code>).</p>
+<p>The claim itself is <code>accept_handoff_in_transaction</code>
+(<code>crates/ai-memory-store/src/ops.rs:4533-4748</code>). It refuses a
+receiver session in another project, of another agent kind, already
+holding a baton, or already ended. It re-reads the row with
+<code>state = 'open'</code> in scope and refuses if the source session
+became busy since selection. Then it runs one
+<code>UPDATE … SET state = 'accepted' … WHERE id AND workspace AND project AND state = 'open'</code>
+with the owner clause appended (<code>:4669-4707</code>). Zero changed
+rows returns <code>false</code>, and every caller treats
+<code>false</code> as "deliver nothing".</p>
+<p><code>memory_handoff_accept</code> (<code>server.rs:5624-5729</code>)
+takes the same route, by id through <code>handoff_by_id_in_scope</code>
+with an <code>Open</code> filter, or by selection through
+<code>latest_open_handoff</code>. <code>memory_handoff_list</code>
+returns open rows only (<code>:5588</code>). The context assembler that
+reaches a prompt without a claim is <code>/recap</code>, injected as
+<code>UserPromptSubmit</code> context after a reload request
+(<code>crates/ai-memory-hooks/src/recap.rs:71-155</code>). It applies
+scope, read access and the owner filter, and lists up to five
+<em>open</em> batons without a directory boundary or the busy filter. An
+accepted or expired handoff reaches an agent by none of these reads. The
+web API lists every state for a person
+(<code>crates/ai-memory-web/src/routes/api.rs:999</code>), and the
+unscoped <code>handoff_by_id</code> has no production caller.</p>
+<h3 id="what-ends-a-handoff">What ends a handoff</h3>
+<p>Four statements write <code>expired</code>, and none of them runs on
+a clock (<code>ops.rs:4392</code>, <code>:4832</code>,
+<code>:4888</code>, <code>:4947</code>). A new automatic baton expires
+older open automatic batons from the same cwd and owner whose sessions
+have ended (<code>:4384-4421</code>). A claimed automatic baton expires
+older automatic batons that were eligible for the receiving directory
+(<code>:4774-4839</code>). <code>memory_handoff_cancel</code> expires
+one by id (<code>:4929-4983</code>). <code>expire_open_handoffs</code>
+expires every open baton in a project, optionally only those older than
+a number of days, and is reachable only from an admin route and the CLI
+(<code>:4868-4926</code>,
+<code>crates/ai-memory-mcp/src/admin.rs:3092-3136</code>).</p>
+<p>Two consequences follow. Manual batons are exempt from both automatic
+sweeps, since each requires <code>from_session_id IS NOT NULL</code>, so
+one written by mistake and never cancelled waits indefinitely. And the
+selection key puts manual before automatic, then newest
+(<code>reader.rs:13298-13319</code>), so a months-old manual baton
+outranks a fresh automatic one at the next session start. The doc
+comment on <code>HandoffState::Expired</code> reads <em>"Aged out (decay
+sweep)"</em> (<code>crates/ai-memory-core/src/handoff.rs:27</code>); no
+decay sweep touches the table.</p>
 <h3 id="capture-without-a-model-call">Capture without a model call</h3>
 <p><code>ObservationKind</code> maps the harness lifecycle directly —
 <code>SessionStart</code>, <code>UserPrompt</code>,
 <code>PreToolUse</code>, <code>PostToolUse</code>,
 <code>PreCompact</code>, <code>PostCompaction</code>,
-<code>Notification</code>, <code>Stop</code>, <code>SessionEnd</code> —
-and observations are recorded as they arrive. Consolidation into pages
-is opt-in and happens later.</p>
-<p>This is <a href="../../patterns/zero-llm-capture/">zero-LLM
-capture</a> with an unusually complete event vocabulary.
-<code>PreCompact</code> and <code>PostCompaction</code> are worth
-noting: capturing around the harness's own compaction boundary means the
-material the harness is about to discard is preserved on the way past,
-which is the moment most systems lose it.</p>
-<p>Capturing the assistant's final turn is <strong>double
-opt-in</strong> — the hook must be installed with
-<code>--capture-assistant</code> <em>and</em> the server must enable
-<code>capture_assistant</code>, off by default. Requiring both sides to
-agree before recording model output is a defensible default for a system
-whose store is a git repository the user reads.</p>
+<code>Notification</code>, <code>Stop</code>, <code>SessionEnd</code>,
+<code>Other</code> — and observations are recorded as they arrive
+(<code>crates/ai-memory-core/src/observation.rs</code>). This is <a
+href="../../patterns/zero-llm-capture/">zero-LLM capture</a> with the
+compaction boundary in its vocabulary, so material the harness is about
+to discard is recorded on the way past. Assistant output is captured
+only when the hook is installed with <code>--capture-assistant</code>
+and the server sets <code>capture_assistant</code>, which defaults to
+false (<code>crates/ai-memory-cli/src/config.rs:445</code>,
+<code>:1372</code>).</p>
 <h3 id="generation-based-supersession-of-pending-work">Generation-based
 supersession of pending work</h3>
-<pre class="sql"><code>SET state = &#39;superseded&#39;, completed_at = ?1, claim_id = …
-    last_error = &#39;superseded by a newer observation generation&#39;</code></pre>
-<p>with a test named
-<code>newer_generation_supersedes_older_pending_work</code> asserting
-"the superseded first generation must not run".</p>
-<p>This is supersession applied to <em>queued consolidation jobs</em>
-rather than to memories: when newer observations arrive, older pending
-work for the same target is cancelled instead of racing to write a stale
-page. Several systems in this atlas have background consolidation and
-none visibly handles the case where two generations of work are in
-flight at once.</p>
+<p>When newer observations arrive for a session, its older pending
+consolidation job is marked <code>superseded</code> with <em>"superseded
+by a newer observation generation"</em> instead of racing to write a
+stale page
+(<code>crates/ai-memory-store/src/session_consolidation.rs</code>), and
+<code>newer_generation_supersedes_older_pending_work</code>
+(<code>:738</code>) asserts that the first generation does not run.
+Supersession here applies to queued jobs, not to memories.</p>
 <h3 id="retention-as-a-scored-decision">Retention as a scored
 decision</h3>
-<p><code>decay.rs</code> computes a <code>retention_score</code> —
-"Higher = keep this page" — from tunable coefficients with
-<strong>separate per-day exponential decay for age since
-<code>updated_at</code> and for days since last access</strong>.</p>
-<p>Splitting those two is right and rare: a page nobody has touched in a
-month is a different case from a page nobody has <em>read</em> in a
-month, and collapsing them into one recency term makes an
-actively-consulted reference look stale. The <a
+<p><code>decay.rs</code> computes
+<code>salience · exp(−λ·age) + σ · log(1 + accesses) · exp(−μ · days_since_access)</code>
+(<code>crates/ai-memory-store/src/decay.rs:1-9</code>), with separate
+rates for age since update and for days since last access, as the <a
 href="../../patterns/decay-and-reinforcement/">decay and
-reinforcement</a> pattern asks for exactly this separation.</p>
-<h3 id="an-actor-model-with-capabilities">An actor model with
-capabilities</h3>
-<p><code>AuthLevel</code> is <code>Anonymous | Root | User</code>;
-<code>Capability</code> is <code>Admin</code>,
-<code>UserManagement</code>, <code>NormalRead</code>,
-<code>NormalWrite</code>, <code>SkipAdmissionChain</code>. Combined with
-workspace and project ids and per-project UUID isolation, that gives a
-real authorization surface, which most local coding-agent memories in
-this atlas do not have at all.</p>
-<p><code>SkipAdmissionChain</code> is the interesting entry: an
-explicit, named capability for bypassing the write-admission path,
-rather than an implicit trusted-caller assumption. A bypass that has a
-name can be audited.</p>
+reinforcement</a> pattern asks. The forget sweep evicts cold episodic
+pages to a decay marker, hard-deletes TTL pages and old markers, and
+prunes observations of consolidated sessions only when
+<code>observation_retention_days</code> is set, which defaults to
+zero.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>Markdown pages in git are canonical; SQLite holds the index, tiers,
-and state. Pages carry frontmatter, a tier (<code>Episodic</code> and
-others), and an authority that participates in ranking. Observations,
-handoffs and workstream events are their own record types.</p>
-<p>What is absent:</p>
+<p>Markdown pages in git are canonical; SQLite holds versions
+(<code>supersedes</code>, <code>is_latest</code>),
+<code>expires_at</code>, <code>salience</code>,
+<code>superseded_at</code> as the decay-eviction marker, and
+<code>valid_from</code>/<code>valid_to</code> windows. Observations,
+sessions, handoffs, cross-project <code>agent_messages</code>,
+workstreams, auto-improvement proposals and profile candidates are
+separate tables.</p>
+<p>What is absent, and why each near-miss does not carry a mark:</p>
 <ul>
-<li><strong>No trust state.</strong> Nothing marks a page candidate,
-verified, or rejected.</li>
-<li><strong>No value-level tombstone.</strong> Supersession is
-page-keyed, and the hooks re-capture every session, so material a user
-deleted can return through the same path that first produced it.</li>
-<li><strong>A <code>do_not_answer_from</code> tag exists only in a test
-fixture.</strong> A fixture in <code>ai-memory-store</code> builds a
-page tagged <code>["superseded", "do_not_answer_from"]</code> and
-asserts that authority ranking puts the canonical decision first. That
-is a test of <em>ranking</em>, not of the tag: no read-path filter on
-<code>do_not_answer_from</code> was found in the crates. The name
-describes the mechanism the atlas keeps asking for; the mechanism itself
-was not located.</li>
+<li><strong>No trust state on a page.</strong> Supersession, expiry and
+decay are lifecycle columns; nothing marks a page candidate, verified or
+disputed. The handoff states describe delivery, not belief.</li>
+<li><strong>No bi-temporal validity.</strong> <code>valid_from</code> is
+the page version's own <code>created_at</code> and <code>valid_to</code>
+its successor's, and entity-link windows inherit the same ingestion
+timeline
+(<code>crates/ai-memory-store/migrations/V62__page_ingestion_windows.sql</code>,
+<code>V56__entity_link_validity.sql</code>). <code>as_of</code> answers
+what the store knew then.</li>
+<li><strong>No value-keyed tombstone.</strong>
+<code>purged_sessions</code> and <code>purged_scopes</code> refuse to
+recreate a purged session id or scope, which is keyed on a record.
+<code>auto_improve_rejections</code> stores a normalized fingerprint and
+renders it into the next model prompt as advice; nothing compares a new
+proposal against it. The profile harvester leaves a topic alone when a
+ledger row's page is gone, until any candidate newer than the removal
+arrives, from a prompt, a curated page or a stack signal
+(<code>crates/ai-memory-consolidate/src/profile.rs:1201-1290</code>).</li>
+<li><strong>The <code>do_not_answer_from</code> tag appears
+once,</strong> in a store test fixture that asserts ranking
+(<code>crates/ai-memory-store/src/lib.rs:2552</code>); no read path
+filters on it.</li>
 </ul>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>Search over pages scoped to workspace and project, ranked with
-authority and tier participating, plus the retention score for lifecycle
-decisions. The prior-art findings document lists "first-class graph/link
-retrieval" and "bounded raw/verbatim fallback recall" among improvements
-it identified, which suggests the retrieval layer is the newer part of
-the system.</p>
+<p><code>memory_query</code> runs a hybrid search per project: FTS5,
+entity, graph, an optional vector stream and an observation-evidence
+stream, fused by RRF and adjusted by page authority
+(<code>crates/ai-memory-store/src/reader.rs:6611-7108</code>).
+Single-project calls also union the reserved <code>_global</code>
+preferences scope.</p>
+<p>The arguments decide the scope. <code>workspace</code> and
+<code>project</code> name one project; <code>scopes</code> names
+several; <code>global: true</code> searches every project in every
+workspace (<code>crates/ai-memory-mcp/src/server.rs:646-653</code>,
+<code>:2734-2779</code>), and
+<code>memory_query_global_searches_all_projects</code>
+(<code>:13392</code>) pins that behaviour. The global branch calls
+<code>search_pages_with_meta</code> with the viewer, and
+<code>readable_repository_filter</code> returns an empty predicate when
+there is no viewer (<code>reader.rs:117-138</code>, <code>:2685</code>).
+An install without database users, and any stdio client, has no viewer,
+so one model argument returns pages from every project. On a deployment
+with users, restricted projects drop out of the union; open projects,
+the default, stay in it. <code>include_expired</code>,
+<code>include_superseded</code> and <code>as_of</code> lift the expiry
+and version filters on the same call.</p>
+<p>Handoffs are not part of this path. They are selected and claimed as
+described in section 4, never ranked against a query.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Hooks capture observations; consolidation turns them into pages under
-an explicit opt-in; the wiki crate manages migrations of the Markdown
-corpus. Git is the durability and audit story, which the atlas treats as
-a real mechanism distinct from an event table.</p>
-<p>Single-writer durability is named in the prior-art document as a
-lesson already taken, and the generation-supersession logic above is the
-concurrency guard on the consolidation path.</p>
+<p>Hooks capture observations. The session end writes a rule-based
+<code>sessions/&lt;id&gt;.md</code> page, then stamps the session ended
+and inserts the automatic handoff in one transaction, so a failed
+handoff insert rolls the end stamp back (<code>ops.rs:4274-4314</code>).
+Consolidation and auto-improvement rewrite pages through the wiki crate.
+Auto-improvement proposals are approved automatically unless
+<code>[auto_improve] require_approval</code> is set
+(<code>crates/ai-memory-cli/src/config.rs:1702</code>); when it is, they
+wait under <code>/admin/pending-writes</code> for an admin.
+<code>memory_write_page</code> writes pages directly and never enters
+that queue.</p>
+<p>Every handoff insert, refresh, claim, cancel and expiry appends an
+<code>audit_log</code> row (<code>ops.rs:4410</code>,
+<code>:4442</code>, <code>:4497</code>, <code>:4709</code>,
+<code>:4736</code>, <code>:4971</code>), as do page writes, purges and
+grant changes. The table is not append-only: moving a project between
+workspaces rewrites <code>workspace_id</code> on its audit rows
+(<code>crates/ai-memory-store/src/ops.rs:7148</code>).</p>
+<p>Admission webhooks, configured by an operator, can refuse a write, a
+handoff begin or a handoff claim. A refused automatic claim leaves the
+baton open for the next session rather than consuming it.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>MCP plus lifecycle hooks for Claude Code, Codex, Cursor, Gemini CLI,
-opencode, Devin, Grok and Kimi — the broadest harness coverage in this
-atlas, and the reason the handoff type can be addressed between
-harnesses at all. Native packaging (AUR, systemd units), Docker images,
-and per-platform binaries.</p>
-<p><code>install-mcp --session-aware</code> optionally isolates scope
-per session through a local stdio bridge.</p>
+<p>Lifecycle hooks are installed for Claude Code, Codex, Cursor, Gemini
+CLI, opencode, Devin, Grok, Kimi Code, Kiro CLI, Copilot CLI and further
+harnesses; <code>AgentKind</code> names 26 agents plus
+<code>Other</code> (<code>crates/ai-memory-core/src/ids.rs</code>). Most
+receive the handoff in their <code>SessionStart</code> context; Kimi
+Code receives it on the first prompt and Grok after the first tool call
+(<code>ids.rs:468-527</code>). The MCP server registers 24 tools,
+including the four handoff verbs and a cross-project message queue
+(<code>memory_message_send</code>, <code>_list</code>,
+<code>_pop</code>, <code>_cancel</code>) whose rows are addressed to a
+recipient project and popped once
+(<code>crates/ai-memory-store/migrations/V64__agent_messages.sql</code>).
+At session start the inbox appears as a count only.</p>
+<p><code>install-mcp --session-aware</code> routes MCP calls through a
+local stdio bridge that carries the native session id, which is what
+lets <code>memory_handoff_accept</code> answer
+<code>consumed_by_hook</code> instead of <code>none_pending</code>.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
+<p><strong><code>negative_eval</code> is earned.</strong>
+<code>named_proxy_operators_stay_isolated</code>
+(<code>crates/ai-memory-mcp/tests/suite/handoff_identity.rs:264-285</code>)
+has alice begin a baton over HTTP, asserts bob's accept returns nothing,
+and then that alice's returns it.
+<code>handoff_cancel_expires_open_handoff_and_clears_briefing_count</code>
+(<code>server.rs:18822-18938</code>) asserts a pending count of one,
+cancels, then asserts zero and a null accept.
+<code>session_start_passes_receiving_cwd_to_auto_handoff_cleanup</code>
+(<code>router.rs:15823-15924</code>) asserts the newest parent baton is
+delivered at session start, the older specific one is absent, and it is
+left <code>expired</code>.
+<code>global_union_never_leaks_a_foreign_projects_pages</code>
+(<code>server.rs:10985-11071</code>) pairs a reserved global page that
+must surface with a foreign project's page that must not.</p>
+<p><strong><code>scope_enforced</code> is withheld.</strong> Every
+agent-facing handoff read carries the project and owner predicates, and
+the <code>/recap</code> assembler does too. The page query does not hold
+the same line: <code>global: true</code> is a model argument that
+removes the project predicate, and nothing replaces it without a
+viewer.</p>
+<p><strong><code>audit_log</code> is withheld</strong> on the
+project-move rewrite in section 7, and
+<strong><code>human_review</code></strong> because the approval queue
+covers auto-improvement only and is off by default, while
+<code>memory_write_page</code> and consolidation write pages directly.
+<code>trust_state</code>, <code>bitemporal</code> and
+<code>tombstone</code> are covered in section 5.</p>
 <p>Strengths:</p>
 <ul>
-<li><strong>A handoff with a lifecycle</strong>, carrying open questions
-and next steps.</li>
-<li><strong>Expiry on unclaimed work</strong>, so stale context decays
-rather than accumulating.</li>
-<li><strong>Typed sender and recipient</strong>, making cross-harness
-continuity explicit.</li>
-<li><strong>Zero-LLM capture</strong> over a complete lifecycle
-vocabulary, including around the harness's own compaction.</li>
-<li><strong>Double opt-in</strong> for capturing assistant output.</li>
-<li><strong>Generation-based cancellation</strong> of superseded pending
-consolidation.</li>
-<li><strong>Separate decay terms</strong> for modification age and
-access age.</li>
-<li><strong>A named <code>SkipAdmissionChain</code> capability</strong>
-rather than an implicit bypass.</li>
-<li><strong>Markdown in git canonical</strong>, SQLite derived and
-rebuildable.</li>
-<li><strong>Committed prior-art analyses</strong> of four systems in
-this atlas, with an honest gap list.</li>
+<li><strong>An atomic, single-use claim</strong>, delivered only to the
+session whose <code>UPDATE</code> changed the row, with the owner
+predicate inside the same statement.</li>
+<li><strong>Owner, directory and liveness boundaries</strong> on
+automatic delivery, each with a test.</li>
+<li><strong>The injected handoff is fenced as untrusted</strong>, and
+the no-claim notice carries metadata only.</li>
+<li><strong>Zero-LLM capture</strong> around the compaction boundary,
+and double opt-in for assistant output.</li>
+<li><strong>Generation-based cancellation</strong> of superseded
+consolidation jobs.</li>
 </ul>
 <p>Gaps:</p>
 <ul>
-<li><strong>No trust state.</strong></li>
-<li><strong>No tombstone</strong>, and hooks re-capture, so deletion is
-undone by the next session.</li>
-<li><strong><code>do_not_answer_from</code> is fixture-only</strong>;
-the read path does not appear to honour it.</li>
-<li><strong>A large surface</strong> relative to the distinctive
-idea.</li>
-<li><strong>Handoff expiry is time-based</strong>, so a genuinely
-still-relevant handoff expires on the same schedule as an abandoned
-one.</li>
+<li><strong>The automatic baton carries prompts, not findings</strong>,
+and lists no files.</li>
+<li><strong><code>to_agent</code> is decorative</strong>: a baton cannot
+be held for a particular harness.</li>
+<li><strong>No age-based expiry</strong>, and manual batons outrank
+automatic ones, so a stale manual baton wins the next session
+start.</li>
+<li><strong><code>/recap</code> lists open batons from sibling
+directories and busy sessions</strong>, which the session-start path
+would withhold.</li>
+<li><strong><code>memory_query global=true</code></strong> crosses every
+project on a default install.</li>
 </ul>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>Tests are present throughout, including targeted concurrency tests
-such as <code>newer_generation_supersedes_older_pending_work</code>, and
-an <code>e2e</code> tree with hook fixtures. Nothing was run for this
-review, and no retrieval-quality benchmark was found.</p>
-<p>The claim worth measuring is the product claim: does a session
-resumed from a handoff in a <em>different</em> harness actually avoid
-re-explaining the architecture? That is testable with a fixed task and a
-scripted interruption, and no such evaluation was located.</p>
+<p>The tree carries 6,544 <code>#[test]</code> and
+<code>#[tokio::test]</code> functions, and CI runs the workspace under
+<code>cargo nextest</code>. The handoff tests are thorough on delivery:
+ownership, cross-workspace isolation, sibling directories, races between
+two claimants, a receiver claiming twice, refused admission and the busy
+filter each have one or more cases. I ran none of them.</p>
+<p><code>docs/benchmarks/</code> commits LongMemEval-S retrieval reports
+produced by the in-repo <code>ai-memory-eval retrieval</code> harness;
+the 3.1 release report gives <code>hit@5</code> 0.951 for zero-LLM FTS
+with the observation stream and 0.940 with local embeddings. These are
+the project's own runs, not reproduced here. They measure page retrieval
+and say nothing about handoffs: no evaluation of a task resumed from a
+baton in another harness is committed, and
+<code>git grep -i handoff</code> over <code>evals</code> and
+<code>docs/benchmarks</code> returns nothing.</p>
+<p>No test asserts that a baton of a given age is not delivered, because
+nothing withholds one by age. No test exercises a non-empty
+<code>to_agent</code>.</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
-<li><strong>Model the handoff, do not retrieve it.</strong> What an
-interrupted task leaves behind is open questions and next steps, and
-those are the worst possible target for similarity search over
-transcript history.</li>
-<li><strong>Store open questions as memory.</strong> Every system here
-records conclusions; the unresolved parts are what a fresh agent most
-needs and nothing else keeps them.</li>
-<li><strong>Give work items an expiry state.</strong> Decay applied to a
-task is more obviously correct than decay applied to a fact.</li>
-<li><strong>Address memory between harnesses.</strong> Typed
-<code>from_agent</code>/<code>to_agent</code> turns a note in a store
-into a message with a recipient.</li>
-<li><strong>Capture around the harness's compaction boundary</strong>,
-where the material is about to be discarded.</li>
-<li><strong>Cancel superseded pending work by generation</strong>, so
-two consolidation runs cannot race to write the same page.</li>
-<li><strong>Split decay into modification age and access
-age.</strong></li>
-<li><strong>Name the bypass.</strong> <code>SkipAdmissionChain</code> as
-an explicit capability is auditable in a way an implicit trusted path is
-not.</li>
-<li><strong>Require both sides to opt in</strong> before recording model
-output into a store the user reads.</li>
+<li><strong>Claim with one compare-and-set and deliver only on a changed
+row.</strong> Put the scope and the owner predicate inside the
+<code>UPDATE</code>, so a refused caller and a lost race are the same
+zero-row outcome.</li>
+<li><strong>Bound automatic delivery by directory and by
+liveness</strong>, so a parallel session's baton is not handed to its
+neighbour.</li>
+<li><strong>Fence the injected baton as untrusted data</strong>, and
+make the no-claim notice metadata only.</li>
+<li><strong>Capture around the harness's compaction boundary</strong>
+without a model call.</li>
+<li><strong>Cancel superseded pending work by generation.</strong></li>
 </ul>
 <h3 id="avoid">Avoid</h3>
 <ul>
-<li><strong>Supersession undone by re-capture</strong>, in a system
-whose hooks fire every session.</li>
-<li><strong>A tag that names the right mechanism without implementing
-it</strong> — the read path decides whether
-<code>do_not_answer_from</code> means anything, and here it does not
-appear to.</li>
-<li><strong>Time-based expiry</strong> as the only signal for handoff
-relevance.</li>
+<li><strong>Deriving "open questions" from the last user
+prompt.</strong> Have the ending agent, or a deterministic pass over the
+session's tool results, state what is unresolved, and label the field by
+where it came from.</li>
+<li><strong>A recipient field nothing writes or reads.</strong> Either
+route on it or drop it.</li>
+<li><strong>Expiry only by supersession.</strong> A baton needs an age
+limit, and a manual one should not outrank a newer automatic one
+indefinitely.</li>
+<li><strong>A second context assembler with weaker filters</strong> than
+the claim path.</li>
+<li><strong>A model-facing <code>global</code> search flag</strong> on a
+store that holds several projects.</li>
 </ul>
 <h3 id="fit">Fit</h3>
-<p>Borrow:</p>
-<ul>
-<li>The <code>Handoff</code> type more or less wholesale, including the
-state machine and the open-questions list. It is small, independent of
-the rest of the system, and solves a problem the atlas has otherwise
-seen only gestured at.</li>
-<li>Generation-based cancellation of pending background work.</li>
-<li>The two-term decay split.</li>
-</ul>
-<p>Do not copy:</p>
-<ul>
-<li>Page-keyed supersession as the correction story where hooks
-re-capture.</li>
-<li>The assumption that a <code>do_not_answer_from</code> tag does
-anything unless the read path enforces it.</li>
-</ul>
+<p>Borrow the claim path in <code>ops.rs:4533-4748</code> and the
+selection rules in <code>reader.rs:13259-13319</code> for any handoff
+between agents that share a store. Do not borrow the automatic baton's
+content, the unused addressing field, or the expiry policy.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
-<li>Does any read path filter <code>do_not_answer_from</code>, or is it
-only a fixture tag?</li>
-<li>What expires a handoff, and can an accepted-then-abandoned handoff
-be reopened?</li>
-<li>What stops a consolidated page returning after a user deletes it,
-given that hooks re-capture every session?</li>
-<li>Has the cross-harness continuity claim been measured end to
-end?</li>
-<li>Does <code>SkipAdmissionChain</code> get logged when exercised?</li>
+<li>Should a manual baton expire, or lose to a newer automatic one after
+some age?</li>
+<li>Should <code>/recap</code> apply the directory and busy filters the
+session-start path applies?</li>
+<li>Has a task resumed in another harness been measured end to end?</li>
+<li>Does <code>SkipAdmissionChain</code> leave a record when
+exercised?</li>
 </ul>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <ul>
-<li>Handoff: <code>crates/ai-memory-core/src/handoff.rs</code>
-(<code>HandoffState</code>, <code>NewHandoff</code>,
-<code>Handoff</code>).</li>
-<li>Capture vocabulary:
-<code>crates/ai-memory-core/src/observation.rs</code>
-(<code>ObservationKind</code>).</li>
-<li>Actors and capabilities:
-<code>crates/ai-memory-core/src/actor.rs</code> (<code>AuthLevel</code>,
-<code>Capability</code>, <code>AuthzError</code>).</li>
-<li>Retention: <code>crates/ai-memory-store/src/decay.rs</code>
-(<code>retention_score</code>).</li>
-<li>Consolidation concurrency:
-<code>crates/ai-memory-store/src/session_consolidation.rs</code>.</li>
-<li>Prior-art analyses: <code>docs/research-agentmemory.md</code>,
-<code>docs/research-basic-memory.md</code>,
-<code>docs/research-cognee.md</code>,
-<code>docs/research-karpathy-llm-wiki.md</code>,
-<code>docs/prior-art-implementation-findings.md</code>.</li>
-<li>Harness adapters: <code>hooks/</code> and
-<code>crates/ai-memory-hooks/</code>.</li>
+<li><strong>Handoff model:</strong>
+<code>crates/ai-memory-core/src/handoff.rs</code>,
+<code>crates/ai-memory-core/src/ids.rs</code> (<code>AgentKind</code>,
+injection points).</li>
+<li><strong>Handoff writes and claims:</strong>
+<code>crates/ai-memory-store/src/ops.rs</code>
+(<code>insert_handoff_row</code>,
+<code>checkpoint_session_handoff</code>,
+<code>end_session_with_handoff</code>,
+<code>accept_handoff_in_transaction</code>,
+<code>expire_same_cwd_auto_handoffs</code>,
+<code>expire_superseded_auto_handoffs</code>,
+<code>expire_open_handoffs</code>, <code>cancel_handoff</code>).</li>
+<li><strong>Handoff reads:</strong>
+<code>crates/ai-memory-store/src/reader.rs</code>
+(<code>startup_handoff</code>, <code>open_handoff_for</code>,
+<code>list_handoffs</code>, <code>handoff_by_id_in_scope</code>,
+<code>is_handoff_candidate</code>,
+<code>handoff_selection_key</code>).</li>
+<li><strong>Hook delivery and production:</strong>
+<code>crates/ai-memory-hooks/src/router.rs</code>
+(<code>fetch_and_accept_handoff_at</code>,
+<code>build_auto_handoff</code>, <code>derive_open_questions</code>,
+<code>render_handoff_markdown</code>),
+<code>crates/ai-memory-hooks/src/recap.rs</code>,
+<code>crates/ai-memory-hooks/src/synth.rs</code>.</li>
+<li><strong>MCP surface:</strong>
+<code>crates/ai-memory-mcp/src/server.rs</code>
+(<code>memory_handoff_*</code>, <code>memory_query</code>,
+<code>require_admin_capability</code>),
+<code>crates/ai-memory-mcp/src/admin.rs</code>.</li>
+<li><strong>Access:</strong>
+<code>crates/ai-memory-store/src/project_authz.rs</code>,
+<code>crates/ai-memory-store/src/grants.rs</code>,
+<code>crates/ai-memory-core/src/actor.rs</code>.</li>
+<li><strong>Schema:</strong>
+<code>crates/ai-memory-store/migrations/V02__handoffs.sql</code>,
+<code>V39</code>, <code>V41</code>, <code>V48</code>, <code>V52</code>,
+<code>V56</code>, <code>V59</code>, <code>V62</code>, <code>V64</code>,
+<code>V68</code>, <code>V75</code>.</li>
+<li><strong>Retention and consolidation:</strong>
+<code>crates/ai-memory-store/src/decay.rs</code>,
+<code>crates/ai-memory-store/src/session_consolidation.rs</code>,
+<code>crates/ai-memory-consolidate/src/profile.rs</code>,
+<code>crates/ai-memory-consolidate/src/auto_improve.rs</code>.</li>
+<li><strong>Tests:</strong>
+<code>crates/ai-memory-mcp/tests/suite/handoff_identity.rs</code>,
+<code>handoff_admission.rs</code>,
+<code>crates/ai-memory-store/tests/suite/handoff_ownership.rs</code>,
+<code>multi_session.rs</code>.</li>
+<li><strong>Benchmarks and docs read as claims:</strong>
+<code>docs/benchmarks/*.md</code>, <code>evals/README.md</code>,
+<code>docs/ARCHITECTURE.md</code>,
+<code>docs/design-handoff-offer-not-claim.md</code>,
+<code>README.md</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked with <code>git grep</code> against the checkout at the pinned
+revision, from the tree root; the same searches were run at
+<code class="commit-id" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">74d2d31e…</code> where the text
+says so.</p>
+<ul>
+<li><code>git grep -n 'to_agent' -- 'crates/*/src/*.rs' 'crates/*/src/**/*.rs'</code>
+— production writers are <code>router.rs:4602</code> and
+<code>server.rs:5489</code>, both <code>None</code>; the insert at
+<code>ops.rs:4467</code>; reads only in <code>handoffs.rs:75</code> and
+the admin metadata listing at <code>reader.rs:6155-6200</code>. At the
+previous pin the production writers were <code>router.rs:3123</code> and
+<code>server.rs:3563</code>, both <code>None</code>.</li>
+<li><code>git grep -n -E 'to_agent: Some|to_agent = Some|"to_agent": *"' -- .</code>
+— one match, <code>docs/design-handoff-offer-not-claim.md:170</code>, in
+the option the note records as not pursued; no code or test sets a
+value.</li>
+<li><code>git grep -n -E "UPDATE handoffs SET state = 'expired'" -- crates</code>
+— <code>ops.rs:4392</code>, <code>:4832</code>, <code>:4888</code>,
+<code>:4947</code>; at the previous pin <code>ops.rs:2623</code>,
+<code>:2959</code>, <code>:3015</code>, <code>:3074</code>. None is
+called from a scheduler or sweep.</li>
+<li><code>git grep -n -E 'expire_open_handoffs|cancel_handoff\(' -- crates</code>
+— production callers <code>admin.rs:3136</code> and
+<code>server.rs:5845</code>; the rest are tests.</li>
+<li><code>git grep -n 'handoff_by_id(' -- crates</code> — every caller
+is inside a <code>#[cfg(test)]</code> module or a test suite.</li>
+<li><code>git grep -n -A4 '\.list_handoffs(' -- 'crates/*/src/**'</code>
+— <code>recap.rs:138</code> and <code>server.rs:5588</code> pass
+<code>Some(HandoffState::Open)</code>; the web API passes the request's
+state; the two <code>None</code> callers in <code>router.rs</code> are
+tests.</li>
+<li><code>git grep -n -i 'do_not_answer_from'</code> — one match,
+<code>crates/ai-memory-store/src/lib.rs:2552</code>; at the previous pin
+one match, <code>lib.rs:2305</code>.</li>
+<li><code>git grep -n -w 'audit_log' -- 'crates/*/src/*' 'crates/*/src/**'</code>
+— inserts at <code>ops.rs:5310</code>, <code>grants.rs:206</code> and
+<code>users.rs:1012</code>; the update at <code>ops.rs:7148</code>; no
+delete. The update was at <code>ops.rs:4225</code> at the previous
+pin.</li>
+<li><code>git grep -n 'normalized_fingerprint' -- 'crates/*/src/**'</code>
+— written at
+<code>crates/ai-memory-store/src/auto_improve.rs:1474</code>, rendered
+into the prompt at
+<code>crates/ai-memory-consolidate/src/auto_improve.rs:1539</code>,
+counted at <code>reader.rs:13086</code>; no comparison against a new
+proposal.</li>
+<li><code>git grep -n -i 'handoff' -- evals docs/benchmarks</code> — no
+match.</li>
+<li><code>git grep -n -E 'valid_from' -- 'crates/*/src/**'</code> —
+every writer sets it from a page version's <code>created_at</code>.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|CITATION|doi\.org' -- README.md docs</code>
+— related-work citations in <code>README.md:208</code>,
+<code>docs/comparison.md</code> and
+<code>docs/research-2026-landscape.md</code>; no paper for this
+system.</li>
+<li><code>git show 74d2d31ebd8cca656c49f31563fac53e0b61c5cf:crates/ai-memory-mcp/src/server.rs | sed -n 1930,1951p</code>
+and
+<code>git show 74d2d31ebd8cca656c49f31563fac53e0b61c5cf:crates/ai-memory-store/src/reader.rs | sed -n 1693,1720p</code>
+— the global branch called
+<code>search_pages_with_meta(query, limit, cutoff)</code>, whose
+<code>WHERE</code> carried no project or viewer predicate.</li>
+<li><code>git ls-tree -r --name-only 74d2d31ebd8cca656c49f31563fac53e0b61c5cf docs/benchmarks</code>
+— <code>README.md</code> and three LongMemEval-S reports dated
+2026-09-01.</li>
 </ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-18</strong> — <a
+href="https://github.com/akitaonrails/ai-memory/commit/995e35d5866973c3176709261e924a67e3c76158"><code class="commit-id" title="995e35d5866973c3176709261e924a67e3c76158">995e35d5…</code></a>
+— re-read 2,137 commits on; <code>handoff.rs</code> is byte-identical
+and the handoff path was read at both pins (<a
+href="#4-essential-implementation-paths">section 4</a>).
+<code>negative_eval</code> added, and present at the previous pin too.
+<code>scope_enforced</code> withdrawn: <code>memory_query</code>
+<code>global=true</code> removes the project predicate, with no viewer
+filter at the previous pin and none without a viewer at this one (<a
+href="#6-retrieval-mechanics">section 6</a>). Wrong at the previous pin:
+<code>to_agent</code> was never written, so a handoff was not addressed
+to a harness; no handoff expired by age; LongMemEval-S reports were
+committed. New since: per-project grants, operator-owned batons, turn
+checkpoints, <code>/recap</code>, cross-project messages. Screened
+before reading: two auto-run surfaces, two build-time execution points,
+22 dependency files inside the cooldown. Nothing was installed, built or
+run.</p>
 <p><strong>2026-09-14</strong> — <a
 href="https://github.com/akitaonrails/ai-memory/commit/74d2d31ebd8cca656c49f31563fac53e0b61c5cf"><code class="commit-id" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">74d2d31e…</code></a>
 — re-read, 791 commits past the previous pin across 443 files. The mark

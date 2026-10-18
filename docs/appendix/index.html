@@ -1007,7 +1007,17 @@ href="https://github.com/acdesigntech/memory-project/commit/83b2ac97c19b6dc650e9
 <li><a
 href="https://github.com/akitaonrails/ai-memory">akitaonrails/ai-memory</a>
 at <a
-href="https://github.com/akitaonrails/ai-memory/commit/74d2d31ebd8cca656c49f31563fac53e0b61c5cf"><code class="commit-id" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">74d2d31e…</code></a></li>
+href="https://github.com/akitaonrails/ai-memory/commit/995e35d5866973c3176709261e924a67e3c76158"><code class="commit-id" title="995e35d5866973c3176709261e924a67e3c76158">995e35d5…</code></a>
+— read only, at the head of <code>main</code>, a commit dated 17 October
+2026; read before at <a
+href="https://github.com/akitaonrails/ai-memory/commit/74d2d31ebd8cca656c49f31563fac53e0b61c5cf"><code class="commit-id" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">74d2d31e…</code></a>.
+MIT. Screened before reading from a full clone: two auto-run surfaces
+(<code>.claude-plugin/</code>, <code>hooks/</code>), two build-time
+execution points (<code>build.rs</code> in
+<code>crates/ai-memory-web</code> and
+<code>companions/ai-memory-desktop</code>), 22 dependency files inside
+the seven-day cooldown, and a committed <code>Cargo.lock</code>. Nothing
+was installed, built or run</li>
 <li><a href="https://github.com/ActiveMemory/ctx">ActiveMemory/ctx</a>
 at <a
 href="https://github.com/ActiveMemory/ctx/commit/955749b409be80636881303ef50891c4c366a645"><code class="commit-id" title="955749b409be80636881303ef50891c4c366a645">955749b4…</code></a></li>
@@ -18311,6 +18321,33 @@ gave <code>arc_hs/</code> 6,542 lines, the count for
 <code>arc_hs/</code> holds 5,599. The first two rested on the prompt
 string rather than on the function that receives the reply, and the
 fourth on a hand count of the scorecard table.</li>
+<li><strong>Five published claims about <a
+href="../systems/ai-memory/">ai-memory</a> were wrong at <a
+href="https://github.com/akitaonrails/ai-memory/commit/74d2d31ebd8cca656c49f31563fac53e0b61c5cf"><code class="commit-id" title="74d2d31ebd8cca656c49f31563fac53e0b61c5cf">74d2d31e…</code></a>,
+the pin they were made at, and are corrected.</strong> The report called
+a handoff addressed from one harness to another by typed
+<code>from_agent</code> and <code>to_agent</code>; every production
+writer set <code>to_agent</code> to <code>None</code>
+(<code>crates/ai-memory-hooks/src/router.rs:3123</code>,
+<code>crates/ai-memory-mcp/src/server.rs:3563</code>), only a CLI
+listing read it, and a manual handoff's <code>from_agent</code> was
+<code>Other</code>. It said an unclaimed handoff decays out on a
+schedule; the four writers of <code>expired</code>
+(<code>crates/ai-memory-store/src/ops.rs:2623</code>,
+<code>:2959</code>, <code>:3015</code>, <code>:3074</code>) were
+supersession, a cancel and an operator bulk expiry, none of them on a
+clock. It said no retrieval-quality benchmark was found, while
+<code>docs/benchmarks/</code> held three LongMemEval-S reports dated 1
+September 2026. It awarded <code>scope_enforced</code> although
+<code>memory_query</code>'s <code>global</code> argument searched every
+project with no project or viewer predicate
+(<code>server.rs:1930-1951</code>). And it withheld
+<code>negative_eval</code> although
+<code>named_proxy_operators_stay_isolated</code>
+(<code>crates/ai-memory-mcp/tests/suite/handoff_identity.rs:264-285</code>)
+asserted that another operator's baton is not delivered, beside the
+owner's successful claim. The first two rested on the type definition
+and its doc comment rather than on the writers of the fields.</li>
 <li><strong>One published claim about <a
 href="../systems/musclememory/">MuscleMemory</a> was wrong at <a
 href="https://github.com/TheWariend/MuscleMemory/commit/4c7b01b49fa5f3866c483fedb66109a7cc04a33d"><code class="commit-id" title="4c7b01b49fa5f3866c483fedb66109a7cc04a33d">4c7b01b4…</code></a>,

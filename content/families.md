@@ -4120,10 +4120,12 @@ that got here arrived by extending a memory schema rather than by adding a
 scheduler.
 
 The gap is also visible from the other side, in systems that hold a future
-without committing to it. [ai-memory](../systems/ai-memory/)'s handoff is a typed
-record of unfinished work addressed from one harness to another, carrying open
-questions rather than conclusions — genuinely forward-looking, and a snapshot of
-an interruption rather than a durable obligation with a trigger and a lifecycle.
+without committing to it. [ai-memory](../systems/ai-memory/)'s handoff is a
+single-use record of unfinished work, claimed once by the next session to open
+the same project and directory, with fields for open questions and next steps —
+forward-looking, and a snapshot of an interruption rather than a durable
+obligation with a trigger. Its automatic version fills those fields from the
+user's last prompt and the tools the session used.
 The distance between those two things is the whole category.
 
 Three requirements follow from the two implementations, and no system here has

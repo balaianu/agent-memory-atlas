@@ -1680,27 +1680,40 @@ inspects; and the storage engine is pinned by a floating range</td>
 </tr>
 <tr>
 <td><a href="../systems/ai-memory/"><code>ai-memory</code></a></td>
-<td>Markdown page in git, plus observation, handoff, and workstream
-records</td>
+<td>Markdown page in git with versions, plus observation, session,
+handoff, cross-project message and workstream records</td>
 <td>Markdown in git as the human source of truth; SQLite as derived
-index and state</td>
-<td>Authority- and tier-ranked search over pages, with a retention
-score</td>
-<td>Harness lifecycle hooks capture observations; opt-in LLM
-consolidation into pages</td>
-<td>Versioned supersession; generation-based supersession of pending
-work</td>
-<td>Workspace and project ids with per-project UUID isolation;
-capability-gated actors</td>
-<td>MCP plus lifecycle hooks for Claude Code, Codex, Cursor, Gemini,
-opencode, Devin, Grok, Kimi</td>
-<td>Consolidation workers, retention/decay scoring, wiki migrations</td>
-<td>Actor capabilities and auth levels; no candidate/verified state on a
-memory</td>
-<td>A handoff with a lifecycle, carrying open questions and next steps
-across harnesses</td>
-<td>No trust state or tombstone; supersession is page-keyed and
-re-capture is unguarded</td>
+index and state, with an audit_log table</td>
+<td>FTS5, entity, graph, optional vector and observation streams fused
+by RRF per project, with authority adjustment; a global flag searches
+every project; handoffs are claimed, not searched</td>
+<td>Harness lifecycle hooks capture observations without a model call;
+the session end writes a rule-based page and an automatic handoff;
+opt-in LLM consolidation and auto-improvement, auto-approved by default;
+MCP page and handoff writes</td>
+<td>Versioned supersession of pages; TTL, decay eviction and hard delete
+in a forget sweep; a handoff is claimed once, or expired by a newer
+baton from the same directory, a cancel or an operator bulk expiry</td>
+<td>Workspace and project ids on every handoff read, plus an owner
+filter on deployments that tell operators apart; page queries take a
+model-supplied project, scopes list or global flag; per-project grants
+only for restricted projects</td>
+<td>MCP with 24 tools plus lifecycle hooks for Claude Code, Codex,
+Cursor, Gemini CLI, opencode and other named harnesses; the handoff is
+injected at session start, first prompt or first tool call depending on
+the harness</td>
+<td>Session consolidation jobs with generation supersession, an
+auto-improvement scheduler, profile harvesting, a forget sweep and wiki
+migrations</td>
+<td>Actor capabilities, auth levels and opt-in per-project grants;
+admission webhooks can refuse writes and handoff claims; no candidate or
+verified state on a page</td>
+<td>A handoff claim that is one atomic compare-and-set inside the
+receiving project, with the body released only to the claimant; owner
+and directory boundaries on delivery; tests for misdelivery</td>
+<td>The automatic handoff is two user prompts and a tool list; to_agent
+is never written; no handoff expires by age and a manual one outranks
+every automatic one; memory_query global=true crosses every project</td>
 </tr>
 <tr>
 <td><a href="../systems/ai-workflow/"><code>ai-workflow</code></a></td>
@@ -34079,7 +34092,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>321 of 754:</em> <a
+<p><em>320 of 754:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34102,7 +34115,6 @@ href="../systems/agentswarms/"><code>agentswarms</code></a>, <a
 href="../systems/agno/"><code>agno</code></a>, <a
 href="../systems/ai-agent-automation/"><code>ai-agent-automation</code></a>,
 <a href="../systems/ai-maestro/"><code>ai-maestro</code></a>, <a
-href="../systems/ai-memory/"><code>ai-memory</code></a>, <a
 href="../systems/aidememo/"><code>aidememo</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/aipass/"><code>aipass</code></a>, <a
@@ -34782,7 +34794,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>483 of 754:</em> <a
+<p><em>484 of 754:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34813,7 +34825,8 @@ href="../systems/agno/"><code>agno</code></a>, <a
 href="../systems/ai-agent-automation/"><code>ai-agent-automation</code></a>,
 <a
 href="../systems/ai-brain-starter/"><code>ai-brain-starter</code></a>,
-<a href="../systems/aidememo/"><code>aidememo</code></a>, <a
+<a href="../systems/ai-memory/"><code>ai-memory</code></a>, <a
+href="../systems/aidememo/"><code>aidememo</code></a>, <a
 href="../systems/aigent-os/"><code>aigent-os</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/alphaonedev-ai-memory/"><code>alphaonedev-ai-memory</code></a>,
@@ -35299,7 +35312,7 @@ collapses "how sure am I" into "how findable is this" — see <a
 href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
-483 repositories of
+484 repositories of
 754 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together

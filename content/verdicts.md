@@ -583,12 +583,13 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Do not copy when: you need a belief model rather than a governed store, or you need correction history past the retention window — `replace` overwrites the row, and what recovers it is an event the policy may already have dropped.
 
 ### [`ai-memory`](../systems/ai-memory/)
-- Best idea: a `Handoff` with an open/accepted/expired lifecycle, typed sender and recipient, and an `open_questions` list — memory of what is *not* known.
-- Biggest risk: hooks re-capture every session and supersession is page-keyed, so a deleted page returns through the path that first produced it.
-- Most reusable component: `handoff.rs`, which is small and independent of the rest of the system.
-- Maturity impression: broad and well packaged, with harness adapters for eight agents and committed prior-art analyses of four systems in this atlas.
-- Study when: work is interrupted and resumed in a different harness, and re-explaining the state is the actual cost.
-- Do not copy when: you need trust state — and do not assume its `do_not_answer_from` tag does anything; it appears only in a test fixture.
+- Best idea: **a single-use claim that is one compare-and-set.** The next session in the same project and directory flips a handoff from `open` to `accepted` with the scope and owner predicates inside the `UPDATE`, and receives the body only if its own statement changed the row.
+- Biggest risk: **the baton is thinner than its schema.** An automatic handoff holds the first and last user prompt and a list of tool names, `files_touched` stays empty and `to_agent` is never written, so what the first agent learned travels only in a manual `memory_handoff_begin`.
+- Most reusable component: `accept_handoff_in_transaction` in `crates/ai-memory-store/src/ops.rs` with the selection rules in `reader.rs` — owner, directory and liveness boundaries on delivery, and a no-claim notice that carries metadata only.
+- Second risk: **nothing expires a baton by age.** Expiry is supersession by a newer automatic baton, a cancel or an operator bulk expiry; manual batons are exempt from the sweeps and outrank automatic ones, so a stale manual baton wins the next session start. Separately, `memory_query` with `global=true` searches every project on a default install.
+- Maturity impression: MIT, 478,099 lines of Rust across eleven crates and 3,922 commits from 21 May to 17 October 2026, with 6,544 test functions and committed LongMemEval-S retrieval reports; no handoff evaluation is committed. One mark, `negative_eval`.
+- Study when: agents in different harnesses share one store and one must pick up the other's interrupted task exactly once, without misdelivery across operators, projects or parallel sessions.
+- Do not copy when: the handoff must carry the first agent's findings, be held for a specific recipient, or lapse when it goes stale.
 
 ### [`ctx`](../systems/ctx/)
 - Best idea: the pass proposes and a person disposes. `dream` emits proposals into a gitignored notebook and never acts on them — its own type comment says so — and `accept`, `reject`, `amend` are three CLI verbs run against one proposal id, with `amend` letting the reviewer substitute an action for the one recommended. Every disposition lands in an append-only ledger. Beside it, a write-scope guard on the pass with one crossing gated on the disposition rather than the caller.

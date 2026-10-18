@@ -48,7 +48,7 @@ These execute without a command being typed. Read before opening the tree.
 | [`agno`](../../content/systems/agno.md) | `.cursorrules` |
 | [`ai-brain-starter`](../../content/systems/ai-brain-starter.md) | `-` |
 | [`ai-maestro`](../../content/systems/ai-maestro.md) | `.gitmodules`, `hooks/` |
-| [`ai-memory`](../../content/systems/ai-memory.md) | `hooks/` |
+| [`ai-memory`](../../content/systems/ai-memory.md) | `.claude-plugin/`, `hooks/` |
 | [`aidememo`](../../content/systems/aidememo.md) | `.claude-plugin/`, `.mcp.json` |
 | [`aigent-os`](../../content/systems/aigent-os.md) | `.claude-plugin/`, `hooks/` |
 | [`aimee`](../../content/systems/aimee.md) | `.claude/hooks/` |
