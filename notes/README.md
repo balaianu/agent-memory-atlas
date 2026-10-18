@@ -8,6 +8,12 @@ clobbered by a build.
 Convention: `YYYY-MM-DD-{name}.md`, dated when the note was written rather than
 when the work happens.
 
+- [2026-10-18-bdi-against-the-marks.md](2026-10-18-bdi-against-the-marks.md) —
+  the belief–desire–intention model laid over the atlas's marks and patterns.
+  Beliefs map to trust state and resolution, intentions to the prospective-memory
+  category, the plan library to procedural skills. Goals are a common stored
+  type; what no reading shows is a goal selecting what the agent commits to, and
+  no mark covers a commitment. Not a proposal for an eighth mark.
 - [2026-09-28-unreleased-code-watchlist.md](2026-09-28-unreleased-code-watchlist.md) —
   items examined while their code, their memory component or their paper was
   not public, with the places to watch for a release and the commands to
