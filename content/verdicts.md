@@ -3148,11 +3148,11 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 ### [`polyphony-arc`](../systems/polyphony-arc/)
 
 - Best idea: **the word bound is stated with its stakes.** *"Under 2500 words. This is the next instance's only memory of your thinking."* A cap alone gets a truncated transcript; a cap with the consequence attached changes what the writer chooses to keep, at no implementation cost.
-- Second idea: **the precedence rule is the heading of the thing it governs.** On-disk files are rendered under *"On-disk files (authoritative; re-read before trusting memory):"*, so the successor cannot read the listing without reading that the files outrank its summary.
-- Biggest risk: **there is no tests directory.** The entire memory behaviour is emergent from prompt text, published with a benchmark claim and without one committed assertion about the compaction path. A summary that runs long, or contradicts a file it was told to defer to, produces no error and no trace.
-- Maturity impression: MIT, 6,542 lines of harness code beside 79,035 vendored, one commit dated 6 July 2026. No marks, and 19.80 RHAE on ARC-AGI-3 Public Demo — 2 of 21 games won, 59/157 levels — so nothing about the result vouches for the design. Two source comments record the failures the design answers — an approach that *"deleted the agent's WORKING MEMORY"*, and per-turn trimming that *"destroyed prefix cache + working memory"*.
-- Study when: you are choosing what to tell a model at a compaction boundary, and want the two lines that do the most work.
-- Do not copy when: the memory has to be checkable by anything but the model that wrote it.
+- Second idea: **the handoff opens with a pointer written by code, and says so.** *"System-recovered state (mechanical, not an LLM summary — trust this over memory)"* carries game progress read from the recorded frames and a listing headed *"On-disk files (authoritative; re-read before trusting memory):"*, so the successor gets something the summariser could not have distorted.
+- Biggest risk: **the precedence rule ends at the prompt.** Nothing makes the successor read a file or run the verifier, the listing names five model-written files, one of them the previous summary, the rebuilt context drops the main prompt, and each summary is written without the one before it. There is no test directory.
+- Maturity impression: MIT, 6,542 lines of Python of its own beside 79,035 vendored, one commit dated 6 July 2026. No marks. 19.8 RHAE on ARC-AGI-3 Public Demo, 2 games won and 59/157 levels across 21 played, from a scorecard published on 2 July 2026, before the commit and under a tag the committed launcher does not set. Two source comments record the failures the design answers: a characters-over-four token meter that let the context overflow, and per-turn trimming that *"deleted the agent's WORKING MEMORY"*.
+- Study when: you are choosing what to tell a model at a compaction boundary, and what to write in code beside it.
+- Do not copy when: the memory has to be checkable by anything but the model that wrote it, or the handoff has to carry the task definition across.
 
 ### [`openhands-sdk`](../systems/openhands-sdk/)
 

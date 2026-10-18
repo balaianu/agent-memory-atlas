@@ -25476,33 +25476,41 @@ default injection recall is unscoped</td>
 <tr>
 <td><a
 href="../systems/polyphony-arc/"><code>polyphony-arc</code></a></td>
-<td>A handoff summary — prose the model writes about its own session,
-asked for under 2,500 words and measured against nothing — plus whatever
-files it left on disk</td>
-<td>The workspace directory and the summary text carried into the next
-context. Nothing is indexed and nothing is queried</td>
-<td>The successor is handed the summary in its prompt, together with a
-rendered listing of on-disk files marked authoritative and to be
-re-read</td>
-<td>The model produces the summary when the context budget is hit; the
-harness prompts for it and stores whatever comes back — the word limit
-is a sentence in the prompt, not a check in the code</td>
-<td>The summary is regenerated per compaction. Files are the model's own
-to overwrite</td>
-<td>One workspace per run. No scope key</td>
-<td>A compaction loop around a long-horizon ARC-AGI-3 session,
-deliberately without per-turn trimming so the prefix cache and the
-working memory survive</td>
+<td>A per-game workspace of model-written files (the Heuristic System's
+engine, state I/O and planner code, hs.md, per-level reasoning logs and
+reports) plus a handoff summary written at each compaction and asked for
+under 2,500 words</td>
+<td>Files in one run directory per game; the latest summary is also
+overwritten into progress_notes.md there. Nothing is indexed</td>
+<td>After a compaction the successor gets a notice, a code-written state
+pointer that lists five model-written files as authoritative, the
+summary, and up to 20,000 tokens of its newest turns; otherwise the
+model reads and greps its own files</td>
+<td>The model writes the files through its tools. At 200,000 tokens the
+harness asks it for the summary, rejects one that is tool-call markup,
+and keeps up to the 16,384-token generation cap; the 2,500-word limit is
+prompt text</td>
+<td>Each compaction overwrites progress_notes.md and drops the previous
+summary from the history. Files are the model's to overwrite, except the
+recorded frames and eleven tooling scripts its file tools refuse</td>
+<td>A fresh workspace per game run, copied from a template; nothing
+crosses games or runs. The file tools read any absolute path</td>
+<td>A compaction check before every generation in each game's coding
+session, deliberately without per-turn trimming; a separate trouble
+protocol clears the conversation and restarts from the main prompt</td>
 <td>None</td>
-<td>None as a field. The precedence rule is in the rendered prompt —
-on-disk files are authoritative and memory is to be distrusted against
-them</td>
-<td>The summary is bounded, its purpose is stated to the model that
-writes it, and the prompt subordinates it to the files; source comments
-record two compaction failures the design is a response to</td>
-<td>Everything is prose in a prompt. There is no test directory, nothing
-parses or validates the summary, and no record survives of what a
-compaction dropped</td>
+<td>None as a field. The state pointer is headed as code-written and to
+be trusted over memory, and its file listing as authoritative; the
+engine code is checked against the recorded frames by a verifier the
+model runs</td>
+<td>The summary's stakes are stated to its writer; the state pointer is
+written by code rather than the model; source comments record the two
+failures the design answers; the recorded frames are refused to the
+model's file tools</td>
+<td>No tests. The compacted context loses the main prompt; each summary
+is written without the previous one; the authoritative listing names
+only model-written files, one of them the previous summary; a summary
+cut off at the generation cap is accepted</td>
 </tr>
 <tr>
 <td><a href="../systems/pond/"><code>pond</code></a></td>

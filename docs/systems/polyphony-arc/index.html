@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="An ARC-AGI-3 harness that compacts
-a session into a bounded handoff summary and tells the successor the
-summary is not authoritative — the files are.">
+    <meta name="description" content="An ARC-AGI-3 harness whose memory
+is a per-game folder of model-written files and a compaction that swaps
+the context for a summary.">
     <meta name="theme-color" content="#101b2a">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="Polyphony
 ARC — Agent Memory Atlas">
-    <meta property="og:description" content="An ARC-AGI-3 harness that
-compacts a session into a bounded handoff summary and tells the
-successor the summary is not authoritative — the files are.">
+    <meta property="og:description" content="An ARC-AGI-3 harness whose
+memory is a per-game folder of model-written files and a compaction that
+swaps the context for a summary.">
     <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Polyphony
 ARC — Agent Memory Atlas">
-    <meta name="twitter:description" content="An ARC-AGI-3 harness that
-compacts a session into a bounded handoff summary and tells the
-successor the summary is not authoritative — the files are.">
+    <meta name="twitter:description" content="An ARC-AGI-3 harness whose
+memory is a per-game folder of model-written files and a compaction that
+swaps the context for a summary.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
     <title>Polyphony ARC — Agent Memory Atlas</title>
     <!-- Schema.org, so an assistant summarising this page can tell a technical
@@ -43,7 +43,7 @@ successor the summary is not authoritative — the files are.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Polyphony ARC",
-      "description": "An ARC-AGI-3 harness that compacts a session into a bounded handoff summary and tells the successor the summary is not authoritative \u2014 the files are.",
+      "description": "An ARC-AGI-3 harness whose memory is a per-game folder of model-written files and a compaction that swaps the context for a summary.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -100,9 +100,9 @@ successor the summary is not authoritative — the files are.">
         <div class="document-hero-inner">
           <p class="eyebrow">Twenty-five hundred words of you</p>
           <h1>Polyphony ARC</h1>
-          <p class="document-deck">An ARC-AGI-3 harness that compacts a
-session into a bounded handoff summary and tells the successor the
-summary is not authoritative — the files are.</p>
+          <p class="document-deck">An ARC-AGI-3 harness whose memory is
+a per-game folder of model-written files and a compaction that swaps the
+context for a summary.</p>
                     <div class="document-meta">
             <a class="meta-pill" href="https://github.com/Mininglamp-AI/polyphony-arc-3">
               <span>Source</span>
@@ -116,7 +116,7 @@ summary is not authoritative — the files are.</p>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-18</strong>
+              <strong>2026-10-18</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/Mininglamp-AI--polyphony-arc-3" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -124,7 +124,22 @@ summary is not authoritative — the files are.</p>
               <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
             </a>
                       </div>
-                                                  <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT
+for the harness; the vendored ARC-AGI SDK, engine and game environment
+files are MIT, ARC Prize Foundation</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>6,542
+lines of Python of its own (5,599 in arc_hs/, 943 in compat/) and 1,804
+lines of prompts and docs, beside 79,035 vendored lines of Python,
+72,572 of them game environments</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>One
+commit on main, dated 6 July 2026, by one author</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>None:
+no test directory, no CI and no test function; one hand-run timeout
+script in the workspace template; nothing run for this
+reading</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
                   </div>
         <div class="hero-contours" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
@@ -140,154 +155,354 @@ summary is not authoritative — the files are.</p>
         </aside>
         <article class="prose" id="article">
 <h2 id="1-executive-summary">1. Executive Summary</h2>
-<p>Polyphony ARC is Mininglamp AI's ARC-AGI-3 harness — 6,542 lines of
-its own Python beside 79,035 vendored, MIT, a single commit dated 6 July
-2026 and no tests directory.</p>
-<p>Its published ARC-AGI-3 result is 19.80% at $115 — 2 of 21 games won,
-59/157 levels — which is the lower end of that leaderboard and well
-below the two harnesses this report compares it to. Its memory is a
-compaction: when the context budget runs out, the model writes a handoff
-summary and a fresh context starts from it. Two design decisions in
-<code>hs_compaction.py</code> are worth a report. The summary is
-<strong>bounded and its stakes are stated to the writer</strong> —
+<p>Polyphony ARC is Mininglamp AI's ARC-AGI-3 harness, and what it keeps
+is a workspace. Each game gets a fresh copy of a template folder, and
+the model grows a small Python program in it — engine, state
+reconstruction, planner, with a prose model in <code>hs.md</code> — that
+a harness-owned verifier replays against the frames the game returned.
+When the conversation reaches 200,000 tokens the harness asks the model
+for a handoff, rebuilds the context around it and keeps the newest
+turns. Nothing carries into the next game.</p>
+<p>Two lines in <code>arc_hs/hs_compaction.py</code> carry the design.
+The summary is bounded and its stakes are stated to the writer:
 <em>"Under 2500 words. This is the next instance's only memory of your
-thinking."</em> And the successor is told not to trust it: files on disk
-are rendered under the heading <em>"On-disk files (authoritative;
-re-read before trusting memory):"</em></p>
-<p><strong>No marks.</strong> Both rules are prompt text, and unlike <a
-href="../tycho/">Tycho</a> none of it is machinery.</p>
+thinking."</em> And the successor is told to defer to disk. Code renders
+a block headed <em>"System-recovered state (mechanical, not an LLM
+summary — trust this over memory)"</em> with a file listing headed
+<em>"On-disk files (authoritative; re-read before trusting
+memory):"</em>.</p>
+<p>What code enforces is narrower than what the prompt states. The 2,500
+words are prompt text; code holds the summary to the 16,384-token
+generation cap and rejects one that is tool-call markup. Nothing makes
+the successor read a file, and the listing names five files the model
+wrote itself, one of them the previous summary. The rebuilt context
+drops the main prompt that defines the workspace, and each summary is
+written without sight of the one before it.</p>
+<p>The published result is 19.8% RHAE on ARC-AGI-3 Public Demo at $115,
+from the community leaderboard. Its scorecard was published on 2 July
+2026, before the repository's only commit, under a tag the committed
+launcher does not set, and no result is committed to the tree.</p>
+<p><strong>No marks.</strong> The precedence rule is prompt text, and
+unlike <a href="../tycho/">Tycho</a> nothing at the memory boundary can
+fail.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
-<p>A compaction is a lossy write, and this harness treats it as one.</p>
-<p>The model is told the word budget and told what the words are for,
-which is a different instruction from <em>summarise the
-conversation</em>: a writer who knows the summary is the successor's
-only recollection prioritises differently from one who thinks a
-transcript is still available.</p>
-<p>Then the successor is given the summary and, in the same prompt, a
-list of the files that outlive it — with the files declared
-authoritative. Where the two disagree, the prose loses.</p>
+<p>There are two memories here, with different standing.</p>
+<p>The workspace is the durable one and the checkable one.
+<code>hs_engine.py</code>, <code>hs_state_io.py</code> and
+<code>hs_planner.py</code> are code, and <code>verify_hs.py</code>
+replays them against the recorded frames under
+<code>client/session/</code>, which the model's file tools refuse to
+write. <code>hs.md</code>, the reasoning logs and the level reports
+beside them are prose the main prompt requires and nothing reads.</p>
+<p>The summary is the volatile one: prose the model writes about its own
+recent window, read by the next window of the same session. The design
+ranks the two correctly — files over prose — and states the ranking in
+the context it hands over.</p>
+<p>A compaction is a lossy write, and the harness treats it as one on
+the writer's side: the model is told the budget and what the words are
+for, which is a different instruction from <em>summarise the
+conversation</em>. On the reader's side the ranking has no teeth. No
+code runs the verifier after a compaction, compares the summary with the
+files, or checks that the successor opened anything.</p>
 <h2 id="3-architecture">3. Architecture</h2>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — the compaction boundary is where memory is created, and the design's two rules — a stated word budget and files-over-prose — are both prompt text at that boundary</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
-%% caption: the compaction boundary is where memory is created, and the design&#39;s two rules — a stated word budget and files-over-prose — are both prompt text at that boundary
-    S[&quot;session with the model&quot;] --&gt; BUD{&quot;context budget hit?&quot;}
-    BUD --&gt;|no| S
-    BUD --&gt;|yes| CMP[&quot;hs_compaction&quot;]
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — each game runs in a fresh copy of the template; at 200,000 tokens the session is rebuilt from a notice, a code-written pointer, a model-written summary and the newest turns, and a separate trouble protocol restarts from the main prompt with none of them</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
+%% caption: each game runs in a fresh copy of the template; at 200,000 tokens the session is rebuilt from a notice, a code-written pointer, a model-written summary and the newest turns, and a separate trouble protocol restarts from the main prompt with none of them
+    T[&quot;workspace template&lt;br/&gt;arc_hs/workspace/&quot;] --&gt;|&quot;copytree, one run directory per game run&quot;| MF
+    MF[&quot;model-written files&lt;br/&gt;hs_engine.py · hs_state_io.py · hs_planner.py&lt;br/&gt;hs.md · level_N_reasoning_log.md · progress_notes.md&quot;]
+    PF[&quot;refused to the file tools&lt;br/&gt;client/session frames · verify_hs.py and ten other scripts&quot;]
+    PF -.-&gt;|&quot;verify_hs.py replays the engine&lt;br/&gt;against the frames, when the model runs it&quot;| MF
 
-    CMP --&gt;|&quot;&#39;Under 2500 words.&lt;br/&gt;This is the next instance&#39;s&lt;br/&gt;only memory of your thinking.&#39;&quot;| HS[&quot;handoff summary&quot;]
+    S[&quot;coding session send() loop&quot;] --&gt; G{&quot;real tokens over 200,000?&lt;br/&gt;checked before every generate&quot;}
+    G --&gt;|no| GEN[&quot;generate with tools&quot;]
+    GEN --&gt;|&quot;read_file · write_file · grep_text · bash&quot;| MF
+    GEN --&gt; S
+    G --&gt;|yes| SQ[&quot;side query without tools&lt;br/&gt;newest 150,000 tokens&lt;br/&gt;earlier summary and pointer skipped&quot;]
+    SQ --&gt; CHK{&quot;empty, or tool-call markup?&quot;}
+    CHK --&gt;|&quot;yes: a failure; three in a row&lt;br/&gt;disable the side query&quot;| RB
+    CHK --&gt;|&quot;no: kept as generated,&lt;br/&gt;at most 16,384 tokens&quot;| PN[&quot;overwrite progress_notes.md&quot;]
+    PN --&gt; MF
+    PN --&gt; RB[&quot;rebuilt history&quot;]
+    RB --&gt; R1[&quot;1. notice: read the files, run verify_hs.py&quot;]
+    R1 --&gt; R2[&quot;2. state pointer written by code&lt;br/&gt;game progress · five file names and sizes&quot;]
+    R2 --&gt; R3[&quot;3. summary&quot;]
+    R3 --&gt; R4[&quot;4. an assistant turn the harness wrote&quot;]
+    R4 --&gt; R5[&quot;5. newest turns, up to 20,000 tokens&lt;br/&gt;the main prompt is not among them&quot;]
+    R5 --&gt; S
 
-    S --&gt; FS[(&quot;workspace files&lt;br/&gt;written by the model&quot;)]
-
-    HS --&gt; P[&quot;successor prompt&quot;]
-    FS --&gt;|&quot;rendered listing&quot;| P
-    P -.-&gt;|&quot;&#39;On-disk files (authoritative;&lt;br/&gt;re-read before trusting memory)&#39;&quot;| PREC[&quot;files outrank the summary&quot;]
-
-    P --&gt; S2[&quot;successor session&quot;]
-
-    NOTE[&quot;design comments:&lt;br/&gt;no per-turn trimming —&lt;br/&gt;it destroyed prefix cache&lt;br/&gt;and working memory&quot;] -.-&gt; CMP</code></pre></details></figure>
+    TP[&quot;trouble protocol 2&lt;br/&gt;a reset 200 steps past the last one on a level&quot;] --&gt;|&quot;new_session()&quot;| NS[&quot;main prompt + trouble prompt + reset output&lt;br/&gt;no summary, no pointer&quot;]
+    NS --&gt; S</code></pre></details></figure>
 <h2 id="4-essential-implementation-paths">4. Essential Implementation
 Paths</h2>
-<p><strong>Compaction is the only memory event.</strong> There is no
-store, no record type and no write path other than the summary the model
-produces at the boundary.</p>
-<p><strong>The bound is stated with its reason.</strong> <em>"Under 2500
-words. This is the next instance's only memory of your thinking."</em> A
-cap without a reason gets a truncated transcript; a cap with the stakes
-attached gets a briefing. It is a prompt-engineering choice rather than
-a mechanism, but it is the right one.</p>
-<p><strong>The file listing carries the precedence rule inline.</strong>
-Rather than a separate instruction to prefer files, the authority claim
-is the <em>heading</em> of the listing — the successor cannot read the
-file names without reading that the files outrank its memory.</p>
-<p><strong>The comments record what went wrong before.</strong> Two
-survive in the source: one noting that an earlier approach <em>"deleted
-the agent's WORKING MEMORY"</em>, and one that per-turn trimming
-<em>"destroyed prefix cache + working memory"</em> and was therefore
-removed. Both are failure modes of aggressive context management, and
-the current design is legible as a response to them.</p>
+<p><strong>The trigger is measured in real tokens.</strong>
+<code>count_tokens</code> encodes the history with the Qwen tokenizer,
+charges every image a flat 1,700 and falls back to characters over three
+(<code>arc_hs/hs_compaction.py:168-187</code>).
+<code>maybe_compact</code> runs before every generation
+(<code>arc_hs/coding_session.py:307</code>); it compacts above 200,000
+tokens and halves the kept tail above 215,000
+(<code>hs_compaction.py:52-53</code>, <code>:284</code>,
+<code>:298-301</code>). The docstring says why the meter matters: a
+characters-over-four estimate under-counted grid frames about fourfold
+and the run hit the context wall at 229,377 (<code>:8-13</code>).</p>
+<p><strong>The summary request names what gets lost.</strong>
+<code>LAYER3_PROMPT</code> asks for seven sections — file state and the
+last verifier result, confirmed rules, the active hypothesis, ruled-out
+directions, coordinates already clicked with their effect, game progress
+and the exact next step — and ends <em>"Be concise but COMPLETE on dims
+2/4/5 (those are what gets lost). Under 2500 words."</em>
+(<code>:79-117</code>).</p>
+<p><strong>Each summary is written from one window.</strong> The writer
+is handed the newest 150,000 tokens of history (<code>:334</code>), and
+<code>select_recent_turns</code> skips every earlier summary, notice and
+pointer on the way (<code>:208-214</code>). The summary at the second
+compaction is therefore not written from the first: what survives two
+compactions is what the model put in a file or re-read into its recent
+turns.</p>
+<p><strong>Acceptance is a markup check and a cap.</strong>
+<code>_run_layer3</code> strips think tags, treats as a failure an empty
+reply or one that opens with a tool call or carries two or more
+tool-call markers, and truncates past 20,000 tokens
+(<code>:329-361</code>, <code>:336-356</code>). The side query runs
+under the session's 16,384-token generation cap
+(<code>coding_session.py:74</code>, <code>:183</code>,
+<code>:218-223</code>), so that truncation cannot fire, and nothing in
+<code>arc_hs/</code> reads the response's stop reason, so a summary cut
+off at the cap is kept as if complete. Three consecutive failures
+disable the side query (<code>hs_compaction.py:62</code>,
+<code>:285-286</code>); the counter resets only on a success
+(<code>:357</code>), so for that session every later compaction runs
+without a summary.</p>
+<p><strong>What the successor receives, in order</strong>
+(<code>:303-316</code>): the compaction notice; the state pointer; the
+summary under the <code>[[WM_COMPACT_SUMMARY]]</code> prefix; an
+assistant turn the harness wrote — <em>"Understood — I just compacted. I
+will read progress_notes.md, hs.md and the latest reasoning log, run
+verify_hs.py…"</em>; and the newest turns up to 20,000 tokens, with no
+leading orphan tool result (<code>:191-223</code>).</p>
+<p><strong>The authoritative listing is five fixed names.</strong>
+<code>layer2_state_pointer</code> reads game progress from the recorded
+frames through <code>session_inspector</code>, then lists whichever of
+<code>hs.md</code>, <code>hs_engine.py</code>,
+<code>hs_state_io.py</code>, <code>hs_planner.py</code> and
+<code>progress_notes.md</code> exist, with byte sizes, and the last
+reasoning log by name (<code>:227-256</code>). Every listed file is
+model-written. The pointer is rendered before the new summary is saved
+(<code>:287</code> against <code>:290-296</code>), so from the second
+compaction on it lists the previous summary's file and size. The name
+sort is lexicographic, so at level 10 the "latest" log is level 9's
+(<code>:253-255</code>). The frames the harness protects are not listed;
+the notice reaches them by telling the model to run
+<code>verify_hs.py</code>.</p>
+<p><strong>The main prompt drops out.</strong> No message has the system
+role, and the 41,383-byte main prompt is the first user message of the
+session (<code>arc_hs/agent.py:217-225</code>), so a 20,000-token tail
+never reaches it. After a compaction the continuation prompt's
+<em>"Follow the original prompt carefully"</em>
+(<code>arc_hs/prompts/protocols/continuation_l2.txt:1</code>) points at
+text no longer in context. A copy of the prompt is on disk as
+<code>main_prompt.md</code>, differing in three paragraphs from the one
+sent, and is not in the listing.</p>
+<p><strong>The other fresh start carries nothing.</strong>
+<code>trouble_protocol2</code> calls <code>new_session()</code>, which
+empties the history (<code>coding_session.py:227-228</code>), and sends
+the main prompt, a trouble prompt and the reset output
+(<code>agent.py:383-403</code>). It fires at a reset more than 200 steps
+past the last one on that level (<code>:417-420</code>). The docstring
+says the saved summary <em>"survives trouble_protocol2's
+new_session"</em> (<code>hs_compaction.py:29</code>); the file survives,
+and no prompt in that path, or anywhere in <code>arc_hs/prompts/</code>,
+names <code>progress_notes.md</code>.</p>
+<p><strong>The comments record two failures.</strong> The first is the
+meter above. The second is per-turn trimming of old tool outputs, which
+rewrote the middle of history every turn, <em>"destroyed prefix-cache
+hits"</em> and <em>"deleted the agent's WORKING MEMORY (which cells it
+clicked + what each did, which hypotheses it ruled out)"</em> — and a
+run without compaction <em>"reached further than the per-turn Layer-1
+runs"</em> (<code>:15-23</code>, restated at <code>:276</code>). One
+per-request rewrite remains below the session: the model adapter
+replaces every image but the newest twelve with a placeholder on the
+wire (<code>compat/qwen_policy.py:46-51</code>, <code>:125-153</code>,
+<code>:269-272</code>), while <code>count_tokens</code> still charges
+all of them.</p>
 <h2 id="5-memory-data-model">5. Memory Data Model</h2>
-<p>None. The unit is prose under a word cap. There is no field for
-confidence, for provenance, for time, for scope or for a rejected
-conclusion, and nothing parses the summary after it is written.</p>
-<p>This places the system at the same point as <a
+<p>The workspace has the shape the main prompt demands:
+<code>hs.md</code>, the three Heuristic System modules, optional
+per-level planners, <code>level_N_reasoning_log.md</code> and
+<code>level_N_report.md</code>
+(<code>arc_hs/prompts/main_prompt.md:73-82</code>). Nothing enforces it,
+and the template ships the modules as placeholders.</p>
+<p>The summary is Markdown under a prefix and a <code>_meta</code> tag
+that exist so the next compaction can drop it
+(<code>hs_compaction.py:64-66</code>, <code>:303-310</code>). There is
+no field for confidence, provenance, time, scope or a rejected
+conclusion; the ruled-out directions the prompt asks for are prose, and
+nothing keys or consults them.</p>
+<p>This places the summary at the same point as <a
 href="../retrodict/">Retrodict</a> — the memory contract is a prompt —
-with one difference in the contract's content. Retrodict asks the model
-to mark each point <em>checked against the log</em> or <em>still
-assumed</em>; Polyphony asks for a bounded summary and states which
-artifact wins a disagreement. Neither is read by code. Retrodict's
-version says more.</p>
+with one difference in content. Retrodict asks the model to mark each
+point <em>checked against the log</em> or <em>still assumed</em>;
+Polyphony asks for a bounded summary and states which artifact wins a
+disagreement. Neither is read by code. Retrodict's version says
+more.</p>
 <h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
-<p>There is no retrieval. The summary is injected into the successor's
-prompt in full, and the file listing beside it is a directory rendering
-rather than a query. Nothing is ranked and nothing is selected, which
-for a single bounded summary is coherent.</p>
+<p>There is no index and no query. The rebuilt history is the
+successor's whole context, and after that the model reads its own files
+with <code>read_file</code>, <code>grep_text</code> and
+<code>list_dir</code>.</p>
+<p>Tool results enter the history cut at 12,000 characters of JSON
+(<code>coding_session.py:66</code>, <code>:331-333</code>). A summary
+written to the 2,500 words the prompt allows can exceed that, so one
+<code>read_file</code> of <code>progress_notes.md</code> may come back
+cut off unless the model pages with <code>offset</code>.</p>
+<p>The read tools are not confined to the workspace.
+<code>_resolve</code> accepts an absolute path and
+<code>_read_file</code>, <code>_grep</code> and <code>_list_dir</code>
+check nothing (<code>:458-484</code>, <code>:510-543</code>), unlike the
+write tools (<code>:617-636</code>). A swarm runs games in sibling run
+directories, so a model can open another game's files; no prompt asks it
+to.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>One write, at the compaction boundary, by the model. No validation,
-no schema, no size enforcement beyond the instruction, and no diff
-against the summary it replaces.</p>
+<p>The model writes the workspace through <code>write_file</code>,
+<code>edit_file</code> and <code>bash</code>. The file tools refuse
+anything under <code>client/session/</code> and eleven top-level tooling
+scripts (<code>coding_session.py:617-636</code>). The bash guard is
+lexical: it blocks <code>rm</code>, <code>mv</code>, <code>shred</code>,
+<code>truncate</code>, <code>unlink</code> and file redirects that name
+those paths or <code>client.py</code> (<code>:545-615</code>), so an
+interpreter one-liner that deletes the same directory passes it.</p>
+<p>The strace sandbox adds nothing to that boundary. The session passes
+its work directory as both workspace and run root
+(<code>:416-420</code>), and the sandbox allows every write under the
+workspace (<code>compat/sandbox.py:459-477</code>); the README's
+competition command sets <code>WM_NO_SANDBOX=1</code> in any case.
+<code>client/client.py</code>, the program that writes the recorded
+frames, is outside the file tools' protected set, which matches
+top-level names only (<code>coding_session.py:629-635</code>).</p>
+<p>The summary is written once per compaction, over
+<code>progress_notes.md</code>, with any error swallowed
+(<code>hs_compaction.py:290-296</code>). Nothing diffs it against the
+file it replaces.</p>
 <h2 id="8-agent-integration">8. Agent Integration</h2>
-<p>The harness wraps a long-horizon ARC-AGI-3 session with a deliberate
-choice not to trim per turn — the comment above says why — so the
-working context stays intact until the budget forces a full compaction.
-The vendored tree is twelve times the size of the harness's own code and
-was not read for this review.</p>
+<p><code>run_swarm.py</code> queues games and <code>Swarm</code> runs N
+at once, each in a fresh run directory named for the game, a sequence
+number, the worker and the batch, with a copy of the template
+(<code>arc_hs/swarm.py:241-252</code>);
+<code>ensure_fresh_run_paths</code> refuses an existing directory
+(<code>agent.py:90-96</code>). Nothing reads an earlier run directory or
+the <code>swarm_report_*.json</code> the swarm writes
+(<code>swarm.py:383-397</code>), so no memory crosses games or runs.
+Per-iteration git snapshots of the workspace exist behind
+<code>HS_GIT_SNAPSHOT=1</code> and are off by default
+(<code>agent.py:227-240</code>).</p>
+<p>The vendored tree under <code>vendor/arc/</code> is the ARC-AGI SDK
+(4,121 lines), its game engine (2,342) and 26 game environment files for
+25 games (72,572). A search of the SDK and engine for memory, summary,
+compaction, persistence and embedding terms returns nothing.</p>
 <h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
 Trust</h2>
-<p>Single agent, single workspace, no other principal: scope, audit and
-review have no consumer here, and their absence is not a defect. What is
-a defect is that neither of the two good rules is checkable. A summary
-that runs to 4,000 words, or one that contradicts a file it was supposed
-to defer to, produces no error and leaves no trace.</p>
-<p>The absence of a tests directory matters more than the marks it
-costs. This is a harness whose entire memory behaviour is emergent from
-prompt text, published with a benchmark claim and without a single
-committed assertion about the compaction path.</p>
+<p>One agent per game, one workspace, no other principal: scope, audit
+and review have no consumer here, and their absence is not a defect.</p>
+<p>The defect is where the precedence rule stops being code. Code writes
+the state pointer, refuses the frames to the file tools and ships a
+verifier that replays the engine against every recorded attempt
+(<code>arc_hs/workspace/verify_hs.py:88-153</code>). Prompt text is all
+that makes the successor read the files, run the verifier, or prefer
+either to the summary. The prose files — <code>hs.md</code>, the
+reasoning logs, <code>progress_notes.md</code> — are checked by nothing,
+and they are what carries the ruled-out directions and the clicked
+coordinates. The verifier is as strong as the model's restraint:
+<code>apply_render_overrides</code>, which the model writes, patches the
+rendered frame before comparison and earns only a printed warning
+(<code>verify_hs.py:26-40</code>).</p>
+<p>What a compaction leaves behind is partial. <code>agent.log</code> in
+the run directory appends a JSON line for each assistant turn (first
+2,000 characters), each bash call (command 500, stdout 1,500, stderr
+800) and each compaction with tokens before and after and turns kept
+(<code>coding_session.py:323-324</code>, <code>:427-430</code>,
+<code>hs_compaction.py:318-326</code>). File-tool results and the
+summary text are not logged, and the log sits in the workspace, where
+the write tools do not refuse it.</p>
+<p><strong>Each mark fails its producer test.</strong> No memory carries
+a status, and the <code>_meta</code> tag that keeps an old summary out
+of the next window marks a message kind, not a belief, so
+<code>trust_state</code> is withheld. The ruled-out directions are prose
+that no write consults, so there is no <code>tombstone</code>. There is
+no scope key: the run directory bounds the write tools only, and the
+read tools take any absolute path, so <code>scope_enforced</code> is
+withheld. <code>agent.log</code> is truncated and the model can
+overwrite it, so it is not an <code>audit_log</code>. Nothing waits for
+a person — <code>--retry-error-handling-manual</code> is accepted by
+<code>CodingSession</code> and read nowhere
+(<code>coding_session.py:150</code>) — so there is no
+<code>human_review</code>. Nothing records when a rule held, so nothing
+is <code>bitemporal</code>, and with no tests there is no
+<code>negative_eval</code>.</p>
+<p>The absence of tests matters more than the marks it costs. The memory
+behaviour is emergent from prompt text, published with a benchmark claim
+and without a committed assertion about the compaction path.</p>
 <h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
 Benchmarks</h2>
-<p>There is no tests directory. Nothing was run for this review.</p>
-<p>The published result is <a
+<p>There is no test directory, no CI configuration and no test function
+outside the vendored tree. <code>arc_hs/workspace/test_timeout.py</code>
+is a hand-run <code>main()</code> that checks a timeout helper inside
+the agent's template. Nothing was run for this reading.</p>
+<p>No result is committed to the tree. The figures come from two pages.
+The <a href="https://arcprize.org/leaderboard/community">community
+leaderboard</a> lists <em>Polyphony Agent - ARC</em> at
+<strong>19.8%</strong> on ARC-AGI-3 Public Demo for
+<strong>$115</strong>, dated 7 July 2026, linking this repository and <a
 href="https://arcprize.org/scorecards/d0895597-2bb5-4191-9b7b-ec97917da1aa">the
-official scorecard</a>, listed on the ARC Prize community leaderboard as
-<strong>19.80%</strong> on ARC-AGI-3 Public Demo for $115, dated 7 July
-2026 and tagged <code>v11.2-swarm</code>. Underneath: <strong>2 of 21
-environments won</strong>, 59/157 levels, 6,838 actions. Two games
-finish at 100.00 (<code>lp85-305b61c3</code> and
-<code>tu93-0768757b</code>) and eleven score below 5. The 21
-per-environment scores average to 19.8029, so the figure recomputes from
-its own table.</p>
-<p>Two qualifications belong beside it. The metric is RHAE — relative
-human action efficiency — so 19.80% is not a completion rate, and the
-59/157 levels is the closer thing to one. And this run covers <strong>21
-environments where <a href="../tycho/">Tycho</a> and <a
+scorecard</a>. The scorecard shows 19.80%, the tags
+<code>v11.2-swarm</code> and <code>agent</code>, 21 environments, 59/157
+levels and 6,838 actions, published 2 July 2026 at 22:20 UTC (rendered
+as 3 July 00:20 in a Europe/Copenhagen browser). I recomputed its
+per-environment table: the mean is 19.8029, the levels and actions
+match, two games finish <code>WIN</code> at 100.00
+(<code>lp85-305b61c3</code>, <code>tu93-0768757b</code>) and ten score
+below 5.</p>
+<p>The scorecard predates the repository's only commit, 6 July 2026 at
+09:20 UTC, by three and a half days, and the committed launcher opens
+scorecards tagged <code>polyphony</code>
+(<code>arc_hs/swarm.py:158</code>), to which the SDK adds
+<code>agent</code>. The scored run was not opened by
+<code>swarm.py</code> as committed, and which code it ran is not
+recorded. Offline mode cannot replay it either: nine scored games are
+vendored at the version scored and twelve at another.</p>
+<p>Two qualifications belong beside the number. The metric is RHAE —
+relative human action efficiency — so 19.80% is not a completion rate,
+and 59/157 levels is the closer thing to one. And the run covers
+<strong>21 environments where <a href="../tycho/">Tycho</a> and <a
 href="../retrodict/">Retrodict</a> cover 25</strong>: <code>ft09</code>,
 <code>r11l</code>, <code>sb26</code> and <code>sc25</code> are absent
-here, so the three numbers are not means over the same set, which
-matters for anyone below a ceiling. The leaderboard hosts but does not
-check these — only ARC-AGI-1 and ARC-AGI-2 semi-private results are run
-and verified by ARC Prize, and <em>"everything else is scored on a
-public set and self-reported."</em></p>
-<p>A harness at 19.80% with no committed test of its compaction path is
-not a system whose memory design has been demonstrated. The two prompt
-lines in section 4 are worth reading because they are well-stated, not
-because a result vouches for them.</p>
+here, so the three numbers are not means over the same set. The
+leaderboard hosts but does not check these: only ARC-AGI-1 and ARC-AGI-2
+semi-private results are run and verified by ARC Prize, and
+<em>"everything else is scored on a public set and
+self-reported."</em></p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <p><strong>Tell the summariser what the summary is for.</strong>
 <em>"This is the next instance's only memory of your thinking"</em>
 changes what a model chooses to keep, at no implementation cost.</p>
-<p><strong>Put the precedence rule in the artifact, not beside
-it.</strong> Making <em>files are authoritative</em> the heading of the
-file listing means the reader cannot skip it.</p>
+<p><strong>Write the pointer in code and say so.</strong> A block headed
+<em>"mechanical, not an LLM summary"</em> gives the successor something
+the summariser could not have distorted. List the evidence in it, not
+only the files the model wrote.</p>
+<p><strong>Carry the instructions across the boundary.</strong> A
+tail-keeping compaction drops the opening message, which here is the
+task definition. Pin it, or re-send it with the handoff.</p>
+<p><strong>Give the summariser the previous summary.</strong> Skipping
+old summaries keeps them from nesting; it also makes every handoff a
+summary of one window.</p>
 <p><strong>Leave the failure in the comment.</strong> <em>"No per-turn
 trimming (that destroyed prefix cache + working memory)"</em> is why the
 next person will not reintroduce it.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <p><strong>What does a real handoff summary look like?</strong> None is
-committed, so whether the 2,500-word bound is honoured, and what a
-compaction drops, is unmeasured.</p>
-<p><strong>Is anything carried between games?</strong> The summary is
-within-run. Nothing found here moves a conclusion across runs.</p>
-<p><strong>What is in the vendored tree?</strong> 79,035 lines, unread
-for this review; a memory mechanism inside it would not have been
-seen.</p>
+committed, so whether the 2,500-word bound is honoured, how often the
+side query fails, and what a compaction drops are unmeasured.</p>
+<p><strong>Which code produced the scorecard?</strong> It was opened
+under <code>v11.2-swarm</code> before the commit that is public, and
+nothing in the tree records that version.</p>
 <h2 id="appendix-file-index">Appendix: File Index</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -299,20 +514,101 @@ seen.</p>
 <tbody>
 <tr>
 <td><code>arc_hs/hs_compaction.py</code></td>
-<td>The compaction, the word bound, the authoritative-files heading, the
-design comments</td>
+<td>The trigger, the summary prompt, acceptance, the state pointer, the
+rebuild, the design comments</td>
 </tr>
 <tr>
-<td><code>arc_hs/</code></td>
-<td>The harness's own code, 6,542 lines</td>
+<td><code>arc_hs/coding_session.py</code></td>
+<td>The tool loop, the generation cap, the read and write tools, the
+bash guard, the log</td>
 </tr>
 <tr>
-<td>vendored tree</td>
-<td>79,035 lines, not read</td>
+<td><code>arc_hs/agent.py</code></td>
+<td>The protocols, the main prompt's placement, the trouble protocol's
+<code>new_session</code></td>
+</tr>
+<tr>
+<td><code>arc_hs/swarm.py</code>, <code>arc_hs/run_swarm.py</code></td>
+<td>One run directory per game, the scorecard tag, the swarm report</td>
+</tr>
+<tr>
+<td><code>arc_hs/workspace/</code></td>
+<td>The template copied per game: <code>verify_hs.py</code>, the
+placeholder modules, <code>client/client.py</code></td>
+</tr>
+<tr>
+<td><code>arc_hs/prompts/</code></td>
+<td>The main prompt and the protocol and refinement prompts</td>
+</tr>
+<tr>
+<td><code>compat/qwen_policy.py</code>,
+<code>compat/sandbox.py</code></td>
+<td>The model adapter with image pruning; the strace sandbox</td>
+</tr>
+<tr>
+<td><code>vendor/arc/</code></td>
+<td>ARC-AGI SDK, engine and game environment files, searched for memory
+terms</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked with <code>/usr/bin/git</code> against the checkout at the
+pinned revision, from the tree root. Line counts:
+<code>git ls-files -z -- '*.py' ':!vendor' | xargs -0 cat | wc -l</code>
+gives 6,542, and the same over <code>arc_hs/*.py</code>,
+<code>compat</code>, <code>vendor/*.py</code> and
+<code>vendor/arc/environment_files/*.py</code> gives 5,599, 943, 79,035
+and 72,572.</p>
+<ul>
+<li><code>git ls-files | grep -i -E '(^|/)(tests?|spec)(/|_)|_test\.py$|conftest|pytest|\.github|tox\.ini|setup\.cfg|pyproject'</code>
+— one match, <code>arc_hs/workspace/test_timeout.py</code>.</li>
+<li><code>git grep -n -E 'def test_|import (unittest|pytest)|^\s*assert ' -- ':!vendor'</code>
+— no match; <code>git grep -l -E 'def test_' -- vendor</code> — no
+match.</li>
+<li><code>git grep -n -I -E '19\.8|\$115|v11|d0895597|leaderboard|RHAE|scorecards/' -- ':!vendor'</code>
+— the scorecard URL template at <code>arc_hs/swarm.py:212</code> and two
+<code>.v11_</code> temp-file prefixes in <code>compat/sandbox.py</code>;
+no result.</li>
+<li><code>git grep -n -E 'tags=' -- arc_hs</code> — one match,
+<code>swarm.py:158</code>, <code>tags=["polyphony"]</code>.</li>
+<li><code>git grep -n -E 'progress_notes' -- arc_hs compat</code> — four
+matches, all in <code>hs_compaction.py</code> (<code>:29</code>,
+<code>:228</code>, <code>:293</code>, <code>:313</code>); none in a
+prompt.</li>
+<li><code>git grep -n -E 'main_prompt' -- arc_hs/agent.py arc_hs/hs_compaction.py arc_hs/coding_session.py</code>
+— <code>agent.py:158</code>, <code>:219</code> and <code>:393</code>
+only.</li>
+<li><code>git grep -n -E 'role.: .system|"system"' -- arc_hs compat</code>
+— no match.</li>
+<li><code>git grep -n -E 'stop_reason|finish_reason' -- arc_hs</code> —
+only <code>swarm.py</code>'s unrelated <code>_stop_reason</code>.</li>
+<li><code>git grep -n -E 'LAYER3_MAX_OUTPUT_TOKENS|GEN_MAX_TOKENS|max_tokens' -- arc_hs compat</code>
+— the 16,384 cap at <code>coding_session.py:74</code> passed at
+<code>:183</code>, the 20,000 truncation at
+<code>hs_compaction.py:61</code> and <code>:355-356</code>.</li>
+<li><code>git grep -n -E 'swarm_report|run_root|swarm_runs|copytree|\.glob\(|rglob|iterdir|read_text|json\.load' -- arc_hs compat ':!arc_hs/workspace'</code>
+— no reader of an earlier run directory or swarm report.</li>
+<li><code>git grep -n -i -E 'memory|summar|compact|handoff|sqlite|pickle|embedding' -- vendor/arc/arc_agi vendor/arc/arcengine</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|citation|doi\.org'</code>
+— no match; the README links a blog post on Heuristic Learning, and no
+paper for this system.</li>
+</ul>
 <h2 id="history">History</h2>
+<p><strong>2026-10-18</strong> — <a
+href="https://github.com/Mininglamp-AI/polyphony-arc-3/commit/9bb384c25d1bc95501cb08a124af7871c9ea24eb"><code class="commit-id" title="9bb384c25d1bc95501cb08a124af7871c9ea24eb">9bb384c2…</code></a>
+— same commit, nothing moved upstream; an audit of the report's own
+claims, seven of which were wrong at this pin. The summary is held to
+the 16,384-token generation cap and refused when it is tool-call markup,
+not stored as returned. The successor also gets a code-written state
+pointer and up to 20,000 tokens of its newest turns, and loses the main
+prompt. Both quoted comments describe one failure; the token meter was
+the other. Ten games score below 5, not eleven; the scorecard was
+published 2 July 2026, before the commit. A truncated log of every turn
+survives a compaction, and <code>arc_hs/</code> is 5,599 lines. Evidence
+in <a href="#4-essential-implementation-paths">section 4</a> and <a
+href="#10-tests-evals-and-benchmarks">section 10</a>. No marks.</p>
 <p><strong>2026-09-18</strong> — re-read at the same commit; nothing
 upstream has moved. One matrix correction, in the direction the report's
 own risk line already points. <em>"Under 2500 words"</em> lives inside

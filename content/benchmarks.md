@@ -2137,6 +2137,10 @@ cost difference in the other direction.
 other two cover 25. A mean over a subset is not comparable to a mean over the
 superset unless the entrant is at a ceiling, and nothing in a leaderboard row
 says which set an entry ran.
+Nor does a scorecard have to describe the committed code: Polyphony's was
+published on 2 July 2026 under the tag `v11.2-swarm`, three and a half days
+before the repository's only commit, whose launcher tags its scorecards
+`polyphony`.
 
 **One entrant shipped the ablation.** Tycho's `artifacts/` commits six scorecard
 files, four of them holding the model fixed and varying only the world-model
