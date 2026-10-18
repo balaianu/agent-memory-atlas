@@ -15022,6 +15022,98 @@ for <code>personali</code> and <code>unlearn</code>. The
 checked by file path only. Screened before reading: no auto-run surface,
 one build-time execution point in <code>setup.py</code>, nothing
 unpinned or inside the cooldown; nothing was installed or run.</li>
+<li><strong><code>yukihamada/chathmd</code> was examined and has no
+report: no commit on <code>main</code> carries a LoRA generator, and the
+<code>v1.0.0</code> tag writes an all-zero adapter delta and keeps rated
+replies that no response reads.</strong> Neither commit has a LICENSE
+file. No licence grants reuse, but reading public code is in scope.
+<code>main</code> was read at <a
+href="https://github.com/yukihamada/chathmd/commit/621cfcd9db0b4bc8e1ac84eb2caff84ba2155dfc"><code class="commit-id" title="621cfcd9db0b4bc8e1ac84eb2caff84ba2155dfc">621cfcd9…</code></a>:
+23 commits by one author, dated 18 to 20 June 2025 in +0900. It holds
+Cloudflare Pages functions that proxy chat to Groq, RunPod or a
+self-hosted backend, a SwiftUI client named WisbeeRAG, and character
+fine-tuning JSONL. Its LoRA mentions are product copy and canned demo
+replies (<code>functions/api/chat.js:238-239</code>). The client keeps
+messages in <code>@State</code> and lists ObjectBox as a package without
+importing it. The tag, <a
+href="https://github.com/yukihamada/chathmd/commit/27dd86bafc251d0c731b61f3723d2be587f19d41"><code class="commit-id" title="27dd86bafc251d0c731b61f3723d2be587f19d41">27dd86ba…</code></a>,
+is one parentless commit of 18 June 2025 whose history <code>main</code>
+does not share. Its <code>scripts/generate_lora.py:38-68</code> never
+calls the hypernetwork whose path it takes: it returns small random A
+matrices and all-zero B matrices, so a saved adapter changes no output,
+and <code>save_lora_adapter</code> writes it under
+<code>loras/&lt;name&gt;/</code> (<code>:70-100</code>). "Train LoRA
+Model" sleeps two seconds and sets a session flag
+(<code>chatHMD_assistant.py:577-582</code>), and the inference command
+that follows carries no <code>--lora</code> argument.
+<code>chat_app.py:341-342</code> passes
+<code>loras/feedback_trained.gguf</code> when it exists, and no code
+writes that file. What persists is <code>LearningDataManager</code>.
+Each rated reply becomes
+<code>learning_data/training_pairs/&lt;id&gt;.json</code>, carrying up
+to six recent turns cut to 200 characters, plus a task-description file
+and a <code>master_index.json</code> entry, all under one directory with
+no user key (<code>learning_data_manager.py:23-78</code>). Only an
+export and a statistics panel read it (<code>:176-261</code>).
+<code>clean_old_data</code> unlinks pairs older than 30 days and leaves
+their index entries (<code>:263-289</code>). Searches at the tag with
+<code>git grep -n</code>: <code>-F -e "--lora"</code> in
+<code>chatHMD_assistant.py</code> (nothing) and
+<code>-E "get_training_dataset|export_for_text_to_lora"</code> over
+<code>*.py</code> (the export path only); at <code>main</code>,
+<code>-iE "lora"</code> over <code>*.py</code>, <code>*.js</code> and
+<code>*.swift</code> (strings and paths only) and
+<code>-E "import[[:space:]]+ObjectBox"</code> (nothing). Screened before
+reading: <code>main</code> gave the screen nothing it parses, and the
+Swift and Wrangler manifests were read by hand; the tag gave one RUNS, a
+<code>llama.cpp</code> submodule left unfetched, and one FLOAT on
+<code>requirements.txt</code>. Nothing was installed or run.</li>
+<li><strong><code>seismael/llm-patch</code> was examined and has no
+report: it stores one Text-to-LoRA adapter per document, named by the
+document's path, and nothing selects or deletes one by user or
+project.</strong> Apache-2.0, standard text with a filled notice. It was
+read at <a
+href="https://github.com/seismael/llm-patch/commit/1f0d5a3234b628aeaf9f57f8959d1b875708ca4d"><code class="commit-id" title="1f0d5a3234b628aeaf9f57f8959d1b875708ca4d">1f0d5a32…</code></a>:
+six commits by one author from 14 to 27 April 2026, a uv workspace of
+three packages with pytest suites.
+<code>LocalSafetensorsRepository</code> writes weights, PEFT config and
+a manifest to <code>&lt;output_dir&gt;/&lt;adapter_id&gt;/</code>, and
+lists, loads and <code>rmtree</code>s them
+(<code>projects/llm-patch/src/llm_patch/storage/local_safetensors.py:39-119</code>).
+The markdown source's id is the file path relative to the watched
+directory, minus its suffix (<code>sources/markdown.py:35-38</code>). A
+recompile overwrites that directory, so there are no versions. The
+watcher handles create and modify events only, so deleting a document
+leaves its adapter. The engine server attaches every stored adapter at
+startup when <code>LLM_PATCH_MODEL_ID</code> is set
+(<code>server/app.py:126-141</code>,
+<code>pipelines/use.py:53-54</code>). The wiki-agent gateway routes each
+request by a <code>context_id</code> or <code>adapter_id</code> the
+caller puts in its metadata
+(<code>projects/wiki-agent/src/llm_patch_wiki_agent/routing/metadata_router.py:27-43</code>).
+Its MCP tool <code>chat_with_adapter</code> takes
+<code>adapter_id</code> as a model argument, so the key is a routing
+label and any caller can name any adapter. The README's per-tenant
+adapters have no tenant field behind them. Detach removes an id from the
+controller's list without touching the model
+(<code>runtime/controller.py:83-91</code>), and <code>/compile</code>
+hands the request's <code>document_id</code> to <code>save</code>
+unchecked. Memory in the ordinary sense was to be the LLM-wiki layer
+that the MCP server, both CLIs and the wiki tests import as
+<code>llm_patch.wiki</code>. It is in no commit:
+<code>.gitignore:94</code> reads <code>wiki/</code>, which
+<code>git check-ignore -v --no-index</code> shows matching
+<code>src/llm_patch/wiki/</code>, and <code>git ls-tree -r</code> lists
+no path under it at any of the six. <code>ChatSession</code> keeps
+history in a list. Searches at the pin with <code>git grep -nE</code>
+under <code>projects</code>: <code>"\(IAdapterRegistryClient\)"</code>
+outside tests, <code>-i "tenant|user_id|principal"</code>,
+<code>"on_deleted|on_moved"</code>, and
+<code>"is_relative_to|\.resolve\("</code> over storage and server, all
+nothing. Screened before reading: no auto-run surface, three build-time
+execution points (two Makefiles, a pytest <code>conftest.py</code>), two
+unpinned <code>pyproject.toml</code> files beside a root
+<code>uv.lock</code>; nothing was installed or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
