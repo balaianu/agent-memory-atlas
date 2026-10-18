@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 754 reports.**
+**This page covers all 755 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6865,3 +6865,14 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0 incubating podling, 5,086 commits from 146 contributors between 19 May and 17 October 2026, about 737,000 lines of TypeScript, 312 test cases in 27 memory and recall test files with crash failpoints at every write boundary. Two marks: `audit_log`, `negative_eval`.
 - Study when: you are building extraction that must resist injected tool output, or a crash-safe per-session extraction cursor with one retry and a receipted discard.
 - Do not copy when: facts must be correctable or deletable, or two projects must not see each other's history through recall.
+
+### [`harness2`](../systems/harness2/)
+
+- Best idea: **store the adopted artifact, not a description of it.** Each library entry is the whole harness tree a task adopted, skills and scripts included, beside an `EXPERIENCE.md` with the selector's reason and the reflector's lesson, and a prefix rule makes the library each task saw reproducible on resume.
+- Second idea: **a grader tripwire at both ends of memory.** `assert_tree_has_no_grader_verdicts` refuses to store a harness or lesson carrying a grader string, and every context build checks answer-key paths and grader markers again before a model sees the library.
+- Biggest risk: **"evidence-supported" is checked for presence.** `_distil` admits a lesson when `cue`, `lesson` and `evidence` are non-empty; the edit verdicts and `confidence` are never parsed, and at `--k 1` the single final is adopted without a selector session.
+- Second risk: **no correction reaches derived state.** The only forget path is the prefix truncation, a hand-deleted entry is replayed from the task summary on resume, and the resume test asserts that a downstream task stays skipped after the upstream task it read is re-run.
+- Most reusable component: `harness2/core/library.py` with `context.assert_tree_has_no_grader_verdicts` — a 222-line per-domain library of full trees with a regenerated index and a prefix `retain`.
+- Maturity impression: Apache-2.0; 12,747 lines of Python in `harness2/`; 3 commits by 2 authors, 8 – 13 October 2026; 5 unittest cases against a deterministic demo adapter, no CI and no committed results, and the paper's no-library, transfer and leave-one-out arms have no CLI flag. No marks; nothing was installed or run.
+- Study when: you want cross-task carry of executable harness components inside a benchmark stream, or a contamination guard between a grader and a learned memory.
+- Do not copy when: lessons must be corrected by later evidence, outlive one run, or be retrieved selectively rather than copied in whole.

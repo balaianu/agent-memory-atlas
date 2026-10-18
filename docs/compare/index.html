@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
     <meta name="description" content="One row per system for all
-754, generated from each report's frontmatter —
+755, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -15,7 +15,7 @@ beside it.">
     <meta property="og:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta property="og:description" content="One row per system for all
-754, generated from each report's frontmatter —
+755, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -24,7 +24,7 @@ beside it.">
     <meta name="twitter:title" content="Comparative
 Matrix — Agent Memory Atlas">
     <meta name="twitter:description" content="One row per system for all
-754, generated from each report's frontmatter —
+755, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.">
@@ -49,7 +49,7 @@ beside it.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "Comparative Matrix",
-      "description": "One row per system for all 754, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
+      "description": "One row per system for all 755, generated from each report's frontmatter \u2014 memory unit, storage, retrieval, writes, update and delete, scoping, integration, background work and trust \u2014 with the capability tables beside it.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -107,7 +107,7 @@ beside it.">
           <p class="eyebrow">Every system, side by side</p>
           <h1>Comparative Matrix</h1>
           <p class="document-deck">One row per system for all
-754, generated from each report's frontmatter —
+755, generated from each report's frontmatter —
 memory unit, storage, retrieval, writes, update and delete, scoping,
 integration, background work and trust — with the capability tables
 beside it.</p>
@@ -128,7 +128,7 @@ beside it.</p>
 <p><a id="2-comparative-matrix"></a></p>
 <p><strong>Looking for a specific mechanism rather than a specific
 system?</strong> The <a href="../capabilities/">capability index</a>
-filters all 754 systems by the seven mechanisms
+filters all 755 systems by the seven mechanisms
 judged against strict definitions, combining them with
 <strong>and</strong> — it answers "tombstone <em>and</em> scope
 enforced" in one click, which is the question this table cannot be
@@ -11678,6 +11678,55 @@ or corrected between runs; ACE deduplication keeps the older bullet when
 a newer one negates it; ACE's helpful and harmful counters are declared
 and never written; no tests and no results committed, so no reported
 figure recomputes from the tree</td>
+</tr>
+<tr>
+<td><a href="../systems/harness2/"><code>harness2</code></a></td>
+<td>A library entry: the full component tree of one task's adopted
+harness (system prompt, guardrails, LongTermMEMORY.md, tool guidance,
+skills, subagents, scripts, plugins) plus an EXPERIENCE.md holding the
+selector's reason, per-edit rows and one cue, lesson, evidence and
+confidence</td>
+<td>Plain directories under runs/library, one per benchmark, k, executor
+and seed, then one per recursion mode and per benchmark domain; INDEX.md
+is regenerated from disk after every write. The task summaries under
+runs/adapt are the store of record the library is rebuilt from on
+resume</td>
+<td>None by query. The whole domain directory is copied into every
+editor session's context tree, and the editing model browses INDEX.md
+and opens entries with its own file tools. The selector, the reflector
+and the executor never receive it</td>
+<td>After a task's blind selection, a reflector session reads the
+adopted and rejected candidates and writes edit rows and at most one
+lesson. The entry is stored only if cue, lesson and evidence are all
+non-empty; NO_ENTRY keeps the adopted harness out as well. Synchronous,
+before the next task in the domain starts</td>
+<td>Before each task the scheduler deletes every entry not from an
+earlier task in the stream; a re-run of a task overwrites its own entry.
+Nothing lets a later task revise, demote or remove an earlier lesson,
+and a hand-deleted entry returns on the next resume</td>
+<td>Physical: a separate directory per run identity, per mode and per
+domain, so retrieval is by construction rather than by a key or
+predicate. The domain comes from the benchmark's task id or manifest,
+never from a model</td>
+<td>Internal to the method: the improvement stages of
+Propose–Probe–Compose read it through the context tree; no API, tool or
+CLI flag exposes the library on its own</td>
+<td>None. Every write happens inline in the task loop; there is no
+consolidation, deduplication or decay pass</td>
+<td>None as state. The lesson's confidence is free text no reader
+parses; the evidence field is a citation the reflector writes about its
+own edit rows, checked only for being non-empty. Grader verdict strings
+and answer-key paths are refused at write and at every copy into
+context</td>
+<td>Entries carry executable components rather than prose; a strict
+prefix rule makes the library each task saw reproducible;
+content-addressed session caching invalidates when the library changes;
+grader output is kept out of memory by a tripwire at both ends</td>
+<td>Admission is a non-empty-field check on a model's self-citation; no
+lesson can be corrected by later evidence; re-running an upstream task
+leaves downstream tasks built on its old entry; the library grows
+without bound into every editor context; the paper's library ablation
+and transfer arms have no CLI path</td>
 </tr>
 <tr>
 <td><a href="../systems/hatchdoor/"><code>hatchdoor</code></a></td>
@@ -33685,7 +33734,7 @@ system that never claims to model belief.</li>
 <p><strong>Rejected-value tombstone</strong> — A durable record of a
 <em>rejected value</em>, keyed on the value, so later extraction cannot
 silently re-assert it.</p>
-<p><em>68 of 754:</em> <a
+<p><em>68 of 755:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/anda-db/"><code>anda-db</code></a>, <a
@@ -33757,7 +33806,7 @@ href="../systems/wenlan/"><code>wenlan</code></a></p>
 <p><strong>Explicit trust state</strong> — Discrete epistemic status as
 a field rather than a confidence score, including at least one state
 that withholds a memory from being treated as true.</p>
-<p><em>193 of 754:</em> <a
+<p><em>193 of 755:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
 <a
@@ -33957,7 +34006,7 @@ href="../systems/weknora/"><code>weknora</code></a>, <a
 href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 <p><strong>Bi-temporal validity</strong> — When a fact was true tracked
 separately from when the system recorded or expired it.</p>
-<p><em>127 of 754:</em> <a
+<p><em>127 of 755:</em> <a
 href="../systems/agent-memory-doctrine/"><code>agent-memory-doctrine</code></a>,
 <a
 href="../systems/agent-memory-dotnet/"><code>agent-memory-dotnet</code></a>,
@@ -34092,7 +34141,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a></p>
 merely available as a tag. This certifies that the key reaches the query
 — not that the boundary is authenticated, nor that a caller cannot widen
 it by passing a different argument.</p>
-<p><em>320 of 754:</em> <a
+<p><em>320 of 755:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/acontext/"><code>acontext</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -34427,7 +34476,7 @@ href="../systems/zep/"><code>zep</code></a></p>
 event record of memory <em>mutations</em> in the system's own store.
 Logs of retrieval or feedback are the other half of the pattern and do
 not count here, nor does git history.</p>
-<p><em>257 of 754:</em> <a
+<p><em>257 of 755:</em> <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/agent-context-os/"><code>agent-context-os</code></a>,
 <a
@@ -34694,7 +34743,7 @@ href="../systems/yantrikdb-engine/"><code>yantrikdb-engine</code></a>,
 <p><strong>Human review surface</strong> — A place where a person
 inspects, approves, or adjudicates memory content before or after it
 takes effect.</p>
-<p><em>96 of 754:</em> <a
+<p><em>96 of 755:</em> <a
 href="../systems/agent-mesh/"><code>agent-mesh</code></a>, <a
 href="../systems/aimee/"><code>aimee</code></a>, <a
 href="../systems/argos/"><code>argos</code></a>, <a
@@ -34794,7 +34843,7 @@ href="../systems/yacmemo/"><code>yacmemo</code></a></p>
 <p><strong>Negative retrieval assertion</strong> — Committed evaluation
 cases asserting that particular material must <em>not</em> be
 retrieved.</p>
-<p><em>484 of 754:</em> <a
+<p><em>484 of 755:</em> <a
 href="../systems/7layermem/"><code>7layermem</code></a>, <a
 href="../systems/a-memory/"><code>a-memory</code></a>, <a
 href="../systems/adk-python/"><code>adk-python</code></a>, <a
@@ -35313,7 +35362,7 @@ href="../patterns/decay-and-reinforcement/">decay and
 reinforcement</a>.</p>
 <p><strong>Negative evidence is almost never tested.</strong>
 484 repositories of
-754 assert that particular material must
+755 assert that particular material must
 <em>not</em> be retrieved — the assertion every scope, deletion and
 correction claim in this document ultimately rests on. Read together
 rather than one at a time, they split cleanly in two, and the split says
@@ -35386,7 +35435,7 @@ the one a coding agent actually wastes time on.</p>
 <p><strong>Only these ten probe the question the atlas is actually
 asking.</strong> A boundary test proves the filter works; a content test
 proves a value that was rejected, disputed or forbidden stays gone. 12
-of 754 is the real figure for the second kind, and
+of 755 is the real figure for the second kind, and
 the two newest are the cheap version of it: a <em>superseded</em> value
 is easy to assert about, because the row is still there to filter on.
 The expensive assertion is that a value the system destroyed does not

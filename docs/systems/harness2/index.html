@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="Google Research paper code that
+refines an agent harness per task and keeps each adopted harness, with a
+model-written lesson, for later tasks' editors.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Harness² — Agent Memory Atlas">
+    <meta property="og:description" content="Google Research paper code
+that refines an agent harness per task and keeps each adopted harness,
+with a model-written lesson, for later tasks' editors.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Harness² — Agent Memory Atlas">
+    <meta name="twitter:description" content="Google Research paper code
+that refines an agent harness per task and keeps each adopted harness,
+with a model-written lesson, for later tasks' editors.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Harness² — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Harness\u00b2",
+      "description": "Google Research paper code that refines an agent harness per task and keeps each adopted harness, with a model-written lesson, for later tasks' editors.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A per-domain library of adopted harnesses
+and lessons</p>
+          <h1>Harness²</h1>
+          <p class="document-deck">Google Research paper code that
+refines an agent harness per task and keeps each adopted harness, with a
+model-written lesson, for later tasks' editors.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/google-research/harness2">
+              <span>Source</span>
+              <strong>google-research/harness2</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/google-research/harness2/commit/1cfe254e8d25b15f37048c3730134686abe60335" title="1cfe254e8d25b15f37048c3730134686abe60335">
+              <span>Analyzed revision</span>
+              <code>1cfe254e…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-18</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/google-research--harness2" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>google-research--harness2</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>12,747
+lines of Python in harness2/, of which the library is 222 and the
+scheduler and selection code that drive it 1,355; 2,591 lines of
+vendored benchmark runners in third_party/</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>3
+commits on main by 2 authors, 8 – 13 October 2026</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>5
+unittest cases in one 229-line file, run against a deterministic local
+adapter; no CI configuration and no benchmark result
+committed</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>0</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Harness² is the code for a Google Research paper on refining an
+agent's harness — prompts, rules, a memory file, skills, scripts,
+subagents and plugins — per task, with model weights fixed and no
+ground-truth feedback. Each task runs a contrastive
+Propose–Probe–Compose round, a blind selector picks one output, and a
+reflector writes what the edits did. The adopted harness and that lesson
+go into a per-domain library, which the editing sessions of every later
+task in the domain read. That library is the memory this report is
+about.</p>
+<p>What is notable is what a library entry is. It holds the whole
+adopted tree, executable scripts and skills included, beside an
+<code>EXPERIENCE.md</code>, and a strict prefix rule rebuilds the
+library so task <em>i</em> sees exactly the entries of tasks 1 to
+<em>i</em>−1. Grader verdicts and answer-key paths are refused before
+anything is stored and again before anything is served. What is weak is
+everything after admission. A lesson enters when three text fields are
+non-empty, no later task can revise or remove one, and a re-run upstream
+task leaves the tasks that read its old entry untouched.</p>
+<p>Five findings shape the rest of this report.</p>
+<ul>
+<li><strong>Only the editor reads it.</strong> The library directory is
+copied into the context of the invariant, domain and composition stages.
+The selector, the reflector, the base rollouts and the executor never
+receive it, and each task starts again from the benchmark's base
+harness. A lesson reaches execution only when an editor copies a
+component across (<code>harness2/core/schedule.py:617</code>,
+<code>:499</code>; <code>harness2/core/selection.py:296-330</code>,
+<code>:418-430</code>).</li>
+<li><strong>"Evidence-supported" is a prompt, and the code checks
+presence.</strong> The reflector is told to prefer
+<code>confounded</code> and to decline on confounded rows.
+<code>_distil</code> keeps a lesson if <code>cue</code>,
+<code>lesson</code> and <code>evidence</code> are non-empty, and nothing
+parses the verdicts or the confidence
+(<code>harness2/core/prompts.py:1126-1147</code>;
+<code>selection.py:494-501</code>).</li>
+<li><strong>At <code>--k 1</code> there is no comparison before
+adoption.</strong> The single final is adopted by
+<code>trivial_selection</code> without a selector session, and
+reflection runs anyway, so the default configuration admits a lesson
+whenever the reflector writes one (<code>schedule.py:514-517</code>,
+<code>selection.py:360-399</code>).</li>
+<li><strong>Forgetting is a reproducibility rule, not a
+correction.</strong> <code>retain</code> deletes entries from tasks
+later in the stream, and it is the only caller of <code>forget</code>
+(<code>harness2/core/library.py:90-104</code>,
+<code>schedule.py:700-701</code>).</li>
+<li><strong>The paper's library experiments have no CLI path.</strong>
+The sweep always builds a library, takes no flag to disable or import
+one, and passes an empty tag to the one function that could share one
+(<code>harness2/cli/run_sweep.py:148</code>, <code>:168</code>;
+<code>harness2/cli/_common.py:75-88</code>).</li>
+</ul>
+<p>No marks. Section 9 names each one and the reason it is withheld.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is an adopted harness with a reason attached. It comes into
+being at the end of a task, in four steps, all model-driven and none
+graded.</p>
+<ol type="1">
+<li><strong>Propose and probe.</strong> Editor sessions read the base
+rollouts and the domain library, write an edited harness tree, and each
+tree is executed on the same task
+(<code>harness2/core/recursion.py:343-449</code> parallel,
+<code>:452-566</code> sequential).</li>
+<li><strong>Select.</strong> At <code>k</code> above 1 a selector
+session sees anonymised final deliverables, with harnesses hidden, and
+picks one (<code>selection.py:268-357</code>). At <code>k = 1</code> the
+only final is adopted.</li>
+<li><strong>Reflect.</strong> <code>reflect_adoption</code> hands a
+reflector the base harness, the adopted harness, every candidate's diff
+and rollout, and the stage notes. It returns <code>&lt;edits&gt;</code>
+rows and one <code>&lt;experience&gt;</code> block, or
+<code>NO_ENTRY</code> (<code>selection.py:402-505</code>).</li>
+<li><strong>Store or drop.</strong> <code>Library.add</code> writes the
+tree and <code>EXPERIENCE.md</code> only if <code>has_experience</code>
+holds. A task whose reflector declined leaves nothing, harness included
+(<code>library.py:43-47</code>, <code>:106-152</code>;
+<code>schedule.py:555-563</code>).</li>
+</ol>
+<p><strong>Nothing is ever doubted.</strong> An entry has no status. It
+is in the directory or it is not, and it leaves in two ways only:
+<code>retain</code> drops it because its task is not earlier in the
+stream, or a re-run of the same task overwrites it. The
+<code>confidence</code> line is copied into <code>EXPERIENCE.md</code>
+as text and no code reads it back. The prompt carries the only epistemic
+instruction: an earlier task's mapping or threshold <em>"is a hypothesis
+here, not a fact"</em> (<code>prompts.py:320-326</code>).</p>
+<p><strong>The library is a projection of the task summaries.</strong>
+On resume, <code>_restore_libraries</code> re-adds every skipped task's
+entry from its saved selection record and harness directory
+(<code>schedule.py:201-240</code>). A person who deletes or edits an
+entry by hand sees it rewritten on the next run of the same command. The
+correctable copy is the summary, and changing it means re-running that
+task.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how one Harness² task writes a library entry, which sessions read the library, and the ways an entry is removed or rewritten</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how one Harness² task writes a library entry, which sessions read the library, and the ways an entry is removed or rewritten
+flowchart TD
+    S[&quot;run_domain: task i of a domain&quot;] --&gt; RT[&quot;retain: delete every entry&lt;br/&gt;not from tasks 1 .. i-1&quot;]
+    RT --&gt; B[&quot;k base rollouts&lt;br/&gt;on the benchmark&#39;s base harness&quot;]
+    B --&gt; P[&quot;editor stages INV, DOM,&lt;br/&gt;AGG or COMPOSE&quot;]
+    L[(&quot;domain library:&lt;br/&gt;INDEX.md and, per task,&lt;br/&gt;harness/ + EXPERIENCE.md&quot;)] --&gt;|&quot;whole directory copied&lt;br/&gt;into context/library/&quot;| P
+    P --&gt; X[&quot;probe and final rollouts&lt;br/&gt;of the edited trees&quot;]
+    X --&gt; SEL{&quot;k = 1?&quot;}
+    SEL -- &quot;yes&quot; --&gt; T[&quot;trivial_selection:&lt;br/&gt;adopt the only final&quot;]
+    SEL -- &quot;no&quot; --&gt; BS[&quot;blind selector:&lt;br/&gt;deliverables only,&lt;br/&gt;no library&quot;]
+    T --&gt; RF[&quot;reflector: diffs, rollouts,&lt;br/&gt;decisions; no library&quot;]
+    BS --&gt; RF
+    RF --&gt; G{&quot;cue, lesson and evidence&lt;br/&gt;all non-empty?&quot;}
+    G -- &quot;no, or NO_ENTRY&quot; --&gt; D[&quot;nothing stored,&lt;br/&gt;adopted harness included&quot;]
+    G -- &quot;yes&quot; --&gt; TW[&quot;grader-verdict tripwire&lt;br/&gt;on tree and lesson&quot;]
+    TW --&gt; L
+    RR[&quot;re-run of the same task&quot;] -.-&gt;|&quot;overwrites its entry&quot;| L
+    SUM[&quot;summary.json per task&quot;] -.-&gt;|&quot;resume replays entries&quot;| L</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Harness² is a Python package with seven console scripts and no
+service. The sweep (<code>harness2</code>) runs domains in parallel
+threads and the tasks of one domain in a seeded order. Every improvement
+stage is a separate model session, run through OpenCode by default or
+through the Claude CLI, in a temporary directory that receives a copy of
+the context tree (<code>harness2/core/proposer.py:126-208</code>).
+Executors are OpenCode or Codex runs of each benchmark's own runner,
+vendored with patches under <code>third_party/</code>.</p>
+<p>The library is plain files. Its path is
+<code>runs/library/&lt;bench&gt;/k&lt;k&gt;-&lt;substrate&gt;[-s&lt;seed&gt;]/&lt;agg|seq&gt;/&lt;domain&gt;/</code>,
+from <code>library_root_for</code> and <code>run_domain</code>
+(<code>_common.py:75-88</code>, <code>schedule.py:686-689</code>). Each
+entry is <code>harnesses/&lt;task&gt;/harness/</code> and
+<code>harnesses/&lt;task&gt;/EXPERIENCE.md</code>, and
+<code>INDEX.md</code> is regenerated from disk after every add or forget
+(<code>library.py:154-181</code>). The task summaries, selections and
+adopted harnesses under <code>runs/adapt/</code> are the authoritative
+record.</p>
+<p>Session calls are content-addressed. <code>_call_fingerprint</code>
+hashes the label, the mission and every file of the context directory,
+the library copy included, so a changed library misses the cache on any
+later editor call that is reached (<code>proposer.py:507-534</code>). A
+resumed task with a complete summary is skipped before any call is made
+(<code>schedule.py:350-421</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The method needs model endpoints for an executor, an improver and a
+judge, configured for Vertex AI, plus each benchmark's toolchain:
+Node.js, Bun and OpenCode, Docker for WorkBuddy-Bench, Pandoc and
+Poppler for LAB. A local demo runs the real recursion and library code
+with a scripted proposer and no model (<code>harness2/demo.py</code>).
+The library itself needs nothing but a filesystem, and it is
+human-readable: every entry is Markdown and source files a person can
+open. It is not repairable by hand in the sense that matters, because a
+resume rewrites it from the summaries. Executor network access is
+unrestricted in the release, and the experiment guide records a Codex
+rollout downloading its task's rubric (<code>docs/EXPERIMENTS.md</code>,
+<em>Web access</em>).</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<ul>
+<li><strong>Write.</strong> <code>_run_one_mode</code> runs the
+recursion, selects, calls <code>reflect_adoption</code>, then
+<code>Library.add</code> when <code>has_experience</code> holds
+(<code>schedule.py:480-563</code>). <code>reflect_adoption</code> builds
+an evidence tree without a library and calls <code>_distil</code>, which
+parses <code>&lt;edits&gt;</code> and <code>&lt;experience&gt;</code>
+line by line on the first colon (<code>selection.py:402-505</code>).
+<code>Library.add</code> re-checks the fields, runs the grader tripwire
+on the tree and on the lesson text, replaces the entry directory and
+rebuilds the index (<code>library.py:106-152</code>).</li>
+<li><strong>Read.</strong> <code>Library.context_dir</code> returns the
+domain directory once it holds an <code>EXPERIENCE.md</code>
+(<code>library.py:79-81</code>). <code>context.build</code> copies it to
+<code>context/library/</code> after <code>assert_no_leak_paths</code>,
+then runs <code>assert_no_grader_verdicts</code> over the whole tree
+(<code>harness2/core/context.py:160-169</code>). <code>_run_stage</code>
+builds that tree for every editor stage
+(<code>recursion.py:135-170</code>), and both drivers pass
+<code>library_dir</code> to the invariant, domain, aggregation and
+composition stages.</li>
+<li><strong>Forget.</strong> <code>run_domain</code> calls
+<code>retain(task_ids[: i - 1])</code> on each mode's library before
+task <em>i</em>. <code>retain</code> hands every other entry to
+<code>forget</code>, which removes the directory and rebuilds the index
+(<code>schedule.py:700-701</code>, <code>library.py:90-104</code>).</li>
+<li><strong>Resume.</strong> <code>_resume</code> validates the cached
+summary, the adopted run directory, its artifacts and the harness
+fingerprint, then <code>_restore_libraries</code> replays the entry
+(<code>schedule.py:350-421</code>, <code>:201-240</code>).</li>
+<li><strong>Admission guard.</strong>
+<code>GRADER_VERDICT_MARKERS</code> lists seven grader strings.
+<code>assert_tree_has_no_grader_verdicts</code> refuses a harness file
+carrying one in its name or body, because <em>"files carrying these
+strings cannot be served as evidence to later tasks"</em>
+(<code>context.py:419-427</code>, <code>:493-518</code>).</li>
+<li><strong>Tests.</strong> <code>tests/test_workflow.py</code>, against
+<code>harness2/demo.py</code>.</li>
+</ul>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>An entry has no schema beyond its files. <code>EXPERIENCE.md</code>
+is generated Markdown: the task id, the adopted label and run id, a
+component census, <em>Why this was chosen</em> from the selector,
+<em>What each edit did</em> from the reflector's rows, and
+<em>Transferable lesson</em> with the four fields as bullets
+(<code>library.py:130-150</code>). <code>INDEX.md</code> lists each
+entry's paths, census and cue, which <code>_field</code> reads back from
+the bullet (<code>library.py:154-212</code>).</p>
+<p>The harness tree is the substrate's editable surface. For OpenCode it
+is four always-on files — <code>systemprompt.md</code>,
+<code>guardrails.md</code>, <code>LongTermMEMORY.md</code> and
+<code>tool_descriptions/tool_guidance.md</code>, capped at 24,000
+characters — plus on-demand skills, subagents, scripts and plugins. For
+Codex it is one <code>AGENTS.md</code> capped at 8,000
+(<code>harness2/substrate/opencode.py:42-80</code>,
+<code>harness2/substrate/codex.py:38-75</code>).
+<code>LongTermMEMORY.md</code> is a memory file inside one harness. It
+travels to another task only if its harness is adopted and a later
+editor copies it.</p>
+<p>Scope is physical. Run identity, mode and domain are directory names,
+and no record carries a key. The domain is
+<code>task_id.split("/", 1)[0]</code> for JobBench and LAB and a
+manifest lookup for WorkBuddy-Bench
+(<code>harness2/benchmarks/jobbench.py:647-648</code>,
+<code>harness2/benchmarks/lab.py:539-540</code>,
+<code>harness2/benchmarks/workbuddy.py:696-697</code>).
+<code>domain_dir</code> turns separators into <code>__</code>, so a
+domain named <code>a/b</code> and one named <code>a__b</code> would
+share a directory (<code>library.py:50-54</code>).</p>
+<p>No entry carries a timestamp. Provenance is the task id and the run
+id of the adopted rollout, both of which resolve into
+<code>runs/adapt/</code>.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>There is no retrieval in the index sense. The whole domain directory
+is copied into each editor session, and the mission tells the model to
+browse <code>INDEX.md</code> first and open what looks relevant
+(<code>context.py:97-101</code>). Ranking, relevance and budget are the
+editing model's own file reads. Nothing caps the entries copied, so a
+domain's later tasks carry every earlier task's full tree into each of
+their 3k editor sessions. LAB's full stream is 1,143 tasks
+(<code>docs/EXPERIMENTS.md</code>, <em>Task selection and
+cost</em>).</p>
+<p>Use is copy-in. The prompts say library files <em>"are NOT part of
+the harness you are editing"</em> and must be copied into
+<code>context/harness/</code>, with any workspace fact re-verified
+(<code>prompts.py:320-326</code>, <code>:579-586</code>). Validation
+rejects a tree in which a skill invokes a script it does not ship, which
+is the failure the prompt warns about
+(<code>harness2/core/tree.py:324-333</code>). Over-recall is the
+expected failure, since the only filter is the domain directory.</p>
+<p>The paper reports library provenance in 22% of modified files on LAB
+and WB-office and 47% on JobBench (Appendix E.2). No committed artifact
+lets that figure be recomputed.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Writes happen once per task per mode, after selection, in the task
+loop. The reflector is a model session on the selector channel
+(<code>schedule.py:529-537</code>). It is told to diff every candidate
+against the base, assign each changed component <code>helped</code>,
+<code>hurt</code>, <code>no observed effect</code> or
+<code>confounded</code>, and write a lesson only if the rows support
+one. The prompt's reason is that <em>"an invented attribution poisons
+the library for every later task"</em>
+(<code>prompts.py:1105-1163</code>).</p>
+<p>The code enforces the shape, not the support. <code>_distil</code>
+keeps the four keys it recognises, returns <code>{}</code> unless the
+three required ones are non-empty, and attaches the edit rows as a
+string (<code>selection.py:494-504</code>). The evidence line is not
+checked against the rows, the verdicts are not parsed, and a lesson
+resting only on confounded rows is admitted if its fields are filled.
+The selector that chose the adopted candidate saw no harness, so
+adoption records which deliverable read best, as the reflector's prompt
+itself says.</p>
+<p>Entries are never merged. Two tasks that learn the same lesson
+produce two entries, and two that learn opposite lessons produce two
+entries the next editor must reconcile. The paper's Appendix G names
+consolidating overlapping components and revising outdated experience as
+future work, which matches the code.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>The write blocks the domain's stream. Task <em>i</em>+1 starts only
+after task <em>i</em>'s reflection and <code>add</code> return, so an
+entry is visible to the next task with no lag. Reflection costs one
+extra session per mode per task, and there is no background pass. The
+read cost is the copy, which grows linearly with stream position and is
+paid by every editor session. It enters the session as files on disk
+rather than prompt text, so it does not sit in a cached prompt
+prefix.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The library is internal to the method. No tool, endpoint or flag
+exposes it; the editor sees it as <code>context/library/</code> in the
+mission's evidence layout (<code>context.py:59-102</code>). An editor's
+edits come back only from <code>context/harness/</code>, which
+<code>Proposer.call</code> harvests, so an editor cannot write the
+library (<code>proposer.py:178-181</code>,
+<code>recursion.py:192</code>).</p>
+<p>Session isolation depends on the channel. The OpenCode channel sets
+<code>OPENCODE_PERMISSION</code> to deny external directories outside
+the session's temporary directory (<code>proposer.py:270-272</code>).
+The Claude CLI channel runs with
+<code>--dangerously-skip-permissions</code> and no such restriction
+(<code>proposer.py:210-222</code>), so on that channel the domain
+boundary is what was copied, not what is reachable.</p>
+<p>Adapting the library to another agent is easy in shape and hard in
+substance. <code>library.py</code> is 222 self-contained lines over a
+tree type. Its value comes from the Propose–Probe–Compose loop producing
+execution contrasts for the reflector to cite, and that loop is most of
+the package.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Contamination control is the strongest part.</strong>
+Answer-key globs are checked on the library before it is copied, grader
+markers are checked on the whole context after, and an adopted tree or
+lesson carrying a marker cannot be stored
+(<code>context.py:160-169</code>, <code>library.py:122-123</code>).
+Judging is a separate command run after the sweep, so no grade reaches
+the library on any path the sweep runs.</p>
+<p><strong>Correction does not propagate.</strong>
+<code>test_recursion_budget_and_resume</code> alters the first task's
+adopted script, re-runs the stream, and asserts that the first task
+re-runs while the second is <code>skipped</code>
+(<code>tests/test_workflow.py:95-106</code>). The second task's adopted
+harness was composed with the first task's old entry in view. The sweep
+record keeps <code>library_entries_before</code>, a count, for each task
+(<code>schedule.py:702</code>), and nothing compares the library a task
+read with the one it would read on a fresh run.</p>
+<p><strong>Prompt injection reaches memory through the
+reflector.</strong> Rollouts and deliverables are copied into the
+reflector's context in full, and the lesson is the reflector's own text.
+Every mission carries an evidence-boundary block telling the model not
+to obey instructions found in its files (<code>prompts.py:56</code>,
+<code>:86-91</code>). Code checks only for grader strings.</p>
+<p><strong>The marks, each withheld.</strong></p>
+<ul>
+<li><strong><code>trust_state</code> — no.</strong> An entry has no
+status field. <code>confidence</code> is free text written into
+<code>EXPERIENCE.md</code> and read by nothing, and
+<code>NO_ENTRY</code> is an admission outcome rather than a state on a
+stored row.</li>
+<li><strong><code>tombstone</code> — no.</strong> A <code>hurt</code>
+row is recorded as text inside the entry it came from and no code reads
+it, so a later proposal can repeat the rejected edit. The row is keyed
+on nothing.</li>
+<li><strong><code>scope_enforced</code> — no.</strong> Scope is a
+physical partition by run, mode and domain directory, with no key on an
+entry and no predicate on a read.</li>
+<li><strong><code>audit_log</code> — no.</strong>
+<code>Library.add</code> replaces the entry directory,
+<code>forget</code> deletes it, and <code>INDEX.md</code> is rewritten.
+The proposer's audit files record calls rather than memory mutations,
+and are rewritten for a repeated label and key
+(<code>proposer.py:362-387</code>).</li>
+<li><strong><code>human_review</code> — no.</strong> Selection and
+reflection are model sessions, and there is no queue or approval
+surface.</li>
+<li><strong><code>bitemporal</code> — no.</strong> Entries carry no time
+of any kind.</li>
+<li><strong><code>negative_eval</code> — no.</strong> Section 10 gives
+the near-misses.</li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I read the tests and did not run them. Five <code>unittest</code>
+cases run the real scheduler, recursion, selection, reflection and
+library against <code>DemoAdapter</code>, a two-task "accounting" domain
+whose executor runs a Python script on a CSV. The demo selector picks
+the candidate whose total matches a sum it computes from the source
+ledger, so it uses the ground truth the real selector lacks
+(<code>harness2/demo.py:120-157</code>).</p>
+<ul>
+<li><strong><code>test_complete_evidence_and_library_prefix</code></strong>
+asserts that the second task's context holds
+<code>library/harnesses/ledger-1</code> and nothing else
+(<code>tests/test_workflow.py:126-127</code>). It is the one assertion
+on what the library serves, and it cannot catch over-serving. The second
+task's own entry does not exist when that context is built, and the demo
+has one domain.</li>
+<li>The same test plants <code>reference_answer.txt</code> holding
+<code>"pass_rate": 1</code> among the task sources and asserts it
+appears nowhere under the work directory, beside required files that
+must be present (<code>:109-125</code>). That is a populated must-not
+case with a positive control. It guards the task-source copy rather than
+the library, so it does not earn <code>negative_eval</code>.</li>
+<li><strong><code>test_no_entry_stays_out_of_library_on_resume</code></strong>
+asserts an empty library after a reflector that returns
+<code>NO_ENTRY</code> or fails (<code>:187-206</code>). It is a
+write-admission test, and a broken writer would pass it too; the
+positive control is in the previous test.</li>
+<li>The resume test pins the downstream-skip behaviour described in
+section 9.</li>
+</ul>
+<p>No CI configuration is committed. No result is committed either, so
+the README's gains — 11.5 points on WorkBuddy-Bench, 4.5 on JobBench,
+11.8 percentage points on LAB's partial pass rate — and the paper's
+tables cannot be recomputed from the tree.</p>
+<p>The paper is <a
+href="https://arxiv.org/abs/2610.14224">arXiv:2610.14224</a>, submitted
+9 October 2026. Its Table 3 removes the library at <code>k = 1</code>
+and reports WorkBuddy-Bench falling from 77.5 to 74.4 and JobBench from
+36.0 to 34.2. Its Figure 7 transfers a JobBench-derived library to
+WorkBuddy-Bench, and Appendix E.2 re-runs each task with its own entry
+excluded. The paper's description of the library matches the code:
+per-domain directories, full trees, an index and sequential reads. None
+of the three experiments has a CLI path at the pin; the sweep's flags
+are listed in the appendix below.</p>
+<p><strong>Related exclusion.</strong> Harness-Zero (<a
+href="https://arxiv.org/abs/2609.24974">arXiv:2609.24974</a>) is <a
+href="../../appendix/#known-limitations">excluded in the appendix</a>
+because its <code>memory.md</code> is written offline and removed at
+deployment. Harness² differs on that axis: its library is written during
+the sweep, read by the next task's editors, and never distilled into
+weights. It also keeps the task and run id on each entry, where
+Harness-Zero's clauses carry no attribution.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Store the executable artifact, not a summary of it.</strong>
+An entry that holds the adopted skill and its scripts lets the next task
+reuse a component that ran, instead of reconstructing it from
+prose.</li>
+<li><strong>Tripwire grader output at both ends of memory.</strong>
+Refuse a write carrying an evaluation marker, and refuse a context build
+containing one. A leaked grade stored as a lesson poisons every later
+task.</li>
+<li><strong>Make the library a function of stream position.</strong>
+Truncating to the prefix before every task makes "what did task
+<em>i</em> see" reproducible and makes a resumed run match an
+uninterrupted one.</li>
+<li><strong>Content-address model calls over their evidence, memory
+included.</strong> A changed memory then invalidates exactly the calls
+that read it.</li>
+<li><strong>Drop the artifact when the reflection declines.</strong> An
+adopted harness with no supportable lesson does not enter the library at
+all.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>An evidence field nothing checks.</strong> If a lesson must
+rest on non-confounded rows, parse the rows and reject the lesson in
+code; a prompt instruction is a request to the writer.</li>
+<li><strong>Derived state with no dependency record.</strong> A
+downstream result built from an upstream entry needs that entry's
+fingerprint stored beside it, or a correction upstream leaves the result
+standing.</li>
+<li><strong>A memory whose only forget path is truncation.</strong>
+Without a way for later evidence to demote or retire an entry,
+contradictory lessons accumulate and the reader is left to reconcile
+them.</li>
+<li><strong>Unbounded copy-in.</strong> Serving every earlier entry in
+full makes read cost grow with history and pushes relevance onto the
+reader's browsing.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Harness² is a research instrument for one benchmark sweep at a time,
+and its library is the cross-task carry inside that sweep. It suits a
+reader studying whether harness edits transfer within a task family, who
+can afford 4k rollouts and 3k improver sessions per task and wants a
+reproducible prefix library to ablate against. It does not suit anyone
+wanting a durable experience store across runs, users or products. The
+library starts empty with each stream, cannot be shared or imported from
+the CLI, and has no correction path. A team that wants the paper's
+transfer result in production would be building that store, not
+configuring this one.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Which code produced the Table 3 no-library arm, the Figure 7
+transfer arm and the Appendix E.2 leave-one-out runs, given that the
+sweep has no flag for any of them?</li>
+<li>Was a check of the <code>evidence</code> line against the
+<code>&lt;edits&gt;</code> verdicts considered, and is
+<code>confidence</code> meant to be read by anything?</li>
+<li>Should re-running an upstream task invalidate the summaries of the
+tasks that read its entry, which the resume test pins it does not
+do?</li>
+<li>How large does a domain's library grow over a full LAB stream, and
+does the copy-in cost show up in the paper's per-task cost figures?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Library and storage:</strong>
+<code>harness2/core/library.py</code>,
+<code>harness2/cli/_common.py</code>
+(<code>library_root_for</code>).</li>
+<li><strong>Write:</strong> <code>harness2/core/selection.py</code>
+(<code>run_selection</code>, <code>trivial_selection</code>,
+<code>reflect_adoption</code>, <code>_distil</code>),
+<code>harness2/core/schedule.py</code> (<code>_run_one_mode</code>,
+<code>_restore_libraries</code>).</li>
+<li><strong>Read:</strong> <code>harness2/core/context.py</code>
+(<code>build</code>, <code>assert_no_leak_paths</code>,
+<code>assert_no_grader_verdicts</code>,
+<code>assert_tree_has_no_grader_verdicts</code>),
+<code>harness2/core/recursion.py</code> (<code>_run_stage</code>,
+<code>run_parallel</code>, <code>run_sequential</code>).</li>
+<li><strong>Forget and resume:</strong>
+<code>harness2/core/schedule.py</code> (<code>run_domain</code>,
+<code>_resume</code>).</li>
+<li><strong>Prompts:</strong> <code>harness2/core/prompts.py</code>
+(<code>_TTS_GENERALIZE</code>, <code>experience</code>,
+<code>propose</code>, <code>aggregate</code>,
+<code>compose_round</code>, <code>select</code>).</li>
+<li><strong>Sessions and surfaces:</strong>
+<code>harness2/core/proposer.py</code>,
+<code>harness2/core/tree.py</code>,
+<code>harness2/substrate/opencode.py</code>,
+<code>harness2/substrate/codex.py</code>.</li>
+<li><strong>CLI:</strong> <code>harness2/cli/run_sweep.py</code>,
+<code>harness2/cli/judge.py</code>.</li>
+<li><strong>Tests and demo:</strong>
+<code>tests/test_workflow.py</code>, <code>harness2/demo.py</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Run with <code>/usr/bin/git grep</code> in the clone,
+<code>PIN=1cfe254e8d25b15f37048c3730134686abe60335</code>, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E "\.forget\(|\.retain\(" ${PIN} -- .</code> —
+<code>library.py:104</code> and <code>schedule.py:701</code> only; no
+other forget path.</li>
+<li><code>git grep -n -E "root_for\(" ${PIN} -- .</code> —
+<code>LIB.root_for</code> is called once, from
+<code>_common.py:86</code>, with <code>variant</code> and never with
+<code>tag</code>.</li>
+<li><code>git grep -h -o -E '"--[a-z-]+"' ${PIN} -- harness2/cli/run_sweep.py harness2/cli/_common.py</code>
+—
+<code>--bench --dry-run --k --max-tasks --mode --modes --only-domains --seed --split --split-file --subset --substrate --workers</code>;
+no library, tag or transfer flag.</li>
+<li><code>git grep -n -E "tag=" ${PIN} -- harness2/cli</code> —
+<code>run_sweep.py:168</code> passes <code>tag=""</code>.</li>
+<li><code>git grep -n -E "confidence" ${PIN} -- harness2 ':!harness2/core/prompts.py'</code>
+— written at <code>library.py:146</code>, parsed at
+<code>selection.py:498</code>, set in <code>demo.py:152</code>; no
+reader.</li>
+<li><code>git grep -n -E 'confounded|helped|"hurt"|verdict' ${PIN} -- harness2 ':!harness2/core/prompts.py'</code>
+— <code>demo.py:146</code> only, once grader-marker names are excluded;
+no code parses an edit verdict.</li>
+<li><code>git grep -n -E "library_dir" ${PIN} -- harness2/core/selection.py</code>
+— no match; neither the selector nor the reflector receives the
+library.</li>
+<li><code>git grep -n -i "library" ${PIN} -- harness2/substrate third_party/wb_runner third_party/jb_runner</code>
+— no match; no executor path reads it.</li>
+<li><code>git grep -n -E "base_harness\(\)" ${PIN} -- harness2/core</code>
+— <code>schedule.py:617</code> and <code>selection.py:431</code>; every
+task starts from the base harness.</li>
+<li><code>git grep -n -E "max_entries|MAX_ENTRIES|\[:[0-9]+\]|\[-[0-9]+:\]" ${PIN} -- harness2/core/library.py harness2/core/context.py</code>
+— four slices in <code>context.py</code>, over rollout names, error
+strings, images and leak hits; none over library entries.</li>
+<li><code>git grep -n -E "datetime|time\.|created_at|valid_" ${PIN} -- harness2/core/library.py</code>
+— no match.</li>
+<li><code>git grep -n -i -E "approve|review|human|interactive|input\(" ${PIN} -- harness2 | grep -v prompts.py</code>
+— benchmark prompt text only; no review surface.</li>
+<li><code>git ls-tree -r --name-only ${PIN} | grep -i -E "judged|summary\.json|\.jsonl$"</code>
+— no match; no result is committed.</li>
+<li><code>git ls-files | grep -E "^\.github|\.gitlab|ci\.yml"</code> —
+no match; no CI configuration.</li>
+<li><code>git grep -n -i -E "arxiv|bibtex|@article|CITATION" ${PIN} -- .</code>
+— the README citation block for <a
+href="https://arxiv.org/abs/2610.14224">arXiv:2610.14224</a>; no
+<code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-18</strong> — <a
+href="https://github.com/google-research/harness2/commit/1cfe254e8d25b15f37048c3730134686abe60335"><code class="commit-id" title="1cfe254e8d25b15f37048c3730134686abe60335">1cfe254e…</code></a>
+— first reading, at the head of <code>main</code>, 13 October 2026. No
+marks. LICENSE read in full: Apache-2.0 with no rider. Screened before
+reading from a full clone: no auto-run surface; one build-time execution
+finding, <code>harness2/cli/setup.py</code>, the
+<code>harness2-setup</code> console script that installs benchmarks when
+invoked rather than a setuptools file; nothing inside the cooldown; one
+unpinned surface, <code>pyproject.toml</code> with no lockfile. No
+<code>.gitmodules</code> and no agent-instruction file. The paper's
+library sections and ablation were read on arXiv. Read with
+<code>git grep</code> and <code>sed</code>; nothing was installed, built
+or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

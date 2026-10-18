@@ -527,6 +527,22 @@ no setting to change, and
 The admission side is weaker: creating a skill needs
 <code>confirmed: true</code>, a field the agent fills in its own tool
 call (<code>:518</code>).</p>
+<p><a href="../../systems/harness2/">Harness²</a> stores skills as part
+of whole adopted harnesses and serves them to the editor rather than the
+executor. After each task a per-domain library receives the adopted tree
+— skills, scripts, subagents, plugins and always-on files — with the
+reflector's lesson, and every later task's editing sessions get the
+whole directory copied into context
+(<code>harness2/core/library.py:106-152</code>,
+<code>harness2/core/context.py:160-169</code>). A component reaches
+execution only when an editor copies it into the new harness, and
+validation rejects a skill whose script did not come with it
+(<code>harness2/core/tree.py:324-333</code>). There is no outcome gate:
+adoption is a blind model choice over deliverables, made without any
+selector session at <code>k = 1</code>, and a lesson is admitted when
+its three fields are non-empty
+(<code>harness2/core/selection.py:360-399</code>,
+<code>:494-501</code>).</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Store a skill, then execute the retrieved copy in a fresh context

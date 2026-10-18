@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 754 reports.</strong></p>
+<p><strong>This page covers all 755 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31410,6 +31410,48 @@ tool output, or a crash-safe per-session extraction cursor with one
 retry and a receipted discard.</li>
 <li>Do not copy when: facts must be correctable or deletable, or two
 projects must not see each other's history through recall.</li>
+</ul>
+<h3 id="harness2"><a
+href="../systems/harness2/"><code>harness2</code></a></h3>
+<ul>
+<li>Best idea: <strong>store the adopted artifact, not a description of
+it.</strong> Each library entry is the whole harness tree a task
+adopted, skills and scripts included, beside an
+<code>EXPERIENCE.md</code> with the selector's reason and the
+reflector's lesson, and a prefix rule makes the library each task saw
+reproducible on resume.</li>
+<li>Second idea: <strong>a grader tripwire at both ends of
+memory.</strong> <code>assert_tree_has_no_grader_verdicts</code> refuses
+to store a harness or lesson carrying a grader string, and every context
+build checks answer-key paths and grader markers again before a model
+sees the library.</li>
+<li>Biggest risk: <strong>"evidence-supported" is checked for
+presence.</strong> <code>_distil</code> admits a lesson when
+<code>cue</code>, <code>lesson</code> and <code>evidence</code> are
+non-empty; the edit verdicts and <code>confidence</code> are never
+parsed, and at <code>--k 1</code> the single final is adopted without a
+selector session.</li>
+<li>Second risk: <strong>no correction reaches derived state.</strong>
+The only forget path is the prefix truncation, a hand-deleted entry is
+replayed from the task summary on resume, and the resume test asserts
+that a downstream task stays skipped after the upstream task it read is
+re-run.</li>
+<li>Most reusable component: <code>harness2/core/library.py</code> with
+<code>context.assert_tree_has_no_grader_verdicts</code> — a 222-line
+per-domain library of full trees with a regenerated index and a prefix
+<code>retain</code>.</li>
+<li>Maturity impression: Apache-2.0; 12,747 lines of Python in
+<code>harness2/</code>; 3 commits by 2 authors, 8 – 13 October 2026; 5
+unittest cases against a deterministic demo adapter, no CI and no
+committed results, and the paper's no-library, transfer and
+leave-one-out arms have no CLI flag. No marks; nothing was installed or
+run.</li>
+<li>Study when: you want cross-task carry of executable harness
+components inside a benchmark stream, or a contamination guard between a
+grader and a learned memory.</li>
+<li>Do not copy when: lessons must be corrected by later evidence,
+outlive one run, or be retrieved selectively rather than copied in
+whole.</li>
 </ul>
         </article>
       </div>
