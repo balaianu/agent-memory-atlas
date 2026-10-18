@@ -14884,6 +14884,144 @@ over <code>src</code> (nothing);
 tree (nothing). Screened before reading: no auto-run, build-time or
 cooldown finding, and one FLOAT on <code>package.json</code> with a
 lockfile present; nothing was installed, built or run.</li>
+<li><strong>Comparing Retrieval-Augmentation and Parameter-Efficient
+Fine-Tuning for Privacy-Preserving Personalization of Large Language
+Models (<a href="https://arxiv.org/abs/2409.09510">arXiv:2409.09510</a>)
+was examined and has no report: its per-user adapters are written once
+by a benchmark script, and nothing updates, versions or deletes
+one.</strong> Salemi and Zamani, v1 14 September 2024. Version 2, of 26
+June 2025, is the ICTIR '25 version of record (<a
+href="https://doi.org/10.1145/3731120.3744595">doi:10.1145/3731120.3744595</a>).
+The method trains one LoRA per user on that user's profile alone, and
+the paper prices it at 55 MB for a rank-8 FlanT5-XXL adapter against 45
+GB for a full copy. Its footnote points to
+<code>LaMP-Benchmark/LaMP</code>, read at <a
+href="https://github.com/LaMP-Benchmark/LaMP/commit/38c9d4d87629aba5a821bcddc10ddcc83f8d49a1"><code class="commit-id" title="38c9d4d87629aba5a821bcddc10ddcc83f8d49a1">38c9d4d8…</code></a>:
+CC BY-NC-SA 4.0, standard text, with <code>PEFT/</code> added on 18
+February 2025 as 369 lines of Python in three files, and no test
+function anywhere in the repository.
+<code>PEFT/train_peft.py:61-71</code> trains an adapter for each user id
+into <code>&lt;output_dir&gt;/adaptors/&lt;user_id&gt;/</code> and skips
+any user whose directory is already non-empty (<code>:63-64</code>), so
+a rerun over a changed profile leaves an existing adapter as it was.
+<code>PEFT/evaluate_llm.py:53-58</code> globs that directory and loads
+the adapter under the user's id before predicting. That is the shape
+that brings <a href="../systems/second-me/">Second Me</a> into scope, a
+stored weight unit selected per user at inference. Here the user key is
+a directory name, a physical partition, and each profile is a static
+LaMP benchmark file rather than anything a session writes. Nothing has
+to answer "delete my data". <code>git grep</code> for
+<code>rmtree</code>, <code>os.remove</code>, <code>unlink</code> and
+<code>delete_adapter</code> finds no hit under <code>PEFT/</code>; the
+repository-wide hits empty scratch directories during evaluation and
+dataset creation, or replace symlinks. The paper defines privacy as
+isolation between users, and its v2 text contains no match for
+<code>delet</code>, <code>unlearn</code> or <code>erasure</code>.
+Screened before reading: no auto-run surface, no build-time execution
+point, three unpinned requirements files; nothing was installed or
+run.</li>
+<li><strong>On the Way to LLM Personalization: Learning to Remember User
+Conversations (<a
+href="https://arxiv.org/abs/2411.13405">arXiv:2411.13405</a>) was
+examined and has no report: it releases no code, and its method discards
+each conversation once trained.</strong> Magister, Metcalf, Zhang and
+ter Hoeve of Cambridge and Apple, v1 20 November 2024. There is no later
+arXiv version; the version of record is in the first L2M2 workshop
+proceedings, pages 61–77 (<a
+href="https://aclanthology.org/2025.l2m2-1.5/">2025.l2m2-1.5</a>). PLUM
+has the model write question-answer pairs about each conversation, then
+fine-tunes a rank-16 LoRA on Llama 3 8B Instruct conversation by
+conversation with a weighted cross-entropy loss. It reports 81.5%
+accuracy over 100 single-turn conversations seeded from OpenAssistant.
+Neither the arXiv PDF nor the ACL PDF contains a repository link, and
+Apple's research page for the paper links only arXiv, with its
+<code>code</code> field null. <code>gh search repos</code> on the exact
+title returned one unrelated repository, <code>jungyl/rabbithole</code>,
+a self-study app; "Learning to Remember User Conversations", "PLUM
+personalization conversations" and "PLUM LoRA conversation" returned
+none. The <code>apple-aiml-research</code> and <code>apple</code> org
+listings carry no repository named for PLUM, personalization or
+conversation memory. Neither does the <code>CharlotteMagister</code>
+account, which holds GCExplainer, nor <code>maartjeth</code>. Discarding
+is a design constraint: the introduction declines to store conversations
+as RAG does, and Section 3.2 drops each one once its samples are
+trained. A request to forget one conversation then names no record and
+leaves no corpus to retrain without. That is the limit <a
+href="#weights-as-memory-at-adapter-granularity">weights as memory, at
+adapter granularity</a> describes, adopted as a privacy measure, and
+with no code there is no artifact to pin either way.</li>
+<li><strong>Text-to-LoRA (<a
+href="https://arxiv.org/abs/2506.06105">arXiv:2506.06105</a>) was
+examined and has no report: its hypernetwork emits an adapter per task
+description, and every adapter it writes is keyed by task or timestamp,
+never by a user.</strong> Charakorn, Cetin, Tang and Lange of Sakana AI,
+v1 6 June 2025. Version 2, of 9 June 2025, corrects the first author's
+surname and carries the ICML 2025 footer (PMLR 267). The abstract links
+<code>SakanaAI/text-to-lora</code>, read at <a
+href="https://github.com/SakanaAI/text-to-lora/commit/8ba77493eb8c732bac41c22ca76117dcacfcf2a4"><code class="commit-id" title="8ba77493eb8c732bac41c22ca76117dcacfcf2a4">8ba77493…</code></a>:
+Apache-2.0, standard text, one commit titled "Initial release" on 8 June
+2025, and 7,083 lines of Python in 31 files beside a vendored
+<code>src/fishfarm</code>, with no test functions. The hypernetwork is
+trained on 479 Super-NaturalInstructions tasks, either to reconstruct
+their LoRAs or by supervised fine-tuning, and turns an embedded task
+description into a LoRA in one forward pass. Every generated adapter
+goes to disk. Evaluation writes them under
+<code>generated_loras/&lt;task&gt;/&lt;split&gt;/lora_&lt;i&gt;</code>
+(<code>src/hyper_llm_modulator/utils/eval_hypermod.py:146-157</code>,
+<code>:208-234</code>). <code>scripts/generate_lora.py:93-96</code>
+writes to
+<code>extras/user_generated/&lt;timestamp&gt;_&lt;random8&gt;/</code>
+with the description beside it in <code>task_desc.txt</code>, a path
+<code>git grep user_generated</code> finds nowhere else. The web demo
+writes to <code>/tmp/gen_lora/</code>, makes that the active LoRA for
+its chat and zips it for download (<code>webui/app.py:350-362</code>).
+The content is a task skill rather than a claim about anyone, and the
+only <code>rmtree</code> in the tree prunes training checkpoints
+(<code>src/hyper_llm_modulator/sft_trainer.py:305-309</code>). This is
+the architecture boundary at one remove: the weights are the product,
+and nothing outlives the call with an identity a correction could name.
+Screened before reading: no auto-run surface, one build-time execution
+point in <code>setup.py</code>, one unpinned manifest in the vendored
+<code>src/fishfarm</code>, nothing inside the cooldown; nothing was
+installed or run.</li>
+<li><strong>Doc-to-LoRA (<a
+href="https://arxiv.org/abs/2602.15902">arXiv:2602.15902</a>) was
+examined and has no report: the adapter it generates from a document
+lives in one process attribute until <code>reset()</code>, and nothing
+writes it to disk.</strong> Charakorn, Cetin, Uesaka and Lange of Sakana
+AI and Minerva University, v1 13 February 2026 with no later version;
+the README cites it as an ICML 2026 paper. The abstract names
+<code>SakanaAI/doc-to-lora</code>, read at <a
+href="https://github.com/SakanaAI/doc-to-lora/commit/baa85db4d5df9b29d618af432d6ebf28b3ad5a29"><code class="commit-id" title="baa85db4d5df9b29d618af432d6ebf28b3ad5a29">baa85db4…</code></a>:
+MIT, three commits on <code>main</code> between 27 February and 25 May
+2026, and 14,018 lines of Python in 50 files, with no test functions. A
+Perceiver hypernetwork maps a context to per-layer LoRA deltas in one
+forward pass, and Table 9 puts the iterative update at 0.522 s against
+41.912 s for context distillation on MultiFieldQA.
+<code>ModulatedPretrainedModel.internalize</code> assigns the generated
+adapter to <code>self.generated_loras</code>, replacing whatever was
+there, and <code>reset()</code> sets it to <code>None</code> and
+restores the original forwards
+(<code>src/ctx_to_lora/modeling/hypernet.py:784-813</code>). The demo
+passes the context text into every <code>generate</code> call. The paper
+calls the result "persistent, re-usable adaptations", yet the one
+adapter save on the context-distillation baseline,
+<code>CtxDistillModel.save_lora</code>
+(<code>src/ctx_to_lora/modeling/context_distillation.py:251-269</code>),
+has no caller by <code>git grep -w save_lora</code>. A
+<code>git grep</code> for <code>torch.save</code>,
+<code>save_file</code> and <code>save_pretrained</code> finds only that
+method, a base-model config written in <code>train.py</code> and the
+vendored Text-to-LoRA baseline. Forgetting is all-or-nothing and
+in-process, with no record a correction could name. Personalized chat
+appears in the abstract's closing sentence and machine unlearning in the
+conclusion's future work, both as prospects, by a search of the PDF text
+for <code>personali</code> and <code>unlearn</code>. The
+<code>iclr-cleanup</code> branch, whose history is unrelated to
+<code>main</code> and whose last commit is dated 15 June 2026, was
+checked by file path only. Screened before reading: no auto-run surface,
+one build-time execution point in <code>setup.py</code>, nothing
+unpinned or inside the cooldown; nothing was installed or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
