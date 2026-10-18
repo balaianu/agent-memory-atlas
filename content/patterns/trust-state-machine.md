@@ -81,13 +81,14 @@ able to move a memory between them is worse than one honest bucket.
 [Portable Handoff](../../systems/portable-handoff/) contributes a narrow
 enforcement half without the filtering half. Its `Trust` enum is
 `verified · observed · claimed · inferred · untrusted`, its `Provenance` enum
-names eight channels, and `cap_trust(provenance, trust)` refuses `verified` to any claim whose provenance is not `git`, `tool`, `test`,
+names eight channels, and `cap_trust(provenance, trust)` downgrades `verified` to `claimed` on any claim whose provenance is not `git`, `tool`, `test`,
 `file` or `transcript` — **applied while parsing**, so a capsule from another
 tool meets the same rule. The draft author writes the provenance as well, so the
 cap binds the pairing rather than the source: a claim declared `tool` and
 `verified` passes. The question this page raises — who is allowed to set the
-state — gets half an answer: local code sets it for the repository snapshot and
-the re-hashed files, the author for everything else. Nothing acts on it:
+state — gets half an answer: local code sets it for the re-hashed files and,
+through a preflight file `finalize` reads back without re-checking, for the
+repository snapshot; the author sets it for everything else. Nothing acts on it:
 every state is rendered as a label and no read path filters, ranks or omits, so
 the mark is withheld.
 

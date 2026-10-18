@@ -3556,17 +3556,18 @@ failures simpler systems discover in production.
 
 **Portable Handoff takes the family's idea and applies it to the one artifact
 nobody else guards: the thing a model writes about its own session.** Its unit
-is a claim carrying `provenance` — one of eight named channels — beside a
-five-state `trust`, and `cap_trust(provenance, trust)` refuses `verified` to
-anything whose declared source is not in `{git, tool, test, file, transcript}`
-(`src/portable_handoff/models.py:166`), at parse time as well as at write. It
-binds the pairing, not the source: the draft author writes the provenance too,
-so a claim declared `tool` and `verified` passes. What holds outright is the
-repository snapshot, which `finalize` takes from local git alone. Where the
-family's other members enforce trust inside a store they own, this one enforces
-it on a file arriving from outside — and where they filter, it only labels,
-which is why the mark is withheld. See
-[Portable Handoff](../systems/portable-handoff/).
+is a claim carrying `provenance` — drawn from eight named channels — beside a
+five-state `trust`, and `cap_trust(provenance, trust)` downgrades `verified` to
+`claimed` on anything whose declared source is not in
+`{git, tool, test, file, transcript}` (`src/portable_handoff/models.py:166`), at
+parse time as well as at write. It binds the pairing, not the source: the draft
+author writes the provenance too, so a claim declared `tool` and `verified`
+passes. The repository snapshot is out of the draft's reach, but `finalize`
+reads it back from a preflight file it never re-checks, so it is protected from
+the draft rather than from the agent. Where the family's other members enforce
+trust inside a store they own, this one enforces it on a file arriving from
+outside — and where they filter, it only labels, which is why the mark is
+withheld. See [Portable Handoff](../systems/portable-handoff/).
 
 
 **Heimdall is the family's outlier: it verifies at read time and stores no trust.**

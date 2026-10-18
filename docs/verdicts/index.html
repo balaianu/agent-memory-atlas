@@ -12277,31 +12277,34 @@ no model column to catch the mismatch.</li>
 <h3 id="portable-handoff"><a
 href="../systems/portable-handoff/"><code>portable-handoff</code></a></h3>
 <ul>
-<li>Best idea: <strong>repository facts never come from the
-model.</strong> <code>finalize</code> takes the <code>project</code>
+<li>Best idea: <strong>repository facts never come from the model's
+draft.</strong> <code>finalize</code> takes the <code>project</code>
 object — root, remotes, branch, commit, dirty state, changed files with
-their hashes — from <code>preflight</code> alone, refuses a draft that
-sets <code>created_at</code>, the integrity digest or an evidence
-digest, and re-hashes every file the draft names before stamping it
+their hashes — from the preflight file alone, refuses a draft that sets
+<code>created_at</code>, the integrity digest or an evidence digest, and
+re-hashes every file the draft names before stamping it
 <code>verified</code>. Beside it,
-<code>cap_trust(provenance, trust)</code> refuses <code>verified</code>
-to a claim whose provenance is conversational or model inference, and
-runs again on load, so the rule holds for a capsule from another tool or
-an older version. The same instinct runs through
-<code>command_safety.py</code>, which classifies a carried shell command
-at load time against raw text <em>"so a capsule has no field it could
-populate to declare itself safe"</em>, and says in its own docstring
-that it is not a sandbox and over-flags on purpose.</li>
+<code>cap_trust(provenance, trust)</code> downgrades
+<code>verified</code> to <code>claimed</code> on a claim whose
+provenance is conversational or model inference, and runs again on load,
+so the rule holds for a capsule from another tool or an older version.
+The same instinct runs through <code>command_safety.py</code>, which
+classifies a carried shell command at load time against raw text <em>"so
+a capsule has no field it could populate to declare itself safe"</em>,
+and says in its own docstring that it is not a sandbox and over-flags on
+purpose.</li>
 <li>Second idea: <strong>the reader is told what the capsule cannot
-vouch for.</strong> The secret scan records
-<code>passed | failed | not_run | unknown</code>, so an empty redaction
-list cannot be read as a clean bill of health, and the rendered capsule
-says so in words. <code>load</code> re-checks the recorded repository
-facts and file hashes against the current tree, reports each as
-<code>match</code>, <code>different</code>, <code>missing</code> or
-<code>appeared</code>, and states the capsule's age and whether its HEAD
-is reachable from a remote-tracking branch — <em>"may exist only on the
-machine that wrote this capsule."</em></li>
+vouch for.</strong> The secret scan records its own status beside the
+redactions, so an empty redaction list cannot be read as a clean bill of
+health, and the rendered capsule says so in words; <code>finalize</code>
+writes that status as <code>passed</code> whenever the scan ran.
+<code>load</code> re-checks the recorded root, remote, commit, branch,
+dirty state and every draft-named file hash against the current tree,
+reports each file as <code>match</code>, <code>different</code>,
+<code>missing</code> or <code>appeared</code>, and states the capsule's
+age and whether its HEAD was reachable from a remote-tracking branch
+when it was written — <em>"may exist only on the machine that wrote this
+capsule."</em></li>
 <li>Biggest risk: <strong>the cap checks a provenance the same author
 writes, and nothing withholds.</strong> A draft claim declared
 <code>tool</code> and <code>verified</code> passes the cap and reaches
@@ -12310,10 +12313,14 @@ not capped, and the <code>git</code>-to-<code>test</code> rewrite covers
 verification records only. Five trust states, a supersession status on
 decisions and a <code>dangerous</code> classification on commands are
 all rendered as labels, and no read path filters, ranks or omits on any
-of them. Beside that: the budget's list of dropped items is printed at
-<code>finalize</code> and not kept in the capsule, and no capsule
-references the one it replaces, so the format cannot answer <em>what is
-currently decided</em> across a project.</li>
+of them. Beside that: <code>finalize</code> reads the git facts back
+from a preflight file with a key-set check and runs no git, so an agent
+that edits the file sets the commit, the publication state and the
+capsule's age; the secret scan skips the free-text
+<code>evidence_refs</code>; the budget's list of dropped items is
+printed at <code>finalize</code> and not kept in the capsule, and no
+capsule references the one it replaces, so the format cannot answer
+<em>what is currently decided</em> across a project.</li>
 <li>Maturity impression: Apache-2.0, version 0.1.0, 5,649 lines of
 Python with a committed stdlib-only check, CI on three operating
 systems, and unit, integration, adapter, security and quality suites —
@@ -12329,7 +12336,8 @@ own positive control.</li>
 may write. The two-phase split — local code supplies the repository
 facts, the model supplies the meaning — is the part to copy, with each
 claim's provenance set by the code path that produced it rather than by
-the claim's author.</li>
+the claim's author, and the facts collected inside <code>finalize</code>
+rather than read back from a file.</li>
 <li>Do not copy when: you need memory that accumulates. There is no
 store, no query, no supersession across capsules and no way to ask what
 is true now rather than what was true at the end of one session.</li>

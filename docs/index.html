@@ -2724,11 +2724,11 @@
             <a aria-label="Read the Corbell analysis" href="./systems/corbell/">Read analysis <span aria-hidden="true">&rarr;</span></a>
           </article>
 
-          <article class="system-card accent-violet" data-category="local runtime" data-capabilities="negative_eval" data-search="portable handoff capsule session provenance trust verified observed claimed inferred untrusted redaction command safety claude codex cursor python apache stdlib">
+          <article class="system-card accent-violet" data-category="local runtime" data-capabilities="negative_eval" data-search="portable handoff capsule session provenance trust verified observed claimed inferred untrusted redaction command safety claude codex cursor python apache stdlib preflight staleness">
             <div class="system-card-top"><span>Local git writes the facts; the model labels its own claims</span><code>313</code></div>
             <h3>Portable Handoff</h3>
             <p>One Markdown capsule between sessions, where local code supplies git state and file hashes, the model supplies labelled claims, and a <code>verified</code> label beside a conversational source is capped at parse time.</p>
-            <dl><div><dt>Best idea</dt><dd>Repository facts and file hashes come from local git, never from the model's draft</dd></div><div><dt>Main risk</dt><dd>The cap checks a provenance the same author writes, and nothing filters on trust</dd></div></dl>
+            <dl><div><dt>Best idea</dt><dd>Repository facts and file hashes come from local git, never from the model's draft</dd></div><div><dt>Main risk</dt><dd>The git facts reach finalize through a file the agent can edit, and nothing filters on trust</dd></div></dl>
             <a aria-label="Read the Portable Handoff analysis" href="./systems/portable-handoff/">Read analysis <span aria-hidden="true">&rarr;</span></a>
           </article>
 

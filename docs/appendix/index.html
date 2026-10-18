@@ -2783,13 +2783,16 @@ only assignment to <code>CandidateDoc.confirmed</code></li>
 href="https://github.com/legoambarish/portable-handoff">legoambarish/portable-handoff</a>
 at <a
 href="https://github.com/legoambarish/portable-handoff/commit/ec5f203b2bf042a74377d4a51cafb695d25efdef"><code class="commit-id" title="ec5f203b2bf042a74377d4a51cafb695d25efdef">ec5f203b…</code></a>
-— read only, at version 0.1.0; screened on a full clone on 2026-09-26 at
-the same pin: one build-time execution point
+— read only, at version 0.1.0; screened on a fresh full clone on
+2026-10-18 at the same pin: one build-time execution point
 (<code>tests/conftest.py</code>) and <code>pyproject.toml</code> with no
 lockfile, so nothing was installed and no capsule was produced. The
-provenance cap and the fields it skips, the finalize merge, the budget's
-output and the load-time briefing were read from <code>models.py</code>,
-<code>finalize.py</code>, <code>budgeting.py</code>, <code>cli.py</code>
+provenance cap and the fields it skips, the preflight read-back, the
+finalize merge, the secret scan's skip-list and status, the budget's
+drop order and the load-time checks and briefing were read from
+<code>models.py</code>, <code>preflight.py</code>,
+<code>finalize.py</code>, <code>sanitize.py</code>,
+<code>budgeting.py</code>, <code>storage.py</code>, <code>cli.py</code>
 and <code>load.py</code> against the committed tests</li>
 <li><a
 href="https://github.com/memorax-ai/memorax-code">memorax-ai/memorax-code</a>
@@ -18343,6 +18346,42 @@ producer, and <code>internal/binding/binding.go:226</code> set device,
 actor and harness only. The first rested on the field's comment rather
 than its callers, and the third on the field's declaration rather than
 its writers.</li>
+<li><strong>Seven published claims about <a
+href="../systems/portable-handoff/">Portable Handoff</a> were wrong at
+<a
+href="https://github.com/legoambarish/portable-handoff/commit/ec5f203b2bf042a74377d4a51cafb695d25efdef"><code class="commit-id" title="ec5f203b2bf042a74377d4a51cafb695d25efdef">ec5f203b…</code></a>,
+the pin they were made at, and are corrected.</strong> The report said
+the model cannot write the commit, branch, dirty flag or a file hash,
+and the families page that <code>finalize</code> takes the snapshot from
+local git alone; <code>finalize</code> reads the snapshot back from a
+preflight JSON file with a key-set check and runs no git
+(<code>src/portable_handoff/preflight.py:69-74</code>), and the shipped
+host commands write that file to a fixed path inside the repository, so
+the facts were protected from the draft and not from the agent. The
+report and its verdict entry presented the briefing's publication state
+as checked at read time and said the recorded file hashes are compared
+with the tree; <code>head_published</code> is the write-time value and
+is never recomputed, and only draft-named files are re-hashed, never the
+changed-file hashes (<code>src/portable_handoff/load.py:82-154</code>).
+The report said <code>sanitize.py</code> scans every string; strings
+under eleven structural keys are skipped, one of them the free-text
+<code>evidence_refs</code>
+(<code>src/portable_handoff/sanitize.py:126</code>). The report and its
+verdict entry said <code>finalize</code> records the scan as any of four
+statuses; it writes <code>passed</code>, and nothing writes
+<code>failed</code> or <code>unknown</code>
+(<code>src/portable_handoff/finalize.py:204</code>). Those four
+overstated the system. The report said the budget drops items in
+rotation and cited an uncalled helper for its truncation; each list is
+emptied before the next, and truncation runs only above the 12,000-token
+hard cap (<code>src/portable_handoff/budgeting.py:73-114</code>). It
+said <code>verified</code> is refused beside a conversational
+provenance, where a draft's claim is downgraded to <code>claimed</code>.
+And it said the null-id guard keeps the capsule's commit honest; it
+guards worktree entries, while <code>project.commit</code> comes from
+<code>git rev-parse HEAD</code>, which fails on an unborn branch
+(<code>src/portable_handoff/gitfacts.py:183</code>,
+<code>:257-259</code>).</li>
 </ul>
 <h3 id="weights-as-memory-at-adapter-granularity">Weights as memory, at
 adapter granularity</h3>

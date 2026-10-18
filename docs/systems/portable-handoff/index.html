@@ -116,7 +116,7 @@ capped by the provenance it declares.</p>
             </a>
                         <div class="meta-pill">
               <span>Analyzed on</span>
-              <strong>2026-09-26</strong>
+              <strong>2026-10-18</strong>
             </div>
                                     <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/legoambarish--portable-handoff" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
               <span>Archived fork</span>
@@ -156,16 +156,21 @@ with a committed report; not run</strong></div>
 end of a coding session so the next session, possibly in a different
 tool, starts from what mattered. Its notable move is a split of
 authority: local code records git state and file hashes, the model
-writes labelled claims, and <code>verified</code> is refused to any
-claim whose declared provenance is conversation or inference. Its
-weakness is that the cap compares two fields the same author writes, and
-no read path filters on any of the five trust states.</p>
+writes labelled claims, and <code>verified</code> is downgraded to
+<code>claimed</code> on any claim whose declared provenance is
+conversation or inference. Its weakness is that the cap compares two
+fields the same author writes, and no read path filters on any of the
+five trust states.</p>
 <p>The README's design sentence is <em>"the model supplies the meaning
-and local code supplies the facts."</em> It holds for the repository:
-<code>finalize</code> takes the <code>project</code> object from
-<code>preflight</code> alone and re-hashes every file the draft names,
-so a draft cannot forge a commit, a dirty flag or a hash. It does not
-hold for claims. A constraint written with
+and local code supplies the facts."</em> It holds against the draft:
+<code>finalize</code> takes the <code>project</code> object from the
+preflight file alone and re-hashes every file the draft names, so a
+draft cannot forge a commit, a dirty flag or a hash. It holds less well
+against the agent. <code>finalize</code> reads the preflight back from
+disk with a key-set check and runs no git of its own, and the shipped
+host commands put that file at a fixed path inside the repository, where
+the agent that writes the draft can also write.</p>
+<p>It does not hold for claims. A constraint written with
 <code>"provenance": "tool"</code> and <code>"trust": "verified"</code>
 passes <code>cap_trust</code> and reaches the capsule, and the briefing,
 as <code>[verified]</code>. The skill documents that rule
@@ -173,20 +178,20 @@ as <code>[verified]</code>. The skill documents that rule
 written; the written rule is weaker than "the model may not author
 facts".</p>
 <p><strong>Strongest:</strong> the briefing states the capsule's age,
-whether its HEAD is reachable from a remote-tracking branch, and which
-recorded facts and file hashes no longer match the tree. The secret scan
-records whether it ran as well as what it redacted. The command-safety
-module classifies a carried shell command at load time against raw text,
-<em>"so a capsule has no field it could populate to declare itself
-safe."</em></p>
+whether its HEAD was reachable from a remote-tracking branch when it was
+written, and which recorded facts and draft-named file hashes no longer
+match the tree. The secret scan records that it ran as well as what it
+redacted. The command-safety module classifies a carried shell command
+at load time against raw text, <em>"so a capsule has no field it could
+populate to declare itself safe."</em></p>
 <p><strong>Weakest:</strong> nothing withholds. Every trust state is a
 label beside text, a memory marked <code>untrusted</code> reaches the
 capsule exactly like a <code>verified</code> one, and the briefing drops
 whole sections by schema rather than by status. That is why
 <code>trust_state</code> is withheld. Beside it, file references and
-evidence records are never capped, and the list of what the budget
-dropped goes to the terminal at <code>finalize</code> rather than into
-the capsule.</p>
+evidence records are never capped, the secret scan skips one free-text
+field, and the list of what the budget dropped goes to the terminal at
+<code>finalize</code> rather than into the capsule.</p>
 <h2 id="2-mental-model">2. Mental Model</h2>
 <p>A memory is a <strong>claim</strong>: text, plus where it says it
 came from, plus how much weight it can carry.</p>
@@ -209,31 +214,33 @@ parsed. Nothing promotes a claim, nothing demotes it later, and nothing
 expires. A capsule is never rewritten; the only correction is another
 capsule, and no capsule references the one it replaces.</p>
 <p>Authority is divided by <strong>field</strong>, not by claim. Local
-code owns the repository snapshot and the file hashes and never
-interprets them. The draft author owns every claim, including the
-provenance the cap consults. The cap rules out one pairing —
-<code>verified</code> beside conversation or inference — and leaves the
-author free to name a deterministic source. The system treats a capsule
-as untrusted historical data and says so in the rendered artifact, the
-module docstrings and the briefing.</p>
-<figure class="diagram"><figcaption class="diagram-caption">Diagram — local code supplies the project object and re-hashes the named files, while every claim's provenance comes from the draft; cap_trust refuses verified only beside a conversational or inferred provenance, evidence records skip it, the budget's losses are printed and not stored, and the briefing shows trust as a label nothing filters on</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
-%% caption: local code supplies the project object and re-hashes the named files, while every claim&#39;s provenance comes from the draft; cap_trust refuses verified only beside a conversational or inferred provenance, evidence records skip it, the budget&#39;s losses are printed and not stored, and the briefing shows trust as a label nothing filters on
+code produces the repository snapshot and the file hashes and never
+interprets them, and it hands the snapshot to <code>finalize</code>
+through a file on disk that nothing re-checks. The draft author owns
+every claim, including the provenance the cap consults. The cap rules
+out one pairing — <code>verified</code> beside conversation or inference
+— and leaves the author free to name a deterministic source. The system
+treats a capsule as untrusted historical data and says so in the
+rendered artifact, the module docstrings and the briefing.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — preflight writes the git facts to a file that finalize reads back without re-running git, finalize re-hashes the named files, and every claim's provenance comes from the draft; cap_trust downgrades verified only beside a conversational or inferred provenance, evidence records skip it, the budget's losses are printed and not stored, load re-checks only some recorded facts, and the briefing shows trust as a label nothing filters on</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>flowchart TD
+%% caption: preflight writes the git facts to a file that finalize reads back without re-running git, finalize re-hashes the named files, and every claim&#39;s provenance comes from the draft; cap_trust downgrades verified only beside a conversational or inferred provenance, evidence records skip it, the budget&#39;s losses are printed and not stored, load re-checks only some recorded facts, and the briefing shows trust as a label nothing filters on
     PRE[&quot;preflight&lt;br/&gt;git facts, changed-file hashes&quot;]
+    PFILE[(&quot;.handoff/evidence/preflight.json&lt;br/&gt;read back with a&lt;br/&gt;key-set check only&quot;)]
     DRAFT[&quot;model writes draft.json&lt;br/&gt;claims with declared&lt;br/&gt;provenance and trust&quot;]
-    PROJ[&quot;project object&lt;br/&gt;taken from preflight only&quot;]
+    PROJ[&quot;project object&lt;br/&gt;taken from the&lt;br/&gt;preflight file only&quot;]
     FILES[&quot;files named by the draft&lt;br/&gt;re-hashed, stamped&lt;br/&gt;git or file + verified&quot;]
     CAP[&quot;cap_trust per claim&lt;br/&gt;verified → claimed unless the&lt;br/&gt;declared provenance is git,&lt;br/&gt;tool, test, file or transcript&quot;]
     VER[&quot;verification list only&lt;br/&gt;verified → claimed&lt;br/&gt;git → test&quot;]
     EVI[&quot;evidence records&lt;br/&gt;no cap&quot;]
-    SAN[&quot;sanitize&lt;br/&gt;redact secrets, record scan status&quot;]
-    BUD[&quot;budget&lt;br/&gt;drop oldest narrative;&lt;br/&gt;dropped list printed, not stored&quot;]
+    SAN[&quot;sanitize&lt;br/&gt;redact secrets except under&lt;br/&gt;structural keys; status passed&quot;]
+    BUD[&quot;budget&lt;br/&gt;empty each narrative list in turn;&lt;br/&gt;dropped list printed, not stored&quot;]
     FILE[(&quot;capsule.md&lt;br/&gt;canonical JSON + unkeyed digest&quot;)]
     VAL[&quot;load: parse, re-cap,&lt;br/&gt;recompute digest, re-render&quot;]
-    DRIFT[&quot;compare recorded facts&lt;br/&gt;and file hashes with the tree&quot;]
+    DRIFT[&quot;compare root, remote, commit,&lt;br/&gt;branch, dirty and draft-named&lt;br/&gt;file hashes with the tree;&lt;br/&gt;publication and changed-file&lt;br/&gt;hashes not re-checked&quot;]
     BRIEF[&quot;briefing&lt;br/&gt;fixed subset of sections,&lt;br/&gt;trust shown as a label&quot;]
 
-    PRE --&gt; PROJ --&gt; SAN
-    PRE --&gt; FILES --&gt; SAN
+    PRE --&gt; PFILE --&gt; PROJ --&gt; SAN
+    PFILE --&gt; FILES --&gt; SAN
     DRAFT --&gt; FILES
     DRAFT --&gt; CAP --&gt; SAN
     CAP --&gt; VER --&gt; SAN
@@ -293,16 +300,19 @@ hashed and stamped <code>git</code> and <code>verified</code>
 <code>git branch --remotes --contains &lt;commit&gt;</code>
 (<code>gitfacts.py:225</code>), so it reports reachability from a local
 remote-tracking ref and makes no network call.</p>
-<p>One guard in that path defends the capsule's central claim. A
-repository with no commits reports <code>HEAD</code> as git's all-zero
-object id, which matches the hex pattern a commit is validated against,
-so recording it verbatim <em>"would let a capsule claim a specific
-commit exists when nothing has been committed at all."</em>
-<code>_is_null_oid</code> rejects it and the field becomes
-<code>None</code> instead (<code>gitfacts.py:183</code>,
-<code>:203</code>), and
+<p>One guard in that path keeps a worktree entry honest. In a repository
+with no commits, <code>git worktree list --porcelain</code> reports the
+worktree's <code>HEAD</code> as git's all-zero object id, which matches
+the hex pattern a commit is validated against. Recording it verbatim
+<em>"would let a capsule claim a specific commit exists when nothing has
+been committed at all."</em> <code>_is_null_oid</code> rejects it and
+the worktree's <code>commit</code> becomes <code>None</code> instead
+(<code>gitfacts.py:183</code>, <code>:203</code>), and
 <code>test_unborn_branch_worktree_commit_is_not_a_fabricated_hash</code>
-pins it.</p>
+pins it. The top-level <code>project.commit</code> comes from
+<code>git rev-parse HEAD</code>, which fails on an unborn branch and
+leaves it <code>None</code> without the guard
+(<code>:257-259</code>).</p>
 <p><strong>Meaning capture.</strong> The model writes a draft JSON
 against <code>schemas/handoff-v1.schema.json</code>. A bare string
 defaults to <code>model_inference</code> and <code>inferred</code>, and
@@ -316,9 +326,36 @@ alone, and a draft that sets <code>created_at</code>,
 <code>handoff_id</code>, <code>integrity</code> or an evidence digest is
 refused (<code>finalize.py:41-58</code>). Every file the draft names is
 resolved inside the root, re-hashed and stamped <code>git</code> or
-<code>file</code> with <code>verified</code> (<code>:96-123</code>).
-Everything else is the draft's, normalized by
-<code>models.py</code>.</p>
+<code>file</code> with <code>verified</code> (<code>:96-123</code>); the
+record's <code>role</code> and <code>symbols</code> are the draft's
+text, carried under that stamp (<code>:114-115</code>). Everything else
+is the draft's, normalized by <code>models.py</code>.</p>
+<p><strong>The preflight file.</strong> <code>finalize</code> never
+calls git. It reads the preflight from the path it is given, and
+<code>read_preflight</code> checks only that the JSON parses strictly
+and carries exactly the expected top-level keys
+(<code>preflight.py:69-74</code>). The commit, branch, dirty flag,
+<code>head_published</code>, the changed-file hashes and
+<code>captured_at</code> — which becomes the capsule's
+<code>created_at</code>, its age and its place in
+<code>load latest</code> (<code>finalize.py:145</code>,
+<code>:161</code>) — are whatever that file holds, and the
+<code>preflight-git</code> evidence record stamped <code>tool</code> and
+<code>verified</code> hashes the file's own <code>git</code> object
+(<code>:186-196</code>).</p>
+<p>The Claude, Cursor and generic host commands all write it to
+<code>.handoff/evidence/preflight.json</code>
+(<code>integrations/claude/commands/handoff.md:7-9</code>), inside the
+repository and outside the changed-file list, which skips
+<code>.handoff/</code> (<code>gitfacts.py:125</code>). A second
+<code>preflight</code> to that path is refused, because
+<code>atomic_write</code> does not overwrite without <code>force</code>
+(<code>storage.py:61-62</code>); finalizing the old file is accepted,
+and <code>list_capsules</code> anticipates <em>"one preflight is
+finalized more than once"</em> (<code>storage.py:104-105</code>). Load
+re-checks some of these values against the tree (below);
+<code>head_published</code>, the changed-file hashes and
+<code>captured_at</code> it never re-checks.</p>
 <p><strong>Cap.</strong> <code>cap_trust</code>
 (<code>models.py:166-170</code>) returns <code>claimed</code> for
 <code>verified</code> unless the provenance is in
@@ -341,43 +378,73 @@ checks that a tool ran. The quality harness's <em>model overclaims
 trust</em> scenario pins the first half
 (<code>tests/quality/evaluate_quality.py:90</code>, <code>:146</code>);
 no committed case covers the second.</p>
-<p><strong>Sanitize.</strong> <code>sanitize.py</code> scans every
-string for eight secret families and replaces a match with a kind marker
-such as <code>[REDACTED:github]</code> (<code>:38-45</code>), recording
-kind and count but not the matched text. <code>finalize</code> records
-the scan as a <code>ScanStatus</code> — <code>passed</code>,
-<code>failed</code>, <code>not_run</code> or <code>unknown</code> —
-(<code>finalize.py:204</code>), and <code>render.py:263</code> says in
-the artifact: <em>"An empty list is only meaningful when the scan status
-above is <code>passed</code>."</em></p>
+<p><strong>Sanitize.</strong> <code>sanitize.py</code> scans strings for
+eight secret families and replaces a match with a kind marker such as
+<code>[REDACTED:github]</code> (<code>:38-45</code>), recording kind and
+count but not the matched text. It skips every string under eleven
+structural keys (<code>:126</code>, <code>:131</code>). Ten of them hold
+digests, ids, timestamps, booleans or counts the schema constrains;
+<code>evidence_refs</code> is free text, up to 64 items of 128
+characters on claims and most records (<code>models.py:212</code>), and
+is written into the embedded JSON whenever it is non-empty
+(<code>render.py:271</code>). A token placed there is neither redacted
+nor counted, and <code>fields_scanned</code> counts the skipped strings
+as scanned (<code>sanitize.py:170-178</code>). The redaction list merges
+the draft's own <code>security.redactions</code> with what the scan
+found (<code>:157-166</code>), so a recorded kind is not proof that a
+match occurred.</p>
+<p><code>finalize</code> writes the scan status once, as
+<code>passed</code>, on every capsule (<code>finalize.py:204</code>); a
+capsule without the field parses as <code>not_run</code>
+(<code>models.py:587</code>), and nothing in <code>src/</code> writes
+<code>failed</code> or <code>unknown</code>. <code>passed</code> records
+that the scan ran. <code>render.py:263</code> says in the artifact:
+<em>"An empty list is only meaningful when the scan status above is
+<code>passed</code>."</em></p>
 <p><strong>Budget.</strong> <code>budgeting.py</code> drops the oldest
-item from recent context, evidence, completed state, risks, errors,
-files and scope-out in rotation until the token estimate is under
-target, then truncates long narrative behind a <code>…[budgeted]</code>
-marker (<code>:64-72</code>, <code>:52</code>). The
-<code>BudgetReport</code> with <code>dropped[]</code> and
-<code>truncated[]</code> is printed in the <code>finalize</code>
-command's JSON result (<code>cli.py:115-124</code>) and is not written
-into the capsule. A later reader sees truncation markers and no trace of
-dropped items. The priority comment says verified facts are preserved,
-while <code>files</code>, the re-hashed records, is on the drop
-list.</p>
+item from recent context until the list is empty, then from evidence,
+completed state, risks, errors, files and scope-out in that order, until
+the token estimate is under the 7,000 target (<code>:64-81</code>,
+<code>bounds.py:39</code>). Each list is emptied before the next is
+touched, so under pressure every evidence record goes before the first
+risk. Only above the 12,000 hard cap does it truncate text fields longer
+than 256 characters behind a <code>…[budgeted]</code> marker
+(<code>budgeting.py:93-114</code>); <code>_truncate_at</code>
+(<code>:42</code>) has no caller. The <code>BudgetReport</code> with
+<code>dropped[]</code> and <code>truncated[]</code> is printed in the
+<code>finalize</code> command's JSON result
+(<code>cli.py:115-124</code>) and is not written into the capsule. A
+later reader sees truncation markers and no trace of dropped items. The
+priority comment says verified facts are preserved, while
+<code>files</code>, the re-hashed records, is on the drop list.</p>
 <p><strong>Load.</strong> <code>load.py</code> validates first: strict
 parse, normalization with the cap, the digest recomputed over the
 normalized document, and a byte-exact re-render
 (<code>validate.py:31-41</code>, <code>canonical.py:31-35</code>). It
-then compares recorded facts with the tree. Root, remote and commit are
-compared when both sides have them, branch and dirty state when they
-differ, and each named file is re-hashed and reported
+then compares recorded facts with a fresh git read of the current
+directory. Root and the <code>origin</code> URL are compared when both
+sides have them, commit always, branch and dirty state when they differ,
+and each file the draft named is re-hashed and reported
 <code>match</code>, <code>different</code>, <code>missing</code> or
-<code>appeared</code> (<code>load.py:82-154</code>). The result is a
-bucket from <code>fresh</code> through <code>obsolete</code>
-(<code>:156-169</code>); a mismatched root makes the capsule
-<code>obsolete</code> and yields a briefing regardless. The briefing
+<code>appeared</code> (<code>load.py:82-154</code>). The changed-file
+hashes in <code>project</code> are never compared, and
+<code>head_published</code> is never recomputed.</p>
+<p>The bucket is <code>missing</code> if a named file vanished,
+otherwise <code>obsolete</code>, <code>stale</code>,
+<code>possibly_stale</code> or <code>fresh</code> by the worst check
+(<code>:156-169</code>). A commit absent on either side scores as
+unverifiable and lands in <code>obsolete</code> (<code>:112-117</code>),
+which leaves the <code>unverified</code> bucket unreachable. The root
+comparison is on absolute paths (<code>:76-79</code>), so the same
+commit loaded from a checkout at a different path reads
+<code>obsolete</code>; a briefing is produced regardless. The briefing
 states age and publication state, pinned by
 <code>test_briefing_states_capsule_age_and_publication_state</code>:
 <em>"less than a day old"</em>, <em>"HEAD reachable from a remote:
-no"</em>.</p>
+no"</em>. Age is computed at load from <code>created_at</code>;
+publication is the value preflight recorded, listed under
+<em>"Repository facts recorded in the capsule"</em>
+(<code>load.py:215-227</code>).</p>
 <p><strong>Command safety.</strong> <code>command_safety.py</code>
 classifies <code>next_action.command</code> as <code>read_only</code>,
 <code>review</code> or <code>dangerous</code> against fifteen named
@@ -430,36 +497,48 @@ the goal, task status, in-progress, pending and blocker text,
 constraints and user corrections with their trust labels, the recorded
 repository facts, verification history, staleness reasons, any blocking
 question and the next action (<code>load.py:181-270</code>). Decisions,
-risks, unknowns, errors, recent context and evidence are not in it, and
-files appear only as staleness reasons. <code>load --format json</code>
-returns the whole normalized document, and <code>export</code> returns
-the prose half, the briefing or the JSON (<code>cli.py:139-175</code>).
-There is no search, no ranking and no relevance model.</p>
+risks, unknowns, errors, recent context, evidence, completed work, scope
+and the definition of done are not in it, and files appear only as
+staleness reasons. Nor is the secret-scan status, or the provenance
+beside a trust label. <code>load --format json</code> returns the whole
+normalized document, and <code>export</code> returns the prose half, the
+briefing or the JSON (<code>cli.py:139-175</code>). There is no search,
+no ranking and no relevance model.</p>
 <p><code>test_export_emits_one_half_not_both</code> does not check what
 <code>export</code> writes: it asserts the exit code and then that each
 forbidden marker is present in the full capsule
 (<code>tests/integration/test_blocking_and_briefing.py:122-125</code>).
 The split is correct on reading <code>_export</code>, and
 unasserted.</p>
-<p>Two things happen at read time that most stores do only at write
-time, if at all.</p>
-<p><strong>The capsule is checked against the world.</strong> The
-recorded git facts and file hashes are compared with the current
-repository, so the reader sees which of the capsule's assumptions have
-expired rather than discovering it later.</p>
-<p><strong>The capsule's own reliability is stated.</strong> Age in
-words, and whether the recorded HEAD is reachable from a remote-tracking
-branch — <em>"may exist only on the machine that wrote this
-capsule"</em> — which matters for a handoff between machines.</p>
+<p>Two things reach the reader that most stores never show.</p>
+<p><strong>The capsule is checked against the world.</strong> At load,
+root, <code>origin</code> URL, commit, branch, dirty state and every
+draft-named file hash are compared with the current repository, so the
+reader sees which of the capsule's assumptions have expired rather than
+discovering it later. The changed-file hashes preflight recorded are not
+part of the check.</p>
+<p><strong>The capsule's own reliability is stated.</strong> Age is
+computed at load and said in words. Publication is the write-time value:
+whether the recorded HEAD was reachable from a remote-tracking branch
+when preflight ran, with <em>"may exist only on the machine that wrote
+this capsule"</em> when it was not. A commit pushed after the capsule
+was written reads that way at every load, and one force-pushed away
+reads as published.</p>
 <p><strong>Failure modes.</strong> The briefing's sections are fixed by
 the code, so what reaches the next session is decided by the schema
 rather than the task; an active decision and a superseded one are
 equally absent. Within the capsule, dropped items leave no trace. Trust
-labels appear on two sections of the briefing as text, and nothing else
-acts on them.</p>
+labels appear on two sections of the briefing as text, without the
+provenance the capsule prints beside them (<code>load.py:208</code>,
+<code>render.py:70</code>), and nothing else acts on them. A handoff to
+a checkout at a different path reads <code>obsolete</code> on the root
+path alone.</p>
 <h2 id="7-write-mechanics">7. Write Mechanics</h2>
-<p>Two phases, and the split protects <strong>repository facts</strong>:
-the model cannot write the commit, branch, dirty flag or a file hash. It
+<p>Two phases, and the split protects <strong>repository facts</strong>
+from the draft: no draft field can set the commit, branch, dirty flag or
+a file hash. It does not protect them from the agent, which can write
+the preflight file <code>finalize</code> reads back unchecked (<a
+href="#4-essential-implementation-paths">section 4</a>). The draft
 writes the trust of its own claims within the cap —
 <code>verified</code> beside <code>conversation:*</code> or
 <code>model_inference</code> becomes <code>claimed</code>, and
@@ -496,10 +575,13 @@ Codex, and <code>HANDOFF_INSTRUCTIONS.md</code> for other hosts.
 <code>scripts/install_skill.py</code> installs it, and
 <code>tests/integration/test_skill_install.py</code> covers the
 install.</p>
-<p>The agent's agency is bounded by construction: it writes a draft in a
-fixed schema and never touches the repository snapshot. No command edits
-a stored capsule; <code>finalize --force</code> can replace one at an
-explicit output path (<code>cli.py:42</code>,
+<p>The draft's reach is bounded by construction: it is a fixed schema,
+and no draft field reaches the repository snapshot. The agent's reach is
+not: the skill grants <code>Bash</code>, <code>Read</code> and
+<code>Write</code> (<code>skills/handoff/SKILL.md:5</code>), and the
+preflight file carrying the snapshot is one more file it can write. No
+command edits a stored capsule; <code>finalize --force</code> can
+replace one at an explicit output path (<code>cli.py:42</code>,
 <code>storage.py:61</code>).</p>
 <p>The briefing is where the design shows most clearly. It carries trust
 labels on constraints and user corrections (<code>load.py:207-208</code>
@@ -528,7 +610,10 @@ refused at finalize
 (<code>test_forged_timestamp_integrity_and_evidence_hash_are_rejected</code>).</p>
 <p><strong>Secrets</strong> are redacted with the kind recorded and the
 match withheld, and the scan's own status is a field, so an empty
-redaction list cannot be read as a clean bill of health.</p>
+redaction list cannot be read as a clean bill of health. The status says
+the scan ran, not what it covered: <code>evidence_refs</code> is
+skipped, and the briefing the next agent reads carries no scan line at
+all.</p>
 <p><strong>What is absent:</strong> no state withholds.
 <code>untrusted</code> is rendered, not enforced, and nothing in
 <code>src/</code> writes it on a capsule record. <code>superseded</code>
@@ -552,9 +637,16 @@ deeply nested input is bounded.</p>
 a token in a draft field and asserts it <strong>absent</strong> from the
 rendered Markdown <em>and</em> <code>[REDACTED:github]</code>
 <strong>present</strong> in the same fixture — an absence assertion with
-its own positive control, so it cannot pass on an empty render.
-<code>test_malformed_json_never_echoes_content</code> does the same for
-the parser's error path, which is not memory.</p>
+its own positive control, so it cannot pass on an empty render. The
+fixture is a committed git repository with a finalized capsule, and the
+case carries no skip marker.
+<code>test_secret_does_not_reach_capsule</code> repeats the shape for a
+<code>password=</code> assignment in the goal, with
+<code>REDACTED</code> as its control
+(<code>tests/integration/test_create_load.py:160-173</code>). No case
+places a secret in <code>evidence_refs</code>, the free-text field the
+scan skips. <code>test_malformed_json_never_echoes_content</code> does
+the same for the parser's error path, which is not memory.</p>
 <p><code>tests/quality/evaluate_quality.py</code> runs twelve scenarios
 through preflight, finalize and load on a real git fixture and scores
 each output on twenty boolean dimensions: canary strings planted in the
@@ -565,11 +657,20 @@ dimension passing in every scenario, a total score of 240, and
 <code>test_quality_eval.py</code> re-runs the harness and asserts every
 scenario passes. Its <code>trust_not_inflated</code> dimension checks
 the pairing, so a claim declared <code>tool</code> and
-<code>verified</code> would pass it.</p>
+<code>verified</code> would pass it. Its <code>no_secret_leak</code>
+dimension checks the briefing as well as the capsule and the document,
+and the briefing renders neither of the two fields the secret is planted
+in, so that part cannot fail (<code>evaluate_quality.py:84-85</code>,
+<code>:148</code>).</p>
 <p><strong>What is not tested:</strong> a draft claim that names a
-deterministic provenance, the uncapped evidence and file records, and
-the content of <code>export</code>, whose test asserts only an exit
-code.</p>
+deterministic provenance, the uncapped evidence and file records, an
+edited or reused preflight file, a load from a different checkout path,
+a secret in <code>evidence_refs</code>, and the content of
+<code>export</code>, whose test asserts only an exit code.
+<code>test_latest_filename_scan_is_deterministic</code> writes two
+capsule names and asserts only that <code>load_capsule</code> is not
+<code>None</code>
+(<code>tests/integration/test_create_load.py:114-119</code>).</p>
 <h2 id="11-for-your-own-build">11. For Your Own Build</h2>
 <h3 id="steal">Steal</h3>
 <ul>
@@ -582,15 +683,19 @@ provenance from the code path that created the record, not from the
 record's author.</li>
 <li><strong>Take the facts half away from the model entirely.</strong>
 The <code>project</code> object is never read from the draft, and every
-file the draft names is re-hashed. That is the part of the split that
-holds without qualification.</li>
+file the draft names is re-hashed. Then close the gap this system
+leaves: re-run git inside <code>finalize</code>, or bind the preflight
+file with a check <code>finalize</code> makes, because here the facts
+travel through a file the agent can edit.</li>
 <li><strong>Make "the scan did not run" a distinct value from "the scan
 found nothing."</strong> <code>ScanStatus.not_run</code> beside
 <code>passed</code>, plus a rendered line saying an empty redaction list
 is only meaningful when the status is <code>passed</code>.</li>
-<li><strong>State the artifact's age and publication state at read
-time.</strong> Not a badge — a sentence: <em>"less than a day old"</em>,
-<em>"may exist only on the machine that wrote this capsule."</em></li>
+<li><strong>State the artifact's age at read time, and label recorded
+facts as recorded.</strong> Not a badge — a sentence: <em>"less than a
+day old"</em>, <em>"may exist only on the machine that wrote this
+capsule."</em> Recompute publication at load if the reader will act on
+it.</li>
 <li><strong>Classify carried commands against raw text at load, and say
 the classifier can be evaded.</strong> A capsule with no field it can
 populate to declare itself safe is the correct shape for any artifact
@@ -606,6 +711,10 @@ passing as fact and does nothing about a model that names
 states that no read path consults put the whole burden on a model
 honouring words in its context. At minimum, let the lowest state change
 what gets rendered.</li>
+<li><strong>Do not exempt a field from the scan by name alone.</strong>
+A skip-list of structural keys is safe only while every key on it is
+constrained; <code>evidence_refs</code> is free text and sits on the
+list.</li>
 <li><strong>Do not report the budget's losses only to the
 writer.</strong> <code>dropped[]</code> exists and goes to the terminal;
 the reader who needs it gets the capsule without it.</li>
@@ -617,11 +726,11 @@ will be asked next.</li>
 <h3 id="fit">Fit</h3>
 <p>This is for one person moving work between agents and tools. Take it
 if your problem is the lost hour between sessions, you are willing to
-read the capsule, and you treat its repository facts as checked and its
-claims as the model's. Walk away if you need memory that accumulates:
-there is no store, no query, no supersession across capsules and no way
-to ask what is true now rather than what was true at the end of one
-session.</p>
+read the capsule, and you treat its repository facts as checked only
+where <code>load</code> re-checks them, and its claims as the model's.
+Walk away if you need memory that accumulates: there is no store, no
+query, no supersession across capsules and no way to ask what is true
+now rather than what was true at the end of one session.</p>
 <h2 id="12-open-questions">12. Open Questions</h2>
 <ul>
 <li>Is there an intended chain between capsules — a
@@ -631,6 +740,11 @@ schema has no field for it and the README does not say.</li>
 required to carry an <code>evidence_refs</code> entry that resolves to a
 record <code>finalize</code> wrote? The schema has both halves and
 nothing joins them.</li>
+<li>Is finalizing one preflight more than once intended?
+<code>list_capsules</code> tie-breaks for it, the host commands write
+the preflight to a fixed path a second <code>preflight</code> refuses to
+overwrite, and nothing compares the file's <code>captured_at</code> with
+the time <code>finalize</code> runs.</li>
 <li>The repository is at version 0.1.0 with its last commit on 8
 September 2026; none of the above has been exercised by other people's
 capsules in anything committed here.</li>
@@ -647,27 +761,38 @@ sites <code>:216</code>, <code>:250</code>, <code>:313</code>,
 <code>schemas/handoff-v1.schema.json</code>,
 <code>src/portable_handoff/schema.py</code></li>
 <li><strong>Write path:</strong>
-<code>src/portable_handoff/preflight.py</code>, <code>gitfacts.py</code>
-(<code>:137-138</code>, <code>:183</code>, <code>:203</code>,
-<code>:225</code>), <code>finalize.py</code>
+<code>src/portable_handoff/preflight.py</code>
+(<code>read_preflight</code> at <code>:69</code>),
+<code>gitfacts.py</code> (<code>:125</code>, <code>:137-138</code>,
+<code>:183</code>, <code>:203</code>, <code>:225</code>,
+<code>:257-259</code>), <code>finalize.py</code>
 (<code>_reject_forged_draft_fields</code> at <code>:41</code>,
 <code>_verified_files</code> at <code>:96</code>,
 <code>_downgrade_model_verification</code> at <code>:126</code>, applied
-at <code>:170</code>), <code>sanitize.py</code>,
-<code>budgeting.py</code> (<code>:64-72</code>),
-<code>canonical.py</code>, <code>strict_json.py</code>,
-<code>storage.py</code></li>
+at <code>:170</code>, <code>created_at</code> from the preflight at
+<code>:145</code>, scan status at <code>:204</code>),
+<code>sanitize.py</code> (<code>_STRUCTURAL_KEYS</code> at
+<code>:126</code>, redaction merge at <code>:157-166</code>,
+<code>count_text_fields</code> at <code>:170</code>),
+<code>budgeting.py</code> (<code>:64-81</code>, truncation at
+<code>:93-114</code>, uncalled <code>_truncate_at</code> at
+<code>:42</code>), <code>canonical.py</code>,
+<code>strict_json.py</code>, <code>storage.py</code>
+(<code>atomic_write</code> at <code>:49</code>,
+<code>list_capsules</code> at <code>:95</code>)</li>
 <li><strong>Read path:</strong>
 <code>src/portable_handoff/load.py</code> (drift checks at
-<code>:82-169</code>, briefing at <code>:181-270</code>, trust rendering
-at <code>:208</code>), <code>validate.py</code>, <code>render.py</code>,
+<code>:82-169</code>, briefing at <code>:181-270</code>, recorded facts
+at <code>:215-227</code>, trust rendering at <code>:208</code>),
+<code>validate.py</code>, <code>render.py</code>,
 <code>command_safety.py</code>, <code>cli.py</code> (budget output at
 <code>:115-124</code>, <code>export</code> at
 <code>:158-175</code>)</li>
 <li><strong>Agent surface:</strong>
 <code>skills/handoff/SKILL.md</code>,
 <code>skills/handoff/references/capsule-format.md</code>,
-<code>integrations/claude/commands/handoff.md</code>,
+<code>integrations/claude/commands/handoff.md</code> (fixed preflight
+path at <code>:7-9</code>),
 <code>integrations/cursor/commands/handoff.md</code>,
 <code>integrations/generic/HANDOFF_INSTRUCTIONS.md</code>,
 <code>scripts/install_skill.py</code></li>
@@ -677,7 +802,8 @@ codex_sqlite, cursor, cursor_live, transcript_file)</li>
 <li><strong>Tests:</strong>
 <code>tests/security/test_adversarial.py</code>,
 <code>tests/integration/test_blocking_and_briefing.py</code>,
-<code>tests/integration/test_create_load.py</code>,
+<code>tests/integration/test_create_load.py</code>
+(<code>:114-119</code>, <code>:160-173</code>),
 <code>tests/quality/evaluate_quality.py</code>,
 <code>tests/quality/test_quality_eval.py</code></li>
 </ul>
@@ -702,8 +828,32 @@ grep -rln &#39;urllib\|http.client\|socket\|requests&#39; src
 grep -rn &#39;def test_&#39; tests | wc -l
 grep -rniE &#39;arxiv|bibtex|@article|@misc|citation|doi\.org&#39; README.md skills
 ls CITATION.cff
-cmp schemas/handoff-v1.schema.json src/portable_handoff/resources/handoff-v1.schema.json</code></pre>
+cmp schemas/handoff-v1.schema.json src/portable_handoff/resources/handoff-v1.schema.json
+git grep -n &#39;read_preflight(\|collect_git_facts(&#39; -- src
+git grep -n -E &#39;subprocess|_run_git|gitfacts&#39; -- src/portable_handoff/finalize.py
+git grep -n &#39;captured_at&#39; -- src/portable_handoff/finalize.py
+git grep -n &#39;head_published\|changed_files&#39; -- src/portable_handoff/load.py
+git grep -n &#39;preflight.json&#39; -- integrations skills
+git grep -n &#39;_STRUCTURAL_KEYS&#39; -- src
+git grep -n -E &#39;&quot;status&quot;: &quot;(passed|failed|unknown)&quot;|ScanStatus\.(FAILED|UNKNOWN)&#39; -- src
+git grep -n &#39;_truncate_at&#39; -- src
+git grep -n &#39;evidence_refs&#39; -- tests
+git grep -n -E &#39;secret_scan|redactions&#39; -- src/portable_handoff/load.py</code></pre>
 <h2 id="history">History</h2>
+<p><strong>2026-10-18</strong> — <a
+href="https://github.com/legoambarish/portable-handoff/commit/ec5f203b2bf042a74377d4a51cafb695d25efdef"><code class="commit-id" title="ec5f203b2bf042a74377d4a51cafb695d25efdef">ec5f203b…</code></a>
+— audit at an unchanged pin; upstream <code>main</code> has not moved.
+The mark is unchanged and seven published claims were wrong.
+<code>finalize</code> reads the git facts back from a preflight file
+with a key-set check and runs no git, so they are protected from the
+draft and not from the agent. The scan skips <code>evidence_refs</code>
+and only ever writes <code>passed</code>; the budget empties each list
+in turn (<a href="#4-essential-implementation-paths">section 4</a>).
+Publication is the write-time value, and changed-file hashes are never
+re-checked (<a href="#6-retrieval-mechanics">section 6</a>). The cap
+downgrades rather than refuses, and the null-id guard covers worktree
+entries. Screened on a fresh full clone with the same two findings.
+Nothing installed, built or run.</p>
 <p><strong>2026-09-26</strong> — <a
 href="https://github.com/legoambarish/portable-handoff/commit/ec5f203b2bf042a74377d4a51cafb695d25efdef"><code class="commit-id" title="ec5f203b2bf042a74377d4a51cafb695d25efdef">ec5f203b…</code></a>
 — audit at an unchanged pin; upstream <code>main</code> has not moved.

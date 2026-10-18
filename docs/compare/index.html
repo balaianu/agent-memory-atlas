@@ -25596,10 +25596,10 @@ database</td>
 newest or named capsule into a briefing and reports how far the
 repository has moved; <code>--format json</code> and <code>export</code>
 return the whole document or its prose half</td>
-<td>Two phases: <code>preflight</code> collects local git facts, the
-model writes a draft, <code>finalize</code> merges them, re-hashes named
-files, redacts and budgets; trust is capped against the provenance each
-claim declares</td>
+<td>Two phases: <code>preflight</code> writes local git facts to a JSON
+file, the model writes a draft, <code>finalize</code> reads both back,
+re-hashes named files, redacts and budgets, and runs no git of its own;
+trust is capped against the provenance each claim declares</td>
 <td>A capsule is never rewritten and validation refuses an edited one;
 decisions carry <code>active</code>/<code>superseded</code>; there is no
 delete, and capsules are related only by filename order</td>
@@ -25610,15 +25610,17 @@ scope</td>
 draft-only path for hosts with no shell, and read-only transcript
 adapters</td>
 <td>None — every step is a command</td>
-<td>Five discrete states; <code>verified</code> is refused at parse time
-beside a conversational or inferred provenance, while the draft author
-declares both fields and file and evidence records skip the cap</td>
-<td>Repository facts and file hashes come from local code; the briefing
-states the capsule's age, publication state and drift; the secret scan
-records whether it ran</td>
+<td>Five discrete states; <code>verified</code> is downgraded to
+<code>claimed</code> at parse time beside a conversational or inferred
+provenance, while the draft author declares both fields and file and
+evidence records skip the cap</td>
+<td>Repository facts and file hashes come from local git calls, never
+from the draft; the briefing states the capsule's age, recorded
+publication state and drift; the secret scan records that it ran</td>
 <td>No state withholds anything, and <code>verified</code> is open to
-any draft author who names a deterministic provenance; what the budget
-dropped is printed at finalize and not kept in the capsule</td>
+any draft author who names a deterministic provenance; finalize trusts a
+preflight file the agent can edit; what the budget dropped is printed at
+finalize and not kept in the capsule</td>
 </tr>
 <tr>
 <td><a href="../systems/potpie/"><code>potpie</code></a></td>
