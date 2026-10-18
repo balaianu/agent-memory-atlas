@@ -106,6 +106,56 @@ the event that invalidated it, but no code path in the package emits it. What
 does run is the neighbouring rule: editing an accepted decision needs a
 `revision_reason` and returns it to `proposed`.
 
+## A coding agent read as BDI
+
+The atlas's own maintenance runs on a coding agent: Claude Code with a goal
+hook, a work queue in a file, memory files, and sub-agents given written briefs.
+Read through BDI, the session that produced this note has the shape and shows the
+gaps. Beliefs are what the agent has read and been told, held in context and in
+memory files, and revised when evidence contradicts them: on 2026-10-18 a claim
+made in chat that goals had no counterpart in the corpus was withdrawn once a
+search of the reports showed otherwise. Means-end reasoning turns "process the
+queue" into screen, read, check the marks, integrate, build and commit, and
+sub-goals go to readers. A failed build or a wrong mark sends it back to
+replanning. What it does not have internally, it gets from the scaffolding
+around it, and each gap below was observed in that session rather than argued.
+
+**The intention store is external, and it has no commitment rule.** The goal
+hook kept "do triage, and process the queue" alive across many turns, which is
+persistence. It also kept pressing after the only remaining work was blocked
+until a day boundary, and when the person stopped a batch of readers it could
+not say whether that meant pause or drop. The agent had to decide, and its two
+decisions on two occasions differed. Clearing the goal ended the intention with
+no recorded reason.
+
+**Intentions otherwise live in text.** The plan is the conversation. When the
+context was compacted, what survived was a summary, the
+[Polyphony ARC](../content/systems/polyphony-arc.md) situation, and the durable
+commitments were the ones held outside: the queue file, the goal hook and git
+history.
+
+**Work is not linked to the beliefs under it.** Claims are re-checked because
+the atlas's rules require it, not because a revised belief re-opens what was
+built on it. A reply about cross-agent handoff was drafted from three reports;
+re-reading them changed the facts, and the correction reached the reply only
+because the agent remembered to carry it.
+
+**Delegation can lose the beliefs.** The readers' briefs lived in a temporary
+directory that the operating system cleaned while the session ran. Readers
+started without them and worked from the shorter prompt, which is the handoff
+gap of the previous section happening to the agent itself. The briefs were
+rebuilt from the session transcripts, and the batch checks now confirm they
+exist before delegating.
+
+**There are no desires of its own.** Goals come from the person. The agent
+deliberates about how, and about the order of what it was asked, not about what
+to want.
+
+So a coding agent of this kind sits where the previous section put a ReAct loop
+with a kanban, memory and sub-agents: the BDI parts it lacks are supplied, when
+they are supplied, by files and hooks around it. This is a reading of observed
+behaviour in one session, not a claim about how the model works internally.
+
 ## What the lens adds
 
 It names a distinction the seven marks do not draw. Every mark is about whether
