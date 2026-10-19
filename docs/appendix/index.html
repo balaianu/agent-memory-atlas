@@ -15114,6 +15114,53 @@ nothing. Screened before reading: no auto-run surface, three build-time
 execution points (two Makefiles, a pytest <code>conftest.py</code>), two
 unpinned <code>pyproject.toml</code> files beside a root
 <code>uv.lock</code>; nothing was installed or run.</li>
+<li><strong><code>velantrian/Velantrim-Memory-Ruslan</code> was examined
+and has no report: it is a memory kept by convention, and no software in
+it stores, retrieves, scopes or corrects anything.</strong> It has no
+licence file and the API reports none, so nothing grants reuse. Read at
+<a
+href="https://github.com/velantrian/Velantrim-Memory-Ruslan/commit/862f1abea0b73dff3a6cb595a8c5166d778ceb69"><code class="commit-id" title="862f1abea0b73dff3a6cb595a8c5166d778ceb69">862f1abe…</code></a>
+through a shallow clone filtered to blobs under 2 MB, with only text
+files checked out. The memory is Markdown with fixed roles:
+<code>START_HERE.md</code> gives any agent a reading order and five
+write rules, <code>CURRENT.md</code> stacks dated checkpoints carrying
+<code>AS_OF</code> and <code>LAST_VERIFIED</code>,
+<code>WORKBOARD.md</code> holds long-term orientation, and
+<code>projects/*.md</code> are per-project cards. A client reads through
+its own GitHub connector; a write is a diff shown to the owner, a draft
+pull request and a merge. The README calls the result <em>"not a source
+of authority"</em>. The Python is four book-edition build scripts under
+<code>projects/religion-spirituality/</code>, 481 lines that write
+Markdown, JSON and PDF into their own folders and name no memory file.
+Nothing enforces the write rules: the tree holds no dotfile, so no
+workflow or hook, and the API reports <code>main</code> unprotected.
+Labels such as <code>NOT_VERIFIED</code> and
+<code>PENDING_OWNER_DECISION</code> are prose no code parses, so not
+<code>trust_state</code>; correction is an appended checkpoint plus git
+history, which the rubric excludes from <code>audit_log</code> by name.
+<code>human_review</code> fails the producer test. The owner's account
+opened and merged all 21 merged pull requests, so GitHub cannot tell the
+agent from the approver. Since the repository was created, 26 commits
+have reached <code>main</code> with no pull request, among them a local
+merge of a branch whose last commit edits the merged card to record the
+owner's authorization. It shares an owner with <a
+href="../systems/velantrim-exocortex-crystal/">Velantrim Crystal</a> and
+is not its store: a research source register here links Crystal at the
+commit the atlas read, and neither tree names the other's files. Beside
+<a href="../systems/diffmem/">DiffMem</a>, which ships the agent that
+explores its Markdown, and the Cline Memory Bank bullet in this list,
+this is <a href="../patterns/memory-as-an-editing-surface/">memory as an
+editing surface</a> with reader and writer both outside the repository.
+Screened before reading on the sparse checkout:
+<code>NOTHING SCANNED</code>, no manifest, hook or agent file; nothing
+was installed or run. Searches at the pin:
+<code>git ls-tree -r --name-only HEAD | grep -E '(^|/)\.'</code> and
+<code>| grep -iE '(^|/)(licen[cs]e|copying)'</code> (nothing);
+<code>git grep -nE 'CURRENT\.md|WORKBOARD|START_HERE|AS_OF|LAST_VERIFIED' -- '*.py'</code>
+(nothing); in Crystal at
+<code class="commit-id" title="692e05e319d1a789752fe797235798d4380e60d4">692e05e3…</code>,
+<code>git grep -nEi 'Velantrim-Memory|WORKBOARD\.md|START_HERE\.md'</code>
+(nothing).</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
