@@ -15161,6 +15161,60 @@ was installed or run. Searches at the pin:
 <code class="commit-id" title="692e05e319d1a789752fe797235798d4380e60d4">692e05e3…</code>,
 <code>git grep -nEi 'Velantrim-Memory|WORKBOARD\.md|START_HERE\.md'</code>
 (nothing).</li>
+<li><strong><code>fudan-generative-vision/Remory</code> was examined and
+has no report: its residual memory is a compaction checkpoint only its
+own session reads, and what crosses sessions is encoder
+weights.</strong> The paper is <em>REMORY: Learning Residual Memory for
+Context Compaction</em> (<a
+href="https://arxiv.org/abs/2610.11287">arXiv:2610.11287</a>; Xia, Chen,
+Ge, Deng, Yang, Dong, Yuan and Zhu; submitted 8 October 2026, v2 11
+October). Its network, 1.94B parameters for Qwen3.8-27B, appends up to
+4,096 soft tokens after a <code>/compact</code> summary for a frozen
+actor. Read at <a
+href="https://github.com/fudan-generative-vision/Remory/commit/743fd1fc97c5e195dd1a580da1d0c941b5ce4045"><code class="commit-id" title="743fd1fc97c5e195dd1a580da1d0c941b5ce4045">743fd1fc…</code></a>:
+MIT with no rider, 42 commits from 7 to 20 October 2026 by one account,
+7,646 lines of Python under <code>src/</code>. Each compaction writes
+one immutable row to <code>memory.sqlite</code>, holding summary token
+ids, the residual tensor and a receipt naming the previous checkpoint
+(<code>src/remory/store.py:33-35</code>,
+<code>src/remory/engine.py:123-134</code>). Reads and deletes filter on
+the session id a client sends as <code>X-Remory-Session</code>
+(<code>store.py:75</code>, <code>:87</code>;
+<code>server.py:39-44</code>). That persistence is session resume, the
+shape <a href="../families/#salt">SALT</a> has.
+<code>r-codex resume</code> reopens one session, its provider refuses a
+checkpoint marker it did not write
+(<code>src/remory/codex/provider.py:193-198</code>), and no path reads
+another session's row. A summary can be wrong, but it is the session's
+own window read by its next window, the <a
+href="../families/#not-in-scope-conversation-window-management">conversation-window</a>
+side of the line. The delete route's only caller is
+<code>examples/quickstart.py:59</code>. What crosses sessions is opt-in
+online training, added 18 October and absent from the paper. Accepted
+compaction frontiers, with the project text they carry, collect in one
+shared pool, a background worker distils them into new encoder
+checkpoints, and <code>/remory load</code> picks one per session; a new
+session starts on the released weights
+(<code>src/remory/online/collect.py:43-60</code>,
+<code>control.py:72</code>). That is <a
+href="#weights-as-memory-at-adapter-granularity">weights as memory, at
+adapter granularity</a>: a checkpoint is chosen or abandoned whole,
+nothing inside one names a fact, and captured samples stay on disk with
+no deletion path. The released GLM encoder is 1.24B against the paper's
+1.502B, as the README says; the paper's archive tool is absent; and no
+result file is committed beyond the paper's figure, so no headline
+number can be recomputed. Screened before reading: no auto-run surface,
+one build-time point (<code>tests/conftest.py</code>), three dependency
+files inside the seven-day cooldown; nothing was installed or run.
+Searches at the pin:
+<code>git grep -n -E '\.delete\(' -- src examples integrations</code>
+(client, route, quickstart);
+<code>git grep -n -E 'unlink|rmtree' -- src/remory/online training/context_compression/qwen38_online_objective.py</code>
+(lock and temporary files);
+<code>git grep -n -i -E 'archive' -- src integrations</code> (the Codex
+tarball); <code>git grep -n -E '43\.39|61\.03|76\.4'</code> (nothing).
+In the paper, <code>grep -n -i -E 'online|sqlite|session'</code> finds
+one within-session count.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
