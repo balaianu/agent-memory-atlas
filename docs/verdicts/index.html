@@ -14364,18 +14364,20 @@ and the request is hashed at dispatch.</strong>
 <code>buildContext</code> walks the wires — materials, references,
 chain, question — the panel shows its output, the model receives it, and
 a <code>commit</code> event records the SHA-256 of the canonical
-request, memory and recall blocks included, in an append-only,
-metadata-only log that undo cannot touch. <em>What did the model
-see</em> is a lookup.</li>
-<li>Biggest risk: <strong>recall crosses every project, and archive does
-not reach it.</strong> Recall reads every project's sessions and agent
-memory files on the machine and can bring back a node archived on
-another canvas, and its full reach hands the opening of every indexed
-turn to the decision endpoint; a working-directory filter exists and no
-caller passes it. Beside that: the profile is merged by a model rewrite
-the constitution never re-checks, stale is a label a judge can remove
-from preview, request and Replay alike, and the event log sees no
-profile, dossier or recall write.</li>
+request, memory and recall blocks included, in a metadata-only log that
+undo cannot touch. <em>What did the model see</em> is a lookup.</li>
+<li>Biggest risk: <strong>recall crosses every project by design, and
+archive is keyed on the node.</strong> Recall reads every project's
+sessions and agent memory files on the machine, and its full reach hands
+the opening of every indexed turn to the decision endpoint; an archived
+canvas node leaves the index, but a dossier sentence written from it, a
+mirrored turn's session text and its own <code>autoRerun</code> outlive
+the archive, and topic labels and dossier coverage are keyed by
+position. Beside that: the event log drops its oldest thousand entries
+past 10,000, the profile's stated label is handed to every line a
+rewrite changed, stale is a label a judge can remove from preview,
+request and Replay alike, and the event log sees no profile, dossier or
+recall write.</li>
 <li>Most reusable component: the dossier — four sections whose every
 sentence carries the keys of the turns it rests on, validated against
 the excerpts the model was shown, with a <code>covered</code> list so an
@@ -14383,22 +14385,26 @@ update reads only new turns and an inbox an update drains only by the
 ids it read — and, beside it, a benchmark whose conditions are graph
 operations, whose traces are immutable and whose scorer re-scores
 without an API call.</li>
-<li>Maturity impression: MIT, 766 commits from 3 July to 30 September
-2026, 746 of them by one author, 38,065 lines of TypeScript under
-<code>src/</code>, a desktop app and harness plugin at 0.5.8, a CLI with
-78 tests and none for the store, recall, the stale judge or the agent
-lane, and a nine-endpoint context-repair pilot with 1,215 captured
-conditions. Two of seven capability marks; the canvas is authoring and
-the memory inbox is a gate the judge's topic probability routes around,
-so <code>human_review</code> is withheld. A feature-status page
-separates current, experimental and not promised.</li>
+<li>Maturity impression: MIT, 834 commits from 3 July to 21 October
+2026, 812 of them by one author, 40,399 lines of TypeScript under
+<code>src/</code>, a desktop app and harness plugin at 0.5.22, a CLI
+with 79 tests and none for the store, recall, the stale judge or the
+agent lane, and a nine-endpoint context-repair pilot with 1,215 captured
+conditions beside a sixth condition compiled with no run. One capability
+mark, <code>negative_eval</code>; the event log trims its oldest
+entries, so <code>audit_log</code> is withheld, and the canvas is
+authoring and the memory inbox is a gate the judge's topic probability
+routes around, so <code>human_review</code> is withheld. A
+feature-status page separates current, experimental and not
+promised.</li>
 <li>Study when: you want a person-legible answer to <em>what was this
 model told</em> — a reviewable retrieval, a request hash, a stale mark —
 a summary whose sentences cite their sources, or a worked example of
 testing a context-editing claim with immutable traces.</li>
 <li>Do not copy when: you need memory isolated per project, a refusal
-that outlives an archive, a validity axis, or a profile whose rewrite is
-held to the rules that admitted its facts.</li>
+that outlives re-assertion, a validity axis, a log that keeps every
+event, or a profile whose rewrite is held to every rule that admitted
+its facts.</li>
 </ul>
 <h3 id="kwipu"><a href="../systems/kwipu/"><code>kwipu</code></a></h3>
 <ul>

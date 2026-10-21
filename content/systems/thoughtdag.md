@@ -7,32 +7,31 @@ page_kind: system
 source_name: "chenxiachan/thoughtdag"
 source_url: https://github.com/chenxiachan/thoughtdag
 archive_name: "chenxiachan--thoughtdag"
-revision: 850b89d1fceebb67e4869863fe1fd4449a244cc6
-revision_url: https://github.com/chenxiachan/thoughtdag/commit/850b89d1fceebb67e4869863fe1fd4449a244cc6
-analyzed_at: 2026-09-30
+revision: 7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f
+revision_url: https://github.com/chenxiachan/thoughtdag/commit/7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f
+analyzed_at: 2026-10-21
 licence: "MIT"
-size: "38,065 lines of TypeScript in 180 files under src/, a 1,895-line why-layer CLI, 1,630 lines of plain Node under runtime/, a 2,145-file benchmark directory; desktop app and harness plugin 0.5.8, CLI 0.2.2"
-activity: "766 commits on main by 9 author names, one a bot, 746 of them by one author, 3 July – 30 September 2026"
-tests: "78 node:test cases in ten CLI files, nine of them skipped below Node 22.15; a Playwright persistence smoke and layout test; a subagent fan-out script; a live-model memory-judge golden set; none run for this reading"
-capabilities: "audit_log, negative_eval"
+size: "40,399 lines of TypeScript in 190 files under src/, a 1,912-line why-layer CLI, 1,743 lines of plain Node under runtime/, a 2,205-file benchmark directory; desktop app and harness plugin 0.5.22, CLI 0.2.2"
+activity: "834 commits on main by 11 author names, one a bot, 812 of them by one author, 3 July – 21 October 2026"
+tests: "79 node:test cases in ten CLI files, nine of them skipped below Node 22.15; a Playwright persistence smoke and layout test; scripts for the undo rules, the subagent fan-out and the backup write; a live-model memory-judge golden set; none run for this reading"
+capabilities: "negative_eval"
 capability_evidence:
-  audit_log: "the canvas event log | src/store/slices/events.ts:1-26, src/types.ts:420-438, src/store/streaming.ts:349-357, src/store/slices/nodes.ts:40-479, src/store/slices/llm.ts:22-625, src/lib/adapters/thoughtdag-canvas.ts:209-224 | an append-only list of semantic operations — ask, generate, edit-question, edit-response, regenerate, delete, archive, unarchive, highlight, connect, disconnect, merge, weave, explore, fanout, material-add, undo, redo and commit — each with a timestamp, the object id and metadata only, never text; undo rolls the graph back and is itself an event; `commit` records at dispatch the SHA-256 of the canonical request, memory and recall blocks included, with its message count, images, lane and model; the log persists with the canvas and in every backup, exports as CSV, and is projected into canonical `context.committed` events; a 10,000-event cap drops the oldest 1,000 past it; profile rewrites, dossier writes, topic labels and stale-judge verdicts write no event, an agent turn's approvals are kept on the node, and an agent-lane `commit` hashes the compiled messages under lane `proxy` | cli/test/canvas.test.mjs:49-130 (a backup's commit events round-trip through the canvas adapter with their hash and bundle id), cli/test/events.test.mjs"
-  negative_eval: "the why layer and the benchmark compiler | cli/test/why.test.mjs:131-145, benchmark/tools/equivalence.mjs, benchmark/runs/compiled/rp-pilot-bakery-trays-k1.{polluted,source_prune,subgraph_prune}.compile.json | `why <path>` must not return read-only turns by default and must return them with `--include-read`, with the count of hidden reads reported — a populated index, the excluded material present, a positive control in the same case; the equivalence suite compiles every benchmark condition through the product's `buildContext` and asserts its node order equals an independent reference compiler's for every case, including the pruned conditions whose compiled artifacts show the deleted turn absent (seven messages polluted, five after source prune, three after subgraph prune) and a cyclic graph refused | cli/test/why.test.mjs:114 (facts hold no interpretation and no full answers), :123 (a stray file does not enter the index)"
+  negative_eval: "the why layer and the benchmark compiler | cli/test/why.test.mjs:131-145, cli/test/canvas.test.mjs:178-195, benchmark/tools/equivalence.mjs:19-27, benchmark/runs/compiled/rp-pilot-bakery-trays-k1.{polluted,source_prune,subgraph_prune}.compile.json | `why <path>` must not return read-only turns by default and must return them with `--include-read`, with the count of hidden reads reported; a canvas record holding a live node and an archived one must project no turn, wire or commit for the archived node, and `find` must miss its words while finding the live node's — populated indexes, the excluded material present, a positive control in each case; the equivalence suite compiles every benchmark condition through the product's `buildContext` and asserts its node order equals an independent reference compiler's, including the pruned conditions whose compiled artifacts show the deleted turn absent | cli/test/why.test.mjs:114 (facts hold no interpretation and no full answers), :123 (a stray file does not enter the index)"
 stack_storage: "files"
 stack_retrieval: "graph, lexical"
 stack_source: "reviewed"
 matrix:
-  memory_unit: "A node on a canvas — a question, answer versions with the model, time and context hash of each, a per-upstream record of what each input contributed, highlights, attachments with page provenance, a role, an archived flag, an import source and a frozen source snapshot — joined by wires that are the context; on a node that ran an agent turn, footprint attachments excluded from context by default; beside it two profile documents, preferences and identity, one fact per line, and one dossier per topic in four sections whose sentences cite the turns they rest on; in the why layer, a fact index over other agents' session files and the memory files Claude Code and Codex keep"
-  storage: "IndexedDB per canvas (idb-keyval) with a one-minute debounced `.thoughtdag.json` folder backup; `localStorage` for the profile documents, the memory inbox and switches; `~/.thoughtdag/` for the why layer's fact index, text index, topic labels and dossiers, and a slim record of each canvas; a `.thoughtdag` folder in an agent turn's working directory for its guard file and copied materials; the source agents' session and memory files are read and never written"
-  retrieval: "For a generation, a deterministic walk of the graph — materials, dashed reference blocks, the solid chain in order, the question last — with archived nodes skipped, stale answers marked and an excluded footprint reduced to one line naming its files; with recall switched on, up to two topic dossiers whole and verbatim excerpts found by the question's exact words or by judged topic labels, ranked by a decision model when one answers over a light, deep or full reach, inside a 4k, 12k or 40k token ceiling; for the why layer, exact phrase and path lookup with reads hidden by default; no vectors anywhere"
-  write: "A person asks, edits, wires and imports; a model's answer lands as a version on its node; after an ordinary generation a decision model or the chat model decides whether something durable was said, a preference or identity fact is merged into its document by a model rewrite, and a project fact is filed to a topic dossier's inbox or to the memory inbox; dossiers are written by the chat model from labelled turns; Session Atlas mirrors other agents' turns idempotently; the harness bridge forks, injects and queues into live sessions; Pi and Codex turns edit files in a working directory behind a guard"
-  update_delete: "Answers are versioned and never overwritten; a node can be archived — kept, dimmed and excluded from every context walk on its canvas — or deleted; a wire can be removed or converted; an upstream change marks dependants stale and replay regenerates them in dependency order; a profile rewrite can be undone at the toast or edited by hand; a dossier section can be edited, the dossier rebuilt from the turns or deleted; a recalled item can be struck from a node"
-  scoping: "One canvas per IndexedDB key and reachability by wire as the only filter inside it; the profile documents are global to the install; recall reads every project's sessions, canvases and agent memory files on the machine and leaves out only the active canvas's own record; the why layer's JSON find honours a working-directory filter that no in-tree caller passes; an agent turn is fenced to one working directory per canvas"
-  integration: "A React canvas in the browser, an Electron desktop app with fenced session roots, an Express proxy for OpenAI-compatible, Anthropic, Google, DeepSeek and Zhipu endpoints plus MCP tools and a pass-through for decision endpoints, a Cloudflare Pages demo with no server state, a `dsh-thoughtdag` plugin mounting the canvas and the why layer inside DeepSeek Harness, a CLI exposing `why_check`, `why_file`, `find` and `recall_turn` over MCP and listed in the MCP Registry, and Pi and Codex as agent runtimes behind the model picker"
-  background: "A file watcher appends new turns of a subscribed session to its mirror; the why index refreshes when a source file's size or mtime moved; the memory judge runs fire-and-forget after ordinary generations; a labelling job asks the decision model one yes or no per topic for up to 600 turns per click; a stale judge asks whether an upstream change bears on each newly stale answer; a dossier with six filed facts merges when the memory page opens; nothing rewrites the graph on its own"
-  trust: "A stale mark on any answer whose upstream fingerprint drifted, prepended in downstream context; a judge can dismiss the mark, which leaves the badge, the preview, the request and Replay alike; a footprint whose contents are withheld names its files; a basis and completeness on every why-layer event, displayed and never filtered; an identity fact admitted only when the user stated it; a credential pattern checked on the fact and not on the rewritten document; conclusiveness levels on takeaways, display only"
-  strengths: "The preview and the request share one compiler; a request hash written at dispatch; dossier sentences that carry the keys of the turns they rest on; recall items listed, priced and strikeable on the node; a benchmark whose conditions are graph operations, whose traces are immutable and whose scorer can re-score without an API call; source sessions and agent memory files read and never rewritten"
-  risks: "Stale is a label and a judge's dismissal removes it outright; recall crosses every project on the machine and can bring back an archived node from another canvas, and a full reach hands the opening of every indexed turn to the decision endpoint; the profile rewrite is a free model rewrite outside the constitution; the event log sees no profile, dossier or recall write; the working-directory filter has no caller and its one test does not exercise it; ambient identity and preferences ride every canvas; the proxy's agent and judge endpoints accept any target from any localhost origin"
+  memory_unit: "A node on a canvas — a question, answer versions with the model, time and context hash of each, a per-upstream record of what each input contributed, highlights, attachments with page provenance, a role, an archived flag, an import source and a frozen source snapshot — joined by wires that are the context; on a node that ran an agent turn, footprint attachments excluded from context by default; beside it two profile documents, preferences and identity, one fact per line, each line with a note of the fact, canvas, time and evidence that wrote it; one dossier per topic in four sections whose sentences cite the turns they rest on; in the why layer, a fact index over other agents' session files and the memory files Claude Code and Codex keep"
+  storage: "IndexedDB per canvas (idb-keyval) with a one-minute debounced `.thoughtdag.json` folder backup; `localStorage` for the profile documents, the memory inbox, the switches and each canvas's ask-the-canvas turns; `~/.thoughtdag/` for the why layer's fact index, text index, topic labels and dossiers, and a slim record of each canvas; a `.thoughtdag` folder in an agent turn's working directory for its guard file and copied materials; the source agents' session and memory files are read and never written"
+  retrieval: "For a generation, a deterministic walk of the graph — materials, dashed reference blocks, the solid chain in order, the question last — with archived nodes skipped, stale answers marked, an excluded footprint reduced to one line naming its files and imported tool steps folded into one execution record; with recall switched on, up to two topic dossiers whole and verbatim excerpts found by the question's exact words or by judged topic labels, ranked by a decision model when one answers over a light, deep or full reach, inside a 4k, 12k or 40k token ceiling; ask the canvas sends an outline of every live node and the focused node's chain; for the why layer, exact phrase and path lookup with reads hidden by default; no vectors anywhere"
+  write: "A person asks, edits, wires and imports; a model's answer lands as a version on its node; after an ordinary generation a decision model or the chat model decides whether something durable was said, a preference or identity fact is merged into its document by a model rewrite whose new lines are re-checked for credentials and which may drop at most two lines, and a project fact is filed to a topic dossier's inbox or to the memory inbox; dossiers are written by the chat model from labelled turns; Session Atlas mirrors other agents' turns idempotently; the harness bridge forks, injects and queues into live sessions; Pi and Codex turns edit files in a working directory behind a guard"
+  update_delete: "Answers are versioned and never overwritten; a node can be archived — kept, dimmed, excluded from every context walk on its canvas and from the why layer's projection of the canvas at the next index refresh — or deleted; a wire can be removed or converted; an upstream change marks live dependants stale and replay regenerates them in dependency order; a profile rewrite can be undone at the toast or edited by hand; a dossier section can be edited, the dossier rebuilt from the turns or deleted; a recalled item can be struck from a node"
+  scoping: "One canvas per IndexedDB key and reachability by wire as the only filter inside it; the profile documents are global to the install; recall reads every project's sessions, canvases and agent memory files on the machine by design, leaving out only the active canvas's own record; the why layer's JSON find honours a working-directory filter that no in-tree caller passes; an agent turn is fenced to one working directory per canvas"
+  integration: "A React canvas in the browser, an Electron desktop app with fenced session roots, an Express proxy for OpenAI-compatible, Anthropic, Google, DeepSeek and Zhipu endpoints plus MCP tools and a pass-through for decision endpoints, a Cloudflare Pages demo with no server state, a `dsh-thoughtdag` plugin mounting the canvas and the why layer inside DeepSeek Harness through its sidebar, a CLI exposing `why_check`, `why_file`, `find` and `recall_turn` over MCP and listed in the MCP Registry, and Pi, Codex and the harness's agents as runtimes behind the model picker"
+  background: "A file watcher appends new turns of a subscribed session to its mirror; the why index refreshes when a source file's size or mtime moved; the memory judge runs fire-and-forget after ordinary generations; a labelling job asks the decision model one yes or no per topic for up to 600 turns per click; a stale judge asks whether an upstream change bears on each newly stale answer; a node with autoRerun regenerates when an ancestor completes; a dossier with six filed facts merges when the memory page opens"
+  trust: "A stale mark on any live answer whose upstream fingerprint drifted, prepended in downstream context; a judge can dismiss the mark, which leaves the badge, the preview, the request and Replay alike; a footprint whose contents are withheld names its files; a basis and completeness on every why-layer event, displayed and never filtered; an identity fact admitted only when the user stated it; a credential pattern checked on the fact and on every new line of the rewritten document; a stated, inferred, manual or folded note on each profile line, display only; conclusiveness levels on takeaways, display only"
+  strengths: "The preview and the request share one compiler; a request hash written at dispatch; dossier sentences that carry the keys of the turns they rest on; recall items listed, priced and strikeable on the node; archive reaching the index recall reads; a benchmark whose conditions are graph operations, whose traces are immutable and whose scorer can re-score without an API call; source sessions and agent memory files read and never rewritten"
+  risks: "The canvas event log drops its oldest thousand events past 10,000, and sees no profile, dossier, recall or ask-the-canvas write; stale is a label and a judge's dismissal removes it outright; recall crosses every project on the machine, and an archived node's dossier sentences and a mirrored turn's session text survive its archive; topic labels and dossier coverage are keyed by a node's position, which an archive shifts; a node with autoRerun reruns while archived; the profile's stated label is the admitted fact's, carried onto every line a rewrite changed; ambient identity and preferences ride every canvas; the proxy's agent and judge endpoints accept any target from any localhost origin"
 ---
 
 ## 1. Executive Summary
@@ -41,23 +40,23 @@ ThoughtDAG is **a context graph a person edits**: an infinite canvas where
 each node is a question and its answer versions, each wire is context, and
 *"what the model sees is exactly what wires into the node."* What it records
 is what a model was shown, hashed at dispatch. Its weakness is at the
-canvas's edges: recall reads every project on the machine and can bring
-back a node archived on another canvas, and a model rewrites the profile
-without the rules that admitted its facts.
+canvas's edges: recall reads every project on the machine, archive does not
+reach a dossier sentence written from the turn before it was archived, and the log
+that holds each request hash drops its oldest entries past a cap.
 
 Six things here are memory in the atlas's sense, and they are wired
 together. The canvas persists — one IndexedDB key per canvas with a
 debounced folder backup as a real `.thoughtdag.json` file — and a
 generation's input is a deterministic walk of the graph
-(`store/context-builder.ts:208-375`): materials first, dashed reference
+(`store/context-builder.ts:274-463`): materials first, dashed reference
 blocks, then the solid chain in order, the question last, archived nodes
 skipped at every layer. Each generation records the fingerprint of
 everything upstream of the node with the node's own content blanked
-(`upstreamFingerprint`, `:111-130`), and `recomputeStaleness`
-(`slices/nodes.ts:271-287`) marks a node **stale** when the live
+(`upstreamFingerprint`, `:174-196`), and `recomputeStaleness`
+(`slices/nodes.ts:274-292`) marks a live node **stale** when the
 fingerprint drifts from the recorded one. A stale answer enters downstream
 context prefixed *"[Stale: this answer was written against an earlier
-version of its upstream]"* (`:157,:353`), and *Replay* regenerates stale
+version of its upstream]"* (`:223,:441`), and *Replay* regenerates stale
 nodes in dependency order.
 
 Second, a **profile**: two documents, preferences and identity, one fact
@@ -66,7 +65,7 @@ model — or the chat model when none is configured — decides whether the
 exchange said something durable, and a constitution in code decides
 admission: identity only when the user *stated* it, a credential pattern
 blocks, three additions per canvas per visit, duplicates and unknown update
-targets refused (`admissionCheck`, `lib/memory.ts:103-122`). An admitted
+targets refused (`admissionCheck`, `lib/memory.ts:106-125`). An admitted
 fact is merged by a model that rewrites the document, newest wins, with an
 eight-second Undo. Both documents ride every ordinary generation as a
 `[Memory]` block.
@@ -78,7 +77,7 @@ from turns a decision model has labelled by topic, and project facts the
 memory judge files wait in a dossier's inbox until the next update.
 
 Fourth, **Session Atlas**: the desktop shell fences the session directories
-of Claude Code, Codex, DeepSeek Harness and Pi (`desktop/main.js:129-147`),
+of Claude Code, Codex, DeepSeek Harness and Pi (`desktop/main.js:195-205`),
 reads them and never writes them, and mirrors a session onto a canvas turn
 by turn, appending idempotently past a per-session ledger. A run a turn
 delegated to a subagent lands as a branch beside that turn
@@ -91,7 +90,9 @@ each turn did to which files, papers and URLs. It answers `why <path>`,
 MCP, and inside the app answers **recall**: with the switch on, an ask
 brings in up to two topic dossiers and verbatim excerpts from any agent's
 past sessions within a token ceiling, listed and strikeable on the node
-(`lib/recall.ts:207-385`).
+(`lib/recall.ts:210-390`). The canvas's own record enters the index
+through an adapter that leaves archived nodes out
+(`lib/adapters/thoughtdag-canvas.ts:81-85`).
 
 Sixth, an **agent lane**: the model picker lists Pi's and Codex's own
 models, and picking one hands the node's compiled context and question to
@@ -100,45 +101,52 @@ guard (`runtime/agents/pi-guard.mjs`) asks the person, on the node, before
 a tool reaches outside the working directory; the turn's tool calls come
 back as footprint attachments excluded from context, and downstream context
 carries one line naming the files the turn touched
-(`store/context-builder.ts:245-308`).
+(`store/context-builder.ts:327-395`).
 
 **The record is of what the model was shown, not what it concluded.** At
 dispatch the streaming slice writes a `commit` event carrying the SHA-256
 of the canonical request — messages, image digests, model, tool flags —
-its message count and lane (`store/streaming.ts:349-357`). The hash covers
-the `[Memory]` block and any recall block, because both are inserted before
-dispatch. The canvas event log (`slices/events.ts`) is append-only,
-metadata-only, survives undo, persists with the canvas and exports as CSV,
-and the canvas adapter projects its commits into canonical
-`context.committed` events. The benchmark under `benchmark/` applies the
-same discipline to a claim: nine endpoints, 1,215 captured conditions,
+its message count and lane (`store/streaming.ts:366-375`). The hash covers
+the `[Memory]` block, any recall block and the execution-record header the
+route picks, because all three are set before dispatch. The canvas event
+log (`slices/events.ts`) is metadata-only, survives undo, persists with the
+canvas and exports as CSV, and the canvas adapter projects the commits of
+live nodes into canonical `context.committed` events. Past 10,000 events it
+keeps the newest 9,000 (`:16,:24`), so it is a bounded record rather than
+an append-only one. The benchmark under `benchmark/` applies the same
+discipline to a claim: nine endpoints, 1,215 captured conditions,
 conditions defined as graph operations, traces immutable, and a
 `STATUS.md` that records its own corrections.
 
 **A decision model decides whether the model is told an answer is
 stale.** With a judge configured, `judgeStaleness`
 (`lib/stale-judge.ts:36-69`) asks whether an upstream change bears on each
-newly stale answer, and a verdict under 0.5 dismisses the mark:
+newly stale answer, and a verdict under 0.5 dismisses the mark.
 `shownStaleIds` (`:23`) subtracts it, and the badge, the panel's preview
 (`focus-panel/FollowUpInput.tsx:69-74`) and every request path
-(`slices/llm.ts:126,260,332,393,450,530`, `slices/evaluator.ts:78`,
+(`slices/llm.ts:128,262,334,404,462,542`, `slices/evaluator.ts:79`,
 `lib/experiment-loop.ts:77`) compile from that one set. The dismissed
 answer stays in context, unlabelled; the dismissal writes no canvas event.
 
 Replay reads the same set. Its chip and confirm dialog count and price
-`shownStaleIds` (`App.tsx:689,1633-1648`), and `replayStale` snapshots it
-(`slices/evaluator.ts:111`), a fix the maintainer made in
-[`2991553e5a32f82781e97a2f740b9c66ef042276`](https://github.com/chenxiachan/thoughtdag/commit/2991553e5a32f82781e97a2f740b9c66ef042276)
-and recorded on [issue #51](https://github.com/chenxiachan/thoughtdag/issues/51#issuecomment-5916161378).
-The stale set does not exclude archived nodes (`slices/nodes.ts:271-287`),
-so Replay regenerates an archived answer whose upstream drifted, one that
-no walk reads.
+`shownStaleIds` (`App.tsx:713,1701`), and `replayStale` snapshots it
+(`slices/evaluator.ts:112`). The stale set passes over archived answers
+(`slices/nodes.ts:281-282`), a skip
+[`edcbe62dcc5f36b8965f98d24063549781b5ce63`](https://github.com/chenxiachan/thoughtdag/commit/edcbe62dcc5f36b8965f98d24063549781b5ce63)
+added, so Replay neither counts nor regenerates one. Two paths run an
+archived node all the same. `rerunNode` has no archived check
+(`slices/evaluator.ts:36-44`), so a manual rerun runs. And after every
+completion `triggerAutoReruns` (`store/streaming.ts:623-667`) reruns each
+node with `autoRerun` whose ancestors include the completed node, archived
+or not; a Replay wave's reruns pass through that hook, so an archived
+reviewer below a replayed node is regenerated with them.
 
-Two marks: `audit_log` for the event log and `negative_eval` for the why
-layer's hidden-reads case and the benchmark's compiler equivalence.
-`human_review`, `tombstone`, `trust_state`, `bitemporal` and
-`scope_enforced` are withheld, each a near miss stated in section 9. No
-paper; the repository cites itself as software.
+One mark: `negative_eval`, for the why layer's hidden-reads case, the
+archived-canvas case and the benchmark's compiler equivalence.
+`audit_log` is withheld on the event log's cap; `human_review`,
+`tombstone`, `trust_state`, `bitemporal` and `scope_enforced` are withheld
+too, each a near miss stated in section 9. No paper; the repository cites
+itself as software.
 
 ## 2. Mental Model
 
@@ -161,22 +169,31 @@ what the person sees and from what the model is sent alike.
 
 It stops being used by exclusion, not erasure. Delete the wire and the
 node stays on the canvas, reconnectable; archive the node and it is
-dimmed and skipped by every walk on its canvas; delete it and it is gone,
-with an event in the log and no other record. An archived node's text
-stays in the why layer's index, because the canvas record the desktop
-writes for it carries every node (`lib/canvas-record.ts:29-46`), so recall
-from another canvas can bring it back. An answer is never overwritten — a
-regeneration is a new version beside the old, each carrying the model that
-wrote it, the time and the hash of what it saw.
+dimmed, skipped by every walk on its canvas, and left out when the why
+layer next projects the canvas record (`thoughtdag-canvas.ts:81-85,:220`);
+delete it and it is gone, with an event in the log and no other record.
+The desktop rewrites that record within a minute of a change
+(`lib/canvas-record.ts:14,:69-78`), and the next query re-reads a record
+whose size or mtime moved and replaces its lines
+(`cli/src/lib.ts:613-636,:655-690`).
+
+Two copies outlive an archive. A mirrored turn's text is not in the canvas
+record at all — the index reads it from the runner's own session file
+(`thoughtdag-canvas.ts:106-107`). And a dossier sentence written from the
+turn before it was archived stays in the dossier recall brings in whole.
+An answer is never overwritten — a regeneration is a new version beside
+the old, each carrying the model that wrote it, the time and the hash of
+what it saw.
 
 The profile and the dossiers are the layers a model writes. A fact the
 memory judge admits is merged into a document by a model that rewrites
 the lines, *"the newest observation wins"*; a dossier is rewritten from
 the turns it has not read and the facts filed for it, and a sentence is
-dropped *"only when the new excerpts contradict or supersede it"*. Neither
-keeps a record of a line it removed: the profile keeps forty changelog
-notes, and an Undo restores the prior document together with its prior
-changelog.
+dropped *"only when the new excerpts contradict or supersede it"*. Each
+profile line carries a note of the fact that wrote it, its canvas, its
+time and its evidence. Neither layer keeps a record of a line it removed:
+the profile keeps forty changelog notes, and an Undo restores the prior
+document together with its prior changelog and notes.
 
 What a model is told about a thing it is not shown has three answers
 here. A stale answer is shown, with a mark. An archived node is not shown,
@@ -185,48 +202,50 @@ shown, and the context says which files the turn touched and that their
 contents were left out.
 
 ```mermaid
-%% caption: a person's wires are the retrieval; the same compiler, given one stale set with the judge's dismissals removed, feeds the preview and the request, and Replay reruns that set; recall and the profile join the request before dispatch and the commit hash covers them; archive excludes on the canvas and not in the index recall reads
+%% caption: a person's wires are the retrieval; the same compiler, given one stale set with the judge's dismissals and archived answers removed, feeds the preview and the request, and Replay reruns that set; recall and the profile join the request before dispatch and the commit hash covers them; archive leaves the canvas walks and the index projection, while dossier sentences, mirrored session text and autoRerun keep reaching it
 flowchart TB
     P["person: ask · wire · archive · edit · strike a recalled item"] --> G[("canvas graph<br/>IndexedDB per canvas · folder backup")]
     A["Session Atlas: Claude Code · Codex · DSH · Pi<br/>read-only session files"] --> G
-    G -->|"every node, archived included"| X[("why index ~/.thoughtdag<br/>sessions · canvases · agent memory files")]
-    A --> X
-    G -->|"upstream fingerprint drifted"| S["stale set"]
+    G -->|"canvas record within a minute<br/>adapter drops archived nodes"| X[("why index ~/.thoughtdag<br/>sessions · canvases · agent memory files")]
+    A -->|"session text, mirrored turns included"| X
+    G -->|"live answer, upstream fingerprint drifted"| S["stale set"]
     S --> SJ{"stale judge<br/>p below 0.5?"}
     SJ -->|"shownStaleIds: dismissals removed"| C["buildContext<br/>materials → references → chain → question<br/>archived skipped · stale marked"]
-    SJ -->|"shownStaleIds"| RP["Replay<br/>counts and reruns the shown set<br/>archived answers included"]
+    SJ -->|"shownStaleIds"| RP["Replay<br/>counts and reruns the shown set"]
+    RP -->|"each completion"| AR["autoRerun pass<br/>archived nodes not skipped"]
     C --> PV["will-send preview"]
     X -->|"recall: two dossiers + excerpts<br/>light · deep · full reach<br/>active canvas left out"| R["recall block"]
-    PR[("profile: preferences · identity")] -->|"[Memory] block"| Q["request"]
+    PR[("profile: preferences · identity<br/>a note per line")] -->|"[Memory] block"| Q["request"]
     C --> Q
     R --> Q
-    Q -->|"commit: sha256(request) · n · model"| E[("event log<br/>append-only · metadata only")]
+    Q -->|"commit: sha256(request) · n · model"| E[("event log<br/>metadata only · newest 9,000 past 10,000")]
     Q --> LLM["model"]
     LLM -->|"answer version + context hash + per-input parts"| G
     LLM -->|"memory judge"| J{"constitution in code<br/>stated identity · no credential · 3 per canvas"}
-    J -->|"preference · identity: model rewrites the document"| PR
+    J -->|"preference · identity: model rewrite<br/>new lines re-checked · at most two dropped"| PR
     J -->|"project: topic dossier inbox or memory inbox"| D[("dossiers<br/>four sections · cited turns")]
     D --> X
 ```
 
 ## 3. Architecture
 
-`src/` is a React 19 and Vite application: `App.tsx` (2,130 lines), the
+`src/` is a React 19 and Vite application: `App.tsx` (2,229 lines), the
 canvas components over `@xyflow/react`, a zustand store split into slices
 (`nodes`, `llm`, `attachments`, `highlights`, `history`, `events`,
 `evaluator`, `roles`) with `context-builder.ts`, `streaming.ts` and
 `projects.ts` beside them. `lib/` holds the mechanisms: `memory.ts`,
 `profile.ts`, `dossier.ts`, `recall.ts`, `topics.ts`, `judge.ts`,
-`stale-judge.ts`, `why-bridge.ts`, `context-bundle.ts`, `graph.ts`,
-`canvas-record.ts`, `persistence.ts`, `local-backup.ts`, the `adapters/`
-for each runner's session format, `atlas/`, `events/` and `agents/`.
+`stale-judge.ts`, `why-bridge.ts`, `canvas-chat.ts`, `context-bundle.ts`,
+`graph.ts`, `canvas-record.ts`, `persistence.ts`, `local-backup.ts`, the
+`adapters/` for each runner's session format, `atlas/`, `events/` and
+`agents/`.
 
 `server.mjs` is the only backend: an Express proxy over the Vercel AI SDK
 with web and scholarly search, MCP clients from `mcp.config.json`, PDF
 extraction and URL fetch. On the person's machine it also mounts the agent
 runtimes under `/api/agents`, the other agents' session files under
 `/api/roots`, and `/api/judge`, a pass-through that forwards a decision
-request to any http or https URL the body names (`server.mjs:637-655`); the
+request to any http or https URL the body names (`server.mjs:686-707`); the
 hosted twin forwards only to three named decision hosts.
 
 `runtime/` is plain Node that the desktop shell, the harness plugin host
@@ -236,9 +255,9 @@ and the proxy share: `agents/pi.cjs` over `pi --mode rpc`,
 
 `desktop/main.js` is the Electron shell: fenced session roots, backup
 writes, protocol links, the agent runtimes over IPC, a private canvas
-record per project under `~/.thoughtdag/canvases/` (`:471-494`), and the
+record per project under `~/.thoughtdag/canvases/` (`:536-560`), and the
 why layer bundled as a library behind eighteen `why:*` IPC handlers
-(`:822-842`). `dsh/lib/index.js` mounts the same why functions as HTTP
+(`:889-909`). `dsh/lib/index.js` mounts the same why functions as HTTP
 routes under the harness plugin host.
 
 `cli/` is the why layer; `functions/` the Cloudflare twin of the proxy with
@@ -248,12 +267,16 @@ cases, gold, suites, tools, compiled artifacts, runs and canvases.
 Persistence is object storage into IndexedDB with a one-second debounce
 and a flush on page hide (`lib/persistence.ts`). The profile documents,
 the memory inbox and the switches live in `localStorage`
-(`lib/ui-store.ts:308-331`). The why layer keeps `fact-index.json`,
-`interpretation-cache.json`, `text-index.jsonl`, `topics.json` and
-`dossiers.json` under `~/.thoughtdag/`, written through a temp file at
-0600 in a 0700 directory (`cli/src/lib.ts:589-594`). Dossier writes are
-read-modify-write of the whole file under their own lock, and past a
-five-second wait *"the write goes ahead unlocked"* (`:1423-1439`).
+(`lib/ui-store.ts:323-338`), and each canvas's ask-the-canvas turns under
+their own key, the last forty (`components/CanvasChat.tsx:21-24`). The why
+layer keeps `fact-index.json`, `interpretation-cache.json`,
+`text-index.jsonl`, `topics.json` and `dossiers.json` under
+`~/.thoughtdag/`, written through a temp file at 0600 in a 0700 directory
+(`cli/src/lib.ts:589-596`). The first three carry the index version and are
+rebuilt whole when it changes (`:91,:536-541`); `topics.json` and
+`dossiers.json` carry versions of their own (`:1243,:1405`). Dossier writes
+are read-modify-write of the whole file under their own lock, and past a
+five-second wait *"the write goes ahead unlocked"* (`:1445`).
 
 ### Deployment and ergonomics
 
@@ -264,96 +287,108 @@ decision model is optional: `DEFAULT_JUDGE` is enabled with no provider,
 and an OpenRouter key, saved with the interfaces or typed into the judge's
 own field, makes OpenRouter's Jev endpoint the provider without a further
 setting (`lib/judge.ts:185-191`). The provider list's *off* entry leaves
-every decision to its rule. Every decision falls
-back to a rule when no judge answers within six seconds, and a failure
-skips the judge for a minute. Recall, topics and dossiers need the why
-layer, so the web demo has none of them.
+every decision to its rule. Every decision falls back to a rule when no
+judge answers within six seconds, and a failure skips the judge for a
+minute. Recall, topics and dossiers need the why layer, so the web demo
+has none of them.
 
 ## 4. Essential Implementation Paths
 
-- **Compile.** `partitionContext` (`lib/graph.ts`) splits a node's
+- **Compile.** `partitionContext` (`lib/graph.ts:80`) splits a node's
   upstream into materials, references and the mainline. `buildContext`
-  (`context-builder.ts:208-375`) walks them in that order, dedups
-  attachments by fingerprint and honours excluded and included attachment
-  ids. It skips `archived` at every layer (`:314,:331,:345`), turns an
-  excluded footprint into one line naming its files (`:245-308`),
-  prepends the stale mark to a chain response in the `staleIds` it is
-  given (`:353`), and returns messages with a parallel `sources` array.
-  `hashContext` (`:97-102`) and `upstreamFingerprint` (`:111-130`) hash
-  it; `upstreamParts` (`:137-154`) records a hash and a 240-character
-  opening per upstream node.
-- **Dispatch and record.** `streaming.ts:258-269` inserts the `[Memory]`
-  block after the last answer; `:276-293` fetches recall items on a fresh
+  (`context-builder.ts:274-287`) calls `compileContext` (`:291-463`), which
+  walks them in that order, dedups attachments by fingerprint and honours
+  excluded and included attachment ids. It skips `archived` at every layer
+  (`:402,:419,:433`), turns an excluded footprint into one line naming its
+  files (`:327-395`), folds an imported turn's tool steps into one
+  execution record (`:98-156,:386-389`), prepends the stale mark to a
+  chain response in the `staleIds` it is given (`:441`), and returns
+  messages with a parallel `sources` array. `hashContext` (`:160-165`) and
+  `upstreamFingerprint` (`:174-196`) hash it, the fingerprint over the
+  tool steps' raw shape; `upstreamParts` (`:203-220`) records a hash and a
+  240-character opening per upstream node.
+- **Dispatch and record.** `streaming.ts:255-275` inserts the `[Memory]`
+  block after the last answer; `:278` fetches recall items on a fresh
   ask, stores them on the node and inserts the recall block at the same
-  seat. `:349-357` computes the SHA-256 of the canonical request and logs
-  `commit`. On completion `writeFinal` (`:214-248`) appends the response
-  as a version with `lastContextHash` and `lastContextParts`,
-  `recomputeStaleness` runs, and `:523-530` fires `judgeMemory` with the
-  active canvas.
-- **Stale judge.** `recomputeStaleness` records the drifted fingerprint per
-  node and imports `judgeStaleness`, which compares `lastContextParts`
-  with the live parts, sends up to eight cases to `decideStaleness`
-  (`judge.ts:137-150`), and stores a verdict keyed on that fingerprint.
-  `shownStaleIds` (`stale-judge.ts:23`) subtracts dismissals; the badge,
-  the preview, the context chain, the replay dialog's count, `replayStale`
-  (`slices/evaluator.ts:111`) and every request read it.
-- **Plaque summaries.** `generateSummary` (`streaming.ts:33-86`) asks the
+  seat; `:311-312` swaps the execution record's header for an agent or a
+  request that declares tools. `:366-375` computes the SHA-256 of the
+  canonical request and logs `commit`. On completion `writeFinal`
+  (`:216-252`) appends the response as a version with `lastContextHash`
+  and `lastContextParts`, a store subscription reruns `recomputeStaleness`
+  (`store/index.ts:89-93`), `:533-540` fires `judgeMemory` with the
+  active canvas, and `:542-543` run the autoRerun pass and the paradigm
+  cascade.
+- **Stale judge.** `recomputeStaleness` skips notes, materials and
+  archived nodes, records the drifted fingerprint per node and imports
+  `judgeStaleness`, which compares `lastContextParts` with the live parts,
+  sends up to eight cases to `decideStaleness` (`judge.ts:137`), and
+  stores a verdict keyed on that fingerprint. `shownStaleIds`
+  (`stale-judge.ts:23`) subtracts dismissals; the badge, the preview, the
+  context chain, the replay dialog's count, `replayStale`
+  (`slices/evaluator.ts:108-139`) and every request read it.
+- **Plaque summaries.** `generateSummary` (`streaming.ts:34-87`) asks the
   answering model, or the background model for an agent's answer, for one
   JSON ladder (`lib/ladder.ts`): a topic copied from inside the takeaway,
   the takeaway, a reason, and three or four sentence numbers whose verbatim
   text becomes the abstract. The thread it is shown is the ancestors' own
   plaques inside 1,400 tokens, archived steps skipped
-  (`lib/ladder-context.ts:29-44`), a skip the maintainer added in
-  [`2991553e5a32f82781e97a2f740b9c66ef042276`](https://github.com/chenxiachan/thoughtdag/commit/2991553e5a32f82781e97a2f740b9c66ef042276).
-  When the ladder call comes back unusable, the one-line fallback prompt
-  carries the ancestor path's takeaway lines from `collectMapLines`
-  (`streaming.ts:90-106`), a walk that keeps archived steps
-  (`:53-56,:84,:522`). Summaries are display-only and never enter context
-  or fingerprints (`src/types.ts:303-304`).
-- **Judge and admit.** `judgeMemory` (`memory.ts:177-220`) takes the
+  (`lib/ladder-context.ts:29-44`). The one-line fallback prompt's map lines
+  come from `collectMapLines` (`streaming.ts:91-107`), which filters
+  archived ancestors before it picks the takeaways and the opening
+  question (`:93`). Summaries are display-only and never enter context or
+  fingerprints.
+- **Judge and admit.** `judgeMemory` (`memory.ts:180-222`) takes the
   typed path when a judge answers — `decideMemory` returns durable,
   category, stated and covers as probabilities, cut at 0.6, 0.7 for
   project and 0.7 for stated (`judge.ts:69-93`), and the chat model then
   phrases one sentence — or the prompt path, a versioned prompt parsed as
   one JSON line. Either verdict passes `admissionCheck`; a preference or
-  identity goes to `mergeIntoDoc` (`profile.ts:52-73`), a project fact to
-  `fileProjectFact` (`memory.ts:134-162`).
+  identity goes to `mergeIntoDoc` (`profile.ts:91-119`) with the verdict's
+  evidence and canvas as its origin, a project fact to `fileProjectFact`
+  (`memory.ts:137`).
 - **Dossier.** `buildDossier`, `updateDossier` and `rebuildDossier`
   (`dossier.ts:85-129`) fetch the topic's unread labelled turns through
-  `dossierNewTurns`, have the chat model return four sections as JSON with
-  source keys validated against what it was shown, and write through
-  `setDossier`, which consumes only the pending facts the model read
-  (`cli/src/lib.ts:1444-1454`).
-- **Recall.** `fetchRecallItems` (`recall.ts:207-385`) asks the judge
+  `dossierNewTurns` (`cli/src/lib.ts:1484-1497`), have the chat model
+  return four sections as JSON with source keys validated against what it
+  was shown, and write through `setDossier` (`:1461`), which consumes only
+  the pending facts the model read.
+- **Recall.** `fetchRecallItems` (`recall.ts:210-390`) asks the judge
   which topics the question is about, brings at most two built dossiers
-  whole and asks whether the question wants a detail. It then looks up at
-  most four terms with typo correction and merges topic-labelled hits.
-  Without a judge it reads the 16 best hits in full, and at the light
-  reach the 40 best. At the deep reach the judge first reads a snippet of each of up to
-  2,000 hits; at the full reach, the opening of every turn the index lists
-  (`turnsJson`, `cli/src/lib.ts:1109-1144`). Those go forty to a request,
-  eight requests in flight, and at most 80 that pass are read in full
-  (`recall.ts:299-349`). The judge keeps items at 0.5 and holds back those
+  whole and asks whether the question wants a detail (`:246-258`). It
+  then looks up at most four terms with typo correction and merges
+  topic-labelled hits. Without a judge it reads the 16 best hits in full,
+  and at the light reach the 40 best. At the deep reach the judge first
+  reads a snippet of each of up to 2,000 hits; at the full reach, the
+  opening of every turn the index lists (`:303-314`, `turnsJson`,
+  `cli/src/lib.ts:1111-1161`). Those go forty to a request, eight requests
+  in flight, and at most 80 that pass are read in full
+  (`recall.ts:322-353`). The judge keeps items at 0.5 and holds back those
   from 0.3, and the budget decides what comes in. The switch, reach and
-  amount are snapshotted on the node at the ask (`ui-store.ts:461-466`).
+  amount are snapshotted on the node at the ask (`ui-store.ts:473`).
+- **Ask the canvas.** `buildCanvasChat` (`lib/canvas-chat.ts:100`)
+  numbers the live nodes, archived ones and frames left out (`:43-48`),
+  and sends an outline of each with its parents, the focused node's chain,
+  materials and references from `partitionContext`, and the last eight
+  turns; `askCanvas` (`:153`) calls the model and keeps on the turn
+  which nodes went out in which layer.
 - **Why.** `cli/src/lib.ts`: collectors per runner and `parseMemory`
-  (`:510-529`) reduce session and memory files to facts; `hitsFor`
-  (`:799-816`) hides read-like ops unless `--include-read` or nothing
-  else happened; `findJson` (`:1088-1103`) filters by a working directory
-  when one is passed; `labelStart` (`:1275-1337`) runs the topic
-  labelling job.
+  (`:510`) reduce session and memory files to facts; `eventsOf` reads a
+  canvas record through the canvas adapter (`:294-301`); `hitsFor`
+  (`:799`) hides read-like ops unless `--include-read` or nothing else
+  happened; `findJson` (`:1088-1103`) filters by a working directory when
+  one is passed; `labelStart` (`:1292`) runs the topic labelling job.
 - **Agent turn.** `agentOutbound` (`agent-runtime.ts:168`) picks the
   route; `compileForAgent` (`:268`) splits the compiled messages into the
   question and one block; `materialsToDisk` (`:224`) copies materials;
-  `adoptAgentTurn` (`:443`) re-reads the session file and excludes the
+  `adoptAgentTurn` (`:444`) re-reads the session file and excludes the
   footprints. `pi-guard.mjs:75` blocks a call outside the working
-  directory when nobody can be asked; `codex.cjs:31-34` maps `allow` to
+  directory when nobody can be asked; `codex.cjs:35` maps `allow` to
   `danger-full-access`.
 - **Mirror, bridge, bundle, export.** `importOrAppendSession`
-  (`atlas/canonical.ts:34`); `dsh/lib/index.js` for the harness's fork,
+  (`atlas/canonical.ts`); `dsh/lib/index.js` for the harness's fork,
   inject and follow-up writes and the `/why/*` routes;
-  `compileContextBundle` (`lib/context-bundle.ts:170`); `export.ts:241-248`
-  for the event log as CSV.
+  `compileContextBundle` (`lib/context-bundle.ts`); `export.ts` for the
+  event log as CSV.
 
 ## 5. Memory Data Model
 
@@ -362,38 +397,47 @@ layer, so the web demo has none of them.
 `generatedAts[]`, `editedAts[]`, `summaries[]`, `summaryTypes[]`,
 `summaryTypeConfidences[]` and `summaryConclusiveness[]` (display only);
 `responseIndex`; `archived` and `archivedAt`; `lastContextHash`,
-`lastContextParts` and `lastGeneratedAt`; `stepKind`; `importSource` and
-`source`, the frozen import snapshot; `recall`, `recallItems[]` and
-`recallMeta`; `recallSource` on a note cited from the why layer. Edges are
-solid, dashed, orange or red.
+`lastContextParts` and `lastGeneratedAt`; `stepKind`; `autoRerun` and
+`autoRerunRounds`; `importSource` and `source`, the frozen import
+snapshot; `recall`, `recallItems[]` and `recallMeta`; `recallSource` on a
+note cited from the why layer. Edges are solid, dashed, orange or red.
 
 A node that ran an agent turn also carries `agentSession`,
 `pendingApprovals` and `approvals[]`, one record per decided question with
 the tool, the question as shown, the outcome, the time and any value
-(`src/types.ts:218-238`). A project's metadata holds `agentCwd` and
-`agentGuard` (`store/projects.ts:46-50`).
+(`src/types.ts:250-270`). A project's metadata holds `agentCwd` and
+`agentGuard` (`store/projects.ts:47-51`).
 
-A `RecallItem` (`src/types.ts:106-131`) names its kind (turn or memory),
+A `RecallItem` (`src/types.ts:138`) names its kind (turn or memory),
 runner, session, turn, title, working directory, file, the words that
 found it, the text, its price, an `excluded` flag, the judge's relevance,
 a cached card and the topics it was reached by, and for a dossier the
 topic and its update time.
 
-`MemoryDoc` (`lib/profile.ts:14`) is `text`, `updatedAt` and a changelog
-capped at forty notes; `Profile` is two of them. The legacy
-`MemoryEntry` list folds into the documents on first use, project entries
-into the inbox, and the original list is copied to
-`thoughtdag.memory.legacy`. A `Dossier` (`cli/src/lib.ts:1374-1385`)
-holds four sections of `{text, src[]}`, a `sources` map, a `covered` list
-of the turn keys it has read, a `pending` inbox, a changelog and
-`builtAt`. `topics.json` holds the topic table and, per turn key, one
-probability per topic.
+`MemoryDoc` (`lib/profile.ts:19-20`) is `text`, `updatedAt`, a changelog
+capped at forty notes and `notes`, one `LineNote` per line keyed by the
+line's text: the time, the canvas, the evidence — `stated`, `inferred`,
+`manual` or `folded` — and the line it replaced when a rewrite swapped
+exactly one for one. `Profile` is two of them. The legacy `MemoryEntry`
+list folds into the documents on first use, project entries into the
+inbox, and the original list is copied to `thoughtdag.memory.legacy`.
 
-The canvas event (`src/types.ts:431-438`) is a timestamp, an op, an
+A `Dossier` (`cli/src/lib.ts:1391-1402`) holds four sections of
+`{text, src[]}`, a `sources` map, a `covered` list of the turn keys it has
+read, a `pending` inbox, a changelog and `builtAt`. `topics.json` holds the
+topic table and, per turn key, one probability per topic. A turn key is a
+source and a position: `<file>#<index>` for labels (`cli/src/lib.ts:1249`)
+and `<session>#<turn number>` for `covered` (`:1488`, `turnNumber`
+`:864-866`). A canvas turn's index is its rank among the record's live
+nodes (`thoughtdag-canvas.ts:81-83`), so archiving or deleting a node moves
+every later node's key onto its neighbour's labels and coverage.
+
+The canvas event (`src/types.ts:463-470`) is a timestamp, an op, an
 optional object id and light metadata, *"NEVER text content"*; `CanvasOp`
-(`:420-429`) has no member for a profile write, a dossier write, a recall
-or an approval. The why layer's `CanonicalEvent` carries `basis` —
-observed, reconstructed, inferred — and `completeness` on every event.
+(`:452-461`) has no member for a profile write, a dossier write, a recall,
+an ask of the canvas or an approval. The why layer's `CanonicalEvent`
+carries `basis` — observed, reconstructed, inferred — and `completeness`
+on every event.
 
 ## 6. Retrieval Mechanics
 
@@ -401,7 +445,9 @@ There are two retrievals. On the canvas there is a walk: the set of nodes
 reachable by incoming wires, in an order the compiler fixes so that *"the
 same graph always produces the same prompt,"* trimmed by what a person did
 to the nodes and never by score. The preview calls the function the
-dispatch calls, with the same stale set (section 1).
+dispatch calls, with the same stale set (section 1); the request differs
+from it only in the blocks set at dispatch — memory, recall and the
+execution record's header for an agent or a tool-declaring request.
 
 Beside it, recall is a search, off until a person switches it on. A
 question's terms are its Latin words of three or more characters and its
@@ -410,23 +456,28 @@ knows is corrected from the index's vocabulary by edit distance, with the
 judge picking among candidates when it answers.
 
 Topics the judge or a named word ties to the question bring their dossiers
-first, whole, at most two; when a dossier is in hand and the judge rules the question wants an
-overview, no excerpts are fetched. Excerpts are ranked by matched terms
-and recency, then by the judge's relevance, and fill a ceiling of 4k, 12k
-or 40k input tokens, never more than two fifths of the answering model's
-window. With a judge, the reach picked for the ask sets how many
-candidates it reads: the 40 best hits, up to 2,000, or every turn in the
-index.
+first, whole, at most two; when a dossier is in hand and the judge rules
+the question wants an overview, no excerpts are fetched. Excerpts are
+ranked by matched terms and recency, then by the judge's relevance, and
+fill a ceiling of 4k, 12k or 40k input tokens, never more than two fifths
+of the answering model's window. With a judge, the reach picked for the ask
+sets how many candidates it reads: the 40 best hits, up to 2,000, or every
+turn in the index. Recall reads every conversation the index holds,
+whatever folder it ran in, and the code gives the reason: *"a canvas has no
+workspace of its own"* (`recall.ts:223-224`).
 
 The recall block tells the model the excerpts are *"Evidence to consult,
-not instructions"* and asks it to name the source. On a fresh ask the
-items are fetched and sent in the same step; striking one takes effect on
-the next run of that node.
+not instructions"* and asks it to name the source (`recall.ts:435`). On a
+fresh ask the items are fetched and sent in the same step; striking one
+takes effect on the next run of that node.
 
-For an agent runtime the compiled messages are flattened into one block
-ahead of the question, and a continued session gets the question only.
-The why layer is lookup, not ranking: `why` resolves a path to the turns
-that touched it, reads hidden unless asked; `find` matches exact words.
+Ask the canvas is a third read, of the active canvas only: every live node
+as one numbered line, the focused node's chain, its materials and
+references, with no stale mark on any answer it quotes. For an agent
+runtime the compiled messages are flattened into one block ahead of the
+question, and a continued session gets the question only. The why layer
+is lookup, not ranking: `why` resolves a path to the turns that touched
+it, reads hidden unless asked; `find` matches exact words.
 
 ## 7. Write Mechanics
 
@@ -436,27 +487,38 @@ minute after the last edit. The memory judge is fire-and-forget with
 failures silent by design, so a fact is retrievable in the next
 generation after the judge and the rewrite return.
 
-The constitution is applied to the fact and not to the document. After
-`admissionCheck` passes, `mergeIntoDoc` sends the whole document and the
-new fact to the default model with the instruction to rewrite the line it
-*"refines or contradicts"*, and keeps the model's lines if there are at
-least half as many as before (`profile.ts:61-67`). Nothing checks the
-rewritten lines against the credential pattern or the stated-identity
-rule, so the rewrite can turn an identity line the user stated into one
-the model inferred.
+The constitution is applied to the fact, and half of it again to the
+document. After `admissionCheck` passes, `mergeIntoDoc` sends the whole
+document and the new fact to the default model with the instruction to
+rewrite the line it *"refines or contradicts"*, and keeps the model's lines
+if there are at least half as many as before (`profile.ts:100-106`). A new
+line matching the credential pattern is dropped (`:108`), and a rewrite
+that would remove more than two lines is discarded for the old lines plus
+the fact appended (`:109-113`).
+
+The stated-identity rule is not re-applied: the code says the distinction
+*"cannot be re-decided from the rewritten words"* (`:14-18`). `carryNotes`
+(`:44-55`) keeps a surviving line's note and gives every new or changed
+line the admitted fact's origin, so a neighbouring line the model reworded
+while merging a stated identity fact is labelled stated. The note is shown
+beside the line on the memory page and exported with the document
+(`MemoryPage.tsx:60,:78-82`); the `[Memory]` block sends the lines without
+it (`memory.ts:56-70`).
 
 A project fact goes to the dossier of the topic the judge ties it to at
 0.5 or above, or, without a judge, the topic whose name appears in the
 fact; otherwise to the memory inbox. A dossier merges its filed facts on a
 person's *Update*, or on its own when six wait and the memory page is
-opened (`MemoryPage.tsx:215`). Building a dossier reads up to a hundred
+opened (`MemoryPage.tsx:227`). Building a dossier reads up to a hundred
 labelled turns and an update sixty, one chat-model call each.
 
 Labelling is the one background pass over the store: a person's click
 sends up to 600 turns, eight per request, to the decision endpoint, one
-question per topic per turn (`cli/src/lib.ts:1275-1337`). The harness
-bridge writes into live DeepSeek Harness sessions, and the agent lane
-edits files in its working directory behind the guard.
+question per topic per turn (`cli/src/lib.ts:1292`). A label is reused
+while its key has one for every topic (`:1303-1306`), so a key that an
+archive moved onto another turn is not relabelled. The harness bridge
+writes into live DeepSeek Harness sessions, and the agent lane edits files
+in its working directory behind the guard.
 
 ### Operational cost
 
@@ -466,19 +528,19 @@ rewrite call when the document is not empty. Recall costs up to three
 decision calls per ask with a judge — topic, detail and relevance — plus
 one per term it corrects, and none without one. A deep or full reach
 replaces the relevance call with one per forty candidates, which the
-project prices at about $0.0007 each (`recall.ts:150-154`). Picking full
-in the menu shows the index's turn count with an estimated time and price
+project prices at about $0.0007 each (`recall.ts:154-157`). Picking full in
+the menu shows the index's turn count with an estimated time and price
 first; once it is set as the default, an ask runs it without that dialog
-(`RecallChip.tsx:43-57`). The benchmark pilot ran nine endpoints on free tiers,
-about 30,000 input and 94,000 output tokens per model.
+(`RecallChip.tsx:61-63`). The benchmark pilot ran nine endpoints on free
+tiers, about 30,000 input and 94,000 output tokens per model.
 
 ## 8. Agent Integration
 
 A model sees the compiled messages with a role as system prompt, the
 `[Memory]` block, the recall block when recall is on, and the question; it
 may call web and scholarly search, which start switched off like recall
-(`ui-store.ts:219-220,239`), and any configured MCP tool. It cannot
-edit the graph, the profile or a dossier.
+(`ui-store.ts:226-228`), and any configured MCP tool. It cannot edit the
+graph, the profile or a dossier.
 
 An external agent sees four read-only questions over MCP — `why_check`,
 `why_file`, `find` and `recall_turn` — and `find` reaches the memory files
@@ -486,35 +548,46 @@ Claude Code and Codex keep. Inside DeepSeek Harness the plugin host serves
 the why layer as `/why/*` routes, including dossier and topic writes, to
 the embedded canvas.
 
-Pi and Codex, picked as models, get the canvas's compiled context as one
-block ahead of the question, the materials copied to disk, and their own
-tools in the working directory. What a runtime asks lands on the node as a
-card; the approval list is appended to and de-duplicated by request id,
-and the session record is merged rather than replaced.
+Pi, Codex and the harness's own agents, picked as models, get the
+canvas's compiled context as one block ahead of the question, the
+materials copied to disk, and their own tools in the working directory. A
+runtime's questions land on the node as one form, and one permission
+switch per canvas maps ask, auto review and allow onto each runtime. The
+approval list is appended to and de-duplicated by request id, and the
+session record is merged rather than replaced.
 
 The person's surfaces are the design: the canvas, the node panel with its
-versions, *will send* preview and recall section, the memory page with
-the two documents, the dossiers, the topic table and the inbox, and the
-folder backup. *"The graph is acyclic. You are the loop."*
+versions, *will send* preview and recall section, the ask-the-canvas
+dialog, the memory page with the two documents and their line notes, the
+dossiers, the topic table and the inbox, and the folder backup. *"The
+graph is acyclic. You are the loop."*
 
 ## 9. Reliability, Safety, and Trust
 
-**Audit — awarded.** The event log is append-only in code and in
-contract, records every semantic mutation of the graph with an id and
-metadata, and records at dispatch a hash of what was sent, recall and
-memory blocks included. Four limits: the 10,000-event cap drops the
-oldest thousand; profile rewrites, dossier writes, topic labels and stale-judge
-verdicts write no event; an agent turn's approvals are recorded on the
-node; and an agent-lane `commit` hashes the compiled messages under lane
-`proxy` (`lib/api.ts:247`) when the runtime received a flattened block.
-The profile's and the dossiers' changelogs are capped at forty notes, and
-an Undo restores the prior changelog with the prior document.
+**Audit — withheld.** The event log records every semantic mutation of
+the graph with an id and metadata, survives undo, and records at dispatch
+a hash of what was sent, recall and memory blocks included. It is not
+append-only: `logEvent` keeps the newest 9,000 entries once the array
+passes 10,000 (`slices/events.ts:16,:24`), a production delete of mutation
+records that leaves no trace of the trim. Beside the cap: profile
+rewrites, dossier writes, topic labels, stale-judge verdicts and
+ask-the-canvas requests write no event; an agent turn's approvals are
+recorded on the node; and an agent-lane `commit` hashes the compiled
+messages under lane `proxy` (`lib/api.ts:263`) when the runtime received a
+flattened block. The canonical projection drops the commits of archived
+nodes (`thoughtdag-canvas.ts:220`). The profile's and the dossiers'
+changelogs are capped at forty notes, and an Undo restores the prior
+changelog with the prior document.
 
 **Negative evaluation — awarded.** The why layer's committed case asserts
 read-only turns stay out of a populated result by default and come back on
-request; the equivalence suite asserts the product compiler's node order
-for every pruned condition against a reference, with the compiled
-artifacts committed.
+request (`cli/test/why.test.mjs:131-145`). A second case writes a canvas
+record holding a live node and an archived one, and asserts the archived
+node has no turn, wire or commit in the projection and that `find` misses
+its words while finding the live node's
+(`cli/test/canvas.test.mjs:178-195`). The equivalence suite asserts the
+product compiler's node order for every pruned condition against a
+reference, with the compiled artifacts committed.
 
 **Human review — withheld.** The canvas is authoring: a person wires,
 archives and edits, and the preview shows what will be sent. The memory
@@ -524,66 +597,75 @@ dossier or discards it. Whether a fact waits is decided by the judge's
 topic probability: at 0.5 or above it skips the inbox for a dossier's
 pending list, which merges on its own at six. A preference or identity
 fact is written before the person is told, with an Undo. The tool-approval
-cards gate tool calls, not memory.
+cards and the question form gate tool calls, not memory.
 
 **Trust state — withheld.** Stale is a mark prepended to text that
 flows. The stale judge's verdict is a probability that removes the mark
-and keeps the answer in context. `basis` and `completeness` on every why
-event are displayed and never filtered; conclusiveness levels on takeaways
-are display only.
+and keeps the answer in context. A profile line's evidence note is a
+discrete field, `stated` or `inferred` among four values, that no read
+path filters on. `basis` and `completeness` on every why event are
+displayed and never filtered; conclusiveness levels on takeaways are
+display only. Archive is the field that excludes, and it is a person's
+put-aside, keyed on the node.
 
-**Tombstone — withheld.** Archive excludes a node from its own canvas's
-walks and not from the index recall reads, and delete leaves no record, so
-a pruned claim can come back through recall from another canvas, a
-re-import or the judge. A dossier's `covered` list keeps an update from
-re-reading a turn whose sentence a person deleted by hand; it is keyed on
-the turn, and *Rebuild* empties it.
+**Tombstone — withheld.** Archive excludes a node from its canvas's walks
+and from the index's projection of the canvas record, and delete leaves no
+record. Both are keyed on the node: the same words re-asked, re-imported
+or mirrored from a session come back, and a mirrored turn's archive leaves
+its session text in the index. A dossier's `covered` list keeps an update
+from re-reading a turn whose sentence a person deleted by hand; it is keyed
+on the turn's position, and *Rebuild* empties it.
 
 **Bitemporal — withheld.** Every version carries when it was generated
 and hand-edited; a dossier's *now* section is the model's summary of the
 newest turns; no record carries when what it says was true.
 
-**Scope — withheld.** A canvas is its own store and the wire is the only
-filter within it. The profile is global to the install. Recall leaves out
-the active canvas's own record and nothing else, so an ask on one canvas
-can carry another project's Claude Code memory entry or a turn archived on
-another canvas. `findJson` filters hits by a working directory on the
-session or the memory entry whenever one is passed
-(`cli/src/lib.ts:1091-1094`), and it is exposed as an IPC option and a
-`/why/find` query parameter. No caller in the tree passes it, and the test
-named for it asserts only that hits carry the field
-(`cli/test/memory.test.mjs:139-146`). The turn listing behind the full
-reach takes no working-directory option (`cli/src/lib.ts:1109`).
+**Scope — withheld, by design.** A canvas is its own store and the wire
+is the only filter within it. The profile is global to the install.
+Recall leaves out the active canvas's own record and searches everything
+else, on the stated ground that a canvas has no workspace
+(`recall.ts:223-224`), so an ask on one canvas can carry another project's
+Claude Code memory entry. `findJson` filters hits by a working directory on
+the session or the memory entry whenever one is passed
+(`cli/src/lib.ts:1088-1094`), and it is exposed as the `why:find` IPC
+option (`desktop/main.js:893`) and a `/why/find` query parameter
+(`dsh/lib/index.js:1405`). No caller in the tree passes it.
+
+The comment that the filter *"serves the CLI and MCP"* (`recall.ts:224`)
+is not borne out: the CLI's and the MCP server's `find` go through
+`findHits` and `renderFind` and take no working directory
+(`cli/src/main.ts:289-295`, `cli/src/lib.ts:1549-1553`). The test named for
+the filter asserts only that hits carry the field
+(`cli/test/memory.test.mjs:139-146`).
 
 **What leaves the machine.** A decision request carries the exchange for
 the memory judge, and for labelling each turn's opening 300 characters of
 question and 700 of answer from every indexed agent session. For recall
 it carries the question and 700-character excerpts: up to forty at the
 light reach, a snippet of each of up to 2,000 hits at the deep one, and at
-the full one the first 300 characters of question and answer of every
+the full one the first 300 characters of question and answer of every live
 turn and memory entry in the index, the active canvas's record aside
-(`recall.ts:299-349`, `cli/src/lib.ts:1109-1144`). The memory guide's
-sentence that a decision *"sends only the question and the candidate
-excerpts"* describes the recall call.
+(`recall.ts:303-353`, `cli/src/lib.ts:1111-1161`). Ask the canvas sends
+the canvas outline and the focused chain to the chat model.
 
 **Read-only where it says so.** Source sessions and agent memory files are
 read and never written. The harness bridge's `fork`, `inject` and
 `followup` write into live harness sessions, fenced to the local host. The
 proxy's `/api/agents`, `/api/roots` and `/api/judge` sit behind a CORS
 rule admitting any localhost origin on any port and a bind to `127.0.0.1`
-unless `HOST` says otherwise (`server.mjs:529-533,:1236-1237`); `/api/judge`
-forwards to any http or https target, the loopback included.
+unless `HOST` says otherwise (`server.mjs:578-590,:1297-1299`);
+`/api/judge` forwards to any http or https target, the loopback included.
 
 **A correction culture.** `benchmark/STATUS.md` records that the wave-2
 reasoning comparison was two different models, withdraws the
 generalisations drawn from it, corrects the statistic to a paired McNemar
-test after a reader's audit, and fixes a scorer provenance bug — dated, in
-the file the numbers live in.
+test after a reader's audit, fixes a scorer provenance bug, and says the
+sixth condition has not been run — dated, in the file the numbers live in.
 
 ## 10. Tests, Evals, and Benchmarks
 
-The CLI has 78 cases under `node:test` in ten files: the why layer (22),
-the event contract (12), the canvas adapter (10), DeepSeek Harness
+The CLI has 79 cases under `node:test` in ten files: the why layer (22),
+the event contract (12), the canvas adapter (11), DeepSeek Harness
 sessions (9), agent memory files (6), dossiers (5), Pi sessions (5),
 topics (4), setup (3) and MCP (2). The harness file aliases `test` to
 `test.skip` when Node lacks zstd, so below Node 22.15 its nine cases
@@ -597,11 +679,13 @@ written to disk.
 to hosts through the JSON api"*; it imports the bundle, discards the
 import with `void lib`, and asserts one hit's `cwd` field, so the filter
 it names has no test. The recall ranking and its reaches, the stale judge
-and Replay's snapshot, the summariser's thread, the profile rewrite and the
-agent lane have no test under `cli/test/`, `scripts/` or `src/`. The app
-has a Playwright persistence smoke test and a layout test, and a script
-asserts the subagent fan-out over Pi and Claude Code session fixtures
-(`scripts/test-subagents.mjs`); there is no unit suite for the store.
+and Replay's snapshot, the summariser's thread and map lines, the profile
+rewrite and its line notes, ask the canvas and the agent lane have no
+test under `cli/test/` or `scripts/`. The app has a Playwright persistence
+smoke test and a layout test, and scripts assert the undo rules over the
+history slice (`scripts/test-undo.mjs`), the subagent fan-out over Pi and
+Claude Code session fixtures and the backup write; there is no unit suite
+for the store.
 
 The memory judge's twenty-case golden set runs the prompt path through the
 live proxy (`scripts/test-memory-judge.mjs`), and `JUDGE_PROMPT_VERSION`
@@ -609,23 +693,35 @@ guards that prompt. The typed path's bars — 0.6, 0.7 and 0.7 — and the
 document rewrite have no golden set.
 
 The benchmark is the serious artifact. `pilot-v1` is nine families of
-arithmetic dependency graphs at three propagation depths, five conditions
-each — clean, polluted, source prune, subgraph prune, recompute
-descendants — compiled through the product's own `buildContext`, checked
-for node-order equivalence, captured as immutable traces, and scored by a
-declarative scorer that re-scores from traces. For `glm-4.5-flash`, with
-27 cases per condition: 27 clean correct, 9 polluted, 27 source prune, 27
-subgraph prune, 26 recompute. Across the seven endpoints in `STATUS.md`, pruning the whole
-contaminated subgraph repairs every derailed case while pruning only the
-source leaves a residue at depth two and three.
+arithmetic dependency graphs at three propagation depths, compiled through
+the product's own `buildContext`, checked for node-order equivalence,
+captured as immutable traces, and scored by a declarative scorer that
+re-scores from traces. The captured conditions are five — clean, polluted,
+source prune, subgraph prune, recompute descendants. For `glm-4.5-flash`,
+with 27 cases per condition: 27 clean correct, 9 polluted, 27 source
+prune, 27 subgraph prune, 26 recompute. Across the seven endpoints in
+`STATUS.md`, pruning the whole contaminated subgraph repairs every derailed
+case while pruning only the source leaves a residue at depth two and
+three.
 
-No compiled condition carries the stale mark: across the 160 compiled
-artifacts under `runs/compiled/` the string `[Stale:` does not occur. The
-scorer reports `adopted_stale_answer`, so the metric a marked-and-kept
-condition would need exists and the condition does not.
+Every repair case carries a sixth condition, `source_prune_stale`: the
+source pruned and the contaminated descendants kept under the product's
+stale mark (`benchmark/DESIGN.md:87`). It is wired end to end.
+`compile.mjs` passes its `stale_nodes` to `buildContext`
+(`tools/lib.mjs:92-98`, `tools/compile.mjs:20`), and 30 compiled artifacts
+carry the mark. `validate.mjs` requires it and checks that its stale nodes
+are the contamination chain (`:55-67`). The capture loop sends its compiled
+artifact like any static condition (`tools/run-capture.mjs:39-63`), and the
+scorer loop scores it with `adopted_stale_answer`.
 
-No paper; `CITATION.cff` cites the software and the README's one arXiv
-link is an example query.
+No committed run holds a trace for it, and `STATUS.md:5` says it has not
+been run. `score.mjs` reads a trace for every condition a case lists with
+no guard (`:13-14`), so re-scoring any committed run against the
+six-condition cases stops at the first missing trace; `generate_figures.py`
+plots the five.
+
+No paper; `CITATION.cff` cites the software, and the arXiv ids in the tree
+are example queries in the why-layer guide (`docs/guides/why-layer.md:117`).
 
 ## 11. For Your Own Build
 
@@ -647,14 +743,16 @@ link is an example query.
 
 ### Avoid
 
-- **Rules on the fact and a free rewrite of the document.** Admission
-  checks that the rewrite step does not re-apply can be undone by it.
-- **A scope parameter no caller passes, and a test named for it.** The
-  filter exists, the product's own recall reads across every project, and
-  the suite's title reads as coverage.
+- **A cap on the audit log.** A trim that keeps the newest entries turns
+  the record of what was sent into the record of what was sent lately.
+- **Keys by position.** A label or a coverage mark keyed on a turn's rank
+  among live nodes moves to the neighbour when a node is archived.
+- **A provenance label the rewrite hands out.** A line note that every
+  changed line inherits from the admitted fact says *stated* about words
+  the user did not state.
 - **Exclusion on some read paths and not the others.** An archived node
-  that recall can fetch from another canvas is archived on its own canvas
-  only, and the summariser's fallback prompt carries its takeaway line.
+  that the context walk, the stale set and the index skip is rerun by its
+  own `autoRerun`, and its dossier sentences reach recall.
 
 ### Fit
 
@@ -664,21 +762,22 @@ agents left behind — this is a legible instrument, and the benchmark behind
 its one rule is kept with rigour. It is a person's tool, and the memory
 that forms on its own is two short documents and a set of dossiers a
 person can read line by line. The recall layer reads everything on the
-machine and ships excerpts to a decision endpoint when one is configured,
-at the full reach the opening of every turn it has indexed;
+machine and ships excerpts to a decision endpoint when one is configured;
 anyone with client work in their Claude Code history should read section 9
 before switching it on. A team wanting per-project isolation, a refusal
-that survives archive, or a validity axis will find the design has not
-built them.
+that survives re-assertion, a validity axis or a log that keeps everything
+will find the design has not built them.
 
 ## 12. Open Questions
 
-- Does the stale mark change model behaviour? No compiled benchmark
-  condition contains it. The missing condition is one graph operation away:
-  correct the polluted source, leave B and C marked, and score
-  `adopted_stale_answer` beside `source_prune` and `recompute_descendants`.
-- Is recall meant to cross projects? `findJson` has the working-directory
-  filter and the canvas knows its `agentCwd`; nothing joins them.
+- Does the stale mark change model behaviour? The `source_prune_stale`
+  condition compiles the mark into every repair case; no run has scored
+  it beside `source_prune` and `recompute_descendants`.
+- Should archive reach a dossier? A sentence built from a turn later
+  archived stays, with the turn's key in its sources.
+- Should a canvas turn's key be its node id? The why layer's turn ids
+  are (`thoughtdag-canvas.ts:79`); labels and coverage use the
+  position.
 - What does the judge do with a fact a person undid or a line they
   deleted? It is shown the surviving lines; the same sentence can be
   proposed again.
@@ -689,51 +788,62 @@ built them.
 
 | Path | Lines | What it holds |
 | --- | --- | --- |
-| `src/store/context-builder.ts` | 401 | `buildContext`, `hashContext`, `upstreamFingerprint`, `upstreamParts`, the stale mark, the footprint pointer |
-| `src/store/streaming.ts` | 657 | Dispatch, the memory and recall blocks, the `commit` hash, version append, the memory judge call, the plaque summary and its fallback map lines |
-| `src/store/slices/nodes.ts`, `llm.ts`, `events.ts`, `evaluator.ts` | 583, 690, 26, 160 | Mutations and their events, `recomputeStaleness`, the request paths, `replayStale` |
-| `src/lib/memory.ts`, `profile.ts`, `dossier.ts` | 220, 98, 157 | The constitution, `admissionCheck`, `judgeMemory`, the document merge, the inbox, dossier synthesis |
+| `src/store/context-builder.ts` | 489 | `buildContext`, `compileContext`, `hashContext`, `upstreamFingerprint`, `upstreamParts`, the stale mark, the footprint pointer, the execution record |
+| `src/store/streaming.ts` | 667 | Dispatch, the memory and recall blocks, the `commit` hash, version append, the memory judge call, the plaque summary and its map lines, the autoRerun pass |
+| `src/store/slices/nodes.ts`, `llm.ts`, `events.ts`, `evaluator.ts` | 591, 702, 26, 161 | Mutations and their events, `recomputeStaleness`, `setArchived`, the request paths, the event cap, `rerunNode`, `replayStale` |
+| `src/lib/memory.ts`, `profile.ts`, `dossier.ts` | 223, 145, 157 | The constitution, `admissionCheck`, `judgeMemory`, the document merge and its line notes, the inbox, dossier synthesis |
 | `src/lib/judge.ts`, `stale-judge.ts`, `topics.ts` | 349, 69, 62 | The decision contract and providers, the typed decisions and bars, the stale verdicts, topic proposal and matching |
-| `src/lib/recall.ts`, `why-bridge.ts`, `canvas-record.ts` | 435, 53, 92 | Recall into an ask and its reaches, the IPC and HTTP bridge, the canvas record the index reads |
-| `src/lib/ladder-context.ts`, `src/components/ui/RecallChip.tsx` | 44, — | The summariser's thread, the recall menu and the full-reach dialog |
-| `src/components/focus-panel/{FollowUpInput,ContextChainSection,RecallSection}.tsx`, `src/components/ui/MemoryPage.tsx` | — | The preview, the context chain, recall items, the memory page and auto-merge |
-| `src/lib/agents/{agent-runtime,http-bridge}.ts`, `runtime/agents/*` | 583, 70, — | The agent lane, the guard, Pi and Codex |
+| `src/lib/recall.ts`, `why-bridge.ts`, `canvas-record.ts` | 440, 53, 92 | Recall into an ask and its reaches, the IPC and HTTP bridge, the canvas record the index reads |
+| `src/lib/adapters/thoughtdag-canvas.ts` | 237 | The canvas record's projection, archived nodes left out |
+| `src/lib/canvas-chat.ts`, `src/components/CanvasChat.tsx` | 181, 199 | Ask the canvas and its per-canvas turns |
+| `src/lib/ladder-context.ts`, `src/components/ui/RecallChip.tsx` | 44, 124 | The summariser's thread, the recall menu and the full-reach dialog |
+| `src/components/focus-panel/{FollowUpInput,ContextChainSection,RecallSection}.tsx`, `src/components/ui/MemoryPage.tsx` | — | The preview, the context chain, recall items, the memory page with line notes and auto-merge |
+| `src/lib/agents/{agent-runtime,http-bridge}.ts`, `runtime/agents/*` | 585, 76, — | The agent lane, the guard, Pi and Codex |
 | `src/lib/adapters/*`, `src/lib/atlas/*`, `src/lib/events/*` | — | Runner readers, Session Atlas, the event contract |
-| `src/types.ts` | 438 | `ThoughtData`, `RecallItem`, `CanvasOp`, `CanvasEvent` |
-| `cli/src/lib.ts`, `cli/src/main.ts`, `cli/test/` | 1,588, 307, 78 tests | The why layer, memory files, topics, dossiers, `findJson`, `turnsJson`, and the suite |
-| `dsh/lib/index.js` | 1,392 | The harness plugin's bridge, writes and `/why/*` routes |
-| `desktop/main.js` | 947 | Fenced session roots, the canvas record, the `why:*` IPC, the agent runtimes |
-| `server.mjs`, `functions/api/[[path]].js` | 1,243, 661 | The proxy with `/api/agents`, `/api/roots`, `/api/judge`, and its stateless twin |
+| `src/types.ts` | 470 | `ThoughtData`, `RecallItem`, `CanvasOp`, `CanvasEvent` |
+| `cli/src/lib.ts`, `cli/src/main.ts`, `cli/test/` | 1,605, 307, 79 tests | The why layer, memory files, topics, dossiers, `findJson`, `turnsJson`, and the suite |
+| `dsh/lib/index.js` | 1,689 | The harness plugin's bridge, writes and `/why/*` routes |
+| `desktop/main.js` | 1,017 | Fenced session roots, the canvas record, the `why:*` IPC, the agent runtimes |
+| `server.mjs`, `functions/api/[[path]].js` | 1,305, 661 | The proxy with `/api/agents`, `/api/roots`, `/api/judge`, and its stateless twin |
 | `benchmark/{DESIGN,README,STATUS}.md`, `tools/`, `runs/` | — | The design, the pipeline, traces, results, compiled conditions |
-| `scripts/test-memory-judge.mjs`, `memory-goldens.json`, `smoke.mjs`, `test-subagents.mjs` | — | The judge golden set, the persistence smoke test, the subagent fan-out |
-| `docs/guides/memory.md`, `docs/reference/feature-status.md` | — | The memory guide; current, experimental, not promised |
+| `scripts/test-memory-judge.mjs`, `memory-goldens.json`, `smoke.mjs`, `test-undo.mjs`, `test-subagents.mjs` | — | The judge golden set, the persistence smoke test, the undo rules, the subagent fan-out |
+| `docs/guides/memory.md`, `docs/guides/why-layer.md`, `docs/reference/feature-status.md` | — | The memory guide, the why-layer guide; current, experimental, not promised |
 
-Searches behind the absence claims above, run from the repository root:
+### Recorded searches
+
+Run at the tree root of the pinned checkout with `git grep -E`; a pipe
+into `/usr/bin/grep` filters `git ls-files` output only.
 
 ```sh
-rg -n 'logEvent\(' src/lib/memory.ts src/lib/profile.ts src/lib/dossier.ts src/lib/recall.ts src/lib/stale-judge.ts   # none: no memory, dossier, recall or verdict event
-rg -n -A12 'export type CanvasOp' src/types.ts | rg -i 'approval|recall|memory'   # none: no op for them
-rg -n 'get\(\)\.staleIds' src/store/slices   # nodes.ts:282 only (the previous set): no request or replay reads the unfiltered set
-rg -n 'find\([^)]*\{[^}]*cwd' src dsh desktop cli/src                # one hit, the type declaration: no caller passes cwd
-sed -n 1105,1144p cli/src/lib.ts | rg 'opts\.cwd'                  # none: the full reach's listing has no cwd filter
-rg -n 'findJson' cli/test                                           # none: the filter has no test
-rg -n 'archived' src/lib/adapters/thoughtdag-canvas.ts src/lib/canvas-record.ts   # none: the index keeps archived nodes
-rg -c 'CREDENTIAL_PATTERN' src/lib/profile.ts src/lib/dossier.ts     # none: the rewrite is not re-checked
-rg -n 'decideMemory|MEMORY_DURABLE_BAR' scripts                     # none: no golden set for the typed path
-rg -n 'tombstone|refused|denylist|rejected' src/lib src/store --glob '*.ts'   # approval outcomes, a rejected import, a judge option: no refused-value record
-rg -n 'valid_from|validFrom|valid_to|validTo' src --glob '*.ts*'    # none: no validity interval
-rg -l 'Stale: this answer' benchmark/runs/compiled                  # none in the 160 artifacts: no condition compiles the mark
-rg -l 'agent-runtime|pi-guard|fs-diff|compileForAgent|fetchRecallItems|judgeStaleness|mergeIntoDoc|replayStale|ladderContextFor|turnsJson' cli/test scripts   # none: lane, recall, stale judge, Replay, summariser thread and profile rewrite untested
-sed -n 90,106p src/store/streaming.ts | rg archived                 # none: collectMapLines keeps archived steps
-sed -n 271,287p src/store/slices/nodes.ts | rg archived             # none: the stale set keeps archived nodes
-rg -n 'archived' src/store/slices/evaluator.ts                     # none: Replay and rerun do not skip archived nodes
-rg -n 'confirmDialog' src/lib/recall.ts src/store/streaming.ts      # none: an ask at the default full reach is not confirmed
-rg -n -i 'arxiv|doi' CITATION.cff README.md | rg -v 'find "arxiv"'  # no paper of its own
-rg --files src | rg -i 'test|spec'                                 # none: no unit suite for the store
-rg -c '^\s*(test|it)\(' cli/test/*.mjs; rg -c '^\s*t\(' cli/test/dsh.test.mjs   # 69, plus 9 under the alias
+git grep -n -E 'EVENT_CAP' -- src                                     # events.ts:16,:24 only: the one trim of the log
+git grep -n -E 'logEvent\(' -- src/lib/memory.ts src/lib/profile.ts src/lib/dossier.ts src/lib/recall.ts src/lib/stale-judge.ts src/lib/canvas-chat.ts   # none: no memory, dossier, recall, verdict or ask-the-canvas event
+git grep -n -A10 -E 'export type CanvasOp' -- src/types.ts | /usr/bin/grep -i -E 'approval|recall|memory|chat'   # none: no op for them
+git grep -n -E 'get\(\)\.staleIds' -- src/store/slices                 # nodes.ts:287 only (the previous set): no request or replay reads the unfiltered set
+git grep -n -E 'archived' -- src/store/slices/evaluator.ts             # none: rerunNode does not skip archived nodes
+git grep -n -E 'archived' -- src/store/streaming.ts                    # :92-93 only: triggerAutoReruns does not skip archived nodes
+git grep -n -E 'find\([^)]*\{[^}]*cwd' -- src dsh desktop cli/src      # none: no caller passes cwd
+git grep -n -E 'cwdOnly|recallFolder' -- src                           # none: the folder row is gone
+git grep -n -E 'findJson' -- cli/test                                  # none: the filter has no test
+git grep -n -E 'findJson\(' -- cli/src/main.ts                         # none: the CLI's find does not reach the filter
+git grep -n -E 'archived' -- cli/src src/lib/dossier.ts src/lib/topics.ts   # lib.ts:91 only: dossiers and labels keep archived turns
+git grep -n -E 'archived' -- src/lib/canvas-record.ts                  # none: the record keeps archived nodes; the adapter drops them
+git grep -n -E 'lineNote|\.notes\b' -- src ':!src/lib/profile.ts'     # MemoryPage.tsx only: no read path filters on a line note
+git grep -n -i -E 'stale' -- src/lib/canvas-chat.ts src/components/CanvasChat.tsx   # none: ask the canvas sends no stale mark
+git grep -n -E 'decideMemory|MEMORY_DURABLE_BAR' -- scripts            # none: no golden set for the typed path
+git grep -n -i -E 'tombstone|denylist|blocklist' -- src cli/src dsh/lib runtime desktop   # none: no refused-value record
+git grep -n -i -E 'valid_?(from|to|until)\b' -- src cli/src dsh/lib runtime desktop server.mjs   # none: no validity interval
+git grep -l -F '[Stale: this answer' -- benchmark/runs/compiled        # 30 artifacts, all source_prune_stale
+git ls-files benchmark/runs | /usr/bin/grep source_prune_stale | /usr/bin/grep -v -c '^benchmark/runs/compiled/'   # 0: no captured trace
+git grep -l -E 'agent-runtime|pi-guard|fs-diff|compileForAgent|fetchRecallItems|judgeStaleness|mergeIntoDoc|carryNotes|replayStale|ladderContextFor|collectMapLines|turnsJson|buildCanvasChat' -- cli/test scripts   # none: lane, recall, stale judge, Replay, summariser, profile rewrite and ask the canvas untested
+git grep -n -E 'confirmDialog' -- src/lib/recall.ts src/store/streaming.ts   # none: an ask at the default full reach is not confirmed
+git grep -n -i -E 'arxiv|doi' -- CITATION.cff README.md README_ZH.md   # none: no paper of its own
+git ls-files src | /usr/bin/grep -i -E 'test|spec'                     # none: no unit suite for the store
+git grep -c -E '^[[:space:]]*(test|it)\(' -- 'cli/test/*.mjs'; git grep -c -E '^[[:space:]]*t\(' -- cli/test/dsh.test.mjs   # 70, plus 9 under the alias
 ```
 
 ## History
+
+**2026-10-21** — [`7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f`](https://github.com/chenxiachan/thoughtdag/commit/7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f) — 68 commits on, releases 0.5.9 to 0.5.22. `audit_log` withdrawn, wrong at the previous pin: `logEvent` has trimmed the log past 10,000 events since it was written ([section 9](#9-reliability-safety-and-trust)); the README's arXiv example had also moved to the why-layer guide by then. Overtaken: archived canvas nodes leave the index's projection, index version 14 ([`eabdb89320ca010ec147dcaf1d9329112475f430`](https://github.com/chenxiachan/thoughtdag/commit/eabdb89320ca010ec147dcaf1d9329112475f430)). The profile rewrite drops credential-like lines, removes at most two and labels each line's origin ([section 7](#7-write-mechanics)). Every repair case carries `source_prune_stale`, compiled and not run ([section 10](#10-tests-evals-and-benchmarks)); a folder row reached the cwd filter and was removed in [`fc753e6e15bb0ea039365c1a3e1e4b0589012c60`](https://github.com/chenxiachan/thoughtdag/commit/fc753e6e15bb0ea039365c1a3e1e4b0589012c60); map lines and the stale set skip archived nodes. Found at both pins: the autoRerun pass reruns archived nodes ([section 1](#1-executive-summary)). Screened from a full clone: no auto-run surface, four manifests inside the seven-day cooldown, `AGENTS.md` treated as data; nothing installed, built or run.
 
 **2026-09-30** — [`850b89d1fceebb67e4869863fe1fd4449a244cc6`](https://github.com/chenxiachan/thoughtdag/commit/850b89d1fceebb67e4869863fe1fd4449a244cc6) — 35 commits on, releases 0.5.4 to 0.5.8. The maintainer fixed two findings in [`2991553e5a32f82781e97a2f740b9c66ef042276`](https://github.com/chenxiachan/thoughtdag/commit/2991553e5a32f82781e97a2f740b9c66ef042276), recorded on [issue #51](https://github.com/chenxiachan/thoughtdag/issues/51#issuecomment-5916161378): Replay snapshots the judge-filtered stale set its dialog counts, and the summariser's thread skips archived steps ([section 1](#1-executive-summary), [section 4](#4-essential-implementation-paths)). The summary's fallback map lines and the stale set keep archived nodes. Added: recall reaches, deep and full, which hand up to 2,000 snippets or every indexed turn's opening to the decision endpoint ([section 9](#9-reliability-safety-and-trust)); web and scholarly search off by default; subagent runs mirrored as branches. The profile rewrite, archived nodes in the recall index, the missing stale benchmark condition and the uncalled working-directory filter are unchanged; no mark moved. Corrected: `server.mjs` had 1,201 lines at the previous pin, not 1,195. Screened from a full clone: no auto-run surface, five manifests inside the seven-day cooldown, `AGENTS.md` treated as data; nothing installed, built or run.
 

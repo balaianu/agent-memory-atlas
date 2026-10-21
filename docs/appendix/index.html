@@ -1967,8 +1967,8 @@ project whose manifest repository no longer resolves</li>
 <li><a
 href="https://github.com/chenxiachan/thoughtdag">chenxiachan/thoughtdag</a>
 at <a
-href="https://github.com/chenxiachan/thoughtdag/commit/850b89d1fceebb67e4869863fe1fd4449a244cc6"><code class="commit-id" title="850b89d1fceebb67e4869863fe1fd4449a244cc6">850b89d1…</code></a>
-— read only; five dependency files inside the seven-day cooldown,
+href="https://github.com/chenxiachan/thoughtdag/commit/7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f"><code class="commit-id" title="7d9ba5e3db2e5cf26bdb25c529e2c2f55b12d10f">7d9ba5e3…</code></a>
+— read only; four dependency files inside the seven-day cooldown,
 nothing installed</li>
 <li><a href="https://github.com/benmaster82/Kwipu">benmaster82/Kwipu</a>
 at <a
@@ -18709,6 +18709,21 @@ containing a failed command therefore raised
 <code>metrics_conflict</code>, was skipped at <code>:1240</code>, and
 was compiled as a duplicate skill. The claim rested on the matching rule
 rather than on the metrics the caller sent.</li>
+<li><strong>Two published claims about <a
+href="../systems/thoughtdag/">ThoughtDAG</a> were wrong at <a
+href="https://github.com/chenxiachan/thoughtdag/commit/850b89d1fceebb67e4869863fe1fd4449a244cc6"><code class="commit-id" title="850b89d1fceebb67e4869863fe1fd4449a244cc6">850b89d1…</code></a>,
+the pin they were made at, and are corrected.</strong> The report
+awarded <code>audit_log</code> on the canvas event log and called it
+append-only in code and in contract. <code>logEvent</code> kept the
+newest 9,000 entries once the array passed 10,000
+(<code>src/store/slices/events.ts:16</code>, <code>:24</code>), a
+production delete of mutation records present at every pin the report
+was read at; the report listed the cap as a limit and kept the mark. It
+also said the README's one arXiv link was an example query; the README
+carried none at that pin, and the example lived in
+<code>docs/guides/why-layer.md</code>. The first rested on the log's
+contract comment rather than on what its one writer does past the
+cap.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
