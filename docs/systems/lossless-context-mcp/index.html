@@ -463,9 +463,7 @@ headline</td>
 <td>A subagent gets its own seen-state</td>
 <td>read <code>guardStateKey</code> at
 <code>src/guard.ts:226-232</code></td>
-<td><code>agentId ? \</code><span
-class="math inline"><em>s</em><em>e</em><em>s</em><em>s</em><em>i</em><em>o</em><em>n</em><em>I</em><em>d</em>.<em>a</em><em>g</em><em>e</em><em>n</em><em>t</em>−</span>{agentId}`
-: sessionId`</td>
+<td><code>agentId ? `${sessionId}.agent-${agentId}` : sessionId</code></td>
 </tr>
 <tr>
 <td>Cursors are per transcript path</td>

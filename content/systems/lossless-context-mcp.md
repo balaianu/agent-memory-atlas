@@ -300,7 +300,7 @@ Run from the root of the checkout at the pinned commit.
 
 | Claim | Command | Result at this pin |
 | --- | --- | --- |
-| A subagent gets its own seen-state | read `guardStateKey` at `src/guard.ts:226-232` | `agentId ? \`${sessionId}.agent-${agentId}\` : sessionId` |
+| A subagent gets its own seen-state | read `guardStateKey` at `src/guard.ts:226-232` | `` agentId ? `${sessionId}.agent-${agentId}` : sessionId `` |
 | Cursors are per transcript path | read the `offsets` doc comment in `src/guard.ts` | Keyed by normalized path; the legacy scalar is retained for old state files and never consulted |
 | Only a tool result marks a file seen | `grep -n "Intent-based marks" src/guard.ts` | *"ONLY for this server's read tools (never guarded tools)"*, and *"only tool RESULTS may mark a file as seen"* |
 | Suite size | `grep -c "it(\|test(" test/*.test.ts` summed | 156 cases across ten files |
