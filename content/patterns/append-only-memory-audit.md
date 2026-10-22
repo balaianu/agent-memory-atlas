@@ -267,6 +267,11 @@ need. The fold keys on the latest event by timestamp rather than by line order,
 with same-second ties broken on event *content*, so a reordered or concurrently
 written log folds identically. And unknown statuses resolve rather than vanish,
 because a writer who bothered to record a lifecycle fact meant something by it.
+It is append-only with one documented carve-out: after a forget's tombstone
+lands, `scrub_event_fields` replaces any `item_text`, `status` or `note` whose
+whole value is the forgotten one with a marker and keeps every row, so the
+tombstone is the record of the redaction. That record carries the key and the
+time and names no actor.
 
 It also demonstrates when **not** to use one log. Rejections from the
 verification gates go to a separate `verification.jsonl`, and the source explains

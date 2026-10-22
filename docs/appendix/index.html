@@ -1105,7 +1105,7 @@ href="https://github.com/yaminbkk/NexusMem/commit/e1842964dec6f268febbc99d5c429a
 manifests inside the seven-day cooldown, nothing installed or run</li>
 <li><a href="https://github.com/Daily-Nerd/daimon">Daily-Nerd/daimon</a>
 at <a
-href="https://github.com/Daily-Nerd/daimon/commit/f05d6340c36231f99a00b8c4410345456a416938"><code class="commit-id" title="f05d6340c36231f99a00b8c4410345456a416938">f05d6340…</code></a>
+href="https://github.com/Daily-Nerd/daimon/commit/7aca1e946a12bd778a260e1a28ef81db24579cf9"><code class="commit-id" title="7aca1e946a12bd778a260e1a28ef81db24579cf9">7aca1e94…</code></a>
 — read only; three auto-run surfaces, three build-time execution paths,
 one unpinned surface and two files inside the seven-day cooldown.
 Nothing was built and nothing was run. Apache-2.0</li>
@@ -18724,6 +18724,27 @@ carried none at that pin, and the example lived in
 <code>docs/guides/why-layer.md</code>. The first rested on the log's
 contract comment rather than on what its one writer does past the
 cap.</li>
+<li><strong>One mark and two claims about <a
+href="../systems/daimon/">Daimon</a> were wrong at <a
+href="https://github.com/Daily-Nerd/daimon/commit/f05d6340c36231f99a00b8c4410345456a416938"><code class="commit-id" title="f05d6340c36231f99a00b8c4410345456a416938">f05d6340…</code></a>,
+the pin they were made at, and are corrected.</strong>
+<code>scope_enforced</code> was credited on the per-project read path
+while the shipped MCP server took <code>slug</code> and
+<code>all_projects</code> from the model on <code>daimon_recall</code>,
+and <code>slug</code> on <code>daimon_brief</code>, refusing them only
+under <code>DAIMON_TENANT_SCOPED</code>, which is off by default
+(<code>plugin/daimon_briefing/mcp_server.py:44-53</code>,
+<code>plugin/daimon_briefing/mcp_tools.py:65-87</code>, identical at
+both pins); the evidence record listed the caller-chosen slug among its
+own limits. The report took the corroboration docstring's
+<em>"append-only and never rewritten"</em>
+(<code>plugin/daimon_briefing/capture.py:299</code>) at its word and
+said the event log held nothing for a deletion to miss, while resolve
+and reopen rows carry <code>item_text</code> that
+<code>scrub_event_fields</code> redacts in place. And the whole-tree
+validity-interval search left out a research benchmark under
+<code>research/memory-backend/benchmark/state/</code> that drives
+Graphiti's bi-temporal edges; it touches no product path.</li>
 <li><strong>Three published claims about <a
 href="../systems/mandalore/">Mandalore</a> were wrong at <a
 href="https://github.com/acoz-labs/mandalore/commit/3332938212cc73ee05d03d57e5179d13705a0447"><code class="commit-id" title="3332938212cc73ee05d03d57e5179d13705a0447">33329382…</code></a>,
