@@ -15215,6 +15215,50 @@ Searches at the pin:
 tarball); <code>git grep -n -E '43\.39|61\.03|76\.4'</code> (nothing).
 In the paper, <code>grep -n -i -E 'online|sqlite|session'</code> finds
 one within-session count.</li>
+<li><strong><code>DevLoops-ai/unified-brain</code> was examined and has
+no report: it is a code index of one repository's git history, written
+only by its ingester, and nothing a model concludes is kept for a later
+question.</strong> AGPL-3.0 with no rider, beside a commercial licence
+and a CLA, read at <a
+href="https://github.com/DevLoops-ai/unified-brain/commit/16e7efb4648370b4a9dbfe935a159cffb05fd3c2"><code class="commit-id" title="16e7efb4648370b4a9dbfe935a159cffb05fd3c2">16e7efb4…</code></a>:
+six commits on 24 and 25 October 2026, 13,959 lines of Python.
+<code>next_claude.py</code> walks the history with tree-sitter and
+writes every version of every symbol, call and reference edges, an FTS5
+index and code vectors to <code>&lt;repo&gt;/.unified-brain.db</code>,
+with no model call and an empty description
+(<code>next_claude.py:225</code>). Correction is re-ingestion. The MCP
+server's one tool, <code>retrieve</code>
+(<code>unified_brain_mcp.py:49</code>), only reads, and its instructions
+tell the agent not to open files to verify. That is the line drawn for
+Fullerenes and kivgraph in this list. "Each answer is answered
+independently" holds literally. The page sends
+<code>AskRequest.history</code>
+(<code>codebase_qa_service.py:1971</code>) and the server never reads
+it; the per-question <code>JevMemory</code> lives in process. The one
+model-written state that persists is the timeline report: judge
+verdicts, findings and evidence under <code>report:&lt;id&gt;</code>
+keys that <em>"never expire"</em> (<code>:2619</code>) and leave only
+through the delete route (<code>:4582</code>). Every read of them is in
+the report endpoints, so no later question sees one. Absorbing new
+commits automatically is unbuilt, as the README says. Screened before
+reading: no auto-run or build-time surface, and
+<code>requirements.txt</code> inside the cooldown with four
+<code>&gt;=</code> ranges; nothing was installed or run. No evaluation
+result is committed. <code>benchmarks/open62541.md</code> is a
+five-question protocol with a blank grading sheet and
+<code>benchmarks/xz.md</code> is empty, though the README says the
+answers are there. The "18 times cheaper" figure has no derivation in
+the tree; the README's one comparison, 9% of a $20 plan against 2% plus
+<span class="math inline">$0.12, works out near 3.5 times. "Does not
+hallucinate" has no check behind it, and the answer writer samples at
+`temperature=0.2` (`:2011`). Searches at the pin: `git grep -n -E
+'req\.history' -- '*.py'` (nothing), and `git grep -n -E
+'report:|reports_index' -- '*.py' ':!templates.py'` (service lines 2565
+to 4974 only, after the ask path and before `/api/retrieve` at 5102).
+Also `git ls-files | grep -i -E
+'test|result|\.(json|csv|jsonl)$</span>'<code>(nothing);</code>git grep
+-n -E '18 times|1/18'<code>(README line 5 only);</code>git grep -n -i -E
+'watchdog|inotify|fsevents' -- '*.py'` (nothing).</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
