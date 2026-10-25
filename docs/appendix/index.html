@@ -15259,6 +15259,60 @@ Also `git ls-files | grep -i -E
 'test|result|\.(json|csv|jsonl)$</span>'<code>(nothing);</code>git grep
 -n -E '18 times|1/18'<code>(README line 5 only);</code>git grep -n -i -E
 'watchdog|inotify|fsevents' -- '*.py'` (nothing).</li>
+<li><strong>Can LLMs Improve Their Own Harness? A Controlled Study on
+ARC-AGI-3 (<a
+href="https://arxiv.org/abs/2610.30499">arXiv:2610.30499</a>) was
+examined and has no report: its only durable artifact is a harness
+source tree a coding model rewrites twice, and each game's writes are
+sandboxed to its own output directory.</strong> Lehmann (TU Dresden;
+Amazon, work done outside it) and Vahdati (Universität Hannover and
+TIB), v1 21 October 2026, the only version listed. Each of 27 lineages
+builds a harness through OpenCode, plays five development games and
+revises from a feedback bundle, twice; every frozen snapshot is scored
+on twenty held-out games. At gameplay the Seatbelt profile allows writes
+only to a per-game output directory and a temporary directory, neither
+of which may already exist
+(<code>framework/control/runtime.sb:58-61</code>;
+<code>run_game.sh:61-65</code>, <code>:223-229</code>,
+<code>:461</code>). The harnesses' own memories, such as T013's
+1,200-character <code>GameMemory</code>, live and die within one game.
+Across revisions the parent's tree is copied read-only and fingerprinted
+(<code>system_snapshot.py:166-174</code>), <code>feedback/</code> and
+<code>.git</code> are excluded from every snapshot
+(<code>:20-29</code>), and each stage gets a fresh repository
+(<code>:223-229</code>). Revision 2 therefore sees its parent's evidence
+and no edit history. Qualification refuses a score cutoff
+(<code>smoke_report.py:426-427</code>), and the paper reports that no
+scored revision kept its parent unchanged. The only ancestral record is
+prose a model chose to keep: the Astra lineages carry
+<code>REPAIR.md</code>, and A001's second-revision
+<code>DEVELOPMENT.md</code> overrides figures in its "inherited
+documentation". Code is the arXiv ancillary artifact, an anonymous
+review copy (<code>CITATION.cff</code> version
+<code>review-2026-09-26</code>) with no licence file under a CC BY 4.0
+listing, pinned by <a
+href="https://arxiv.org/src/2610.30499v1/anc/MANIFEST.sha256"><code>MANIFEST.sha256</code></a>
+(sha256
+<code>3d49fd5763267b1519ec5ea6066a466d92f3713af5432b7ea5457f664dcb47cd</code>):
+11,861 lines of Python in <code>framework/control/</code>, 232 test
+functions, not run. <a href="../systems/harness2/">Harness²</a> keeps
+every adopted harness with a lesson for later tasks' editors; here there
+is one parent and one bundle. Harness-Zero distils an offline
+<code>memory.md</code> into weights; here weights are fixed and nothing
+outlives the lineage. The <code>metauto-ai/HGM</code> bar, a generation
+reading a durable record of what its ancestors tried, is met only by
+that unmanaged in-tree prose. Revision 2 raised mean held-out RHAE by
+2.80 points (95% interval [−1.44, 7.35]) against 8.42 on development
+games. No GitHub repository turned up: <code>gh search repos</code> for
+the exact title, <code>harness adaptation gap</code> and
+<code>self-improving harness ARC-AGI-3</code>;
+<code>gh search code</code> for
+<code>harness-adaptation-review-artifact</code>,
+<code>ARC_SCRATCH_SYSTEM_DIR</code> and the qualification error string;
+accounts <code>JensLehmann</code> and <code>S6savahd</code>; orgs
+<code>NIMI-research</code>, <code>TIBHannover</code>,
+<code>SmartDataAnalytics</code> and <code>tu-dresden</code>. The screen
+parsed nothing in this non-git tree; nothing was installed or run.</li>
 <li><strong><code>assafelovic/gpt-researcher</code> was examined and has
 no report: every store it writes is either a per-run index of scraped
 pages or an archive of finished reports, and no research run reads what
