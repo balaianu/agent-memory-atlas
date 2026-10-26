@@ -255,22 +255,26 @@ host checks the quote and the version; nobody reviews before the change
 lands.</p>
 <figure class="diagram"><figcaption class="diagram-caption">Diagram — how a Cindy memory shard is written, which paths check anything before it lands, what reads it back, and how it dies without a trace</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a Cindy memory shard is written, which paths check anything before it lands, what reads it back, and how it dies without a trace
 flowchart TD
-    M[&quot;Model in Claude Code, Codex or Pi&quot;] --&gt;|&quot;memory_write / consolidate&lt;br/&gt;no evidence&quot;| W[&quot;MemoryStorage.write&quot;]
-    N[&quot;Nightly routine, teammate only&quot;] --&gt;|&quot;create: quote must appear&lt;br/&gt;in a user message&quot;| W
-    N --&gt;|&quot;update / delete: reason only,&lt;br/&gt;CAS on updatedAt&quot;| W
-    P[&quot;Pi compaction&quot;] --&gt;|&quot;type digest&quot;| W
-    U[&quot;Person, teammate settings&quot;] --&gt;|&quot;edit / delete, CAS&quot;| W
-    H[&quot;Host session context&quot;] --&gt;|&quot;scope key: workdir, ssh:, bot:&quot;| D
-    W --&gt; D[&quot;Directory for the key&lt;br/&gt;type_slug.md&quot;]
+    subgraph WR[&quot;Writers, each calling MemoryStorage.write&quot;]
+        direction TB
+        M[&quot;Model in Claude Code,&lt;br/&gt;Codex or Pi&lt;br/&gt;memory_write, consolidate&lt;br/&gt;no evidence asked&quot;]
+        N[&quot;Nightly routine,&lt;br/&gt;teammate only&lt;br/&gt;create: quote must appear&lt;br/&gt;in a user message&lt;br/&gt;update, delete: reason only,&lt;br/&gt;CAS on updatedAt&quot;]
+        P[&quot;Pi compaction&lt;br/&gt;writes a digest shard&quot;]
+        U[&quot;Person in&lt;br/&gt;teammate settings&lt;br/&gt;edit or delete, CAS&quot;]
+        M ~~~ N ~~~ P ~~~ U
+    end
+    WR --&gt; W[&quot;MemoryStorage.write&quot;]
+    L[&quot;Per-reply review and&lt;br/&gt;working-memory ledger&quot;] -. &quot;no caller since&lt;br/&gt;23 October 2026&quot; .-&gt; W
+    H[&quot;Host session context&lt;br/&gt;scope key: workdir,&lt;br/&gt;ssh:, bot:&quot;] --&gt;|&quot;picks the directory&quot;| D
+    W --&gt; D[&quot;Directory for the key&lt;br/&gt;type_slug.md shards&quot;]
+    W --&gt;|&quot;nightly change&quot;| B[&quot;learning-history backup&lt;br/&gt;last 30 runs,&lt;br/&gt;rewritten by undo&quot;]
     D --&gt; I[&quot;MEMORY.md rebuilt&lt;br/&gt;curated types only&quot;]
     D --&gt; F[&quot;fts.db FTS5 row&quot;]
-    I --&gt;|&quot;snapshot at session start&quot;| C[&quot;Prompt&quot;]
-    F --&gt;|&quot;memory_search: MATCH + LIKE&quot;| C
-    D --&gt;|&quot;memory_read by filename&quot;| C
-    W --&gt;|&quot;nightly change&quot;| B[&quot;learning-history backup&lt;br/&gt;last 30 runs, undo&quot;]
-    X[&quot;memory_delete, consolidate,&lt;br/&gt;reset, nightly delete&quot;] --&gt;|&quot;fs.unlink&quot;| G[&quot;Gone: no record of the value&quot;]
-    G -. &quot;nothing consulted on&lt;br/&gt;the next write&quot; .-&gt; W
-    L[&quot;Per-reply review and&lt;br/&gt;working-memory ledger&quot;] -. &quot;no caller since&lt;br/&gt;23 October 2026&quot; .-&gt; W</code></pre></details></figure>
+    I --&gt;|&quot;snapshot at&lt;br/&gt;session start&quot;| C[&quot;Prompt&quot;]
+    F --&gt;|&quot;memory_search&lt;br/&gt;MATCH + LIKE&quot;| C
+    D --&gt;|&quot;memory_read&lt;br/&gt;by filename&quot;| C
+    C ~~~ X[&quot;memory_delete, consolidate,&lt;br/&gt;reset, nightly delete&quot;]
+    X --&gt;|&quot;fs.unlink&quot;| G[&quot;Gone: no record&lt;br/&gt;of the value, nothing&lt;br/&gt;consulted on the next write&quot;]</code></pre></details></figure>
 <h2 id="3-architecture">3. Architecture</h2>
 <p>Cindy is a pnpm monorepo. The memory engine is
 <code>packages/maker-core/src/memory</code>: <code>MemoryStorage</code>

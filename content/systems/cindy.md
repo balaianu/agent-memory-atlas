@@ -120,22 +120,26 @@ quote and the version; nobody reviews before the change lands.
 ```mermaid
 %% caption: how a Cindy memory shard is written, which paths check anything before it lands, what reads it back, and how it dies without a trace
 flowchart TD
-    M["Model in Claude Code, Codex or Pi"] -->|"memory_write / consolidate<br/>no evidence"| W["MemoryStorage.write"]
-    N["Nightly routine, teammate only"] -->|"create: quote must appear<br/>in a user message"| W
-    N -->|"update / delete: reason only,<br/>CAS on updatedAt"| W
-    P["Pi compaction"] -->|"type digest"| W
-    U["Person, teammate settings"] -->|"edit / delete, CAS"| W
-    H["Host session context"] -->|"scope key: workdir, ssh:, bot:"| D
-    W --> D["Directory for the key<br/>type_slug.md"]
+    subgraph WR["Writers, each calling MemoryStorage.write"]
+        direction TB
+        M["Model in Claude Code,<br/>Codex or Pi<br/>memory_write, consolidate<br/>no evidence asked"]
+        N["Nightly routine,<br/>teammate only<br/>create: quote must appear<br/>in a user message<br/>update, delete: reason only,<br/>CAS on updatedAt"]
+        P["Pi compaction<br/>writes a digest shard"]
+        U["Person in<br/>teammate settings<br/>edit or delete, CAS"]
+        M ~~~ N ~~~ P ~~~ U
+    end
+    WR --> W["MemoryStorage.write"]
+    L["Per-reply review and<br/>working-memory ledger"] -. "no caller since<br/>23 October 2026" .-> W
+    H["Host session context<br/>scope key: workdir,<br/>ssh:, bot:"] -->|"picks the directory"| D
+    W --> D["Directory for the key<br/>type_slug.md shards"]
+    W -->|"nightly change"| B["learning-history backup<br/>last 30 runs,<br/>rewritten by undo"]
     D --> I["MEMORY.md rebuilt<br/>curated types only"]
     D --> F["fts.db FTS5 row"]
-    I -->|"snapshot at session start"| C["Prompt"]
-    F -->|"memory_search: MATCH + LIKE"| C
-    D -->|"memory_read by filename"| C
-    W -->|"nightly change"| B["learning-history backup<br/>last 30 runs, undo"]
-    X["memory_delete, consolidate,<br/>reset, nightly delete"] -->|"fs.unlink"| G["Gone: no record of the value"]
-    G -. "nothing consulted on<br/>the next write" .-> W
-    L["Per-reply review and<br/>working-memory ledger"] -. "no caller since<br/>23 October 2026" .-> W
+    I -->|"snapshot at<br/>session start"| C["Prompt"]
+    F -->|"memory_search<br/>MATCH + LIKE"| C
+    D -->|"memory_read<br/>by filename"| C
+    C ~~~ X["memory_delete, consolidate,<br/>reset, nightly delete"]
+    X -->|"fs.unlink"| G["Gone: no record<br/>of the value, nothing<br/>consulted on the next write"]
 ```
 
 ## 3. Architecture
