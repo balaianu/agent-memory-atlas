@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A desktop agent host that replaces
+Claude Code, Codex and Pi native memory with per-workdir or per-teammate
+Markdown shards, an injected index and FTS5 search.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Cindy — Agent Memory Atlas">
+    <meta property="og:description" content="A desktop agent host that
+replaces Claude Code, Codex and Pi native memory with per-workdir or
+per-teammate Markdown shards, an injected index and FTS5 search.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cindy — Agent Memory Atlas">
+    <meta name="twitter:description" content="A desktop agent host that
+replaces Claude Code, Codex and Pi native memory with per-workdir or
+per-teammate Markdown shards, an injected index and FTS5 search.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Cindy — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Cindy",
+      "description": "A desktop agent host that replaces Claude Code, Codex and Pi native memory with per-workdir or per-teammate Markdown shards, an injected index and FTS5 search.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">A desktop agent host whose memory is
+Markdown shards per workdir or per teammate, an injected index and FTS5
+search</p>
+          <h1>Cindy</h1>
+          <p class="document-deck">A desktop agent host that replaces
+Claude Code, Codex and Pi native memory with per-workdir or per-teammate
+Markdown shards, an injected index and FTS5 search.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/makecindy/cindy">
+              <span>Source</span>
+              <strong>makecindy/cindy</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/makecindy/cindy/commit/82d44ec3eedb923e268ae963114a09849ee62655" title="82d44ec3eedb923e268ae963114a09849ee62655">
+              <span>Analyzed revision</span>
+              <code>82d44ec3…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-26</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/makecindy--cindy" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>makecindy--cindy</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>Apache-2.0;
+LICENSE is the canonical text and NOTICE names XD Inc., both read in
+full, no rider; contributions carry a DCO sign-off</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>about
+1,908,000 lines of TypeScript outside tests; the memory core is 2,933
+lines in packages/maker-core/src/memory, the cindy_memory MCP server
+833, the teammate memory service, nightly learning and history search
+1,697, and an unwired per-reply review and working-memory ledger
+1,394</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>10,286
+commits on main, 24 July 2026 (initial open-source release) – 26 October
+2026; 166 contributor entries in the GitHub API, anonymous
+included</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>5,703
+test files in the tree; 157 cases in 19 memory, nightly-learning and
+history-search test files; maker-core and lizi-mcps are required unit
+workspaces</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Cindy is a desktop agent host from XD Inc. that runs Claude Code,
+Codex and Pi as harnesses, plus persistent "teammate" agents (Bots)
+reachable from chat apps. Its memory, called Maker Memory in the code,
+replaces the harnesses' own auto-memory with Markdown shards under one
+of four types, a <code>MEMORY.md</code> index the host rebuilds and
+injects at session start, and an FTS5 table per store behind an
+in-process <code>cindy_memory</code> MCP server. What is notable is
+where the boundary lives: the host derives every store's key from the
+session, never from a tool argument. A teammate's memory is also tidied
+by a nightly routine that admits a new memory only on a verbatim user
+quote and records every change for undo. What is weak is correction: a
+memory has no state and no history, a delete unlinks the file, and the
+undo trail keeps 30 runs.</p>
+<p>The design is Claude Code's auto-memory with the index moved out of
+the model's hands. The model writes
+<code>&lt;type&gt;_&lt;slug&gt;.md</code> through
+<code>memory_write</code>, and <code>MemoryStorage.rebuildIndex</code>
+regenerates <code>MEMORY.md</code> from every shard's frontmatter after
+each mutation, so the index cannot drift from the files
+(<code>packages/maker-core/src/memory/storage.ts:509-553</code>). The
+FTS5 table is a derived index too, rebuilt from the files whenever a
+store opens
+(<code>packages/maker-core/src/memory/store.ts:109-132</code>).</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>Scope is a directory, chosen by the host.</strong>
+<code>withStore</code> takes <code>memoryScopeKey</code> or
+<code>workingDir</code> from the session context and never from a tool
+argument (<code>packages/lizi-mcps/src/memory/_shared.ts:55-73</code>),
+and each key maps to its own directory and <code>fts.db</code>. The mark
+is withheld because the boundary is physical, and because
+<code>session_search</code>, registered in the same server, returns
+account-wide history to an ordinary session.</li>
+<li><strong>The background writer checks its evidence; the foreground
+writer does not.</strong> A nightly memory create is applied only if its
+quote appears in a user message with that id
+(<code>apps/desktop/src/main/maker-ipc/botNightlyLearning.ts:472-473</code>).
+A model <code>memory_write</code> carries no evidence at all, and
+nightly updates and deletes need only a reason.</li>
+<li><strong>Forgetting leaves nothing behind.</strong>
+<code>memory_delete</code> unlinks the shard and rebuilds the index
+(<code>storage.ts:420-445</code>); no record of the value survives to
+stop the model writing it again.</li>
+<li><strong>A whole layer is declared and unwired.</strong> The
+per-reply learning review and the working-memory ledger it maintained
+have had no caller since commit <a
+href="https://github.com/makecindy/cindy/commit/9672a99bc98f1415f90ccdf1d597e99833fff503"><code class="commit-id" title="9672a99bc98f1415f90ccdf1d597e99833fff503">9672a99b…</code></a>
+(23 October 2026), and the product rules say so; only the ledger's
+deletion cleanup is wired.</li>
+</ul>
+<p>One mark, <code>negative_eval</code>, from a deletion case run
+through the real MCP server against a populated store with a kept memory
+as control.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a file. Its identity is the filename,
+<code>&lt;type&gt;_&lt;slug&gt;.md</code>, where the slug is
+<code>[a-z0-9_-]{1,64}</code> supplied by the writer and the type is one
+of <code>user</code>, <code>feedback</code>, <code>project</code>,
+<code>reference</code> or <code>digest</code>
+(<code>packages/maker-core/src/memory/types.ts:17-29</code>). The
+frontmatter holds <code>title</code>, <code>description</code>,
+<code>type</code> and <code>updatedAt</code>; nothing records who wrote
+it, from what, or how sure anyone is. A shard is believed from the
+moment it lands: the next session's index lists it and the next search
+can return it.</p>
+<p>The four curated types are what the model is taught to write. The
+injected rules ask for a <code>**Why:**</code> and
+<code>**How to apply:**</code> on feedback, absolute dates, and no code
+facts, git history or task state
+(<code>packages/maker-core/src/memory/system-prompt.md</code>).
+<code>digest</code> is the host's own type: Pi writes a compaction
+summary under it, <code>memory_search</code> can find it, and
+<code>rebuildIndex</code> leaves it out of <code>MEMORY.md</code>, so it
+never reaches a prompt unasked (<code>storage.ts:533-545</code>,
+<code>packages/maker-core/src/agents/pi/index.ts:3836-3855</code>).</p>
+<p>A memory changes in three ways and dies in one.
+<code>mode: 'update'</code> replaces the body and keeps the old title or
+description if the new ones are empty; <code>append</code> concatenates;
+<code>memory_consolidate</code> writes a target and unlinks the sources
+(<code>storage.ts:346-418</code>, <code>store.ts:260-333</code>). Death
+is <code>fs.unlink</code>, by the model's <code>memory_delete</code>, a
+person's settings page, a nightly delete, a consolidation, or a reset of
+a whole store. There is no superseded, archived or rejected state, and
+no record that a value was ever removed.</p>
+<p>Teammate memory adds one actor. A built-in routine runs once a night
+per teammate, reads the owner's conversations since its watermark, and
+asks an auxiliary model for a JSON plan. The host applies a create only
+if the quote it cites is found in a user message with that id, applies
+an update or delete only to a shard whose full body the model was shown
+and whose <code>updatedAt</code> has not moved, and records each
+change's before and after so a person can undo it
+(<code>botNightlyLearning.ts:441-502</code>). The model proposes; the
+host checks the quote and the version; nobody reviews before the change
+lands.</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a Cindy memory shard is written, which paths check anything before it lands, what reads it back, and how it dies without a trace</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a Cindy memory shard is written, which paths check anything before it lands, what reads it back, and how it dies without a trace
+flowchart TD
+    M[&quot;Model in Claude Code, Codex or Pi&quot;] --&gt;|&quot;memory_write / consolidate&lt;br/&gt;no evidence&quot;| W[&quot;MemoryStorage.write&quot;]
+    N[&quot;Nightly routine, teammate only&quot;] --&gt;|&quot;create: quote must appear&lt;br/&gt;in a user message&quot;| W
+    N --&gt;|&quot;update / delete: reason only,&lt;br/&gt;CAS on updatedAt&quot;| W
+    P[&quot;Pi compaction&quot;] --&gt;|&quot;type digest&quot;| W
+    U[&quot;Person, teammate settings&quot;] --&gt;|&quot;edit / delete, CAS&quot;| W
+    H[&quot;Host session context&quot;] --&gt;|&quot;scope key: workdir, ssh:, bot:&quot;| D
+    W --&gt; D[&quot;Directory for the key&lt;br/&gt;type_slug.md&quot;]
+    D --&gt; I[&quot;MEMORY.md rebuilt&lt;br/&gt;curated types only&quot;]
+    D --&gt; F[&quot;fts.db FTS5 row&quot;]
+    I --&gt;|&quot;snapshot at session start&quot;| C[&quot;Prompt&quot;]
+    F --&gt;|&quot;memory_search: MATCH + LIKE&quot;| C
+    D --&gt;|&quot;memory_read by filename&quot;| C
+    W --&gt;|&quot;nightly change&quot;| B[&quot;learning-history backup&lt;br/&gt;last 30 runs, undo&quot;]
+    X[&quot;memory_delete, consolidate,&lt;br/&gt;reset, nightly delete&quot;] --&gt;|&quot;fs.unlink&quot;| G[&quot;Gone: no record of the value&quot;]
+    G -. &quot;nothing consulted on&lt;br/&gt;the next write&quot; .-&gt; W
+    L[&quot;Per-reply review and&lt;br/&gt;working-memory ledger&quot;] -. &quot;no caller since&lt;br/&gt;23 October 2026&quot; .-&gt; W</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Cindy is a pnpm monorepo. The memory engine is
+<code>packages/maker-core/src/memory</code>: <code>MemoryStorage</code>
+for files, <code>MemoryFts</code> for one better-sqlite3 FTS5 table,
+<code>MakerMemoryStore</code> as the facade over both, and
+<code>MakerMemoryManager</code> as a pool of stores keyed by scope. The
+MCP surface is
+<code>packages/lizi-mcps/src/cindy_memoryMcpServer.ts</code> with tool
+modules under <code>packages/lizi-mcps/src/memory/</code>. The Electron
+main process in <code>apps/desktop</code> injects the SQLite factory,
+the owner-scoped data root, the teammate storage resolver and the
+history search; <code>apps/cindy-headless</code> wraps the same MCP
+factory for a headless runner
+(<code>apps/cindy-headless/src/memory-provider.ts</code>).</p>
+<p>A store is opened lazily on first <code>getStore(scopeKey)</code>:
+the manager resolves the signed-in owner's root, derives a directory
+name from the key, opens <code>fts.db</code> beside the shards and pools
+the result
+(<code>packages/maker-core/src/memory/manager.ts:518-723</code>).
+Teammate scopes resolve to <code>memories/</code> inside the teammate's
+Home under <code>&lt;ownerRoot&gt;/bots/</code>
+(<code>apps/desktop/src/main/maker-host/maker-memory-host.ts:108-112</code>),
+copying shards from the legacy location once and writing a receipt.
+Opening a store rebuilds both derived indexes from the files
+(<code>store.ts:109-132</code>).</p>
+<p>The owner boundary is enforced harder than anything else in the
+subsystem. If the account is unknown, <code>getStore</code> throws
+<code>memory:not-ready</code> rather than writing to a temporary
+directory; every store operation re-checks the owner key before and
+after each await, and a sign-out mid-write aborts with the derived index
+marked dirty for repair (<code>manager.ts:320-405</code>,
+<code>storage.ts:399-445</code>). The comments cite more than twenty
+review rounds on one pull request, #2388, for these guards.</p>
+<p>Two more stores sit beside memory. The <code>messages</code> table
+and its <code>messages_fts</code> shadow back
+<code>session_search</code>
+(<code>apps/desktop/src/main/maker-host/session-search.ts</code>), and
+<code>searchChatHistoryHybrid</code> adds a sqlite-vec arm over the same
+messages for the sidebar and the <code>cindy_helper</code> history tools
+(<code>apps/desktop/src/main/localDb/chatHistorySearch.ts</code>). Cloud
+companions upload each teammate's memory files to Cindy's Chat Server as
+preference values, with a <code>null</code> tombstone when a file
+disappears locally
+(<code>apps/desktop/src/main/companion-cloud/host.ts:96-107</code>,
+<code>apps/desktop/src/main/companion-cloud/uploader.ts</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>Nothing runs besides the desktop app. The store is Markdown on local
+disk plus a SQLite file that can be deleted and regenerated, so it is
+readable and repairable by hand; editing a shard outside the app is
+picked up the next time the store opens. Storing needs no API key.
+<code>memory_review</code> and nightly learning call an auxiliary model,
+which needs a configured provider. Install is the desktop app; nothing
+in the memory path leaves the machine unless a teammate is a cloud
+companion.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Write through MCP.</strong> <code>memory_write</code>
+validates type, slug, title and description with zod
+(<code>packages/lizi-mcps/src/memory/write.ts:36-52</code>), then
+<code>withStore</code> resolves the scope from the session context and
+calls <code>MakerMemoryStore.write</code>
+(<code>_shared.ts:44-112</code>). <code>MemoryStorage.writeFile</code>
+refuses a <code>create</code> over an existing file, rejects bodies over
+8,192 bytes, stamps <code>updatedAt</code>, writes the file, rebuilds
+<code>MEMORY.md</code> by reading every shard, and returns a soft
+warning over 2,048 bytes per shard or 4,096 for the index
+(<code>storage.ts:346-418</code>, <code>types.ts:128-135</code>). The
+facade then re-reads the shard and upserts its FTS row, logging rather
+than failing if that errors (<code>store.ts:193-212</code>).</p>
+<p><strong>Retrieval.</strong> <code>memory_search</code> escapes the
+query into one FTS5 phrase, ranks <code>MATCH</code> hits by
+<code>bm25</code>, and merges a <code>LIKE</code> scan over title,
+description and body for CJK substrings that <code>unicode61</code>
+cannot split, reserving one slot for a LIKE-only hit when the MATCH
+results fill the limit
+(<code>packages/maker-core/src/memory/fts.ts:90-207</code>).
+<code>memory_read</code> takes a filename, rejects <code>..</code>,
+<code>/</code> and <code>\</code>, and requires the
+<code>&lt;type&gt;_&lt;slug&gt;.md</code> shape
+(<code>storage.ts:286-291</code>, <code>:591-599</code>).</p>
+<p><strong>Context assembly.</strong> Claude Code and Codex resolve the
+scope key at session start, open the store, and inject the static rules
+plus a snapshot of <code>MEMORY.md</code>
+(<code>packages/maker-core/src/agents/claude-code/index.ts:1792-1803</code>,
+<code>packages/maker-core/src/agents/codex/index.ts:3764-3775</code>). A
+teammate's runtime builds the same snapshot from its <code>bot:</code>
+scope and omits the rules
+(<code>apps/desktop/src/main/maker-ipc/botProfileRuntime.ts:581-597</code>).
+The snapshot is taken once; a write mid-session is visible through the
+tools and not in the injected index until the next session.</p>
+<p><strong>Correction and forgetting.</strong>
+<code>memory_delete</code> and <code>memory_consolidate</code> are the
+model's verbs (<code>packages/lizi-mcps/src/memory/delete.ts</code>,
+<code>consolidate.ts</code>). A person edits or deletes teammate
+memories in settings through <code>botMemoryService</code>, which
+compares <code>updatedAt</code> and refuses a stale save with
+<code>BOT_MEMORY_CHANGED</code>
+(<code>apps/desktop/src/main/maker-ipc/botMemoryService.ts:273-358</code>).
+Workdir memory has no per-item UI: settings offers a reset of every
+store
+(<code>apps/desktop/src/renderer/components/settings/MemorySection.tsx:211-230</code>).</p>
+<p><strong>Nightly learning.</strong> <code>runNightlyLearning</code> is
+called only by the routine service
+(<code>apps/desktop/src/main/routines/service.ts:169</code>), on a cron
+of <code>30 3 * * *</code> by default
+(<code>apps/desktop/src/main/bot-autonomy/nightlyLearningRoutine.ts:30-46</code>).
+<code>runLocked</code> reads up to 60,000 characters of owner turns,
+sends the teammate's memories, skills, candidates and declined titles to
+the auxiliary model, validates the JSON against
+<code>nightlyLearningSchema</code>, and applies memory operations before
+skill operations (<code>botNightlyLearning.ts:312-580</code>,
+<code>apps/desktop/src/main/maker-ipc/botNightlyLearningPlan.ts:16-81</code>).
+<code>revertNightlyLearningItem</code> undoes or redoes one change and
+refuses if the live content no longer matches the recorded side
+(<code>botNightlyLearning.ts:592-631</code>).</p>
+<p><strong>LLM review.</strong> <code>memory_review</code> sends every
+record's full body to the auxiliary model and returns up to 200 words of
+suggestions; it changes nothing (<code>manager.ts:900-963</code>,
+<code>packages/lizi-mcps/src/memory/review.ts</code>).</p>
+<p><strong>Unwired.</strong> <code>reviewTeammateLearning</code> in
+<code>apps/desktop/src/main/maker-ipc/botLearningReview.ts</code> has no
+importer outside its tests. The working-memory ledger in
+<code>botWorkingMemory.ts</code> has a writer only in that review; its
+readers <code>readWorkingMemoryNoteForSession</code> and
+<code>createWorkingMemoryRefreshRegistry</code> have no caller, and the
+optional <code>readWorkingMemoryNote</code> and
+<code>peekWorkingMemoryRefresh</code> dependencies are never supplied.
+Its deletion pruner is wired
+(<code>apps/desktop/src/main/maker-ipc/register.ts:11327-11328</code>).</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<p>The record is <code>MemoryRecord</code>: filename, slug, frontmatter
+and body, plus the file's byte size (<code>types.ts:60-71</code>).
+<code>bodyLength</code> is added only for imported shards whose
+whitespace must survive exactly. There is no id beyond the filename, no
+author, no source, no confidence and no status field;
+<code>updatedAt</code> is the only time, and every write overwrites
+it.</p>
+<p><code>meta.json</code> in each directory records the key the store
+was opened for and its creation time; the manager uses it to tell a
+teammate directory from a project directory with a similar name before a
+global reset (<code>manager.ts:150-168</code>). <code>MEMORY.md</code>
+and <code>fts.db</code> are derived and are skipped when legacy shards
+are migrated.</p>
+<p>Scope keys come in three shapes (<code>storage.ts:79-136</code>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Directory</th>
+<th>Produced by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>absolute working directory</td>
+<td><code>sanitizeWorkdir(path)</code> under
+<code>&lt;ownerRoot&gt;/maker-memory/</code></td>
+<td><code>resolveMemoryScopeKey</code>, after folding a linked git
+worktree to the main checkout plus the same subpath</td>
+</tr>
+<tr>
+<td><code>ssh:&lt;encoded host&gt;:&lt;remote path&gt;</code></td>
+<td><code>ssh-&lt;host&gt;-&lt;sha256 prefix&gt;</code></td>
+<td><code>buildMemoryScopeKey</code> for remote sessions</td>
+</tr>
+<tr>
+<td><code>bot:&lt;encoded id&gt;</code></td>
+<td><code>memories/</code> in the teammate's Home under
+<code>&lt;ownerRoot&gt;/bots/</code></td>
+<td><code>buildBotMemoryScopeKey</code>, set by the host for a teammate
+session</td>
+</tr>
+</tbody>
+</table></div>
+<p>A subdirectory of a repository is its own scope: the resolver keeps
+"isolate by cwd" and only swaps a worktree root for the main root
+(<code>packages/maker-core/src/memory/scope-resolver.ts</code>). A
+session opened in <code>/repo/apps/a</code> and one in
+<code>/repo</code> do not share memory.</p>
+<p>Nightly learning keeps its own state per teammate: a watermark,
+pending turn counts, up to 30 runs with their items, up to 20 skill
+candidates, up to 40 declined candidate titles, and skill usage counts
+(<code>apps/desktop/src/main/maker-ipc/botNightlyLearningState.ts:20-22</code>,
+<code>:40-63</code>). Each run's before and after snapshots go to
+<code>learning-history/&lt;runId&gt;.json</code>; runs past the 30th are
+dropped and their files removed
+(<code>botNightlyLearningState.ts:151-163</code>).</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p>Retrieval is lexical and tool-mediated. The only automatic injection
+is the index at session start: one line per curated shard, its filename,
+title and description, grouped by type. The model decides when to search
+or read.</p>
+<p>Search is phrase-exact. <code>escapeFtsQuery</code> wraps the whole
+query in quotes, so <code>AND</code>, <code>OR</code> and prefix syntax
+are inert and a multi-word query matches only the exact phrase
+(<code>fts.ts:248-250</code>). The LIKE fallback compensates for Chinese
+text and, as a side effect, for any exact substring. LIKE hits carry no
+score and sort after every MATCH hit. The <code>type</code> filter
+applies on both arms. Limits default to 10 and cap at 50.</p>
+<p>The injected index has no hard ceiling.
+<code>index-size-exceeded</code> is a warning returned to the writer at
+4,096 bytes, and the prompt tells the model to judge whether to
+consolidate (<code>system-prompt.md</code>). A store that grows past the
+soft limit is injected whole into every new session.</p>
+<p><code>session_search</code> is a second recall surface in the same
+server, over raw messages. For a teammate session it adds
+<code>m.session_id IN</code> the teammate's linked and delegated
+sessions, derived from the caller's session row, and a model-supplied
+<code>sessionId</code> only narrows inside that set
+(<code>session-search.ts:83-102</code>,
+<code>apps/desktop/src/main/localDb/botHistoryScope.ts:16-39</code>).
+For an ordinary session the caller scope is <code>unscoped</code> and
+the query searches all history in the account, across every working
+directory. The host can also widen a teammate's main task to account
+history for the owner's own turns
+(<code>apps/desktop/src/main/mcp-integrations/mcp-providers.ts:570-588</code>).</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>Most memories are written by the model in the turn, through tools, on
+its own judgement guided by the injected rules. A user message starting
+with <code>Save in memory:</code> or <code>记到 memory:</code> is a
+manual trigger the prompt asks the model to honour. Nothing filters what
+the model writes beyond the schema: no secret scan, no source check, no
+quote. A prompt-injected instruction in tool output can produce a
+<code>memory_write</code> like any other.</p>
+<p>The nightly writer is the careful one. It sees only completed owner
+turns with a user input that did not come from automation, IM channel
+turns only when the host stamped the sender as the owner, and nothing
+from subagents, private replies or group lanes
+(<code>botNightlyLearning.ts:109-160</code>). A create needs
+<code>hasLearningEvidence</code>: a message with the cited id, role
+<code>user</code>, whose text contains the quote
+(<code>apps/desktop/src/main/maker-ipc/botLearningReviewPlan.ts:59-70</code>).
+An update or delete needs a full-body snapshot the model was shown and
+an unchanged <code>updatedAt</code>, and no evidence. A merge deletes
+its sources only if the kept shard's update landed.</p>
+<p>Deduplication is by name. A <code>create</code> with an existing
+filename returns <code>ALREADY_EXISTS</code>, and the prompt tells the
+model to read and update instead. Two shards saying the same thing under
+different slugs coexist until someone consolidates them;
+<code>memory_review</code> suggests merges and leaves the action to the
+model.</p>
+<h3 id="operational-cost">Operational cost</h3>
+<p>A model write is synchronous inside the tool call: one file write,
+one full re-read of every shard to rebuild <code>MEMORY.md</code>, one
+FTS upsert. It is retrievable by search immediately and appears in the
+index from the next session. Writes within one process are serialized
+per directory; the code says it does not protect against another process
+or an external editor (<code>storage.ts:17-19</code>). Opening a store
+lists every shard several times and rebuilds the FTS table in full.</p>
+<p>The nightly routine makes at most one auxiliary-model call per
+teammate per night, with a 120-second timeout and 8,000 output tokens,
+and skips the call when no owner turn arrived
+(<code>botNightlyLearning.ts:385-420</code>). Its input includes up to
+40,000 characters of memory bodies and 30,000 of skills, so its cost
+grows with the teammate's store. <code>memory_review</code> sends the
+whole store on each call. Per turn, the injected index sits in the
+system prompt and changes only between sessions, which keeps it inside a
+prompt-prefix cache.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>The MCP server exposes two entry tools, <code>list_tools</code> and
+<code>call_tool</code>, and registers <code>memory_list</code>,
+<code>memory_read</code>, <code>memory_search</code>,
+<code>memory_write</code>, <code>memory_delete</code>,
+<code>memory_consolidate</code> and <code>memory_review</code> behind
+them, plus <code>session_search</code> when the host supplies a history
+search (<code>cindy_memoryMcpServer.ts:130-138</code>). Claude Code
+receives it as an SDK server per query; Codex reaches it through an HTTP
+bridge whose tool calls resolve the thread's context at call time; a Pi
+teammate gets a typed <code>bot_memory</code> tool that routes to the
+same <code>call_tool</code>
+(<code>packages/maker-core/src/agents/pi/cindy-bridge-source.ts:3504-3580</code>).</p>
+<p>Turning Maker Memory on switches each harness's native auto-memory
+off, and the prompt tells the model to ignore instructions to write
+memory through other channels (<code>manager.ts:443-493</code>).
+Teammate memory is independent of that global switch and is governed by
+the teammate's own <code>memory</code> capability.</p>
+<p>Compaction is handled per harness. Pi writes each compaction summary
+as a <code>digest</code>; Claude Code and Codex compact natively, and a
+flush controller that would prompt a save before compaction only logs
+threshold crossings
+(<code>packages/maker-core/src/memory/flush-controller.ts</code>).
+Adapting the store to another agent means implementing the session
+context the MCP layer reads; the engine has no Electron dependency.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p>Provenance is absent from the record. A shard does not say whether
+the model, the nightly routine, a person, an import or Pi compaction
+wrote it. Nightly creates carry their evidence only in the transient
+plan; the shard keeps none, and deleting the source message leaves the
+memory in place. The nightly run record names the change and the model's
+reason, for 30 runs.</p>
+<p>Correction is overwrite. An update replaces the body; the previous
+value survives only if the nightly routine made the change. A person can
+undo a nightly change and is refused if the memory was edited since,
+which is the one place the system protects a later human edit from an
+older machine decision.</p>
+<p>Scope leaks are closed on the memory path and open beside it. The
+scope key is derived from the host session on every surface the model
+reaches: the MCP tools, Pi's facade, and the session-start index. No
+tool takes a scope, and <code>memory_read</code> cannot step outside the
+directory. <code>session_search</code> returns messages from every
+working directory to an ordinary session.</p>
+<p>Concurrency inside one process is handled with a per-directory
+mutation queue and compare-and-swap for settings and nightly edits. A
+second app instance, or the headless runner pointed at the same data
+directory, is outside that queue. FTS failures are logged and repaired
+on the next open.</p>
+<p>Deletion stops at the local directory for a workdir store. For a
+cloud companion it propagates as a <code>null</code> preference value
+keyed on the filename; what the Chat Server keeps is not in this
+tree.</p>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>The memory engine has unit tests for FTS behaviour, scope keys, the
+worktree resolver, digests, the review fallback, concurrency and the
+owner guards (<code>packages/maker-core/src/memory/*.test.ts</code>,
+<code>packages/maker-core/src/memory/__tests__/fts.test.ts</code>).
+<code>manager.scope.test.ts</code> asserts that a store fails closed
+when the account is unknown and that a reset on one owner's root leaves
+the other's files.</p>
+<p><code>packages/lizi-mcps/src/__tests__/botMemoryChain.test.ts</code>
+is the strongest file. It runs a real manager, real better-sqlite3 and a
+real MCP server over an in-memory transport, and a fake model turn calls
+<code>call_tool</code>. The deletion case writes <code>keep-me</code>
+and <code>delete-me</code>, deletes one, then asserts the list equals
+<code>['keep-me']</code>, the next session's index lacks the deleted
+title and contains the kept one, and <code>memory_read</code> returns
+<code>NOT_FOUND</code> (<code>botMemoryChain.test.ts:408-464</code>).
+Another case writes one memory per teammate in the same project
+directory and asserts each list equals exactly its own slug
+(<code>:300-329</code>). This earns <code>negative_eval</code>. It does
+not assert <code>memory_search</code> after a delete, and it tests
+teammate scopes, not two workdirs.</p>
+<p><code>apps/desktop/src/main/maker-host/__tests__/sessionSearch.test.ts</code>
+checks the Bot predicate against a mocked database client, asserting SQL
+text and parameters; it would pass against a database that returned
+anything. The nightly tests cover the observe-then-promote rule, a
+refused undo after an edit, and a skipped merge source
+(<code>botNightlyLearning.test.ts:115-201</code>).</p>
+<p>No paper and no benchmark ship with the tree, and no
+retrieval-quality test exists. I ran nothing; the counts above are from
+reading the files.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Derive the scope key on the host and make it the only way to
+name a store.</strong> A tool schema with no scope argument cannot be
+widened by the model, and a store keyed by directory fails closed when
+the key is unknown.</li>
+<li><strong>Generate the index from the records.</strong> Letting the
+model maintain a table of contents beside the files guarantees drift;
+rebuilding it after every mutation costs one directory scan at this
+size.</li>
+<li><strong>Gate background creates on a verbatim quote from a user
+message.</strong> The check is a substring test against the message the
+plan cites, done by the host, and it keeps the background model from
+inventing preferences.</li>
+<li><strong>Record before and after per background change and refuse an
+undo that would overwrite a later edit.</strong> That makes an automatic
+tidy reversible without a review queue.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>Hard delete as the only forgetting.</strong> Without a
+value-keyed record of what was removed, the next turn that hears the
+claim can write it again, and nothing will notice.</li>
+<li><strong>Gating one writer and not the other.</strong> The careful
+nightly path and the unchecked tool path write to the same files with
+the same standing.</li>
+<li><strong>An evidence check on create only.</strong> An update or
+delete with a free-text reason can rewrite a memory the evidence rule
+would never have admitted.</li>
+<li><strong>A recall tool with a wider scope than the memory beside
+it.</strong> <code>session_search</code> reaching every project undoes,
+for raw history, the isolation the shards have.</li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>This suits a single person running several coding agents on one
+machine who wants them to share a small, legible, per-project notebook
+and is willing to prune it. It needs nothing beyond the app and degrades
+gracefully: the files are the truth and every index rebuilds. It does
+not suit memory that must be audited, corrected with history, or held to
+a provenance standard, and it will not stay small on its own; the index
+is injected whole and the only bound is a warning. Teams wanting
+background curation should read the nightly routine, whose checks are
+the strictest in this repository's memory path and which covers
+teammates only.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Whether the per-reply review and working-memory ledger will be
+removed or rewired; the product rules call the ledger legacy and keep
+only its cleanup.</li>
+<li>What the Chat Server does with a teammate's memory values, whether
+it keeps history, and how a conflict between two computers' edits is
+resolved (<code>apps/desktop/src/main/companion-cloud/merge.ts</code>
+describes the client side).</li>
+<li>Whether the headless runner and the desktop app can open the same
+data directory at once, which the in-process queue would not
+serialize.</li>
+<li>How large real <code>MEMORY.md</code> files grow before users
+consolidate, since the injection has no hard cap.</li>
+<li>Whether Cindy Learn, a separate skill-installation flow that stages
+a distilled Skill until a person applies it in <code>learn:apply</code>,
+belongs with this subsystem; this reading did not trace it in full
+(<code>apps/desktop/src/main/learn-host/</code>).</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Storage and schema:</strong>
+<code>packages/maker-core/src/memory/types.ts</code>,
+<code>storage.ts</code>, <code>fts.ts</code>, <code>store.ts</code>,
+<code>manager.ts</code>, <code>scope-resolver.ts</code>.</li>
+<li><strong>MCP surface:</strong>
+<code>packages/lizi-mcps/src/cindy_memoryMcpServer.ts</code>,
+<code>packages/lizi-mcps/src/cindy_memoryToolRegistry.ts</code>,
+<code>packages/lizi-mcps/src/memory/*.ts</code>,
+<code>apps/cindy-headless/src/memory-provider.ts</code>,
+<code>apps/cindy-headless/src/codex-memory-bridge.ts</code>.</li>
+<li><strong>Context assembly:</strong>
+<code>packages/maker-core/src/memory/system-prompt.md</code>,
+<code>packages/maker-core/src/agents/claude-code/index.ts</code>,
+<code>packages/maker-core/src/agents/codex/index.ts</code>,
+<code>packages/maker-core/src/agents/pi/index.ts</code>,
+<code>packages/maker-core/src/agents/pi/cindy-bridge-source.ts</code>,
+<code>apps/desktop/src/main/maker-ipc/botProfileRuntime.ts</code>.</li>
+<li><strong>Teammate memory and nightly learning:</strong>
+<code>apps/desktop/src/main/maker-ipc/botMemoryService.ts</code>,
+<code>botNightlyLearning.ts</code>,
+<code>botNightlyLearningPlan.ts</code>,
+<code>botNightlyLearningState.ts</code>,
+<code>botLearningReviewPlan.ts</code>,
+<code>apps/desktop/src/main/bot-autonomy/nightlyLearningRoutine.ts</code>,
+<code>apps/desktop/src/main/routines/service.ts</code>,
+<code>apps/desktop/src/main/routines/nightlyLearningIpc.ts</code>,
+<code>docs/product-rules/bot-routines.md</code>.</li>
+<li><strong>History search:</strong>
+<code>apps/desktop/src/main/maker-host/session-search.ts</code>,
+<code>apps/desktop/src/main/localDb/botHistoryScope.ts</code>,
+<code>apps/desktop/src/main/mcp-integrations/mcp-providers.ts</code>.</li>
+<li><strong>Unwired:</strong>
+<code>apps/desktop/src/main/maker-ipc/botLearningReview.ts</code>,
+<code>botWorkingMemory.ts</code>,
+<code>docs/product-rules/cindy-bots-runtime.md</code>.</li>
+<li><strong>Cloud companions:</strong>
+<code>apps/desktop/src/main/companion-cloud/host.ts</code>,
+<code>uploader.ts</code>, <code>merge.ts</code>.</li>
+<li><strong>Tests:</strong>
+<code>packages/lizi-mcps/src/__tests__/botMemoryChain.test.ts</code>,
+<code>packages/maker-core/src/memory/manager.scope.test.ts</code>,
+<code>apps/desktop/src/main/maker-host/__tests__/sessionSearch.test.ts</code>,
+<code>apps/desktop/src/main/maker-ipc/__tests__/botNightlyLearning.test.ts</code>,
+<code>scripts/test-workspaces.config.mjs</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root, with <code>git grep</code>.</p>
+<ul>
+<li><code>git grep -n -i -E 'tombstone|blocklist|denylist|rejected_?value|forget_?list' -- packages/maker-core/src/memory packages/lizi-mcps/src/memory apps/desktop/src/main/maker-ipc ':!*.test.*'</code>
+— no memory hit; the matches are message, outbox, queue and cloud-sync
+tombstones keyed on records or files.</li>
+<li><code>git grep -n -E '\bdeclined\b' -- 'apps/desktop/src/main/**' ':!*.test.*'</code>
+— the declined skill-candidate titles are written at
+<code>botNightlyLearning.ts:646</code> and read at <code>:405</code> and
+<code>:557</code>, the nightly observe filter; no memory or skill writer
+outside nightly learning reads them.</li>
+<li><code>git grep -n -E '\b(valid_?from|valid_?to|valid_?until|validFrom|validTo|validUntil|effectiveAt|effective_at|expiresAt|expires_at)\b' -- packages/maker-core/src/memory packages/lizi-mcps/src/memory apps/desktop/src/main/maker-ipc/botNightlyLearning.ts apps/desktop/src/main/maker-ipc/botNightlyLearningState.ts apps/desktop/src/main/maker-ipc/botMemoryService.ts apps/desktop/src/shared/botMemory.ts</code>
+— only the scope-resolver cache expiry at
+<code>scope-resolver.ts:105-151</code>.</li>
+<li><code>git grep -n -E 'status|verified|candidate|confidence' -- packages/maker-core/src/memory/types.ts packages/maker-core/src/memory/storage.ts packages/maker-core/src/memory/fts.ts</code>
+— no match.</li>
+<li><code>git grep -n -E 'evidence|messageId' -- packages/maker-core/src/memory ':!*.test.*'</code>
+— no match; shards keep no source.</li>
+<li><code>git grep -n -E 'appendFile|audit|_log\b|history' -- packages/maker-core/src/memory packages/lizi-mcps/src/memory ':!*.test.*'</code>
+— one hit, the prompt's "Git history" line.</li>
+<li><code>git grep -n -E 'MAX_RUNS|MAX_DECLINED|keptRuns|fs.rm\(historyPath' -- apps/desktop/src/main/maker-ipc/botNightlyLearningState.ts</code>
+— runs capped at 30 with their backups removed, declined titles at
+40.</li>
+<li><code>git grep -n -E "botLearningReview(\.js)?'" -- . ':!*.test.*' ':!**/__tests__/**'</code>
+— no match; the per-reply review has no importer.</li>
+<li><code>git grep -n -E 'readWorkingMemoryNote|peekWorkingMemoryRefresh|createWorkingMemoryRefreshRegistry|isWorkingMemoryFreshForSession|renderWorkingMemory' -- . ':!*.test.*' ':!**/__tests__/**'</code>
+— interface declarations and optional calls in
+<code>makerSendTransaction.ts</code>,
+<code>messageDeleteHandler.ts</code> and
+<code>sessionAgentSwitchHandler.ts</code>, and the definitions in
+<code>botWorkingMemory.ts</code>; nothing supplies or calls them.</li>
+<li><code>git grep -n -E 'readBotWorkingMemory|working-memory\.json|WORKING_MEMORY_FILE' -- . ':!*.test.*' ':!**/__tests__/**'</code>
+— read only by <code>botLearningReview.ts:140</code>, and named as
+legacy in
+<code>docs/product-rules/cindy-bots-runtime.md:258</code>.</li>
+<li><code>git grep -n -E 'searchSessions' -- ':!*.test.*'</code> — one
+host implementation, <code>searchSessionsWithBotScope</code>, wired at
+<code>mcp-providers.ts:570-588</code>.</li>
+<li><code>git grep -n -i -E 'secret|redact|sanitiz|inject' -- packages/maker-core/src/memory packages/lizi-mcps/src/memory ':!*.test.*'</code>
+— no content filter on the write path.</li>
+<li><code>git grep -l -E 'embedding' -- packages/maker-core/src/memory packages/lizi-mcps/src/memory apps/desktop/src/main/maker-ipc/botNightlyLearning.ts</code>
+— no match; the memory read path has no vector arm.</li>
+<li><code>git grep -n -i -E 'arxiv|bibtex|@article|@misc|CITATION|doi\.org' -- README.md README.zh-CN.md docs/ ':!docs/legal/**'</code>
+— no paper; the hits are unrelated uses of "elicitation" and citation
+stripping. No <code>CITATION.cff</code>.</li>
+<li><code>ls .gitmodules</code> — absent.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-26</strong> — <a
+href="https://github.com/makecindy/cindy/commit/82d44ec3eedb923e268ae963114a09849ee62655"><code class="commit-id" title="82d44ec3eedb923e268ae963114a09849ee62655">82d44ec3…</code></a>
+— first reading, at the head of <code>main</code>, from a shallow clone
+(<code>--depth 1</code>) with images, video and PDFs excluded by sparse
+checkout; history and dates from the GitHub API. One mark,
+<code>negative_eval</code>. Screened before reading: two auto-run
+surfaces. One is a <code>.gitattributes</code> Git LFS filter, which the
+machine's global LFS configuration ran at checkout to fetch five
+sqlite-vec binaries, never executed; the other is a DCO
+<code>prepare-commit-msg</code> hook, inactive with
+<code>core.hooksPath</code> unset. Also four build-time execution points
+(root <code>postinstall</code>, three <code>build.rs</code>); 73
+surfaces inside the cooldown, inflated by the shallow clone; 41 unpinned
+surfaces; <code>CLAUDE.md</code> and <code>AGENTS.md</code> read as
+data. Nothing installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

@@ -127,7 +127,7 @@ belief.</p>
 <p><strong>Reported:</strong> a durable record keyed on the rejected
 <em>value</em> rather than on the row, and consulted on the write path,
 recurs across the corpus. 68 systems of
-755 carry the mark, and <a
+756 carry the mark, and <a
 href="#sorted-by-what-actually-stops-the-value">the table below</a>
 sorts the holders this page discusses by what actually stops the value.
 The idea's history runs from invention to independent arrival: Verel
@@ -292,7 +292,7 @@ not the hard half.</li>
 </ul>
 <h3 id="every-instance">Every instance</h3>
 <p><strong>68 systems of
-755 in the atlas carry the mark.</strong> The
+756 in the atlas carry the mark.</strong> The
 entries below are the ones whose mechanism this page discusses.</p>
 <p><a href="../../systems/verel/">Verel</a> uses rejected memory records
 as a correctness mechanism and protects rejected states from ordinary
@@ -1658,6 +1658,18 @@ new conversation is remembered again
 (<code>memhub/apps/core/tests/test_hy_state_source.py:281</code>).
 <strong>A value-keyed record consulted only downstream of the write that
 re-asserts the value is a filter, not a tombstone.</strong></p>
+<p><strong><a href="../../systems/cindy/">Cindy</a> keeps a value-keyed
+rejection for skill drafts and none for memories.</strong> When a person
+declines a candidate skill, the nightly routine stores the candidate's
+title in <code>declined</code> and drops any later observation with that
+exact title before it reaches the candidate list
+(<code>apps/desktop/src/main/maker-ipc/botNightlyLearning.ts:553-560</code>,
+<code>:646</code>). It is consulted, which is the form this page argues
+for, and it is narrow: keyed on a model-written title, capped at 40
+entries, and read by no other skill writer. Memory has nothing of the
+kind. <code>memory_delete</code>, consolidation and the nightly delete
+unlink the shard, and the next <code>memory_write</code> of the same
+claim lands as a new file.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li><strong>Run the laundering sequence</strong>: reject a value,

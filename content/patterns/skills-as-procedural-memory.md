@@ -192,6 +192,8 @@ It also ships the test this page asks for. `test_an_unrelated_query_gets_nothing
 
 [Harness²](../../systems/harness2/) stores skills as part of whole adopted harnesses and serves them to the editor rather than the executor. After each task a per-domain library receives the adopted tree — skills, scripts, subagents, plugins and always-on files — with the reflector's lesson, and every later task's editing sessions get the whole directory copied into context (`harness2/core/library.py:106-152`, `harness2/core/context.py:160-169`). A component reaches execution only when an editor copies it into the new harness, and validation rejects a skill whose script did not come with it (`harness2/core/tree.py:324-333`). There is no outcome gate: adoption is a blind model choice over deliverables, made without any selector session at `k = 1`, and a lesson is admitted when its three fields are non-empty (`harness2/core/selection.py:360-399`, `:494-501`).
 
+[Cindy](../../systems/cindy/) holds a one-off approach back until it recurs. The nightly routine puts a skill draft first seen in an owner conversation into a candidate list that no prompt loads, promotes it only when a later night cites a new occurrence as evidence or a person presses promote, and drops it for good when a person declines (`apps/desktop/src/main/maker-ipc/botNightlyLearning.ts:532-575`, `:634-647`). The gate is recurrence, not execution: a promoted skill has been seen twice and never run against an outcome, and the teammate's own `save_teammate_skill` tool writes skills directly when the owner asks.
+
 ## Tests to require
 
 - Store a skill, then execute the retrieved copy in a fresh context and assert it still succeeds — generality, not just recorded success.

@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 755 reports.</strong></p>
+<p><strong>This page covers all 756 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31459,6 +31459,48 @@ grader and a learned memory.</li>
 <li>Do not copy when: lessons must be corrected by later evidence,
 outlive one run, or be retrieved selectively rather than copied in
 whole.</li>
+</ul>
+<h3 id="cindy"><a href="../systems/cindy/"><code>cindy</code></a></h3>
+<ul>
+<li>Best idea: <strong>the host, not the model, names the
+store.</strong> <code>withStore</code> takes the scope key from the
+session context — the working directory with git worktrees folded to the
+main checkout, <code>ssh:</code> for remote sessions, <code>bot:</code>
+for teammates — and no memory tool takes a scope argument, so the model
+cannot widen what it reads or writes.</li>
+<li>Second idea: <strong>background writes need a verbatim user quote,
+and every one is undoable.</strong> The nightly routine applies a create
+only when its quote is found in a user message with the cited id, checks
+<code>updatedAt</code> before every update, and keeps before and after
+for an undo that refuses to overwrite a later edit.</li>
+<li>Biggest risk: <strong>forgetting is <code>unlink</code>.</strong> A
+delete, a consolidation or a reset removes the file and rebuilds the
+index; nothing records the value, so the next turn can write it again,
+and the shard keeps no source to trace it by.</li>
+<li>Second risk: <strong>the gate covers one writer.</strong> Model
+writes through <code>memory_write</code> carry no evidence, nightly
+updates and deletes need only a reason, and <code>session_search</code>
+beside the memory tools returns every workdir's history to an ordinary
+session.</li>
+<li>Third risk: the per-reply learning review and the working-memory
+ledger have had no caller since 23 October 2026 and stay in the tree
+with their tests.</li>
+<li>Most reusable component:
+<code>packages/maker-core/src/memory/storage.ts</code> with
+<code>store.ts</code> — Markdown shards with a host-rebuilt index, an
+FTS5 table rebuilt on open, and owner-scope fail-closed checks around
+every await.</li>
+<li>Maturity impression: Apache-2.0, 10,286 commits between 24 July and
+26 October 2026, about 1.9 million lines of TypeScript; the memory core
+is 2,933 lines, with 157 cases in 19 memory and nightly-learning test
+files, one of them an end-to-end MCP chain on a real store. One mark:
+<code>negative_eval</code>.</li>
+<li>Study when: you are moving several coding harnesses onto one shared,
+host-scoped memory, or want a background tidy that is evidence-gated and
+reversible.</li>
+<li>Do not copy when: a correction must outlive the next assertion,
+memories need provenance, or raw history must respect the same project
+boundary as the notes.</li>
 </ul>
         </article>
       </div>

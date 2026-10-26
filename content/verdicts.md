@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 755 reports.**
+**This page covers all 756 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6876,3 +6876,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0; 12,747 lines of Python in `harness2/`; 3 commits by 2 authors, 8 – 13 October 2026; 5 unittest cases against a deterministic demo adapter, no CI and no committed results, and the paper's no-library, transfer and leave-one-out arms have no CLI flag. No marks; nothing was installed or run.
 - Study when: you want cross-task carry of executable harness components inside a benchmark stream, or a contamination guard between a grader and a learned memory.
 - Do not copy when: lessons must be corrected by later evidence, outlive one run, or be retrieved selectively rather than copied in whole.
+
+### [`cindy`](../systems/cindy/)
+
+- Best idea: **the host, not the model, names the store.** `withStore` takes the scope key from the session context — the working directory with git worktrees folded to the main checkout, `ssh:` for remote sessions, `bot:` for teammates — and no memory tool takes a scope argument, so the model cannot widen what it reads or writes.
+- Second idea: **background writes need a verbatim user quote, and every one is undoable.** The nightly routine applies a create only when its quote is found in a user message with the cited id, checks `updatedAt` before every update, and keeps before and after for an undo that refuses to overwrite a later edit.
+- Biggest risk: **forgetting is `unlink`.** A delete, a consolidation or a reset removes the file and rebuilds the index; nothing records the value, so the next turn can write it again, and the shard keeps no source to trace it by.
+- Second risk: **the gate covers one writer.** Model writes through `memory_write` carry no evidence, nightly updates and deletes need only a reason, and `session_search` beside the memory tools returns every workdir's history to an ordinary session.
+- Third risk: the per-reply learning review and the working-memory ledger have had no caller since 23 October 2026 and stay in the tree with their tests.
+- Most reusable component: `packages/maker-core/src/memory/storage.ts` with `store.ts` — Markdown shards with a host-rebuilt index, an FTS5 table rebuilt on open, and owner-scope fail-closed checks around every await.
+- Maturity impression: Apache-2.0, 10,286 commits between 24 July and 26 October 2026, about 1.9 million lines of TypeScript; the memory core is 2,933 lines, with 157 cases in 19 memory and nightly-learning test files, one of them an end-to-end MCP chain on a real store. One mark: `negative_eval`.
+- Study when: you are moving several coding harnesses onto one shared, host-scoped memory, or want a background tidy that is evidence-gated and reversible.
+- Do not copy when: a correction must outlive the next assertion, memories need provenance, or raw history must respect the same project boundary as the notes.

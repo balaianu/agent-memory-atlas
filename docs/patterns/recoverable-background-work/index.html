@@ -440,6 +440,18 @@ pending-events layer filters on the same memory time
 (<code>app/domain/memory_retrieval.py:241-261</code>), so they leave the
 prompt too. <strong>A cursor is a watermark the consumer owns; any other
 writer of the output table must not be able to move it.</strong></p>
+<p><a href="../../systems/cindy/">Cindy</a> makes its nightly memory
+tidy reversible item by item. The run is registered before the first
+change, each change's before and after are written to
+<code>learning-history/&lt;runId&gt;.json</code> as it lands, and the
+watermark and turn count advance only when the run succeeds, so a failed
+model call leaves the conversations for the next night
+(<code>apps/desktop/src/main/maker-ipc/botNightlyLearning.ts:340-356</code>,
+<code>:441-451</code>). Undo refuses when the live memory no longer
+matches the recorded side rather than overwriting a later edit
+(<code>:592-631</code>). Retention is the weak edge: runs past the 30th
+are dropped with their backup files
+(<code>botNightlyLearningState.ts:151-163</code>).</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>Crash before, during, and after each state mutation.</li>

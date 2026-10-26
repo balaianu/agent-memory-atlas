@@ -209,6 +209,8 @@ columns does this pass have no input for, and what happens to them.
 
 **[Elephantasm](../../systems/elephantasm-core/) derives its synthesis cursor from the output table.** Collection keeps events whose client-supplied `occurred_at` is later than the newest memory's `created_at` (`app/workflows/memory_synthesis/nodes/event_collection.py:37-38`, `app/domain/event_operations.py:248-285`). The Dreamer's merges and splits and a manual `POST /memories` also insert memories stamped now. Each one moves the cursor past events that were pending, and nothing links or collects them afterwards. The pack's pending-events layer filters on the same memory time (`app/domain/memory_retrieval.py:241-261`), so they leave the prompt too. **A cursor is a watermark the consumer owns; any other writer of the output table must not be able to move it.**
 
+[Cindy](../../systems/cindy/) makes its nightly memory tidy reversible item by item. The run is registered before the first change, each change's before and after are written to `learning-history/<runId>.json` as it lands, and the watermark and turn count advance only when the run succeeds, so a failed model call leaves the conversations for the next night (`apps/desktop/src/main/maker-ipc/botNightlyLearning.ts:340-356`, `:441-451`). Undo refuses when the live memory no longer matches the recorded side rather than overwriting a later edit (`:592-631`). Retention is the weak edge: runs past the 30th are dropped with their backup files (`botNightlyLearningState.ts:151-163`).
+
 ## Tests to require
 
 - Crash before, during, and after each state mutation.
