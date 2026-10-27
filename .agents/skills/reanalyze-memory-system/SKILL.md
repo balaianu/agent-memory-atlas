@@ -349,3 +349,8 @@ npm test
 link, a missing Mermaid diagram, a missing or misdated History entry, and an
 inspected-list pin that disagrees with the report. It will not catch a line number
 that moved or a claim that is no longer true.
+
+Nor will it catch a diagram too wide to read. When a re-read redraws the diagram,
+or inherits one whose rendered `viewBox` is wider than tall, draw it tall and
+narrow as `add-memory-system` describes: `flowchart TD`, parallel sources stacked
+in a subgraph, detail in node labels, at most about 900 units across.

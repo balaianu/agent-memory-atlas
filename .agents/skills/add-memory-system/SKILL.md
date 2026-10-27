@@ -187,6 +187,15 @@ Make the report opinionated but fair. Explain what makes the design good, what m
 
 **Every report carries a Mermaid diagram.** Put it at the end of section 2, before `## 3. Architecture`, and draw the mechanism the report is actually about — the epistemic state machine where there is one, the write-to-recall path where there is not, and the place the design fails where that is the finding. A generic boxes-and-arrows of components is worse than none: it takes a reader's attention and returns nothing the prose did not already say. `scripts/check_mermaid.py` fails the build on a report without one, and separately on labels that break the renderer, so quote any label containing `[](){}"` and avoid a second `:` in a stateDiagram transition.
 
+**Draw it tall and narrow.** The report column is about 707px wide and the renderer scales a wider diagram down to fit it, so width sets the text size: a 1,797-unit diagram renders its labels at about 40%, an 827-unit one at about 85%. Height costs only scrolling. Use `flowchart TD`, never `LR` for anything past three nodes, and aim for a rendered `viewBox` taller than it is wide and no wider than about 900 units. The techniques that get there:
+
+- Put parallel sources (several writers, several readers) in a `subgraph` with `direction TB`, stack them with invisible links (`A ~~~ B ~~~ C`), and draw one edge from the subgraph itself. Mermaid ignores the inner direction as soon as a node inside links to a node outside.
+- Move detail out of edge labels into node labels broken with `<br/>`. An edge label is a few words; a sentence on an edge widens its whole rank.
+- Keep each label line under about 26 characters. Mermaid re-wraps at about 200px on top of your breaks, and a line it re-wraps leaves one word stranded.
+- Keep a fan-out to three siblings per rank, and chain a trailing path under the main flow with an invisible link rather than beside it.
+
+Measure before shipping: render the candidate against mermaid 11.16.1 with the site's theme variables (a scratch page under `docs/_*` is gitignored for this), read the `svg`'s `viewBox`, and look at it at 707px. A layout that is shorter but wider is worse — a 2×2 grid of writers came out 1,084 units wide where a single column came out 827.
+
 Before integration, verify:
 
 - No placeholder text remains.
@@ -391,7 +400,7 @@ Then verify:
 - No root-relative links were introduced.
 - Search/filter metadata makes the new card discoverable.
 
-Inspect the rendered page when the report contains wide tables, diagrams, or unusual markup.
+Inspect the rendered page when the report contains wide tables, diagrams, or unusual markup. For the diagram, read the rendered `viewBox`: taller than wide and no more than about 900 units across, or redraw it.
 
 Finally review `git diff --check`, the scoped diff, and repository status. Do not commit or push unless the user asks.
 
