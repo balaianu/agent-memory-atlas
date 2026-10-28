@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
+    <meta name="description" content="A local Bun MCP server keeping
+coding-agent memories in one SQLite file, in named spaces with three
+capped tiers, fused lexical search and checkpoints.">
+    <meta name="theme-color" content="#101b2a">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agent Memory Atlas">
+    <meta property="og:title" content="Mind — Agent Memory Atlas">
+    <meta property="og:description" content="A local Bun MCP server
+keeping coding-agent memories in one SQLite file, in named spaces with
+three capped tiers, fused lexical search and checkpoints.">
+    <meta property="og:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mind — Agent Memory Atlas">
+    <meta name="twitter:description" content="A local Bun MCP server
+keeping coding-agent memories in one SQLite file, in named spaces with
+three capped tiers, fused lexical search and checkpoints.">
+    <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
+    <title>Mind — Agent Memory Atlas</title>
+    <!-- Schema.org, so an assistant summarising this page can tell a technical
+         article from a product page and cite it as one. `TechArticle` rather
+         than `Article` because every page here is a claim about code at a
+         commit, and `isBasedOn` points at the repository those claims were read
+         from — the provenance a citation should carry.
+
+         Deliberately not here: chunk-boundary comments and directives addressed
+         to whatever model parses the page. This atlas screens other people's
+         repositories for text aimed at a reading agent and records it as data
+         rather than as commands (screen_repo.py's AGENT finding), and two of its
+         own acceptance tests — prompt.recall_is_fenced_as_data and
+         prompt.model_ignores_embedded_instructions — exist because stored text
+         that executes as instruction is a defect. Writing such directives into
+         its own pages would be the thing it tests against. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Mind",
+      "description": "A local Bun MCP server keeping coding-agent memories in one SQLite file, in named spaces with three capped tiers, fused lexical search and checkpoints.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Agent Memory Atlas",
+        "url": "https://neoneye.github.io/agent-memory-atlas/"
+      },
+      "isBasedOn": "https://github.com/neoneye/agent-memory-atlas",
+      "license": "https://github.com/neoneye/agent-memory-atlas/blob/main/LICENSE",
+      "inLanguage": "en"
+    }
+    </script>
+    <!-- Google Analytics is NOT loaded here, deliberately. Nothing in this head
+         contacts Google, and the measurement id lives in assets/main.js, which
+         injects the tag only after a reader clicks Allow.
+
+         This was Consent Mode v2 with every signal defaulted to denied, which
+         still loaded gtag.js on the first paint. Google documents that a denied
+         analytics_storage sends cookieless pings anyway, so the banner's promise
+         — "Nothing is collected until you choose" — was false for every reader
+         who never chose. Basic consent mode is the only arrangement that makes
+         that sentence true, and a site arguing for scope-before-ranking does not
+         get to measure people while it decides whether it has to ask. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/main.css">
+  </head>
+  <body class="document-page" data-root="../..">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="../../">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Agent Memory Atlas</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="../../#systems">Systems</a>
+        <a href="../../a-z/">A–Z</a>
+        <a href="../../build/">Build</a>
+        <a href="../../tensions/">Tensions</a>
+        <a href="../../patterns/">Patterns</a>
+        <a href="../../capabilities/">Capabilities</a>
+        <a href="../../verdicts/">Verdicts</a>
+        <a href="../../overview/">Overview</a>
+        <a href="../../compare/">Compare</a>
+        <a href="../../benchmarks/">Benchmarks</a>
+        <a href="../../methodology/atlas-rubric/">Rubric</a>
+        <a href="../../methodology/per-repo-report-format/">Method</a>
+        <a class="nav-source" href="https://github.com/neoneye/agent-memory-atlas">GitHub <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="document-hero">
+        <div class="document-hero-inner">
+          <p class="eyebrow">Tiered spaces of agent-written memories
+over MCP, with checkpoints</p>
+          <h1>Mind</h1>
+          <p class="document-deck">A local Bun MCP server keeping
+coding-agent memories in one SQLite file, in named spaces with three
+capped tiers, fused lexical search and checkpoints.</p>
+                    <div class="document-meta">
+            <a class="meta-pill" href="https://github.com/GabrielMartinMoran/mind">
+              <span>Source</span>
+              <strong>GabrielMartinMoran/mind</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+            <a class="meta-pill revision-pill" href="https://github.com/GabrielMartinMoran/mind/commit/4e9a41e9432810269553e7a369d05d0bd1f36852" title="4e9a41e9432810269553e7a369d05d0bd1f36852">
+              <span>Analyzed revision</span>
+              <code>4e9a41e9…</code>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                        <div class="meta-pill">
+              <span>Analyzed on</span>
+              <strong>2026-10-28</strong>
+            </div>
+                                    <a class="meta-pill" href="https://github.com/agent-memory-atlas-archive/GabrielMartinMoran--mind" title="A fork of the source, taken by this atlas, so the reading stays checkable if the original moves or disappears">
+              <span>Archived fork</span>
+              <strong>GabrielMartinMoran--mind</strong>
+              <svg class="ext-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2.8 7.2 7.2 2.8M3.9 2.8h3.3v3.3"/></svg>
+            </a>
+                      </div>
+                              <div class="document-meta document-facts">
+            <div class="meta-pill fact-pill"><span>Licence</span><strong>MIT;
+LICENSE read in full, no rider</strong></div>
+            <div class="meta-pill fact-pill"><span>Size</span><strong>18,998
+lines of TypeScript in src/; the store, MCP handlers and checkpoint code
+are 7,861 of them, autosync 2,490 and agent setup 1,884. The web app
+(12,602 lines in web/src) and the benchmark harnesses (38,430 lines in
+benchmarks/) sit outside the core</strong></div>
+            <div class="meta-pill fact-pill"><span>Activity</span><strong>140
+commits on main by 2 contributors, 27 April 2025 – 26 October 2026; the
+pin is the head of main, the v1.7.0 release commit</strong></div>
+            <div class="meta-pill fact-pill"><span>Tests</span><strong>1,793
+bun test cases in 122 spec files under test/ and web/test, run by CI on
+every push; a LoCoMo agent harness with two committed runs, and an
+OmniMemEval adapter whose results live in Actions
+artifacts</strong></div>
+          </div>
+                                        <div class="capability-strip"><p class="cap-legend">Carries <b>1</b> of 7 rubric mechanisms.<span> Most systems here carry none or one (43%), and a dash means the mechanism was not found at this commit — not that the system needed it. Each mark is one LLM reviewer's reading of the code at this commit rather than a run of it — <a href="../../methodology/atlas-rubric/#known-limits">known limits</a>.</span></p><ul class="cap-chips"><li class="cap-chip" title="Rejected-value tombstone — A durable record of a *rejected value*, keyed on the value, so later extraction cannot silently re-assert it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Tombstone</span></li><li class="cap-chip" title="Explicit trust state — Discrete epistemic status as a field rather than a confidence score, including at least one state that withholds a memory from being treated as true."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Trust state</span></li><li class="cap-chip" title="Bi-temporal validity — When a fact was true tracked separately from when the system recorded or expired it."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Bi-temporal</span></li><li class="cap-chip" title="Scope enforced in retrieval — A stored scope key (user, project, agent, tenant) applied as a filter on the read path, not merely available as a tag. This certifies that the key reaches the query — not that the boundary is authenticated, nor that a caller cannot widen it by passing a different argument."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Scope enforced</span></li><li class="cap-chip" title="Append-only mutation audit — A named append-only event record of memory *mutations* in the system&#x27;s own store. Logs of retrieval or feedback are the other half of the pattern and do not count here, nor does git history."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Mutation audit</span></li><li class="cap-chip" title="Human review surface — A place where a person inspects, approves, or adjudicates memory content before or after it takes effect."><span class="cap-mark" aria-hidden="true">—</span><span class="cap-name">Human review</span></li><li class="cap-chip is-present" title="Negative retrieval assertion — Committed evaluation cases asserting that particular material must *not* be retrieved."><span class="cap-mark" aria-hidden="true">✓</span><span class="cap-name">Negative evals</span></li></ul></div>
+                  </div>
+        <div class="hero-contours" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <div class="document-shell">
+        <aside class="toc-shell" aria-label="On this page">
+          <div class="toc">
+            <p>On this page</p>
+            <nav id="table-of-contents"></nav>
+          </div>
+        </aside>
+        <article class="prose" id="article">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Mind is a local memory server for coding agents, written in
+TypeScript on Bun. The agent saves named memories into spaces such as
+<code>projects/&lt;repo&gt;</code>, links them, keeps a checkpoint of
+unfinished work, and searches them later through an MCP server; a CLI
+and a web app open the same SQLite file. What is notable is the tier
+rule and the search pipeline. Every space has a capped hot tier and a
+capped warm tier, a read promotes, an overflow demotes the least
+recently used row, and nothing is ever evicted to deletion. The search
+fuses seven lexical channels and an optional embedding channel into a
+score with a confidence bucket. What is weak is correction: superseding
+a decision is a tag every read ignores, an update overwrites with no
+prior version, and the only mutation record is pruned after seven
+days.</p>
+<p>The design is skill-driven. <code>mind setup</code> installs a
+<code>mind-management</code> skill and a protocol into each supported
+agent and registers the MCP server at user scope, and the protocol tells
+the model when to orient, recall, learn, link, checkpoint and hand off
+(<code>src/resources/protocols/mind-cognitive-protocol.md</code>). No
+hook injects memory content. Every memory reaches the model because the
+model asked for it.</p>
+<p>Four findings shape the rest of this report.</p>
+<ul>
+<li><strong>The model chooses the boundary.</strong> Every read takes a
+<code>space</code> argument the model supplies, and
+<code>memory_query</code> maps <code>space: "*"</code> to no filter at
+all (<code>src/mcp/handlers/memories/query-memories.ts:86</code>). The
+protocol teaches the wildcard for cross-project recall, and a test pins
+it (<code>test/mcp-tools.spec.ts:1220-1231</code>).</li>
+<li><strong>Supersession is a label.</strong> The protocol's correction
+is to tag the old decision <code>status:superseded</code> and link the
+new one with <code>contradicts</code>. No read path filters on any
+<code>status:*</code> tag, and the space orientation the agent loads at
+session start previews superseded rows beside current ones.</li>
+<li><strong>A read is a write.</strong> <code>memory_read</code> bumps
+the access count and promotes the memory one tier, which can demote
+another memory out of the hot tier
+(<code>src/store/repositories/memory-repository.ts:571-590</code>).</li>
+<li><strong>The record of change does not last.</strong> The
+<code>logs</code> table captures every MCP, CLI and API call with its
+arguments, and the process deletes rows older than seven days on start
+and every hour (<code>src/mind.ts:18-29</code>).</li>
+</ul>
+<p>One mark, <code>negative_eval</code>. Section 9 names the six
+withheld.</p>
+<h2 id="2-mental-model">2. Mental Model</h2>
+<p>A memory is a row the agent wrote. It becomes a belief when
+<code>memory_add</code> commits: there is no extraction, no model call
+and no candidate state. Its identity is the pair of space and name,
+unique per space (<code>src/store/schema.ts</code>,
+<code>UNIQUE(space_id, name)</code>), and its meaning is whatever free
+text the agent put in <code>content</code>, conventionally
+<strong>What</strong>, <strong>Why</strong>, <strong>Where</strong> and
+<strong>Learned</strong> sections. It stops being a belief only when
+someone deletes it. Every other transition changes where it sits, not
+whether it is believed.</p>
+<p><strong>Tier is a place, and use moves it.</strong> A new memory
+lands in tier 2 unless the caller names another. Tiers 1 and 2 are
+capped per space at 25 and 50 non-pinned rows
+(<code>src/config.ts:42-45</code>); tier 3 is unlimited. When a write or
+a promotion would overfill a tier, <code>ensureCapacity</code> picks the
+unpinned row with the oldest
+<code>COALESCE(last_accessed_at, created_at)</code> and moves it down
+one tier (<code>memory-repository.ts:126-169</code>). A non-pinned
+<code>memory_read</code> promotes the memory one tier when the
+destination has room or a victim
+(<code>memory-repository.ts:571-590</code>). Pinning exempts a row from
+both. The tier decides what the default list and the orientation
+previews show; it does not enter the search score.</p>
+<p><strong>Status is a convention the store does not know.</strong> The
+protocol lists <code>status:proposed</code>,
+<code>status:validated</code>, <code>status:failed</code>,
+<code>status:superseded</code>, <code>status:obsolete</code>,
+<code>status:final</code> and <code>status:living</code> as tags
+(<code>mind-cognitive-protocol.md:355-358</code>). The store treats them
+like any tag. One read selects on one of them: the orientation's
+references block requires <code>type:reference</code> and
+<code>status:living</code>
+(<code>search-repository.ts:1274-1280</code>). That selects which rows
+appear as references; it withholds nothing from search, list, read or
+the tier previews.</p>
+<p><strong>Correction keeps the old row live.</strong> The protocol says
+<em>"Do not overwrite the historical memory"</em>: add the replacement,
+re-send the old memory's tags plus <code>status:superseded</code>, and
+link the pair with <code>contradicts</code>
+(<code>mind-cognitive-protocol.md:181-210</code>). The old memory
+remains in every result, carrying its tag, and its content is unchanged.
+<code>memory_update</code> with <code>content</code> overwrites in
+place, and <code>memory_delete</code> removes the row and its links.</p>
+<p><strong>Checkpoints are memories with a lifecycle.</strong>
+<code>checkpoint_save</code> writes a tier-1 memory tagged
+<code>checkpoint</code> and <code>active</code> holding JSON goal,
+pending and notes fields, or patches the active one
+(<code>src/checkpoint/checkpoint-save.ts:85-160</code>).
+<code>checkpoint_done</code> refuses while <code>pending</code> is
+non-empty, then in one transaction writes a tier-3
+<code>session-*</code> summary tagged <code>type:session</code> and
+<code>cat:summary</code>, copies every link in both directions, and
+deletes the checkpoint
+(<code>src/checkpoint/checkpoint-done.ts:58-99</code>,
+<code>memory-repository.ts:492-568</code>).</p>
+<figure class="diagram"><figcaption class="diagram-caption">Diagram — how a Mind memory is written, moves between tiers, is read and is corrected; the status tag is a label that no read honours</figcaption><details class="diagram-source"><summary>Diagram source</summary><pre class="mermaid"><code>%% caption: how a Mind memory is written, moves between tiers, is read and is corrected; the status tag is a label that no read honours
+flowchart TD
+    subgraph WR[&quot;writers&quot;]
+        direction TB
+        MA[&quot;memory_add:&lt;br/&gt;space, name, content,&lt;br/&gt;tags, tier default T2&quot;] ~~~ CS[&quot;checkpoint_save:&lt;br/&gt;T1 row tagged&lt;br/&gt;checkpoint, active&quot;] ~~~ MF[&quot;autosync import:&lt;br/&gt;a .mind/ Markdown&lt;br/&gt;file, opt-in&quot;]
+    end
+    WR --&gt; CAP{&quot;destination tier&lt;br/&gt;full? T1 holds 25,&lt;br/&gt;T2 holds 50,&lt;br/&gt;per space&quot;}
+    CAP -- &quot;yes&quot; --&gt; EV[&quot;oldest-used unpinned&lt;br/&gt;row moves down&lt;br/&gt;one tier, never&lt;br/&gt;deleted&quot;]
+    CAP -- &quot;no&quot; --&gt; ROW
+    EV --&gt; ROW[&quot;memories row,&lt;br/&gt;FTS5 and trigram&lt;br/&gt;rows in the same&lt;br/&gt;transaction&quot;]
+    ROW --&gt; Q[&quot;memory_query:&lt;br/&gt;names, tags, tier,&lt;br/&gt;confidence, no content;&lt;br/&gt;space or &#39;*&#39;&quot;]
+    Q --&gt; RD[&quot;memory_read:&lt;br/&gt;content and links,&lt;br/&gt;access count bumped,&lt;br/&gt;promoted one tier&quot;]
+    RD --&gt; CAP2[&quot;promotion can push&lt;br/&gt;another row down&quot;]
+    ROW --&gt; C
+    subgraph C[&quot;correction&quot;]
+        direction TB
+        SUP[&quot;supersede by protocol:&lt;br/&gt;tag old status:superseded,&lt;br/&gt;link contradicts;&lt;br/&gt;old row returned&lt;br/&gt;by every read&quot;] ~~~ DEL[&quot;memory_delete,&lt;br/&gt;space_delete:&lt;br/&gt;hard delete,&lt;br/&gt;links cascade&quot;] ~~~ DONE[&quot;checkpoint_done:&lt;br/&gt;refused while pending;&lt;br/&gt;T3 session summary,&lt;br/&gt;checkpoint deleted&quot;]
+    end</code></pre></details></figure>
+<h2 id="3-architecture">3. Architecture</h2>
+<p>Mind is a Bun program behind a shell launcher, <code>mind</code>,
+that finds a <code>bun</code> binary and runs <code>src/mind.ts</code>.
+Each invocation opens the store, runs the log cleanup, and dispatches
+one command. <code>mind mcp</code> keeps the process alive as an MCP
+server over stdio, <code>mind mcp start --http</code> serves Streamable
+HTTP on port 7438, and <code>mind serve</code> runs the web app and REST
+API on port 30303 (<code>src/mcp/server.ts:144-269</code>,
+<code>src/api/server.ts:65-93</code>).</p>
+<p><strong>Persistence.</strong> One SQLite file,
+<code>data/mind.db</code> under the install directory unless
+<code>MIND_DATA_DIR</code> or <code>MIND_DB_PATH</code> says otherwise
+(<code>src/config.ts:4-13</code>), opened in WAL mode with foreign keys
+on (<code>src/store/schema.ts</code>, <code>initializeDatabase</code>).
+The schema is version 10: <code>spaces</code>, <code>memories</code>,
+<code>memory_tags</code>, <code>links</code>, <code>logs</code>, an FTS5
+table with the <code>porter unicode61</code> tokenizer, and a
+contentless trigram FTS5 table with diacritics removed. Both FTS tables
+are synced by hand in the same transaction as the row, because, as the
+schema comment says, <code>bun:sqlite</code> mishandles content-sync
+triggers. A startup check rebuilds the search indexes when they drift
+from the rows (<code>src/store/sqlite-store.ts:34-100</code>).</p>
+<p><strong>Search stack.</strong> Everything lexical is SQLite. The
+optional semantic channel is enabled by <code>MIND_RAG=true</code> and a
+provider, OpenAI or OpenRouter <code>text-embedding-3-small</code>.
+Embeddings are stored as a BLOB on the row and scored by cosine over
+every candidate row in the filtered set
+(<code>src/helpers/rag.ts</code>,
+<code>search-repository.ts:613-661</code>). A provider failure opens a
+five-minute breaker, after which search runs lexical only.</p>
+<p><strong>Autosync</strong> (experimental, opt-in per space) mirrors a
+space to <code>.mind/spaces/&lt;hash&gt;/*.md</code> with YAML
+frontmatter after each mutation, and a file watcher imports edited files
+back (<code>src/sync/</code>). A file deleted on disk does not delete
+the memory (<code>src/sync/auto-sync-service.ts:157-159</code>).</p>
+<h3 id="deployment-and-ergonomics">Deployment and ergonomics</h3>
+<p>The documented install is <code>curl … | bash</code>, which installs
+Bun if absent and puts the checkout under user-local paths.
+<code>mind setup</code> then writes MCP registrations, the skill and a
+managed instruction block into each supported agent's configuration,
+including agents that are not installed. Nothing else has to run: no API
+key is needed to store or search, and the store is an ordinary SQLite
+file a person can open with <code>sqlite3</code>, apart from embedding
+BLOBs. The web app on port 30303 lists, edits and deletes memories,
+draws a per-space link graph, and shows the call log. Running from
+source needs <code>bun install</code>, whose <code>prepare</code> script
+runs <code>husky install</code>.</p>
+<h2 id="4-essential-implementation-paths">4. Essential Implementation
+Paths</h2>
+<p><strong>Capture.</strong> <code>memory_add</code> validates with
+<code>MemoryAddSchema</code>, resolves any <code>links_to</code>
+references, and calls <code>MindStore.addMemory</code>
+(<code>src/mcp/handlers/memories/add-memory.ts</code>).
+<code>addMemory</code> refuses a duplicate name in the space, then runs
+<code>insertMemoryRowSync</code> in one transaction:
+<code>ensureCapacity</code> for the target tier, the row, both FTS rows,
+normalized tags and <code>related</code> links
+(<code>memory-repository.ts:179-273</code>). With RAG on, the embedding
+is requested after commit and written by a second
+<code>UPDATE</code>.</p>
+<p><strong>Retrieval.</strong> <code>memory_query</code> with
+<code>search</code> calls <code>store.search</code>, which runs
+<code>searchMemories</code> (<code>search-repository.ts:672-969</code>);
+without <code>search</code> it calls <code>queryMemories</code>, ordered
+by <code>changed_at</code> (<code>:1081-1139</code>). The MCP response
+strips <code>id</code>, <code>content</code>, rank and timestamps from
+every row (<code>query-memories.ts:39-66</code>), so the agent sees
+names, tags, tier, pinned and a confidence bucket, and must call
+<code>memory_read</code> for content.</p>
+<p><strong>Context assembly.</strong> There is no automatic assembly.
+<code>space_get</code> is the orientation the protocol tells the model
+to call at session start and after compaction. It returns overview
+counts, up to five non-checkpoint rows per tier, pinned first and then
+most recently changed, up to five living references, and every active
+checkpoint (<code>src/mcp/handlers/spaces/get-space.ts</code>,
+<code>search-repository.ts:1195-1281</code>).
+<code>checkpoint_load</code> returns one checkpoint's fields and its
+linked memories' names, tags and tiers
+(<code>src/mcp/handlers/checkpoint/load-checkpoint.ts</code>).</p>
+<p><strong>Update, delete, forget.</strong> <code>memory_update</code>
+builds one patch for rename, content, pinned, a one-step tier transition
+and a tag diff, applied in one transaction by <code>patchMemory</code>
+(<code>memory-repository.ts:638-772</code>). <code>memory_delete</code>
+calls <code>deleteMemoryByName</code>, which deletes the FTS rows and
+the memory; links and tags go by <code>ON DELETE CASCADE</code>
+(<code>:485-490</code>). <code>space_delete</code> cascades a whole
+space. Log pruning is <code>cleanupOldLogs</code>
+(<code>log-repository.ts:212-219</code>).</p>
+<p><strong>Schema.</strong> <code>src/store/schema.ts</code> holds the
+v10 tables and the nine migrations from v1, including the v8 move to
+UUID keys and the v9 and v10 trigram index.</p>
+<p><strong>Integration.</strong> <code>createMcpServer</code> registers
+six tool groups and wraps every call in a log entry with the resolved
+agent identity (<code>src/mcp/server.ts:29-140</code>). Agent setup is
+<code>src/cli/setup.ts</code> and <code>src/setup/</code>.</p>
+<h2 id="5-memory-data-model">5. Memory Data Model</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Holds</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spaces</code></td>
+<td>UUID <code>id</code>, unique <code>name</code>, description,
+<code>hidden</code></td>
+<td><code>hidden</code> filters <code>space_list</code> and bare-name
+resolution only</td>
+</tr>
+<tr>
+<td><code>space_tags</code></td>
+<td>space name, tag</td>
+<td>at least one tag on create</td>
+</tr>
+<tr>
+<td><code>memories</code></td>
+<td>UUID <code>id</code>, <code>fts_id</code>, <code>space_id</code>,
+<code>name</code>, <code>content</code>, <code>tier</code> 1–3,
+<code>pinned</code>, <code>access_count</code>,
+<code>last_accessed_at</code>, <code>embedding</code>,
+<code>created_at</code>, <code>updated_at</code>,
+<code>changed_at</code></td>
+<td>unique on space and name</td>
+</tr>
+<tr>
+<td><code>memory_tags</code></td>
+<td>memory id, tag</td>
+<td>at least one per memory</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>source, target, <code>label</code>, <code>created_at</code></td>
+<td>one link per directed pair; the label is free text</td>
+</tr>
+<tr>
+<td><code>logs</code></td>
+<td>source, operation, level, input and output JSON, error, caller info,
+duration, timestamp</td>
+<td>pruned after seven days</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Scope</strong> is the space. A memory belongs to exactly one,
+and names are unique within it. Links may cross spaces. The convention
+is <code>projects/&lt;repo&gt;</code>, <code>user/preferences</code> and
+<code>global/config</code>, and the model types the name.</p>
+<p><strong>Provenance</strong> on a memory is absent: no author, source,
+session or agent column. The agent identity resolved from
+<code>MIND_AGENT</code> and the MCP client name goes into
+<code>logs.caller_info</code> only
+(<code>src/helpers/agent-identity.ts</code>). Session summaries carry a
+<code>provenance</code> object naming their checkpoint inside the JSON
+content (<code>checkpoint-done.ts:68-80</code>).</p>
+<p><strong>Time</strong> is record time throughout.
+<code>changed_at</code> moves on content, rename, pin and explicit tier
+changes, not on access promotion, and the <code>from</code> and
+<code>to</code> filters on <code>memory_query</code> read it.</p>
+<p><strong>Versioning</strong> is none. An update overwrites
+<code>content</code>, and the protocol's temporal fallback says so in
+its own words: <code>changed_at</code> <em>"does not preserve
+intermediate versions or all tag/link changes"</em>
+(<code>mind-cognitive-protocol.md:104-106</code>). The log row of the
+update holds the new arguments, not the old content, for seven days.</p>
+<h2 id="6-retrieval-mechanics">6. Retrieval Mechanics</h2>
+<p><code>searchMemories</code> parses the query into phrases, terms,
+<code>AND</code>, <code>OR</code>, <code>NOT</code> and
+trailing-<code>*</code> prefixes; only uppercase operators count
+(<code>src/store/shared/query-parser.ts</code>). A query with no
+informative term after stopword removal is an error rather than an empty
+result. Then every channel runs independently against the same space,
+tier and tag filter:</p>
+<ul>
+<li><strong>phrase, all, any</strong> — three FTS5 <code>MATCH</code>
+rungs over the porter index; the any-term rung must cover a minimum
+share of the query tokens.</li>
+<li><strong>trigram</strong> — substring matching for tokens of three or
+more characters.</li>
+<li><strong>fuzzy</strong> — banded optimal-string-alignment distance of
+at most 2 against a cached vocabulary of every folded term in the
+database, then an FTS match on the expansions
+(<code>search-repository.ts:224-273</code>, <code>:535-560</code>).</li>
+<li><strong>like</strong> — <code>LIKE</code> for tokens shorter than
+three characters.</li>
+<li><strong>semantic</strong> — cosine over stored embeddings when RAG
+is on, the top 50 above a 0.3 floor
+(<code>search-repository.ts:73-75</code>).</li>
+<li><strong>token_set</strong> — a coverage score over the lexical
+candidates only.</li>
+</ul>
+<p><code>NOT</code> terms are matched once and removed from every
+channel. Fusion normalizes each channel and combines them with fixed
+weights — phrase 1.0, all 0.9, semantic 0.8, trigram 0.6, any 0.55, like
+0.5, fuzzy 0.4, token_set 0.3 — plus an agreement bonus capped at 0.15
+(<code>src/store/shared/search-fusion.ts:55-69</code>). A semantic hit
+enters the result on its own only at cosine 0.6 or above, and only for
+plain natural-language queries
+(<code>src/store/shared/semantic-admission.ts:24</code>). The confidence
+bucket is <code>high</code> when a strong lexical channel matched and
+the relative score clears 0.6.</p>
+<p>The ranking does not consult tier, pinned, access count, recency or
+tags. A superseded memory with the same words as its replacement ranks
+beside it, distinguishable by its tags.</p>
+<p><strong>Token budget.</strong> The MCP response omits content, so a
+query costs names and tags, 25 rows by default and at most 500. Content
+arrives one <code>memory_read</code> at a time. <code>space_get</code>
+returns at most five rows per tier and five references, with no
+content.</p>
+<p><strong>Failure modes.</strong> Over-recall from the fuzzy and
+any-term rungs is guarded by coverage floors. The fuzzy vocabulary is
+global, so a term that exists only in another space can produce an
+expansion; the expanded match is filtered by space before any row is
+returned.</p>
+<h2 id="7-write-mechanics">7. Write Mechanics</h2>
+<p>The agent writes explicitly, by tool call, following the protocol's
+LEARN section: check for a near-duplicate <em>"when duplication is
+reasonably possible"</em>, then add one atomic memory with at least one
+tag. There is no extraction, no deduplication beyond the unique name,
+and no filter on content. The protocol separates durable memories from
+checkpoints and session summaries. The store enforces none of the
+distinction, except that <code>checkpoint_done</code> refuses a memory
+without the <code>checkpoint</code> tag.</p>
+<p>Three writers sit outside the model's tool calls:</p>
+<ul>
+<li><strong>The OpenCode plugin</strong>, installed by default for
+OpenCode, runs
+<code>mind add &lt;space&gt; &lt;name&gt; &lt;json&gt; --tags type:session,cat:summary --tier 3</code>
+when a session is deleted, at most once per four minutes per session
+(<code>src/setup/opencode-automation-plugin.ts:258-285</code>). The
+content is the repository name, session id, event type and a timestamp,
+not anything the session did. Its compaction hooks inject fixed
+instructions, because <code>recoverCheckpointContext</code> returns
+<code>null</code> unconditionally (<code>:225-228</code>).</li>
+<li><strong>The Claude Code Stop hook</strong>, opt-in through
+<code>MIND_SETUP_CLAUDE_ENABLE_HOOKS=true</code>, runs
+<code>mind checkpoint set "$PROJECT_SPACE" "Session close" "Review summary and persist key learnings"</code>
+(<code>src/cli/setup.ts:526-545</code>). <code>saveCheckpoint</code>
+updates the active checkpoint when one exists. On a configured
+<code>MIND_PROJECT_SPACE</code>, this hook therefore replaces the active
+checkpoint's goal and pending text with those strings. The Cursor hook
+script beside it is a deliberate no-op whose comment gives the reason: a
+hook <em>"can never clobber a real active checkpoint's goal or pending
+work"</em> (<code>setup.ts:547-570</code>).</li>
+<li><strong>Autosync import</strong> writes whatever a Markdown file in
+<code>.mind/</code> says, by name, into the configured space
+(<code>src/sync/importer.ts:28-80</code>).</li>
+</ul>
+<h3 id="operational-cost">Operational cost</h3>
+<p>Writes are synchronous and cheap: one SQLite transaction with no
+model call. With RAG on, <code>addMemory</code> awaits one embedding
+request after the commit, so the tool call blocks on the provider and
+returns with the vector stored. With RAG off, a memory is searchable as
+soon as the call returns. No background pass reads or rewrites memory
+content. The fuzzy vocabulary cache is rebuilt from every row when the
+store changes, which is a scan of the whole store on the first search
+after any write (<code>search-repository.ts:535-560</code>). The server
+injects nothing per turn; the cost on the read path is whatever the
+model chooses to fetch.</p>
+<h2 id="8-agent-integration">8. Agent Integration</h2>
+<p>Eighteen MCP tools: <code>space_create</code>,
+<code>space_list</code>, <code>space_get</code>,
+<code>space_update</code>, <code>space_delete</code>;
+<code>memory_add</code>, <code>memory_update</code>,
+<code>memory_delete</code>, <code>memory_read</code>,
+<code>memory_query</code>; <code>link_create</code>,
+<code>link_delete</code>; <code>checkpoint_save</code>,
+<code>checkpoint_done</code>, <code>checkpoint_load</code>,
+<code>checkpoint_query</code>; <code>status</code>; and
+<code>system_instructions</code>, which returns the full protocol when
+the skill cannot load. The server declares tools only, no resources or
+prompts (<code>src/mcp/server.ts:37-40</code>). The
+<code>initialize</code> instructions are a short activation text telling
+the model to load the <code>mind-management</code> skill first
+(<code>src/cli/skill-activation.ts</code>).</p>
+<p>The model has every verb, including <code>space_delete</code> over a
+whole space, and chooses the space on every call. The protocol asks it
+to keep project knowledge in <code>projects/&lt;repo&gt;</code>
+<em>"using the actual repository name"</em>, so two repositories with
+the same name share a space. The database is shared by every project,
+because Claude Code's registration is <code>--scope user</code>
+(<code>setup.ts:101-116</code>).</p>
+<p>Compaction is handled by instruction: ORIENT says to call
+<code>checkpoint_query</code> and <code>space_get</code> after a reset,
+and the OpenCode plugin repeats that in the compaction context.
+<code>buildRecoveryPack</code>, a fuller recovery bundle with capability
+profile and context hits, is called only from tests
+(<code>src/checkpoint/recovery-pack.ts</code>).</p>
+<p>Adapting it to another agent means an MCP registration and a copy of
+the skill. <code>mind setup compatibility</code> prints which
+integrations were validated and which were only written.</p>
+<h2 id="9-reliability-safety-and-trust">9. Reliability, Safety, and
+Trust</h2>
+<p><strong>Scope is enforced when the model asks for it.</strong> Every
+read that names a space applies <code>s.name = ?</code> in SQL: every
+search channel, the list and count queries, get-by-name, the orientation
+previews and the graph (<code>search-repository.ts:444-447</code>,
+<code>:1093-1096</code>, <code>:1195-1203</code>). The model names the
+space, and three reads cross. <code>memory_query</code> takes
+<code>*</code>; <code>memory_read</code> and
+<code>checkpoint_load</code> open any space the model names; and
+reference resolution falls back to scanning every non-hidden space for a
+bare name (<code>src/helpers/memory-ref-resolver.ts:25-32</code>). The
+<code>hidden</code> flag hides a space from <code>space_list</code> and
+that fallback, and from nothing else.</p>
+<p><strong>Correction is advisory.</strong> A
+<code>status:superseded</code> memory is returned by search, list, read
+and the tier previews, and the protocol's anti-pattern list names
+deleting history as the mistake. Old and new values coexist with only a
+tag and a link to tell them apart. That works for a model that reads
+tags and fails silently for one that does not.</p>
+<p><strong>Provenance and injection.</strong> No memory records who or
+what wrote it, and nothing screens content. A web page the agent read
+can become a memory with the same standing as a user's decision.</p>
+<p><strong>The local surfaces are open.</strong> <code>Bun.serve</code>
+is called with a port and no <code>hostname</code> for both the web API
+and the HTTP MCP server (<code>src/api/server.ts:79-89</code>,
+<code>src/mcp/server.ts:189</code>); Bun's documented default binds
+every interface. The router has no authentication and no
+<code>Origin</code> check (<code>src/api/router.ts</code>), and
+<code>POST /api/memories</code> parses the body with
+<code>request.json()</code> regardless of content type. I infer, without
+running it, that another host on the network, or a page in the user's
+browser sending a simple cross-origin POST, can write memories.</p>
+<p><strong>Concurrency.</strong> WAL with a five-second busy timeout;
+writes are single transactions. The fuzzy cache detects another
+process's write through SQLite's <code>data_version</code>, which a test
+exercises with a child process.</p>
+<p><strong>Privacy.</strong> Delete is a hard delete of the row, its FTS
+rows and its links. The deleted content survives in
+<code>logs.input_data</code> of the original <code>memory_add</code> for
+up to seven days, in autosync Markdown history if the space was mirrored
+into git, and in SQLite free pages until a <code>VACUUM</code>.</p>
+<p>Capability marks:</p>
+<ul>
+<li><code>negative_eval</code> — awarded; evidence in section 10.</li>
+<li><code>scope_enforced</code> — withheld. The space predicate is real
+and applied on every read path that names a space. The space is a
+model-supplied argument that widens to every space with <code>*</code>,
+a documented and tested surface on the agent's own MCP server.</li>
+<li><code>audit_log</code> — withheld. <code>logs</code> records every
+call with its arguments, which covers every mutation through MCP, CLI
+and API. It is pruned to seven days on start and hourly, truncated at 64
+KB per field, and cleared in full by <code>DELETE /api/logs</code> from
+the web app (<code>log-repository.ts:78-119</code>,
+<code>:212-224</code>, <code>src/api/routes/logs.ts:5-13</code>).
+Autosync imports write no row, and a failed insert is swallowed.</li>
+<li><code>trust_state</code> — withheld. <code>status:*</code> tags have
+a writer, the model, and no read that excludes on them; the one
+tag-required read, living references, selects a category rather than
+withholding a belief.</li>
+<li><code>tombstone</code> — withheld. Deletion leaves nothing behind in
+the store. The autosync manifest's <code>deleted</code> and
+<code>tombstone_at_utc</code> fields are keyed on the memory id and only
+stop the exporter re-pruning a file
+(<code>src/sync/file-sync-service.ts:219-233</code>).</li>
+<li><code>bitemporal</code> — withheld. <code>created_at</code>,
+<code>updated_at</code> and <code>changed_at</code> are all record time,
+and the date filters read <code>changed_at</code>.</li>
+<li><code>human_review</code> — withheld. No memory waits in any state;
+a person can edit or delete through the web app after the write, which
+is authoring.</li>
+</ul>
+<h2 id="10-tests-evals-and-benchmarks">10. Tests, Evals, and
+Benchmarks</h2>
+<p>I installed and ran nothing. The suite is 1,793 <code>bun test</code>
+cases in 122 spec files, all against a temporary SQLite store with no
+skipped case, run by CI on every push and pull request
+(<code>.github/workflows/main.yml:3-38</code>).</p>
+<p><strong>The negative cases.</strong>
+<code>test/mind-store.spec.ts:701-711</code> stores identical content in
+<code>proj-a</code> and <code>proj-b</code>, searches
+<code>proj-a</code>, and asserts exactly one result whose space is
+<code>proj-a</code>; the length and the space name are the positive
+control. <code>:874-884</code> asserts
+<code>authentication NOT jwt</code> returns <code>auth-only</code> and
+not <code>auth-jwt</code>. <code>test/fuzzy-cache.spec.ts:263-283</code>
+finds <code>proc-del</code> by a fuzzy query, deletes it from a child
+process, and asserts the next search omits it and rebuilt the
+vocabulary; the post-delete result has no control of its own. The space
+case runs on the store, below the MCP handler, whose <code>*</code>
+crossing is itself pinned by a test
+(<code>test/mcp-tools.spec.ts:1220-1231</code>).</p>
+<p><strong>The correction contract</strong> is tested as storage, not
+retrieval. <code>test/supersession-contract.spec.ts:27-82</code> runs
+the protocol's supersede steps through the MCP handlers. It asserts the
+old memory keeps its content and gains the tag, the
+<code>contradicts</code> link points from new to old, and the default
+list contains both. No case asserts how search or <code>space_get</code>
+treats the superseded row.</p>
+<p><strong>Search quality</strong> has a fixture evaluation
+(<code>test/search-eval/</code>) with typed cases, including negatives
+whose expected result is empty, and baseline metric fixtures the suite
+compares against. An expected-empty negative passes on a retriever that
+returns nothing, so the scope and NOT cases above carry the mark, not
+these. Checkpoint atomicity, partial updates, schema migrations and the
+setup writers each have their own spec files.</p>
+<p><strong>The agent benchmark.</strong>
+<code>benchmarks/agent-memory/</code> drives OpenCode against LoCoMo
+<code>conv-26</code> with a fresh Mind database per condition. Two runs
+are committed, 24 October 2026, model
+<code>deepseek/deepseek-v4.1-flash</code>, 30 questions by 3
+repetitions, condition <code>mind-current</code> only. From the
+per-question rows I recompute 13 correct answers with RAG off and 14
+with RAG on (14.4% and 15.6%), with 29 and 34 abstentions, matching the
+committed summaries. Evidence recall at 10 on categories 1–4 is 0.457
+and 0.522. No baseline condition is in either run.
+<code>ANALYSIS.md</code> reports an earlier run, not committed as rows,
+in which an older Mind scored 21 correct answers (23.3%) against none
+for <code>no-memory</code>.</p>
+<p><strong>The headline.</strong> The README's 86.67% on OmniMemEval
+LongMemEval-S is a 120-question stratified subset answered and judged by
+one model, and its evidence is an Actions run, not a committed file
+(<code>benchmarks/omnimemeval/README.md</code>). Through the GitHub API,
+run <code>40320556252</code> shows the RAG-off job succeeded and the
+RAG-on job failed at its QA stage, which matches the README's account.
+The score sits in a 19 MB artifact I did not download. No paper or
+citation file is in the tree.</p>
+<h2 id="11-for-your-own-build">11. For Your Own Build</h2>
+<h3 id="steal">Steal</h3>
+<ul>
+<li><strong>Cap the hot tiers and demote, never delete, on
+overflow.</strong> A fixed count per scope with least-recently-used
+demotion gives a bounded orientation view with no forgetting policy to
+get wrong.</li>
+<li><strong>Return names and tags from search, content from a separate
+read.</strong> It keeps a recall query cheap and makes the model choose
+what to open.</li>
+<li><strong>Complete a checkpoint atomically, and refuse while work is
+pending.</strong> One transaction that writes the summary, moves every
+link and deletes the checkpoint leaves nothing half-done to recover
+from.</li>
+<li><strong>Sync derived indexes in the row's transaction and check them
+on start.</strong> The drift check and in-place rebuild make a
+contentless index safe to use.</li>
+<li><strong>Ship a no-op hook with its reason.</strong> The Cursor
+script records why a lifecycle hook must not write.</li>
+</ul>
+<h3 id="avoid">Avoid</h3>
+<ul>
+<li><strong>A scope argument with a wildcard on the agent's own
+surface.</strong> If cross-scope recall is a feature, make it a separate
+tool a deployment can withhold.</li>
+<li><strong>Correction by tag with no reader.</strong> A status the
+protocol defines and no query filters reads as a lifecycle and behaves
+as a comment.</li>
+<li><strong>A read that mutates placement.</strong> Promotion on read
+couples inspection to ranking; the <code>noPromote</code> flag only
+helps a model that remembers to pass it.</li>
+<li><strong>Pruning the only record of change.</strong> A seven-day call
+log answers "what happened today" and not "why does the store believe
+this".</li>
+<li><strong>A hook that overwrites agent-authored state with a fixed
+string.</strong></li>
+</ul>
+<h3 id="fit">Fit</h3>
+<p>Mind suits one developer who works across several coding agents on
+one machine, wants decisions and fixes to carry between sessions without
+an API key, and trusts the agent to follow a written protocol. The store
+is inspectable, the search is solid without embeddings, and the core is
+a weekend's read. It does not suit anyone who needs projects kept apart
+from the model, a team sharing memory over the network, or a record of
+what a memory said before it changed. Those need the space fixed by the
+host, an authenticated API, and version rows: three changes to the
+design, not settings.</p>
+<h2 id="12-open-questions">12. Open Questions</h2>
+<ul>
+<li>Is <code>memory_query</code> with <code>*</code> intended to stay on
+the agent surface, or is a host-fixed space planned for multi-project
+setups?</li>
+<li>Should search or <code>space_get</code> demote or hide
+<code>status:superseded</code> and <code>status:obsolete</code> rows, or
+is the tag meant only for the model to read?</li>
+<li>Is <code>recoverCheckpointContext</code> in the OpenCode plugin a
+placeholder for a recovery snapshot, and is
+<code>buildRecoveryPack</code> meant to feed it?</li>
+<li>Is the Claude Code Stop hook meant to overwrite an active
+checkpoint's goal and pending fields, given the Cursor script's stated
+rule?</li>
+<li>What does the 86.67% run's artifact contain per question, and does
+it recompute?</li>
+</ul>
+<h2 id="appendix-file-index">Appendix: File Index</h2>
+<ul>
+<li><strong>Schema and storage:</strong>
+<code>src/store/schema.ts</code>,
+<code>src/store/sqlite-store.ts</code>,
+<code>src/store/repositories/memory-repository.ts</code>,
+<code>src/store/repositories/space-repository.ts</code>,
+<code>src/store/repositories/link-repository.ts</code>,
+<code>src/store/repositories/log-repository.ts</code>,
+<code>src/config.ts</code>, <code>src/types.ts</code>.</li>
+<li><strong>Retrieval:</strong>
+<code>src/store/repositories/search-repository.ts</code>,
+<code>src/store/shared/search-fusion.ts</code>,
+<code>src/store/shared/query-parser.ts</code>,
+<code>src/store/shared/semantic-admission.ts</code>,
+<code>src/helpers/rag.ts</code>.</li>
+<li><strong>MCP surface:</strong> <code>src/mcp/server.ts</code>,
+<code>src/mcp/tools/*.ts</code>, <code>src/mcp/handlers/**</code>,
+<code>src/mcp/schemas/**</code>,
+<code>src/mcp/helpers/space-orientation.ts</code>,
+<code>src/helpers/memory-ref-resolver.ts</code>.</li>
+<li><strong>Checkpoints:</strong>
+<code>src/checkpoint/checkpoint-save.ts</code>,
+<code>src/checkpoint/checkpoint-done.ts</code>,
+<code>src/checkpoint/checkpoint-lookup.ts</code>,
+<code>src/checkpoint/recovery-pack.ts</code>,
+<code>src/helpers/session-summary.ts</code>.</li>
+<li><strong>Agent setup and protocol:</strong>
+<code>src/cli/setup.ts</code>,
+<code>src/setup/opencode-automation-plugin.ts</code>,
+<code>src/setup/skill-installation.ts</code>,
+<code>src/resources/protocols/mind-cognitive-protocol.md</code>,
+<code>src/cli/skill-activation.ts</code>,
+<code>src/helpers/agent-identity.ts</code>.</li>
+<li><strong>HTTP and autosync:</strong> <code>src/api/server.ts</code>,
+<code>src/api/router.ts</code>, <code>src/api/routes/*.ts</code>,
+<code>src/sync/file-sync-service.ts</code>,
+<code>src/sync/auto-sync-service.ts</code>,
+<code>src/sync/importer.ts</code>, <code>src/sync/types.ts</code>.</li>
+<li><strong>Tests and benchmarks:</strong>
+<code>test/mind-store.spec.ts</code>,
+<code>test/fuzzy-cache.spec.ts</code>,
+<code>test/mcp-tools.spec.ts</code>,
+<code>test/supersession-contract.spec.ts</code>,
+<code>test/search-eval/</code>,
+<code>benchmarks/agent-memory/results/run-ragoff-20261024-2110/</code>,
+<code>benchmarks/agent-memory/results/run-ragon-20261024-2110/</code>,
+<code>benchmarks/agent-memory/ANALYSIS.md</code>,
+<code>benchmarks/omnimemeval/README.md</code>,
+<code>.github/workflows/main.yml</code>.</li>
+</ul>
+<h3 id="recorded-searches">Recorded searches</h3>
+<p>Checked against the checkout at the pinned revision, from the tree
+root.</p>
+<ul>
+<li><code>git grep -n -E "superseded|obsolete|status:living|type:reference" -- 'src/*.ts' web/src</code>
+— one read, <code>search-repository.ts:1277</code>, the
+living-references block, and a migration comment in
+<code>schema.ts</code>; no filter on any other <code>status:*</code>
+tag.</li>
+<li><code>git grep -n -E "parsed.space === '[*]'" -- src/mcp</code> —
+<code>query-memories.ts:86</code> maps <code>*</code> to no space
+filter.</li>
+<li><code>git grep -n -E 'hidden' -- src</code> — written by
+<code>updateSpace</code> and read as a predicate only by
+<code>listSpaces</code> (<code>space-repository.ts:90</code>); no search
+or query path.</li>
+<li><code>git grep -n -E 'DELETE FROM logs|cleanupOldLogs|clearAllLogs' -- src web/src</code>
+— the hourly prune in <code>src/mind.ts</code>, the web clear route, and
+the repository.</li>
+<li><code>git grep -n -E "addLog|logEntry\(" -- src</code> — writers in
+<code>src/mcp/server.ts</code>, <code>src/api/router.ts</code>,
+<code>src/cli/command-executor.ts</code>, and
+<code>src/sync/sync-coordinator.ts</code> for exports; none in
+<code>src/sync/importer.ts</code> or
+<code>src/sync/auto-sync-service.ts</code>, the import path.</li>
+<li><code>git grep -n -i -E 'tombstone|reject|blocklist|denylist' -- src</code>
+— the autosync manifest fields and diagnostics, a protocol example and a
+doc comment; nothing on a memory write or read path.</li>
+<li><code>git grep -n -i -E 'valid_from|valid_to|valid_until|validFrom|valid_at|as_of|asOf|event_time|occurred_at' -- src</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'approve|pending_review|quarantine' -- 'src/*.ts'</code>
+— no match.</li>
+<li><code>git grep -n -i -E 'authorization|bearer|api[_-]?key|token|hostname|cors|Access-Control' -- src/api src/mcp/server.ts</code>
+— no match.</li>
+<li><code>git grep -n -E 'test\.skip|describe\.skip|skipIf|test\.if|test\.todo|it\.skip' -- test web/test</code>
+— no match.</li>
+<li><code>git grep -n -E 'recovery-pack|buildRecoveryPack' -- src test web</code>
+— callers in <code>test/session-summary-migration.spec.ts</code>
+only.</li>
+<li><code>git grep -n -E 'tier|pinned|access_count|changed_at' -- src/store/shared/search-fusion.ts</code>
+— no match; ranking ignores them.</li>
+<li><code>git grep -l -i -E 'arxiv|bibtex|@article|@misc|doi\.org|CITATION' -- . ':!bun.lock' ':!benchmarks/agent-memory/bun.lock'</code>
+— no match, and no <code>CITATION.cff</code>.</li>
+</ul>
+<h2 id="history">History</h2>
+<p><strong>2026-10-28</strong> — <a
+href="https://github.com/GabrielMartinMoran/mind/commit/4e9a41e9432810269553e7a369d05d0bd1f36852"><code class="commit-id" title="4e9a41e9432810269553e7a369d05d0bd1f36852">4e9a41e9…</code></a>
+— first reading, at the head of <code>main</code>, the v1.7.0 release
+commit of 26 October 2026, from a shallow clone
+(<code>--depth 1</code>); history from the GitHub API. One mark,
+<code>negative_eval</code>. Screened before reading: no auto-run
+surface; two build-time execution points, the <code>Makefile</code> and
+a <code>prepare: husky install</code> script; 14 dependency surfaces
+inside the cooldown, inflated because the shallow clone dates every file
+to the tip; two unpinned surfaces with <code>bun.lock</code> present, 17
+floating ranges at the root and 2 in the benchmark;
+<code>AGENTS.md</code> and its <code>CLAUDE.md</code> symlink read as
+data. The hosted benchmark run was checked through the API and its
+artifact not downloaded. Nothing was installed, built or run.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="../../">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-name">Agent Memory Atlas</span>
+        </a>
+        <p>Code-grounded notes for people building agents that remember.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../../patterns/">Design patterns</a>
+        <a href="../../capabilities/">Capability index</a>
+        <a href="../../verdicts/">Repo-by-repo verdicts</a>
+        <a href="../../overview/">Comparative report</a>
+        <a href="../../compare/">Comparative matrix</a>
+        <a href="../../families/">System families</a>
+        <a href="../../appendix/">Pins and known limitations</a>
+        <a href="../../benchmarks/">Benchmarking memory</a>
+        <a href="../../methodology/per-repo-report-format/">Review method</a>
+        <a href="../../contributing/">Contributing</a>
+        <button class="footer-consent" type="button" data-consent-reopen>Cookie choice</button>
+        <a href="../../discord.html">Discord</a>
+        <a href="https://github.com/neoneye/agent-memory-atlas">Source</a>
+      </div>
+    </footer>
+
+    <script type="module">
+      // Pinned exactly, not to `mermaid@11`. Every diagram in this atlas is
+      // rendered in the reader's browser by whatever the CDN serves, and a
+      // floating major-version range meant a minor release upstream could break
+      // hundreds of diagrams hours after a green build here, with nothing in
+      // the repository having changed. `check_mermaid.py` cannot catch that: it
+      // is two regexes for syntax errors already seen once, not a parser, so
+      // the renderer is the only thing that knows and it runs after publish.
+      // A pin turns "the CDN changed" into a diff.
+      //
+      // Raising it is a deliberate edit: bump the version, rebuild, and open a
+      // report page with a state diagram and one with a flowchart before
+      // pushing.
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+      const diagrams = document.querySelectorAll("pre.mermaid");
+      diagrams.forEach((pre) => {
+        const holder = document.createElement("div");
+        holder.className = "mermaid";
+        holder.textContent = pre.textContent;
+        // The build folds the source into a <details> inside the figure so an
+        // unrendered page reads as a captioned diagram rather than as loose
+        // edge labels. With a renderer available the rendered diagram takes
+        // that slot, and the source disclosure goes away.
+        const source = pre.closest("details.diagram-source");
+        if (source) {
+          source.replaceWith(holder);
+        } else {
+          pre.replaceWith(holder);
+        }
+      });
+      if (diagrams.length) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Manrope, sans-serif",
+            primaryColor: "#e7efe9",
+            primaryTextColor: "#101b2a",
+            primaryBorderColor: "#3d6b59",
+            lineColor: "#739080",
+            secondaryColor: "#f4e2bd",
+            tertiaryColor: "#f7f4ec"
+          }
+        });
+      }
+    </script>
+    <script src="../../assets/main.js"></script>
+  </body>
+</html>

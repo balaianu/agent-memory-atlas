@@ -1503,6 +1503,18 @@ get, update and delete by id unscoped, and ships OpenClaw tools whose
 withholds the mark on that agent surface. <strong>A scope argument the
 model can fill is a request; only one rebuilt from the grant is a
 boundary.</strong></p>
+<p><strong><a href="../../systems/mind/">Mind</a> applies the space
+predicate on every read and lets the model name the space, including all
+of them.</strong> Each search channel, list, count, orientation preview
+and graph query filters on <code>s.name = ?</code> when a space is
+given, and a test asserts a search in one space misses identical content
+in another (<code>test/mind-store.spec.ts:701-711</code>). The space is
+a tool argument on every read, and <code>memory_query</code> maps
+<code>*</code> to no filter
+(<code>src/mcp/handlers/memories/query-memories.ts:86</code>), which the
+protocol teaches for cross-project recall and a test pins. Bare memory
+references fall back to scanning every non-hidden space, and one
+user-scope database serves every project.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <p>The first of these need not be written by hand. <a
 href="https://github.com/promptfoo/promptfoo">promptfoo</a> ships a

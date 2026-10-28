@@ -229,6 +229,8 @@ promotion produces: reflection records are "22% of rows yet ~1% of both read
 channels". A fifth of that store is distilled material that retrieval almost
 never surfaces. Promotion succeeded; usefulness did not follow.
 
+[Mind](../../systems/mind/) ships the simplest computable rule on this page and records none of its reasons. Tier 1 holds 25 and tier 2 holds 50 non-pinned memories per space; every non-pinned `memory_read` promotes the memory one tier, and a write or promotion into a full tier demotes the unpinned row with the oldest `COALESCE(last_accessed_at, created_at)` (`src/store/repositories/memory-repository.ts:126-169`, `:571-590`). Nothing is ever evicted to deletion, and tier never enters the search score. The one input is a read, which also serves inspection, so the protocol has to tell the model to pass `noPromote: true` when it only looks; no row records why a memory moved, and access promotion leaves `changed_at` untouched.
+
 ## Tests to require
 
 - State the rule, then compute it by hand for ten promoted records and ten that

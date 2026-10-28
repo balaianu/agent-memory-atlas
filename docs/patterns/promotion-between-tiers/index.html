@@ -397,6 +397,19 @@ to whatever promotion produces: reflection records are "22% of rows yet
 ~1% of both read channels". A fifth of that store is distilled material
 that retrieval almost never surfaces. Promotion succeeded; usefulness
 did not follow.</p>
+<p><a href="../../systems/mind/">Mind</a> ships the simplest computable
+rule on this page and records none of its reasons. Tier 1 holds 25 and
+tier 2 holds 50 non-pinned memories per space; every non-pinned
+<code>memory_read</code> promotes the memory one tier, and a write or
+promotion into a full tier demotes the unpinned row with the oldest
+<code>COALESCE(last_accessed_at, created_at)</code>
+(<code>src/store/repositories/memory-repository.ts:126-169</code>,
+<code>:571-590</code>). Nothing is ever evicted to deletion, and tier
+never enters the search score. The one input is a read, which also
+serves inspection, so the protocol has to tell the model to pass
+<code>noPromote: true</code> when it only looks; no row records why a
+memory moved, and access promotion leaves <code>changed_at</code>
+untouched.</p>
 <h2 id="tests-to-require">Tests to require</h2>
 <ul>
 <li>State the rule, then compute it by hand for ten promoted records and

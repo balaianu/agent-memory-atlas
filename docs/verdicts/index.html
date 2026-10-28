@@ -129,7 +129,7 @@ any one system is worth your time. Reading it end to end is not the
 point; find the system you are weighing.</p>
 <!-- BEGIN GENERATED VERDICT COUNT -->
 
-<p><strong>This page covers all 756 reports.</strong></p>
+<p><strong>This page covers all 757 reports.</strong></p>
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 
 <p>the biggest risk, the most reusable component, an impression of
@@ -31501,6 +31501,51 @@ reversible.</li>
 <li>Do not copy when: a correction must outlive the next assertion,
 memories need provenance, or raw history must respect the same project
 boundary as the notes.</li>
+</ul>
+<h3 id="mind"><a href="../systems/mind/"><code>mind</code></a></h3>
+<ul>
+<li>Best idea: <strong>cap the hot tiers and demote, never
+delete.</strong> Tier 1 holds 25 and tier 2 holds 50 non-pinned memories
+per space; a write or promotion into a full tier moves the least
+recently used unpinned row down one tier, and tier 3 is unlimited, so
+the orientation view stays bounded with no forgetting policy to get
+wrong.</li>
+<li>Second idea: <strong>search returns names, a read returns
+content.</strong> <code>memory_query</code> fuses phrase, all-terms,
+any-term, trigram, fuzzy, LIKE and token-set channels, plus cosine when
+RAG is on, into a high, medium or low bucket and strips
+<code>content</code> from the response, so recall is cheap and the model
+chooses what to open.</li>
+<li>Biggest risk: <strong>the model picks the boundary.</strong> Every
+read takes a <code>space</code> the model supplies,
+<code>memory_query</code> maps <code>*</code> to no filter, the protocol
+teaches it for cross-project recall, and one user-scope database serves
+every project.</li>
+<li>Second risk: <strong>correction is a tag with no reader.</strong>
+Superseding a decision tags the old row <code>status:superseded</code>
+and links <code>contradicts</code>; search, list, read and the
+session-start orientation all return it, and <code>memory_update</code>
+overwrites content with no prior version.</li>
+<li>Third risk: the call log that records every mutation is pruned to
+seven days every hour and cleared from the web app, and the HTTP API
+binds Bun's default host with no authentication.</li>
+<li>Most reusable component:
+<code>src/store/repositories/search-repository.ts</code> with
+<code>src/store/shared/search-fusion.ts</code> — a multi-channel SQLite
+FTS5 pipeline with coverage floors, a global fuzzy vocabulary keyed on
+<code>data_version</code>, and fixed fusion weights.</li>
+<li>Maturity impression: MIT, 140 commits by 2 contributors, 27 April
+2025 – 26 October 2026; 18,998 lines of TypeScript in <code>src/</code>,
+7,861 of them the store, MCP and checkpoint core; 1,793 bun test cases
+in CI; two committed LoCoMo agent runs at 14.4% and 15.6% correct, and a
+README headline whose evidence is an Actions artifact. One mark:
+<code>negative_eval</code>.</li>
+<li>Study when: you want a bounded, use-ordered working set per project
+with no LLM in the write path, or a lexical search that holds up without
+embeddings.</li>
+<li>Do not copy when: projects must be kept apart from the model,
+corrections must stop the old value reaching the agent, or a change must
+stay explainable past a week.</li>
 </ul>
         </article>
       </div>

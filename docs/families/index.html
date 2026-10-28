@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101b2a%27/%3E%3Ccircle cx=%2712%27 cy=%2711%27 r=%273%27 fill=%27%234a5f4a%27/%3E%3Ccircle cx=%2721%27 cy=%2714%27 r=%273%27 fill=%27%23d8a24a%27/%3E%3Ccircle cx=%2714%27 cy=%2721%27 r=%273%27 fill=%27%23c4736a%27/%3E%3C/svg%3E">
-    <meta name="description" content="The 756
+    <meta name="description" content="The 757
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -13,7 +13,7 @@ here.">
     <meta property="og:site_name" content="Agent Memory Atlas">
     <meta property="og:title" content="System
 Families — Agent Memory Atlas">
-    <meta property="og:description" content="The 756
+    <meta property="og:description" content="The 757
 systems grouped by eight architectural commitments, the categories
 almost nothing models, and the boundaries of what counts as memory
 here.">
@@ -22,7 +22,7 @@ here.">
     <meta name="twitter:title" content="System
 Families — Agent Memory Atlas">
     <meta name="twitter:description" content="The
-756 systems grouped by eight architectural
+757 systems grouped by eight architectural
 commitments, the categories almost nothing models, and the boundaries of
 what counts as memory here.">
     <meta name="twitter:image" content="https://neoneye.github.io/agent-memory-atlas/assets/og.png">
@@ -46,7 +46,7 @@ what counts as memory here.">
       "@context": "https://schema.org",
       "@type": "TechArticle",
       "headline": "System Families",
-      "description": "The 756 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
+      "description": "The 757 systems grouped by eight architectural commitments, the categories almost nothing models, and the boundaries of what counts as memory here.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Agent Memory Atlas",
@@ -103,7 +103,7 @@ what counts as memory here.">
         <div class="document-hero-inner">
           <p class="eyebrow">Taxonomy</p>
           <h1>System Families</h1>
-          <p class="document-deck">The 756 systems
+          <p class="document-deck">The 757 systems
 grouped by eight architectural commitments, the categories almost
 nothing models, and the boundaries of what counts as memory here.</p>
                                                 </div>
@@ -120,7 +120,7 @@ nothing models, and the boundaries of what counts as memory here.</p>
           </div>
         </aside>
         <article class="prose" id="article">
-<p>756 systems do not fall into 182 categories. They
+<p>757 systems do not fall into 182 categories. They
 cluster around eight architectural commitments, and most systems belong
 to more than one — a coding-agent memory can also be verification-first,
 and a host runtime's plugin can also be a hosted service. The families
@@ -4096,7 +4096,8 @@ href="../systems/binder/"><code>binder</code></a>, <a
 href="../systems/crystalline/"><code>crystalline</code></a>, <a
 href="../systems/aigent-os/"><code>aigent-os</code></a>, <a
 href="../systems/stella/"><code>stella</code></a>, <a
-href="../systems/ken/"><code>ken</code></a></p>
+href="../systems/ken/"><code>ken</code></a>, <a
+href="../systems/mind/"><code>mind</code></a></p>
 <p><strong><a href="../systems/dsh-mneme/">dsh-mneme</a> makes
 background consolidation accountable rather than trusted.</strong> A
 DeepSeek Harness plugin on SQLite with Markdown mirrors, it writes a
@@ -8274,6 +8275,20 @@ library's is 0.25. Findings correct by overwrite and hard delete; a
 separate premise store for rule inference logs every insert, replace and
 retract. Two marks, <code>audit_log</code> and
 <code>negative_eval</code>, both on the premise store.</p>
+<p><strong><a href="../systems/mind/">Mind</a> bounds what the agent
+sees by tier and leaves the boundary between projects to the
+agent.</strong> An MIT TypeScript server on Bun that keeps coding-agent
+memories in one SQLite file, in named spaces with a hot tier capped at
+25 and a warm tier at 50 per space; a read promotes a memory one tier
+and an overflow demotes the least recently used row, so nothing is
+evicted to deletion. Search fuses seven lexical channels and optional
+embeddings into a confidence bucket and returns names and tags, never
+content. Checkpoints complete into session summaries in one transaction
+and refuse while work is pending. The model names the space on every
+call and <code>memory_query</code> accepts <code>*</code> for all of
+them; supersession is a <code>status:superseded</code> tag no read
+filters on, and the only mutation record, a call log, is pruned after
+seven days. One mark, <code>negative_eval</code>.</p>
 <h2 id="graph-temporal-and-symbolic-memory">Graph, temporal, and
 symbolic memory</h2>
 <p><a href="../systems/holomem/"><code>holomem</code></a>, <a

@@ -18,7 +18,7 @@ is worth your time. Reading it end to end is not the point; find the system you
 are weighing.
 
 <!-- BEGIN GENERATED VERDICT COUNT -->
-**This page covers all 756 reports.**
+**This page covers all 757 reports.**
 <!-- END GENERATED VERDICT COUNT --> Six judgements each: the best idea,
 the biggest risk, the most reusable component, an impression of maturity, and
 the two that matter most to a reader deciding — when to study it and when to
@@ -6888,3 +6888,15 @@ Disclosure: RainBox is the atlas author's own project; this verdict is a self-as
 - Maturity impression: Apache-2.0, 10,286 commits between 24 July and 26 October 2026, about 1.9 million lines of TypeScript; the memory core is 2,933 lines, with 157 cases in 19 memory and nightly-learning test files, one of them an end-to-end MCP chain on a real store. One mark: `negative_eval`.
 - Study when: you are moving several coding harnesses onto one shared, host-scoped memory, or want a background tidy that is evidence-gated and reversible.
 - Do not copy when: a correction must outlive the next assertion, memories need provenance, or raw history must respect the same project boundary as the notes.
+
+### [`mind`](../systems/mind/)
+
+- Best idea: **cap the hot tiers and demote, never delete.** Tier 1 holds 25 and tier 2 holds 50 non-pinned memories per space; a write or promotion into a full tier moves the least recently used unpinned row down one tier, and tier 3 is unlimited, so the orientation view stays bounded with no forgetting policy to get wrong.
+- Second idea: **search returns names, a read returns content.** `memory_query` fuses phrase, all-terms, any-term, trigram, fuzzy, LIKE and token-set channels, plus cosine when RAG is on, into a high, medium or low bucket and strips `content` from the response, so recall is cheap and the model chooses what to open.
+- Biggest risk: **the model picks the boundary.** Every read takes a `space` the model supplies, `memory_query` maps `*` to no filter, the protocol teaches it for cross-project recall, and one user-scope database serves every project.
+- Second risk: **correction is a tag with no reader.** Superseding a decision tags the old row `status:superseded` and links `contradicts`; search, list, read and the session-start orientation all return it, and `memory_update` overwrites content with no prior version.
+- Third risk: the call log that records every mutation is pruned to seven days every hour and cleared from the web app, and the HTTP API binds Bun's default host with no authentication.
+- Most reusable component: `src/store/repositories/search-repository.ts` with `src/store/shared/search-fusion.ts` — a multi-channel SQLite FTS5 pipeline with coverage floors, a global fuzzy vocabulary keyed on `data_version`, and fixed fusion weights.
+- Maturity impression: MIT, 140 commits by 2 contributors, 27 April 2025 – 26 October 2026; 18,998 lines of TypeScript in `src/`, 7,861 of them the store, MCP and checkpoint core; 1,793 bun test cases in CI; two committed LoCoMo agent runs at 14.4% and 15.6% correct, and a README headline whose evidence is an Actions artifact. One mark: `negative_eval`.
+- Study when: you want a bounded, use-ordered working set per project with no LLM in the write path, or a lexical search that holds up without embeddings.
+- Do not copy when: projects must be kept apart from the model, corrections must stop the old value reaching the agent, or a change must stay explainable past a week.
